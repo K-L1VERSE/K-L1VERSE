@@ -35,5 +35,6 @@ module.exports = {
     "react/jsx-filename-extension": 0,
     "react/jsx-one-expression-per-line": 0,
     "no-nested-ternary": 0,
+    "prettier/prettier": ["error", { endOfLine: "auto" }],
   },
 };
