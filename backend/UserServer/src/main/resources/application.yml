@@ -7,3 +7,23 @@ spring:
     url: jdbc:mariadb://localhost:3306/dev
     username: root
     password: 1234
+
+
+oauth:
+  google:
+    client-id: 651679120216-gedguefmg8lgjhi8vul42c48r9305mol.apps.googleusercontent.com
+    client-secret: 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
+    redirect-uri: http://localhost:8080/login/oauth/code/google
+    token-uri: https://oauth2.googleapis.com/token
+    resource-uri: https://www.googleapis.com/oauth2/v2/userinfo
+    login-uri: https://accounts.google.com/o/oauth2/auth?client_id=651679120216-gedguefmg8lgjhi8vul42c48r9305mol.apps.googleusercontent.com&redirect_uri=http://localhost:8080/login/oauth/code/google&response_type=code&scope=https://www.googleapis.com/auth/userinfo.email https://www.googleapis.com/auth/userinfo.profile&access_type=offline
+
+cloud:
+  aws:
+    s3:
+      bucket: k-l1verse
+    credentials:
+      access-key: AKIA4X5JVVJBRX7QSL5G
+      secret-key: 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
+    region:
+      static: ap-northeast-2
