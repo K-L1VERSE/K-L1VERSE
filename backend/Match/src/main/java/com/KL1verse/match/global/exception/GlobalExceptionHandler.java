@@ -1,7 +1,7 @@
-package com.kl1verse.UserServer.global.exception;
+package com.KL1verse.match.global.exception;
 
-import com.kl1verse.UserServer.domain.sample.exception.SampleException;
-import com.kl1verse.UserServer.global.dto.BaseResponse;
+import com.KL1verse.match.domain.sample.exception.SampleException;
+import com.KL1verse.match.global.dto.BaseResponse;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;

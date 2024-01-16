@@ -1,7 +1,8 @@
-package com.kl1verse.UserServer.domain.sample.exception;
+package com.KL1verse.match.domain.sample.exception;
 
-import com.kl1verse.UserServer.global.ResponseCode;
-import com.kl1verse.UserServer.global.exception.BaseException;
+
+import com.KL1verse.match.global.ResponseCode;
+import com.KL1verse.match.global.exception.BaseException;
 
 public class SampleException extends BaseException {
 

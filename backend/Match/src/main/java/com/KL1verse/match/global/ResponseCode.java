@@ -1,4 +1,4 @@
-package com.kl1verse.UserServer.global;
+package com.KL1verse.match.global;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

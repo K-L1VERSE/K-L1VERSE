@@ -1,6 +1,6 @@
-package com.kl1verse.UserServer.global.exception;
+package com.KL1verse.match.global.exception;
 
-import com.kl1verse.UserServer.global.ResponseCode;
+import com.KL1verse.match.global.ResponseCode;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 

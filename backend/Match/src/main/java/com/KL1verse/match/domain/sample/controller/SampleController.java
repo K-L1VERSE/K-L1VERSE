@@ -1,8 +1,8 @@
-package com.kl1verse.UserServer.domain.sample.controller;
+package com.KL1verse.match.domain.sample.controller;
 
-import com.kl1verse.UserServer.domain.sample.exception.SampleException;
-import com.kl1verse.UserServer.global.ResponseCode;
-import com.kl1verse.UserServer.global.dto.BaseResponse;
+import com.KL1verse.match.domain.sample.exception.SampleException;
+import com.KL1verse.match.global.ResponseCode;
+import com.KL1verse.match.global.dto.BaseResponse;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;

@@ -1,6 +1,6 @@
-package com.kl1verse.UserServer.global.dto;
+package com.KL1verse.match.global.dto;
 
-import com.kl1verse.UserServer.global.ResponseCode;
+import com.KL1verse.match.global.ResponseCode;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 
