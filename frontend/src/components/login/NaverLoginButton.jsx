@@ -1,6 +1,6 @@
 import React from "react";
 
-function NaverLogin() {
+function NaverLoginButton() {
   // const NAVER_RESPONSE_TYPE = "code"
   const NAVER_REDIRECT_URI = "http://localhost:3000/NaverAuth/";
   const NAVER_STATE = "1234asdf";
@@ -15,4 +15,4 @@ function NaverLogin() {
   );
 }
 
-export default NaverLogin;
+export default NaverLoginButton;
