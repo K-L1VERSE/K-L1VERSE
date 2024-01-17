@@ -2,8 +2,10 @@ package com.kl1verse.UserServer.domain.oauth.controller;
 
 import com.kl1verse.UserServer.domain.oauth.service.OAuthService;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;
 
+@Slf4j
 @RestController
 @RequestMapping("/login/oauth")
 @RequiredArgsConstructor
@@ -17,7 +19,9 @@ public class OAuthController {
     @GetMapping("/code/{registrationId}")
     // @RequestParam, @Pathvariable 둘 다 (name = "") 선언을 안해주니까 에러남
     public void googleLogin(@RequestParam(name = "code") String code, @PathVariable(name = "registrationId") String registrationId) {
+        log.info("googleLogin()...");
+        log.info("code = {}", code);
+        log.info("registrationId = {}", registrationId);
         oAuthService.socialLogin(code, registrationId);
-
     }
 }
