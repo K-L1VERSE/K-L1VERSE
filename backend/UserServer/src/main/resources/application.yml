@@ -27,3 +27,4 @@ cloud:
       secret-key: 247Uyb5U7Qy0dhhExdvrRM0ofR9c3ojFop1MGwtm
     region:
       static: ap-northeast-2
+

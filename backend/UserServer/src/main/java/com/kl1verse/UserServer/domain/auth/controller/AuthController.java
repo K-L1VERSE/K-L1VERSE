@@ -6,6 +6,7 @@ import com.kl1verse.UserServer.domain.auth.dto.res.SignInResDto;
 import com.kl1verse.UserServer.domain.auth.service.AuthService;
 import com.kl1verse.UserServer.global.dto.BaseResponse;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -20,13 +21,13 @@ public class AuthController {
 
 
     @PostMapping("/sign-up")
-    public BaseResponse<Void> signUp(@RequestBody SignUpReqDto signUpReqDto) {
+    public ResponseEntity<Void> signUp(@RequestBody SignUpReqDto signUpReqDto) {
         authService.signUp(signUpReqDto);
-        return BaseResponse.success(null);
+        return ResponseEntity.ok().build();
     }
 
     @PostMapping("/sign-in")
-    public BaseResponse<SignInResDto> signIn(@RequestBody SignInReqDto signInReqDto) {
-        return BaseResponse.success(authService.signIn(signInReqDto));
+    public ResponseEntity<SignInResDto> signIn(@RequestBody SignInReqDto signInReqDto) {
+        return ResponseEntity.ok().body(authService.signIn(signInReqDto));
     }
 }

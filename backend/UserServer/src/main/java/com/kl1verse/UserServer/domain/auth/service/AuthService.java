@@ -51,25 +51,14 @@ public class AuthService {
     public SignInResDto signIn(SignInReqDto signInDto) {
         User user = userRepository.findByEmail(signInDto.getEmail())
             .orElseThrow(() -> new UserException(ResponseCode.INVALID_USER_INFO));
-        log.info("email = {}", user.getEmail());
         Optional<Token> token = tokenRepository.findByUserId(user.getId());
-
-        // 로그인 시에는 무조건 서버의 refreshToken 삭제
-        if (token.isPresent()) {
-            Long tokenId = token.get().getId();
-//            user.setToken(null);
-            tokenRepository.deleteById(tokenId);
-        }
 
         // accessToken 생성
         Authentication authentication = null;
-        log.info("authentication before");
         authentication = authenticationManager.authenticate(
             new UsernamePasswordAuthenticationToken(signInDto.getEmail(), "1234")
         );
-        log.info("authentication = {}", authentication);
         String accessToken = jwtUtil.createAccessToken(authentication);
-        log.info("accessToken = {}", accessToken);
 
         // refreshToken 생성
         jwtUtil.createRefreshToken(authentication, user);

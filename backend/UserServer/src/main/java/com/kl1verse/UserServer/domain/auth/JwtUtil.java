@@ -17,15 +17,18 @@ import jakarta.servlet.http.HttpServletRequest;
 import java.time.Duration;
 import java.util.Base64;
 import java.util.Date;
+import java.util.Optional;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
+import org.springframework.transaction.annotation.Transactional;
 
 @Slf4j
 @Component
@@ -43,7 +46,6 @@ public class JwtUtil {
 
     // accessToken 생성
     public String createAccessToken(Authentication authentication) {
-        log.info("createAccessToken()");
         Claims claims = Jwts.claims().setSubject(authentication.getName());
         Date now = new Date();
         Date expireDate = new Date(now.getTime() + accessExpirationTime);
@@ -54,30 +56,59 @@ public class JwtUtil {
             .setExpiration(expireDate)
             .signWith(SignatureAlgorithm.HS256, secretKey)
             .compact();
+        log.info("accessToken = {}", accessToken);
         return accessToken;
     }
 
     // refreshToken 생성
+    @Transactional
     public void createRefreshToken(Authentication authentication, User user) {
+        Optional<Token> existingToken = tokenRepository.findByUserId(user.getId());
+
+        if (existingToken.isPresent()) {
+            // 이미 해당 User에 대한 Token이 존재하면 업데이트
+            log.info("Already RefreshToken = {}", user.getEmail());
+            Token tokenToUpdate = existingToken.get();
+            updateToken(tokenToUpdate, authentication);
+        } else {
+            // 해당 User에 대한 Token이 없으면 새로 생성
+            createNewToken(authentication, user);
+        }
+    }
+
+    private void updateToken(Token token, Authentication authentication) {
         Claims claims = Jwts.claims().setSubject(authentication.getName());
         Date now = new Date();
         Date expireDate = new Date(now.getTime() + refreshExpirationTime);
-        String refreshToken;
-        refreshToken = Jwts.builder()
+        String refreshToken = Jwts.builder()
             .setClaims(claims)
             .setIssuedAt(now)
             .setExpiration(expireDate)
             .signWith(SignatureAlgorithm.HS256, secretKey)
             .compact();
 
-        // DB에 저장
-        Token token = Token.builder()
-            .refreshToken(refreshToken)
-            .build();
+        token.setRefreshToken(refreshToken);
+        log.info("refreshToken Updated = {}", refreshToken);
         tokenRepository.save(token);
+    }
 
-//        user.setToken(token);
-        userRepository.save(user);
+    private void createNewToken(Authentication authentication, User user) {
+        Claims claims = Jwts.claims().setSubject(authentication.getName());
+        Date now = new Date();
+        Date expireDate = new Date(now.getTime() + refreshExpirationTime);
+        String refreshToken = Jwts.builder()
+            .setClaims(claims)
+            .setIssuedAt(now)
+            .setExpiration(expireDate)
+            .signWith(SignatureAlgorithm.HS256, secretKey)
+            .compact();
+
+        Token newToken = Token.builder()
+            .refreshToken(refreshToken)
+            .user(user)
+            .build();
+        log.info("refreshToken = {}", refreshToken);
+        tokenRepository.save(newToken);
     }
 
     public Authentication getAuthentication(String token) {
