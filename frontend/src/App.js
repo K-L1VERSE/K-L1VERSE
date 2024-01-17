@@ -1,5 +1,12 @@
+import { BrowserRouter, Route, Routes } from "react-router-dom";
+import KakaoLoginButton from "./components/login/KakaoLoginButton";
+
 import logo from "./logo.svg";
 import "./App.css";
+import KaKaoRedirection from "./pages/login_page/KaKaoRedirection";
+import NaverLoginButton from "./components/login/NaverLoginButton";
+import NaverRedirection from "./pages/login_page/NaverRedirection";
+import GoogleLoginButton from "./components/login/GoogleLoginButton";
 
 function App() {
   return (
@@ -17,7 +24,18 @@ function App() {
         >
           Learn React
         </a>
+
+        <KakaoLoginButton />
+        <NaverLoginButton />
+        <GoogleLoginButton />
       </header>
+      <BrowserRouter>
+        <Routes>
+          <Route path="/KakaoAuth" element={<KaKaoRedirection />} />
+          {/* <Route path="/GoogleAuth" element={<GoogleRedirect />} /> */}
+          <Route path="/NaverAuth" element={<NaverRedirection />} />
+        </Routes>
+      </BrowserRouter>
     </div>
   );
 }
