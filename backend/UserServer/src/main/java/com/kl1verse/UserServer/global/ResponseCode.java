@@ -16,7 +16,15 @@ public enum ResponseCode {
     OK(HttpStatus.OK.value(), "OK"),
 
     // Sample
-    SAMPLE_EXCEPTION(9999, "샘플예외 입니다.");
+    SAMPLE_EXCEPTION(9999, "샘플예외 입니다."),
+
+    // User
+    INVALID_USER_INFO(1000, "유효하지 않은 유저 입니다."),
+    USER_ALREADY_EXIST_ERROR(1001, "이미 존재하는 유저 입니다."),
+
+    // Token
+    EXPIRED_ACCESS_TOKEN(1100, "액세스 토큰 만료"),
+    EXPIRED_REFRESH_TOKEN(1101, "리프레쉬 토큰 만료");
 
 
 
