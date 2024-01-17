@@ -3,6 +3,9 @@
 // import { useCookies } from "react-cookie";
 // import { useNavigate } from "react-router-dom";
 
+import React from "react";
+import axios from "../../api/axios";
+
 function NaverRedirection() {
   console.log("NaverRedirection");
 
@@ -11,6 +14,17 @@ function NaverRedirection() {
   //   const code = window.location.search;
   //   console.log(code);
   console.log("NAVER_CODE:", NAVER_CODE);
+
+  const request = axios
+    .get(`/login/oauth/code/naver?code=${NAVER_CODE}`)
+    .then((res) => {
+      console.log(res);
+    })
+    .catch((err) => {
+      console.log(err);
+    });
+
+  console.log(request);
 
   return <div>로그인 중입니다.</div>;
 
