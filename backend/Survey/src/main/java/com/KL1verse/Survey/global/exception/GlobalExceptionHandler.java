@@ -1,6 +1,6 @@
 package com.KL1verse.Survey.global.exception;
 
-import com.KL1verse.Survey.domain.sample.exception.SampleException;
+import com.KL1verse.Survey.survey.exception.SampleException;
 import com.KL1verse.Survey.global.dto.BaseResponse;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.ExceptionHandler;
