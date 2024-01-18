@@ -24,7 +24,9 @@ function UserInfo({ user }) {
       </div>
       <div> 대표 뱃지 : {user.mainBadge} </div>
       <div> 골 : {user.goal}</div>
-      <div> 적중률 : {user.mainBadge}</div>
+      <div> 적중률 : {user.accurate}</div>
+      <div> 총 배팅 : {user.totalBet}</div>
+      <div> 적중 배팅 : {user.winBet}</div>
       <div>
         뱃지
         <div> 팀 1 : {user.badge.team1}</div>

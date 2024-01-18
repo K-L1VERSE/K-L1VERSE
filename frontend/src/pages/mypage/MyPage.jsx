@@ -1,10 +1,12 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import UserInfo from "../../components/mypage/UserInfo";
+import axios from "../../api/axios";
+// import mockAxios from "../../api/mockAxios";
 
 function MyPage() {
   const [user, setUser] = useState({
     userId: "",
-    nickname: "ㅣㅑㅐㅜ0077ㅍ",
+    nickname: "",
     profile: "",
     mainBadge: "",
     goal: 0,
@@ -26,6 +28,22 @@ function MyPage() {
       team12: false,
     },
   });
+
+  /* 유저 정보 가져오기 */
+  const getUserInfo = () => {
+    axios
+      .get("/users")
+      .then(({ data }) => {
+        setUser(data);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+
+  useEffect(() => {
+    getUserInfo();
+  }, []);
 
   console.log(user);
 
