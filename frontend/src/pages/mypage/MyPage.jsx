@@ -3,6 +3,10 @@ import UserInfo from "../../components/mypage/UserInfo";
 import axios from "../../api/axios";
 // import mockAxios from "../../api/mockAxios";
 
+import RadioGroup from "../../components/common/RadioGroup";
+import Radio from "../../components/common/Radio";
+import MyWagle from "../../components/mypage/MyWagle";
+
 function MyPage() {
   const [user, setUser] = useState({
     userId: "",
@@ -73,6 +77,27 @@ function MyPage() {
   return (
     <div>
       <UserInfo user={user} />
+      <div>
+        <RadioGroup>
+          <Radio
+            name="contact"
+            value="1"
+            defaultChecked
+            setCategory={setCategory}
+          >
+            와글
+          </Radio>
+          <Radio name="contact" value="2" setCategory={setCategory}>
+            직관 메이트
+          </Radio>
+          <Radio name="contact" value="3" setCategory={setCategory}>
+            중고
+          </Radio>
+        </RadioGroup>
+      </div>
+      <div>
+        <MyWagle wagles={myWagle} />
+      </div>
     </div>
   );
 }
