@@ -1,6 +1,8 @@
 package com.kl1verse.UserServer.global.exception;
 
+import com.kl1verse.UserServer.domain.auth.exception.TokenException;
 import com.kl1verse.UserServer.domain.sample.exception.SampleException;
+import com.kl1verse.UserServer.domain.user.exception.UserException;
 import com.kl1verse.UserServer.global.dto.BaseResponse;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -22,6 +24,18 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(SampleException.class)
     public BaseResponse<Void> handleSampleException(SampleException e) {
         log.info("SampleException: {}", e.getMessage());
+        return BaseResponse.fail(e.getResponseCode(), null);
+    }
+
+    @ExceptionHandler(UserException.class)
+    public BaseResponse<Void> handleUserException(UserException e) {
+        log.info("UserException: {}", e.getMessage());
+        return BaseResponse.fail(e.getResponseCode(), null);
+    }
+
+    @ExceptionHandler(TokenException.class)
+    public BaseResponse<Void> handleTokenException(TokenException e) {
+        log.info("TokenException: {}", e.getMessage());
         return BaseResponse.fail(e.getResponseCode(), null);
     }
 

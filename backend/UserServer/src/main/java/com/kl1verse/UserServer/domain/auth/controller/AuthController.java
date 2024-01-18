@@ -4,9 +4,10 @@ import com.kl1verse.UserServer.domain.auth.dto.req.SignInReqDto;
 import com.kl1verse.UserServer.domain.auth.dto.req.SignUpReqDto;
 import com.kl1verse.UserServer.domain.auth.dto.res.SignInResDto;
 import com.kl1verse.UserServer.domain.auth.service.AuthService;
-import com.kl1verse.UserServer.global.dto.BaseResponse;
+import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -29,5 +30,11 @@ public class AuthController {
     @PostMapping("/sign-in")
     public ResponseEntity<SignInResDto> signIn(@RequestBody SignInReqDto signInReqDto) {
         return ResponseEntity.ok().body(authService.signIn(signInReqDto));
+    }
+
+    @GetMapping("/sign-out")
+    public ResponseEntity<?> signOut(HttpServletRequest request) {
+        authService.signOut(request);
+        return ResponseEntity.ok().build();
     }
 }

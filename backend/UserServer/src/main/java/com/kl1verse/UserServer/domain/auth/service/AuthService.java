@@ -4,12 +4,14 @@ import com.kl1verse.UserServer.domain.auth.JwtUtil;
 import com.kl1verse.UserServer.domain.auth.dto.req.SignInReqDto;
 import com.kl1verse.UserServer.domain.auth.dto.req.SignUpReqDto;
 import com.kl1verse.UserServer.domain.auth.dto.res.SignInResDto;
+import com.kl1verse.UserServer.domain.auth.exception.TokenException;
 import com.kl1verse.UserServer.domain.auth.repository.TokenRepository;
 import com.kl1verse.UserServer.domain.auth.repository.entity.Token;
 import com.kl1verse.UserServer.domain.user.exception.UserException;
 import com.kl1verse.UserServer.domain.user.repository.UserRepository;
 import com.kl1verse.UserServer.domain.user.repository.entity.User;
 import com.kl1verse.UserServer.global.ResponseCode;
+import jakarta.servlet.http.HttpServletRequest;
 import java.util.Optional;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -68,11 +70,32 @@ public class AuthService {
         authentication = authenticationManager.authenticate(
             new UsernamePasswordAuthenticationToken(signInDto.getEmail(), "1234")
         );
-        String accessToken = jwtUtil.createAccessToken(authentication);
+        String accessToken = jwtUtil.createAccessToken(authentication, signInDto.getDomain());
 
         // refreshToken 생성
         jwtUtil.createRefreshToken(authentication, user);
 
-        return new SignInResDto(user.getEmail(), accessToken, user.getName(), user.getProfile());
+        return SignInResDto.builder()
+            .email(user.getEmail())
+            .accessToken(accessToken)
+            .name(user.getName())
+            .profile(user.getProfile())
+            .domain(user.getDomain())
+            .build();
+    }
+
+    // 로그아웃
+    @Transactional
+    public void signOut(HttpServletRequest request) {
+        String requestToken = jwtUtil.resolveToken(request);
+        String email = jwtUtil.extractUserNameFromExpiredToken(requestToken);
+        String domain = jwtUtil.extractUserDomainFromExpiredToken(requestToken);
+        log.info("signOut = {} / {}", email, domain);
+
+        User user = userRepository.findByEmailAndDomain(email, domain).orElseThrow(() -> new UserException(
+            ResponseCode.INVALID_USER_INFO));
+        Token token = tokenRepository.findByUserId(user.getId()).orElseThrow(() -> new TokenException(
+            ResponseCode.INVALID_TOKEN_INFO));
+        tokenRepository.delete(token);
     }
 }

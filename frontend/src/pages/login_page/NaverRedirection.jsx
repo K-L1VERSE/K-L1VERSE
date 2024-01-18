@@ -25,6 +25,7 @@ function NaverRedirection() {
       localStorage.setItem("email", res.data.email);
       localStorage.setItem("name", res.data.name);
       localStorage.setItem("profile", res.data.profile);
+      localStorage.setItem("domain", res.data.domain);
 
       /* 성공시 홈화면으로 */
       // window.location.href = "/";

@@ -14,4 +14,5 @@ public class SignInResDto {
     private String accessToken;
     private String name;
     private String profile;
+    private String domain;
 }
