@@ -56,7 +56,7 @@ public class JwtUtil {
             .setExpiration(expireDate)
             .signWith(SignatureAlgorithm.HS256, secretKey)
             .compact();
-        log.info("accessToken = {}", accessToken);
+        log.info("JWT accessToken = {}", accessToken);
         return accessToken;
     }
 

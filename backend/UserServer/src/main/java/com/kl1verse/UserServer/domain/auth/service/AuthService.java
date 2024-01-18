@@ -31,9 +31,17 @@ public class AuthService {
     private final JwtUtil jwtUtil;
     private final PasswordEncoder passwordEncoder;
 
+    // 회원 가입 여부 확인
+    public boolean isExistUser(String email, String domain) {
+        return userRepository.findByEmailAndDomain(email, domain).isPresent();
+    }
+
     // 회원가입
     public void signUp(SignUpReqDto signUpReqDto) {
-        boolean exsitUser = userRepository.findByEmail(signUpReqDto.getEmail()).isPresent();
+
+        log.info("new User SignUp = {} / {}", signUpReqDto.getEmail(), signUpReqDto.getDomain());
+
+        boolean exsitUser = userRepository.findByEmailAndDomain(signUpReqDto.getEmail(), signUpReqDto.getDomain()).isPresent();
         if(exsitUser){
             throw new UserException(ResponseCode.USER_ALREADY_EXIST_ERROR);
         }
@@ -42,6 +50,8 @@ public class AuthService {
             .email(signUpReqDto.getEmail())
             .password(passwordEncoder.encode("1234"))
             .name(signUpReqDto.getName())
+            .profile(signUpReqDto.getProfile())
+            .domain(signUpReqDto.getDomain())
             .build();
         userRepository.save(user);
     }
@@ -49,7 +59,7 @@ public class AuthService {
     // 로그인
     @Transactional
     public SignInResDto signIn(SignInReqDto signInDto) {
-        User user = userRepository.findByEmail(signInDto.getEmail())
+        User user = userRepository.findByEmailAndDomain(signInDto.getEmail(), signInDto.getDomain())
             .orElseThrow(() -> new UserException(ResponseCode.INVALID_USER_INFO));
         Optional<Token> token = tokenRepository.findByUserId(user.getId());
 

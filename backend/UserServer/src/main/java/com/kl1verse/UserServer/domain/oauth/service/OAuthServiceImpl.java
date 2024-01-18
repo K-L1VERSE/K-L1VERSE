@@ -1,7 +1,10 @@
 package com.kl1verse.UserServer.domain.oauth.service;
 
 import com.fasterxml.jackson.databind.JsonNode;
+import com.kl1verse.UserServer.domain.auth.dto.req.SignInReqDto;
+import com.kl1verse.UserServer.domain.auth.dto.req.SignUpReqDto;
 import com.kl1verse.UserServer.domain.auth.dto.res.SignInResDto;
+import com.kl1verse.UserServer.domain.auth.service.AuthService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.core.env.Environment;
@@ -17,6 +20,7 @@ import org.springframework.web.client.RestTemplate;
 public class OAuthServiceImpl implements OAuthService {
 
     private final Environment env;
+    private final AuthService authService;
 
     /*
     * Google 승인 서버로 HTTP 요청을 보내기 위한 RestTemplate
@@ -30,7 +34,7 @@ public class OAuthServiceImpl implements OAuthService {
     public SignInResDto socialLogin(String code, String registrationId) {
         String accessToken = getAccessToken(code, registrationId);
         JsonNode userResourceNode = getUserResource(accessToken, registrationId);
-        System.out.println("userResourceNode = " + userResourceNode);
+        log.info("userResourceNode = {}" + userResourceNode);
 
         String id = "";
         String email = "";
@@ -57,12 +61,20 @@ public class OAuthServiceImpl implements OAuthService {
         log.info("name = {}", name);
         log.info("profile = {}", profile);
 
-        return SignInResDto.builder()
+
+        if(!authService.isExistUser(email, registrationId)) {
+            authService.signUp(SignUpReqDto.builder()
                 .email(email)
                 .name(name)
                 .profile(profile)
-                .accessToken(accessToken)
-                .build();
+                .domain(registrationId)
+                .build());
+        }
+
+        return authService.signIn(SignInReqDto.builder()
+            .email(email)
+            .domain(registrationId)
+            .build());
     }
 
     /*
