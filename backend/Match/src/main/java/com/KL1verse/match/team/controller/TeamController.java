@@ -21,8 +21,8 @@ public class TeamController {
     private final TeamService teamService;
 
     @GetMapping("/{id}")
-    public ResponseEntity<List<TeamInfoResponse>> getTeamInfo(@PathVariable final int id) {
-        List<TeamInfoResponse> teamInfo = teamService.getTeamInfo(id);
+    public ResponseEntity<TeamInfoResponse> getTeamInfo(@PathVariable final int id) {
+        TeamInfoResponse teamInfo = teamService.getTeamInfo(id);
         return new ResponseEntity<>(teamInfo, HttpStatus.OK);
     }
 
