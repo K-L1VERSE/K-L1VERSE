@@ -63,6 +63,6 @@ public class AuthService {
         // refreshToken 생성
         jwtUtil.createRefreshToken(authentication, user);
 
-        return new SignInResDto(user.getEmail(), accessToken, user.getName());
+        return new SignInResDto(user.getEmail(), accessToken, user.getName(), user.getProfile());
     }
 }
