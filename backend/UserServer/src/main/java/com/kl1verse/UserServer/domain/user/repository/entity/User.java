@@ -2,6 +2,7 @@ package com.kl1verse.UserServer.domain.user.repository.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.kl1verse.UserServer.domain.auth.repository.entity.Token;
+import com.kl1verse.UserServer.domain.badge.repository.entity.Badge;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -34,4 +35,10 @@ public class User {
     private String nickname;
     private String profile;
     private String domain;
+    private Integer goal;
+
+    @JoinColumn(name = "badge_id")
+    @OneToOne
+    @JsonIgnore
+    private Badge wearBadge;
 }

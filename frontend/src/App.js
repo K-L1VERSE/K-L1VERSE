@@ -7,6 +7,7 @@ import GoogleRedirection from "./pages/login_page/GoogleRedirection";
 import logo from "./logo.svg";
 import "./App.css";
 import LoginPage from "./pages/login_page/LoginPage";
+import MyPage from "./pages/my_page/MyPage";
 
 function App() {
   return (
@@ -37,6 +38,9 @@ function App() {
           <Route path="/KakaoAuth" element={<KaKaoRedirection />} />
           <Route path="/GoogleAuth" element={<GoogleRedirection />} />
           <Route path="/NaverAuth" element={<NaverRedirection />} />
+
+          {/* 마이 페이지 */}
+          <Route path="/mypage" element={<MyPage />} />
         </Routes>
       </BrowserRouter>
     </div>

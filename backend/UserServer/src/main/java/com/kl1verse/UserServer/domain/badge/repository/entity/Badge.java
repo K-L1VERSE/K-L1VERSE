@@ -1,14 +1,9 @@
 package com.kl1verse.UserServer.domain.badge.repository.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.kl1verse.UserServer.domain.user.repository.entity.User;
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
-import jakarta.persistence.OneToMany;
+import jakarta.persistence.*;
+
 import java.time.LocalDateTime;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -29,9 +24,12 @@ public class Badge {
     @Column(name = "badge_id")
     private Integer id;
 
-    @Column(name = "badge_code")
-    private Integer code;
+    @JsonIgnore
+    @OneToOne
+    @JoinColumn(name = "badge_detail_id")
+    private BadgeDetail badgeDetail;
 
+    @JsonIgnore
     @ManyToOne
     @JoinColumn(name = "user_id")
     private User user;
