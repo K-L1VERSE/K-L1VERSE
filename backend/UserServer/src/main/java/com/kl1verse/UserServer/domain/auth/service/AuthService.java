@@ -51,7 +51,7 @@ public class AuthService {
         User user = User.builder()
             .email(signUpReqDto.getEmail())
             .password(passwordEncoder.encode("1234"))
-            .name(signUpReqDto.getName())
+            .nickname(signUpReqDto.getName())
             .profile(signUpReqDto.getProfile())
             .domain(signUpReqDto.getDomain())
             .build();
@@ -78,7 +78,7 @@ public class AuthService {
         return SignInResDto.builder()
             .email(user.getEmail())
             .accessToken(accessToken)
-            .name(user.getName())
+            .nickname(user.getNickname())
             .profile(user.getProfile())
             .domain(user.getDomain())
             .build();
