@@ -4,6 +4,7 @@ import java.util.List;
 
 
 public interface SurveyService {
-    String recommendTeam(List<Integer> answers);
+    int recommendTeam(List<Long> userSelection);
 }
+
 
