@@ -1,5 +1,12 @@
+import { BrowserRouter, Route, Routes } from "react-router-dom";
+
+import KaKaoRedirection from "./pages/login_page/KaKaoRedirection";
+import NaverRedirection from "./pages/login_page/NaverRedirection";
+import GoogleRedirection from "./pages/login_page/GoogleRedirection";
+
 import logo from "./logo.svg";
 import "./App.css";
+import LoginPage from "./pages/login_page/LoginPage";
 
 function App() {
   return (
@@ -18,6 +25,20 @@ function App() {
           Learn React
         </a>
       </header>
+      <BrowserRouter>
+        <Routes>
+          {/* 메인 페이지 */}
+          {/* <Route path="/" element={<index />} /> */}
+
+          {/* 로그인 페이지 */}
+          <Route path="/login" element={<LoginPage />} />
+
+          {/* 로그인 리다이렉션 페이지 */}
+          <Route path="/KakaoAuth" element={<KaKaoRedirection />} />
+          <Route path="/GoogleAuth" element={<GoogleRedirection />} />
+          <Route path="/NaverAuth" element={<NaverRedirection />} />
+        </Routes>
+      </BrowserRouter>
     </div>
   );
 }
