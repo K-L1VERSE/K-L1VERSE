@@ -19,9 +19,17 @@ function NaverRedirection() {
     .get(`/login/oauth/code/naver?code=${NAVER_CODE}`)
     .then((res) => {
       console.log(res);
+
+      /* access Token 받고 전역 변수로 관리 */
+
+      /* 성공시 홈화면으로 */
+      window.location.href = "/";
     })
     .catch((err) => {
       console.log(err);
+
+      /* 실패시 로그인 화면으로 */
+      window.location.href = "/login";
     });
 
   console.log(request);
