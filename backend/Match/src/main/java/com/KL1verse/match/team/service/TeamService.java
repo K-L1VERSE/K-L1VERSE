@@ -7,5 +7,5 @@ import java.util.List;
 
 public interface TeamService {
 
-    List<TeamInfoResponse> getTeamInfo(int id);
+    TeamInfoResponse getTeamInfo(int id);
 }
