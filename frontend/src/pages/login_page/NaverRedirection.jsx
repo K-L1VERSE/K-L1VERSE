@@ -21,9 +21,13 @@ function NaverRedirection() {
       console.log(res);
 
       /* access Token 받고 전역 변수로 관리 */
+      localStorage.setItem("accessToken", res.data.accessToken);
+      localStorage.setItem("email", res.data.email);
+      localStorage.setItem("name", res.data.name);
+      localStorage.setItem("profile", res.data.profile);
 
       /* 성공시 홈화면으로 */
-      window.location.href = "/";
+      // window.location.href = "/";
     })
     .catch((err) => {
       console.log(err);
