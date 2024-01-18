@@ -5,13 +5,15 @@ import QuestionPage from "./pages/SurveyPage/QuestionPage";
 import ResultPage from "./pages/SurveyPage/ResultPage";
 
 function App() {
+  // const [questionId, setQuestionId] = useState("");
+
   return (
     <div>
       <title>K-L1verse</title>
 
       <Routes>
         <Route path="/survey" element={<StartPage />} />
-        <Route path="/question" element={<QuestionPage />} />
+        <Route path="/question/:questionNum" element={<QuestionPage />} />
         <Route path="/result" element={<ResultPage />} />
       </Routes>
     </div>
