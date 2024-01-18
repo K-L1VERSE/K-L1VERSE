@@ -45,8 +45,10 @@ public class JwtUtil {
     private final UserRepository userRepository;
 
     // accessToken 생성
-    public String createAccessToken(Authentication authentication) {
+    public String createAccessToken(Authentication authentication, String domain) {
         Claims claims = Jwts.claims().setSubject(authentication.getName());
+        claims.put("domain", domain);
+
         Date now = new Date();
         Date expireDate = new Date(now.getTime() + accessExpirationTime);
         String accessToken;
@@ -78,6 +80,7 @@ public class JwtUtil {
 
     private void updateToken(Token token, Authentication authentication) {
         Claims claims = Jwts.claims().setSubject(authentication.getName());
+        claims.put("domain", token.getUser().getDomain());
         Date now = new Date();
         Date expireDate = new Date(now.getTime() + refreshExpirationTime);
         String refreshToken = Jwts.builder()
@@ -94,6 +97,7 @@ public class JwtUtil {
 
     private void createNewToken(Authentication authentication, User user) {
         Claims claims = Jwts.claims().setSubject(authentication.getName());
+        claims.put("domain", user.getDomain());
         Date now = new Date();
         Date expireDate = new Date(now.getTime() + refreshExpirationTime);
         String refreshToken = Jwts.builder()
@@ -142,9 +146,9 @@ public class JwtUtil {
     }
 
     // accessToken 재발급
-    public String reIssueAccessToken(String email) {
+    public String reIssueAccessToken(String email, String domain) {
         // email로 refreshToken 조회
-        User user = userRepository.findByEmail(email).orElseThrow(() -> new UserException(
+        User user = userRepository.findByEmailAndDomain(email, domain).orElseThrow(() -> new UserException(
             ResponseCode.INVALID_USER_INFO));
         Token token = tokenRepository.findByUserId(user.getId()).orElseThrow(() -> new UserException(
             ResponseCode.INVALID_USER_INFO));
@@ -154,7 +158,7 @@ public class JwtUtil {
             // refreshToken이 정상일때
             Authentication authentication = getAuthentication(refreshToken);
             String accessToken;
-            accessToken = createAccessToken(authentication);
+            accessToken = createAccessToken(authentication, domain);
             return accessToken;
         } catch (JwtException jwtException) {
 //            //refreshToken이 만료일때
@@ -178,6 +182,24 @@ public class JwtUtil {
         } catch (ParseException e) {
             throw new RuntimeException(e);
         }
-        return (String) payload.get("sub");
+        String userName = (String) payload.get("sub");
+        log.info("extracted UserName from AccessToken = {}", userName);
+        return userName;
+    }
+
+    public String extractUserDomainFromExpiredToken (String token) {
+        String[] arr = token.split("\\.");
+        byte[] decodedBytes = Base64.getDecoder().decode(arr[1]);
+
+        JSONParser parser = new JSONParser();
+        JSONObject payload = null;
+        try {
+            payload = (JSONObject) parser.parse(new String(decodedBytes));
+        } catch (ParseException e) {
+            throw new RuntimeException(e);
+        }
+        String domain = (String) payload.get("domain");
+        log.info("extracted UserDomain from AccessToken = {}", domain);
+        return domain;
     }
 }

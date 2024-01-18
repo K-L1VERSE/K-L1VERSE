@@ -19,6 +19,7 @@ function KaKaoRedirection() {
       localStorage.setItem("email", res.data.email);
       localStorage.setItem("name", res.data.name);
       localStorage.setItem("profile", res.data.profile);
+      localStorage.setItem("domain", res.data.domain);
     })
     .catch((err) => {
       console.log(err);

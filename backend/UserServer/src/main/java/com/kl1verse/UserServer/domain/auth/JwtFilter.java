@@ -43,7 +43,8 @@ public class JwtFilter extends OncePerRequestFilter {
         } else {
             // accessToken 만료
             String email = jwtUtil.extractUserNameFromExpiredToken(requestToken);
-            User user = userRepository.findByEmail(email).orElseThrow(() -> new UserException(
+            String domain = jwtUtil.extractUserDomainFromExpiredToken(requestToken);
+            User user = userRepository.findByEmailAndDomain(email, domain).orElseThrow(() -> new UserException(
                 ResponseCode.INVALID_USER_INFO));
             Token token = tokenRepository.findByUserId(user.getId()).orElseThrow(() -> new UserException(
                 ResponseCode.INVALID_USER_INFO));
@@ -53,7 +54,7 @@ public class JwtFilter extends OncePerRequestFilter {
             try {
                 // refreshToken 정상
                 Authentication authentication = jwtUtil.getAuthentication(refreshToken);
-                String accessToken = jwtUtil.createAccessToken(authentication); // accessToken 재발급
+                String accessToken = jwtUtil.createAccessToken(authentication, domain); // accessToken 재발급
                 ObjectNode json = new ObjectMapper().createObjectNode();
                 json.put("code", ResponseCode.EXPIRED_ACCESS_TOKEN.getCode());
                 json.put("message", String.valueOf(ResponseCode.EXPIRED_ACCESS_TOKEN.getMessage()));
