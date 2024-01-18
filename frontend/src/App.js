@@ -7,6 +7,7 @@ import KaKaoRedirection from "./pages/login_page/KaKaoRedirection";
 import NaverLoginButton from "./components/login/NaverLoginButton";
 import NaverRedirection from "./pages/login_page/NaverRedirection";
 import GoogleLoginButton from "./components/login/GoogleLoginButton";
+import MyPage from "./pages/mypage/MyPage";
 
 function App() {
   return (
@@ -34,6 +35,7 @@ function App() {
           <Route path="/KakaoAuth" element={<KaKaoRedirection />} />
           {/* <Route path="/GoogleAuth" element={<GoogleRedirect />} /> */}
           <Route path="/NaverAuth" element={<NaverRedirection />} />
+          <Route path="/mypage" element={<MyPage />} />
         </Routes>
       </BrowserRouter>
     </div>
