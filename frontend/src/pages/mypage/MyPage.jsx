@@ -45,6 +45,29 @@ function MyPage() {
     getUserInfo();
   }, []);
 
+  const [page, setPage] = useState(1);
+  const [category, setCategory] = useState();
+  const [myWagle, setMyWagle] = useState([]);
+  /* 카테고리 변경 시 호출될 훅 */
+  const getMyWagle = () => {
+    const url = `/wagles?user_id=${user.userId}&category=${category}&pageno=${page}`;
+    console.log(url);
+    axios
+      .get(url)
+      .then(({ data }) => {
+        console.log(data);
+        setMyWagle(data);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+
+  useEffect(() => {
+    console.log(`${category}로 변경됨`);
+    getMyWagle();
+  }, [category]);
+
   console.log(user);
 
   return (
