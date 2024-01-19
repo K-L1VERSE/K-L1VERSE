@@ -21,11 +21,17 @@ public enum ResponseCode {
     // User
     INVALID_USER_INFO(1000, "유효하지 않은 유저 입니다."),
     USER_ALREADY_EXIST_ERROR(1001, "이미 존재하는 유저 입니다."),
+    NOT_ENOUGH_GOAL(1002, "골이 부족합니다."),
+    ALREADY_BUYED_BADGE(1003, "이미 구매한 뱃지 입니다."),
+    DO_NOT_HAVE_BADGE(1004, "보유하지 않은 뱃지 입니다."),
 
     // Token
     EXPIRED_ACCESS_TOKEN(1100, "액세스 토큰 만료"),
-    EXPIRED_REFRESH_TOKEN(1101, "리프레쉬 토큰 만료");
+    EXPIRED_REFRESH_TOKEN(1101, "리프레쉬 토큰 만료"),
+    INVALID_TOKEN_INFO(1102, "유효하지 않은 토큰 입니다."),
 
+    // Badge
+    BADGE_NOT_FOUND(1200, "뱃지를 찾을 수 없습니다.");
 
 
     /*

@@ -12,5 +12,7 @@ import lombok.NoArgsConstructor;
 public class SignInResDto {
     private String email;
     private String accessToken;
-    private String name;
+    private String nickname;
+    private String profile;
+    private String domain;
 }

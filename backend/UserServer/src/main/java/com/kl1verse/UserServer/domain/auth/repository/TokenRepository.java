@@ -9,6 +9,6 @@ import org.springframework.data.jpa.repository.Lock;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface TokenRepository extends JpaRepository<Token, Long> {
-    Optional<Token> findByUserId(Long userId);
+public interface TokenRepository extends JpaRepository<Token, Integer> {
+    Optional<Token> findByUserId(Integer userId);
 }

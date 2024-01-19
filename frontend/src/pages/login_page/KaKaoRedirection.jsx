@@ -15,6 +15,11 @@ function KaKaoRedirection() {
       console.log(res);
 
       /* access Token 받고 전역 변수로 관리 */
+      localStorage.setItem("accessToken", res.data.accessToken);
+      localStorage.setItem("email", res.data.email);
+      localStorage.setItem("nickname", res.data.nickname);
+      localStorage.setItem("profile", res.data.profile);
+      localStorage.setItem("domain", res.data.domain);
     })
     .catch((err) => {
       console.log(err);
