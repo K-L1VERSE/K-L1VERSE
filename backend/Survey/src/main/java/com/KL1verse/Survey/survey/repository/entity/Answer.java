@@ -27,8 +27,8 @@ public class Answer {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long answerId;;
 
-    @Column(name = "text")
-    private String context;
+    @Column(name = "content")
+    private String content;
 
 
     @ManyToOne
