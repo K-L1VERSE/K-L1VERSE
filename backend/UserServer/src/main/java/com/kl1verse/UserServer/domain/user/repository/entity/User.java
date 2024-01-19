@@ -41,4 +41,9 @@ public class User {
     @OneToOne
     @JsonIgnore
     private Badge wearBadge;
+
+    private String mainBadge;
+    private int goal;
+    private int totalBet;
+    private int winBet;
 }
