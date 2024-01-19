@@ -44,7 +44,7 @@ public class SecurityConfig {
         httpSecurity.csrf(AbstractHttpConfigurer::disable)
             .cors(cors -> cors.configurationSource(corsConfig.corsConfigurationSource())) // cors 설정
             .authorizeHttpRequests(request -> request.requestMatchers("/auth/sign-up", "/auth/sign-in",
-                    "/auth/sign-out", "/ws/**", "/file/upload", "/geocode/**", "/login/oauth/**")
+                    "/auth/sign-out", "/ws/**", "/file/upload", "/geocode/**", "/login/oauth/**", "/badges/**")
                 .permitAll()
                 .anyRequest().authenticated())
             .sessionManagement(manager -> manager.sessionCreationPolicy(STATELESS));

@@ -43,8 +43,9 @@ public class AuthService {
 
         log.info("new User SignUp = {} / {}", signUpReqDto.getEmail(), signUpReqDto.getDomain());
 
-        boolean exsitUser = userRepository.findByEmailAndDomain(signUpReqDto.getEmail(), signUpReqDto.getDomain()).isPresent();
-        if(exsitUser){
+        boolean exsitUser = userRepository.findByEmailAndDomain(signUpReqDto.getEmail(),
+            signUpReqDto.getDomain()).isPresent();
+        if (exsitUser) {
             throw new UserException(ResponseCode.USER_ALREADY_EXIST_ERROR);
         }
 
@@ -92,10 +93,12 @@ public class AuthService {
         String domain = jwtUtil.extractUserDomainFromExpiredToken(requestToken);
         log.info("signOut = {} / {}", email, domain);
 
-        User user = userRepository.findByEmailAndDomain(email, domain).orElseThrow(() -> new UserException(
-            ResponseCode.INVALID_USER_INFO));
-        Token token = tokenRepository.findByUserId(user.getId()).orElseThrow(() -> new TokenException(
-            ResponseCode.INVALID_TOKEN_INFO));
+        User user = userRepository.findByEmailAndDomain(email, domain)
+            .orElseThrow(() -> new UserException(
+                ResponseCode.INVALID_USER_INFO));
+        Token token = tokenRepository.findByUserId(user.getId())
+            .orElseThrow(() -> new TokenException(
+                ResponseCode.INVALID_TOKEN_INFO));
         tokenRepository.delete(token);
     }
 }
