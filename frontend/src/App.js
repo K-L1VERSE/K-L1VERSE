@@ -1,23 +1,21 @@
-import logo from "./logo.svg";
-import "./App.css";
+import React from "react";
+import { Routes, Route } from "react-router-dom";
+import StartPage from "./pages/SurveyPage/StartPage";
+import QuestionPage from "./pages/SurveyPage/QuestionPage";
+import ResultPage from "./pages/SurveyPage/ResultPage";
 
 function App() {
+  // const [questionId, setQuestionId] = useState("");
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div>
+      <title>K-L1verse</title>
+
+      <Routes>
+        <Route path="/survey" element={<StartPage />} />
+        <Route path="/question/:questionNum" element={<QuestionPage />} />
+        <Route path="/result" element={<ResultPage />} />
+      </Routes>
     </div>
   );
 }
