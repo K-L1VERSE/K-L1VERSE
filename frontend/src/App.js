@@ -1,5 +1,9 @@
+import { BrowserRouter, Route, Routes } from "react-router-dom";
+
 import logo from "./logo.svg";
 import "./App.css";
+
+import MatchPage from "./pages/match_page/MatchPage";
 
 function App() {
   return (
@@ -18,6 +22,13 @@ function App() {
           Learn React
         </a>
       </header>
+      <BrowserRouter>
+        <Routes>
+
+          {/* 경기 페이지 */}
+          <Route path="/match" element={<MatchPage />} />
+        </Routes>
+      </BrowserRouter>
     </div>
   );
 }
