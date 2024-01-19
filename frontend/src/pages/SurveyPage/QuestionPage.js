@@ -61,6 +61,25 @@ function QuestionPage() {
     if (questionId === 7) {
       console.log("끝남");
       console.log(result);
+
+      // 프론트엔드에서 백엔드로 result 전송
+      fetch("https://your-backend-api.com/submitResult", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ result }),
+      })
+        .then((response) => response.json())
+        .then((data) => {
+          console.log("Success:", data);
+          // 추가적인 작업이 필요하다면 여기에서 처리
+        })
+        .catch((error) => {
+          console.error("Error:", error);
+        });
+
+      nav("/result", { state: { result } });
     } else {
       nav(`/question/${questionId + 1}`, { state: { result } });
     }
