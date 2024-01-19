@@ -2,7 +2,10 @@ package com.KL1verse.match.team.repository.entity;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
 import lombok.AllArgsConstructor;
@@ -22,11 +25,15 @@ import lombok.ToString;
 public class Member {
 
     @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "member_id")
-    private int memberId;
+    private Integer memberId;
 
-    @ManyToOne
-    private Team team;
+//    @ManyToOne
+//    @JoinColumn(name = "team_id")
+//    private Team team;
+@Column(name = "team_id")
+    private Integer teamId;
 
     private String name;
 
