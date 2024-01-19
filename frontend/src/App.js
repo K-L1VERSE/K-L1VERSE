@@ -6,6 +6,7 @@ import GoogleRedirection from "./pages/login_page/GoogleRedirection";
 
 import logo from "./logo.svg";
 import "./App.css";
+
 import LoginPage from "./pages/login_page/LoginPage";
 import MyPage from "./pages/my_page/MyPage";
 
