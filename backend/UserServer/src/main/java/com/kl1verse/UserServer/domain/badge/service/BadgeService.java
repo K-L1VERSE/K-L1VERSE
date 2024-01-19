@@ -20,6 +20,7 @@ import java.util.stream.Collectors;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Slf4j
 @Service
@@ -49,6 +50,7 @@ public class BadgeService {
         return badges.stream().map(badge -> badge.getBadgeDetail().getCode()).collect(Collectors.toList());
     }
 
+    @Transactional
     public void buyBadge(HttpServletRequest request, BadgeBuyReqDto badgeBuyReqDto) {
         /*
         * accessToken으로 유저 정보를 가져온다.
@@ -92,6 +94,7 @@ public class BadgeService {
         badgeRepository.save(badge);
     }
 
+    @Transactional
     public void wearBadge(HttpServletRequest request, BadgeBuyReqDto badgeBuyReqDto) {
         /*
         * accessToken으로 유저 정보를 가져온다.
@@ -127,6 +130,7 @@ public class BadgeService {
         log.info("user {} wear badge {}", user.getEmail(), user.getWearBadge().getBadgeDetail().getCode());
     }
 
+    @Transactional
     public void addBadgeDetail(BadgeDetailReqDto badgeDetailReqDto) {
         BadgeDetail badgeDetail = BadgeDetail.builder()
             .code(badgeDetailReqDto.getCode())
