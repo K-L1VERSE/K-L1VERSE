@@ -1,5 +1,4 @@
 import styled from "styled-components";
-import Button from "./SurveyButton";
 
 export const Main = styled.div`
   text-align: center;
@@ -35,9 +34,19 @@ export const MainTitle = styled.div`
   }
 `;
 
-export const MainButton = styled(Button)`
+export const MainButton = styled.div`
+  border: none;
+  border-radius: 3px;
+  width: 80%;
+  font-size: 1.2rem;
+  font-weight: 600;
+  padding: 10px 10px;
+  background-color: #001b79;
+  color: white;
+  outline: none;
+  cursor: pointer;
   text-align: center;
-  margin-top: 10px;
-  margin-bottom: 30px;
+  justify-content: center;
+  margin: 30px;
   background: #001b79;
 `;
