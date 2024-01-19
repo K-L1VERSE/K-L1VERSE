@@ -9,5 +9,5 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface WeightRepository extends JpaRepository<Weight, Long> {
-        List<Weight> findByAnswerId(Long answerId);
+        List<Weight> findByAnswer_AnswerId(Long answerId);
 }
