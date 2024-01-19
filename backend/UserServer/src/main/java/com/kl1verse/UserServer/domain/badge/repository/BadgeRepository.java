@@ -5,5 +5,5 @@ import java.util.List;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface BadgeRepository extends JpaRepository<Badge, Integer> {
-    List<Badge> findByUserId(Long userId);
+    List<Badge> findByUserId(Integer userId);
 }

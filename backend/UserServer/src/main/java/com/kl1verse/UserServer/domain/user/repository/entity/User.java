@@ -29,7 +29,7 @@ public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "user_id")
-    private Long id;
+    private Integer id;
     private String email;
     private String password;
     private String nickname;
@@ -43,7 +43,6 @@ public class User {
     private Badge wearBadge;
 
     private String mainBadge;
-    private int goal;
-    private int totalBet;
-    private int winBet;
+    private Integer totalBet;
+    private Integer winBet;
 }
