@@ -43,7 +43,7 @@ public class BadgeService {
         /*
         * 유저 정보로 뱃지 정보를 가져온다.
         */
-        Long userId = userRepository.findByEmailAndDomain(email, domain)
+        Integer userId = userRepository.findByEmailAndDomain(email, domain)
             .orElseThrow(() -> new UserException(ResponseCode.INVALID_USER_INFO)).getId();
 
         List<Badge> badges = badgeRepository.findByUserId(userId);

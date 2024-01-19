@@ -26,7 +26,7 @@ public class Token {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "token_id")
-    private Long id;
+    private Integer id;
 
 
     @Column(name = "refresh_token")
