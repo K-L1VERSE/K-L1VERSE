@@ -7,6 +7,7 @@ plugins {
 group = 'com.K-L1verse'
 version = '0.0.1-SNAPSHOT'
 
+
 java {
 	sourceCompatibility = '17'
 }

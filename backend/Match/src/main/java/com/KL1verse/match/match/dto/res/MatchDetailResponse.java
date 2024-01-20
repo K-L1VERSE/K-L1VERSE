@@ -1,5 +1,6 @@
 package com.KL1verse.match.match.dto.res;
 
+import java.time.LocalDateTime;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -19,7 +20,7 @@ public class MatchDetailResponse {
     private String awayTeamName;
     private int homeBettingAmount;
     private int awayBettingAmount;
-    private String matchAt;
+    private LocalDateTime matchAt;
     private String status;
     private int homeScore;
     private int awayScore;
