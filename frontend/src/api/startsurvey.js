@@ -10,7 +10,7 @@ export function getSurvey(surveyId) {
   console.log("axios survey");
   return new Promise((resolve, reject) => {
     axios
-      .get(`${baseUrl}/api/survey/${surveyId}`)
+      .get(`${baseUrl}/surveys/${surveyId}`)
       .then((response) => {
         console.log("got response");
         console.log(response);

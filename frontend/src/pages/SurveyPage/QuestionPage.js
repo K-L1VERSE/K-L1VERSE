@@ -2,7 +2,7 @@
 import React, { useState, useEffect } from "react";
 // import QuizCard from "../../components/Survey/Quizcard";
 import { useParams, useLocation, useNavigate } from "react-router-dom";
-
+import { submitResult } from "../../api/result";
 import { Question } from "../../styles/SurveyStyles/QuizCardStyle";
 
 import { getQuestion, getAnswer } from "../../api/question";
@@ -56,68 +56,35 @@ function QuestionPage() {
       });
   }, [questionId]);
 
-  // function handleClick(answerId) {
-  //   console.log(answerId);
-
-  //   result[questionId] = answerId;
-  //   console.log("next");
-  //   console.log(result);
-
-  //   if (questionId === 7) {
-  //     console.log("끝남");
-  //     console.log(result);
-
-  //     // 프론트엔드에서 백엔드로 result 전송
-  //     fetch("https://your-backend-api.com/submitResult", {
-  //       method: "POST",
-  //       headers: {
-  //         "Content-Type": "application/json",
-  //       },
-  //       body: JSON.stringify({ result }),
-  //     })
-  //       .then((response) => response.json())
-  //       .then((data) => {
-  //         console.log("Success:", data);
-  //         // 추가적인 작업이 필요하다면 여기에서 처리
-  //       })
-  //       .catch((error) => {
-  //         console.error("Error:", error);
-  //       });
-
-  //     nav("/result", { state: { result } });
-  //   } else {
-  //     nav(`/question/${questionId + 1}`, { state: { result } });
-  //   }
-  // }
   function handleClick(answerId) {
-    console.log(answerId);
-
-    result[questionId] = answerId;
-    console.log("next");
-    console.log(result);
-
+    result[questionId - 1] = answerId;
     if (questionId === 7) {
-      console.log("끝남");
-      console.log(result);
-
       // 프론트엔드에서 백엔드로 result 전송
-      fetch("https://your-backend-api.com/submitResult", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ result }),
-      })
-        .then((response) => response.json())
-        .then((data) => {
-          console.log("Success:", data);
-          // 추가적인 작업이 필요하다면 여기에서 처리
+      // fetch("http://localhost:8080/api/survey/recommend", {
+      //   method: "POST",
+      //   headers: {
+      //     "Content-Type": "application/json",
+      //   },
+      //   body: JSON.stringify({ result }),
+      // })
+      //   .then((response) => response.json())
+      //   .then((data) => {
+      //     console.log("Success:", data);
+      //     // 추가적인 작업이 필요하다면 여기에서 처리
+      //   })
+      //   .catch((error) => {
+      //     console.error("Error:", error);
+      //   });
+
+      // 서버에 결과 값을 전송하고 계산된 팀 ID를 받아옴
+      console.log("result: ", result);
+      submitResult(result)
+        .then((teamId) => {
+          nav("/result", { state: { teamId } });
         })
         .catch((error) => {
-          console.error("Error:", error);
+          console.error("Error getting calculated team ID:", error);
         });
-
-      nav("/result", { state: { result } });
     } else {
       nav(`/question/${questionId + 1}`, { state: { result } });
     }
@@ -144,6 +111,7 @@ function QuestionPage() {
               {item.context}
             </ChoiceButton>
           ))}
+        <></>
         {questionId >= 2 && (
           <PreviousButton onClick={() => handleBeforeClick()}>
             이전 문제로 돌아가기

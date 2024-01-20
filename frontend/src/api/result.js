@@ -6,18 +6,12 @@ import axios from "./axios";
 // const baseUrl = "http://localhost:8000";
 
 // 답변에 대한 결과값 조회
-export function getResult(teamId) {
-  console.log("axios result");
-  return new Promise((resolve, reject) => {
-    axios
-      .get(`api/survey/recommend?teamId=${teamId}`)
-      .then(({ data }) => {
-        console.log("got response");
-        console.log(data);
-        resolve(data);
-      })
-      .catch((error) => {
-        reject(error);
-      });
-  });
+export async function submitResult(result) {
+  return await axios
+    .post("/surveys/recommend", { selectedAnswers: result })
+    .then((response) => response.data)
+    .catch((error) => {
+      console.error("Error submitting result:", error);
+      throw error; // 오류를 상위 컴포넌트로 전달
+    });
 }

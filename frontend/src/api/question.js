@@ -10,7 +10,7 @@ export function getQuestion(questionNum) {
   console.log("axios question");
   return new Promise((resolve, reject) => {
     axios
-      .get(`api/survey/question-details?questionId=${questionNum}`)
+      .get(`surveys/questions?questionId=${questionNum}`)
       .then(({ data }) => {
         console.log("got response");
         console.log(data);
@@ -26,7 +26,7 @@ export function getQuestion(questionNum) {
 export function getAnswer(questionNum) {
   return new Promise((resolve, reject) => {
     axios
-      .get(`api/survey/question-details?questionId=${questionNum}`)
+      .get(`surveys/questions?questionId=${questionNum}`)
       .then((response) => {
         console.log("got answers");
         resolve(response.data);
