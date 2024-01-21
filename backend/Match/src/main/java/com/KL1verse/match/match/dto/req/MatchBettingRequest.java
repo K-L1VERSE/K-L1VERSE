@@ -1,5 +1,5 @@
 package com.KL1verse.match.match.dto.req;
 
-public class BettingRequest {
+public class MatchBettingRequest {
 
 }
