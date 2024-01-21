@@ -2,22 +2,27 @@
 import React, { useState, useEffect } from "react";
 // import QuizCard from "../../components/Survey/Quizcard";
 import { useParams, useLocation, useNavigate } from "react-router-dom";
-
+import { submitResult } from "../../api/result";
 import { Question } from "../../styles/SurveyStyles/QuizCardStyle";
 
 import { getQuestion, getAnswer } from "../../api/question";
-import SurveyButton from "../../styles/SurveyStyles/SurveyButton";
+import {
+  ChoiceButton,
+  PreviousButton,
+} from "../../styles/SurveyStyles/SurveyButton";
 
 function QuestionPage() {
   const params = useParams();
   const questionId = parseInt(params.questionNum);
+  console.log("!!!!" + questionId);
+
   const nav = useNavigate();
   const location = useLocation();
 
   const [question, setQuestion] = useState("question");
-  const [answer, setAnswer] = useState([
-    { answerId: 1, content: "hello" },
-    { answerId: 2, content: "hello" },
+  const [answers, setAnswers] = useState([
+    // { answerId: 1, content: "hello" },
+    // { answerId: 2, content: "hello" },
   ]);
 
   let result = location.state?.result || [];
@@ -42,9 +47,9 @@ function QuestionPage() {
     // 선택지 내용 가져오기
     getAnswer(questionId)
       .then((data) => {
-        setAnswer(data);
+        setAnswers(data.answers);
         console.log("got answer");
-        console.log(answer);
+        console.log("data", data.answers);
       })
       .catch((e) => {
         console.log(e);
@@ -52,34 +57,34 @@ function QuestionPage() {
   }, [questionId]);
 
   function handleClick(answerId) {
-    console.log(answerId);
-
-    result[questionId] = answerId;
-    console.log("next");
-    console.log(result);
-
+    result[questionId - 1] = answerId;
     if (questionId === 7) {
-      console.log("끝남");
-      console.log(result);
-
       // 프론트엔드에서 백엔드로 result 전송
-      fetch("https://your-backend-api.com/submitResult", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ result }),
-      })
-        .then((response) => response.json())
-        .then((data) => {
-          console.log("Success:", data);
-          // 추가적인 작업이 필요하다면 여기에서 처리
+      // fetch("http://localhost:8080/api/survey/recommend", {
+      //   method: "POST",
+      //   headers: {
+      //     "Content-Type": "application/json",
+      //   },
+      //   body: JSON.stringify({ result }),
+      // })
+      //   .then((response) => response.json())
+      //   .then((data) => {
+      //     console.log("Success:", data);
+      //     // 추가적인 작업이 필요하다면 여기에서 처리
+      //   })
+      //   .catch((error) => {
+      //     console.error("Error:", error);
+      //   });
+
+      // 서버에 결과 값을 전송하고 계산된 팀 ID를 받아옴
+      console.log("result: ", result);
+      submitResult(result)
+        .then((teamId) => {
+          nav("/result", { state: { teamId } });
         })
         .catch((error) => {
-          console.error("Error:", error);
+          console.error("Error getting calculated team ID:", error);
         });
-
-      nav("/result", { state: { result } });
     } else {
       nav(`/question/${questionId + 1}`, { state: { result } });
     }
@@ -97,19 +102,20 @@ function QuestionPage() {
         <br />
         <div>{question}</div>
         <br />
-        {answer &&
-          answer.map((item) => (
-            <SurveyButton
+        {answers &&
+          answers.map((item) => (
+            <ChoiceButton
               key={item.answerId}
               onClick={() => handleClick(item.answerId)}
             >
-              {item.content}
-            </SurveyButton>
+              {item.context}
+            </ChoiceButton>
           ))}
+        <></>
         {questionId >= 2 && (
-          <SurveyButton onClick={() => handleBeforeClick()}>
+          <PreviousButton onClick={() => handleBeforeClick()}>
             이전 문제로 돌아가기
-          </SurveyButton>
+          </PreviousButton>
         )}
       </>
     </Question>

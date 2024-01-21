@@ -15,21 +15,24 @@ import org.springframework.stereotype.Service;
 @Service
 public class AnswerServiceImpl implements AnswerService {
 
-        @Autowired
-        private AnswerRepository answerRepository;
+    @Autowired
+    private AnswerRepository answerRepository;
 
-        @Override
-        public List<AnswerDTO> getAnswersByQuestionId(Long questionId) {
-            List<Answer> answers = answerRepository.findByQuestionQuestionId(questionId);
-            List<AnswerDTO> answerDTOs = new ArrayList<>();
+    @Override
+    public List<AnswerDTO> getAnswersByQuestionId(Long questionId) {
+        List<Answer> answers = answerRepository.findByQuestionQuestionId(questionId);
+        List<AnswerDTO> answerDTOs = new ArrayList<>();
 
-            for (Answer answer : answers) {
-                AnswerDTO answerDTO = new AnswerDTO();
-                BeanUtils.copyProperties(answer, answerDTO);
-                answerDTOs.add(answerDTO);
-            }
+        for (Answer answer : answers) {
+            AnswerDTO answerDTO = new AnswerDTO();
+            // 현재 Answer 객체의 속성을 AnswerDTO 객체로 복사
 
-            return answerDTOs;
+            BeanUtils.copyProperties(answer, answerDTO);
+            // 생성된 AnswerDTO 객체를 answerDTOs 목록에 추가
+            answerDTOs.add(answerDTO);
+        }
+
+        return answerDTOs;
 
     }
 

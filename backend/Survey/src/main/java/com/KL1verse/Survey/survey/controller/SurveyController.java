@@ -20,7 +20,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 @Slf4j
 @RestController
-@RequestMapping("/api/survey")
+@RequestMapping("/surveys")
 public class SurveyController {
 
     @Autowired
@@ -36,7 +36,7 @@ public class SurveyController {
         // 추천 로직 수행
         int recommendedTeamIndex = surveyService.recommendTeam(selectedAnswers);
 
-        // 성공적인 응답과 함께 추천 결과를 반환
+        // 성공적인 응답과 함께 추천 결과를 반환, 0부터 시작이니깐 +1
         return ResponseEntity.ok().body(recommendedTeamIndex + 1);
     }
 
@@ -51,9 +51,9 @@ public class SurveyController {
     }
 
     @Autowired
-        private QuestionService questionService;
+    private QuestionService questionService;
 
-    @GetMapping("/question-details")
+    @GetMapping("/questions")
     public ResponseEntity<QuestionDTO> getQuestionDetailsById(@RequestParam(name = "questionId") Long questionId) {
         QuestionDTO questionDTO = questionService.getQuestionById(questionId);
         if (questionDTO != null) {

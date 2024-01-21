@@ -27,7 +27,7 @@ public class Answer {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long answerId;;
 
-    @Column(name = "text")
+    @Column(name = "context")
     private String context;
 
 
