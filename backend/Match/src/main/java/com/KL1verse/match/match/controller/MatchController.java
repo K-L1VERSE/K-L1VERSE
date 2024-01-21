@@ -1,8 +1,11 @@
 package com.KL1verse.match.match.controller;
 
+import com.KL1verse.match.match.dto.req.ScoreRequest;
 import com.KL1verse.match.match.dto.res.MatchDetailResponse;
 import com.KL1verse.match.match.dto.res.MatchListResponse;
+import com.KL1verse.match.match.dto.res.ScoreResponse;
 import com.KL1verse.match.match.service.MatchService;
+import com.fasterxml.jackson.core.JsonProcessingException;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -23,8 +26,10 @@ public class MatchController {
 
     // 월 별 경기 일정 조회 /matches/:month
     @GetMapping("/{month}")
-    public ResponseEntity<List<MatchListResponse>> getMatchList(@PathVariable("month") int month) {
+    public ResponseEntity<List<MatchListResponse>> getMatchList(@PathVariable("month") int month)
+        throws JsonProcessingException {
         List<MatchListResponse> matchList = matchService.getMatchList(month);
+
         return new ResponseEntity<>(matchList, HttpStatus.OK);
     }
 
