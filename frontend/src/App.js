@@ -1,5 +1,13 @@
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 
+import {
+  RecoilRoot,
+  atom,
+  selector,
+  useRecoilState,
+  useRecoilValue,
+} from "recoil";
+
 import KaKaoRedirection from "./pages/login_page/KaKaoRedirection";
 import NaverRedirection from "./pages/login_page/NaverRedirection";
 import GoogleRedirection from "./pages/login_page/GoogleRedirection";
@@ -27,23 +35,25 @@ function App() {
           Learn React
         </a>
       </header>
-      <BrowserRouter>
-        <Routes>
-          {/* 메인 페이지 */}
-          {/* <Route path="/" element={<index />} /> */}
+      <RecoilRoot>
+        <BrowserRouter>
+          <Routes>
+            {/* 메인 페이지 */}
+            {/* <Route path="/" element={<index />} /> */}
 
-          {/* 로그인 페이지 */}
-          <Route path="/login" element={<LoginPage />} />
+            {/* 로그인 페이지 */}
+            <Route path="/login" element={<LoginPage />} />
 
-          {/* 로그인 리다이렉션 페이지 */}
-          <Route path="/KakaoAuth" element={<KaKaoRedirection />} />
-          <Route path="/GoogleAuth" element={<GoogleRedirection />} />
-          <Route path="/NaverAuth" element={<NaverRedirection />} />
+            {/* 로그인 리다이렉션 페이지 */}
+            <Route path="/KakaoAuth" element={<KaKaoRedirection />} />
+            <Route path="/GoogleAuth" element={<GoogleRedirection />} />
+            <Route path="/NaverAuth" element={<NaverRedirection />} />
 
-          {/* 마이 페이지 */}
-          <Route path="/mypage" element={<MyPage />} />
-        </Routes>
-      </BrowserRouter>
+            {/* 마이 페이지 */}
+            <Route path="/mypage" element={<MyPage />} />
+          </Routes>
+        </BrowserRouter>
+      </RecoilRoot>
     </div>
   );
 }
