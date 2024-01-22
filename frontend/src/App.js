@@ -1,11 +1,10 @@
-<<<<<<< HEAD
 import React from "react";
-import { Routes, Route } from "react-router-dom";
+
+import { BrowserRouter, Route, Routes } from "react-router-dom";
+
 import StartPage from "./pages/SurveyPage/StartPage";
 import QuestionPage from "./pages/SurveyPage/QuestionPage";
 import ResultPage from "./pages/SurveyPage/ResultPage";
-=======
-import { BrowserRouter, Route, Routes } from "react-router-dom";
 
 import KaKaoRedirection from "./pages/login_page/KaKaoRedirection";
 import NaverRedirection from "./pages/login_page/NaverRedirection";
@@ -13,25 +12,14 @@ import GoogleRedirection from "./pages/login_page/GoogleRedirection";
 
 import logo from "./logo.svg";
 import "./App.css";
->>>>>>> feature-api/S10P12A409-3
 
 import LoginPage from "./pages/login_page/LoginPage";
-import MyPage from "./pages/my_page/MyPage";
+import MyPage from "./pages/mypage/MyPage";
 
 function App() {
   // const [questionId, setQuestionId] = useState("");
 
   return (
-<<<<<<< HEAD
-    <div>
-      <title>K-L1verse</title>
-
-      <Routes>
-        <Route path="/survey" element={<StartPage />} />
-        <Route path="/question/:questionNum" element={<QuestionPage />} />
-        <Route path="/result" element={<ResultPage />} />
-      </Routes>
-=======
     <div className="App">
       <header className="App-header">
         <img src={logo} className="App-logo" alt="logo" />
@@ -68,8 +56,6 @@ function App() {
           <Route path="/result" element={<ResultPage />} />
         </Routes>
       </BrowserRouter>
-
->>>>>>> feature-api/S10P12A409-3
     </div>
   );
 }
