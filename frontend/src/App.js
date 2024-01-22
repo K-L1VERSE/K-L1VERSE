@@ -16,6 +16,10 @@ import "./App.css";
 import LoginPage from "./pages/login_page/LoginPage";
 import MyPage from "./pages/mypage/MyPage";
 
+import WaggleListPage from "./pages/board_page/waggle_page/WaggleListPage";
+import WaggleDetailPage from "./pages/board_page/waggle_page/WaggleDetailPage";
+import WaggleRegistPage from "./pages/board_page/waggle_page/WaggleRegistPage";
+
 function App() {
   // const [questionId, setQuestionId] = useState("");
 
@@ -51,9 +55,13 @@ function App() {
           {/* 마이 페이지 */}
           <Route path="/mypage" element={<MyPage />} />
 
+          {/* 설문 페이지 */}
           <Route path="/survey" element={<StartPage />} />
           <Route path="/question/:questionNum" element={<QuestionPage />} />
           <Route path="/result" element={<ResultPage />} />
+
+          {/* 와글 페이지 */}
+          <Route path="/waggle" element={<Waggle />} />
         </Routes>
       </BrowserRouter>
     </div>
