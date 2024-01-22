@@ -1,6 +1,7 @@
 package com.kl1verse.UserServer.domain.user.controller;
 
 
+import com.kl1verse.UserServer.domain.auth.service.AuthService;
 import com.kl1verse.UserServer.domain.user.dto.res.MypageResponseDto;
 import com.kl1verse.UserServer.domain.user.service.MypageServiceImpl;
 import jakarta.servlet.http.HttpServletRequest;
@@ -18,6 +19,7 @@ import org.springframework.web.bind.annotation.RestController;
 public class UserController {
 
     private final MypageServiceImpl mypageService;
+    private final AuthService authService;
 
     @GetMapping("/hello")
     public String hello() {
@@ -29,5 +31,12 @@ public class UserController {
     public ResponseEntity<MypageResponseDto> userinfo(HttpServletRequest request) {
         log.info("user info");
         return ResponseEntity.ok(mypageService.getUserInfo(request));
+    }
+
+    @GetMapping
+    public ResponseEntity<?> logout(HttpServletRequest request) {
+        authService.signOut(request);
+
+        return ResponseEntity.ok().build();
     }
 }
