@@ -13,6 +13,7 @@ import GoogleRedirection from "./pages/login_page/GoogleRedirection";
 import logo from "./logo.svg";
 import "./App.css";
 
+import MainPage from "./pages/main_page/MainPage";
 import LoginPage from "./pages/login_page/LoginPage";
 import MyPage from "./pages/mypage/MyPage";
 
@@ -38,7 +39,7 @@ function App() {
       <BrowserRouter>
         <Routes>
           {/* 메인 페이지 */}
-          {/* <Route path="/" element={<index />} /> */}
+          <Route path="/" element={<MainPage />} />
 
           {/* 로그인 페이지 */}
           <Route path="/login" element={<LoginPage />} />
