@@ -10,7 +10,7 @@ import {
   Share,
   Modal,
 } from "../../styles/SurveyStyles/ResultCardStyle";
-import TeamImage from "../SurveyContent/teamImage";
+import TeamImage from "../../components/Survey/teamImage";
 
 function ResultPage() {
   const {
