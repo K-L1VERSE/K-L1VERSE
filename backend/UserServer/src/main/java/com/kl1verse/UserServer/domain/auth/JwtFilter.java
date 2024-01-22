@@ -16,11 +16,15 @@ import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.nio.charset.StandardCharsets;
+
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.filter.OncePerRequestFilter;
 
+@Slf4j
 @RequiredArgsConstructor
 public class JwtFilter extends OncePerRequestFilter {
 
@@ -35,8 +39,10 @@ public class JwtFilter extends OncePerRequestFilter {
         String requestToken = jwtUtil.resolveToken(request);
 
         if (requestToken == null) {
+            log.info("Access Token is null from Request");
             filterChain.doFilter(request, response);
         } else if (requestToken != null && jwtUtil.isValidAccessToken(requestToken)) { // accessToken 정상
+            log.info("Access Token Validated");
             Authentication authentication = jwtUtil.getAuthentication(requestToken);
             SecurityContextHolder.getContext().setAuthentication(authentication);
             filterChain.doFilter(request, response);
@@ -52,27 +58,27 @@ public class JwtFilter extends OncePerRequestFilter {
             String refreshToken = token.getRefreshToken();
 
             try {
-                // refreshToken 정상
                 Authentication authentication = jwtUtil.getAuthentication(refreshToken);
+
+                // refreshToken 정상
+                log.info("Access Token Expired & Refresh Token Validated");
                 String accessToken = jwtUtil.createAccessToken(authentication, domain); // accessToken 재발급
                 ObjectNode json = new ObjectMapper().createObjectNode();
                 json.put("code", ResponseCode.EXPIRED_ACCESS_TOKEN.getCode());
                 json.put("message", String.valueOf(ResponseCode.EXPIRED_ACCESS_TOKEN.getMessage()));
                 json.put("data", new ReIssueResDto(accessToken).toJson());
                 String newResponse = new ObjectMapper().writeValueAsString(json);
-                response.setContentLength(newResponse.length());
-                response.getOutputStream().write(newResponse.getBytes());
+                response.setContentLength(newResponse.getBytes(StandardCharsets.UTF_8).length);
+                response.getOutputStream().write(newResponse.getBytes(StandardCharsets.UTF_8));
             } catch (ExpiredJwtException expiredJwtException) {
                 // refreshToken 만료
-//                user.setToken(null);
-//                userRepository.save(user);
-                tokenRepository.deleteById(token.getId());
+                log.info("Refresh Token Expired");
                 ObjectNode json = new ObjectMapper().createObjectNode();
                 json.put("code", ResponseCode.EXPIRED_REFRESH_TOKEN.getCode());
                 json.put("message", String.valueOf(ResponseCode.EXPIRED_REFRESH_TOKEN.getMessage()));
                 String newResponse = new ObjectMapper().writeValueAsString(json);
-                response.setContentLength(newResponse.length());
-                response.getOutputStream().write(newResponse.getBytes());
+                response.setContentLength(newResponse.getBytes(StandardCharsets.UTF_8).length);
+                response.getOutputStream().write(newResponse.getBytes(StandardCharsets.UTF_8));
             }
         }
     }

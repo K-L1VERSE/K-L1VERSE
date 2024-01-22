@@ -1,5 +1,6 @@
 package com.KL1verse.Gateway;
 
+import static com.KL1verse.Gateway.auth.JWTFilter.instrument;
 import static org.springframework.cloud.gateway.server.mvc.handler.GatewayRouterFunctions.route;
 import static org.springframework.cloud.gateway.server.mvc.handler.HandlerFunctions.http;
 import static org.springframework.cloud.gateway.server.mvc.predicate.GatewayRequestPredicates.path;
@@ -21,6 +22,7 @@ public class GatewayApplication {
 	public RouterFunction<ServerResponse> getUserServiceRoute() {
 		return route("USER-SERVICE")
 			.route(path("/users/**"), http("http://localhost:8010"))
+				.filter(instrument())
 			.build();
 	}
 
