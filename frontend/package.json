@@ -19,6 +19,8 @@
     "react-helmet-async": "^2.0.4",
     "react-router-dom": "^6.21.2",
     "react-scripts": "5.0.1",
+    "recoil": "^0.7.7",
+    "recoil-persist": "^5.1.0",
     "styled-components": "^6.1.8",
     "web-vitals": "^2.1.4"
   },
