@@ -1,8 +1,18 @@
 import React from "react";
 
+import axios from "../../api/axios";
+// import mockAxios from "../../api/mockAxios";
+
 function LogoutButton() {
   const logout = () => {
-    console.log("로그아웃");
+    axios.get("/users/logout").then(({ data }) => {
+      //  로그아웃 전역 상태 관리
+
+      console.log(data);
+
+      //  로그아웃 후 메인 페이지로 이동
+      // window.location.href = "/";
+    });
   };
 
   return (
