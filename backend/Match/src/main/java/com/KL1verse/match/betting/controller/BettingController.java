@@ -31,7 +31,7 @@ public class BettingController {
 
     @GetMapping
     public ResponseEntity<?> test() {
-        kafkaMatchProducer.sendMessage("betting-good", "match도메인에서 info 보내드립니다");
+        kafkaMatchProducer.sendMessage("betting-test", "match도메인에서 info 보내드립니다");
         return new ResponseEntity<>("success", HttpStatus.OK);
     }
 
