@@ -1,11 +1,20 @@
 package com.KL1verse.match.betting.service;
 
 import com.KL1verse.match.betting.dto.req.BettingRequest;
+import com.KL1verse.match.betting.repository.BettingRepository;
+import com.KL1verse.match.betting.repository.entity.Betting;
 import com.KL1verse.match.kafka.KafkaMatchProducer;
+import com.KL1verse.match.match.repository.MatchRepository;
+import com.KL1verse.match.match.repository.entity.Match;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.kafka.clients.producer.KafkaProducer;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -14,21 +23,43 @@ import org.springframework.stereotype.Service;
 public class BettingServiceImpl implements BettingService {
 
     private final KafkaMatchProducer kafkaMatchProducer;
+    private final BettingRepository bettingRepository;
+    private final MatchRepository matchRepository;
+
+    @Autowired
+    private ObjectMapper objectMapper;
 
     @Override
-    public void betting(HttpServletRequest request, BettingRequest bettingRequest) {
-        // 베팅하는 메서드임
-        /*
-        일단 베팅을 한다. (Match도메인 Betting Table, 포트 8040)
-        -> 베팅한 유저 골이 db에서 -됨 (User도메인 User Table, 포트 8010)
-        경기가 끝난다.
-        -> 진 사람 : 그대로
-        -> 이긴 사람 : 배율대로 나눠주기
-            -> 배팅한 유저 골이 db에서 +됨 (User도메인 User Table, 포트 8010)
-        * */
+    public void betting(int userId, BettingRequest bettingRequest) {
+        // userId 어캄;; ??????????????
 
-        kafkaMatchProducer.sendMessage("userId-betting", "userId 보내드립니다");
+        // 1. betting table에 저장
+        Betting betting = Betting.builder()
+                .userId(userId)
+                .matchId(Integer.parseInt(bettingRequest.getMatchId()))
+                .bettingTeamId(Integer.parseInt(bettingRequest.getBettingTeamId()))
+                .amount(Integer.parseInt(bettingRequest.getAmount()))
+                .build();
+        bettingRepository.save(betting);
 
+        // game table 수정(matchId를 통해서, betting_team_id로 베팅한 팀 알아내서, 베팅액 올리기)
+        Match match = matchRepository.findById(Integer.parseInt(bettingRequest.getMatchId())).orElseThrow();
+
+        if (betting.getBettingTeamId() == match.getHomeTeamId()) { // home team에 베팅했으면
+            match.setHomeBettingAmount(match.getHomeBettingAmount() + betting.getAmount());
+            matchRepository.updateHomeBettingAmount(match.getHomeBettingAmount(), match.getMatchId());
+        } else { // away team에 베팅했으면
+            match.setAwayBettingAmount(match.getAwayBettingAmount() + betting.getAmount());
+            matchRepository.updateAwayBettingAmount(match.getAwayBettingAmount(), match.getMatchId());
+        }
+
+        try {
+            // Json으로 바꿔서 보내줌
+            String bettingJson = objectMapper.writeValueAsString(betting);
+            kafkaMatchProducer.sendMessage("betting", bettingJson);
+        } catch (JsonProcessingException e) {
+            e.printStackTrace();
+        }
     }
 
 }

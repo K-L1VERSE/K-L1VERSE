@@ -30,38 +30,26 @@ public class BettingController {
     private final BettingService bettingService;
     private final KafkaMatchProducer kafkaMatchProducer;
 
-    @Autowired
-    private ObjectMapper objectMapper;
 
+    // 베팅하기
+    @PostMapping
+    public ResponseEntity<?> betting(HttpServletRequest request, @RequestBody BettingRequest bettingRequest) {
+        // 1. request 안에 accessToken 있음 !
+
+        // 2. 어랏 근데 userId(숫자)를 받아야하는데?? betting table에 넣어야함..
+        String userId = "1";
+
+        // 3. betting하기
+        bettingService.betting(Integer.parseInt(userId), bettingRequest);
+
+        return new ResponseEntity<>("success", HttpStatus.OK);
+    }
+
+    // test
     @GetMapping
     public ResponseEntity<?> test() {
         kafkaMatchProducer.sendMessage("betting-test", "match도메인에서 info 보내드립니다");
         return new ResponseEntity<>("success", HttpStatus.OK);
     }
-
-
-    // 베팅하기
-    @PostMapping
-    public ResponseEntity<?> betting(@RequestBody BettingRequest bettingRequest) {
-        // HttpServletRequest request,
-        // betting table에 저장 + game table 수정(matchId를 통해서, betting_team_id로 베팅한 팀 알아내서, 베팅액 올리기)
-        // bettingService.betting(request, bettingRequest);
-
-        // user에 보내줘야함(request랑 bettingRequest 다 보내줘야함)
-
-        try {
-            // Json으로 바꿔서 보내줌
-            String bettingRequestJson = objectMapper.writeValueAsString(bettingRequest);
-            kafkaMatchProducer.sendMessage("betting", bettingRequestJson);
-            
-            return new ResponseEntity<>("success", HttpStatus.OK);
-            
-        } catch (JsonProcessingException e) {
-            e.printStackTrace();
-            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
-        }
-    }
-
-
 
 }

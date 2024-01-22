@@ -1,8 +1,10 @@
-package com.kl1verse.UserServer.domain;
+package com.kl1verse.UserServer.domain.kafka;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.kl1verse.UserServer.domain.betting.BettingEntity;
+import com.kl1verse.UserServer.domain.user.repository.UserRepository;
+import com.kl1verse.UserServer.domain.user.repository.entity.User;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,26 +16,19 @@ import org.springframework.stereotype.Component;
 @RequiredArgsConstructor
 public class KafkaUserConsumer {
 
+    private final KafkaUserRepository kafkaUserRepository;
+
     @Autowired
     private ObjectMapper objectMapper;
 
-
-    // test
-    @KafkaListener(topics = "betting-test", groupId = "user-group") // match-group아님, 현재 groupID !
-    public void kafkaTest(String data){
-        System.out.println(data);
-        System.out.println("UserServer KafkaTest Consumer에서 받았습니다아아 11");
-    }
-
     @KafkaListener(topics = "betting", groupId = "user-group") // match-group아님, 현재 groupID !
-    public void betting(String data){
+    public void betting(String data) {
 
         try {
             BettingEntity bet = objectMapper.readValue(data, BettingEntity.class);
 
-            System.out.println(bet.getMatchId()); // 1
-            System.out.println(bet.getBettingTeamId()); // 1
-            System.out.println(bet.getAmount()); // 53
+            User user = kafkaUserRepository.findById(bet.getUserId()).orElseThrow();
+            kafkaUserRepository.updateGoal(user.getId(), user.getGoal() - bet.getAmount());
 
         } catch (JsonProcessingException e) {
             e.printStackTrace();
@@ -42,6 +37,11 @@ public class KafkaUserConsumer {
         }
     }
 
-
+    // test
+    @KafkaListener(topics = "betting-test", groupId = "user-group") // match-group아님, 현재 groupID !
+    public void kafkaTest(String data){
+        System.out.println(data);
+        System.out.println("UserServer KafkaTest Consumer에서 받았습니다아아 11");
+    }
 
 }

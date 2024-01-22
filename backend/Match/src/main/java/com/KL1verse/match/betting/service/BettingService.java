@@ -6,5 +6,5 @@ import org.springframework.stereotype.Service;
 
 @Service
 public interface BettingService {
-    void betting(HttpServletRequest request, BettingRequest bettingRequest);
+    void betting(int userId, BettingRequest bettingRequest);
 }
