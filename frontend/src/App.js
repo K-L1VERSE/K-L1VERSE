@@ -14,7 +14,7 @@ import logo from "./logo.svg";
 import "./App.css";
 
 import LoginPage from "./pages/login_page/LoginPage";
-import MyPage from "./pages/my_page/MyPage";
+import MyPage from "./pages/mypage/MyPage";
 
 function App() {
   // const [questionId, setQuestionId] = useState("");

@@ -9,20 +9,20 @@ import { getQuestion, getAnswer } from "../../api/question";
 import {
   ChoiceButton,
   PreviousButton,
-  SurveyButton
 } from "../../styles/SurveyStyles/SurveyButton";
-
 
 function QuestionPage() {
   const params = useParams();
   const questionId = parseInt(params.questionNum);
+  console.log("!!!!" + questionId);
+
   const nav = useNavigate();
   const location = useLocation();
 
   const [question, setQuestion] = useState("question");
-  const [answer, setAnswer] = useState([
-    { answerId: 1, content: "hello" },
-    { answerId: 2, content: "hello" },
+  const [answers, setAnswers] = useState([
+    // { answerId: 1, content: "hello" },
+    // { answerId: 2, content: "hello" },
   ]);
 
   let result = location.state?.result || [];
@@ -48,6 +48,8 @@ function QuestionPage() {
     getAnswer(questionId)
       .then((data) => {
         setAnswers(data.answers);
+        console.log("got answer");
+        console.log("data", data.answers);
       })
       .catch((e) => {
         console.log(e);
