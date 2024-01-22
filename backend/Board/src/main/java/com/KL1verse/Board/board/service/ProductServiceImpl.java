@@ -1,10 +1,18 @@
 package com.KL1verse.Board.board.service.impl;
 
+<<<<<<< HEAD
 import com.KL1verse.Board.board.dto.req.ProductDTO;
 import com.KL1verse.Board.board.repository.ProductRepository;
 import com.KL1verse.Board.board.repository.entity.Product;
 import com.KL1verse.Board.board.service.ProductService;
 import org.springframework.beans.BeanUtils;
+=======
+import com.KL1verse.Board.board.dto.BoardDTO;
+import com.KL1verse.Board.board.repository.BoardRepository;
+import com.KL1verse.Board.board.repository.entity.Board;
+import com.KL1verse.Board.board.service.BoardService;
+import org.modelmapper.ModelMapper;
+>>>>>>> 2a1ca48f30b698bd88701ef600a4b3e60f3262fd
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -12,6 +20,7 @@ import java.util.stream.Collectors;
 
 @Service
 public class ProductServiceImpl implements ProductService {
+
 
     private final ProductRepository productRepository;
 
@@ -66,5 +75,6 @@ public class ProductServiceImpl implements ProductService {
         Product product = new Product();
         BeanUtils.copyProperties(productDTO, product);
         return product;
+
     }
 }

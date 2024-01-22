@@ -5,10 +5,12 @@ import java.util.List;
 
 
 public interface MateService {
+<<<<<<< HEAD
     MateDto getMateById(Long MateDto);
     MateDto createMate(MateDto mateDto);
     MateDto updateMate(Long mateId, MateDto mateDto);
     void deleteMate(Long mateId);
     List<MateDto> getMatesByBoardId(Long boardId);
+
 }
 

@@ -1,10 +1,18 @@
 package com.KL1verse.Board.board.service.impl;
 
+<<<<<<< HEAD
 import com.KL1verse.Board.board.dto.req.WaggleDTO;
 import com.KL1verse.Board.board.repository.WaggleRepository;
 import com.KL1verse.Board.board.repository.entity.Waggle;
 import com.KL1verse.Board.board.service.WaggleService;
 import org.springframework.beans.BeanUtils;
+=======
+import com.KL1verse.Board.board.dto.BoardDTO;
+import com.KL1verse.Board.board.repository.BoardRepository;
+import com.KL1verse.Board.board.repository.entity.Board;
+import com.KL1verse.Board.board.service.BoardService;
+import org.modelmapper.ModelMapper;
+>>>>>>> 2a1ca48f30b698bd88701ef600a4b3e60f3262fd
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -12,6 +20,7 @@ import java.util.stream.Collectors;
 
 @Service
 public class WaggleServiceImpl implements WaggleService {
+
 
     private final WaggleRepository waggleRepository;
 
@@ -69,4 +78,5 @@ public class WaggleServiceImpl implements WaggleService {
         BeanUtils.copyProperties(waggleDTO, waggle);
         return waggle;
     }
+
 }

@@ -1,5 +1,6 @@
 package com.KL1verse.Board.board.service.impl;
 
+<<<<<<< HEAD
 import com.KL1verse.Board.board.dto.req.MateDTO;
 import com.KL1verse.Board.board.repository.MateRepository;
 import com.KL1verse.Board.board.repository.entity.Mate;
