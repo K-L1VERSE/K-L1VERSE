@@ -13,7 +13,7 @@ import lombok.Setter;
 @Builder
 public class ScoreRequest {
 
-    private String leagueId;
+    private String leagueId = "1";
     private String month;
 //    private String teamId;
     private String ticketYn = "";
