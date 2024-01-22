@@ -8,6 +8,6 @@ import lombok.Setter;
 public class AnswerDTO {
 
     private Long answerId;
-    private String context;
+    private String content;
 
 }
