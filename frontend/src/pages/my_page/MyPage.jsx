@@ -7,6 +7,7 @@ import RadioGroup from "../../components/common/RadioGroup";
 import Radio from "../../components/common/Radio";
 import MyWagle from "../../components/mypage/MyWagle";
 import BadgeButton from "../../components/mypage/BadgeButton";
+import LogoutButton from "../../components/mypage/LogoutButton";
 
 function MyPage() {
   const [user, setUser] = useState({
@@ -78,6 +79,7 @@ function MyPage() {
   return (
     <div>
       <UserInfo user={user} />
+      <LogoutButton />
       <BadgeButton />
       <div>
         <RadioGroup>
