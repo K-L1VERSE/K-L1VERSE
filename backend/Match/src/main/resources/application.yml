@@ -1,10 +1,9 @@
 spring:
-  jpa:
-    hibernate:
-      ddl-auto: update
-  datasource:
-    driver-class-name: org.mariadb.jdbc.Driver
-    url : jdbc:mariadb://stg-yswa-kr-practice-db-master.mariadb.database.azure.com:3306/s10p12a409
-    username : S10P12A409
-    password : kp7Ad1kzRN
-
+    jpa:
+        hibernate:
+            ddl-auto: update
+    datasource:
+        driver-class-name: org.mariadb.jdbc.Driver
+        url : jdbc:mariadb://stg-yswa-kr-practice-db-master.mariadb.database.azure.com:3306/s10p12a409
+        username : S10P12A409
+        password : kp7Ad1kzRN
