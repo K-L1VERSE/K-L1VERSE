@@ -1,8 +1,9 @@
-package com.KL1verse.Board.service;
+package com.KL1verse.Board.board.service;
 
 import com.KL1verse.Board.dto.req.BoardDTO;
 import com.KL1verse.Board.repository.BoardRepository;
 import com.KL1verse.Board.repository.entity.Board;
+import com.KL1verse.Board.service.BoardService;
 import java.util.List;
 import java.util.stream.Collectors;
 import org.springframework.beans.BeanUtils;
@@ -10,7 +11,8 @@ import org.springframework.stereotype.Service;
 
 @Service
 public class BoardServiceImpl implements BoardService {
-  private BoardRepository boardRepository;
+
+  private final BoardRepository boardRepository;
 
   public BoardServiceImpl(BoardRepository boardRepository) {
     this.boardRepository = boardRepository;
@@ -64,5 +66,4 @@ public class BoardServiceImpl implements BoardService {
     BeanUtils.copyProperties(boardDTO, board);
     return board;
   }
-
 }

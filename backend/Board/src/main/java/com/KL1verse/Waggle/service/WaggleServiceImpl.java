@@ -1,6 +1,5 @@
 package com.KL1verse.Waggle.service;
 
-
 import com.KL1verse.Waggle.dto.req.WaggleDTO;
 import com.KL1verse.Waggle.repository.WaggleRepository;
 import com.KL1verse.Waggle.repository.entity.Waggle;
