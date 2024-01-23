@@ -11,18 +11,20 @@ public class JwtUtil {
 
     private static final String secretKey = "413F4428472B4B6250655368566D5970337336763979244226452948404D6351";
 
+    public static enum Status
+    {
+        VALID, EXPIRED, INVALID
+    }
+
     // accessToken validate
-    public static boolean isValidAccessToken(String token) {
+    public static Status isValidAccessToken(String token) {
         try {
             Jwts.parser().setSigningKey(secretKey).parseClaimsJws(token);
-            log.info("Access Token Validated");
-            return true;
+            return Status.VALID;
         } catch (ExpiredJwtException expiredJwtException) {
-            log.info("Access Token Expired");
-            return true;
+            return Status.EXPIRED;
         } catch (Exception e) {
-            log.info("Access Token Invalid");
-            return false;
+            return Status.INVALID;
         }
     }
 }

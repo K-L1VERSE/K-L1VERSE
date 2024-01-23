@@ -3,7 +3,7 @@ package com.kl1verse.UserServer.global.config;
 import static org.springframework.security.config.http.SessionCreationPolicy.STATELESS;
 
 //import com.kl1verse.UserServer.domain.auth.JwtSecurityConfig;
-import com.kl1verse.UserServer.domain.auth.JwtSecurityConfig;
+//import com.kl1verse.UserServer.domain.auth.JwtSecurityConfig;
 import com.kl1verse.UserServer.domain.auth.JwtUtil;
 import com.kl1verse.UserServer.domain.auth.repository.TokenRepository;
 import com.kl1verse.UserServer.domain.user.repository.UserRepository;
@@ -50,7 +50,7 @@ public class SecurityConfig {
                     .anyRequest().authenticated())
             .sessionManagement(manager -> manager.sessionCreationPolicy(STATELESS));
 
-        httpSecurity.apply(new JwtSecurityConfig(jwtUtil, userRepository, tokenRepository));
+//        httpSecurity.apply(new JwtSecurityConfig(jwtUtil, userRepository, tokenRepository));
         return httpSecurity.build();
     }
 
