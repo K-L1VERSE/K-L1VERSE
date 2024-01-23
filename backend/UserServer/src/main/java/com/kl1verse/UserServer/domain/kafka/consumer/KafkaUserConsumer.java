@@ -1,40 +1,61 @@
-package com.kl1verse.UserServer.domain.kafka;
+package com.kl1verse.UserServer.domain.kafka.consumer;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.kl1verse.UserServer.domain.betting.BettingEntity;
+import com.kl1verse.UserServer.domain.kafka.KafkaUserRepository;
+import com.kl1verse.UserServer.domain.kafka.producer.KafkaProducer;
 import com.kl1verse.UserServer.domain.user.repository.UserRepository;
 import com.kl1verse.UserServer.domain.user.repository.entity.User;
+import java.util.Random;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.kafka.annotation.KafkaListener;
 import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Slf4j
 @Component
 @RequiredArgsConstructor
+@Service
 public class KafkaUserConsumer {
 
     private final KafkaUserRepository kafkaUserRepository;
+    private final KafkaProducer kafkaProducer;
 
     @Autowired
     private ObjectMapper objectMapper;
 
+    @Transactional
     @KafkaListener(topics = "betting", groupId = "user-group") // match-group아님, 현재 groupID !
     public void betting(String data) {
 
+        BettingEntity bet = null;
+
         try {
-            BettingEntity bet = objectMapper.readValue(data, BettingEntity.class);
+            bet = objectMapper.readValue(data, BettingEntity.class);
+
+            // 롤백 확인하기 위한 error 발생
+            // error();
 
             User user = kafkaUserRepository.findById(bet.getUserId()).orElseThrow();
+            // user의 goal 감소 (베팅한 만큼)
             kafkaUserRepository.updateGoal(user.getId(), user.getGoal() - bet.getAmount());
+            // user의 전체 베팅 횟수 증가 +1
+            kafkaUserRepository.updateTotalBet(user.getId(), user.getTotalBet() + 1);
 
-        } catch (JsonProcessingException e) {
+        } catch (Exception e) { // betting 할 때 오류생겨서 rollback할 때
+            log.error("======== [Rollback] betting-rollback, bettingId :{}======== ", data);
+            // match로 rollback 메시지 보내기
+            kafkaProducer.sendMessage("betting-rollback", String.valueOf(bet.getBettingId()));
             e.printStackTrace();
-            // JSON 문자열을 Betting 객체로 변환하는 도중에 예외가 발생한 경우
-
         }
+    }
+
+    private void error() throws Exception {
+        throw new Exception("Random error occurred!");
     }
 
     // test

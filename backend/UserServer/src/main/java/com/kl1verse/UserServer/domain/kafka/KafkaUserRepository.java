@@ -11,4 +11,7 @@ import org.springframework.stereotype.Repository;
 public interface KafkaUserRepository extends JpaRepository<User, Integer> {
     @Query(value = "UPDATE user SET goal = :goal WHERE user_id = :id", nativeQuery = true)
     void updateGoal(@Param("id") Integer id,@Param("goal") int goal);
+
+    @Query(value = "UPDATE user SET total_bet = :totalBet WHERE user_id = :id", nativeQuery = true)
+    void updateTotalBet(@Param("id") Integer id,@Param("totalBet") int totalBet);
 }

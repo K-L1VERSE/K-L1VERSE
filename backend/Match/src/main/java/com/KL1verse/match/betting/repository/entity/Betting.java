@@ -38,5 +38,5 @@ public class Betting {
 
     @Column(name = "amount")
     private int amount;
-    
+
 }

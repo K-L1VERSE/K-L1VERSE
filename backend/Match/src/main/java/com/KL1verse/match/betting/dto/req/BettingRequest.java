@@ -21,8 +21,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @Builder
 public class BettingRequest {
 
-    private String matchId;
-    private String bettingTeamId;
-    private String amount;
+    private int matchId;
+    private int bettingTeamId;
+    private int amount;
 
 }
