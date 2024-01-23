@@ -19,6 +19,8 @@ public enum ResponseCode {
     SAMPLE_EXCEPTION(9999, "샘플예외 입니다.");
 
 
+    // Kafka
+
 
     /*
      * 이 부분에 처리할 예외를 하나씩 추가하기
