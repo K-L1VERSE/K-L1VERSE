@@ -1,0 +1,17 @@
+server:
+  port: 8000
+
+#spring:
+#  cloud:
+#    gateway:
+#      mvc:
+#        routes:
+#          - id: USER-SERVICE-1
+#            uri: http://localhost:8010
+#            predicates:
+#              - Path=/users/**
+#
+#          - id: USER-SERVICE-2
+#            uri: http://localhost:8010
+#            predicates:
+#              - Path=/login/**

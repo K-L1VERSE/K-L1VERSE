@@ -69,7 +69,7 @@ public class AuthService {
         // accessToken 생성
         Authentication authentication = null;
         authentication = authenticationManager.authenticate(
-            new UsernamePasswordAuthenticationToken(signInDto.getEmail(), "1234")
+            new UsernamePasswordAuthenticationToken(signInDto.getEmail()+":"+signInDto.getDomain(), "1234")
         );
         String accessToken = jwtUtil.createAccessToken(authentication, signInDto.getDomain());
 

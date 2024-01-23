@@ -29,14 +29,19 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
+import static com.kl1verse.UserServer.domain.user.service.UserDetailServiceImpl.*;
+
 @Slf4j
 @Component
 @RequiredArgsConstructor
 public class JwtUtil {
 
     private final String secretKey = "413F4428472B4B6250655368566D5970337336763979244226452948404D6351";
-    private final Long accessExpirationTime = Duration.ofMinutes(60).toMillis(); // 60분
-    private final Long refreshExpirationTime = Duration.ofHours(24).toMillis();  // 24시간
+//    private final Long accessExpirationTime = Duration.ofMinutes(60).toMillis(); // 60분
+//    private final Long refreshExpirationTime = Duration.ofHours(24).toMillis();  // 24시간
+    private final Long accessExpirationTime = Duration.ofSeconds(1).toMillis(); // 10초
+    private final Long refreshExpirationTime = Duration.ofSeconds(6).toMillis();  // 60초
+
 
     private final UserDetailServiceImpl userDetailService;
 
@@ -115,14 +120,22 @@ public class JwtUtil {
     }
 
     public Authentication getAuthentication(String token) {
-        String claims = Jwts
+        String email = Jwts
             .parser()
             .setSigningKey(secretKey)
             .parseClaimsJws(token)
             .getBody()
             .getSubject();
-        UserDetails userDetails = userDetailService.loadUserByUsername(claims);
-        return new UsernamePasswordAuthenticationToken(userDetails, "", userDetails.getAuthorities());
+
+        String domain = Jwts
+            .parser()
+            .setSigningKey(secretKey)
+            .parseClaimsJws(token)
+            .getBody()
+            .get("domain", String.class);
+
+        CustomUserDetails customUserDetails = (CustomUserDetails) userDetailService.loadUserByUsername(email+":"+domain);
+        return new UsernamePasswordAuthenticationToken(customUserDetails, "", customUserDetails.getAuthorities());
     }
 
     // http 헤더로부터 bearer token을 추출

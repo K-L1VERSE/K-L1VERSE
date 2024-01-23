@@ -15,6 +15,7 @@ import "./App.css";
 
 import LoginPage from "./pages/login_page/LoginPage";
 import MyPage from "./pages/mypage/MyPage";
+import Test from "./pages/MainPage/Test"
 
 function App() {
   // const [questionId, setQuestionId] = useState("");
@@ -39,7 +40,8 @@ function App() {
         <Routes>
           {/* 메인 페이지 */}
           {/* <Route path="/" element={<index />} /> */}
-
+          <Route path="/test" element={<Test />} />
+          
           {/* 로그인 페이지 */}
           <Route path="/login" element={<LoginPage />} />
 

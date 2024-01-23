@@ -26,7 +26,7 @@ function GoogleRedirection() {
     })
     .catch((err) => {
       console.log(err);
-      window.location.href = "/login";
+      // window.location.href = "/login";
     });
 
   console.log(request);
