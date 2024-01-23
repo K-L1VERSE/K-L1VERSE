@@ -2,7 +2,7 @@ import React from "react";
 import styled from "styled-components";
 
 const UsergoalContainer = styled.div`
-  display: flex;
+  display: inline-flex;
   width: 390px;
   padding: 0px 16px;
   align-items: flex-start;
@@ -60,16 +60,16 @@ function Usergoal({ user }) {
         <ItemContent>
           <ItemTitle>
             <ItemTitleText>골</ItemTitleText>
-            <ItemText>{user.goal}</ItemText>
           </ItemTitle>
+          <ItemText>{user.goal}</ItemText>
         </ItemContent>
       </Item>
       <Item>
         <ItemContent>
           <ItemTitle>
             <ItemTitleText>적중률</ItemTitleText>
-            <ItemText>{user.accurate}%</ItemText>
           </ItemTitle>
+          <ItemText>{user.accurate}%</ItemText>
         </ItemContent>
       </Item>
     </UsergoalContainer>

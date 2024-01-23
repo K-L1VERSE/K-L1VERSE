@@ -3,6 +3,9 @@ import styled from "styled-components";
 
 import axios from "../../api/authAxios";
 
+import { ReactComponent as BadgeBackground } from "../../assets/BadgeBackground.svg";
+import Badge1 from "../../assets/daegu.png";
+
 const BadgeContainer = styled.div`
   display: flex;
   width: 32px;
@@ -15,32 +18,16 @@ const BadgeContainer = styled.div`
   border-radius: 30px;
 `;
 
-const BadgeVector = styled.div`
-  width: 32px;
-  height: 24px;
-  transform: rotate(90deg);
-  flex-shrink: 0;
-
-  fill: #fff;
-  stroke-width: 0.4px;
-  stroke: var(--blue1, #026);
-  filter: drop-shadow(0px 0px 6px rgba(0, 0, 0, 0.12));
-`;
-
-const BadgeImage = styled.img`
-  width: 18px;
-  height: 18px;
+const BadgeImage = styled.div`
+  width: ${18}px;
+  height: ${18}px;
 
   position: absolute;
-  left: 7px;
-  top: 5px;
-
-  background:
-    url(../../public/badge/badge1.png),
-    lightgray 50% / cover no-repeat;
+  // left: 7px;
+  // top: 5px;
 `;
 
-function BadgeButton() {
+function BadgeButton({ mainBadge }) {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const badgeCodeList = [
     "1",
@@ -151,12 +138,20 @@ function BadgeButton() {
     }
   };
 
+  console.log("mainBadge : ", mainBadge);
+
   return (
     <div>
       <BadgeContainer>
-        <BadgeVector onClick={openModal}>
-          <BadgeImage />
-        </BadgeVector>
+        <BadgeBackground onClick={openModal} />
+        <BadgeImage onClick={openModal}>
+          <img
+            alt="뱃지"
+            src={`/badge/badge${mainBadge || 0}.png`}
+            width={18}
+            height={18}
+          />
+        </BadgeImage>
       </BadgeContainer>
       {isModalOpen && (
         <div className="modal">

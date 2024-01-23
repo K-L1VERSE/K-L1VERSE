@@ -15,7 +15,7 @@ function MyPage() {
     userId: "",
     nickname: "",
     profile: "",
-    mainBadge: "",
+    mainBadge: "0",
     goal: 0,
     accurate: 0.0,
     totalBet: 0,
@@ -81,8 +81,7 @@ function MyPage() {
     <div>
       <UserProfile user={user} />
       <Usergoal user={user} />
-      <LogoutButton />
-      <BadgeButton />
+      <BadgeButton mainBadge={user.mainBadge} />
       <div>
         <RadioGroup>
           <Radio
