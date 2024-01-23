@@ -17,7 +17,8 @@ import MatchPage from "./pages/match_page/MatchPage";
 
 import LoginPage from "./pages/login_page/LoginPage";
 import MyPage from "./pages/mypage/MyPage";
-import Test from "./pages/MainPage/Test"
+import Test from "./pages/MainPage/Test";
+import Main from "./pages/MainPage/Main";
 
 function App() {
   // const [questionId, setQuestionId] = useState("");
@@ -43,6 +44,7 @@ function App() {
           {/* 메인 페이지 */}
           {/* <Route path="/" element={<index />} /> */}
           <Route path="/test" element={<Test />} />
+          <Route path="/main" element={<Main />} />
           
           {/* 로그인 페이지 */}
           <Route path="/login" element={<LoginPage />} />

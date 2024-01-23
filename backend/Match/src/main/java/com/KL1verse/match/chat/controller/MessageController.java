@@ -1,6 +1,6 @@
-package com.kl1verse.UserServer.domain.chat.controller;
+package com.KL1verse.match.chat.controller;
 
-import com.kl1verse.UserServer.domain.chat.dto.req.MessageReqDto;
+import com.KL1verse.match.chat.dto.req.MessageReqDto;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.messaging.handler.annotation.MessageMapping;
