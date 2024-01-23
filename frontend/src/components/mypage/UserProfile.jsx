@@ -126,7 +126,7 @@ function UserInfo({ user }) {
           <UserInfoContent>
             <UserProfile />
             <BadgeButton />
-            <UserNickName>손흥민잘생겻다{user.nickname}</UserNickName>
+            <UserNickName>김민재굉장하다{user.nickname}</UserNickName>
           </UserInfoContent>
         </UserInfoContainer>
       </ProfileTitleContainer>
