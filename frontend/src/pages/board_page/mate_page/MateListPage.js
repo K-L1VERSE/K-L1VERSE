@@ -1,12 +1,14 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
+import Calendar from "react-calendar";
 import axios from "../../../api/axios";
 
 function MateListPage() {
   const [mateList, setMateList] = useState([]);
   const navigate = useNavigate();
+  const [value, onChange] = useState(new Date());
+  const [isOpen, setIsOpen] = useState(false);
 
-  /* mate 전체 글 가져오기 */
   useEffect(() => {
     const getMateList = () => {
       axios
@@ -22,15 +24,20 @@ function MateListPage() {
     getMateList();
   }, []);
 
-  function handlerWriteMateClick() {
-    // "직관 메이트 글 작성" 버튼 클릭 시 MateRegistPage로 이동
+  const handleWriteMateClick = () => {
     navigate("/mateRegist");
-  }
+  };
+
+  const handleCalendarToggle = () => {
+    setIsOpen(!isOpen);
+  };
 
   return (
     <div>
       <h1>Mate 게시판 목록</h1>
-      <button onClick={handlerWriteMateClick}>직관 메이트 글 작성</button>
+      <button onClick={handleWriteMateClick}>직관 메이트 글 작성</button>
+      <button onClick={handleCalendarToggle}>📆</button>
+      {isOpen && <Calendar onChange={onChange} value={value} />}
       <ul>
         {mateList.map((mate) => (
           <li key={mate.mateId}>

@@ -31,13 +31,24 @@ function WaggleListPage() {
     <div>
       <h1>Waggle 게시판 목록</h1>
       <button onClick={handleWriteWaggleClick}>글 작성</button>
-      <ul>
-        {waggleList.map((waggle) => (
-          <li key={waggle.waggleId}>
-            <strong>{waggle.title}</strong>: {waggle.content}
-          </li>
-        ))}
-      </ul>
+      <table border="1">
+        <thead>
+          <tr>
+            <th>제목</th>
+            <th>글 내용</th>
+            <th>작성자</th>
+          </tr>
+        </thead>
+        <tbody>
+          {waggleList.map((waggle) => (
+            <tr key={waggle.waggleId}>
+              <td>{waggle.board.title}</td>
+              <td>{waggle.board.content}</td>
+              <td>{waggle.board.user.nickname}</td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
     </div>
   );
 }
