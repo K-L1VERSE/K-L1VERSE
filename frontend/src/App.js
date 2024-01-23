@@ -1,3 +1,5 @@
+import React from "react";
+
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 
 import {
@@ -19,6 +21,8 @@ import LoginPage from "./pages/login_page/LoginPage";
 import MyPage from "./pages/my_page/MyPage";
 
 function App() {
+  // const [questionId, setQuestionId] = useState("");
+
   return (
     <div className="App">
       <header className="App-header">
@@ -49,10 +53,14 @@ function App() {
             <Route path="/GoogleAuth" element={<GoogleRedirection />} />
             <Route path="/NaverAuth" element={<NaverRedirection />} />
 
-            {/* 마이 페이지 */}
-            <Route path="/mypage" element={<MyPage />} />
-          </Routes>
-        </BrowserRouter>
+          {/* 마이 페이지 */}
+          <Route path="/mypage" element={<MyPage />} />
+
+          <Route path="/survey" element={<StartPage />} />
+          <Route path="/question/:questionNum" element={<QuestionPage />} />
+          <Route path="/result" element={<ResultPage />} />
+        </Routes>
+      </BrowserRouter>
       </RecoilRoot>
     </div>
   );
