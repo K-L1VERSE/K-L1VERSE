@@ -81,7 +81,6 @@ function MyPage() {
     <div>
       <UserProfile user={user} />
       <Usergoal user={user} />
-      <LogoutButton />
       <BadgeButton mainBadge={user.mainBadge} />
       <div>
         <RadioGroup>

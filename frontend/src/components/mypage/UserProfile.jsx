@@ -1,6 +1,7 @@
 import React, { useEffect } from "react";
 import styled from "styled-components";
 import BadgeButton from "./BadgeButton";
+import LogoutButton from "./LogoutButton";
 
 const ProfileTitleContainer = styled.div`
   display: inline-flex;
@@ -72,6 +73,10 @@ const UserInfoContainer = styled.div`
   align-items: center;
   gap: 12px;
   align-self: stretch;
+
+  width: 358px;
+  justify-content: space-between;
+  align-items: center;
 `;
 
 const UserInfoContent = styled.div`
@@ -128,6 +133,8 @@ function UserInfo({ user }) {
             <BadgeButton />
             <UserNickName>김민재굉장하다{user.nickname}</UserNickName>
           </UserInfoContent>
+
+          <LogoutButton />
         </UserInfoContainer>
       </ProfileTitleContainer>
     </div>
