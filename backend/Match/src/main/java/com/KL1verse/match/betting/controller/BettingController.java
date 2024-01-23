@@ -3,6 +3,7 @@ package com.KL1verse.match.betting.controller;
 import com.KL1verse.match.betting.dto.req.BettingRequest;
 import com.KL1verse.match.kafka.KafkaProducer;
 import com.KL1verse.match.kafka.producer.KafkaBettingProducer;
+import com.KL1verse.match.kafka.producer.KafkaBettingWinProducer;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -22,19 +23,19 @@ public class BettingController {
 
     private final KafkaProducer kafkaProducer;
     private final KafkaBettingProducer kafkaBettingProducer;
+    // test
+    private final KafkaBettingWinProducer kafkaBettingWinProducer;
 
+    @GetMapping("/betting")
+    public ResponseEntity<?> bettingWinTest() {
+        kafkaBettingWinProducer.bettingWin(1,2);
+        return new ResponseEntity<>("success", HttpStatus.OK);
+    }
 
     // 베팅하기
     @PostMapping
-    public ResponseEntity<?> betting(HttpServletRequest request, @RequestBody BettingRequest bettingRequest) {
-        // 1. request 안에 accessToken 있음 !
-
-        // 2. 어랏 근데 userId(숫자)를 받아야하는데?? betting table에 넣어야함..
-        String userId = "1";
-
-        // 3. betting하기
-        kafkaBettingProducer.betting(Integer.parseInt(userId), bettingRequest);
-
+    public ResponseEntity<?> betting(@RequestBody BettingRequest bettingRequest) {
+        kafkaBettingProducer.betting(bettingRequest);
         return new ResponseEntity<>("success", HttpStatus.OK);
     }
 

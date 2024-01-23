@@ -31,16 +31,19 @@ public class BettingServiceImpl implements BettingService {
         // bettingId로 삭제할 betting 찾기
         Betting betting = bettingRepository.findById(Integer.parseInt(bettingId)).orElseThrow();
 
-        // 베팅한 팀이 home인지 away인지 알아내기 -> game table 수정해야함 (베팅액 내리기)
+        // 베팅한 팀이 home인지 away인지 무승부인지 알아내기 -> game table 수정해야함 (베팅액 내리기)
         Match match = matchRepository.findById(betting.getMatchId()).orElseThrow();
 
         // home team에 베팅했으면
         if(betting.getBettingTeamId() == match.getHomeTeamId()){
             int newAmount = match.getHomeBettingAmount() - betting.getAmount();
             matchRepository.updateHomeBettingAmount(match.getMatchId(), newAmount);
-        }else{ // away team에 베팅했으면
+        }else if(betting.getBettingTeamId() == match.getAwayTeamId()){ // away team에 베팅했으면
             int newAmount = match.getAwayBettingAmount() - betting.getAmount();
             matchRepository.updateAwayBettingAmount(match.getMatchId(), newAmount);
+        }else { // 무승부에 베팅했으면
+            int newAmount = match.getDrawBettingAmount() - betting.getAmount();
+            matchRepository.updateDrawBettingAmount(match.getMatchId(), newAmount);
         }
 
         bettingRepository.deleteById(Integer.parseInt(bettingId));

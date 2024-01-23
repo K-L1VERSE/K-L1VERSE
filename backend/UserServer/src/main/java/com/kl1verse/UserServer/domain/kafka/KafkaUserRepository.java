@@ -14,4 +14,7 @@ public interface KafkaUserRepository extends JpaRepository<User, Integer> {
 
     @Query(value = "UPDATE user SET total_bet = :totalBet WHERE user_id = :id", nativeQuery = true)
     void updateTotalBet(@Param("id") Integer id,@Param("totalBet") int totalBet);
+
+    @Query(value = "UPDATE user SET win_bet = :WinBet WHERE user_id = :id", nativeQuery = true)
+    void updateWinBet(@Param("id") Integer id,@Param("WinBet") int winBet);
 }

@@ -47,7 +47,7 @@ public class KafkaUserConsumer {
             kafkaUserRepository.updateTotalBet(user.getId(), user.getTotalBet() + 1);
 
         } catch (Exception e) { // betting 할 때 오류생겨서 rollback할 때
-            log.error("======== [Rollback] betting-rollback, bettingId :{}======== ", data);
+            log.error("======== [Rollback] betting-rollback, bettingId :{}======== ", bet.getBettingId());
             // match로 rollback 메시지 보내기
             kafkaProducer.sendMessage("betting-rollback", String.valueOf(bet.getBettingId()));
             e.printStackTrace();

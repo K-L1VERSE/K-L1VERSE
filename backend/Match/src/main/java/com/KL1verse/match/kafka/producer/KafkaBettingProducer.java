@@ -25,12 +25,11 @@ public class KafkaBettingProducer {
     @Autowired
     private ObjectMapper objectMapper;
 
-    public void betting(int userId, BettingRequest bettingRequest) {
-        // userId 어캄;; ??????????????
+    public void betting(BettingRequest bettingRequest) {
 
         // 1. betting table에 저장
         Betting betting = Betting.builder()
-            .userId(userId)
+            .userId(bettingRequest.getUserId())
             .matchId(bettingRequest.getMatchId())
             .bettingTeamId(bettingRequest.getBettingTeamId())
             .amount(bettingRequest.getAmount())
@@ -44,10 +43,12 @@ public class KafkaBettingProducer {
         if (betting.getBettingTeamId() == match.getHomeTeamId()) {
             int newAmount = match.getHomeBettingAmount() + betting.getAmount();
             matchRepository.updateHomeBettingAmount(match.getMatchId(), newAmount);
-
-        } else {  // away team에 베팅했으면
+        } else if(betting.getBettingTeamId() == match.getAwayTeamId()) {  // away team에 베팅했으면
             int newAmount = match.getAwayBettingAmount() + betting.getAmount();
             matchRepository.updateAwayBettingAmount(match.getMatchId(), newAmount);
+        } else { // 무승부에 베팅했으면
+            int newAmount = match.getDrawBettingAmount() + betting.getAmount();
+            matchRepository.updateDrawBettingAmount(match.getMatchId(), newAmount);
         }
 
         try {
