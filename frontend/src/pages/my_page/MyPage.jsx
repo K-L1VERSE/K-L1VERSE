@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import UserInfo from "../../components/mypage/UserInfo";
+import UserProfile from "../../components/mypage/UserProfile";
 import axios from "../../api/axios";
 // import mockAxios from "../../api/mockAxios";
 
@@ -8,6 +8,7 @@ import Radio from "../../components/common/Radio";
 import MyWagle from "../../components/mypage/MyWagle";
 import BadgeButton from "../../components/mypage/BadgeButton";
 import LogoutButton from "../../components/mypage/LogoutButton";
+import Usergoal from "../../components/mypage/Usergoal";
 
 function MyPage() {
   const [user, setUser] = useState({
@@ -78,7 +79,8 @@ function MyPage() {
 
   return (
     <div>
-      <UserInfo user={user} />
+      <UserProfile user={user} />
+      <Usergoal user={user} />
       <LogoutButton />
       <BadgeButton />
       <div>
