@@ -18,6 +18,7 @@ instance.interceptors.response.use(
 
     if (newAccessToken) {
       // accessToken 갱신
+      // Todo... Redux 사용 시 storage 대신 Redux로 교체
       localStorage.setItem('accessToken', newAccessToken);
 
       // 현재 페이지 리로드
