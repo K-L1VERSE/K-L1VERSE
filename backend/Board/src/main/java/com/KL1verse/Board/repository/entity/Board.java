@@ -7,6 +7,8 @@ import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.PrePersist;
+import jakarta.persistence.PreUpdate;
 import java.util.Date;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -54,4 +56,28 @@ public class Board {
 //    @ManyToOne
 //    @JoinColumn(name = "user_id")
     private String user;
+
+
+    @PrePersist
+    protected void onCreate() {
+        this.createAt = new Date();
+    }
+
+    @PreUpdate
+    protected void onUpdate() {
+        this.updateAt = new Date();
+    }
+
+    // Entity Listener Class
+    public static class BoardEntityListener {
+        @PrePersist
+        public void prePersist(Board board) {
+            board.onCreate();
+        }
+
+        @PreUpdate
+        public void preUpdate(Board board) {
+            board.onUpdate();
+        }
+    }
 }
