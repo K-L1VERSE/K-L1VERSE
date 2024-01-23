@@ -18,4 +18,7 @@ public interface MatchRepository extends JpaRepository<Match, Integer> {
     @Query(value = "SELECT team_name FROM team WHERE team_id = :teamId", nativeQuery = true)
     String findOneByTeamId(@Param("teamId") int teamId);
 
+    @Query(value = "SELECT COUNT(t) FROM timeline t WHERE t.match_id = :matchId", nativeQuery = true)
+    int countById(@Param("matchId") int matchId);
+
 }

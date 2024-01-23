@@ -3,11 +3,16 @@ package com.KL1verse.match.match.service;
 import com.KL1verse.match.match.dto.req.ScoreRequest;
 import com.KL1verse.match.match.dto.res.MatchDetailResponse;
 import com.KL1verse.match.match.dto.res.MatchListResponse;
+import com.KL1verse.match.match.dto.res.TimelineResponse;
 import com.KL1verse.match.match.repository.MatchRepository;
+import com.KL1verse.match.match.repository.TimelineRepository;
 import com.KL1verse.match.match.repository.entity.Match;
+import com.KL1verse.match.match.repository.entity.Timeline;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
@@ -27,8 +32,10 @@ import java.time.LocalDate;
 public class MatchServiceImpl implements MatchService {
 
     private final MatchRepository matchRepository;
+    private final TimelineRepository timelineRepository;
 
     @Override
+    @Transactional
     public List<MatchListResponse> getMatchList(int month) {
 
         List<Match> matchList = matchRepository.findByMonth(month);
@@ -36,8 +43,16 @@ public class MatchServiceImpl implements MatchService {
 
         for(Match match : matchList) {
             // 현재 시간이랑 매치 시간이랑 비교해서 일치하면 status upcoming -> during으로 변경
+            LocalDateTime now = LocalDateTime.now();
+            LocalDateTime matchAt = match.getMatchAt();
+            if (now.getYear() == matchAt.getYear() && now.getMonthValue() == matchAt.getMonthValue() && now.getDayOfMonth() == matchAt.getDayOfMonth() && now.getHour() == matchAt.getHour()) {
+                match.setStatus("during");
+            }
+
             // status가 during일 경우 getScore 함수 실행
-            getScore(match);
+            if (match.getStatus().equals("during")) {
+                getScore(match);
+            }
 
             matchListResponses.add(MatchListResponse.builder()
                 .homeTeamName(matchRepository.findOneByTeamId(match.getHomeTeamId()))
@@ -99,9 +114,6 @@ public class MatchServiceImpl implements MatchService {
             .get("scheduleList").getAsJsonArray();
 
         for (JsonElement element : asJsonArray) {
-            // 경기 종료 y 오면 status during -> done 으로 변경
-
-
             // day, homeTeamName, awayTeamName 으로 해당 match 가져오기
             String gameDate = element.getAsJsonObject().getAsJsonObject("gameDate").getAsString();
             DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy.MM.dd");
@@ -114,10 +126,15 @@ public class MatchServiceImpl implements MatchService {
             String matchAwayTeamName = matchRepository.findOneByTeamId(match.getAwayTeamId());
 
             if (matchDay == gameDay && matchHomeTeamName.equals(gameHomeTeamName) && matchAwayTeamName.equals(gameAwayTeamName)) {
-                // 경기의 gameId, meetSeq 가져오기
+                // 경기 종료되면 status during -> done 으로 변경
+                if (element.getAsJsonObject().getAsJsonObject("endYn").getAsString().equals("Y")) {
+                    match.setStatus("done");
+                    break;
+                }
+                // 경기 gameId, meetSeq -> 타임라인 갱신
                 int gameId = element.getAsJsonObject().getAsJsonObject("gameId").getAsInt();
                 int meetSeq = element.getAsJsonObject().getAsJsonObject("meetSeq").getAsInt();
-                getTimeline(matchYear, gameId, meetSeq);
+                saveTimeline(matchYear, gameId, meetSeq, match.getMatchId());
 
                 // 스코어 다를 경우 갱신
                 int homeGoal = element.getAsJsonObject().getAsJsonObject("homeGoal").getAsInt();
@@ -136,7 +153,8 @@ public class MatchServiceImpl implements MatchService {
     }
 
     @Override
-    public void getTimeline(int matchYear, int gameId, int meetSeq) {
+    @Transactional
+    public void saveTimeline(int matchYear, int gameId, int meetSeq, int matchId) {
         String url = "https://www.kleague.com/api/match/timeline.do";
 
         RestTemplate restTemplate = new RestTemplate();
@@ -160,8 +178,44 @@ public class MatchServiceImpl implements MatchService {
         JsonArray asJsonArray = jsonElement.getAsJsonObject().get("data").getAsJsonObject()
             .get("firstHalf").getAsJsonArray();
 
+        int matchCnt = matchRepository.countById(matchId);
+        if (matchCnt <  asJsonArray.size()) {
+            for (int i = 0; i < asJsonArray.size() - matchCnt; i++) {
+                JsonObject timelineItem = asJsonArray.get(matchCnt + i).getAsJsonObject();
+                Timeline timeline = Timeline.builder()
+                    .matchId(matchId)
+                    .memberName(timelineItem.getAsJsonObject("playerName").getAsString())
+                    .teamName(timelineItem.getAsJsonObject("teamName").getAsString())
+                    .backNo(timelineItem.getAsJsonObject("backNo").getAsInt())
+                    .timeMin(timelineItem.getAsJsonObject("timeMin").getAsInt())
+                    .eventName(timelineItem.getAsJsonObject("eventName").getAsString())
+                    .homeOrAway(timelineItem.getAsJsonObject("homeOrAway").getAsString())
+                    .build();
 
+                timelineRepository.save(timeline);
 
+            }
+        }
+
+    }
+
+    @Override
+    public List<TimelineResponse> getTimeline(int matchId) {
+        List<Timeline> timeline = timelineRepository.findByMatchId(matchId);
+        List<TimelineResponse> timelineResponse = new ArrayList<>();
+        for (Timeline timelineItem : timeline) {
+            timelineResponse.add(TimelineResponse.builder()
+                .timelineId(timelineItem.getTimelineId())
+                .teamName(timelineItem.getTeamName())
+                .memberName(timelineItem.getMemberName())
+                .backNo(timelineItem.getBackNo())
+                .eventName(timelineItem.getEventName())
+                .timeMin(timelineItem.getTimeMin())
+                .homeOrAway(timelineItem.getHomeOrAway())
+                .build());
+
+        }
+        return timelineResponse;
     }
 
 

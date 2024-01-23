@@ -2,6 +2,7 @@ package com.KL1verse.match.match.service;
 
 import com.KL1verse.match.match.dto.res.MatchDetailResponse;
 import com.KL1verse.match.match.dto.res.MatchListResponse;
+import com.KL1verse.match.match.dto.res.TimelineResponse;
 import com.KL1verse.match.match.repository.entity.Match;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import java.util.List;
@@ -21,5 +22,8 @@ public interface MatchService {
     @Transactional
     void getScore(Match match);
 
-    void getTimeline(int matchYear, int gameId, int meetSeq);
+    @Transactional
+    void saveTimeline(int matchYear, int gameId, int meetSeq, int matchId);
+
+    List<TimelineResponse> getTimeline(int matchId);
 }
