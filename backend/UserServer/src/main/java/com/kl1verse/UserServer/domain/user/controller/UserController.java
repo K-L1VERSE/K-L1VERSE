@@ -19,6 +19,8 @@ import io.jsonwebtoken.ExpiredJwtException;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.redis.core.RedisTemplate;
+import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
@@ -35,7 +37,7 @@ public class UserController {
     private final MypageServiceImpl mypageService;
     private final JwtUtil jwtUtil;
     private final UserRepository userRepository;
-    private final TokenRepository tokenRepository;
+    private final StringRedisTemplate redisTemplate;
 
     @GetMapping("/hello")
     public String hello() {
@@ -50,7 +52,7 @@ public class UserController {
     }
 
     @GetMapping("/access_token/reissue")
-    public ResponseEntity<?> accessToken(HttpServletRequest request) {
+    public ResponseEntity<?> accessTokenReIssue(HttpServletRequest request) {
         log.info("access token reissue");
 
         String requestToken = jwtUtil.resolveToken(request);
@@ -60,24 +62,25 @@ public class UserController {
         String domain = jwtUtil.extractUserDomainFromExpiredToken(requestToken);
         User user = userRepository.findByEmailAndDomain(email, domain).orElseThrow(() -> new UserException(
             ResponseCode.INVALID_USER_INFO));
-        Token token = tokenRepository.findByUserId(user.getId()).orElseThrow(() -> new UserException(
-            ResponseCode.INVALID_USER_INFO));
 
-        String refreshToken = token.getRefreshToken();
+        String refreshToken = redisTemplate.opsForValue().get(user.getEmail()+":"+user.getDomain());
 
-        try {
-            Authentication authentication = jwtUtil.getAuthentication(refreshToken);
-
-            // refreshToken 정상
-            log.info("Access Token Expired & Refresh Token Validated");
-            String accessToken = jwtUtil.createAccessToken(authentication, domain); // accessToken 재발급
-            return ResponseEntity.ok().body(new ReIssueResDto(accessToken));
-            } catch (ExpiredJwtException expiredJwtException) {
-            // refreshToken 만료
+        // Refresh Token 만료 된 상황
+        if(refreshToken == null) {
             log.info("Refresh Token Expired");
 //            Custom Error 1101 return
 //            throw new TokenException(ResponseCode.EXPIRED_REFRESH_TOKEN);
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
+        }
+
+        // Refresh Token 만료 안된 상황
+        else {
+            log.info("Access Token Expired & Refresh Token Validated");
+            Authentication authentication = jwtUtil.getAuthentication(refreshToken);
+
+            // accessToken 재발급
+            String accessToken = jwtUtil.createAccessToken(authentication, domain);
+            return ResponseEntity.ok().body(new ReIssueResDto(accessToken));
         }
     }
 }
