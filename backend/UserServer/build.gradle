@@ -23,6 +23,12 @@ repositories {
 
 dependencies {
 
+	// web socket
+	implementation 'org.springframework.boot:spring-boot-starter-websocket'
+	implementation 'org.webjars:sockjs-client:1.1.2'
+	implementation 'org.webjars:stomp-websocket:2.3.3-1'
+
+
 	implementation 'org.springframework.kafka:spring-kafka' // Kafka
 
 	// s3 설정

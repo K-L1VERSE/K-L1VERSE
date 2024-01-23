@@ -12,6 +12,8 @@
     "@testing-library/react": "^13.4.0",
     "@testing-library/user-event": "^13.5.0",
     "axios": "^1.6.5",
+    "circular-json": "^0.5.9",
+    "moment": "^2.29.4",
     "jquery": "^3.7.1",
     "prop-types": "^15.8.1",
     "react": "^18.2.0",
@@ -19,6 +21,9 @@
     "react-helmet-async": "^2.0.4",
     "react-router-dom": "^6.21.2",
     "react-scripts": "5.0.1",
+    "sockjs-client": "^1.6.1",
+    "web-vitals": "^2.1.4",
+    "webstomp-client": "^1.2.6"
     "styled-components": "^6.1.8",
     "web-vitals": "^2.1.4"
   },
