@@ -71,6 +71,18 @@ public class MatchServiceImpl implements MatchService {
 
         Match match = matchRepository.findByMatchId(matchId).orElse(null);
 
+        // 현재 시간이랑 매치 시간이랑 비교해서 일치하면 status upcoming -> during으로 변경
+        LocalDateTime now = LocalDateTime.now();
+        LocalDateTime matchAt = match.getMatchAt();
+        if (now.getYear() == matchAt.getYear() && now.getMonthValue() == matchAt.getMonthValue() && now.getDayOfMonth() == matchAt.getDayOfMonth() && now.getHour() == matchAt.getHour()) {
+            match.setStatus("during");
+        }
+
+        // status가 during일 경우 getScore 함수 실행
+        if (match.getStatus().equals("during")) {
+            getScore(match);
+        }
+
         return MatchDetailResponse.builder()
             .homeTeamId(match.getHomeTeamId())
             .awayTeamId(match.getAwayTeamId())
