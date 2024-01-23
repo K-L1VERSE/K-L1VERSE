@@ -23,9 +23,8 @@
     "react-scripts": "5.0.1",
     "sockjs-client": "^1.6.1",
     "web-vitals": "^2.1.4",
-    "webstomp-client": "^1.2.6"
-    "styled-components": "^6.1.8",
-    "web-vitals": "^2.1.4"
+    "webstomp-client": "^1.2.6",
+    "styled-components": "^6.1.8"
   },
   "scripts": {
     "start": "react-scripts start",
