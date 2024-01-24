@@ -2,6 +2,8 @@ package com.KL1verse.match.match.controller;
 
 import com.KL1verse.match.match.dto.res.MatchDetailResponse;
 import com.KL1verse.match.match.dto.res.MatchListResponse;
+import com.KL1verse.match.match.dto.res.TimelineResponse;
+import com.KL1verse.match.match.repository.TimelineRepository;
 import com.KL1verse.match.match.service.MatchService;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
@@ -39,6 +41,12 @@ public class MatchController {
     public ResponseEntity<List<MatchListResponse>> getTodayMatch() {
         List<MatchListResponse> todayMatchList = matchService.getTodayMatchList();
         return new ResponseEntity<>(todayMatchList, HttpStatus.OK);
+    }
+
+    @GetMapping("/{matchId}/timelines")
+    public ResponseEntity<List<TimelineResponse>> getTimelines(@PathVariable int matchId) {
+        List<TimelineResponse> timelineResponse = matchService.getTimeline(matchId);
+        return new ResponseEntity<>(timelineResponse, HttpStatus.OK);
     }
 
 }

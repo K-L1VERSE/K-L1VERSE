@@ -30,4 +30,8 @@ public interface MatchRepository extends JpaRepository<Match, Integer> {
 
     @Query(value="UPDATE game SET goal_divided = :bool WHERE match_id = :matchId", nativeQuery = true)
     void updateGoalDivided(@Param("matchId")int matchId,@Param("bool") int bool);
+
+    @Query(value = "SELECT COUNT(t) FROM timeline t WHERE t.match_id = :matchId", nativeQuery = true)
+    int countById(@Param("matchId") int matchId);
+
 }
