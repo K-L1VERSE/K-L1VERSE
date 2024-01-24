@@ -41,7 +41,11 @@ public class CommentServiceImpl implements CommentService {
         comment.setBoardId(board);
 
         Comment createdComment = commentRepository.save(comment);
-        return convertToDTO(createdComment);
+        return CommentDTO.builder()
+            .commentId(createdComment.getCommentId())
+            .content(createdComment.getContent())
+            .boardId(createdComment.getBoardId().getBoardId())
+            .build();
     }
 
     @Override
