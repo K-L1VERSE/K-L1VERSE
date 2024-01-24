@@ -14,4 +14,6 @@ public interface MatchService {
     List<MatchListResponse> getMatchList(int month);
 
     MatchDetailResponse getMatchDetail(int matchId);
+
+    List<MatchListResponse> getTodayMatchList();
 }

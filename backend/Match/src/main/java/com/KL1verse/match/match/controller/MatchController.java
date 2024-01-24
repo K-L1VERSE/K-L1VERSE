@@ -35,4 +35,10 @@ public class MatchController {
         return new ResponseEntity<>(matchDetail, HttpStatus.OK);
     }
 
+    @GetMapping("/today")
+    public ResponseEntity<List<MatchListResponse>> getTodayMatch() {
+        List<MatchListResponse> todayMatchList = matchService.getTodayMatchList();
+        return new ResponseEntity<>(todayMatchList, HttpStatus.OK);
+    }
+
 }
