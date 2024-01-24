@@ -39,7 +39,7 @@ public class MatchServiceImpl implements MatchService {
     @Override
     public MatchDetailResponse getMatchDetail(int matchId) {
 
-        Match match = matchRepository.findByMatchId(matchId).orElse(null);
+        Match match = matchRepository.findById(matchId).orElse(null);
 
         return MatchDetailResponse.builder()
             .homeTeamId(match.getHomeTeamId())

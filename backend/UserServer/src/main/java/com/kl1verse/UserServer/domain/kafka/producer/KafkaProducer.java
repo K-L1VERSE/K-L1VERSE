@@ -1,4 +1,4 @@
-package com.KL1verse.match.kafka;
+package com.kl1verse.UserServer.domain.kafka.producer;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.kafka.core.KafkaTemplate;
@@ -9,7 +9,7 @@ import org.springframework.stereotype.Service;
 @Component
 @RequiredArgsConstructor
 @Service
-public class KafkaMatchProducer {
+public class KafkaProducer {
 
     private final KafkaTemplate<String, String> kafkaTemplate;
 
