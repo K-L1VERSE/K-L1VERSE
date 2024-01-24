@@ -26,7 +26,7 @@ public class KafkaBettingWinProducer {
     @Autowired
     private ObjectMapper objectMapper;
 
-    // 게임 끝난거 확인헀을 때 불릴 메소드
+    // 게임 끝난거 확인했을 때 불릴 메소드
     public void bettingWin(int matchId, int winningTeamId) {
         
         // 원금 + 원금*배율 계산해서 보내주기
@@ -39,7 +39,7 @@ public class KafkaBettingWinProducer {
         int drawBettingTotal = match.getDrawBettingAmount();
 
         // 원금 + 원금*배율 계산
-        float rate = 0;
+        float rate = 1;
 
         // home팀이 이겼을 때
         if(match.getHomeTeamId() == winningTeamId) {
@@ -78,11 +78,11 @@ public class KafkaBettingWinProducer {
                     throw new RuntimeException(e);
                 }
 
-                // match테이블에서 분배 안했을 때 확인하기
-
-                kafkaProducer.sendMessage("winner-info", winnerInfoJson);
-
-                // match 테이블에서 베팅 분배 했음 안했음 컬럼 추가해야함. 그리고 했다고 바꿔주기 !!
+                // match테이블에서 분배 안했을 때 확인
+                if(match.getGoalDivided() == 0) {
+                    matchRepository.updateGoalDivided(matchId, 1);
+                    kafkaProducer.sendMessage("winner-info", winnerInfoJson);
+                }
 
             }
         }

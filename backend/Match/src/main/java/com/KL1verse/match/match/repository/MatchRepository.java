@@ -24,4 +24,7 @@ public interface MatchRepository extends JpaRepository<Match, Integer> {
 
     @Query(value="UPDATE game SET draw_betting_amount = :drawBettingAmount WHERE match_id = :matchId", nativeQuery = true)
     void updateDrawBettingAmount(@Param("matchId") int matchId, @Param("drawBettingAmount") int drawBettingAmount);
+
+    @Query(value="UPDATE game SET goal_divided = :bool WHERE match_id = :matchId", nativeQuery = true)
+    void updateGoalDivided(@Param("matchId")int matchId,@Param("bool") int bool);
 }

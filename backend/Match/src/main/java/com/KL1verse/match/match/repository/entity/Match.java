@@ -50,4 +50,7 @@ public class Match {
     @Column(name = "draw_betting_amount")
     private int drawBettingAmount;
 
+    @Column(name = "goal_divided")
+    private int goalDivided;
+
 }

@@ -41,9 +41,6 @@ public class KafkaBettingWinConsumer {
             kafkaUserRepository.updateGoal(winner.getUserId(), user.getGoal() + winner.getNewGoal());
             kafkaUserRepository.updateWinBet(winner.getUserId(), user.getWinBet() + 1);
         } catch (Exception e) {
-            log.error("======== [Rollback] winner-info-rollback, userId :{}======== ", winnerInfoJson);
-            // rollback 처리하는거 보내줘야함 match로
-
             e.printStackTrace();
         }
     }
