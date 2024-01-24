@@ -41,7 +41,14 @@ public class CommentServiceImpl implements CommentService {
         comment.setBoardId(board);
 
         Comment createdComment = commentRepository.save(comment);
-        return convertToDTO(createdComment);
+        return CommentDTO.builder()
+            .commentId(createdComment.getCommentId())
+            .content(createdComment.getContent())
+            .createAt(createdComment.getCreateAt())
+            .updateAt(createdComment.getUpdateAt())
+            .deleteAt(createdComment.getDeleteAt())
+            .boardId(createdComment.getBoardId().getBoardId())
+            .build();
     }
 
     @Override
@@ -63,11 +70,21 @@ public class CommentServiceImpl implements CommentService {
         commentRepository.deleteById(commentId);
     }
 
+
     @Override
     public List<CommentDTO> getAllCommentsByBoardId(Long boardId) {
         List<Comment> comments = commentRepository.findByBoardId_BoardId(boardId);
-        return comments.stream().map(this::convertToDTO).collect(Collectors.toList());
+        return comments.stream().map(this::convertToDTOWithReplies).collect(Collectors.toList());
     }
+
+    private CommentDTO convertToDTOWithReplies(Comment comment) {
+        CommentDTO commentDTO = convertToDTO(comment);
+        List<CommentDTO> replyDTOs = comment.getReplies().stream().map(this::convertToDTO).collect(Collectors.toList());
+        commentDTO.setReplies(replyDTOs);
+        return commentDTO;
+    }
+
+
 
     @Override
     public CommentDTO createReply(Long parentCommentId, CommentDTO replyDTO) {
@@ -78,8 +95,17 @@ public class CommentServiceImpl implements CommentService {
         reply.setParentId(parentComment);
 
         Comment createdReply = commentRepository.save(reply);
-        return convertToDTO(createdReply);
+        return CommentDTO.builder()
+            .commentId(createdReply.getCommentId())
+            .content(createdReply.getContent())
+            .parentId(createdReply.getParentId().getCommentId())
+            .updateAt(createdReply.getUpdateAt())
+            .deleteAt(createdReply.getDeleteAt())
+            .createAt(createdReply.getCreateAt())
+            .build();
     }
+
+
 
     @Override
     public List<CommentDTO> getAllRepliesByParentId(Long parentId) {

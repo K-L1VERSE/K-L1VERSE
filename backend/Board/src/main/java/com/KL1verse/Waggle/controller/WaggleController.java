@@ -60,4 +60,7 @@ public class WaggleController {
         List<WaggleDTO> waggles = waggleService.getAllWaggleList();
         return ResponseEntity.ok(waggles);
     }
+
+
+
 }

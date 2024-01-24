@@ -30,13 +30,6 @@ public class CommentController {
         return ResponseEntity.ok(comment);
     }
 
-    // Create Comment
-//    @PostMapping
-//    public ResponseEntity<CommentDTO> createComment(@RequestBody CommentDTO commentDTO) {
-//        CommentDTO createdComment = commentService.createComment(commentDTO);
-//        return ResponseEntity.ok(createdComment);
-//    }
-
     @PostMapping("/{boardId}")
     public ResponseEntity<CommentDTO> createComment(@PathVariable Long boardId, @RequestBody CommentDTO commentDTO) {
         commentDTO.setBoardId(boardId);
@@ -60,12 +53,12 @@ public class CommentController {
         return ResponseEntity.noContent().build();
     }
 
+
     @GetMapping("/list/{boardId}")
     public ResponseEntity<List<CommentDTO>> getAllCommentsByBoardId(@PathVariable Long boardId) {
         List<CommentDTO> comments = commentService.getAllCommentsByBoardId(boardId);
         return ResponseEntity.ok(comments);
     }
-
 
     // Create Reply for a Comment
     @PostMapping("/{parentCommentId}/replies")
@@ -74,6 +67,8 @@ public class CommentController {
         CommentDTO createdReply = commentService.createReply(parentCommentId, replyDTO);
         return ResponseEntity.ok(createdReply);
     }
+
+
 
     // Get Replies for a Comment
     @GetMapping("/{parentCommentId}/replies")

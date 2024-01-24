@@ -1,11 +1,8 @@
-//package com.KL1verse.Waggle.service;
-//
-//import com.KL1verse.Waggle.dto.req.WaggleLikeDTO;
-//
-//public interface WaggleLikeService {
-//    WaggleLikeDTO createWaggleLike(WaggleLikeDTO waggleLikeDto);
-//    void deleteWaggleLike(Long waggleId);
-//
-////    List<WaggleLikeDTO> getWaggleLikesByBoardId(Long boardId);
-//}
-//
+package com.KL1verse.Waggle.service;
+
+public interface WaggleLikeService {
+
+  void likeWaggle(Long waggleId, Long userId);
+
+  void unlikeWaggle(Long waggleId, Long userId);
+}
