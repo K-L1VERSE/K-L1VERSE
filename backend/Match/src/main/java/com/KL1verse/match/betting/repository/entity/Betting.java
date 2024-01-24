@@ -23,9 +23,12 @@ import lombok.ToString;
 public class Betting {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "betting_id")
     private int bettingId;
+
+    @Column(name = "match_id")
+    private int matchId;
 
     @Column(name = "user_id")
     private int userId;
@@ -35,5 +38,5 @@ public class Betting {
 
     @Column(name = "amount")
     private int amount;
-    
+
 }
