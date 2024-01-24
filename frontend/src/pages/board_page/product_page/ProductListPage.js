@@ -10,7 +10,7 @@ function ProductListPage() {
 
   const getProductList = () => {
     axios
-      .get("/products/list")
+      .get(`/products/list`)
       .then(({ data }) => {
         setProductList(data.products);
       })

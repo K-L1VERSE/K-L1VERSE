@@ -10,7 +10,7 @@ function WaggleListPage() {
   useEffect(() => {
     const getWaggleList = () => {
       axios
-        .get("/waggles/list")
+        .get(`/waggle`)
         .then(({ data }) => {
           setWaggleList(data);
         })
@@ -36,7 +36,7 @@ function WaggleListPage() {
           <tr>
             <th>제목</th>
             <th>글 내용</th>
-            <th>작성자</th>
+            {/* <th>작성자</th> */}
           </tr>
         </thead>
         <tbody>
@@ -44,7 +44,7 @@ function WaggleListPage() {
             <tr key={waggle.waggleId}>
               <td>{waggle.board.title}</td>
               <td>{waggle.board.content}</td>
-              <td>{waggle.board.user.nickname}</td>
+              {/* <td>{waggle.board.user.nickname}</td> */}
             </tr>
           ))}
         </tbody>

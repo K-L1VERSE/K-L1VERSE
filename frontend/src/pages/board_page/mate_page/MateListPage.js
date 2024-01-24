@@ -12,7 +12,7 @@ function MateListPage() {
   useEffect(() => {
     const getMateList = () => {
       axios
-        .get("/mates/list")
+        .get(`/mate`)
         .then(({ data }) => {
           setMateList(data);
         })

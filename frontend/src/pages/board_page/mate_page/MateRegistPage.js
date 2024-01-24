@@ -37,7 +37,7 @@ function MateRegistPage() {
         console.log("Mate 게시물 수정 성공!");
       } else {
         // 새로운 mate 게시물 생성
-        await axios.post("/mates", { title, content });
+        await axios.post(`/mates`, { title, content });
         console.log("Mate 게시물 작성 성공!");
       }
       // Mate 상세  페이지로 리디렉션

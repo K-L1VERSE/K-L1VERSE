@@ -9,7 +9,7 @@ function WaggleDetailPage() {
   /* waggle 상세 정보 가져오기 */
   const getWaggleDetail = () => {
     axios
-      .get(`/waggles/${boardId}/detail`)
+      .get(`/waggle/${boardId}`)
       .then(({ data }) => {
         setWaggleDetail(data);
       })
