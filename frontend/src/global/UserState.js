@@ -1,6 +1,5 @@
 import { atom } from 'recoil';
 import { recoilPersist } from 'recoil-persist';
-import { useUserAccessToken } from '../hooks/useUserAccessToken';
 
 const { persistAtom } = recoilPersist();
 
@@ -12,6 +11,7 @@ export const UserState = atom({
         accessToken: "",
         email: "",
         domain: "",
+        isLoggedIn: false,
     },
     effects_UNSTABLE: [persistAtom],
 });

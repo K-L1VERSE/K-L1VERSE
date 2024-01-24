@@ -1,11 +1,8 @@
-import React, { useEffect } from "react";
+import React, { useContext, useEffect } from "react";
 import { useSetRecoilState } from "recoil";
 import { get } from "jquery";
 import axios from "../../api/axios";
 import { UserState } from "../../global/UserState";
-import { NotificationState } from "../../global/NotificationState";
-import SockJS from "sockjs-client";
-import Stomp from "webstomp-client";
 
 function GoogleRedirection() {
   const PARAMS = new URL(document.location).searchParams;
@@ -18,9 +15,6 @@ function GoogleRedirection() {
     .then((res) => {
       console.log(res);
 
-      const email = res.data.email;
-      const domain = res.data.domain;
-
       /* access Token 받고 전역 변수로 관리 */
       setUserState({
         nickname: res.data.nickname, 
@@ -28,10 +22,11 @@ function GoogleRedirection() {
         accessToken: res.data.accessToken,
         email: res.data.email,
         domain: res.data.domain,
+        isLoggedIn: true,
       });
 
       /* 성공시 홈화면으로 */
-      window.location.href = "/main";
+      // window.location.href = "/main";
     })
     .catch((err) => {
       console.log(err);

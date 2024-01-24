@@ -1,4 +1,3 @@
-import AuthAxios from "../../components/common/authAxios";
 import axios from "../../api/authAxios";
 
 function Test() {
