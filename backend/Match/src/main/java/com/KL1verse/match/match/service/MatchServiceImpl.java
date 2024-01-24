@@ -4,6 +4,7 @@ import com.KL1verse.match.match.dto.res.MatchDetailResponse;
 import com.KL1verse.match.match.dto.res.MatchListResponse;
 import com.KL1verse.match.match.repository.MatchRepository;
 import com.KL1verse.match.match.repository.entity.Match;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
@@ -25,6 +26,7 @@ public class MatchServiceImpl implements MatchService {
 
         for(Match match : matchList) {
             matchListResponses.add(MatchListResponse.builder()
+                .matchId(match.getMatchId())
                 .homeTeamName(matchRepository.findOneByTeamId(match.getHomeTeamId()))
                 .awayTeamName(matchRepository.findOneByTeamId(match.getAwayTeamId()))
                 .matchAt(match.getMatchAt())
@@ -53,5 +55,24 @@ public class MatchServiceImpl implements MatchService {
             .homeScore(match.getHomeScore())
             .awayScore(match.getAwayScore())
             .build();
+    }
+
+    @Override
+    public List<MatchListResponse> getTodayMatchList() {
+        LocalDateTime now = LocalDateTime.now();
+        List<Match> matchList = matchRepository.findByDate(now.getYear(), now.getMonthValue(), now.getDayOfMonth());
+        List<MatchListResponse> matchListResponse = new ArrayList<>();
+
+        for (Match match : matchList) {
+            matchListResponse.add(MatchListResponse.builder()
+                .matchId(match.getMatchId())
+                .homeTeamName(matchRepository.findOneByTeamId(match.getHomeTeamId()))
+                .awayTeamName(matchRepository.findOneByTeamId(match.getAwayTeamId()))
+                .matchAt(match.getMatchAt())
+                .homeScore(match.getHomeScore())
+                .awayScore(match.getAwayScore())
+                .build());
+        }
+        return matchListResponse;
     }
 }
