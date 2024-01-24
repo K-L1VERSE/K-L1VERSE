@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import axios from "../../../api/axios";
+import BoardTopNavBar from "../../../components/Board/BoardTopNavBar";
 
 function ProductDetailPage() {
   const [productDetail, setProductDetail] = useState({});
@@ -24,6 +25,7 @@ function ProductDetailPage() {
 
   return (
     <div>
+      <BoardTopNavBar />
       <h1>Product 상세 정보</h1>
       <p>
         <strong>Title:</strong> {productDetail.title}

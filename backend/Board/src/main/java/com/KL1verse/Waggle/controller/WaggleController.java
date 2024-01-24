@@ -60,4 +60,10 @@ public class WaggleController {
         List<WaggleDTO> waggles = waggleService.getAllWaggleList();
         return ResponseEntity.ok(waggles);
     }
+
+    @GetMapping("/recent/{count}")
+    public ResponseEntity<List<WaggleDTO>> getMostRecentWaggles(@PathVariable int count) {
+        List<WaggleDTO> recentWaggles = waggleService.getMostRecentWaggles(count);
+        return ResponseEntity.ok(recentWaggles);
+    }
 }

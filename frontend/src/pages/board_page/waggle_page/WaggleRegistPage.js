@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate, useParams, Link } from "react-router-dom";
 import axios from "../../../api/axios";
+import BoardTopNavBar from "../../../components/Board/BoardTopNavBar";
 
 function WaggleRegistPage() {
   const navigate = useNavigate();
@@ -58,8 +59,10 @@ function WaggleRegistPage() {
 
   return (
     <div>
+      <BoardTopNavBar />
       <h1>{isUpdateMode ? "Waggle 게시물 수정" : "Waggle 게시물 작성"}</h1>
       <form onSubmit={handleSubmit}>
+        <Link to={waggleId ? `/waggle/${waggleId}` : "/waggle"} />
         <br />
         제목:
         <input

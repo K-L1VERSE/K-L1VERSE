@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 import axios from "../../../api/axios";
+import BoardTopNavBar from "../../../components/Board/BoardTopNavBar";
 
 function ProductListPage() {
   const navigate = useNavigate();
@@ -30,15 +31,30 @@ function ProductListPage() {
 
   return (
     <div>
+      <BoardTopNavBar />
       <h1>Product 게시판 목록</h1>
       <button onClick={handleRegistProductClick}>중고거래 글 작성</button>
-      <ul>
-        {productList.map((product) => (
-          <li key={product.productId}>
-            <strong>{product.title}</strong>: {product.content}
-          </li>
-        ))}
-      </ul>
+      <table border="1">
+        <thead>
+          <tr>
+            <th>제목</th>
+            <th>글 내용</th>
+          </tr>
+        </thead>
+        <tbody>
+          {productList.map((waggle) => (
+            <tr key={waggle.board.boardId}>
+              {/* 클릭 시 상세 페이지로 이동하도록 Link 사용 */}
+              <td>
+                <Link to={`/waggle/${waggle.board.boardId}`}>
+                  {waggle.board.title}
+                </Link>
+              </td>
+              <td>{waggle.board.content}</td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
     </div>
   );
 }

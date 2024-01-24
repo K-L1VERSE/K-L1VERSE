@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import axios from "../../../api/axios";
+import BoardTopNavBar from "../../../components/Board/BoardTopNavBar";
 
 function MateRegistPage() {
   const navigate = useNavigate();
@@ -49,6 +50,7 @@ function MateRegistPage() {
 
   return (
     <div>
+      <BoardTopNavBar />
       <h1>{isUpdateMode ? "Mate 게시물 수정" : "Mate 게시물 작성"}</h1>
       <form onSubmit={handleSubmit}>
         제목:

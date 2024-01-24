@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 import axios from "../../../api/axios";
+import BoardTopNavBar from "../../../components/Board/BoardTopNavBar";
+import RecentWaggleCard from "../../../components/Board/RecentWaggleCard";
 
 function WaggleListPage() {
   const [waggleList, setWaggleList] = useState([]);
@@ -22,29 +24,37 @@ function WaggleListPage() {
     getWaggleList();
   }, []);
 
+  // "와글 글 작성" 버튼 클릭 시 WaggleRegistPage로 이동
   function handleWriteWaggleClick() {
-    // "와글 글 작성" 버튼 클릭 시 WaggleRegistPage로 이동
     navigate("/waggleRegist");
   }
 
   return (
     <div>
-      <h1>Waggle 게시판 목록</h1>
-      <button onClick={handleWriteWaggleClick}>글 작성</button>
+      <BoardTopNavBar />
+      <RecentWaggleCard />
+      <div>
+        <h3>와글와글 떠들어주세요</h3>
+        <button onClick={handleWriteWaggleClick}>🖋글쓰기</button>
+      </div>
+
       <table border="1">
         <thead>
           <tr>
             <th>제목</th>
             <th>글 내용</th>
-            {/* <th>작성자</th> */}
           </tr>
         </thead>
         <tbody>
           {waggleList.map((waggle) => (
-            <tr key={waggle.waggleId}>
-              <td>{waggle.board.title}</td>
+            <tr key={waggle.board.boardId}>
+              {/* 클릭 시 상세 페이지로 이동하도록 Link 사용 */}
+              <td>
+                <Link to={`/waggle/${waggle.board.boardId}`}>
+                  {waggle.board.title}
+                </Link>
+              </td>
               <td>{waggle.board.content}</td>
-              {/* <td>{waggle.board.user.nickname}</td> */}
             </tr>
           ))}
         </tbody>

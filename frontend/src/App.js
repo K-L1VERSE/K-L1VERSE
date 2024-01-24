@@ -10,7 +10,6 @@ import KaKaoRedirection from "./pages/login_page/KaKaoRedirection";
 import NaverRedirection from "./pages/login_page/NaverRedirection";
 import GoogleRedirection from "./pages/login_page/GoogleRedirection";
 
-import logo from "./logo.svg";
 import "./App.css";
 
 import LoginPage from "./pages/login_page/LoginPage";
@@ -31,20 +30,6 @@ import ProductRegistPage from "./pages/board_page/product_page/ProductRegistPage
 function App() {
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
       <BrowserRouter>
         <Routes>
           {/* 메인 페이지 */}
@@ -68,17 +53,17 @@ function App() {
 
           {/* 와글 페이지 */}
           <Route path="/waggle" element={<WaggleListPage />} />
-          <Route path="/waggle/:waggleId" element={<WaggleDetailPage />} />
+          <Route path="/waggle/:boardId" element={<WaggleDetailPage />} />
           <Route path="/waggleRegist" element={<WaggleRegistPage />} />
 
           {/* 직관 메이트 페이지 */}
           <Route path="/mate" element={<MateListPage />} />
-          <Route path="/mate/:mateId" element={<MateDetailPage />} />
+          <Route path="/mate/:boardId" element={<MateDetailPage />} />
           <Route path="/mateRegist" element={<MateRegistPage />} />
 
           {/* 중고 거래 페이지 */}
           <Route path="/product" element={<ProductListPage />} />
-          <Route path="/product/:productId" element={<ProductDetailPage />} />
+          <Route path="/product/:boardId" element={<ProductDetailPage />} />
           <Route path="/productRegist" element={<ProductRegistPage />} />
         </Routes>
       </BrowserRouter>

@@ -10,6 +10,8 @@ import com.KL1verse.Waggle.repository.entity.Waggle;
 import java.util.List;
 import java.util.stream.Collectors;
 import org.springframework.beans.BeanUtils;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -120,5 +122,16 @@ public class WaggleServiceImpl implements WaggleService {
             .deleteAt(waggleDTO.getBoard().getDeleteAt())
             .build());
         return waggle;
+    }
+
+    @Override
+    public List<WaggleDTO> getMostRecentWaggles(int count) {
+        List<Waggle> recentWaggles = waggleRepository.findAll(
+            PageRequest.of(0, count, Sort.by(Sort.Direction.DESC, "board.createAt"))
+        ).getContent();
+
+        return recentWaggles.stream()
+            .map(this::convertToDTO)
+            .collect(Collectors.toList());
     }
 }
