@@ -1,6 +1,6 @@
-import React from "react";
-
 import { BrowserRouter, Route, Routes } from "react-router-dom";
+
+import React from "react";
 
 import StartPage from "./pages/SurveyPage/StartPage";
 import QuestionPage from "./pages/SurveyPage/QuestionPage";
@@ -12,6 +12,8 @@ import GoogleRedirection from "./pages/login_page/GoogleRedirection";
 
 import logo from "./logo.svg";
 import "./App.css";
+
+import MatchPage from "./pages/match_page/MatchPage";
 
 import MainPage from "./pages/main_page/MainPage";
 import LoginPage from "./pages/login_page/LoginPage";
@@ -48,6 +50,9 @@ function App() {
           <Route path="/KakaoAuth" element={<KaKaoRedirection />} />
           <Route path="/GoogleAuth" element={<GoogleRedirection />} />
           <Route path="/NaverAuth" element={<NaverRedirection />} />
+
+          {/* 경기 페이지 */}
+          <Route path="/match" element={<MatchPage />} />
 
           {/* 마이 페이지 */}
           <Route path="/mypage" element={<MyPage />} />
