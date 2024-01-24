@@ -19,6 +19,8 @@ public interface MatchService {
 
     MatchDetailResponse getMatchDetail(int matchId);
 
+    List<MatchListResponse> getTodayMatchList();
+
     @Transactional
     void getScore(Match match);
 

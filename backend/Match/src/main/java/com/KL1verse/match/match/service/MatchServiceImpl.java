@@ -8,10 +8,7 @@ import com.KL1verse.match.match.repository.MatchRepository;
 import com.KL1verse.match.match.repository.TimelineRepository;
 import com.KL1verse.match.match.repository.entity.Match;
 import com.KL1verse.match.match.repository.entity.Timeline;
-import com.google.gson.JsonArray;
-import com.google.gson.JsonElement;
-import com.google.gson.JsonObject;
-import com.google.gson.JsonParser;
+import com.google.gson.*;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -55,6 +52,7 @@ public class MatchServiceImpl implements MatchService {
             }
 
             matchListResponses.add(MatchListResponse.builder()
+                .matchId(match.getMatchId())
                 .homeTeamName(matchRepository.findOneByTeamId(match.getHomeTeamId()))
                 .awayTeamName(matchRepository.findOneByTeamId(match.getAwayTeamId()))
                 .matchAt(match.getMatchAt())
@@ -69,7 +67,7 @@ public class MatchServiceImpl implements MatchService {
     @Override
     public MatchDetailResponse getMatchDetail(int matchId) {
 
-        Match match = matchRepository.findByMatchId(matchId).orElse(null);
+        Match match = matchRepository.findById(matchId).orElse(null);
 
         // 현재 시간이랑 매치 시간이랑 비교해서 일치하면 status upcoming -> during으로 변경
         LocalDateTime now = LocalDateTime.now();
@@ -231,4 +229,23 @@ public class MatchServiceImpl implements MatchService {
     }
 
 
+
+    @Override
+    public List<MatchListResponse> getTodayMatchList() {
+        LocalDateTime now = LocalDateTime.now();
+        List<Match> matchList = matchRepository.findByDate(now.getYear(), now.getMonthValue(), now.getDayOfMonth());
+        List<MatchListResponse> matchListResponse = new ArrayList<>();
+
+        for (Match match : matchList) {
+            matchListResponse.add(MatchListResponse.builder()
+                .matchId(match.getMatchId())
+                .homeTeamName(matchRepository.findOneByTeamId(match.getHomeTeamId()))
+                .awayTeamName(matchRepository.findOneByTeamId(match.getAwayTeamId()))
+                .matchAt(match.getMatchAt())
+                .homeScore(match.getHomeScore())
+                .awayScore(match.getAwayScore())
+                .build());
+        }
+        return matchListResponse;
+    }
 }
