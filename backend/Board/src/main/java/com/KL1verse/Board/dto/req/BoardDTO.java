@@ -23,5 +23,3 @@ public class BoardDTO {
     private Date updateAt;
     private Date deleteAt;
 }
-
-

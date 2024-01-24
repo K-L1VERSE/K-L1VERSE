@@ -1,14 +1,16 @@
 package com.KL1verse.Waggle.service;
 
 import com.KL1verse.Waggle.dto.req.WaggleDTO;
+import java.util.List;
 
 public interface WaggleService {
 
-    WaggleDTO getWaggleById(Long waggleId);
+    WaggleDTO getWaggleById(Long BoardId);
     WaggleDTO createWaggle(WaggleDTO waggleDto);
-    WaggleDTO updateWaggle(Long waggleId, WaggleDTO waggleDto);
-    void deleteWaggle(Long waggleId);
-//    List<WaggleDTO> getWagglesByBoardId(Long boardId);
+    WaggleDTO updateWaggle(Long BoardId, WaggleDTO waggleDto);
+    void deleteWaggle(Long BoardId);
+
+    List<WaggleDTO> getAllWaggleList();
 
 }
 
