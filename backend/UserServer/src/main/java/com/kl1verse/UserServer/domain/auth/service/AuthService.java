@@ -7,6 +7,9 @@ import com.kl1verse.UserServer.domain.auth.dto.res.SignInResDto;
 import com.kl1verse.UserServer.domain.auth.exception.TokenException;
 import com.kl1verse.UserServer.domain.auth.repository.TokenRepository;
 import com.kl1verse.UserServer.domain.auth.repository.entity.Token;
+import com.kl1verse.UserServer.domain.notification.dto.req.MessageReqDto;
+import com.kl1verse.UserServer.domain.notification.dto.req.MessageReqDto.NotificationType;
+import com.kl1verse.UserServer.domain.notification.service.NotificationService;
 import com.kl1verse.UserServer.domain.user.exception.UserException;
 import com.kl1verse.UserServer.domain.user.repository.UserRepository;
 import com.kl1verse.UserServer.domain.user.repository.entity.User;
@@ -41,6 +44,7 @@ public class AuthService {
     private final JwtUtil jwtUtil;
     private final PasswordEncoder passwordEncoder;
     private final StringRedisTemplate redisTemplate;
+    private final NotificationService notificationService;
 
     // 회원 가입 여부 확인
     public boolean isExistUser(String email, String domain) {
@@ -92,6 +96,13 @@ public class AuthService {
             // 100골 지급 (Todo... 골 지급 정책 정하기)
             log.info("user {}:{} today first login at {}", user.getEmail(), user.getDomain(), LocalDateTime.now());
             user.setGoal(user.getGoal() + 100);
+            notificationService.sendNotification(MessageReqDto.builder()
+                        .userId(user.getId())
+                        .type(NotificationType.GOAL)
+                        .message("출석 보상으로 100골을 지급 받았습니다.")
+                        .uri("http://localhost:3000/mypage")
+                        .date(LocalDateTime.now().toString())
+                        .build());
         } else {
             log.info("user {}:{} already login today at {}", user.getEmail(), user.getDomain(), todayLogin);
         }

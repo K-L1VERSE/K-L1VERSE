@@ -1,6 +1,6 @@
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 
-import React from "react";
+import React, { useEffect, useState } from "react";
 
 import StartPage from "./pages/SurveyPage/StartPage";
 import QuestionPage from "./pages/SurveyPage/QuestionPage";

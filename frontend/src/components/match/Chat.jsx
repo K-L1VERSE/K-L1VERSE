@@ -26,6 +26,7 @@ function Chat() {
 
         // Set stompClient state to ensure it persists across re-renders
         setStompClient(stomp);
+        console.log("stomp", stomp);
 
         // Cleanup function to disconnect the socket when the component unmounts
         return () => {

@@ -3,28 +3,25 @@ package com.kl1verse.UserServer.domain.user.controller;
 
 import com.kl1verse.UserServer.domain.auth.JwtUtil;
 import com.kl1verse.UserServer.domain.auth.dto.res.ReIssueResDto;
-import com.kl1verse.UserServer.domain.auth.dto.res.SignInResDto;
-import com.kl1verse.UserServer.domain.auth.exception.TokenException;
-import com.kl1verse.UserServer.domain.auth.repository.TokenRepository;
-import com.kl1verse.UserServer.domain.auth.repository.entity.Token;
+import com.kl1verse.UserServer.domain.notification.dto.req.MessageReqDto;
+import com.kl1verse.UserServer.domain.notification.dto.req.MessageReqDto.NotificationType;
+import com.kl1verse.UserServer.domain.notification.service.NotificationService;
 import com.kl1verse.UserServer.domain.user.dto.res.MypageResponseDto;
 import com.kl1verse.UserServer.domain.user.exception.UserException;
 import com.kl1verse.UserServer.domain.user.repository.UserRepository;
 import com.kl1verse.UserServer.domain.user.repository.entity.User;
 import com.kl1verse.UserServer.domain.user.service.MypageServiceImpl;
 import com.kl1verse.UserServer.global.ResponseCode;
-import com.kl1verse.UserServer.global.dto.BaseResponse;
-import com.kl1verse.UserServer.global.exception.BaseException;
-import io.jsonwebtoken.ExpiredJwtException;
 import jakarta.servlet.http.HttpServletRequest;
+import java.time.LocalDateTime;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -38,6 +35,7 @@ public class UserController {
     private final JwtUtil jwtUtil;
     private final UserRepository userRepository;
     private final StringRedisTemplate redisTemplate;
+    private final NotificationService notificationService;
 
     @GetMapping("/hello")
     public String hello() {
@@ -83,4 +81,17 @@ public class UserController {
             return ResponseEntity.ok().body(new ReIssueResDto(accessToken));
         }
     }
+
+    @GetMapping("/notifications/test")
+    public ResponseEntity<String> notificationTest() {
+        notificationService.sendNotification(MessageReqDto.builder()
+            .userId(1)
+            .type(NotificationType.GOAL)
+            .message("테스트 알림 입니다.")
+            .uri("http://localhost:3000/mypage")
+            .date(LocalDateTime.now().toString())
+            .build());
+        return ResponseEntity.ok("OK");
+    }
+
 }

@@ -1,28 +1,37 @@
-import React from "react";
-
+import React, { useEffect } from "react";
+import { useSetRecoilState } from "recoil";
+import { get } from "jquery";
 import axios from "../../api/axios";
+import { UserState } from "../../global/UserState";
+import { NotificationState } from "../../global/NotificationState";
+import SockJS from "sockjs-client";
+import Stomp from "webstomp-client";
 
 function GoogleRedirection() {
   const PARAMS = new URL(document.location).searchParams;
   const GOOGLE_CODE = PARAMS.get("code");
-  //   const code = window.location.search;
-  //   console.log(code);
-  console.log("GOOGLE_CODE:", GOOGLE_CODE);
+
+  const setUserState = useSetRecoilState(UserState);
 
   const request = axios
     .get(`/login/oauth/code/google?code=${GOOGLE_CODE}`)
     .then((res) => {
       console.log(res);
 
+      const email = res.data.email;
+      const domain = res.data.domain;
+
       /* access Token 받고 전역 변수로 관리 */
-      localStorage.setItem("accessToken", res.data.accessToken);
-      localStorage.setItem("email", res.data.email);
-      localStorage.setItem("nickname", res.data.nickname);
-      localStorage.setItem("profile", res.data.profile);
-      localStorage.setItem("domain", res.data.domain);
+      setUserState({
+        nickname: res.data.nickname, 
+        profile: res.data.profile, 
+        accessToken: res.data.accessToken,
+        email: res.data.email,
+        domain: res.data.domain,
+      });
 
       /* 성공시 홈화면으로 */
-      // window.location.href = "/";
+      window.location.href = "/main";
     })
     .catch((err) => {
       console.log(err);
@@ -30,6 +39,7 @@ function GoogleRedirection() {
     });
 
   console.log(request);
+  
 
   return <div>로그인 중입니다.</div>;
 }

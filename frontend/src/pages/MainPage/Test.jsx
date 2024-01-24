@@ -1,7 +1,8 @@
+import AuthAxios from "../../components/common/authAxios";
 import axios from "../../api/authAxios";
 
 function Test() {
-    
+
     const request = axios
         .get(`/users/hello`)
         .then((res) => {

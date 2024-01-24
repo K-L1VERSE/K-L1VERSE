@@ -8,14 +8,14 @@ spring:
   datasource:
     driver-class-name: org.mariadb.jdbc.Driver
 #    ssafy
-#    url: jdbc:mariadb://localhost:3306/dev
-#    username: root
-#    password: 1234
-
-#    home
-    url: jdbc:mariadb://localhost:3307/dev
+    url: jdbc:mariadb://localhost:3306/dev
     username: root
     password: 1234
+
+#    home
+#    url: jdbc:mariadb://localhost:3307/dev
+#    username: root
+#    password: 1234
 
 #    remote
 #    url: jdbc:mariadb://stg-yswa-kr-practice-db-master.mariadb.database.azure.com:3306/s10p12a409
@@ -35,9 +35,11 @@ spring:
       value-serializer: org.apache.kafka.common.serialization.StringSerializer
 
   # redis 설정
-  redis:
-    host: localhost
-    port: 6379
+  data:
+    redis:
+      host: i10a409.p.ssafy.io
+      port: 6379
+      password: redis
 
 oauth:
   google:
@@ -76,5 +78,5 @@ cloud:
 
 jwt:
   secretKey: 413F4428472B4B6250655368566D5970337336763979244226452948404D6351
-  accessExpirationTime: 10 # 10초
-  refreshExpirationTime: 60 # 60초
+  accessExpirationTime: 3600 # 1시간
+  refreshExpirationTime: 86400 # 1일
