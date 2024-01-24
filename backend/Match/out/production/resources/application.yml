@@ -1,0 +1,24 @@
+server:
+  port: 8040
+
+spring:
+  jpa:
+    hibernate:
+      ddl-auto: update
+  datasource:
+    driver-class-name: org.mariadb.jdbc.Driver
+    url : jdbc:mariadb://stg-yswa-kr-practice-db-master.mariadb.database.azure.com:3306/s10p12a409
+    username : S10P12A409
+    password : kp7Ad1kzRN
+
+  # kafka 설정
+  kafka:
+    consumer:
+      bootstrap-servers: localhost:9092
+      group-id: match-group # 여기만 다름
+      key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+      value-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+    producer:
+      bootstrap-servers: localhost:9092
+      key-serializer: org.apache.kafka.common.serialization.StringSerializer
+      value-serializer: org.apache.kafka.common.serialization.StringSerializer
