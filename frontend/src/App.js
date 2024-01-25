@@ -21,6 +21,7 @@ import Test from "./pages/MainPage/Test";
 import Main from "./pages/MainPage/Main";
 import SocketProvider from "./global/SocketProvider";
 import LogoutPage from "./pages/logout_page/LogoutPage";
+import Notification from "./components/notification/Notification";
 
 function App() {
   // const [questionId, setQuestionId] = useState("");
@@ -48,6 +49,9 @@ function App() {
             {/* <Route path="/" element={<index />} /> */}
             <Route path="/test" element={<Test />} />
             <Route path="/main" element={<Main />} />
+
+            {/* 알림 페이지 */}
+            <Route path="/notification" element={<Notification />} />
             
             {/* 로그인 페이지 */}
             <Route path="/login" element={<LoginPage />} />

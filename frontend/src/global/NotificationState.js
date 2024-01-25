@@ -7,6 +7,7 @@ export const NotificationState = atom({
     key: "notificationState",
     default: {
         notifications: [],
+        newNotifications: [],
     },
     effects_UNSTABLE: [persistAtom],
 });

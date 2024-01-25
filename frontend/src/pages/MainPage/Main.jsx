@@ -1,44 +1,38 @@
-import { useEffect } from "react";
-import { UserState } from "../../global/UserState";
 import { NotificationState } from "../../global/NotificationState";
 import { useRecoilState, useSetRecoilState } from "recoil";
-import SockJS from "sockjs-client";
-import Stomp from "webstomp-client";
-
-import Notification from "../../components/notification/Notification";
+import axios from "../../api/authAxios";
+import { useEffect } from "react";
 
 function Main() {
 
-    // const [user] = useRecoilState(UserState);
-    // const setNotificationState = useSetRecoilState(NotificationState);
+    const setNotification = useSetRecoilState(NotificationState);
+    const [notificationState, setNotificationState] = useRecoilState(NotificationState);
 
-    // const recvNotification = (notification) => {
-    //     setNotificationState((prevNotificationState) => {
-    //         return {
-    //             notifications: [...prevNotificationState.notifications, notification],
-    //         };
-    //     });
-    // };
+    useEffect(() => {
+        axios.get("/users/notifications")
+        .then((res) => {
+            console.log(res.data);
 
-    // useEffect(() => {
-    //     if(user.accessToken) {
-    //     console.log("user updated!!!!!!!!!!", user);
-    //     const socket = new SockJS("http://localhost:8010/ws/notification");
-    //     const stompClient = Stomp.over(socket);
-    //     stompClient.connect({}, (frame) => {
-    //         stompClient.subscribe(
-    //         `/topic/notification/${user.email}:${user.domain}`,
-    //         (message) => {
-    //             console.log(message);
-    //             recvNotification(JSON.parse(message.body));
-    //         }
-    //         )});
-    //     }
-    // }, [user]);
+            // 기존 알림 상태를 덮어쓰기
+            setNotification({
+                notifications: res.data.filter(notification => notification.readFlag),
+                newNotifications: res.data.filter(notification => !notification.readFlag),
+            });
+        })
+        .catch((err) => {
+            console.log(err);
+        })
+    }, []);
+
+    const handleNotification = () => {
+        window.location.href = "/notification";
+    }
 
     return (
         <div>
-            <Notification />
+            <button type="button" onClick={handleNotification} style={{ backgroundColor: notificationState.newNotifications.length > 0 ? 'red' : 'inherit'}}>
+                알림
+            </button>
         </div>
     );
 }

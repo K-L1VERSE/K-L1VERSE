@@ -17,7 +17,7 @@ const SocketProvider = ({ children }) => {
     const recvNotification = (notification) => {
         setNotificationState((prevNotificationState) => {
             return {
-                notifications: [...prevNotificationState.notifications, notification],
+                newNotifications: [...prevNotificationState.newNotifications, notification],
             };
         });
     };

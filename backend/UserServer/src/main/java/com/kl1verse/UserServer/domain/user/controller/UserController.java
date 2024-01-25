@@ -5,6 +5,7 @@ import com.kl1verse.UserServer.domain.auth.JwtUtil;
 import com.kl1verse.UserServer.domain.auth.dto.res.ReIssueResDto;
 import com.kl1verse.UserServer.domain.notification.dto.req.MessageReqDto;
 import com.kl1verse.UserServer.domain.notification.dto.req.MessageReqDto.NotificationType;
+import com.kl1verse.UserServer.domain.notification.dto.res.NotificationResDto;
 import com.kl1verse.UserServer.domain.notification.service.NotificationService;
 import com.kl1verse.UserServer.domain.user.dto.res.MypageResponseDto;
 import com.kl1verse.UserServer.domain.user.exception.UserException;
@@ -14,6 +15,7 @@ import com.kl1verse.UserServer.domain.user.service.MypageServiceImpl;
 import com.kl1verse.UserServer.global.ResponseCode;
 import jakarta.servlet.http.HttpServletRequest;
 import java.time.LocalDateTime;
+import java.util.List;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.redis.core.StringRedisTemplate;
@@ -80,6 +82,18 @@ public class UserController {
             String accessToken = jwtUtil.createAccessToken(authentication, domain);
             return ResponseEntity.ok().body(new ReIssueResDto(accessToken));
         }
+    }
+
+    @GetMapping("/notifications")
+    public ResponseEntity<List<NotificationResDto>> selectUserNotifications(HttpServletRequest request) {
+        log.info("select user notifications");
+        return ResponseEntity.ok(notificationService.getNotifications(request));
+    }
+
+    @GetMapping("notifications/read")
+    public ResponseEntity<?> readUserNotifications(HttpServletRequest request) {
+        notificationService.readNotifications(request);
+        return ResponseEntity.ok().build();
     }
 
     @GetMapping("/notifications/test")
