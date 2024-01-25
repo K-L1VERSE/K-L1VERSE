@@ -1,9 +1,7 @@
-package com.KL1verse.Board.dto.req;
+package com.KL1verse.Comment.dto.req;
 
-import com.KL1verse.Board.repository.entity.Board.BoardType;
-import com.KL1verse.Comment.dto.req.CommentDTO;
 import java.time.LocalDateTime;
-import java.util.Date;
+import java.util.List;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -15,16 +13,15 @@ import lombok.Setter;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class BoardDTO {
-
-    private Long boardId;
-    private BoardType boardType;
-    private String title;
+public class CommentDTO {
+    private Long commentId;
+    private Long userId;
     private String content;
+    private Long boardId;
+    private Long parentId;
+    private List<CommentDTO> replies;
     private LocalDateTime createAt;
     private LocalDateTime updateAt;
     private LocalDateTime deleteAt;
-
-
 
 }

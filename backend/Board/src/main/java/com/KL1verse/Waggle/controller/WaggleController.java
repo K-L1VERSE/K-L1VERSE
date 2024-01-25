@@ -1,5 +1,6 @@
 package com.KL1verse.Waggle.controller;
 
+import com.KL1verse.Board.dto.req.SearchBoardConditionDto;
 import com.KL1verse.Waggle.dto.req.WaggleDTO;
 import com.KL1verse.Waggle.service.WaggleService;
 import java.util.List;
@@ -13,6 +14,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 @Slf4j
@@ -42,8 +44,8 @@ public class WaggleController {
 
     // Waggle 업데이트 by ID
     @PutMapping("/{boardId}")
-    public ResponseEntity<WaggleDTO> updateWaggle(@PathVariable Long waggleId, @RequestBody WaggleDTO waggleDto) {
-        WaggleDTO updatedWaggle = waggleService.updateWaggle(waggleId, waggleDto);
+    public ResponseEntity<WaggleDTO> updateWaggle(@PathVariable Long boardId, @RequestBody WaggleDTO waggleDto) {
+        WaggleDTO updatedWaggle = waggleService.updateWaggle(boardId, waggleDto);
         return ResponseEntity.ok(updatedWaggle);
     }
 
@@ -66,4 +68,14 @@ public class WaggleController {
         List<WaggleDTO> recentWaggles = waggleService.getMostRecentWaggles(count);
         return ResponseEntity.ok(recentWaggles);
     }
+    @GetMapping("/search")
+    public ResponseEntity<List<WaggleDTO>> searchWaggles(@RequestParam(required = false) String keyword) {
+        SearchBoardConditionDto searchCondition = SearchBoardConditionDto.builder()
+            .keyword(keyword)
+            .build();
+        List<WaggleDTO> waggles = waggleService.searchWaggles(searchCondition);
+        return ResponseEntity.ok(waggles);
+    }
+
+
 }

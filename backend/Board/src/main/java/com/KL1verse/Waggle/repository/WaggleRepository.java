@@ -11,5 +11,5 @@ public interface WaggleRepository extends JpaRepository<Waggle, Long> {
     List<Waggle> findByBoard_BoardType(Board.BoardType boardType);
 
     List<Waggle> findByBoard_BoardId(Long boardId);
-
+    List<Waggle> findByBoard_TitleContainingOrBoard_ContentContaining(String titleKeyword, String contentKeyword);
 }

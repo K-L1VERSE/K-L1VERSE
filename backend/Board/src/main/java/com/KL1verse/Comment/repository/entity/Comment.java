@@ -1,47 +1,56 @@
-package com.KL1verse.Board.repository.entity;
+package com.KL1verse.Comment.repository.entity;
 
+import com.KL1verse.Board.repository.entity.Board;
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
-import jakarta.persistence.EnumType;
-import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToMany;
 import java.time.LocalDateTime;
+import java.util.List;
+
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import lombok.ToString;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
-
-@Entity(name = "board")
+@Entity(name = "comment")
 @Getter
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
 @Setter
-@ToString
-public class Board {
-
-    public enum BoardType {
-        WAGGLE, MATE, PRODUCT
-    }
+public class Comment {
 
     @Id
-    @Column(name = "board_id")
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long boardId;
+    @Column(name = "comment_id")
+    private Long commentId;
 
-    @Enumerated(EnumType.STRING)
-    @Column(name = "board_type")
-    private BoardType boardType;
+    @Column(name = "user_id")
+    private Long userId;
 
-    private String title;
+    @Column(name = "content")
     private String content;
+
+    @ManyToOne
+    @JoinColumn(name = "board_id")
+    private Board boardId;
+
+    @ManyToOne
+    @JoinColumn(name = "parent_id")
+    private Comment parentId;
+
+    //대댓글 목록
+    @OneToMany(mappedBy = "parentId", cascade = CascadeType.ALL)
+    private List<Comment> replies;
 
     @CreationTimestamp
     @Column(name = "create_at")
@@ -53,11 +62,4 @@ public class Board {
 
     @Column(name = "delete_at")
     private LocalDateTime deleteAt;
-
-//    @ManyToOne
-//    @JoinColumn(name = "user_id")
-    private String user;
-
-
-
 }

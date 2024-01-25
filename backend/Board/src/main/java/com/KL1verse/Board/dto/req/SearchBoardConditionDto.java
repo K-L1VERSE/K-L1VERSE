@@ -1,4 +1,4 @@
-package com.KL1verse.Waggle.dto.req;
+package com.KL1verse.Board.dto.req;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -11,10 +11,10 @@ import lombok.Setter;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class WaggleLikeDTO {
+public class SearchBoardConditionDto {
 
-  private Long likesId;
-  private Long userId;
-  private Long waggleId;
+    private String keyword; // 검색어 필드
+
+
 
 }

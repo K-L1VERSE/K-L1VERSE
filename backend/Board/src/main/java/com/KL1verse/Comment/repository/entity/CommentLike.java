@@ -1,4 +1,4 @@
-package com.KL1verse.Waggle.repository.entity;
+package com.KL1verse.Comment.repository.entity;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -7,32 +7,31 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
-import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-@Entity
-@Table(name = "wagglelike")
+@Entity(name = "Waggle_colikes")
 @Getter
-@Setter
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class WaggleLike {
+@Setter
+public class CommentLike {
+
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "likes_id")
-    private Long likesId;
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    @Column(name = "comment_like_id")
+    private Long commentLikeId;
 
     @Column(name = "user_id")
     private Long userId;
 
     @ManyToOne
-    @JoinColumn(name = "waggle_id")
-    private Waggle waggleId;
+    @JoinColumn(name = "comment_id")
+    private Comment commentId;
 
 
 }
