@@ -1,50 +1,46 @@
 import React, { useState } from "react";
 import axios from "../../api/axios";
 
-function CommentForm({ boardId, parentId, onCommentSubmit }) {
-  const [commentContent, setCommentContent] = useState("");
+const CommentForm = ({ boardId, parentId, onCommentSubmit }) => {
+  const [content, setContent] = useState("");
 
-  const handleCommentSubmit = async (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
 
     try {
-      const response = await axios.post("/comments", {
-        content: commentContent,
-        boardId: boardId,
-        parentId: parentId || null,
-      });
+      const response = await axios.post(
+        "/comments/" + (parentId ? parentId : boardId),
+        {
+          content: content,
+        },
+      );
 
-      // 댓글 입력 필드를 비웁니다.
-      setCommentContent("");
+      console.log("댓글이 작성되었습니다!");
+      console.log("댓글 내용:", response.data.content);
 
-      // 부모 컴포넌트에 새 댓글을 알립니다.
-      if (onCommentSubmit) {
-        onCommentSubmit(response.data);
-      }
+      // 서버로부터 새로운 댓글 데이터를 받아와 부모 컴포넌트로 전달
+      onCommentSubmit(response.data);
+
+      // 작성된 댓글 내용 초기화
+      setContent("");
     } catch (error) {
       console.error("댓글 작성 중 에러 발생:", error);
     }
   };
 
   return (
-    <div>
-      <h2>{parentId ? "대댓글 작성하기" : "댓글 작성하기"}</h2>
-      <form onSubmit={handleCommentSubmit}>
+    <form onSubmit={handleSubmit}>
+      <label>
+        댓글 내용:
         <textarea
-          value={commentContent}
-          onChange={(e) => setCommentContent(e.target.value)}
-          placeholder={
-            parentId ? "대댓글을 작성하세요..." : "댓글을 작성하세요..."
-          }
+          value={content}
+          onChange={(e) => setContent(e.target.value)}
           required
         />
-        <br />
-        <button type="submit">
-          {parentId ? "대댓글 작성하기" : "댓글 작성하기"}
-        </button>
-      </form>
-    </div>
+      </label>
+      <button type="submit">댓글 작성</button>
+    </form>
   );
-}
+};
 
 export default CommentForm;

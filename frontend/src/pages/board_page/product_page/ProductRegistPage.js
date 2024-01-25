@@ -1,5 +1,5 @@
 // import React, { useState, useEffect } from "react";
-// import { useNavigate, useParams, useLocation } from "react-router-dom";
+// import { useNavigate, useLocation } from "react-router-dom";
 // import axios from "../../../api/axios";
 // import BoardTopNavBar from "../../../components/Board/BoardTopNavBar";
 
@@ -7,7 +7,6 @@
 
 // function ProductRegistPage() {
 //   const navigate = useNavigate();
-//   // const { productId } = useParams();
 
 //   const [title, setTitle] = useState("");
 //   const [content, setContent] = useState("");
@@ -17,7 +16,7 @@
 //   let boardId = location.state ? location.state.boardId : null;
 
 //   useEffect(() => {
-//     // productId 제공되는 경우, 수정 모드임을 나타냄
+//     // boardId가 제공되는 경우, 수정 모드임을 나타냄
 //     if (boardId) {
 //       // 기존 product 게시물을 가져와서 폼을 채움
 //       boardApi
@@ -65,7 +64,7 @@
 //             const boardTemp = response.data.board;
 //             boardId = boardTemp.boardId;
 //             // Product 상세 페이지로 리디렉션
-//             navigate(`/prodcuts/${boardId}`);
+//             navigate(`/products/${boardId}`);
 //           })
 //           .catch((error) => {
 //             console.log(error);

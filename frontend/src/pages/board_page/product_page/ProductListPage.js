@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import { useNavigate, Link } from "react-router-dom";
 import axios from "../../../api/axios";
 import BoardTopNavBar from "../../../components/Board/BoardTopNavBar";
@@ -6,28 +6,61 @@ import BoardTopNavBar from "../../../components/Board/BoardTopNavBar";
 function ProductListPage() {
   const navigate = useNavigate();
   const [productList, setProductList] = useState([]);
+  const [page, setPage] = useState(0);
+  const [hasMore, setHasMore] = useState(true);
+  const [loading, setLoading] = useState(false);
 
   /* Product 전체 글 가져오기 */
+  const fetchProductList = useCallback(async () => {
+    try {
+      setLoading(true);
+      const response = await axios.get(`/products/pages?page=${page}&size=30`);
+      const newProducts = response.data.content;
 
-  const getProductList = () => {
-    axios
-      .get(`/products`)
-      .then(({ data }) => {
-        setProductList(data);
-      })
-      .catch((err) => {
-        console.log("Product 게시판 목록을 불러오는 중 에러 발생:", err);
-      });
-  };
+      if (newProducts.length === 0) {
+        // 새로 불러온 데이터가 없으면 더 이상 불러올 데이터가 없다고 설정
+        setHasMore(false);
+      } else {
+        setProductList((prevProducts) => [...prevProducts, ...newProducts]);
+      }
+    } catch (error) {
+      console.log("Product 게시판 목록을 불러오는 중 에러 발생:", error);
+    } finally {
+      setLoading(false);
+    }
+  }, [page]);
 
   useEffect(() => {
-    getProductList();
-  }, []);
+    if (hasMore) {
+      // hasMore가 true일 때만 추가 데이터를 불러오도록 설정
+      fetchProductList();
+    }
+  }, [hasMore, fetchProductList]);
 
   function handleRegistProductClick() {
     // "중고거래 글 작성" 버튼 클릭 시 ProductRegistPage로 이동
     navigate("/productRegist");
   }
+
+  const handleScroll = () => {
+    const windowHeight = window.innerHeight;
+    const documentHeight = document.documentElement.scrollHeight;
+    const scrollTop = window.scrollY;
+    const distanceFromBottom = documentHeight - scrollTop - windowHeight;
+
+    if (distanceFromBottom < 200 && !loading && hasMore) {
+      // 스크롤이 아래에 도달하면 다음 페이지의 데이터를 불러옴
+      setPage((prevPage) => prevPage + 1);
+    }
+  };
+
+  useEffect(() => {
+    window.addEventListener("scroll", handleScroll);
+
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+    };
+  }, [handleScroll]);
 
   return (
     <div>
@@ -42,8 +75,8 @@ function ProductListPage() {
           </tr>
         </thead>
         <tbody>
-          {productList.map((product) => (
-            <tr key={product.board.boardId}>
+          {productList.map((product, index) => (
+            <tr key={index}>
               {/* 클릭 시 상세 페이지로 이동하도록 Link 사용 */}
               <td>
                 <Link to={`/products/${product.board.boardId}`}>
@@ -55,6 +88,8 @@ function ProductListPage() {
           ))}
         </tbody>
       </table>
+      {loading && <p>Loading...</p>}
+      {!hasMore && <p>No more data</p>}
     </div>
   );
 }
