@@ -7,16 +7,15 @@ import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.PrePersist;
-import jakarta.persistence.PreUpdate;
-import java.util.Date;
+import java.time.LocalDateTime;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
-
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
 
 
 @Entity(name = "board")
@@ -44,40 +43,21 @@ public class Board {
     private String title;
     private String content;
 
+    @CreationTimestamp
     @Column(name = "create_at")
-    private Date createAt;
+    private LocalDateTime createAt;
 
+    @UpdateTimestamp
     @Column(name = "update_at")
-    private Date updateAt;
+    private LocalDateTime updateAt;
 
     @Column(name = "delete_at")
-    private Date deleteAt;
+    private LocalDateTime deleteAt;
 
 //    @ManyToOne
 //    @JoinColumn(name = "user_id")
     private String user;
 
 
-    @PrePersist
-    protected void onCreate() {
-        this.createAt = new Date();
-    }
 
-    @PreUpdate
-    protected void onUpdate() {
-        this.updateAt = new Date();
-    }
-
-    // Entity Listener Class
-    public static class BoardEntityListener {
-        @PrePersist
-        public void prePersist(Board board) {
-            board.onCreate();
-        }
-
-        @PreUpdate
-        public void preUpdate(Board board) {
-            board.onUpdate();
-        }
-    }
 }

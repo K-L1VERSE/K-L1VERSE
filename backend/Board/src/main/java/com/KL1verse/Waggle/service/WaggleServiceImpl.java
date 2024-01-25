@@ -2,6 +2,7 @@
 package com.KL1verse.Waggle.service;
 
 import com.KL1verse.Board.dto.req.BoardDTO;
+import com.KL1verse.Board.dto.req.SearchBoardConditionDto;
 import com.KL1verse.Board.repository.BoardRepository;
 import com.KL1verse.Board.repository.entity.Board;
 import com.KL1verse.Waggle.dto.req.WaggleDTO;
@@ -88,6 +89,24 @@ public class WaggleServiceImpl implements WaggleService {
             .map(this::convertToDTO)
             .collect(Collectors.toList());
 }
+
+    @Override
+    public List<WaggleDTO> searchWaggles(SearchBoardConditionDto searchCondition) {
+        List<Waggle> waggles;
+
+        if (searchCondition != null && searchCondition.getKeyword() != null) {
+            // If keyword is provided, search for posts containing the keyword
+            waggles = waggleRepository.findByBoard_TitleContainingOrBoard_ContentContaining(searchCondition.getKeyword(), searchCondition.getKeyword());
+        } else {
+            // If no keyword provided, get all posts
+            waggles = waggleRepository.findAll();
+        }
+
+        // Convert the entities to DTOs
+        return waggles.stream()
+            .map(this::convertToDTO)
+            .collect(Collectors.toList());
+    }
 
 
 

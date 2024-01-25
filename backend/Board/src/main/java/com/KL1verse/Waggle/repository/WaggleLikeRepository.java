@@ -13,4 +13,5 @@ public interface WaggleLikeRepository extends JpaRepository<WaggleLike, Long> {
   Optional<WaggleLike> findByUserIdAndWaggleId_WaggleId(Long userId, Long waggleId);
 
   void deleteByWaggleIdAndUserId(Waggle waggle, Long userId);
+
 }

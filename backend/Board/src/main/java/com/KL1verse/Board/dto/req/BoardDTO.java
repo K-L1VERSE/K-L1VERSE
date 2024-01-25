@@ -2,6 +2,7 @@ package com.KL1verse.Board.dto.req;
 
 import com.KL1verse.Board.repository.entity.Board.BoardType;
 import com.KL1verse.Comment.dto.req.CommentDTO;
+import java.time.LocalDateTime;
 import java.util.Date;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -20,9 +21,9 @@ public class BoardDTO {
     private BoardType boardType;
     private String title;
     private String content;
-    private Date createAt;
-    private Date updateAt;
-    private Date deleteAt;
+    private LocalDateTime createAt;
+    private LocalDateTime updateAt;
+    private LocalDateTime deleteAt;
 
 
 

@@ -1,5 +1,6 @@
 package com.KL1verse.Waggle.controller;
 
+import com.KL1verse.Board.dto.req.SearchBoardConditionDto;
 import com.KL1verse.Waggle.dto.req.WaggleDTO;
 import com.KL1verse.Waggle.service.WaggleService;
 import java.util.List;
@@ -13,6 +14,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 @Slf4j
@@ -60,7 +62,14 @@ public class WaggleController {
         List<WaggleDTO> waggles = waggleService.getAllWaggleList();
         return ResponseEntity.ok(waggles);
     }
-
+    @GetMapping("/search")
+    public ResponseEntity<List<WaggleDTO>> searchWaggles(@RequestParam(required = false) String keyword) {
+        SearchBoardConditionDto searchCondition = SearchBoardConditionDto.builder()
+            .keyword(keyword)
+            .build();
+        List<WaggleDTO> waggles = waggleService.searchWaggles(searchCondition);
+        return ResponseEntity.ok(waggles);
+    }
 
 
 }
