@@ -7,7 +7,7 @@ function RecentProductCard() {
   useEffect(() => {
     // 최근 2개의 waggle 게시물을 가져오는 API 호출
     axios
-      .get("/api/recent-products")
+      .get("/products/recent/2")
       .then((response) => {
         // API에서 받아온 데이터 중 최근 2개만 추출
         const recentTwoProducts = response.data.slice(0, 2);
