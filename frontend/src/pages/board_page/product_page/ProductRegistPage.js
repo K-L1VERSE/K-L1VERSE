@@ -7,7 +7,7 @@ import * as boardApi from "../../../api/product";
 
 function ProductRegistPage() {
   const navigate = useNavigate();
-  const { productId } = useParams();
+  // const { productId } = useParams();
 
   const [title, setTitle] = useState("");
   const [content, setContent] = useState("");
@@ -31,7 +31,7 @@ function ProductRegistPage() {
           console.error("Product 게시물을 불러오는 중 에러 발생:", error);
         });
     }
-  }, [productId]);
+  }, [boardId]);
 
   const handleSubmit = async (event) => {
     event.preventDefault();

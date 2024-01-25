@@ -53,7 +53,7 @@ function WaggleRegistPage() {
       if (isUpdateMode) {
         // 기존 waggle 게시물 업데이트
         axios
-          .put(`/waggle/${boardId}`, requestData.board)
+          .put(`/waggles/${boardId}`, requestData.board)
           .then((response) => {
             console.log("Waggle 게시물 수정 성공!");
             console.log(response);
@@ -64,7 +64,7 @@ function WaggleRegistPage() {
       } else {
         // 새로운 waggle 게시물 생성
         axios
-          .post("/waggle", requestData)
+          .post("/waggles", requestData)
           .then((response) => {
             console.log("Waggle 게시물 작성 성공!");
             const boardTemp = response.data.board;

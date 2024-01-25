@@ -12,7 +12,7 @@ function WaggleListPage() {
   useEffect(() => {
     const getWaggleList = () => {
       axios
-        .get(`/waggle`)
+        .get(`/waggles`)
         .then(({ data }) => {
           setWaggleList(data);
         })

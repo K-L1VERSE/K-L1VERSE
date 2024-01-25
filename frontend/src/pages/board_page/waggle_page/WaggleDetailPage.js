@@ -13,7 +13,7 @@ function WaggleDetailPage() {
   function getWaggleDetail() {
     console.log(boardId);
     axios
-      .get(`/waggle/${boardId}`)
+      .get(`/waggles/${boardId}`)
       .then(({ data }) => {
         console.log("received data");
         setWaggleDetail(data.board);

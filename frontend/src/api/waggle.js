@@ -5,7 +5,7 @@ export function getBoard(boardId) {
   return new Promise((resolve, reject) => {
     // 이건 다른 페이지에서 가져다 쓸 때 chaining 하려고 promise로 반환해주는거
     axios // 그래서 바로 쓸꺼면 여기부터
-      .get(`/waggle/${boardId}`)
+      .get(`/waggles/${boardId}`)
       .then((response) => {
         console.log("got response");
         console.log(response);
@@ -20,7 +20,7 @@ export function getBoard(boardId) {
 export function createBoard(board) {
   return new Promise((resolve, reject) => {
     axios
-      .post("/waggle", board)
+      .post("/waggles", board)
       .then((response) => {
         console.log("got response");
         console.log(response);
@@ -35,7 +35,7 @@ export function createBoard(board) {
 export function updateBoard(board) {
   return new Promise((resolve, reject) => {
     axios
-      .put(`/waggle/${board.boardId}`, board)
+      .put(`/waggles/${board.boardId}`, board)
       .then((response) => {
         console.log("got response");
         console.log(response);
