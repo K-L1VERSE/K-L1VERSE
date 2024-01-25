@@ -1,48 +1,76 @@
 import React, { useState, useEffect } from "react";
-import { useNavigate, useParams } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 import axios from "../../../api/axios";
 import BoardTopNavBar from "../../../components/Board/BoardTopNavBar";
 
+import * as boardApi from "../../../api/mate";
+
 function MateRegistPage() {
   const navigate = useNavigate();
-  const { mateId } = useParams();
+  // const { mateId } = useParams();
 
   const [title, setTitle] = useState("");
   const [content, setContent] = useState("");
   const [isUpdateMode, setIsUpdateMode] = useState(false);
 
+  const location = useLocation();
+  let boardId = location.state ? location.state.boardId : null;
+
   useEffect(() => {
     // mateId 제공되는 경우, 수정 모드임을 나타냄
-    if (mateId) {
+    if (boardId) {
       // 기존 mate 게시물을 가져와서 폼을 채움
-      axios
-        .get(`/mates/${mateId}`)
-        .then(({ data }) => {
-          setTitle(data.title);
-          setContent(data.content);
+      boardApi
+        .getBoard(boardId)
+        .then((data) => {
+          setTitle(data.board.title);
+          setContent(data.board.content);
           setIsUpdateMode(true);
         })
-        .catch((error) => {
-          console.error("Mate 게시물을 불러오는 중 에러 발생:", error);
+        .catch((e) => {
+          console.log("Mate 게시물을 불러오는 중 에러 발생:", e);
         });
     }
-  }, [mateId, navigate]);
+  }, [boardId]);
 
   const handleSubmit = async (event) => {
     event.preventDefault();
 
     try {
+      const requestData = {
+        board: {
+          boardType: "WAGGLE",
+          title: title,
+          content: content,
+        },
+      };
+
       if (isUpdateMode) {
-        // 기존 mate 게시물을 업데이트
-        await axios.post(`/mates/${mateId}`, { title, content });
-        console.log("Mate 게시물 수정 성공!");
+        // 기존 mate 게시물 업데이트
+        axios
+          .put(`/mates/${boardId}`, requestData.board)
+          .then((response) => {
+            console.log("Mate 게시물 수정 성공!");
+            console.log(response);
+          })
+          .catch((error) => {
+            console.log(error);
+          });
       } else {
         // 새로운 mate 게시물 생성
-        await axios.post(`/mates`, { title, content });
-        console.log("Mate 게시물 작성 성공!");
+        axios
+          .post("/mates", requestData)
+          .then((response) => {
+            console.log("Mate 게시물 작성 성공!");
+            const boardTemp = response.data.board;
+            boardId = boardTemp.boardId;
+            // Mate 상세 페이지로 리디렉션
+            navigate(`/mates/${boardId}`);
+          })
+          .catch((error) => {
+            console.log(error);
+          });
       }
-      // Mate 상세  페이지로 리디렉션
-      navigate("/mate/:mateId");
     } catch (error) {
       console.error("Mate 게시물 작성 또는 수정 중 에러 발생:", error);
     }

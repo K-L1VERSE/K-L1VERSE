@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 @Slf4j
 @RestController
-@RequestMapping("/mateboard")
+@RequestMapping("/mates")
 public class MateController {
 
     private final MateService mateService;

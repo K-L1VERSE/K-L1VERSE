@@ -29,10 +29,6 @@ function WaggleListPage() {
     navigate("/waggleRegist");
   }
 
-  function handleUpdateWaggle() {
-    navigate("/waggleRegist");
-  }
-
   return (
     <div>
       <BoardTopNavBar />

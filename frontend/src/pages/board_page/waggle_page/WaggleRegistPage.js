@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { useNavigate, useParams, Link, useLocation } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 import axios from "../../../api/axios";
 import BoardTopNavBar from "../../../components/Board/BoardTopNavBar";
 
@@ -53,7 +53,7 @@ function WaggleRegistPage() {
       if (isUpdateMode) {
         // 기존 waggle 게시물 업데이트
         axios
-          .put(`/waggle/${board.boardId}`, requestData)
+          .put(`/waggle/${boardId}`, requestData.board)
           .then((response) => {
             console.log("Waggle 게시물 수정 성공!");
             console.log(response);

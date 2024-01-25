@@ -1,7 +1,9 @@
 import React, { useState, useEffect } from "react";
-import { useNavigate, useParams } from "react-router-dom";
+import { useNavigate, useParams, useLocation } from "react-router-dom";
 import axios from "../../../api/axios";
 import BoardTopNavBar from "../../../components/Board/BoardTopNavBar";
+
+import * as boardApi from "../../../api/product";
 
 function ProductRegistPage() {
   const navigate = useNavigate();
@@ -11,38 +13,64 @@ function ProductRegistPage() {
   const [content, setContent] = useState("");
   const [isUpdateMode, setIsUpdateMode] = useState(false);
 
+  const location = useLocation();
+  let boardId = location.state ? location.state.boardId : null;
+
   useEffect(() => {
     // productId 제공되는 경우, 수정 모드임을 나타냄
-    if (productId) {
+    if (boardId) {
       // 기존 product 게시물을 가져와서 폼을 채움
-      axios
-        .get(`/products/${productId}`)
-        .then(({ data }) => {
-          setTitle(data.title);
-          setContent(data.content);
+      boardApi
+        .get(boardId)
+        .then((data) => {
+          setTitle(data.board.title);
+          setContent(data.board.content);
           setIsUpdateMode(true);
         })
         .catch((error) => {
           console.error("Product 게시물을 불러오는 중 에러 발생:", error);
         });
     }
-  }, [productId, navigate]);
+  }, [productId]);
 
   const handleSubmit = async (event) => {
     event.preventDefault();
 
     try {
+      const requestData = {
+        board: {
+          boardType: "PRODUCT",
+          title: title,
+          content: content,
+        },
+      };
+
       if (isUpdateMode) {
-        // 기존 product 게시물을 업데이트
-        await axios.put(`/products/${productId}`, { title, content });
-        console.log("Product 게시물 수정 성공!");
+        // 기존 product 게시물 업데이트
+        axios
+          .put(`/products/${boardId}`, requestData.board)
+          .then((response) => {
+            console.log("Product 게시물 수정 성공!");
+            console.log(response);
+          })
+          .catch((error) => {
+            console.log(error);
+          });
       } else {
         // 새로운 product 게시물 생성
-        await axios.post(`/products`, { title, content });
-        console.log("Product 게시물 작성 성공!");
+        axios
+          .post("/products", requestData)
+          .then((response) => {
+            console.log("Product 게시물 작성 성공!");
+            const boardTemp = response.data.board;
+            boardId = boardTemp.boardId;
+            // Product 상세 페이지로 리디렉션
+            navigate(`/prodcuts/${boardId}`);
+          })
+          .catch((error) => {
+            console.log(error);
+          });
       }
-      // Product 상세 페이지로 리디렉션
-      navigate("/product/:productId");
     } catch (error) {
       console.error("Product 게시물 작성 또는 수정 중 에러 발생:", error);
     }

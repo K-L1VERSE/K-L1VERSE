@@ -13,7 +13,7 @@ function MateListPage() {
   useEffect(() => {
     const getMateList = () => {
       axios
-        .get(`/mate`)
+        .get(`/mates`)
         .then(({ data }) => {
           setMateList(data);
         })
@@ -48,15 +48,15 @@ function MateListPage() {
           </tr>
         </thead>
         <tbody>
-          {mateList.map((waggle) => (
-            <tr key={waggle.board.boardId}>
+          {mateList.map((mate) => (
+            <tr key={mate.board.boardId}>
               {/* 클릭 시 상세 페이지로 이동하도록 Link 사용 */}
               <td>
-                <Link to={`/waggle/${waggle.board.boardId}`}>
-                  {waggle.board.title}
+                <Link to={`/mates/${mate.board.boardId}`}>
+                  {mate.board.title}
                 </Link>
               </td>
-              <td>{waggle.board.content}</td>
+              <td>{mate.board.content}</td>
             </tr>
           ))}
         </tbody>
