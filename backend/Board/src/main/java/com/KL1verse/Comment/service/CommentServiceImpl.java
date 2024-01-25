@@ -7,6 +7,7 @@ import com.KL1verse.Board.repository.entity.Board;
 import com.KL1verse.Comment.dto.req.CommentDTO;
 import com.KL1verse.Comment.repository.CommentRepository;
 import com.KL1verse.Comment.repository.entity.Comment;
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.stream.Collectors;
 import org.springframework.beans.BeanUtils;
@@ -65,9 +66,19 @@ public class CommentServiceImpl implements CommentService {
         return convertToDTO(updatedComment);
     }
 
+//    @Override
+//    public void deleteComment(Long commentId) {
+//        commentRepository.deleteById(commentId);
+//    }
+
     @Override
     public void deleteComment(Long commentId) {
-        commentRepository.deleteById(commentId);
+        Comment existingComment = commentRepository.findById(commentId)
+            .orElseThrow(() -> new RuntimeException("Comment not found with id: " + commentId));
+
+        // delete_at 필드를 현재 타임스탬프로 설정하여 소프트 삭제
+        existingComment.setDeleteAt(LocalDateTime.now());
+        commentRepository.save(existingComment);
     }
 
 

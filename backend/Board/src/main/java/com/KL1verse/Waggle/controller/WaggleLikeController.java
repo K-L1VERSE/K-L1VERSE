@@ -6,7 +6,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("/waggle")
+@RequestMapping("/waggles")
 public class WaggleLikeController {
 
     private final WaggleLikeService waggleLikeService;

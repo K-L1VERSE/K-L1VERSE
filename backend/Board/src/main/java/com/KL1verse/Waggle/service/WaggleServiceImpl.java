@@ -8,6 +8,7 @@ import com.KL1verse.Board.repository.entity.Board;
 import com.KL1verse.Waggle.dto.req.WaggleDTO;
 import com.KL1verse.Waggle.repository.WaggleRepository;
 import com.KL1verse.Waggle.repository.entity.Waggle;
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.stream.Collectors;
 import org.springframework.beans.BeanUtils;
@@ -52,8 +53,13 @@ public class WaggleServiceImpl implements WaggleService {
     @Override
     public void deleteWaggle(Long boardId) {
         Waggle waggleToDelete = findWaggleByBoardId(boardId);
+
+        if(waggleToDelete != null) {
+            waggleToDelete.getBoard().setDeleteAt(LocalDateTime.now());
+        }
         waggleRepository.deleteById(waggleToDelete.getWaggleId());
     }
+
 
     @Override
     public Page<WaggleDTO> searchWaggles(SearchBoardConditionDto searchCondition, Pageable pageable) {
@@ -79,11 +85,11 @@ public class WaggleServiceImpl implements WaggleService {
     }
 
     private Waggle findWaggleByBoardId(Long boardId) {
-        List<Waggle> waggles = (List<Waggle>) waggleRepository.findByBoard_BoardId(boardId, Pageable.unpaged());
+        Page<Waggle> waggles = waggleRepository.findByBoard_BoardId(boardId, Pageable.unpaged());
         if (waggles.isEmpty()) {
             throw new RuntimeException("Waggle not found with boardId: " + boardId);
         }
-        return waggles.get(0);
+        return waggles.getContent().get(0);
     }
 
     private Board saveBoard(Board board) {

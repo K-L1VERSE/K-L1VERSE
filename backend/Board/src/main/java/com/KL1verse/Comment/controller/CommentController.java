@@ -5,6 +5,7 @@ import com.KL1verse.Comment.dto.req.CommentLikeDTO;
 import com.KL1verse.Comment.service.CommentLikeService;
 import com.KL1verse.Comment.service.CommentService;
 import java.util.List;
+import java.util.stream.Collectors;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -60,9 +61,14 @@ public class CommentController {
 
     @GetMapping("/list/{boardId}")
     public ResponseEntity<List<CommentDTO>> getAllCommentsByBoardId(@PathVariable Long boardId) {
-        List<CommentDTO> comments = commentService.getAllCommentsByBoardId(boardId);
+        List<CommentDTO> comments = commentService.getAllCommentsByBoardId(boardId)
+            .stream()
+            .filter(comment -> comment.getDeleteAt() == null) // delete_at이 비어 있으면 포함
+            .collect(Collectors.toList());
+
         return ResponseEntity.ok(comments);
     }
+
 
     // Create Reply for a Comment
     @PostMapping("/{parentCommentId}/replies")
