@@ -19,7 +19,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 @Slf4j
 @RestController
-@RequestMapping("/waggle")
+@RequestMapping("/waggles")
 public class WaggleController {
 
     private final WaggleService waggleService;

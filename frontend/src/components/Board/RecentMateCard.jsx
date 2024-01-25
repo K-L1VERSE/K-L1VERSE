@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import axios from "axios";
+import axios from "../../api/axios";
 
 function RecentMateCard() {
   const [recentMates, setRecentMates] = useState([]);
@@ -7,7 +7,7 @@ function RecentMateCard() {
   useEffect(() => {
     // 최근 2개의 waggle 게시물을 가져오는 API 호출
     axios
-      .get("/api/recent-products")
+      .get("/producs/recent/2")
       .then((response) => {
         // API에서 받아온 데이터 중 최근 2개만 추출
         const recentTwoMates = response.data.slice(0, 2);

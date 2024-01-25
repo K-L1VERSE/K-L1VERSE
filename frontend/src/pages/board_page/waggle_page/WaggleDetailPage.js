@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import axios from "../../../api/axios";
 import BoardTopNavBar from "../../../components/Board/BoardTopNavBar";
+import CommentList from "../../../components/Board/CommentList"; // 추가
 
 function WaggleDetailPage() {
   const [waggleDetail, setWaggleDetail] = useState({});
@@ -11,11 +12,9 @@ function WaggleDetailPage() {
 
   /* waggle 상세 정보 가져오기 */
   function getWaggleDetail() {
-    console.log(boardId);
     axios
       .get(`/waggles/${boardId}`)
       .then(({ data }) => {
-        console.log("received data");
         setWaggleDetail(data.board);
         setWaggleId(data.waggleId);
       })
@@ -25,12 +24,10 @@ function WaggleDetailPage() {
   }
 
   useEffect(() => {
-    console.log("boardId:" + boardId);
     getWaggleDetail();
   }, [boardId]);
 
   function handleUpdateBtn() {
-    console.log(waggleDetail.boardId);
     navigate("/waggleRegist", { state: { boardId: waggleDetail.boardId } });
   }
 
@@ -45,6 +42,9 @@ function WaggleDetailPage() {
         <strong>Content:</strong> {waggleDetail.content}
       </p>
       <div onClick={() => handleUpdateBtn()}>수정하기</div>
+
+      {/* 댓글 목록을 표시하는 컴포넌트 추가 */}
+      <CommentList boardId={boardId} />
     </div>
   );
 }
