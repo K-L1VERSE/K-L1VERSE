@@ -33,4 +33,11 @@ public class GatewayApplication {
 			.build();
 	}
 
+	@Bean
+	public RouterFunction<ServerResponse> getLogoutRoute() {
+		return route("LOGOUT-SERVICE")
+			.route(path("/auth/**"), http("http://localhost:8010"))
+			.build();
+	}
+
 }

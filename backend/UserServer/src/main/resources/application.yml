@@ -34,6 +34,13 @@ spring:
       key-serializer: org.apache.kafka.common.serialization.StringSerializer
       value-serializer: org.apache.kafka.common.serialization.StringSerializer
 
+  # redis 설정
+  data:
+    redis:
+      host: i10a409.p.ssafy.io
+      port: 6379
+      password: redis
+
 oauth:
   google:
     client-id: 651679120216-gedguefmg8lgjhi8vul42c48r9305mol.apps.googleusercontent.com
@@ -69,3 +76,11 @@ cloud:
     region:
       static: ap-northeast-2
 
+jwt:
+  secretKey: 413F4428472B4B6250655368566D5970337336763979244226452948404D6351
+  # 배포
+  accessExpirationTime: 3600 # 1시간
+  refreshExpirationTime: 86400 # 1일
+  # 로컬
+#  accessExpirationTime: 10 # 10초
+#  refreshExpirationTime: 60 # 60초

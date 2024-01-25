@@ -7,14 +7,26 @@ import com.kl1verse.UserServer.domain.auth.dto.res.SignInResDto;
 import com.kl1verse.UserServer.domain.auth.exception.TokenException;
 import com.kl1verse.UserServer.domain.auth.repository.TokenRepository;
 import com.kl1verse.UserServer.domain.auth.repository.entity.Token;
+import com.kl1verse.UserServer.domain.notification.dto.req.MessageReqDto;
+import com.kl1verse.UserServer.domain.notification.dto.req.MessageReqDto.NotificationType;
+import com.kl1verse.UserServer.domain.notification.service.NotificationService;
 import com.kl1verse.UserServer.domain.user.exception.UserException;
 import com.kl1verse.UserServer.domain.user.repository.UserRepository;
 import com.kl1verse.UserServer.domain.user.repository.entity.User;
 import com.kl1verse.UserServer.global.ResponseCode;
 import jakarta.servlet.http.HttpServletRequest;
+
+import java.time.Duration;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
+import java.time.temporal.ChronoUnit;
 import java.util.Optional;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.data.redis.core.RedisTemplate;
+import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -28,10 +40,11 @@ import org.springframework.transaction.annotation.Transactional;
 public class AuthService {
 
     private final UserRepository userRepository;
-    private final TokenRepository tokenRepository;
     private final AuthenticationManager authenticationManager;
     private final JwtUtil jwtUtil;
     private final PasswordEncoder passwordEncoder;
+    private final StringRedisTemplate redisTemplate;
+    private final NotificationService notificationService;
 
     // 회원 가입 여부 확인
     public boolean isExistUser(String email, String domain) {
@@ -39,6 +52,7 @@ public class AuthService {
     }
 
     // 회원가입
+    @Transactional
     public void signUp(SignUpReqDto signUpReqDto) {
 
         log.info("new User SignUp = {} / {}", signUpReqDto.getEmail(), signUpReqDto.getDomain());
@@ -55,6 +69,7 @@ public class AuthService {
             .nickname(signUpReqDto.getName())
             .profile(signUpReqDto.getProfile())
             .domain(signUpReqDto.getDomain())
+            .goal(1000)
             .build();
         userRepository.save(user);
     }
@@ -64,7 +79,33 @@ public class AuthService {
     public SignInResDto signIn(SignInReqDto signInDto) {
         User user = userRepository.findByEmailAndDomain(signInDto.getEmail(), signInDto.getDomain())
             .orElseThrow(() -> new UserException(ResponseCode.INVALID_USER_INFO));
-        Optional<Token> token = tokenRepository.findByUserId(user.getId());
+
+        /*
+        * 유저가 오늘 로그인 했는지 확인
+        */
+        String todayLogin = (String) redisTemplate.opsForValue().get(user.getEmail()+":"+user.getDomain()+"/goal");
+        if (todayLogin == null) {
+            /*
+            * 로그인 한적 없음
+            * 자정까지의 시간으로 설정하여 Redis에 저장 후 골 지급
+            */
+            LocalDateTime midnight = LocalDateTime.now().toLocalDate().atTime(LocalTime.MAX);
+            long secondsUntilMidnight = LocalDateTime.now().until(midnight, ChronoUnit.SECONDS);
+            redisTemplate.opsForValue().set(user.getEmail()+":"+user.getDomain()+"/goal", LocalDateTime.now().toString(), Duration.ofSeconds(secondsUntilMidnight));
+
+            // 100골 지급 (Todo... 골 지급 정책 정하기)
+            log.info("user {}:{} today first login at {}", user.getEmail(), user.getDomain(), LocalDateTime.now());
+            user.setGoal(user.getGoal() + 100);
+            notificationService.sendNotification(MessageReqDto.builder()
+                        .userId(user.getId())
+                        .type(NotificationType.GOAL)
+                        .message("출석 보상으로 100골을 지급 받았습니다.")
+                        .uri("http://localhost:3000/mypage")
+                        .date(LocalDateTime.now().toString())
+                        .build());
+        } else {
+            log.info("user {}:{} already login today at {}", user.getEmail(), user.getDomain(), todayLogin);
+        }
 
         // accessToken 생성
         Authentication authentication = null;
@@ -96,9 +137,6 @@ public class AuthService {
         User user = userRepository.findByEmailAndDomain(email, domain)
             .orElseThrow(() -> new UserException(
                 ResponseCode.INVALID_USER_INFO));
-        Token token = tokenRepository.findByUserId(user.getId())
-            .orElseThrow(() -> new TokenException(
-                ResponseCode.INVALID_TOKEN_INFO));
-        tokenRepository.delete(token);
+        redisTemplate.delete(user.getEmail()+":"+user.getDomain());
     }
 }
