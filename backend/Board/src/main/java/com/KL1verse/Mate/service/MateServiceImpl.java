@@ -7,6 +7,8 @@ import com.KL1verse.Mate.repository.entity.Mate;
 import java.util.List;
 import java.util.stream.Collectors;
 import org.springframework.beans.BeanUtils;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -66,5 +68,15 @@ public class MateServiceImpl implements MateService {
         Mate mate = new Mate();
         BeanUtils.copyProperties(mateDTO, mate);
         return mate;
+    }
+    @Override
+    public List<MateDTO> getMostRecentMates(int count) {
+        List<Mate> recentWaggles = mateRepository.findAll(
+            PageRequest.of(0, count, Sort.by(Sort.Direction.DESC, "board.createAt"))
+        ).getContent();
+
+        return recentWaggles.stream()
+            .map(this::convertToDTO)
+            .collect(Collectors.toList());
     }
 }

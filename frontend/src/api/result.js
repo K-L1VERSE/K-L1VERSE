@@ -1,10 +1,5 @@
 /* eslint-disable */
-// import axios from "axios";
 import axios from "./axios";
-
-// const postmanUrl =
-//   " https://73f3a277-da9e-487e-9d67-488152202415.mock.pstmn.io";
-// const baseUrl = "http://localhost:8000";
 
 // 답변에 대한 결과값 조회
 export async function submitResult(result) {

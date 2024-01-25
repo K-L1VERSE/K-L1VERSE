@@ -108,7 +108,7 @@ function QuestionPage() {
               key={item.answerId}
               onClick={() => handleClick(item.answerId)}
             >
-              {item.context}
+              {item.content}
             </ChoiceButton>
           ))}
         <></>

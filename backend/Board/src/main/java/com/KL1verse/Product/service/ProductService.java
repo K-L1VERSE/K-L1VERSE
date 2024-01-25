@@ -18,7 +18,7 @@ public interface ProductService {
 
     List<ProductDTO> getAllProductList();
 
-
+    List<ProductDTO> getMostRecentProducts(int count);
 
 }
 

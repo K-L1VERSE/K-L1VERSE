@@ -65,7 +65,6 @@ public class WaggleController {
         return ResponseEntity.ok(waggles);
     }
 
-    // 검색 결과 조회 with pagination
     @GetMapping("/searchPaged")
     public ResponseEntity<Page<WaggleDTO>> searchWagglesPaged(
         @RequestParam(required = false) String keyword,
@@ -77,6 +76,13 @@ public class WaggleController {
         Page<WaggleDTO> waggles = waggleService.searchWaggles(searchCondition, pageable);
         return ResponseEntity.ok(waggles);
     }
+    
+    @GetMapping("/recent/{count}")
+    public ResponseEntity<List<WaggleDTO>> getMostRecentWaggles(@PathVariable int count) {
+        List<WaggleDTO> recentWaggles = waggleService.getMostRecentWaggles(count);
+        return ResponseEntity.ok(recentWaggles);
+    }
+   
 
 
 }
