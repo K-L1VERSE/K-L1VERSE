@@ -1,19 +1,15 @@
-import axios from "axios";
-
-const postmanUrl =
-  " https://73f3a277-da9e-487e-9d67-488152202415.mock.pstmn.io";
-// const baseUrl = "http://localhost:8000";
+import axios from "./axios";
 
 // 질문 내용 조회
 export function getQuestion(questionNum) {
   console.log("axios question");
   return new Promise((resolve, reject) => {
     axios
-      .get(`${postmanUrl}/surveys/1/${questionNum}`)
-      .then((response) => {
+      .get(`surveys/questions?questionId=${questionNum}`)
+      .then(({ data }) => {
         console.log("got response");
-        console.log(response);
-        resolve(response.data);
+        console.log(data);
+        resolve(data);
       })
       .catch((error) => {
         reject(error);
@@ -25,8 +21,9 @@ export function getQuestion(questionNum) {
 export function getAnswer(questionNum) {
   return new Promise((resolve, reject) => {
     axios
-      .get(`${postmanUrl}/surveys/1/answer/${questionNum}`)
+      .get(`surveys/questions?questionId=${questionNum}`)
       .then((response) => {
+        console.log("got answers");
         resolve(response.data);
       })
       .catch((error) => {

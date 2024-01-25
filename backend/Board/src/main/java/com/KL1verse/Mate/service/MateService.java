@@ -14,5 +14,7 @@ public interface MateService {
 
 //    List<MateDTO> getMatesByBoardId(Long boardId);
 
+    List<MateDTO> getMostRecentMates(int count);
+
 }
 

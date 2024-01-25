@@ -14,5 +14,6 @@ public interface WaggleService {
     List<WaggleDTO> searchWaggles(SearchBoardConditionDto searchCondition);
     List<WaggleDTO> getAllWaggleList();
 
+    List<WaggleDTO> getMostRecentWaggles(int count);
 }
 
