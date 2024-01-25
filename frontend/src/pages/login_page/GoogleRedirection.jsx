@@ -26,7 +26,7 @@ function GoogleRedirection() {
       });
 
       /* 성공시 홈화면으로 */
-      // window.location.href = "/main";
+      window.location.href = "/";
     })
     .catch((err) => {
       console.log(err);

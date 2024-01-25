@@ -13,7 +13,7 @@ public class KafkaBettingRollbackConsumer {
 
     private final BettingService bettingService;
 
-    @KafkaListener(topics = "betting-rollback", groupId = "match-group")
+//    @KafkaListener(topics = "betting-rollback", groupId = "match-group")
     public void rollbackBetting(String bettingId){
         bettingService.bettingCancel(bettingId);
     }
