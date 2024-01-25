@@ -1,4 +1,4 @@
-package com.kl1verse.UserServer.domain.chat.dto.req;
+package com.KL1verse.match.chat.dto.req;
 
 import lombok.Getter;
 
