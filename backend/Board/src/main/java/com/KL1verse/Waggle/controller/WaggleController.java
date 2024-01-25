@@ -5,6 +5,8 @@ import com.KL1verse.Waggle.dto.req.WaggleDTO;
 import com.KL1verse.Waggle.service.WaggleService;
 import java.util.List;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -56,18 +58,23 @@ public class WaggleController {
         return ResponseEntity.noContent().build();
     }
 
-    // 모든 Waggles 조회
-    @GetMapping
-    public ResponseEntity<List<WaggleDTO>> getAllWaggles() {
-        List<WaggleDTO> waggles = waggleService.getAllWaggleList();
+    // 모든 Waggles 조회 with pagination
+    @GetMapping("/pages")
+    public ResponseEntity<Page<WaggleDTO>> getAllWagglesPaged(Pageable pageable) {
+        Page<WaggleDTO> waggles = waggleService.getAllWaggleList(pageable);
         return ResponseEntity.ok(waggles);
     }
-    @GetMapping("/search")
-    public ResponseEntity<List<WaggleDTO>> searchWaggles(@RequestParam(required = false) String keyword) {
+
+    // 검색 결과 조회 with pagination
+    @GetMapping("/searchPaged")
+    public ResponseEntity<Page<WaggleDTO>> searchWagglesPaged(
+        @RequestParam(required = false) String keyword,
+        Pageable pageable
+    ) {
         SearchBoardConditionDto searchCondition = SearchBoardConditionDto.builder()
             .keyword(keyword)
             .build();
-        List<WaggleDTO> waggles = waggleService.searchWaggles(searchCondition);
+        Page<WaggleDTO> waggles = waggleService.searchWaggles(searchCondition, pageable);
         return ResponseEntity.ok(waggles);
     }
 
