@@ -1,8 +1,16 @@
 import axios from "axios";
 
 const instance = axios.create({
+<<<<<<< HEAD
   baseURL: "http://localhost:8000",
   params: {},
+=======
+  baseURL: "http://localhost:8080",
+  params: {},
+  headers: {
+    Authorization: "Bearer " + localStorage.getItem("accessToken"),
+  },
+>>>>>>> cc3d960bd42d91cc460e651881fcaebbc5b5b20a
 });
 
 // 요청 인터셉터 추가

@@ -10,8 +10,13 @@ import KaKaoRedirection from "./pages/login_page/KaKaoRedirection";
 import NaverRedirection from "./pages/login_page/NaverRedirection";
 import GoogleRedirection from "./pages/login_page/GoogleRedirection";
 
+<<<<<<< HEAD
 import MainPage from "./pages/main_page/MainPage";
 import MatchPage from "./pages/match_page/MatchPage";
+=======
+import "./App.css";
+
+>>>>>>> cc3d960bd42d91cc460e651881fcaebbc5b5b20a
 import LoginPage from "./pages/login_page/LoginPage";
 import MyPage from "./pages/mypage/MyPage";
 import Navbar from "./pages/nav/Navbar";
@@ -19,17 +24,34 @@ import SocketProvider from "./global/SocketProvider";
 import LogoutPage from "./pages/logout_page/LogoutPage";
 import Notification from "./components/notification/Notification";
 
-function App() {
-  // const [questionId, setQuestionId] = useState("");
+import WaggleListPage from "./pages/board_page/waggle_page/WaggleListPage";
+import WaggleDetailPage from "./pages/board_page/waggle_page/WaggleDetailPage";
+import WaggleRegistPage from "./pages/board_page/waggle_page/WaggleRegistPage";
 
+import MateListPage from "./pages/board_page/mate_page/MateListPage";
+import MateDetailPage from "./pages/board_page/mate_page/MateDetailPage";
+import MateRegistPage from "./pages/board_page/mate_page/MateRegistPage";
+
+import ProductListPage from "./pages/board_page/product_page/ProductListPage";
+import ProductDetailPage from "./pages/board_page/product_page/ProductDetailPage";
+import ProductRegistPage from "./pages/board_page/product_page/ProductRegistPage";
+
+function App() {
   return (
     <div className="App">
+<<<<<<< HEAD
       <SocketProvider>
         <BrowserRouter>
           <Routes>
             <Route path="/" element={<Navbar />}>
               {/* 메인 페이지 */}
               <Route index element={<MainPage />} />
+=======
+      <BrowserRouter>
+        <Routes>
+          {/* 메인 페이지 */}
+          {/* <Route path="/" element={<index />} /> */}
+>>>>>>> cc3d960bd42d91cc460e651881fcaebbc5b5b20a
 
               {/* 로그인 페이지 */}
               <Route path="/login" element={<LoginPage />} />
@@ -40,6 +62,7 @@ function App() {
               {/* 로그인 페이지 */}
               <Route path="/login" element={<LoginPage />} />
 
+<<<<<<< HEAD
               {/* 로그아웃 페이지 */}
               <Route path="/logout" element={<LogoutPage />} />
 
@@ -61,6 +84,29 @@ function App() {
           </Routes>
         </BrowserRouter>
       </SocketProvider>
+=======
+          {/* 설문 페이지 */}
+          <Route path="/survey" element={<StartPage />} />
+          <Route path="/question/:questionNum" element={<QuestionPage />} />
+          <Route path="/result" element={<ResultPage />} />
+
+          {/* 와글 페이지 */}
+          <Route path="/waggle" element={<WaggleListPage />} />
+          <Route path="/waggle/:boardId" element={<WaggleDetailPage />} />
+          <Route path="/waggleRegist" element={<WaggleRegistPage />} />
+
+          {/* 직관 메이트 페이지 */}
+          <Route path="/mate" element={<MateListPage />} />
+          <Route path="/mate/:boardId" element={<MateDetailPage />} />
+          <Route path="/mateRegist" element={<MateRegistPage />} />
+
+          {/* 중고 거래 페이지 */}
+          <Route path="/product" element={<ProductListPage />} />
+          <Route path="/product/:boardId" element={<ProductDetailPage />} />
+          <Route path="/productRegist" element={<ProductRegistPage />} />
+        </Routes>
+      </BrowserRouter>
+>>>>>>> cc3d960bd42d91cc460e651881fcaebbc5b5b20a
     </div>
   );
 }
