@@ -21,7 +21,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 @Slf4j
 @RestController
-@RequestMapping("/waggle")
+@RequestMapping("/waggles")
 public class WaggleController {
 
     private final WaggleService waggleService;
@@ -53,8 +53,8 @@ public class WaggleController {
 
     // Waggle 삭제 by ID
     @DeleteMapping("/{boardId}")
-    public ResponseEntity<Void> deleteWaggle(@PathVariable Long waggleId) {
-        waggleService.deleteWaggle(waggleId);
+    public ResponseEntity<Void> deleteWaggle(@PathVariable Long boardId) {
+        waggleService.deleteWaggle(boardId);
         return ResponseEntity.noContent().build();
     }
 
@@ -76,12 +76,12 @@ public class WaggleController {
         Page<WaggleDTO> waggles = waggleService.searchWaggles(searchCondition, pageable);
         return ResponseEntity.ok(waggles);
     }
-    
-    @GetMapping("/recent/{count}")
-    public ResponseEntity<List<WaggleDTO>> getMostRecentWaggles(@PathVariable int count) {
-        List<WaggleDTO> recentWaggles = waggleService.getMostRecentWaggles(count);
-        return ResponseEntity.ok(recentWaggles);
-    }
+
+//    @GetMapping("/recent/{count}")
+//    public ResponseEntity<List<WaggleDTO>> getMostRecentWaggles(@PathVariable int count) {
+//        List<WaggleDTO> recentWaggles = waggleService.getMostRecentWaggles(count);
+//        return ResponseEntity.ok(recentWaggles);
+//    }
    
 
 
