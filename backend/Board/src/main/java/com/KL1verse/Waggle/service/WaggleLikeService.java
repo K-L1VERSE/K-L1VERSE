@@ -1,8 +1,10 @@
 package com.KL1verse.Waggle.service;
 
+import com.KL1verse.Waggle.dto.req.WaggleLikeDTO;
+
 public interface WaggleLikeService {
 
-  void likeWaggle(Long waggleId, Long userId);
+  WaggleLikeDTO likeWaggle(Long waggleId, Long userId);
 
   void unlikeWaggle(Long waggleId, Long userId);
 }

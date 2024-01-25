@@ -21,9 +21,13 @@ public class WaggleLikeController {
         return ResponseEntity.ok().build();
     }
 
-    @DeleteMapping("/unlike/{waggleId}")
-    public ResponseEntity<Void> unlikeWaggle(@PathVariable Long waggleId, @RequestParam Long userId) {
-        waggleLikeService.unlikeWaggle(waggleId, userId);
+    @DeleteMapping("/like/{waggleId}")
+    public ResponseEntity<Void> unlikeWaggle(@PathVariable Long waggleId, @RequestBody WaggleLikeDTO requestDTO) {
+        waggleLikeService.unlikeWaggle(waggleId, requestDTO.getUserId());
         return ResponseEntity.ok().build();
     }
+
+
+
+
 }

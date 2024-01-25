@@ -1,6 +1,8 @@
 package com.KL1verse.Comment.controller;
 
 import com.KL1verse.Comment.dto.req.CommentDTO;
+import com.KL1verse.Comment.dto.req.CommentLikeDTO;
+import com.KL1verse.Comment.service.CommentLikeService;
 import com.KL1verse.Comment.service.CommentService;
 import java.util.List;
 import org.springframework.http.ResponseEntity;
@@ -18,9 +20,11 @@ import org.springframework.web.bind.annotation.RestController;
 public class CommentController {
 
     private final CommentService commentService;
+    private final CommentLikeService commentLikeService;
 
-    public CommentController(CommentService commentService) {
+    public CommentController(CommentService commentService, CommentLikeService commentLikeService) {
         this.commentService = commentService;
+        this.commentLikeService = commentLikeService;
     }
 
     // Get Comment by ID
@@ -75,6 +79,22 @@ public class CommentController {
     public ResponseEntity<List<CommentDTO>> getRepliesByParentId(@PathVariable Long parentCommentId) {
         List<CommentDTO> replies = commentService.getAllRepliesByParentId(parentCommentId);
         return ResponseEntity.ok(replies);
+    }
+
+
+
+    // 댓글 좋아요
+    @PostMapping("/like/{commentId}")
+    public ResponseEntity<CommentLikeDTO> likeComment(@PathVariable Long commentId, @RequestBody CommentLikeDTO likeDTO) {
+        CommentLikeDTO likedComment = commentLikeService.likeComment(likeDTO.getUserId(), commentId);
+        return ResponseEntity.ok(likedComment);
+    }
+
+    // 댓글 좋아요 취소
+    @DeleteMapping("/like/{commentId}")
+    public ResponseEntity<Void> unlikeComment(@PathVariable Long commentId, @RequestBody CommentLikeDTO likeDTO) {
+        commentLikeService.unlikeComment(likeDTO.getUserId(), commentId);
+        return ResponseEntity.noContent().build();
     }
 
 }

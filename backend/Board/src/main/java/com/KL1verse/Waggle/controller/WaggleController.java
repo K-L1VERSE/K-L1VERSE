@@ -42,8 +42,8 @@ public class WaggleController {
 
     // Waggle 업데이트 by ID
     @PutMapping("/{boardId}")
-    public ResponseEntity<WaggleDTO> updateWaggle(@PathVariable Long waggleId, @RequestBody WaggleDTO waggleDto) {
-        WaggleDTO updatedWaggle = waggleService.updateWaggle(waggleId, waggleDto);
+    public ResponseEntity<WaggleDTO> updateWaggle(@PathVariable Long boardId, @RequestBody WaggleDTO waggleDto) {
+        WaggleDTO updatedWaggle = waggleService.updateWaggle(boardId, waggleDto);
         return ResponseEntity.ok(updatedWaggle);
     }
 
