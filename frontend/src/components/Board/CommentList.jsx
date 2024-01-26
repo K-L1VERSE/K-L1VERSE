@@ -1,10 +1,11 @@
+/* eslint-disable react/button-has-type */
 // CommentList.jsx
 
 import React, { useState, useEffect } from "react";
 import axios from "../../api/axios";
 import CommentForm from "./CommentForm";
 
-const CommentList = ({ boardId }) => {
+function CommentList({ boardId }) {
   const [comments, setComments] = useState([]);
 
   useEffect(() => {
@@ -20,9 +21,49 @@ const CommentList = ({ boardId }) => {
     fetchComments();
   }, [boardId]);
 
-  const handleCommentSubmit = (newComment) => {
-    // 새로운 댓글을 현재 댓글 목록에 추가
-    setComments((prevComments) => [...prevComments, newComment]);
+  const handleCommentSubmit = async () => {
+    try {
+      // 댓글 목록 업데이트를 위해 서버에서 최신 댓글 목록을 다시 가져옴
+      const response = await axios.get(`/comments/list/${boardId}`);
+      setComments(response.data);
+    } catch (error) {
+      console.error("댓글을 다시 불러오는 중 에러 발생:", error);
+    }
+  };
+
+  const handleCommentUpdate = (commentId, updatedContent) => {
+    // Find the index of the comment to be updated
+    const commentIndex = comments.findIndex(
+      (comment) => comment.commentId === commentId,
+    );
+
+    // Create a copy of the comment to be updated
+    const updatedComment = { ...comments[commentIndex] };
+
+    // Update the content of the copy
+    updatedComment.content = updatedContent;
+
+    // Create a new array with the updated comment
+    const updatedComments = [...comments];
+    updatedComments[commentIndex] = updatedComment;
+
+    // Update the state with the new array
+    setComments(updatedComments);
+  };
+
+  const handleCommentDelete = async (commentId) => {
+    try {
+      // 댓글 삭제 요청 보내기
+      await axios.delete(`/comments/${commentId}`);
+      console.log("댓글이 삭제되었습니다!");
+
+      // 삭제된 댓글을 제외한 목록으로 업데이트
+      setComments((prevComments) =>
+        prevComments.filter((comment) => comment.commentId !== commentId),
+      );
+    } catch (error) {
+      console.error("댓글 삭제 중 에러 발생:", error);
+    }
   };
 
   return (
@@ -32,13 +73,28 @@ const CommentList = ({ boardId }) => {
         {comments.map((comment) => (
           <li key={comment.commentId}>
             <p>{comment.content}</p>
-            {/* 여기에 추가적인 댓글 정보를 표시할 수 있습니다. */}
+            <button
+              onClick={() => {
+                const updatedContent = prompt(
+                  "수정할 내용을 입력하세요",
+                  comment.content,
+                );
+                if (updatedContent !== null) {
+                  handleCommentUpdate(comment.commentId, updatedContent);
+                }
+              }}
+            >
+              수정
+            </button>
+            <button onClick={() => handleCommentDelete(comment.commentId)}>
+              삭제
+            </button>
           </li>
         ))}
       </ul>
       <CommentForm boardId={boardId} onCommentSubmit={handleCommentSubmit} />
     </div>
   );
-};
+}
 
 export default CommentList;

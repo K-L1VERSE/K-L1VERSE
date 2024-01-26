@@ -3,7 +3,6 @@ import { useParams, useNavigate } from "react-router-dom";
 import axios from "../../../api/axios";
 import BoardTopNavBar from "../../../components/Board/BoardTopNavBar";
 import CommentList from "../../../components/Board/CommentList";
-import CommentForm from "../../../components/Board/CommentForm";
 
 function WaggleDetailPage() {
   const [waggleDetail, setWaggleDetail] = useState({});
@@ -50,8 +49,8 @@ function WaggleDetailPage() {
   const handleLikeClick = async () => {
     try {
       const response = isLiked
-        ? await axios.delete(`/waggles/like/${waggleDetail.board.waggleId}`)
-        : await axios.post(`/waggles/like/${waggleDetail.board.waggleId}`);
+        ? await axios.delete(`/waggles/like/${boardId}`)
+        : await axios.post(`/waggles/like/${boardId}`);
 
       console.log("Like response:", response); // 추가
 
@@ -69,7 +68,7 @@ function WaggleDetailPage() {
       <BoardTopNavBar />
       <h1>Waggle 상세 정보</h1>
       <p>
-        <strong>Title:</strong> {waggleDetail.title} {waggleId}
+        <strong>Title:</strong> {waggleDetail.title} {waggleId} {boardId}
       </p>
       <p>
         <strong>Content:</strong> {waggleDetail.content}

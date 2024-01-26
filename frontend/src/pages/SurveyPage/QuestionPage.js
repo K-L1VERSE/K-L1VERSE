@@ -2,10 +2,9 @@
 import React, { useState, useEffect } from "react";
 // import QuizCard from "../../components/Survey/Quizcard";
 import { useParams, useLocation, useNavigate } from "react-router-dom";
-import { submitResult } from "../../api/result";
 import { Question } from "../../styles/SurveyStyles/QuizCardStyle";
 
-import { getQuestion, getAnswer } from "../../api/question";
+import { getQuestion, submitResult } from "../../api/survey";
 import {
   ChoiceButton,
   PreviousButton,
@@ -37,6 +36,7 @@ function QuestionPage() {
     getQuestion(questionId)
       .then((data) => {
         setQuestion(data.content);
+        setAnswers(data.answers);
         console.log("got question");
         console.log(data.content);
       })
@@ -45,15 +45,6 @@ function QuestionPage() {
       });
 
     // 선택지 내용 가져오기
-    getAnswer(questionId)
-      .then((data) => {
-        setAnswers(data.answers);
-        console.log("got answer");
-        console.log("data", data.answers);
-      })
-      .catch((e) => {
-        console.log(e);
-      });
   }, [questionId]);
 
   function handleClick(answerId) {

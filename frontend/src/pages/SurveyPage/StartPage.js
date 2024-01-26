@@ -2,7 +2,7 @@
 
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import { getSurvey } from "../../api/startsurvey";
+import { getSurvey } from "../../api/survey";
 import {
   Main,
   Img,

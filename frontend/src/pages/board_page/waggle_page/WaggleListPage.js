@@ -15,7 +15,9 @@ function WaggleListPage() {
   const fetchWaggleList = useCallback(async () => {
     try {
       setLoading(true);
-      const response = await axios.get(`/waggles/pages?page=${page}&size=30`);
+      const response = await axios.get(
+        `/waggles/pages?page=${page}&size=30&sort=board.createAt,desc`,
+      );
       const newWaggles = response.data.content;
 
       if (newWaggles.length === 0) {
@@ -42,7 +44,7 @@ function WaggleListPage() {
     navigate("/waggleRegist");
   };
 
-  const handleScroll = () => {
+  const handleScroll = useCallback(() => {
     const windowHeight = window.innerHeight;
     const documentHeight = document.documentElement.scrollHeight;
     const scrollTop = window.scrollY;
@@ -52,7 +54,7 @@ function WaggleListPage() {
       // 스크롤이 아래에 도달하면 다음 페이지의 데이터를 불러옴
       setPage((prevPage) => prevPage + 1);
     }
-  };
+  }, [loading, hasMore]);
 
   useEffect(() => {
     window.addEventListener("scroll", handleScroll);
