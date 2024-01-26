@@ -4,6 +4,7 @@ import Stomp from "webstomp-client";
 import { NotificationState } from "./NotificationState";
 import { useSetRecoilState, useRecoilState } from "recoil";
 import { UserState } from "./UserState";
+import axios from "../api/authAxios";
 
 export const SocketContext = createContext();
 
@@ -12,11 +13,13 @@ const SocketProvider = ({ children }) => {
     const [stompClient, setStompClient] = useState(null);
 
     const setNotificationState = useSetRecoilState(NotificationState);
+    const [notification, setNotification] = useRecoilState(NotificationState);
     const [userState, setUserState] = useRecoilState(UserState);
 
     const recvNotification = (notification) => {
         setNotificationState((prevNotificationState) => {
             return {
+                notifications: [...prevNotificationState.notifications],
                 newNotifications: [...prevNotificationState.newNotifications, notification],
             };
         });
@@ -43,6 +46,21 @@ const SocketProvider = ({ children }) => {
         if (userState.isLoggedIn) {
             console.log("Socket Connected!!!");
             connectSocket();
+
+            // 알림 목록 불러오기
+            axios.get("/users/notifications")
+            .then((res) => {
+                console.log(res.data);
+        
+                // 기존 알림 상태를 덮어쓰기
+                setNotification({
+                    notifications: res.data.filter(notification => notification.readFlag),
+                    newNotifications: res.data.filter(notification => !notification.readFlag),
+                });
+            })
+            .catch((err) => {
+                console.log(err);
+            })
         } else {
             if (stompClient) {
                 console.log("Socket Disconnected!!!");

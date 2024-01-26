@@ -103,7 +103,7 @@ public class UserController {
             .type(NotificationType.GOAL)
             .message("테스트 알림 입니다.")
             .uri("http://localhost:3000/mypage")
-            .date(LocalDateTime.now().toString())
+            .date(LocalDateTime.now())
             .build());
         return ResponseEntity.ok("OK");
     }
