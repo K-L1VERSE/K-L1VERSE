@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useRef } from "react";
 import {
   NoticeBar,
   NoticeBar1,
@@ -8,6 +8,9 @@ import {
 } from "../../styles/main-styles/noticeStyle";
 
 export default function Notice() {
+  const contentText =
+    "출석하면 5골이 적립됩니다 ✨ 글 쓰면 5골이 적립됩니다 ✨ 출석하면 5골이 적립됩니다 ✨ 글 쓰면 5골이 적립됩니다 ✨ 출석하면 5골이 적립됩니다 ✨ 글 쓰면 5골이 적립됩니다 ✨ 출석하면 5골이 적립됩니다 ✨ 글 쓰면 5골이 적립됩니다 ✨";
+  // 여러분 ~~~~~~~ 로그인 하면 5골 드려용 푸하핫 ✨
   return (
     <div>
       <NoticeBar>
@@ -27,13 +30,19 @@ export default function Notice() {
           </div>
         </NoticeBar1>
         <AnimatedTitle>
-          <Track>
-            <Content>
-              ???&nbsp;여러분 ~~~~~~~ 로그인 하면 5골 드려용 푸하핫 ✨
-              &nbsp;30분 뒤에 FC서울 vs 수원FC 시작합니댕 🏆 모두들 많 관 부 ^0^
-              &nbsp;또 뭐가 알림인가요? ㅋ 울산이랑 광주 경기 끝났음요
-            </Content>
-          </Track>
+          <div style={{ display: "inline-block" }}>
+            <Track>
+              <div style={{ display: "inline-block" }}>
+                <Content>
+                  {contentText}
+                  {contentText}
+                  {contentText}
+                  {contentText}
+                  {contentText}
+                </Content>
+              </div>
+            </Track>
+          </div>
         </AnimatedTitle>
       </NoticeBar>
     </div>
