@@ -101,7 +101,7 @@ public class AuthService {
                         .type(NotificationType.GOAL)
                         .message("출석 보상으로 100골을 지급 받았습니다.")
                         .uri("http://localhost:3000/mypage")
-                        .date(LocalDateTime.now().toString())
+                        .date(LocalDateTime.now())
                         .build());
         } else {
             log.info("user {}:{} already login today at {}", user.getEmail(), user.getDomain(), todayLogin);

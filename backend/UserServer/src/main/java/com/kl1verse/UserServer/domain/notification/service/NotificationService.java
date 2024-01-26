@@ -43,12 +43,18 @@ public class NotificationService {
             .uri(messageReqDto.getUri())
             .readFlag(false)
             .type(messageReqDto.getType())
-            .createdAt(LocalDateTime.now())
+            .createdAt(messageReqDto.getDate())
             .build();
 
         notificationRepository.save(notification);
+        NotificationResDto notificationResDto = NotificationResDto.builder()
+            .uri(messageReqDto.getUri())
+            .content(messageReqDto.getMessage())
+            .readFlag(false)
+            .type(messageReqDto.getType())
+            .build();
 
-        sendingOperations.convertAndSend("/topic/notification/" + user.getEmail()+":"+user.getDomain(), messageReqDto);
+        sendingOperations.convertAndSend("/topic/notification/" + user.getEmail()+":"+user.getDomain(), notificationResDto);
     }
 
     public List<NotificationResDto> getNotifications(HttpServletRequest request) {

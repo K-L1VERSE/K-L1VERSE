@@ -11,32 +11,13 @@ import {
   Contents,
 } from "../../styles/navbar-styles/NavbarStyle";
 import Logo from "../../assets/K-L1VERSE(white).png";
-import { useRecoilState, useSetRecoilState } from "recoil";
+import { useRecoilState } from "recoil";
 import { NotificationState } from "../../global/NotificationState";
-import axios from "../../api/authAxios";
-import { useEffect } from "react";
 
 
 export default function Header() {
 
-  const setNotification = useSetRecoilState(NotificationState);
   const [notificationState, setNotificationState] = useRecoilState(NotificationState);
-
-  useEffect(() => {
-      axios.get("/users/notifications")
-      .then((res) => {
-          console.log(res.data);
-
-          // 기존 알림 상태를 덮어쓰기
-          setNotification({
-              notifications: res.data.filter(notification => notification.readFlag),
-              newNotifications: res.data.filter(notification => !notification.readFlag),
-          });
-      })
-      .catch((err) => {
-          console.log(err);
-      })
-  }, []);
 
   const navigate = useNavigate();
 
@@ -71,6 +52,10 @@ export default function Header() {
         </NavItem>
         <NavItem onClick={goNotification}>
           <NotificationIcon />
+          {notificationState.newNotifications.length > 0 && (
+            <div style={{ position: 'absolute', top: '14px', right: '120px', display: 'flex', background: 'red', borderRadius: '50%', width: '3px', height: '3px', padding: '2px' }}>
+            </div>
+          )}
           <Text>알림</Text>
         </NavItem>
         <NavItem onClick={goMypage}>
