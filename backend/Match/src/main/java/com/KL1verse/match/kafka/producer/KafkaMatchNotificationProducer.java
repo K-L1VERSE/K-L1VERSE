@@ -3,6 +3,7 @@ package com.KL1verse.match.kafka.producer;
 import com.KL1verse.match.betting.repository.BettingRepository;
 import com.KL1verse.match.betting.repository.entity.Betting;
 import com.KL1verse.match.kafka.KafkaProducer;
+import com.KL1verse.match.kafka.dto.res.MatchNotificationResDto;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import java.util.ArrayList;
 import java.util.List;
@@ -32,9 +33,14 @@ public class KafkaMatchNotificationProducer {
             userIdList.add(betting.getUserId());
         }
 
+        MatchNotificationResDto matchNotificationResDto = MatchNotificationResDto.builder()
+            .userIdList(userIdList)
+            .uri("http://localhost:3000/matches/" + String.valueOf(matchId))
+            .build();
+
         // kafka로 보내기
         try {
-            kafkaProducer.sendMessage("match-notification", objectMapper.writeValueAsString(userIdList));
+            kafkaProducer.sendMessage("match-notification", objectMapper.writeValueAsString(matchNotificationResDto));
         } catch (Exception e) {
             e.printStackTrace();
         }
