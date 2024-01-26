@@ -27,6 +27,8 @@ import org.hibernate.annotations.UpdateTimestamp;
 @ToString
 public class Board {
 
+
+
     public enum BoardType {
         WAGGLE, MATE, PRODUCT
     }
@@ -56,6 +58,7 @@ public class Board {
 
 //    @ManyToOne
 //    @JoinColumn(name = "user_id")
+    @Column(name = "user_id")
     private String user;
 
 

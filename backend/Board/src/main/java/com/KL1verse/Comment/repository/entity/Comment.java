@@ -62,4 +62,7 @@ public class Comment {
 
     @Column(name = "delete_at")
     private LocalDateTime deleteAt;
+
+    @Column(name = "is_secret")
+    private boolean isSecret;
 }
