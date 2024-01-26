@@ -15,11 +15,11 @@ import lombok.Setter;
 public class ProductDTO {
 
         private Long productId;
-        private Long boardId;
-        private double price;
-        private boolean dealFlag;
 
         private BoardDTO board;
+
+        private Long price;
+
+        private boolean dealFlag;
+
 }
-
-
