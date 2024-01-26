@@ -13,7 +13,7 @@ import lombok.*;
 public class BadgeDetail {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "badge_detail_id")
     private Integer id;
 
