@@ -73,7 +73,7 @@ public class CommentController {
     @GetMapping("/list/{boardId}")
     public ResponseEntity<List<CommentDTO>> getAllCommentsByBoardId(@PathVariable Long boardId) {
         // requestingUserId를 123으로 가정
-        Long requestingUserId = 1235L;
+        Long requestingUserId = 1232245L;
         List<CommentDTO> comments = commentService.getAllCommentsByBoardId(boardId, requestingUserId)
             .stream()
             .filter(comment -> comment.getDeleteAt() == null) // delete_at이 비어 있으면 포함

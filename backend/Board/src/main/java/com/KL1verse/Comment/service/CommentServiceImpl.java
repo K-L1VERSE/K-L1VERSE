@@ -31,15 +31,6 @@ public class CommentServiceImpl implements CommentService {
     }
 
 
-//    private boolean isAuthorized(Comment comment, Long requestingUserId) {
-//        // 요청한 사용자가 게시물 작성자 또는 댓글 작성자인지 확인
-////        User requestingUser = getUserById(requestingUserId); // 사용자 ID로 사용자 정보 가져오기 (가정)
-//        Long requestingUser = 123L; // 사용자 ID로 사용자 정보 가져오기 (가정)
-//        requestingUserId = requestingUser;
-//        // 게시물 작성자와 댓글 작성자 확인
-//        return requestingUser.equals(comment.getBoardId().getUser()) || requestingUser.equals(comment.getUserId());
-//    }
-
 
     @Override
     public CommentDTO getCommentById(Long commentId, Long requestingUserId) {
@@ -54,15 +45,6 @@ public class CommentServiceImpl implements CommentService {
         return convertToDTO(comment);
     }
 
-//    private boolean isAuthorized(Comment comment, Long requestingUserId) {
-//        // 요청한 사용자가 게시물 작성자 또는 댓글 작성자인지 확인
-//        // 사용자 ID로 사용자 정보 가져오기 (가정)
-//        Long requestingUser = 123L;
-//
-//        // 게시물 작성자와 댓글 작성자 확인
-//        return requestingUser.equals(comment.getBoardId().getUser()) ||
-//            requestingUser.equals(comment.getUserId());
-//    }
 
     private boolean isAuthorized(Comment comment, Long requestingUserId) {
         // 요청한 사용자가 댓글 작성자 또는 게시물 작성자인지 확인
@@ -93,6 +75,7 @@ public class CommentServiceImpl implements CommentService {
             .boardId(createdComment.getBoardId().getBoardId())
             .userId(createdComment.getUserId())
             .isSecret(createdComment.isSecret())
+            .parentId(createdComment.getParentId() != null ? createdComment.getParentId().getCommentId() : null)
             .build();
     }
 
@@ -110,10 +93,6 @@ public class CommentServiceImpl implements CommentService {
         return convertToDTO(updatedComment);
     }
 
-//    @Override
-//    public void deleteComment(Long commentId) {
-//        commentRepository.deleteById(commentId);
-//    }
 
     @Override
     public void deleteComment(Long commentId) {
@@ -131,23 +110,30 @@ public class CommentServiceImpl implements CommentService {
     }
 
 
-    private CommentDTO convertToDTOWithReplies(Comment comment) {
-        CommentDTO commentDTO = convertToDTO(comment);
-        List<CommentDTO> replyDTOs = comment.getReplies().stream().map(this::convertToDTO).collect(Collectors.toList());
-        commentDTO.setReplies(replyDTOs);
-        return commentDTO.builder()
-            .commentId(comment.getCommentId())
-            .content(comment.getContent())
-//            .parentId(comment.getParentId().getCommentId())
-            .updateAt(comment.getUpdateAt())
-            .deleteAt(comment.getDeleteAt())
-            .createAt(comment.getCreateAt())
-            .userId(comment.getUserId())
-            .isSecret(comment.isSecret())
-            .boardId(comment.getBoardId().getBoardId())
-            .build();
-    }
 
+//    private CommentDTO convertToDTOWithReplies(Comment comment) {
+//        CommentDTO commentDTO = convertToDTO(comment);
+//        List<CommentDTO> replyDTOs = comment.getReplies().stream()
+//            .map(reply -> {
+//                CommentDTO replyDTO = convertToDTO(reply);
+//                replyDTO.setParentId(comment.getCommentId());
+//                return replyDTO;
+//            })
+//            .collect(Collectors.toList());
+//        commentDTO.setReplies(replyDTOs);
+//        return commentDTO.builder()
+//            .commentId(comment.getCommentId())
+//            .content(comment.getContent())
+//            .updateAt(comment.getUpdateAt())
+//            .deleteAt(comment.getDeleteAt())
+//            .createAt(comment.getCreateAt())
+//            .parentId(comment.getParentId() != null ? comment.getParentId().getCommentId() : null)
+//            .userId(comment.getUserId())
+//            .isSecret(comment.isSecret())
+//            .boardId(comment.getBoardId().getBoardId())
+//            .replies(replyDTOs)
+//            .build();
+//    }
 
 
     @Override
@@ -176,12 +162,11 @@ public class CommentServiceImpl implements CommentService {
     }
 
 
-
-
 //    @Override
 //    public List<CommentDTO> getAllCommentsByBoardId(Long boardId, Long requestingUserId) {
 //        List<Comment> comments = commentRepository.findByBoardId_BoardId(boardId);
 //        return comments.stream()
+//            .filter(comment -> comment.getParentId() == null) // 부모 댓글만 가져옴
 //            .map(comment -> {
 //                if (comment.isSecret() && !isAuthorized(comment, requestingUserId)) {
 //                    // 비밀 댓글에 대한 권한이 없는 경우 처리
@@ -192,9 +177,25 @@ public class CommentServiceImpl implements CommentService {
 //                    secretComment.setCommentId(comment.getCommentId());
 //                    secretComment.setCreateAt(comment.getCreateAt());
 //                    secretComment.setSecret(comment.isSecret());
-//                    secretComment.setReplies(comment.getReplies().stream().map(this::convertToDTO).collect(Collectors.toList()));
+//                    secretComment.setReplies(comment.getReplies().stream()
+//                        .map(reply -> {
+//                            if (reply.isSecret() && !isAuthorized(reply, requestingUserId)) {
+//
+//                                CommentDTO secretReply = new CommentDTO();
+//                                secretReply.setContent("비밀 대댓글입니다.");
+//                                secretReply.setUpdateAt(reply.getUpdateAt());
+//                                secretReply.setDeleteAt(reply.getDeleteAt());
+//                                secretReply.setCommentId(reply.getCommentId());
+//                                secretReply.setCreateAt(reply.getCreateAt());
+//                                secretReply.setParentId(reply.getParentId().getCommentId());
+//                                secretReply.setSecret(reply.isSecret());
+//                                return secretReply;
+//                            } else {
+//                                return convertToDTO(reply);
+//                            }
+//                        })
+//                        .collect(Collectors.toList()));
 //                    secretComment.setBoardId(comment.getBoardId().getBoardId());
-////                    secretComment.setParentId(comment.getParentId().getCommentId());
 //
 //                    return secretComment;
 //                } else {
@@ -205,13 +206,16 @@ public class CommentServiceImpl implements CommentService {
 //            .collect(Collectors.toList());
 //    }
 
+
     @Override
     public List<CommentDTO> getAllCommentsByBoardId(Long boardId, Long requestingUserId) {
         List<Comment> comments = commentRepository.findByBoardId_BoardId(boardId);
+
         return comments.stream()
+            .filter(comment -> comment.getParentId() == null) // 부모 댓글만 가져옴
             .map(comment -> {
                 if (comment.isSecret() && !isAuthorized(comment, requestingUserId)) {
-                    // 비밀 댓글에 대한 권한이 없는 경우 처리
+                    // 댓글이 비밀이고 사용자가 권한이 없는 경우 적절한 메시지 표시
                     CommentDTO secretComment = new CommentDTO();
                     secretComment.setContent("비밀 댓글입니다.");
                     secretComment.setUpdateAt(comment.getUpdateAt());
@@ -219,40 +223,44 @@ public class CommentServiceImpl implements CommentService {
                     secretComment.setCommentId(comment.getCommentId());
                     secretComment.setCreateAt(comment.getCreateAt());
                     secretComment.setSecret(comment.isSecret());
-                    secretComment.setReplies(comment.getReplies().stream()
-                        .map(reply -> {
-                            if (reply.isSecret() && !isAuthorized(reply, requestingUserId)) {
-                                CommentDTO secretReply = new CommentDTO();
-                                secretReply.setContent("비밀 대댓글입니다.");
-                                secretReply.setUpdateAt(reply.getUpdateAt());
-                                secretReply.setDeleteAt(reply.getDeleteAt());
-                                secretReply.setCommentId(reply.getCommentId());
-                                secretReply.setCreateAt(reply.getCreateAt());
-                                secretReply.setSecret(reply.isSecret());
-//                                secretReply.setBoardId(reply.getBoardId().getBoardId());
-                                // secretReply.setParentId(reply.getParentId().getCommentId());
-                                return secretReply;
-                            } else {
-                                return convertToDTO(reply);
-                            }
-                        })
-                        .collect(Collectors.toList()));
+                    secretComment.setReplies(Collections.emptyList()); // 비밀 댓글에 대한 답글 가져오기 불필요
                     secretComment.setBoardId(comment.getBoardId().getBoardId());
-                    // secretComment.setParentId(comment.getParentId().getCommentId());
-
                     return secretComment;
                 } else {
-                    return convertToDTOWithReplies(comment);
+                    // 비밀이 아닌 댓글에 대해 재귀적으로 답글 가져오기
+                    return convertToDTOWithReplies(comment, requestingUserId);
                 }
             })
             .filter(commentDTO -> commentDTO.getDeleteAt() == null)
             .collect(Collectors.toList());
     }
 
-
-
-
-
+    private CommentDTO convertToDTOWithReplies(Comment comment, Long requestingUserId) {
+        CommentDTO commentDTO = convertToDTO(comment);
+        List<CommentDTO> replyDTOs = comment.getReplies().stream()
+            .map(reply -> {
+                if (reply.isSecret() && !isAuthorized(reply, requestingUserId)) {
+                    // 답글이 비밀이고 사용자가 권한이 없는 경우 적절한 메시지 표시
+                    CommentDTO secretReply = new CommentDTO();
+                    secretReply.setContent("비밀 대댓글입니다.");
+                    secretReply.setUpdateAt(reply.getUpdateAt());
+                    secretReply.setDeleteAt(reply.getDeleteAt());
+                    secretReply.setCommentId(reply.getCommentId());
+                    secretReply.setCreateAt(reply.getCreateAt());
+                    secretReply.setParentId(reply.getParentId().getCommentId());
+                    secretReply.setSecret(reply.isSecret());
+                    secretReply.setReplies(Collections.emptyList()); // 비밀 대댓글에 대한 답글 가져오기 불필요
+                    secretReply.setBoardId(reply.getBoardId().getBoardId());
+                    return secretReply;
+                } else {
+                    // 비밀이 아닌 답글에 대해 재귀적으로 답글 가져오기
+                    return convertToDTOWithReplies(reply, requestingUserId);
+                }
+            })
+            .collect(Collectors.toList());
+        commentDTO.setReplies(replyDTOs);
+        return commentDTO;
+    }
 
 
     @Override
@@ -286,12 +294,18 @@ public class CommentServiceImpl implements CommentService {
     private CommentDTO convertToDTO(Comment comment) {
         CommentDTO commentDTO = new CommentDTO();
         BeanUtils.copyProperties(comment, commentDTO);
+        commentDTO.setBoardId(comment.getBoardId().getBoardId());
+        commentDTO.setUserId(comment.getUserId());
+        commentDTO.setParentId(comment.getParentId() != null ? comment.getParentId().getCommentId() : null);
+        commentDTO.setReplies(comment.getReplies().stream().map(this::convertToDTO).collect(Collectors.toList()));
+
         return commentDTO;
     }
 
     private Comment convertToEntity(CommentDTO commentDTO) {
         Comment comment = new Comment();
         BeanUtils.copyProperties(commentDTO, comment);
+        comment.setParentId(commentDTO.getParentId() != null ? commentRepository.findById(commentDTO.getParentId()).orElseThrow(() -> new RuntimeException("Parent Comment not found with id: " + commentDTO.getParentId())) : null);
         return comment;
     }
 
