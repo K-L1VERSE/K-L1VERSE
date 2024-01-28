@@ -37,6 +37,7 @@ export const NavItem = styled.div`
 
   &:hover {
     cursor: pointer;
+    opacity: 80%;
   }
 `;
 

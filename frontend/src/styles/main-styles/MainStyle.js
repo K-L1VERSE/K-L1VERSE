@@ -1,11 +1,21 @@
 import styled from "styled-components";
 
-export const Board = styled.div`
-  /* background-color: blue; */
-  /* padding: 0.7rem; */
-  /* margin: 0 0.8rem; */
-  /* border: 1px solid whitesmoke; */
-  /* box-shadow: #595959; */
-  /* box-shadow: 0 2px 8px 2px #e9ecef; */
-  /* border-radius: 8px; */
+export const Category = styled.div`
+  display: flex;
+  justify-content: space-between;
+  margin: 0.8rem;
+`;
+
+export const Title = styled.div`
+  color: #002266;
+  font-weight: bold;
+  font-size: 1.1rem;
+`;
+export const AllBtn = styled.div`
+  color: #002266;
+  font-size: 0.7rem;
+  &:hover {
+    cursor: pointer;
+    opacity: 80%;
+  }
 `;

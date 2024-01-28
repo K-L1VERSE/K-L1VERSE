@@ -5,44 +5,28 @@ import {
   Text,
   Post,
   Date,
-  Wrap,
+  BoardItemWrap,
 } from "../../styles/main-styles/BoardItemStyle";
-import { getLatestWaggle } from "../../api/waggle";
-import { getLatestProduct } from "../../api/product";
-import { getLatestMate } from "../../api/mate";
 
-export default function BoardItem() {
-  const [posts, setPosts] = useState([]);
+// ************ 날짜 yyyy-mm-dd 형태로 변환 ************
+function formatDate(date) {
+  var d = new window.Date(date);
+  var month = "" + (d.getMonth() + 1);
+  var day = "" + d.getDate();
+  var year = d.getFullYear();
+  if (month.length < 2) month = "0" + month;
+  if (day.length < 2) day = "0" + day;
+  return [year, month, day].join("-");
+}
 
-  useEffect(() => {
-    // get waggle posts
-    getLatestWaggle(({ data }) => {
-      setPosts([...posts, data]);
-      console.log(data);
-    }),
-      (error) => {
-        console.error(error);
-      };
-
-    // get mates posts
-    getLatestProduct(({ data }) => {
-      setPosts([...posts, data]);
-    }),
-      (error) => {
-        console.error(error);
-      };
-
-    // get produt posts
-    getLatestWaggle(({ data }) => {
-      setPosts([...posts, data]);
-    }),
-      (error) => {
-        console.error(error);
-      };
-  }, []);
-
-  console.log(posts);
-
+// ************ 제목 글자 수 제한 ************
+function truncateText(text, maxLength) {
+  if (text && text.length > maxLength) {
+    return text.slice(0, maxLength) + "..";
+  }
+  return text;
+}
+export default function BoardItem({ type, posts }) {
   const category = [
     {
       type: "와글와글",
@@ -59,19 +43,15 @@ export default function BoardItem() {
   ];
 
   return (
-    <div>
-      {posts.map((type, idx) => (
-        <Wrap>
-          <Type>{category[idx].type}</Type>
-          <Text>{category[idx].text}</Text>
-          {type.map((post) => (
-            <Post>
-              <Title>{post.board.title}</Title>
-              <Date>{post.board.createAt}</Date>
-            </Post>
-          ))}
-        </Wrap>
+    <BoardItemWrap>
+      <Type type={type}>{category[type].type}</Type>
+      <Text>{category[type].text}</Text>
+      {posts.map((post) => (
+        <Post>
+          <Title>{truncateText(post.board.title, 18)}</Title>
+          <Date>{formatDate(post.board.createAt)}</Date>
+        </Post>
       ))}
-    </div>
+    </BoardItemWrap>
   );
 }
