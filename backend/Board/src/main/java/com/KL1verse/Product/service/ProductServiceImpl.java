@@ -128,6 +128,7 @@ public class ProductServiceImpl implements ProductService {
         .createAt(product.getBoard().getCreateAt())
         .updateAt(product.getBoard().getUpdateAt())
         .deleteAt(product.getBoard().getDeleteAt())
+//        .user(Long.valueOf(product.getBoard().getUser()))
         .build());
     return productDTO;
   }
@@ -143,6 +144,7 @@ public class ProductServiceImpl implements ProductService {
         .createAt(productDTO.getBoard().getCreateAt())
         .updateAt(productDTO.getBoard().getUpdateAt())
         .deleteAt(productDTO.getBoard().getDeleteAt())
+//        .user(String.valueOf(productDTO.getBoard().getUser()))
         .build());
     return product;
   }

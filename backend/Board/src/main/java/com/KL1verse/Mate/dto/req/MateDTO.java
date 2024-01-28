@@ -14,12 +14,10 @@ import lombok.Setter;
 @NoArgsConstructor
 public class MateDTO {
 
-    private Long mateId;
-
-    private int total;
-    private boolean fullFlag;
-    private String matchId;
-
-    private BoardDTO board;
+  private Long mateId;
+  private BoardDTO board;
+  private int total;
+  private boolean fullFlag;
+  private int matchId;
 
 }

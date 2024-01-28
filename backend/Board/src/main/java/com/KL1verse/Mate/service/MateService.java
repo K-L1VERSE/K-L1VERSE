@@ -1,20 +1,21 @@
 package com.KL1verse.Mate.service;
 
+import com.KL1verse.Board.dto.req.SearchBoardConditionDto;
 import com.KL1verse.Mate.dto.req.MateDTO;
-import java.util.List;
-
+import java.time.LocalDateTime;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 
 public interface MateService {
+  MateDTO getMateById(Long boardId);
+  MateDTO createMate(MateDTO mateDto);
+  MateDTO updateMate(Long boardId, MateDTO mateDto);
+  void deleteMate(Long boardId);
 
-    MateDTO getMateById(Long mateId);
-    MateDTO createMate(MateDTO mateDto);
-    MateDTO updateMate(Long mateId, MateDTO mateDto);
-    void deleteMate(Long mateId);
-    List<MateDTO> getAllMateList();
+  Page<MateDTO> searchMates(SearchBoardConditionDto searchCondition, Pageable pageable);
+  Page<MateDTO> getAllMateList(Pageable pageable);
 
-//    List<MateDTO> getMatesByBoardId(Long boardId);
+  Page<MateDTO> getOpenMates(Pageable pageable);
 
-    List<MateDTO> getMostRecentMates(int count);
-
+  Page<MateDTO> getMatesByDateRange(LocalDateTime startDate, LocalDateTime endDate, Pageable pageable);
 }
-

@@ -33,14 +33,14 @@ public class Mate {
     @JoinColumn(name = "board_id")
     private Board board;
 
-
-    private int total;
+    @Column(name = "total")
+    private int total; // 총 인원수
 
     @Column(name = "full_flag")
-    private boolean fullFlag;
+    private boolean fullFlag; // 인원수가 다 찼는지 여부
 
     @Column(name = "match_id")
-    private String matchId;
+    private int matchId;
 
 
 }
