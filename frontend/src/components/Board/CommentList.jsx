@@ -32,22 +32,17 @@ function CommentList({ boardId }) {
   };
 
   const handleCommentUpdate = (commentId, updatedContent) => {
-    // Find the index of the comment to be updated
     const commentIndex = comments.findIndex(
       (comment) => comment.commentId === commentId,
     );
 
-    // Create a copy of the comment to be updated
     const updatedComment = { ...comments[commentIndex] };
 
-    // Update the content of the copy
     updatedComment.content = updatedContent;
 
-    // Create a new array with the updated comment
     const updatedComments = [...comments];
     updatedComments[commentIndex] = updatedComment;
 
-    // Update the state with the new array
     setComments(updatedComments);
   };
 

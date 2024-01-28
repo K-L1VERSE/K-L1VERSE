@@ -1,8 +1,10 @@
+// WaggleListPage.js
+
 import React, { useState, useEffect, useCallback } from "react";
 import { useNavigate, Link } from "react-router-dom";
 import axios from "../../../api/axios";
 import BoardTopNavBar from "../../../components/Board/BoardTopNavBar";
-import RecentWaggleCard from "../../../components/Board/RecentWaggleCard";
+import "../../../styles/BoardStyles/WaggleListStyle.css"; // Import the new CSS file
 
 function WaggleListPage() {
   const [waggleList, setWaggleList] = useState([]);
@@ -64,36 +66,80 @@ function WaggleListPage() {
     };
   }, [handleScroll]);
 
+  // =========날짜 포맷팅 함수 ==========
+  // 날짜 포맷팅 함수
+  function formatDate(dateString) {
+    const options = { year: "numeric", month: "numeric", day: "numeric" };
+    const formattedDate = new Date(dateString).toLocaleDateString(
+      "ko-KR",
+      options,
+    );
+    return formattedDate;
+  }
+
+  // 상대적인 시간 표시 함수
+  function formatRelativeTime(dateString) {
+    const now = new Date();
+    const createdAt = new Date(dateString);
+    const timeDifference = now - createdAt;
+
+    const seconds = Math.floor(timeDifference / 1000);
+    const minutes = Math.floor(seconds / 60);
+    const hours = Math.floor(minutes / 60);
+    const days = Math.floor(hours / 24);
+
+    if (days > 0) {
+      // 24시간 이상 전 작성된 경우 날짜 형식으로 반환
+      return formatDate(dateString);
+    } else if (hours > 0) {
+      // 1시간 이상 24시간 미만 전 작성된 경우 'n시간 전' 형식으로 반환
+      return `${hours}시간 전`;
+    } else if (minutes > 0) {
+      // 1분 이상 1시간 미만 전 작성된 경우 'n분 전' 형식으로 반환
+      return `${minutes}분 전`;
+    } else {
+      // 1분 미만 전 작성된 경우 '방금 전' 형식으로 반환
+      return "방금 전";
+    }
+  }
+
   return (
     <div>
       <BoardTopNavBar />
-      <RecentWaggleCard />
-      <div>
-        <h3>와글와글 떠들어주세요</h3>
+      <div className="waggle-header">
+        <h2>와글와글 떠들어주세요</h2>
         <button onClick={handleWriteWaggleClick}>🖋글쓰기</button>
       </div>
 
-      <table border="1">
-        <thead>
-          <tr>
-            <th>제목</th>
-            <th>글 내용</th>
-          </tr>
-        </thead>
-        <tbody>
-          {waggleList.map((waggle, index) => (
-            <tr key={index}>
-              {/* 클릭 시 상세 페이지로 이동하도록 Link 사용 */}
-              <td>
-                <Link to={`/waggle/${waggle.board.boardId}`}>
-                  {waggle.board.title}
-                </Link>
-              </td>
-              <td>{waggle.board.content}</td>
-            </tr>
-          ))}
-        </tbody>
-      </table>
+      <div className="waggle-list">
+        {waggleList.map((waggle, index) => (
+          <div key={index} className="waggle-item">
+            {/* 클릭 시 상세 페이지로 이동하도록 Link 사용 */}
+            <div className="title">
+              <Link to={`/waggle/${waggle.board.boardId}`}>
+                {waggle.board.title}
+              </Link>
+            </div>
+            <div className="content">
+              <Link to={`/waggle/${waggle.board.boardId}`}>
+                <p>{waggle.board.content}</p>
+              </Link>
+            </div>
+            <div className="info-section">
+              <div className="waggle-like">
+                좋아요 {waggle.board.likeCount} |
+              </div>
+              <div className="waggle-comment">
+                댓글 {waggle.board.commentCount} |
+              </div>
+              <div className="waggle-created-at">
+                {formatRelativeTime(waggle.board.createAt)}
+              </div>
+            </div>
+            <div className="separator"></div>
+          </div>
+        ))}
+      </div>
       {loading && <p>Loading...</p>}
       {!hasMore && <p>No more data</p>}
     </div>
