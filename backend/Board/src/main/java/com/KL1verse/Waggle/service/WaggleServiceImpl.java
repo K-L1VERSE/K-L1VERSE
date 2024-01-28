@@ -110,7 +110,7 @@ public class WaggleServiceImpl implements WaggleService {
             .createAt(waggle.getBoard().getCreateAt())
             .updateAt(waggle.getBoard().getUpdateAt())
             .deleteAt(waggle.getBoard().getDeleteAt())
-            .user(Long.valueOf(waggle.getBoard().getUser()))
+//            .user(Long.valueOf(waggle.getBoard().getUser()))
             .build());
         return waggleDTO;
     }
@@ -126,7 +126,7 @@ public class WaggleServiceImpl implements WaggleService {
             .createAt(waggleDTO.getBoard().getCreateAt())
             .updateAt(waggleDTO.getBoard().getUpdateAt())
             .deleteAt(waggleDTO.getBoard().getDeleteAt())
-            .user(String.valueOf(waggleDTO.getBoard().getUser()))
+//            .user(String.valueOf(waggleDTO.getBoard().getUser()))
             .build());
         return waggle;
     }

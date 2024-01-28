@@ -1,5 +1,6 @@
 package com.KL1verse.Board.dto.req;
 
+import java.time.LocalDateTime;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -14,7 +15,5 @@ import lombok.Setter;
 public class SearchBoardConditionDto {
 
     private String keyword; // 검색어 필드
-
-
 
 }
