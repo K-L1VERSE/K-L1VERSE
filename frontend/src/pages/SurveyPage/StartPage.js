@@ -16,19 +16,11 @@ function StartPage() {
   const [surveyId, setSurvey] = useState("survey");
 
   useEffect(() => {
-    console.log(`Started surveyId ${surveyId}`); // 그냥 출력문
-
     // 설문 가져오기
-    getSurvey(surveyId)
-      .then((data) => {
-        setSurvey(data.surveyId);
-        console.log("got survey");
-        console.log(data.surveyId);
-      })
-      .catch((e) => {
-        console.log(e);
-      });
-  }, []); // Add a closing curly brace '}' here
+    getSurvey(surveyId).then((data) => {
+      setSurvey(data.surveyId);
+    });
+  }, []);
 
   return (
     <Main>

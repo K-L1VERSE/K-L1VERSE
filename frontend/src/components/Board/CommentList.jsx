@@ -14,7 +14,7 @@ function CommentList({ boardId }) {
         const response = await axios.get(`/comments/list/${boardId}`);
         setComments(response.data);
       } catch (error) {
-        console.error("댓글을 불러오는 중 에러 발생:", error);
+        // console.error("댓글을 불러오는 중 에러 발생:", error);
       }
     };
 
@@ -23,7 +23,6 @@ function CommentList({ boardId }) {
 
   const handleCommentSubmit = async () => {
     try {
-      // 댓글 목록 업데이트를 위해 서버에서 최신 댓글 목록을 다시 가져옴
       const response = await axios.get(`/comments/list/${boardId}`);
       setComments(response.data);
     } catch (error) {
@@ -50,14 +49,12 @@ function CommentList({ boardId }) {
     try {
       // 댓글 삭제 요청 보내기
       await axios.delete(`/comments/${commentId}`);
-      console.log("댓글이 삭제되었습니다!");
 
-      // 삭제된 댓글을 제외한 목록으로 업데이트
       setComments((prevComments) =>
         prevComments.filter((comment) => comment.commentId !== commentId),
       );
     } catch (error) {
-      console.error("댓글 삭제 중 에러 발생:", error);
+      // console.error("댓글 삭제 중 에러 발생:", error);
     }
   };
 

@@ -18,13 +18,10 @@ function ProductListPage() {
       const newProducts = response.data.content;
 
       if (newProducts.length === 0) {
-        // 새로 불러온 데이터가 없으면 더 이상 불러올 데이터가 없다고 설정
         setHasMore(false);
       } else {
         setProductList((prevProducts) => [...prevProducts, ...newProducts]);
       }
-    } catch (error) {
-      console.log("Product 게시판 목록을 불러오는 중 에러 발생:", error);
     } finally {
       setLoading(false);
     }
@@ -32,13 +29,11 @@ function ProductListPage() {
 
   useEffect(() => {
     if (hasMore) {
-      // hasMore가 true일 때만 추가 데이터를 불러오도록 설정
       fetchProductList();
     }
   }, [hasMore, fetchProductList]);
 
   function handleRegistProductClick() {
-    // "중고거래 글 작성" 버튼 클릭 시 ProductRegistPage로 이동
     navigate("/productRegist");
   }
 
@@ -49,7 +44,6 @@ function ProductListPage() {
     const distanceFromBottom = documentHeight - scrollTop - windowHeight;
 
     if (distanceFromBottom < 200 && !loading && hasMore) {
-      // 스크롤이 아래에 도달하면 다음 페이지의 데이터를 불러옴
       setPage((prevPage) => prevPage + 1);
     }
   };
@@ -77,7 +71,6 @@ function ProductListPage() {
         <tbody>
           {productList.map((product, index) => (
             <tr key={index}>
-              {/* 클릭 시 상세 페이지로 이동하도록 Link 사용 */}
               <td>
                 <Link to={`/products/${product.board.boardId}`}>
                   {product.board.title}

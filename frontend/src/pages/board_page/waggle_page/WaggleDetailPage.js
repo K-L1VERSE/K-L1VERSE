@@ -23,7 +23,7 @@ function WaggleDetailPage() {
         setLikeCount(data.likeCount); // 좋아요 개수 업데이트
       })
       .catch((err) => {
-        console.log("Waggle 상세 정보를 불러오는 중 에러 발생:", err);
+        // console.log("Waggle 상세 정보를 불러오는 중 에러 발생:", err);
       });
   }
 
@@ -38,11 +38,9 @@ function WaggleDetailPage() {
   const handleDeleteBtn = async () => {
     try {
       await axios.delete(`/waggles/${boardId}`);
-      // 삭제 후, 어떤 화면으로 이동할지 결정
-      // 예: 삭제 후에 게시판 목록으로 이동하거나, 홈 화면으로 이동하는 등
-      navigate("/waggle"); // 수정 필요
+      navigate("/waggle");
     } catch (error) {
-      console.error("글 삭제 중 에러 발생:", error);
+      // console.error("글 삭제 중 에러 발생:", error);
     }
   };
 
@@ -51,15 +49,11 @@ function WaggleDetailPage() {
       const response = isLiked
         ? await axios.delete(`/waggles/like/${boardId}`)
         : await axios.post(`/waggles/like/${boardId}`);
-
-      console.log("Like response:", response); // 추가
-
       setIsLiked(!isLiked);
       setWaggleDetail(response.data.board);
       setLikeCount(response.data.likeCount);
     } catch (error) {
-      console.error("좋아요 처리 중 에러 발생:", error);
-      console.log("Error response:", error.response); // 추가
+      // console.error("좋아요 처리 중 에러 발생:", error);
     }
   };
 

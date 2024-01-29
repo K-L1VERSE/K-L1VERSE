@@ -3,7 +3,6 @@ import { useParams, useNavigate } from "react-router-dom";
 import axios from "../../../api/axios";
 import BoardTopNavBar from "../../../components/Board/BoardTopNavBar";
 import CommentList from "../../../components/Board/CommentList";
-import CommentForm from "../../../components/Board/CommentForm";
 
 function ProductDetailPage() {
   const [productDetail, setProductDetail] = useState({});
@@ -14,16 +13,11 @@ function ProductDetailPage() {
 
   /* product 상세 정보 가져오기 */
   function getProductDetail() {
-    axios
-      .get(`/products/${boardId}`)
-      .then(({ data }) => {
-        setProductDetail(data.board);
-        setIsLiked(data.isLiked);
-        setLikeCount(data.likeCount);
-      })
-      .catch((err) => {
-        console.log("Product 상세 정보를 불러오는 중 에러 발생:", err);
-      });
+    axios.get(`/products/${boardId}`).then(({ data }) => {
+      setProductDetail(data.board);
+      setIsLiked(data.isLiked);
+      setLikeCount(data.likeCount);
+    });
   }
 
   useEffect(() => {
@@ -37,9 +31,8 @@ function ProductDetailPage() {
   const handleDeleteBtn = async () => {
     try {
       await axios.delete(`/products/${boardId}`);
-      navigate("/products"); // Redirect to the product list or another appropriate page
     } catch (error) {
-      console.error("글 삭제 중 에러 발생:", error);
+      // console.error("글 삭제 중 에러 발생:", error);
     }
   };
 
@@ -53,7 +46,7 @@ function ProductDetailPage() {
       setProductDetail(response.data.board);
       setLikeCount(response.data.likeCount);
     } catch (error) {
-      console.error("좋아요 처리 중 에러 발생:", error);
+      // console.error("좋아요 처리 중 에러 발생:", error);
     }
   };
 
@@ -70,13 +63,10 @@ function ProductDetailPage() {
       <div onClick={() => handleUpdateBtn()}>수정하기</div>
       <div onClick={() => handleDeleteBtn()}>삭제하기</div>
 
-      {/* Like Button */}
       <div>
         <button onClick={handleLikeClick}>{isLiked ? "♡" : "♥︎"}</button>
         <span>좋아요 {likeCount}개</span>
       </div>
-
-      {/* Comment List */}
       <CommentList boardId={boardId} />
     </div>
   );
