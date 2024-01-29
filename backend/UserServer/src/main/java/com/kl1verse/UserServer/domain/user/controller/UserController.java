@@ -9,6 +9,7 @@ import com.kl1verse.UserServer.domain.notification.dto.req.MessageReqDto.Notific
 import com.kl1verse.UserServer.domain.notification.dto.res.NotificationResDto;
 import com.kl1verse.UserServer.domain.notification.service.NotificationService;
 import com.kl1verse.UserServer.domain.user.dto.res.MypageResponseDto;
+import com.kl1verse.UserServer.domain.user.dto.res.NicknameUpdateReqDto;
 import com.kl1verse.UserServer.domain.user.exception.UserException;
 import com.kl1verse.UserServer.domain.user.repository.UserRepository;
 import com.kl1verse.UserServer.domain.user.repository.entity.User;
@@ -118,4 +119,9 @@ public class UserController {
         return ResponseEntity.ok("OK");
     }
 
+    @PostMapping("/nickname")
+    public ResponseEntity<?> updateNickname(HttpServletRequest request, NicknameUpdateReqDto nicknameUpdateReqDto) {
+        mypageService.updateNickname(request, nicknameUpdateReqDto);
+        return ResponseEntity.ok().build();
+    }
 }
