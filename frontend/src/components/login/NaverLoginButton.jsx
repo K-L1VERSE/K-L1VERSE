@@ -5,15 +5,17 @@ import NaverImg from "../../assets/login_button/naver_img.png";
 
 function NaverLoginButton() {
   // const NAVER_RESPONSE_TYPE = "code"
-  const NAVER_REDIRECT_URI = "http://localhost:3000/NaverAuth/";
-  const NAVER_STATE = "1234asdf";
+  const { NAVER_REDIRECT_URI } = process.env;
+  const { NAVER_STATE } = process.env;
   // const NAVER_SCOPE = "profile"
-  const NAVER_CLIENT_ID = "eXJ_cTAVvlCn3lXE5sY6";
+  const { NAVER_CLIENT_ID } = process.env;
   const NAVER_AUTH_URL = `https://nid.naver.com/oauth2.0/authorize?response_type=code&client_id=${NAVER_CLIENT_ID}&redirect_uri=${NAVER_REDIRECT_URI}&state=${NAVER_STATE}`;
 
   const handleLogin = () => {
     window.location.href = NAVER_AUTH_URL;
   };
+
+  console.log(NAVER_REDIRECT_URI);
 
   return (
     <NaverLoginContainer>
