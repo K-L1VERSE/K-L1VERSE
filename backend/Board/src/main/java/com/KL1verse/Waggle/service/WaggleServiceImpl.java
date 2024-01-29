@@ -9,11 +9,11 @@ import com.KL1verse.Waggle.dto.req.WaggleDTO;
 import com.KL1verse.Waggle.repository.WaggleRepository;
 import com.KL1verse.Waggle.repository.entity.Waggle;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
 import org.springframework.beans.BeanUtils;
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
@@ -64,8 +64,7 @@ public class WaggleServiceImpl implements WaggleService {
 
 
     @Override
-    public Page<WaggleDTO> searchWaggles(SearchBoardConditionDto searchCondition,
-        Pageable pageable) {
+    public Page<WaggleDTO> searchWagglesWithLikes(SearchBoardConditionDto searchCondition, Pageable pageable) {
         Page<Waggle> waggles;
 
         if (searchCondition != null && searchCondition.getKeyword() != null) {
@@ -104,6 +103,26 @@ public class WaggleServiceImpl implements WaggleService {
         existingWaggle.getBoard().setTitle(waggleDto.getBoard().getTitle());
         existingWaggle.getBoard().setContent(waggleDto.getBoard().getContent());
     }
+
+    @Override
+    public Page<WaggleDTO> getAllWagglesWithLikes(Pageable pageable) {
+        List<Object[]> likesCounts = waggleRepository.getLikesCountForEachWaggle();
+        List<WaggleDTO> wagglesWithLikes = convertToDTOListWithLikes(likesCounts);
+        return new PageImpl<>(wagglesWithLikes, pageable, wagglesWithLikes.size());
+    }
+
+    private List<WaggleDTO> convertToDTOListWithLikes(List<Object[]> likesCounts) {
+        List<WaggleDTO> wagglesWithLikes = new ArrayList<>();
+        for (Object[] result : likesCounts) {
+            Waggle waggle = (Waggle) result[0];
+            Long totalLikes = (Long) result[1];
+            WaggleDTO waggleDTO = convertToDTO(waggle);
+            waggleDTO.setLikesCount(totalLikes.intValue());
+            wagglesWithLikes.add(waggleDTO);
+        }
+        return wagglesWithLikes;
+    }
+
 
     private WaggleDTO convertToDTO(Waggle waggle) {
         WaggleDTO waggleDTO = new WaggleDTO();
