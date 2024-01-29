@@ -2,6 +2,7 @@ import React, { useEffect } from "react";
 import styled from "styled-components";
 import BadgeButton from "./BadgeButton";
 import LogoutButton from "./LogoutButton";
+import { Navigate, useNavigate } from "react-router-dom";
 
 const ProfileTitleContainer = styled.div`
   display: inline-flex;

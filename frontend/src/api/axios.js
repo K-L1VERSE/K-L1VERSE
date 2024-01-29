@@ -58,7 +58,7 @@ instance.interceptors.response.use(
 
     if (err.response && err.response.status === 401) {
         // UNAUTHORIZED 응답이면 로그인 페이지로 리다이렉션
-        window.location.href = 'http://localhost:3000/logout';
+        // window.location.href = 'http://localhost:3000/logout';
     }
   }
 );
