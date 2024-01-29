@@ -18,11 +18,16 @@ function KakaoLoginButton() {
   };
 
   return (
-    <div>
+    <ButtonContainer>
       <LoginButton onClick={handleLogin} />
-    </div>
+    </ButtonContainer>
   );
 }
+
+const ButtonContainer = styled.div`
+  height: 45px;
+  border: none;
+`;
 
 const LoginButton = styled.button`
   width: 183px;
@@ -32,8 +37,7 @@ const LoginButton = styled.button`
   cursor: pointer;
 
   background-image: url(${KakaoLoginImg});
-
-  &:hover {
+  back &:hover {
     filter: brightness(0.7);
   }
 `;
