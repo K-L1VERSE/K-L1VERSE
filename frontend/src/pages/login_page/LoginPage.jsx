@@ -5,6 +5,7 @@ import GoogleLoginButton from "../../components/login/GoogleLoginButton";
 import KakaoLoginButton from "../../components/login/KakaoLoginButton";
 
 function LoginPage() {
+
   return (
     <div>
       <KakaoLoginButton />
