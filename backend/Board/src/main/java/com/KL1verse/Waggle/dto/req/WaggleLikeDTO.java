@@ -13,8 +13,10 @@ import lombok.Setter;
 @NoArgsConstructor
 public class WaggleLikeDTO {
 
-  private Long likesId;
-  private Long userId;
-  private Long waggleId;
+    private Long likesId;
+
+    private Long userId;
+
+    private Long waggleId;
 
 }

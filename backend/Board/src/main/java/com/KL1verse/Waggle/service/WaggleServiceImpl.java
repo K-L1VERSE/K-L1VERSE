@@ -52,7 +52,7 @@ public class WaggleServiceImpl implements WaggleService {
     public void deleteWaggle(Long boardId) {
         Waggle waggleToDelete = findWaggleByBoardId(boardId);
 
-        if(waggleToDelete != null) {
+        if (waggleToDelete != null) {
             waggleToDelete.getBoard().setDeleteAt(LocalDateTime.now());
         }
         waggleRepository.deleteById(waggleToDelete.getWaggleId());
@@ -60,7 +60,8 @@ public class WaggleServiceImpl implements WaggleService {
 
 
     @Override
-    public Page<WaggleDTO> searchWaggles(SearchBoardConditionDto searchCondition, Pageable pageable) {
+    public Page<WaggleDTO> searchWaggles(SearchBoardConditionDto searchCondition,
+        Pageable pageable) {
         Page<Waggle> waggles;
 
         if (searchCondition != null && searchCondition.getKeyword() != null) {
@@ -78,7 +79,8 @@ public class WaggleServiceImpl implements WaggleService {
 
     @Override
     public Page<WaggleDTO> getAllWaggleList(Pageable pageable) {
-        Page<Waggle> waggles = waggleRepository.findByBoard_BoardType(Board.BoardType.WAGGLE, pageable);
+        Page<Waggle> waggles = waggleRepository.findByBoard_BoardType(Board.BoardType.WAGGLE,
+            pageable);
         return waggles.map(this::convertToDTO);
     }
 

@@ -5,6 +5,7 @@ import java.util.List;
 
 
 public interface BoardService {
+
     List<BoardDTO> getAllBoards();
 
     BoardDTO getBoardById(Long boardId);
