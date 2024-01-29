@@ -14,7 +14,7 @@ import LoginLogo from "../../components/login/LoginLogo";
 function KaKaoRedirection() {
   const PARAMS = new URL(document.location).searchParams;
   const KAKAO_CODE = PARAMS.get("code");
-  
+
   const setUserState = useSetRecoilState(UserState);
 
   const request = axios
@@ -24,8 +24,8 @@ function KaKaoRedirection() {
 
       /* access Token 받고 전역 변수로 관리 */
       setUserState({
-        nickname: res.data.nickname, 
-        profile: res.data.profile, 
+        nickname: res.data.nickname,
+        profile: res.data.profile,
         accessToken: res.data.accessToken,
         email: res.data.email,
         domain: res.data.domain,

@@ -4,7 +4,7 @@ import styled from "styled-components";
 import axios from "../../api/authAxios";
 
 import { ReactComponent as BadgeBackground } from "../../assets/BadgeBackground.svg";
-import Badge1 from "../../assets/daegu.png";
+import Badge from "../../assets/K-L1VERSE.png";
 
 const BadgeContainer = styled.div`
   display: flex;
