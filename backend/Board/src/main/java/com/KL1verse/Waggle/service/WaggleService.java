@@ -15,10 +15,14 @@ public interface WaggleService {
 
     void deleteWaggle(Long BoardId);
 
-    Page<WaggleDTO> searchWaggles(SearchBoardConditionDto searchCondition, Pageable pageable);
+//    Page<WaggleDTO> searchWaggles(SearchBoardConditionDto searchCondition, Pageable pageable);
 
     Page<WaggleDTO> getAllWaggleList(Pageable pageable);
 
 //    List<WaggleDTO> getMostRecentWaggles(int count);
+
+    Page<WaggleDTO> searchWagglesWithLikes(SearchBoardConditionDto searchCondition, Pageable pageable);
+
+    Page<WaggleDTO> getAllWagglesWithLikes(Pageable pageable);
 }
 
