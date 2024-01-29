@@ -23,14 +23,24 @@ function WaggleListPage() {
       if (newWaggles.length === 0) {
         setHasMore(false);
       } else {
-        setWaggleList((prevWaggles) => [...prevWaggles, ...newWaggles]);
+        const uniqueWaggles = newWaggles.filter(
+          (newWaggle) =>
+            !waggleList.some(
+              (waggle) => waggle.board.boardId === newWaggle.board.boardId,
+            ),
+        );
+
+        setWaggleList((prevWaggles) => [
+          ...uniqueWaggles.reverse(),
+          ...prevWaggles,
+        ]);
       }
     } catch (error) {
       console.error("와글 목록을 불러오는 중 오류 발생:", error);
     } finally {
       setLoading(false);
     }
-  }, [page]);
+  }, [page, waggleList]);
 
   useEffect(() => {
     if (hasMore) {
