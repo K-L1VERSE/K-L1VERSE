@@ -3,8 +3,6 @@ import styled from "styled-components";
 
 import GoogleLoginImg from "../../assets/login_button/google_login_medium_narrow.png";
 
-import { GoogleLogin, GoogleOAuthProvider } from "@react-oauth/google";
-
 function GoogleLoginButton() {
   const GOOGLE_REDIRECT_URI = "http://localhost:3000/GoogleAuth";
   const GOOGLE_CLIENT_ID =
