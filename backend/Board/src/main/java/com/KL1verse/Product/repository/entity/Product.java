@@ -1,4 +1,4 @@
-package com.KL1verse.Waggle.repository.entity;
+package com.KL1verse.Product.repository.entity;
 
 import com.KL1verse.Board.repository.entity.Board;
 import jakarta.persistence.Column;
@@ -33,7 +33,8 @@ public class Product {
     @JoinColumn(name = "board_id")
     private Board board;
 
-    private double price;
+    @JoinColumn(name = "price")
+    private Long price;
 
     @Column(name = "deal_flag")
     private boolean dealFlag;

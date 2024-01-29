@@ -12,7 +12,6 @@ import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
 import java.time.LocalDateTime;
 import java.util.List;
-
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -62,4 +61,7 @@ public class Comment {
 
     @Column(name = "delete_at")
     private LocalDateTime deleteAt;
+
+    @Column(name = "is_secret")
+    private boolean isSecret;
 }

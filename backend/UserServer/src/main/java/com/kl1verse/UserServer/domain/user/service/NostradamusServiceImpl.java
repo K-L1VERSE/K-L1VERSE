@@ -15,6 +15,7 @@ import org.springframework.stereotype.Service;
 public class NostradamusServiceImpl {
 
     private final NostradamusRepository nostradamusRepository;
+
     public List<NostradamusResponse> getNostraList() {
 
         List<User> userList = nostradamusRepository.getNostraList();
@@ -22,7 +23,7 @@ public class NostradamusServiceImpl {
 
         float accurate;
 
-        for(User user : userList) {
+        for (User user : userList) {
             if (user.getTotalBet() == 0) {
                 accurate = 0.0f;
             } else {

@@ -26,11 +26,8 @@ public class KafkaBettingWinProducer {
     @Autowired
     private ObjectMapper objectMapper;
 
-    // 게임 끝난거 확인했을 때 불릴 메소드
     public void bettingWin(int matchId, int winningTeamId) {
-        
-        // 원금 + 원금*배율 계산해서 보내주기
-        // matchId로 match 찾기
+
         Match match = matchRepository.findById(matchId).orElseThrow();
 
         int winningTeamBettingTotal = 0;
@@ -38,30 +35,27 @@ public class KafkaBettingWinProducer {
         int AwayTeamBettingTotal = match.getAwayBettingAmount();
         int drawBettingTotal = match.getDrawBettingAmount();
 
-        // 원금 + 원금*배율 계산
         float rate = 1;
 
-        // home팀이 이겼을 때
-        if(match.getHomeTeamId() == winningTeamId) {
+        if (match.getHomeTeamId() == winningTeamId) {
             winningTeamBettingTotal = match.getHomeBettingAmount();
-        } else if(match.getAwayTeamId() == winningTeamId){ // away 팀이 이겼을 때
+        } else if (match.getAwayTeamId() == winningTeamId) {
             winningTeamBettingTotal = match.getAwayBettingAmount();
-        } else { // 비겼을 때
+        } else {
             winningTeamBettingTotal = match.getDrawBettingAmount();
         }
 
-        if(winningTeamBettingTotal > 0) {
-            rate = ((float) HomeTeamBettingTotal + AwayTeamBettingTotal + drawBettingTotal) / winningTeamBettingTotal;
+        if (winningTeamBettingTotal > 0) {
+            rate = ((float) HomeTeamBettingTotal + AwayTeamBettingTotal + drawBettingTotal)
+                / winningTeamBettingTotal;
         }
-        // 아무도 베팅 안한 팀이 이기면? 그냥 다들 사라짐.
 
-        // winner info 가져오기
-        List<Betting> bettingList = bettingRepository.findByMatchIdAndBettingTeamId(matchId, winningTeamId);
+        List<Betting> bettingList = bettingRepository.findByMatchIdAndBettingTeamId(matchId,
+            winningTeamId);
 
-        // 반환하는 list가 있을 때
-        if(bettingList.size() > 0) {
+        if (bettingList.size() > 0) {
 
-            for(int i=0; i<bettingList.size(); i++) {
+            for (int i = 0; i < bettingList.size(); i++) {
                 Betting betting = bettingList.get(i);
                 int newGoal = Math.round(betting.getAmount() * rate);
 
@@ -70,7 +64,6 @@ public class KafkaBettingWinProducer {
                     .newGoal(newGoal)
                     .build();
 
-                // Json으로 바꿔서 user로 보내줌
                 String winnerInfoJson = null;
                 try {
                     winnerInfoJson = objectMapper.writeValueAsString(winner);
@@ -78,8 +71,7 @@ public class KafkaBettingWinProducer {
                     throw new RuntimeException(e);
                 }
 
-                // match테이블에서 분배 안했을 때 확인
-                if(match.getGoalDivided() == 0) {
+                if (match.getGoalDivided() == 0) {
                     matchRepository.updateGoalDivided(matchId, 1);
                     kafkaProducer.sendMessage("winner-info", winnerInfoJson);
                 }
@@ -88,8 +80,6 @@ public class KafkaBettingWinProducer {
         }
 
     }
-
-
 
 
 }

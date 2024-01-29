@@ -17,19 +17,12 @@ function MateRegistPage() {
   let boardId = location.state ? location.state.boardId : null;
 
   useEffect(() => {
-    // mateId 제공되는 경우, 수정 모드임을 나타냄
     if (boardId) {
-      // 기존 mate 게시물을 가져와서 폼을 채움
-      boardApi
-        .getBoard(boardId)
-        .then((data) => {
-          setTitle(data.board.title);
-          setContent(data.board.content);
-          setIsUpdateMode(true);
-        })
-        .catch((e) => {
-          console.log("Mate 게시물을 불러오는 중 에러 발생:", e);
-        });
+      boardApi.getBoard(boardId).then((data) => {
+        setTitle(data.board.title);
+        setContent(data.board.content);
+        setIsUpdateMode(true);
+      });
     }
   }, [boardId]);
 
@@ -39,40 +32,23 @@ function MateRegistPage() {
     try {
       const requestData = {
         board: {
-          boardType: "WAGGLE",
+          boardType: "MATE",
           title: title,
           content: content,
         },
       };
 
       if (isUpdateMode) {
-        // 기존 mate 게시물 업데이트
-        axios
-          .put(`/mates/${boardId}`, requestData.board)
-          .then((response) => {
-            console.log("Mate 게시물 수정 성공!");
-            console.log(response);
-          })
-          .catch((error) => {
-            console.log(error);
-          });
+        axios.put(`/mates/${boardId}`, requestData.board);
       } else {
-        // 새로운 mate 게시물 생성
-        axios
-          .post("/mates", requestData)
-          .then((response) => {
-            console.log("Mate 게시물 작성 성공!");
-            const boardTemp = response.data.board;
-            boardId = boardTemp.boardId;
-            // Mate 상세 페이지로 리디렉션
-            navigate(`/mates/${boardId}`);
-          })
-          .catch((error) => {
-            console.log(error);
-          });
+        axios.post("/mates", requestData).then((response) => {
+          const boardTemp = response.data.board;
+          boardId = boardTemp.boardId;
+          navigate(`/mates/${boardId}`);
+        });
       }
     } catch (error) {
-      console.error("Mate 게시물 작성 또는 수정 중 에러 발생:", error);
+      // console.error("Mate 게시물 작성 또는 수정 중 에러 발생:", error);
     }
   };
 

@@ -14,12 +14,12 @@ import lombok.Setter;
 @NoArgsConstructor
 public class ProductDTO {
 
-        private Long productId;
-        private Long boardId;
-        private double price;
-        private boolean dealFlag;
+    private Long productId;
 
-        private BoardDTO board;
+    private BoardDTO board;
+
+    private Long price;
+
+    private boolean dealFlag;
+
 }
-
-

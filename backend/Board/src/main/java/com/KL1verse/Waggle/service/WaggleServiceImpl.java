@@ -8,10 +8,13 @@ import com.KL1verse.Board.repository.entity.Board;
 import com.KL1verse.Waggle.dto.req.WaggleDTO;
 import com.KL1verse.Waggle.repository.WaggleRepository;
 import com.KL1verse.Waggle.repository.entity.Waggle;
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.stream.Collectors;
 import org.springframework.beans.BeanUtils;
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
@@ -26,28 +29,16 @@ public class WaggleServiceImpl implements WaggleService {
         this.boardRepository = boardRepository;
     }
 
-
     @Override
     public WaggleDTO getWaggleById(Long boardId) {
-        List<Waggle> waggles = waggleRepository.findByBoard_BoardId(boardId);
-
-        if (waggles.isEmpty()) {
-            throw new RuntimeException("해당 ID의 Waggle을 찾을 수 없습니다: " + boardId);
-        }
-
-        Waggle waggle = waggles.get(0);
+        Waggle waggle = findWaggleByBoardId(boardId);
         return convertToDTO(waggle);
     }
-
-
 
     @Override
     public WaggleDTO createWaggle(WaggleDTO waggleDto) {
         Waggle waggle = convertToEntity(waggleDto);
-
-        Board board = waggle.getBoard();
-        board = boardRepository.save(board);
-
+        Board board = saveBoard(waggle.getBoard());
         waggle.setBoard(board);
         Waggle createdWaggle = waggleRepository.save(waggle);
         return convertToDTO(createdWaggle);
@@ -55,63 +46,64 @@ public class WaggleServiceImpl implements WaggleService {
 
     @Override
     public WaggleDTO updateWaggle(Long boardId, WaggleDTO waggleDto) {
-        List<Waggle> waggles = waggleRepository.findByBoard_BoardId(boardId);
-
-        if (waggles.isEmpty()) {
-            throw new RuntimeException("Waggle not found with boardId: " + boardId);
-        }
-        Waggle existingWaggle = waggles.get(0);
-
-        existingWaggle.getBoard().setTitle(waggleDto.getBoard().getTitle());
-        existingWaggle.getBoard().setContent(waggleDto.getBoard().getContent());
-
+        Waggle existingWaggle = findWaggleByBoardId(boardId);
+        updateExistingWaggle(existingWaggle, waggleDto);
         Waggle updatedWaggle = waggleRepository.save(existingWaggle);
-
         return convertToDTO(updatedWaggle);
     }
 
-
     @Override
     public void deleteWaggle(Long boardId) {
-        List<Waggle> waggles = waggleRepository.findByBoard_BoardId(boardId);
+        Waggle waggleToDelete = findWaggleByBoardId(boardId);
 
-        if (waggles.isEmpty()) {
-            throw new RuntimeException("해당 ID의 Waggle을 찾을 수 없습니다: " + boardId);
+        if (waggleToDelete != null) {
+            waggleToDelete.getBoard().setDeleteAt(LocalDateTime.now());
         }
-
-        Waggle waggleToDelete = waggles.get(0);
         waggleRepository.deleteById(waggleToDelete.getWaggleId());
     }
 
 
     @Override
-    public List<WaggleDTO> getAllWaggleList() {
-        List<Waggle> waggles = waggleRepository.findByBoard_BoardType(Board.BoardType.WAGGLE);
-        return waggles.stream()
-            .map(this::convertToDTO)
-            .collect(Collectors.toList());
-}
-
-    @Override
-    public List<WaggleDTO> searchWaggles(SearchBoardConditionDto searchCondition) {
-        List<Waggle> waggles;
+    public Page<WaggleDTO> searchWaggles(SearchBoardConditionDto searchCondition,
+        Pageable pageable) {
+        Page<Waggle> waggles;
 
         if (searchCondition != null && searchCondition.getKeyword() != null) {
-            // If keyword is provided, search for posts containing the keyword
-            waggles = waggleRepository.findByBoard_TitleContainingOrBoard_ContentContaining(searchCondition.getKeyword(), searchCondition.getKeyword());
+            waggles = waggleRepository.findByBoard_TitleContainingOrBoard_ContentContaining(
+                searchCondition.getKeyword(),
+                searchCondition.getKeyword(),
+                pageable
+            );
         } else {
-            // If no keyword provided, get all posts
-            waggles = waggleRepository.findAll();
+            waggles = waggleRepository.findAll(pageable);
         }
 
-        // Convert the entities to DTOs
-        return waggles.stream()
-            .map(this::convertToDTO)
-            .collect(Collectors.toList());
+        return waggles.map(this::convertToDTO);
     }
 
+    @Override
+    public Page<WaggleDTO> getAllWaggleList(Pageable pageable) {
+        Page<Waggle> waggles = waggleRepository.findByBoard_BoardType(Board.BoardType.WAGGLE,
+            pageable);
+        return waggles.map(this::convertToDTO);
+    }
 
+    private Waggle findWaggleByBoardId(Long boardId) {
+        Page<Waggle> waggles = waggleRepository.findByBoard_BoardId(boardId, Pageable.unpaged());
+        if (waggles.isEmpty()) {
+            throw new RuntimeException("Waggle not found with boardId: " + boardId);
+        }
+        return waggles.getContent().get(0);
+    }
 
+    private Board saveBoard(Board board) {
+        return boardRepository.save(board);
+    }
+
+    private void updateExistingWaggle(Waggle existingWaggle, WaggleDTO waggleDto) {
+        existingWaggle.getBoard().setTitle(waggleDto.getBoard().getTitle());
+        existingWaggle.getBoard().setContent(waggleDto.getBoard().getContent());
+    }
 
     private WaggleDTO convertToDTO(Waggle waggle) {
         WaggleDTO waggleDTO = new WaggleDTO();
@@ -124,6 +116,7 @@ public class WaggleServiceImpl implements WaggleService {
             .createAt(waggle.getBoard().getCreateAt())
             .updateAt(waggle.getBoard().getUpdateAt())
             .deleteAt(waggle.getBoard().getDeleteAt())
+//            .user(Long.valueOf(waggle.getBoard().getUser()))
             .build());
         return waggleDTO;
     }
@@ -139,6 +132,7 @@ public class WaggleServiceImpl implements WaggleService {
             .createAt(waggleDTO.getBoard().getCreateAt())
             .updateAt(waggleDTO.getBoard().getUpdateAt())
             .deleteAt(waggleDTO.getBoard().getDeleteAt())
+//            .user(String.valueOf(waggleDTO.getBoard().getUser()))
             .build());
         return waggle;
     }

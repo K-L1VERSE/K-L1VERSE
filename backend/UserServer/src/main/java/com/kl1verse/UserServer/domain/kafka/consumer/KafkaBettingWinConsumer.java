@@ -1,8 +1,6 @@
 package com.kl1verse.UserServer.domain.kafka.consumer;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.kl1verse.UserServer.domain.betting.BettingEntity;
 import com.kl1verse.UserServer.domain.betting.Winner;
 import com.kl1verse.UserServer.domain.kafka.KafkaUserRepository;
 import com.kl1verse.UserServer.domain.kafka.producer.KafkaProducer;
@@ -28,7 +26,7 @@ public class KafkaBettingWinConsumer {
     private ObjectMapper objectMapper;
 
     @Transactional
-//    @KafkaListener(topics = "winner-info", groupId = "user-group") // match-group아님, 현재 groupID !
+//    @KafkaListener(topics = "winner-info", groupId = "user-group")
     public void divideGoal(String winnerInfoJson) {
 
         Winner winner = null;
@@ -37,8 +35,8 @@ public class KafkaBettingWinConsumer {
             winner = objectMapper.readValue(winnerInfoJson, Winner.class);
             User user = kafkaUserRepository.findById(winner.getUserId()).orElseThrow();
 
-            // user의 goal 증가 (베팅한 만큼)
-            kafkaUserRepository.updateGoal(winner.getUserId(), user.getGoal() + winner.getNewGoal());
+            kafkaUserRepository.updateGoal(winner.getUserId(),
+                user.getGoal() + winner.getNewGoal());
             kafkaUserRepository.updateWinBet(winner.getUserId(), user.getWinBet() + 1);
         } catch (Exception e) {
             e.printStackTrace();

@@ -1,13 +1,25 @@
+<<<<<<< HEAD
 // import React, { useState, useEffect } from "react";
 // import { useNavigate, useParams, useLocation } from "react-router-dom";
 // import axios from "../../../api/axios";
 // import BoardTopNavBar from "../../../components/Board/BoardTopNavBar";
+=======
+import React, { useState, useEffect } from "react";
+import { useNavigate, useLocation } from "react-router-dom";
+import axios from "../../../api/axios";
+import BoardTopNavBar from "../../../components/Board/BoardTopNavBar";
+>>>>>>> 97fea671e9cdd2ebff857e910b2a742dec0fda9d
 
 // import * as boardApi from "../../../api/product";
 
+<<<<<<< HEAD
 // function ProductRegistPage() {
 //   const navigate = useNavigate();
 //   // const { productId } = useParams();
+=======
+function ProductRegistPage() {
+  const navigate = useNavigate();
+>>>>>>> 97fea671e9cdd2ebff857e910b2a742dec0fda9d
 
 //   const [title, setTitle] = useState("");
 //   const [content, setContent] = useState("");
@@ -16,6 +28,7 @@
 //   const location = useLocation();
 //   let boardId = location.state ? location.state.boardId : null;
 
+<<<<<<< HEAD
 //   useEffect(() => {
 //     // productId 제공되는 경우, 수정 모드임을 나타냄
 //     if (boardId) {
@@ -32,10 +45,22 @@
 //         });
 //     }
 //   }, [boardId]);
+=======
+  useEffect(() => {
+    if (boardId) {
+      boardApi.getProduct(boardId).then((data) => {
+        setTitle(data.board.title);
+        setContent(data.board.content);
+        setIsUpdateMode(true);
+      });
+    }
+  }, [boardId]);
+>>>>>>> 97fea671e9cdd2ebff857e910b2a742dec0fda9d
 
 //   const handleSubmit = async (event) => {
 //     event.preventDefault();
 
+<<<<<<< HEAD
 //     try {
 //       const requestData = {
 //         board: {
@@ -75,6 +100,30 @@
 //       console.error("Product 게시물 작성 또는 수정 중 에러 발생:", error);
 //     }
 //   };
+=======
+    try {
+      const requestData = {
+        board: {
+          boardType: "PRODUCT",
+          title,
+          content,
+        },
+      };
+
+      if (isUpdateMode) {
+        axios.put(`/products/${boardId}`, requestData.board);
+      } else {
+        axios.post("/products", requestData).then((response) => {
+          const boardTemp = response.data.board;
+          boardId = boardTemp.boardId;
+          navigate(`/products/${boardId}`);
+        });
+      }
+    } catch (error) {
+      // console.error("Product 게시물 작성 또는 수정 중 에러 발생:", error);
+    }
+  };
+>>>>>>> 97fea671e9cdd2ebff857e910b2a742dec0fda9d
 
 //   return (
 //     <div>
