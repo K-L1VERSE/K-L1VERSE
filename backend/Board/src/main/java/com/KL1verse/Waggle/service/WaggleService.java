@@ -2,6 +2,7 @@ package com.KL1verse.Waggle.service;
 
 import com.KL1verse.Board.dto.req.SearchBoardConditionDto;
 import com.KL1verse.Waggle.dto.req.WaggleDTO;
+import java.util.List;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 

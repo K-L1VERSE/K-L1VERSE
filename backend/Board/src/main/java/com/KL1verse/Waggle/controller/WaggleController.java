@@ -3,6 +3,7 @@ package com.KL1verse.Waggle.controller;
 import com.KL1verse.Board.dto.req.SearchBoardConditionDto;
 import com.KL1verse.Waggle.dto.req.WaggleDTO;
 import com.KL1verse.Waggle.service.WaggleService;
+import java.util.List;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
