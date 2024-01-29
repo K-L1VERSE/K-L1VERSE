@@ -3,14 +3,21 @@ package com.KL1verse.Product.controller;
 import com.KL1verse.Board.dto.req.SearchBoardConditionDto;
 import com.KL1verse.Product.dto.req.ProductDTO;
 import com.KL1verse.Product.service.ProductService;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
-import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
-
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.List;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping("/products")
@@ -29,13 +36,16 @@ public class ProductController {
     }
 
     @PostMapping
-    public ResponseEntity<ProductDTO> createProduct(@RequestBody ProductDTO productDto) throws URISyntaxException {
+    public ResponseEntity<ProductDTO> createProduct(@RequestBody ProductDTO productDto)
+        throws URISyntaxException {
         ProductDTO createdProduct = productService.createProduct(productDto);
-        return ResponseEntity.created(new URI("/products/" + createdProduct.getProductId())).body(createdProduct);
+        return ResponseEntity.created(new URI("/products/" + createdProduct.getProductId()))
+            .body(createdProduct);
     }
 
     @PutMapping("/{boardId}")
-    public ResponseEntity<ProductDTO> updateProduct(@PathVariable Long boardId, @RequestBody ProductDTO productDto) {
+    public ResponseEntity<ProductDTO> updateProduct(@PathVariable Long boardId,
+        @RequestBody ProductDTO productDto) {
         ProductDTO updatedProduct = productService.updateProduct(boardId, productDto);
         return ResponseEntity.ok(updatedProduct);
     }

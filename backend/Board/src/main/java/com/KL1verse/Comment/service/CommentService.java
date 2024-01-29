@@ -5,7 +5,8 @@ import com.KL1verse.Comment.dto.req.CommentDTO;
 import java.util.List;
 
 public interface CommentService {
-    CommentDTO getCommentById(Long commentId);
+
+    CommentDTO getCommentById(Long commentId, Long requestingUserId);
 
     CommentDTO createComment(CommentDTO commentDTO);
 
@@ -13,7 +14,7 @@ public interface CommentService {
 
     void deleteComment(Long commentId);
 
-    List<CommentDTO> getAllCommentsByBoardId(Long boardId);
+    List<CommentDTO> getAllCommentsByBoardId(Long boardId, Long requestingUserId);
 
     List<CommentDTO> getAllRepliesByParentId(Long parentId);
 

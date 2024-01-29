@@ -15,11 +15,9 @@ import lombok.Setter;
 public class MateDTO {
 
     private Long mateId;
-
+    private BoardDTO board;
     private int total;
     private boolean fullFlag;
-    private String matchId;
-
-    private BoardDTO board;
+    private int matchId;
 
 }

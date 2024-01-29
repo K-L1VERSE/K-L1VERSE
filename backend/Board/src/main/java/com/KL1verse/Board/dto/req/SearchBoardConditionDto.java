@@ -15,6 +15,4 @@ public class SearchBoardConditionDto {
 
     private String keyword; // 검색어 필드
 
-
-
 }

@@ -9,9 +9,11 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface ProductRepository extends JpaRepository<Product, Long> {
+
     Page<Product> findByBoard_BoardType(Board.BoardType boardType, Pageable pageable);
 
     Page<Product> findByBoard_BoardId(Long boardId, Pageable pageable);
 
-    Page<Product> findByBoard_TitleContainingOrBoard_ContentContaining(String titleKeyword, String contentKeyword, Pageable pageable);
+    Page<Product> findByBoard_TitleContainingOrBoard_ContentContaining(String titleKeyword,
+        String contentKeyword, Pageable pageable);
 }

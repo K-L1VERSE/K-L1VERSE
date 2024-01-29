@@ -6,6 +6,7 @@ import com.KL1verse.Comment.service.CommentLikeService;
 import com.KL1verse.Comment.service.CommentService;
 import java.util.List;
 import java.util.stream.Collectors;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -31,7 +32,17 @@ public class CommentController {
     // Get Comment by ID
     @GetMapping("/{commentId}")
     public ResponseEntity<CommentDTO> getCommentById(@PathVariable Long commentId) {
-        CommentDTO comment = commentService.getCommentById(commentId);
+        // 사용자 ID를 가져오는 방법을 구현한다고 가정하고 이를 서비스에 전달
+
+        Long requestingUserId = 123L; // 사용자 ID를 가져오는 메서드를 구현
+        CommentDTO comment = commentService.getCommentById(commentId, requestingUserId);
+
+        if (comment == null) {
+            // 비밀 댓글에 대한 권한이 없는 경우 처리
+            return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
+            // 또는 다른 적절한 응답을 반환할 수 있습니다.
+        }
+
         return ResponseEntity.ok(comment);
     }
 
@@ -61,13 +72,16 @@ public class CommentController {
 
     @GetMapping("/list/{boardId}")
     public ResponseEntity<List<CommentDTO>> getAllCommentsByBoardId(@PathVariable Long boardId) {
-        List<CommentDTO> comments = commentService.getAllCommentsByBoardId(boardId)
+        // requestingUserId를 123으로 가정
+        Long requestingUserId = 1232245L;
+        List<CommentDTO> comments = commentService.getAllCommentsByBoardId(boardId, requestingUserId)
             .stream()
             .filter(comment -> comment.getDeleteAt() == null) // delete_at이 비어 있으면 포함
             .collect(Collectors.toList());
 
         return ResponseEntity.ok(comments);
     }
+
 
 
     // Create Reply for a Comment
