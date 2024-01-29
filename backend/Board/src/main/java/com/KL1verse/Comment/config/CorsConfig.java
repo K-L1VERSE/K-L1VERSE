@@ -1,4 +1,4 @@
-package com.KL1verse.Board.config;
+package com.KL1verse.Comment.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

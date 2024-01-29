@@ -1,64 +1,117 @@
-import React, { useState, useEffect } from "react";
-import { useNavigate, Link } from "react-router-dom";
+// WaggleListPage.jsx
+
+import React, { useState, useEffect, useCallback } from "react";
+import { useNavigate } from "react-router-dom";
 import axios from "../../../api/axios";
 import BoardTopNavBar from "../../../components/Board/BoardTopNavBar";
-import RecentWaggleCard from "../../../components/Board/RecentWaggleCard";
+import "../../../styles/BoardStyles/WaggleListStyle.css";
+import WaggleItemCard from "../../../components/Board/WaggleItemCard";
 
 function WaggleListPage() {
   const [waggleList, setWaggleList] = useState([]);
+  const [page, setPage] = useState(0);
+  const [hasMore, setHasMore] = useState(true);
+  const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
 
-  /* waggle 전체 글 가져오기 */
+  const fetchWaggleList = useCallback(async () => {
+    try {
+      setLoading(true);
+      const response = await axios.get(
+        `/waggles/pages?page=${page}&size=30&sort=board.createAt,desc`,
+      );
+      const newWaggles = response.data.content;
+
+      if (newWaggles.length === 0) {
+        setHasMore(false);
+      } else {
+        setWaggleList((prevWaggles) => [...prevWaggles, ...newWaggles]);
+      }
+    } finally {
+      setLoading(false);
+    }
+  }, [page]);
+
   useEffect(() => {
-    const getWaggleList = () => {
-      axios
-        .get(`/waggles`)
-        .then(({ data }) => {
-          setWaggleList(data);
-        })
-        .catch((err) => {
-          console.log("Waggle 게시판 목록을 불러오는 중 에러 발생:", err);
-        });
-    };
+    if (hasMore) {
+      fetchWaggleList();
+    }
+  }, [hasMore, fetchWaggleList]);
 
-    getWaggleList();
-  }, []);
-
-  // "와글 글 작성" 버튼 클릭 시 WaggleRegistPage로 이동
-  function handleWriteWaggleClick() {
+  const handleWriteWaggleClick = () => {
     navigate("/waggleRegist");
+  };
+
+  const handleScroll = useCallback(() => {
+    const windowHeight = window.innerHeight;
+    const documentHeight = document.documentElement.scrollHeight;
+    const scrollTop = window.scrollY;
+    const distanceFromBottom = documentHeight - scrollTop - windowHeight;
+
+    if (distanceFromBottom < 200 && !loading && hasMore) {
+      setPage((prevPage) => prevPage + 1);
+    }
+  }, [loading, hasMore]);
+
+  useEffect(() => {
+    window.addEventListener("scroll", handleScroll);
+
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+    };
+  }, [handleScroll]);
+
+  function formatDate(dateString) {
+    const options = { year: "numeric", month: "numeric", day: "numeric" };
+    const formattedDate = new Date(dateString).toLocaleDateString(
+      "ko-KR",
+      options,
+    );
+    return formattedDate;
+  }
+
+  function formatRelativeTime(dateString) {
+    const now = new Date();
+    const createdAt = new Date(dateString);
+    const timeDifference = now - createdAt;
+
+    const seconds = Math.floor(timeDifference / 1000);
+    const minutes = Math.floor(seconds / 60);
+    const hours = Math.floor(minutes / 60);
+    const days = Math.floor(hours / 24);
+
+    if (days > 0) {
+      return formatDate(dateString);
+    }
+    if (hours > 0) {
+      return `${hours}시간 전`;
+    }
+    if (minutes > 0) {
+      return `${minutes}분 전`;
+    }
+    return "방금 전";
   }
 
   return (
     <div>
       <BoardTopNavBar />
-      <RecentWaggleCard />
-      <div>
-        <h3>와글와글 떠들어주세요</h3>
+      <div className="waggle-header">
+        <h2>와글와글 떠들어주세요</h2>
         <button onClick={handleWriteWaggleClick}>🖋글쓰기</button>
       </div>
 
-      <table border="1">
-        <thead>
-          <tr>
-            <th>제목</th>
-            <th>글 내용</th>
-          </tr>
-        </thead>
-        <tbody>
-          {waggleList.map((waggle) => (
-            <tr key={waggle.board.boardId}>
-              {/* 클릭 시 상세 페이지로 이동하도록 Link 사용 */}
-              <td>
-                <Link to={`/waggle/${waggle.board.boardId}`}>
-                  {waggle.board.title}
-                </Link>
-              </td>
-              <td>{waggle.board.content}</td>
-            </tr>
-          ))}
-        </tbody>
-      </table>
+      <div className="waggle-list">
+        {waggleList.map((waggle, index) => (
+          <WaggleItemCard
+            key={index}
+            waggle={waggle}
+            formatRelativeTime={formatRelativeTime}
+          />
+        ))}
+      </div>
+
+      {loading && <p>Loading...</p>}
+      {!hasMore && <p>No more data</p>}
     </div>
   );
 }

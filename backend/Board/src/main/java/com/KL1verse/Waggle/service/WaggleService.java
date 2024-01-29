@@ -19,6 +19,6 @@ public interface WaggleService {
 
     Page<WaggleDTO> getAllWaggleList(Pageable pageable);
 
-//    List<WaggleDTO> getMostRecentWaggles(int count);
+    List<WaggleDTO> getMostRecentWaggles(int count);
 }
 

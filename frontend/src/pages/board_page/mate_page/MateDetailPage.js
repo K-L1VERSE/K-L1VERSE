@@ -20,17 +20,15 @@ function MateDetailPage() {
         setMateId(data.mateId);
       })
       .catch((err) => {
-        console.log("Waggle 상세 정보를 불러오는 중 에러 발생:", err);
+        console.log("Mate 상세 정보를 불러오는 중 에러 발생:", err);
       });
   }
 
   useEffect(() => {
-    console.log("boardId:" + boardId);
     getMateDetail();
   }, [boardId]);
 
   function handleUpdateBtn() {
-    console.log(mateDetail.boardId);
     navigate("/mateRegist", { state: { boardId: mateDetail.boardId } });
   }
 

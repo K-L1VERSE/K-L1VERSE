@@ -18,7 +18,7 @@ function MateListPage() {
           setMateList(data);
         })
         .catch((err) => {
-          console.log("Mate 게시판 목록을 불러오는 중 에러 발생:", err);
+          // console.log("Mate 게시판 목록을 불러오는 중 에러 발생:", err);
         });
     };
 
@@ -50,7 +50,6 @@ function MateListPage() {
         <tbody>
           {mateList.map((mate) => (
             <tr key={mate.board.boardId}>
-              {/* 클릭 시 상세 페이지로 이동하도록 Link 사용 */}
               <td>
                 <Link to={`/mates/${mate.board.boardId}`}>
                   {mate.board.title}
