@@ -11,7 +11,7 @@ function KaKaoRedirection() {
   const setUserState = useSetRecoilState(UserState);
 
   const request = axios
-    .get(`/login/oauth/code/kakao?code=${KAKAO_CODE}`)
+    .get(`/user/login/oauth/code/kakao?code=${KAKAO_CODE}`)
     .then((res) => {
       console.log(res);
 

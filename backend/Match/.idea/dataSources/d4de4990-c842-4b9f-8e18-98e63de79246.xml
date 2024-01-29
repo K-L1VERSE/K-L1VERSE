@@ -1,11 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <dataSource name="@stg-yswa-kr-practice-db-master.mariadb.database.azure.com">
   <database-model serializer="dbm" dbms="MARIADB" family-id="MARIADB" format-version="4.51">
-    <root id="1">
-      <DefaultCasing>lower/lower</DefaultCasing>
-      <DefaultEngine>InnoDB</DefaultEngine>
-      <ServerVersion>10.3.23</ServerVersion>
-    </root>
+    <root id="1"/>
     <schema id="2" parent="1" name="information_schema">
       <CollationName>utf8_general_ci</CollationName>
     </schema>
