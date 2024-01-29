@@ -10,13 +10,16 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface MateRepository extends JpaRepository<Mate, Long> {
-  Page<Mate> findByBoard_BoardType(Board.BoardType boardType, Pageable pageable);
 
-  Page<Mate> findByBoard_BoardId(Long boardId, Pageable pageable);
+    Page<Mate> findByBoard_BoardType(Board.BoardType boardType, Pageable pageable);
 
-  Page<Mate> findByBoard_TitleContainingOrBoard_ContentContaining(String titleKeyword, String contentKeyword, Pageable pageable);
+    Page<Mate> findByBoard_BoardId(Long boardId, Pageable pageable);
 
-  Page<Mate> findByFullFlagFalse(Pageable pageable);
+    Page<Mate> findByBoard_TitleContainingOrBoard_ContentContaining(String titleKeyword,
+        String contentKeyword, Pageable pageable);
 
-  Page<Mate> findByBoard_CreateAtBetween(LocalDateTime startDate, LocalDateTime endDate, Pageable pageable);
+    Page<Mate> findByFullFlagFalse(Pageable pageable);
+
+    Page<Mate> findByBoard_CreateAtBetween(LocalDateTime startDate, LocalDateTime endDate,
+        Pageable pageable);
 }

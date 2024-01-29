@@ -1,6 +1,5 @@
 package com.KL1verse.Board.dto.req;
 
-import java.time.LocalDateTime;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;

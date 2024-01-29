@@ -10,30 +10,31 @@ import org.springframework.stereotype.Service;
 @Service
 public class WaggleLikeServiceImpl implements WaggleLikeService {
 
-  private final WaggleLikeRepository waggleLikeRepository;
+    private final WaggleLikeRepository waggleLikeRepository;
 
-  public WaggleLikeServiceImpl(WaggleLikeRepository waggleLikeRepository) {
-    this.waggleLikeRepository = waggleLikeRepository;
-  }
-
-  @Override
-  public WaggleLikeDTO likeWaggle(Long waggleId, Long userId) {
-    Optional<WaggleLike> existingLike = waggleLikeRepository.findByUserIdAndWaggleId_WaggleId(userId, waggleId);
-    if (existingLike.isPresent()) {
-
-
-      WaggleLike like = existingLike.get();
-      return new WaggleLikeDTO(like.getLikesId(), like.getUserId(), like.getWaggleId().getWaggleId());
+    public WaggleLikeServiceImpl(WaggleLikeRepository waggleLikeRepository) {
+        this.waggleLikeRepository = waggleLikeRepository;
     }
 
-    WaggleLike waggleLike = WaggleLike.builder()
-        .userId(userId)
-        .waggleId(Waggle.builder().waggleId(waggleId).build())
-        .build();
+    @Override
+    public WaggleLikeDTO likeWaggle(Long waggleId, Long userId) {
+        Optional<WaggleLike> existingLike = waggleLikeRepository.findByUserIdAndWaggleId_WaggleId(
+            userId, waggleId);
+        if (existingLike.isPresent()) {
 
-    waggleLikeRepository.save(waggleLike);
-    return null;
-  }
+            WaggleLike like = existingLike.get();
+            return new WaggleLikeDTO(like.getLikesId(), like.getUserId(),
+                like.getWaggleId().getWaggleId());
+        }
+
+        WaggleLike waggleLike = WaggleLike.builder()
+            .userId(userId)
+            .waggleId(Waggle.builder().waggleId(waggleId).build())
+            .build();
+
+        waggleLikeRepository.save(waggleLike);
+        return null;
+    }
 
 //  @Override
 //  public void unlikeWaggle(Long waggleId, Long userId) {
@@ -42,10 +43,11 @@ public class WaggleLikeServiceImpl implements WaggleLikeService {
 //  }
 
 
-  @Override
-  public void unlikeWaggle(Long waggleId, Long userId) {
-    Optional<WaggleLike> existingLike = waggleLikeRepository.findByUserIdAndWaggleId_WaggleId(userId, waggleId);
-    existingLike.ifPresent(like -> waggleLikeRepository.delete(like));
-  }
+    @Override
+    public void unlikeWaggle(Long waggleId, Long userId) {
+        Optional<WaggleLike> existingLike = waggleLikeRepository.findByUserIdAndWaggleId_WaggleId(
+            userId, waggleId);
+        existingLike.ifPresent(like -> waggleLikeRepository.delete(like));
+    }
 
 }

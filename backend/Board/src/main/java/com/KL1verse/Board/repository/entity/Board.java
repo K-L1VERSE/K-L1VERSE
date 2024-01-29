@@ -28,7 +28,6 @@ import org.hibernate.annotations.UpdateTimestamp;
 public class Board {
 
 
-
     public enum BoardType {
         WAGGLE, MATE, PRODUCT
     }
@@ -56,11 +55,10 @@ public class Board {
     @Column(name = "delete_at")
     private LocalDateTime deleteAt;
 
-//    @ManyToOne
+    //    @ManyToOne
 //    @JoinColumn(name = "user_id")
     @Column(name = "user_id")
     private String user;
-
 
 
 }
