@@ -1,4 +1,7 @@
 import React from "react";
+import styled from "styled-components";
+
+import KakaoLoginImg from "../../assets/login_button/kakao_login_medium_narrow.png";
 
 // eslint-disable-next-line react/prop-types
 function KakaoLoginButton() {
@@ -10,19 +13,29 @@ function KakaoLoginButton() {
   // oauth 요청 URL
   const KAKAO_AUTH_URL = `https://kauth.kakao.com/oauth/authorize?client_id=${KakaoRestApiKey}&redirect_uri=${KaKaoRedirectUri}&response_type=code`;
 
-  const loginText = "카카오 로그인";
-
   const handleLogin = () => {
     window.location.href = KAKAO_AUTH_URL;
   };
 
   return (
     <div>
-      <button type="button" onClick={handleLogin}>
-        {loginText}
-      </button>
+      <LoginButton onClick={handleLogin} />
     </div>
   );
 }
+
+const LoginButton = styled.button`
+  width: 183px;
+  height: 45px;
+  border: none;
+  background-color: transparent;
+  cursor: pointer;
+
+  background-image: url(${KakaoLoginImg});
+
+  &:hover {
+    filter: brightness(0.7);
+  }
+`;
 
 export default KakaoLoginButton;
