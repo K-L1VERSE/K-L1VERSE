@@ -34,4 +34,6 @@ public interface MatchRepository extends JpaRepository<Match, Integer> {
     @Query(value = "SELECT COUNT(t) FROM timeline t WHERE t.match_id = :matchId", nativeQuery = true)
     int countById(@Param("matchId") int matchId);
 
+    @Query(value = "SELECT * FROM game g WHERE DATE(g.match_at) = CURRENT_DATE", nativeQuery = true)
+    List<Match> findTodayMatches();
 }
