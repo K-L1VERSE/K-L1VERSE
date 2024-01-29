@@ -10,7 +10,8 @@ import {
   Share,
   Modal,
 } from "../../styles/SurveyStyles/ResultCardStyle";
-import TeamImage from "../SurveyContent/teamImage";
+import TeamImage from "../../components/Survey/teamImage";
+import TeamName from "../../components/Survey/teamName";
 
 function ResultPage() {
   const {
@@ -56,11 +57,13 @@ function ResultPage() {
 
   return (
     <div>
-      <h1>Result Page</h1>
+      <br></br>
+      <h1>나랑 어울리는 팀은~?</h1>
       <TeamImage teamId={teamId} />
-
+      <TeamName teamId={teamId} />
+      <br></br>
       <ShareBox>
-        <div>친구의 결과도 궁금하다면!</div>
+        <div>친구의 결과도 궁금하다면 ?</div>
       </ShareBox>
       <ShareBox>
         <button type="button" onClick={shareTwitter}>

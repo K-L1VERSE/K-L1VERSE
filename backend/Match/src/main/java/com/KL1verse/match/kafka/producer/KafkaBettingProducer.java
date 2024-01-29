@@ -27,7 +27,6 @@ public class KafkaBettingProducer {
 
     public void betting(BettingRequest bettingRequest) {
 
-        // 1. betting table에 저장
         Betting betting = Betting.builder()
             .userId(bettingRequest.getUserId())
             .matchId(bettingRequest.getMatchId())
@@ -36,23 +35,20 @@ public class KafkaBettingProducer {
             .build();
         bettingRepository.save(betting);
 
-        // game table 수정(matchId를 통해서, betting_team_id로 베팅한 팀 알아내서, 베팅액 올리기)
         Match match = matchRepository.findById(bettingRequest.getMatchId()).orElseThrow();
 
-        // home team에 베팅했으면
         if (betting.getBettingTeamId() == match.getHomeTeamId()) {
             int newAmount = match.getHomeBettingAmount() + betting.getAmount();
             matchRepository.updateHomeBettingAmount(match.getMatchId(), newAmount);
-        } else if(betting.getBettingTeamId() == match.getAwayTeamId()) {  // away team에 베팅했으면
+        } else if (betting.getBettingTeamId() == match.getAwayTeamId()) {
             int newAmount = match.getAwayBettingAmount() + betting.getAmount();
             matchRepository.updateAwayBettingAmount(match.getMatchId(), newAmount);
-        } else { // 무승부에 베팅했으면
+        } else {
             int newAmount = match.getDrawBettingAmount() + betting.getAmount();
             matchRepository.updateDrawBettingAmount(match.getMatchId(), newAmount);
         }
 
         try {
-            // Json으로 바꿔서 보내줌
             String bettingJson = objectMapper.writeValueAsString(betting);
             kafkaProducer.sendMessage("betting", bettingJson);
         } catch (JsonProcessingException e) {

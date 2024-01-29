@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<dataSource name="@stg-yswa-kr-practice-db-master.mariadb.database.azure.com">
+  <database-model serializer="dbm" dbms="MARIADB" family-id="MARIADB" format-version="4.51">
+    <root id="1"/>
+    <schema id="2" parent="1" name="information_schema">
+      <CollationName>utf8_general_ci</CollationName>
+    </schema>
+    <schema id="3" parent="1" name="s10p12a409">
+      <CollationName>utf8mb4_bin</CollationName>
+    </schema>
+  </database-model>
+</dataSource>

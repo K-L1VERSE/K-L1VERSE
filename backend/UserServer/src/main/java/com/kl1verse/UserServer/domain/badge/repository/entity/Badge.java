@@ -20,7 +20,7 @@ import lombok.Setter;
 public class Badge {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "badge_id")
     private Integer id;
 
