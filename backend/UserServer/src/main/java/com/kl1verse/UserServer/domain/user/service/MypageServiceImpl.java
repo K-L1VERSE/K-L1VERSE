@@ -2,6 +2,7 @@ package com.kl1verse.UserServer.domain.user.service;
 
 import com.kl1verse.UserServer.domain.auth.JwtUtil;
 import com.kl1verse.UserServer.domain.user.dto.res.MypageResponseDto;
+import com.kl1verse.UserServer.domain.user.dto.res.NicknameUpdateReqDto;
 import com.kl1verse.UserServer.domain.user.exception.UserException;
 import com.kl1verse.UserServer.domain.user.repository.UserRepository;
 import com.kl1verse.UserServer.domain.user.repository.entity.User;
@@ -10,6 +11,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
 @Slf4j
@@ -51,5 +53,27 @@ public class MypageServiceImpl {
             .totalBet(user.getTotalBet())
             .winBet(user.getWinBet())
             .build();
+    }
+
+    @Transactional
+    public void updateNickname(HttpServletRequest request, NicknameUpdateReqDto nicknameUpdateReqDto) {
+        String requestToken = jwtUtil.resolveToken(request);
+        String email = jwtUtil.extractUserNameFromExpiredToken(requestToken);
+        String domain = jwtUtil.extractUserDomainFromExpiredToken(requestToken);
+
+        User user = userRepository.findByEmailAndDomain(email, domain).orElseThrow(
+            () -> new UserException(ResponseCode.INVALID_USER_INFO));
+
+        if(user.getNickname().equals(nicknameUpdateReqDto.getNickname())) {
+            throw new UserException(ResponseCode.NICKNAME_EQUAL);
+        }
+
+        if(user.getGoal() < 10000) {
+            throw new UserException(ResponseCode.NOT_ENOUGH_GOAL);
+        }
+
+        user.setGoal(user.getGoal() - 10000);
+        user.setNickname(nicknameUpdateReqDto.getNickname());
+        userRepository.save(user);
     }
 }
