@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import axios from "axios";
 import {
   HotClipContainer,
   Img,
@@ -6,7 +7,7 @@ import {
   VideoContainer,
 } from "../../styles/main-styles/hotclipStyle";
 import heart from "../../assets/heart_on_fire.png";
-import axios from "axios";
+
 import { ScrollMenu, VisibilityContext } from "react-horizontal-scrolling-menu";
 
 export default function Hotclip() {
@@ -40,7 +41,7 @@ export default function Hotclip() {
                 width="265"
                 src={`https://www.youtube.com/embed/${video.id.videoId}?controls=1&fs=0&modestbranding=1&color=white`}
                 frameborder="0"
-              ></iframe>
+              />
             </VideoContainer>
           ))}
         </VideoWrapper>

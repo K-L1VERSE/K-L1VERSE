@@ -2,6 +2,7 @@
 
 import React from "react";
 import { Link } from "react-router-dom";
+import "../../styles/BoardStyles/WaggleListStyle.css";
 
 function WaggleItemCard({ waggle, formatRelativeTime }) {
   return (

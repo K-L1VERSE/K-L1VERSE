@@ -6,7 +6,7 @@ import CommentList from "../../../components/Board/CommentList";
 
 function WaggleDetailPage() {
   const [waggleDetail, setWaggleDetail] = useState({});
-  const [waggleId, setWaggleId] = useState(0);
+  const [, setWaggleId] = useState(0);
   const [isLiked, setIsLiked] = useState(false);
   const [likeCount, setLikeCount] = useState(0); // 추가
   const { boardId } = useParams();
@@ -14,17 +14,12 @@ function WaggleDetailPage() {
 
   /* waggle 상세 정보 가져오기 */
   function getWaggleDetail() {
-    axios
-      .get(`/waggles/${boardId}`)
-      .then(({ data }) => {
-        setWaggleDetail(data.board);
-        setWaggleId(data.waggleId);
-        setIsLiked(data.isLiked);
-        setLikeCount(data.likeCount); // 좋아요 개수 업데이트
-      })
-      .catch((err) => {
-        // console.log("Waggle 상세 정보를 불러오는 중 에러 발생:", err);
-      });
+    axios.get(`/waggles/${boardId}`).then(({ data }) => {
+      setWaggleDetail(data.board);
+      setWaggleId(data.waggleId);
+      setIsLiked(data.isLiked);
+      setLikeCount(data.likeCount); // 좋아요 개수 업데이트
+    });
   }
 
   useEffect(() => {
@@ -58,15 +53,14 @@ function WaggleDetailPage() {
   };
 
   return (
-    <div>
+    <div className="container">
       <BoardTopNavBar />
-      <h1>Waggle 상세 정보</h1>
-      <p>
-        <strong>Title:</strong> {waggleDetail.title} {waggleId} {boardId}
-      </p>
-      <p>
-        <strong>Content:</strong> {waggleDetail.content}
-      </p>
+      <div className="waggle-detail-box">
+        <p>
+          <strong>{waggleDetail.title}</strong>
+        </p>
+        <p>{waggleDetail.content}</p>
+      </div>
       <div onClick={() => handleUpdateBtn()}>수정하기</div>
       <div onClick={() => handleDeleteBtn()}>삭제하기</div>
 

@@ -1,4 +1,4 @@
-package com.KL1verse.Comment.config;
+package com.KL1verse.Waggle.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

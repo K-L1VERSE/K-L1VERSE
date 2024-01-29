@@ -7,7 +7,6 @@ import * as boardApi from "../../../api/mate";
 
 function MateRegistPage() {
   const navigate = useNavigate();
-  // const { mateId } = useParams();
 
   const [title, setTitle] = useState("");
   const [content, setContent] = useState("");
@@ -33,8 +32,8 @@ function MateRegistPage() {
       const requestData = {
         board: {
           boardType: "MATE",
-          title: title,
-          content: content,
+          title,
+          content,
         },
       };
 

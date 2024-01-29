@@ -1,33 +1,66 @@
-import React, { useState, useEffect } from "react";
-import { useNavigate, Link } from "react-router-dom";
+import React, { useState, useEffect, useCallback } from "react";
+import { useNavigate } from "react-router-dom";
 import Calendar from "react-calendar";
 import axios from "../../../api/axios";
 import BoardTopNavBar from "../../../components/Board/BoardTopNavBar";
+import "../../../styles/BoardStyles/MateListStyle.css";
+import MateItemCard from "../../../components/Board/MateItemCard";
 
 function MateListPage() {
   const [mateList, setMateList] = useState([]);
+  const [page, setPage] = useState(0);
+  const [hasMore, setHasMore] = useState(true);
+  const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
   const [value, onChange] = useState(new Date());
   const [isOpen, setIsOpen] = useState(false);
 
-  useEffect(() => {
-    const getMateList = () => {
-      axios
-        .get(`/mates`)
-        .then(({ data }) => {
-          setMateList(data);
-        })
-        .catch((err) => {
-          // console.log("Mate 게시판 목록을 불러오는 중 에러 발생:", err);
-        });
-    };
+  const fetchMateList = useCallback(async () => {
+    try {
+      setLoading(true);
+      const response = await axios.get(
+        `/mates/pages?page=${page}&size=30&sort=board.createAt,desc`,
+      );
+      const newMates = response.data.content;
 
-    getMateList();
-  }, []);
+      if (newMates.length === 0) {
+        setHasMore(false);
+      } else {
+        setMateList((prevMates) => [...prevMates, ...newMates]);
+      }
+    } finally {
+      setLoading(false);
+    }
+  }, [page]);
+
+  useEffect(() => {
+    if (hasMore) {
+      fetchMateList();
+    }
+  }, [hasMore, fetchMateList]);
 
   const handleWriteMateClick = () => {
     navigate("/mateRegist");
   };
+
+  const handleScroll = useCallback(() => {
+    const windowHeight = window.innerHeight;
+    const documentHeight = document.documentElement.scrollHeight;
+    const scrollTop = window.scrollY;
+    const distanceFromBottom = documentHeight - scrollTop - windowHeight;
+
+    if (distanceFromBottom < 200 && !loading && hasMore) {
+      setPage((prevPage) => prevPage + 1);
+    }
+  }, [loading, hasMore]);
+
+  useEffect(() => {
+    window.addEventListener("scroll", handleScroll);
+
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+    };
+  }, [handleScroll]);
 
   const handleCalendarToggle = () => {
     setIsOpen(!isOpen);
@@ -36,30 +69,20 @@ function MateListPage() {
   return (
     <div>
       <BoardTopNavBar />
-      <h1>Mate 게시판 목록</h1>
-      <button onClick={handleWriteMateClick}>직관 메이트 글 작성</button>
+      <div className="mate-header">
+        <h2>저랑 같이 응원 갈래욤?</h2>
+        <button onClick={handleWriteMateClick}> 🖋글쓰기</button>
+      </div>
       <button onClick={handleCalendarToggle}>📆</button>
       {isOpen && <Calendar onChange={onChange} value={value} />}
-      <table border="1">
-        <thead>
-          <tr>
-            <th>제목</th>
-            <th>글 내용</th>
-          </tr>
-        </thead>
-        <tbody>
-          {mateList.map((mate) => (
-            <tr key={mate.board.boardId}>
-              <td>
-                <Link to={`/mates/${mate.board.boardId}`}>
-                  {mate.board.title}
-                </Link>
-              </td>
-              <td>{mate.board.content}</td>
-            </tr>
-          ))}
-        </tbody>
-      </table>
+
+      <div className="mate-list">
+        {mateList.map((mate, index) => (
+          <MateItemCard key={index} mate={mate} />
+        ))}
+      </div>
+      {loading && <p>Loading...</p>}
+      {!hasMore && <p>No more data</p>}
     </div>
   );
 }
