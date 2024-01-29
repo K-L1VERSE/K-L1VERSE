@@ -2,8 +2,10 @@ package com.kl1verse.UserServer.domain.user.service;
 
 import com.kl1verse.UserServer.domain.auth.JwtUtil;
 import com.kl1verse.UserServer.domain.user.dto.res.MypageResponseDto;
+import com.kl1verse.UserServer.domain.user.exception.UserException;
 import com.kl1verse.UserServer.domain.user.repository.UserRepository;
 import com.kl1verse.UserServer.domain.user.repository.entity.User;
+import com.kl1verse.UserServer.global.ResponseCode;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -28,7 +30,8 @@ public class MypageServiceImpl {
 //        String email = "admin";
 //        String domain = "kakao";
 
-        User user = userRepository.findByEmailAndDomain(email, domain).orElseThrow();
+        User user = userRepository.findByEmailAndDomain(email, domain).orElseThrow(
+            () -> new UserException(ResponseCode.INVALID_USER_INFO));
 
         /* accurate 계산 */
         float accurate;

@@ -5,7 +5,6 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import java.time.LocalDateTime;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -23,9 +22,12 @@ import lombok.ToString;
 public class Betting {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "betting_id")
     private int bettingId;
+
+    @Column(name = "match_id")
+    private int matchId;
 
     @Column(name = "user_id")
     private int userId;
@@ -35,5 +37,5 @@ public class Betting {
 
     @Column(name = "amount")
     private int amount;
-    
+
 }

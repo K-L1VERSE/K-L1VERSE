@@ -18,6 +18,12 @@ public class OAuthController {
     /*
     * Google로 로그인 후 Google 승인 서버로 부터 Authorization Code를 응답받는 컨트롤러
     * */
+
+    @GetMapping("/test")
+    public String test() {
+        return "test";
+    }
+
     @GetMapping("/code/{registrationId}")
     // @RequestParam, @Pathvariable 둘 다 (name = "") 선언을 안해주니까 에러남
     public ResponseEntity<SignInResDto> socialLogin(@RequestParam(name = "code") String code, @PathVariable(name = "registrationId") String registrationId) {
