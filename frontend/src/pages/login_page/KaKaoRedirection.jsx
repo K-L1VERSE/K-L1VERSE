@@ -1,35 +1,43 @@
 import React from "react";
+
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faHourglassHalf } from "@fortawesome/free-solid-svg-icons";
 
 import styled from "styled-components";
 
+import { useSetRecoilState } from "recoil";
 import axios from "../../api/axios";
+import { UserState } from "../../global/UserState";
 
 import LoginLogo from "../../components/login/LoginLogo";
 
 function KaKaoRedirection() {
   const PARAMS = new URL(document.location).searchParams;
   const KAKAO_CODE = PARAMS.get("code");
-  //   const code = window.location.search;
-  //   console.log(code);
-  console.log("KAKAO_CODE:", KAKAO_CODE);
+  
+  const setUserState = useSetRecoilState(UserState);
 
   const request = axios
-    .get(`/login/oauth/code/kakao?code=${KAKAO_CODE}`)
+    .get(`/user/login/oauth/code/kakao?code=${KAKAO_CODE}`)
     .then((res) => {
       console.log(res);
 
       /* access Token 받고 전역 변수로 관리 */
-      localStorage.setItem("accessToken", res.data.accessToken);
-      localStorage.setItem("email", res.data.email);
-      localStorage.setItem("nickname", res.data.nickname);
-      localStorage.setItem("profile", res.data.profile);
-      localStorage.setItem("domain", res.data.domain);
+      setUserState({
+        nickname: res.data.nickname, 
+        profile: res.data.profile, 
+        accessToken: res.data.accessToken,
+        email: res.data.email,
+        domain: res.data.domain,
+        isLoggedIn: true,
+      });
+
+      /* 성공시 홈화면으로 */
+      window.location.href = "/";
     })
     .catch((err) => {
       console.log(err);
-      window.location.href = "/login";
+      // window.location.href = "/login";
     });
 
   console.log(request);
