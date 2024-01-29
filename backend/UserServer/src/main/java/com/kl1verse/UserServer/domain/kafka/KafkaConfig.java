@@ -18,6 +18,7 @@ public class KafkaConfig {
 
     @Value("localhost:9092")
     private String bootstrapServers;
+
     @Bean
     public ProducerFactory<String, String> producerFactory() {
         Map<String, Object> config = new HashMap<>();
