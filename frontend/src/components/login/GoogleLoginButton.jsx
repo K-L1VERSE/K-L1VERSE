@@ -1,4 +1,7 @@
 import React from "react";
+import styled from "styled-components";
+
+import GoogleLoginImg from "../../assets/login_button/google_login_medium_narrow.png";
 
 import { GoogleLogin, GoogleOAuthProvider } from "@react-oauth/google";
 
@@ -19,22 +22,27 @@ function GoogleLoginButton() {
 
   return (
     <div>
-      <button type="button" onClick={handleLogin}>
-        구글 로그인
-      </button>
-
-      <GoogleOAuthProvider clientId={GOOGLE_CLIENT_ID}>
-        <GoogleLogin
-          onSuccess={(res) => {
-            console.log(res);
-          }}
-          onFailure={(err) => {
-            console.log(err);
-          }}
-        />
-      </GoogleOAuthProvider>
+      <LoginButton type="button" onClick={handleLogin} />
     </div>
   );
 }
+
+const LoginButton = styled.button`
+  width: 183px;
+  height: 45px;
+  border: none;
+  background-color: transparent;
+  cursor: pointer;
+
+  border-radius: 6px;
+  border: 1px solid #dcdcdc;
+
+  background-image: url(${GoogleLoginImg});
+  background-size: contain;
+
+  &:hover {
+    filter: brightness(0.7);
+  }
+`;
 
 export default GoogleLoginButton;
