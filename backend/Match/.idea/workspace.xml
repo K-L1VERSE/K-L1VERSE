@@ -4,178 +4,8 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="28d638e8-7727-48af-8c38-2002f58f12d8" name="S10P12A409-369 [FE] 메인페이지 공지사항 개발" comment="[Fix] merge feature-common/S10P12A409-369/main-notice-detail -&gt;  feature-common/S10P12A409-365/main-notice &#10;&#10;- &#10;&#10;&#10;&#10;[Resolves] S10P12A409-365&#10;[Ref] &#10;[Related to]">
-      <change afterPath="$PROJECT_DIR$/../Gateway/.gitignore" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../Gateway/build.gradle" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../Gateway/gradle/wrapper/gradle-wrapper.jar" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../Gateway/gradle/wrapper/gradle-wrapper.properties" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../Gateway/gradlew" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../Gateway/gradlew.bat" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../Gateway/settings.gradle" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../Gateway/src/main/java/com/KL1verse/Gateway/GatewayApplication.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../Gateway/src/main/java/com/KL1verse/Gateway/auth/JWTFilter.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../Gateway/src/main/java/com/KL1verse/Gateway/auth/JwtUtil.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../Gateway/src/main/java/com/KL1verse/Gateway/auth/config/CorsConfig.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../Gateway/src/main/java/com/KL1verse/Gateway/auth/config/SecurityConfig.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../Gateway/src/main/resources/application.yml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../Gateway/src/test/java/com/KL1verse/Gateway/GatewayApplicationTests.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.gradle/8.4/checksums/md5-checksums.bin" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.gradle/8.4/checksums/sha1-checksums.bin" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.gradle/file-system.probe" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/build/classes/java/main/com/KL1verse/match/MatchApplication.class" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/build/classes/java/main/com/KL1verse/match/match/dto/req/ScoreRequest$ScoreRequestBuilder.class" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/build/classes/java/main/com/KL1verse/match/match/dto/req/ScoreRequest.class" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/build/classes/java/main/com/KL1verse/match/match/dto/res/TimelineResponse$TimelineResponseBuilder.class" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/build/classes/java/main/com/KL1verse/match/match/repository/TimelineRepository.class" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/build/classes/java/main/com/KL1verse/match/match/repository/entity/Timeline$TimelineBuilder.class" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/build/classes/java/main/com/KL1verse/match/match/repository/entity/Timeline.class" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/build/tmp/compileJava/compileTransaction/stash-dir/MatchServiceImpl.class.uniqueId0" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/out/production/classes/com/KL1verse/match/betting/dto/Winner$WinnerBuilder.class" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/out/production/classes/com/KL1verse/match/betting/dto/Winner.class" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/out/production/classes/com/KL1verse/match/betting/dto/req/BettingRequest$BettingRequestBuilder.class" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/out/production/classes/com/KL1verse/match/kafka/KafkaProducer.class" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/out/production/classes/com/KL1verse/match/kafka/consumer/KafkaBettingRollbackConsumer.class" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/out/production/classes/com/KL1verse/match/kafka/producer/KafkaBettingProducer.class" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/out/production/classes/com/KL1verse/match/kafka/producer/KafkaBettingWinProducer.class" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/out/production/resources/application.yml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/out/test/classes/com/KL1verse/match/MatchApplicationTests.class" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/KL1verse/match/MatchApplication.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/KL1verse/match/betting/dto/Winner.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/KL1verse/match/chat/config/ChatConfig.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/KL1verse/match/chat/controller/MessageController.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/KL1verse/match/chat/dto/req/MessageReqDto.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/KL1verse/match/kafka/consumer/KafkaBettingRollbackConsumer.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/KL1verse/match/kafka/producer/KafkaBettingProducer.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/KL1verse/match/kafka/producer/KafkaBettingWinProducer.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/KL1verse/match/match/dto/req/ScoreRequest.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/KL1verse/match/match/repository/TimelineRepository.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/KL1verse/match/match/repository/entity/Timeline.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../UserServer/Dockerfile" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../UserServer/src/main/java/com/kl1verse/UserServer/domain/auth/JwtProperty.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../UserServer/src/main/java/com/kl1verse/UserServer/domain/betting/BettingEntity.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../UserServer/src/main/java/com/kl1verse/UserServer/domain/betting/Winner.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../UserServer/src/main/java/com/kl1verse/UserServer/domain/kafka/KafkaConfig.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../UserServer/src/main/java/com/kl1verse/UserServer/domain/kafka/KafkaUserRepository.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../UserServer/src/main/java/com/kl1verse/UserServer/domain/kafka/consumer/KafkaBettingWinConsumer.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../UserServer/src/main/java/com/kl1verse/UserServer/domain/kafka/consumer/KafkaUserConsumer.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../UserServer/src/main/java/com/kl1verse/UserServer/domain/kafka/producer/KafkaBettingRollbackProducer.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../UserServer/src/main/java/com/kl1verse/UserServer/domain/kafka/producer/KafkaProducer.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../UserServer/src/main/java/com/kl1verse/UserServer/domain/notification/config/NotificationConfig.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../UserServer/src/main/java/com/kl1verse/UserServer/domain/notification/controller/MessageController.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../UserServer/src/main/java/com/kl1verse/UserServer/domain/notification/dto/req/MessageReqDto.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../UserServer/src/main/java/com/kl1verse/UserServer/domain/notification/dto/res/NotificationResDto.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../UserServer/src/main/java/com/kl1verse/UserServer/domain/notification/repository/NotificationRepository.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../UserServer/src/main/java/com/kl1verse/UserServer/domain/notification/repository/entity/Notification.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../UserServer/src/main/java/com/kl1verse/UserServer/domain/notification/service/NotificationService.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../UserServer/src/main/java/com/kl1verse/UserServer/domain/user/controller/NostradamusController.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../UserServer/src/main/java/com/kl1verse/UserServer/domain/user/dto/res/NostradamusResponse.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../UserServer/src/main/java/com/kl1verse/UserServer/domain/user/repository/NostradamusRepository.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../UserServer/src/main/java/com/kl1verse/UserServer/domain/user/service/NostradamusServiceImpl.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../UserServer/src/main/java/com/kl1verse/UserServer/global/config/WebConfig.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../../frontend/src/assets/K-L1VERSE(white).png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../../frontend/src/assets/icon/mypage-icon.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../../frontend/src/assets/icon/notification-icon.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../../frontend/src/assets/icon/schedule-icon.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../../frontend/src/assets/icon/teaminfo-icon.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../../frontend/src/components/logout/LogoutButton.jsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../../frontend/src/components/main/Notice.jsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../../frontend/src/components/match/Chat.jsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../../frontend/src/components/notification/Notification.jsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../../frontend/src/global/NotificationState.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../../frontend/src/global/SocketProvider.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../../frontend/src/global/UserState.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../../frontend/src/hooks/useUserAccessToken.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../../frontend/src/pages/MainPage/Main.jsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../../frontend/src/pages/MainPage/Test.jsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../../frontend/src/pages/logout_page/LogoutPage.jsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../../frontend/src/pages/match_page/MatchPage.jsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../../frontend/src/pages/nav/Navbar.jsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../../frontend/src/styles/main-styles/noticeStyle.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../../frontend/src/styles/navbar-styles/NavbarStyle.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gradle/8.4/checksums/checksums.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/8.4/checksums/checksums.lock" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gradle/8.4/executionHistory/executionHistory.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/8.4/executionHistory/executionHistory.bin" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gradle/8.4/executionHistory/executionHistory.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/8.4/executionHistory/executionHistory.lock" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gradle/8.4/fileHashes/fileHashes.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/8.4/fileHashes/fileHashes.bin" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gradle/8.4/fileHashes/fileHashes.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/8.4/fileHashes/fileHashes.lock" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gradle/buildOutputCleanup/buildOutputCleanup.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/buildOutputCleanup/buildOutputCleanup.lock" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gradle/buildOutputCleanup/outputFiles.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/buildOutputCleanup/outputFiles.bin" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/build.gradle" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/classes/java/main/com/KL1verse/match/betting/controller/BettingController.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/com/KL1verse/match/betting/controller/BettingController.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/classes/java/main/com/KL1verse/match/betting/dto/req/BettingRequest.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/com/KL1verse/match/betting/dto/req/BettingRequest.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/classes/java/main/com/KL1verse/match/betting/repository/BettingRepository.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/com/KL1verse/match/betting/repository/BettingRepository.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/classes/java/main/com/KL1verse/match/betting/repository/entity/Betting$BettingBuilder.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/com/KL1verse/match/betting/repository/entity/Betting$BettingBuilder.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/classes/java/main/com/KL1verse/match/betting/repository/entity/Betting.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/com/KL1verse/match/betting/repository/entity/Betting.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/classes/java/main/com/KL1verse/match/betting/service/BettingService.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/com/KL1verse/match/betting/service/BettingService.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/classes/java/main/com/KL1verse/match/betting/service/BettingServiceImpl.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/com/KL1verse/match/betting/service/BettingServiceImpl.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/classes/java/main/com/KL1verse/match/kafka/KafkaConfig.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/com/KL1verse/match/kafka/KafkaConfig.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/classes/java/main/com/KL1verse/match/match/controller/MatchController.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/com/KL1verse/match/match/controller/MatchController.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/classes/java/main/com/KL1verse/match/match/dto/res/TimelineResponse.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/com/KL1verse/match/match/dto/res/TimelineResponse.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/classes/java/main/com/KL1verse/match/match/repository/MatchRepository.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/com/KL1verse/match/match/repository/MatchRepository.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/classes/java/main/com/KL1verse/match/match/repository/entity/Match$MatchBuilder.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/com/KL1verse/match/match/repository/entity/Match$MatchBuilder.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/classes/java/main/com/KL1verse/match/match/repository/entity/Match.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/com/KL1verse/match/match/repository/entity/Match.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/classes/java/main/com/KL1verse/match/match/service/MatchService.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/com/KL1verse/match/match/service/MatchService.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/classes/java/main/com/KL1verse/match/match/service/MatchServiceImpl.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/com/KL1verse/match/match/service/MatchServiceImpl.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/resources/main/application.yml" beforeDir="false" afterPath="$PROJECT_DIR$/build/resources/main/application.yml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/tmp/compileJava/previous-compilation-data.bin" beforeDir="false" afterPath="$PROJECT_DIR$/build/tmp/compileJava/previous-compilation-data.bin" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/KL1verse/match/betting/controller/BettingController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/KL1verse/match/betting/controller/BettingController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/KL1verse/match/betting/dto/req/BettingRequest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/KL1verse/match/betting/dto/req/BettingRequest.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/KL1verse/match/betting/repository/BettingRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/KL1verse/match/betting/repository/BettingRepository.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/KL1verse/match/betting/repository/entity/Betting.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/KL1verse/match/betting/repository/entity/Betting.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/KL1verse/match/betting/service/BettingService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/KL1verse/match/betting/service/BettingService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/KL1verse/match/betting/service/BettingServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/KL1verse/match/betting/service/BettingServiceImpl.java" afterDir="false" />
+    <list default="true" id="28d638e8-7727-48af-8c38-2002f58f12d8" name="S10P12A409-369 [FE] 메인페이지 공지사항 개발" comment="[Feat] 공지사항, 핫클립, 노스트라다무스, 챗봇 완료 &#10;&#10;- &#10;&#10;&#10;&#10;[Resolves] S10P12A409-369&#10;[Ref] &#10;[Related to]">
       <change beforePath="$PROJECT_DIR$/src/main/java/com/KL1verse/match/kafka/KafkaConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/KL1verse/match/kafka/KafkaConfig.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/KL1verse/match/kafka/KafkaMatchProducer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/KL1verse/match/kafka/KafkaProducer.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/KL1verse/match/match/controller/MatchController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/KL1verse/match/match/controller/MatchController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/KL1verse/match/match/controller/test.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/KL1verse/match/match/dto/req/TimelineRequest.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/KL1verse/match/match/dto/res/TimelineResponse.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/KL1verse/match/match/dto/res/TimelineResponse.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/KL1verse/match/match/repository/MatchRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/KL1verse/match/match/repository/MatchRepository.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/KL1verse/match/match/repository/entity/Match.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/KL1verse/match/match/repository/entity/Match.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/KL1verse/match/match/service/MatchService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/KL1verse/match/match/service/MatchService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/KL1verse/match/match/service/MatchServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/KL1verse/match/match/service/MatchServiceImpl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/application.yml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/application.yml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../UserServer/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/../UserServer/build.gradle" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../UserServer/src/main/java/com/kl1verse/UserServer/domain/KafkaUserConsumer.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../UserServer/src/main/java/com/kl1verse/UserServer/domain/auth/JwtFilter.java" beforeDir="false" afterPath="$PROJECT_DIR$/../UserServer/src/main/java/com/kl1verse/UserServer/domain/auth/JwtFilter.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../UserServer/src/main/java/com/kl1verse/UserServer/domain/auth/JwtSecurityConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/../UserServer/src/main/java/com/kl1verse/UserServer/domain/auth/JwtSecurityConfig.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../UserServer/src/main/java/com/kl1verse/UserServer/domain/auth/JwtUtil.java" beforeDir="false" afterPath="$PROJECT_DIR$/../UserServer/src/main/java/com/kl1verse/UserServer/domain/auth/JwtUtil.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../UserServer/src/main/java/com/kl1verse/UserServer/domain/auth/controller/AuthController.java" beforeDir="false" afterPath="$PROJECT_DIR$/../UserServer/src/main/java/com/kl1verse/UserServer/domain/auth/controller/AuthController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../UserServer/src/main/java/com/kl1verse/UserServer/domain/auth/repository/entity/Token.java" beforeDir="false" afterPath="$PROJECT_DIR$/../UserServer/src/main/java/com/kl1verse/UserServer/domain/auth/repository/entity/Token.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../UserServer/src/main/java/com/kl1verse/UserServer/domain/auth/service/AuthService.java" beforeDir="false" afterPath="$PROJECT_DIR$/../UserServer/src/main/java/com/kl1verse/UserServer/domain/auth/service/AuthService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../UserServer/src/main/java/com/kl1verse/UserServer/domain/badge/repository/entity/Badge.java" beforeDir="false" afterPath="$PROJECT_DIR$/../UserServer/src/main/java/com/kl1verse/UserServer/domain/badge/repository/entity/Badge.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../UserServer/src/main/java/com/kl1verse/UserServer/domain/badge/repository/entity/BadgeDetail.java" beforeDir="false" afterPath="$PROJECT_DIR$/../UserServer/src/main/java/com/kl1verse/UserServer/domain/badge/repository/entity/BadgeDetail.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../UserServer/src/main/java/com/kl1verse/UserServer/domain/oauth/controller/OAuthController.java" beforeDir="false" afterPath="$PROJECT_DIR$/../UserServer/src/main/java/com/kl1verse/UserServer/domain/oauth/controller/OAuthController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../UserServer/src/main/java/com/kl1verse/UserServer/domain/user/controller/UserController.java" beforeDir="false" afterPath="$PROJECT_DIR$/../UserServer/src/main/java/com/kl1verse/UserServer/domain/user/controller/UserController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../UserServer/src/main/java/com/kl1verse/UserServer/domain/user/repository/UserRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/../UserServer/src/main/java/com/kl1verse/UserServer/domain/user/repository/UserRepository.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../UserServer/src/main/java/com/kl1verse/UserServer/domain/user/repository/entity/User.java" beforeDir="false" afterPath="$PROJECT_DIR$/../UserServer/src/main/java/com/kl1verse/UserServer/domain/user/repository/entity/User.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../UserServer/src/main/java/com/kl1verse/UserServer/domain/user/service/MypageServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/../UserServer/src/main/java/com/kl1verse/UserServer/domain/user/service/MypageServiceImpl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../UserServer/src/main/java/com/kl1verse/UserServer/domain/user/service/UserDetailServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/../UserServer/src/main/java/com/kl1verse/UserServer/domain/user/service/UserDetailServiceImpl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../UserServer/src/main/java/com/kl1verse/UserServer/global/ResponseCode.java" beforeDir="false" afterPath="$PROJECT_DIR$/../UserServer/src/main/java/com/kl1verse/UserServer/global/ResponseCode.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../UserServer/src/main/java/com/kl1verse/UserServer/global/config/CorsConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/../UserServer/src/main/java/com/kl1verse/UserServer/global/config/CorsConfig.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../UserServer/src/main/java/com/kl1verse/UserServer/global/config/SecurityConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/../UserServer/src/main/java/com/kl1verse/UserServer/global/config/SecurityConfig.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../UserServer/src/main/resources/application.yml" beforeDir="false" afterPath="$PROJECT_DIR$/../UserServer/src/main/resources/application.yml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../frontend/.env" beforeDir="false" afterPath="$PROJECT_DIR$/../../frontend/.env" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../frontend/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/../../frontend/package-lock.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../frontend/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/../../frontend/package.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../frontend/public/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/../../frontend/public/index.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../frontend/public/logo192.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../frontend/public/logo512.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../frontend/src/App.css" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../frontend/src/App.js" beforeDir="false" afterPath="$PROJECT_DIR$/../../frontend/src/App.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../frontend/src/api/authAxios.js" beforeDir="false" afterPath="$PROJECT_DIR$/../../frontend/src/api/authAxios.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../frontend/src/api/axios.js" beforeDir="false" afterPath="$PROJECT_DIR$/../../frontend/src/api/axios.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../frontend/src/assets/daegu.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../frontend/src/assets/daejeon.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../frontend/src/index.css" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../frontend/src/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/../../frontend/src/index.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../frontend/src/logo.svg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../frontend/src/pages/login_page/GoogleRedirection.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/../../frontend/src/pages/login_page/GoogleRedirection.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../frontend/src/pages/login_page/KaKaoRedirection.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/../../frontend/src/pages/login_page/KaKaoRedirection.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../frontend/src/pages/login_page/LoginPage.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/../../frontend/src/pages/login_page/LoginPage.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../frontend/src/pages/login_page/NaverRedirection.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/../../frontend/src/pages/login_page/NaverRedirection.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../frontend/src/pages/main_page/MainPage.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/../../frontend/src/pages/main_page/MainPage.jsx" afterDir="false" />
     </list>
     <list id="a0c7810e-23c4-4b5b-9b34-2e4da1d77e3f" name="Changes" comment="[Fix][BE] 분배했는지 확인하고 분배 추가&#10;&#10;- &#10;&#10; [BE] 베팅골 분배하기&#10;&#10;[Resolves] S10P12A409&#10;[Ref] &#10;[Related to]" />
     <list id="8f9b1d4a-caa9-4a69-ba59-b89b546ae82f" name="S10P12A409-364 [BE] 메인 페이지 관련 API" comment="[커밋 타입] 제목&#10;&#10;- &#10;&#10; [BE] 메인 페이지 관련 API&#10;&#10;[Resolves] S10P12A409-364 &#10;[Ref] &#10;[Related to]" />
@@ -218,7 +48,7 @@
   <component name="Git.Settings">
     <option name="RECENT_BRANCH_BY_REPOSITORY">
       <map>
-        <entry key="$PROJECT_DIR$/../.." value="feature-common/S10P12A409-369/main-notice-detail" />
+        <entry key="$PROJECT_DIR$/../.." value="feature-common/S10P12A409-365/main-notice" />
       </map>
     </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/../.." />
@@ -383,8 +213,10 @@
       <option name="number" value="365" />
       <option name="presentableId" value="S10P12A409-365" />
       <option name="project" value="S10P12A409" />
-      <updated>1706142294882</updated>
+      <updated>1706491579228</updated>
       <workItem from="1706078700598" duration="184000" />
+      <workItem from="1706491516349" duration="21000" />
+      <workItem from="1706491573433" duration="6000" />
     </task>
     <task active="true" id="S10P12A409-369" summary="[FE] 메인페이지 공지사항 개발">
       <branch name="feature-common/S10P12A409-365/main-notice" repository="C:\Users\SSAFY\IdeaProjects\S10P12A409" original="true" />
@@ -396,14 +228,16 @@
       <option name="number" value="369" />
       <option name="presentableId" value="S10P12A409-369" />
       <option name="project" value="S10P12A409" />
-      <updated>1706142408095</updated>
+      <updated>1706491579228</updated>
       <workItem from="1706078884775" duration="2613000" />
       <workItem from="1706085877788" duration="224000" />
       <workItem from="1706139380010" duration="5089000" />
       <workItem from="1706228853319" duration="8276000" />
       <workItem from="1706260951387" duration="970000" />
       <workItem from="1706322111960" duration="1207000" />
-      <workItem from="1706487363221" duration="2218000" />
+      <workItem from="1706487363221" duration="2258000" />
+      <workItem from="1706491537377" duration="36000" />
+      <workItem from="1706491579444" duration="828000" />
     </task>
     <task id="LOCAL-00001" summary="[WIP][FE] 메인페이지 공지사항 개발 중&#10;&#10;- &#10;&#10; [FE] 메인페이지 공지사항 개발&#10;&#10;[Resolves] S10P12A409-369 &#10;[Ref] &#10;[Related to]">
       <option name="closed" value="true" />
@@ -453,7 +287,15 @@
       <option name="project" value="LOCAL" />
       <updated>1706257126590</updated>
     </task>
-    <option name="localTasksCounter" value="7" />
+    <task id="LOCAL-00007" summary="[Feat] 공지사항, 핫클립, 노스트라다무스, 챗봇 완료 &#10;&#10;- &#10;&#10;&#10;&#10;[Resolves] S10P12A409-369&#10;[Ref] &#10;[Related to]">
+      <option name="closed" value="true" />
+      <created>1706491741365</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1706491741365</updated>
+    </task>
+    <option name="localTasksCounter" value="8" />
     <option name="branchNameFormat" value="feature-domain/${id}/[작업명_영어로]" />
     <servers>
       <JIRA url="https://ssafy.atlassian.net">
@@ -507,6 +349,7 @@
     <MESSAGE value="[Fix] application.yml db 정보 수정&#10;&#10;- &#10;&#10;&#10;&#10;[Resolves] S10P12A409&#10;[Ref] &#10;[Related to]" />
     <MESSAGE value="[Feat] 메인페이지 공지사항 개발  &#10;&#10;- &#10;&#10;&#10;&#10;[Resolves] S10P12A409-369&#10;[Ref] &#10;[Related to]" />
     <MESSAGE value="[Fix] merge feature-common/S10P12A409-369/main-notice-detail -&gt;  feature-common/S10P12A409-365/main-notice &#10;&#10;- &#10;&#10;&#10;&#10;[Resolves] S10P12A409-365&#10;[Ref] &#10;[Related to]" />
-    <option name="LAST_COMMIT_MESSAGE" value="[Fix] merge feature-common/S10P12A409-369/main-notice-detail -&gt;  feature-common/S10P12A409-365/main-notice &#10;&#10;- &#10;&#10;&#10;&#10;[Resolves] S10P12A409-365&#10;[Ref] &#10;[Related to]" />
+    <MESSAGE value="[Feat] 공지사항, 핫클립, 노스트라다무스, 챗봇 완료 &#10;&#10;- &#10;&#10;&#10;&#10;[Resolves] S10P12A409-369&#10;[Ref] &#10;[Related to]" />
+    <option name="LAST_COMMIT_MESSAGE" value="[Feat] 공지사항, 핫클립, 노스트라다무스, 챗봇 완료 &#10;&#10;- &#10;&#10;&#10;&#10;[Resolves] S10P12A409-369&#10;[Ref] &#10;[Related to]" />
   </component>
 </project>
