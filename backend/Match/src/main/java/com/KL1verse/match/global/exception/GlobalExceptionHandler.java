@@ -2,6 +2,7 @@ package com.KL1verse.match.global.exception;
 
 import com.KL1verse.match.domain.sample.exception.SampleException;
 import com.KL1verse.match.global.dto.BaseResponse;
+import com.KL1verse.match.match.exception.MatchException;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
@@ -22,6 +23,12 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(SampleException.class)
     public BaseResponse<Void> handleSampleException(SampleException e) {
         log.info("SampleException: {}", e.getMessage());
+        return BaseResponse.fail(e.getResponseCode(), null);
+    }
+
+    @ExceptionHandler(MatchException.class)
+    public BaseResponse<Void> handleMatchException(MatchException e) {
+        log.info("MatchException: {}", e.getMessage());
         return BaseResponse.fail(e.getResponseCode(), null);
     }
 
