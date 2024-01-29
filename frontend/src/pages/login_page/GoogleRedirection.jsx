@@ -1,6 +1,13 @@
+import React from "react";
+
+import styled from "styled-components";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faHourglassHalf } from "@fortawesome/free-solid-svg-icons";
+import LoginLogo from "../../components/login/LoginLogo";
+
 import React, { useContext, useEffect } from "react";
 import { useSetRecoilState } from "recoil";
-import { get } from "jquery";
+
 import axios from "../../api/axios";
 import { UserState } from "../../global/UserState";
 
@@ -35,7 +42,29 @@ function GoogleRedirection() {
 
   console.log(request);
 
-  return <div>로그인 중입니다.</div>;
+  return (
+    <div>
+      <LoginLogo />
+      <WaitForLogin>
+        <div>
+          <FontAwesomeIcon icon={faHourglassHalf} />
+          &nbsp;&nbsp;&nbsp;로그인 중입니다.
+        </div>
+      </WaitForLogin>
+    </div>
+  );
 }
+
+const WaitForLogin = styled.div`
+  font-size: 1.5rem;
+  font-weight: bold;
+
+  height: 15rem;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+`;
 
 export default GoogleRedirection;
