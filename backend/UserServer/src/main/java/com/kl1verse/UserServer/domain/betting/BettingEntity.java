@@ -37,5 +37,5 @@ public class BettingEntity {
 
     @Column(name = "amount")
     private int amount;
-    
+
 }

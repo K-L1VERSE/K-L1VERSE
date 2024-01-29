@@ -19,7 +19,6 @@ public class NostradamusController {
 
     private final NostradamusServiceImpl nostraService;
 
-    @GetMapping("/hello")
     public String hello() {
         return "Hello World!";
     }
