@@ -6,7 +6,7 @@ import CommentList from "../../../components/Board/CommentList";
 
 function WaggleDetailPage() {
   const [waggleDetail, setWaggleDetail] = useState({});
-  const [, setWaggleId] = useState(0);
+  const [waggleId, setWaggleId] = useState(0);
   const [isLiked, setIsLiked] = useState(false);
   const [likeCount, setLikeCount] = useState(0); // 추가
   const { boardId } = useParams();
@@ -41,14 +41,15 @@ function WaggleDetailPage() {
 
   const handleLikeClick = async () => {
     try {
-      const response = isLiked
-        ? await axios.delete(`/waggles/like/${boardId}`)
-        : await axios.post(`/waggles/like/${boardId}`);
-      setIsLiked(!isLiked);
-      setWaggleDetail(response.data.board);
-      setLikeCount(response.data.likeCount);
+      if (isLiked) {
+        await axios.delete(`/waggles/like/${waggleId}`);
+        setIsLiked(false);
+      } else {
+        await axios.post(`/waggles/like/${waggleId}`);
+        setIsLiked(true);
+      }
     } catch (error) {
-      // console.error("좋아요 처리 중 에러 발생:", error);
+      console.error("좋아요 처리 중 에러 발생:", error);
     }
   };
 
@@ -66,7 +67,7 @@ function WaggleDetailPage() {
 
       {/* 좋아요 버튼 및 개수 표시 */}
       <div>
-        <button onClick={handleLikeClick}>{isLiked ? "♡" : "♥︎"}</button>
+        <button onClick={handleLikeClick}>{isLiked ? "♥︎" : "♡"}</button>
         <span>좋아요 {likeCount}개</span>
       </div>
 
