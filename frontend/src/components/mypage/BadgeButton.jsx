@@ -4,7 +4,7 @@ import styled from "styled-components";
 import axios from "../../api/authAxios";
 
 import { ReactComponent as BadgeBackground } from "../../assets/BadgeBackground.svg";
-import Badge1 from "../../assets/daegu.png";
+import { useNavigate } from "react-router-dom";
 
 const BadgeContainer = styled.div`
   display: flex;
@@ -84,6 +84,11 @@ function BadgeButton({ mainBadge }) {
     setIsModalOpen(false);
   };
 
+  const navigate = useNavigate();
+  const goBadge = () => {
+    navigate("/badge");
+  }
+
   const handleBuyBadge = (index) => {
     const confirmPurchase = window.confirm("뱃지를 구매하시겠습니까?");
 
@@ -143,8 +148,8 @@ function BadgeButton({ mainBadge }) {
   return (
     <div>
       <BadgeContainer>
-        <BadgeBackground onClick={openModal} />
-        <BadgeImage onClick={openModal}>
+        <BadgeBackground />
+        <BadgeImage onClick={goBadge}>
           <img
             alt="뱃지"
             src={`/badge/badge${mainBadge || 0}.png`}
@@ -153,34 +158,6 @@ function BadgeButton({ mainBadge }) {
           />
         </BadgeImage>
       </BadgeContainer>
-      {isModalOpen && (
-        <div className="modal">
-          {/* 모달 내용 */}
-          <div>
-            <button type="button" onClick={closeModal}>
-              &times;
-            </button>
-            <p>
-              {badgeList &&
-                badgeList.map((isBadgeEarned, index) => (
-                  <img
-                    key={index}
-                    src={`/badge/badge${index + 1}.png`}
-                    alt={`badge${index + 1}`}
-                    width={60}
-                    height={60}
-                    style={{
-                      filter: isBadgeEarned ? "none" : "grayscale(100%)",
-                    }}
-                    onClick={() =>
-                      !isBadgeEarned ? handleBuyBadge(index) : wearBadge(index)
-                    }
-                  />
-                ))}
-            </p>
-          </div>
-        </div>
-      )}
     </div>
   );
 }

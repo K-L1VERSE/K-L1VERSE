@@ -9,7 +9,7 @@ function LogoutButton() {
 
     useEffect(() => {
         const request = axios
-            .get(`/auth/sign-out`)
+            .get(`/user/auth/sign-out`)
             .then((res) => {
                 console.log(res);
                 resetUserState();
