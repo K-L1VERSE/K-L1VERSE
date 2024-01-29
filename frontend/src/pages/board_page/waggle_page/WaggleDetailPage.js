@@ -8,7 +8,7 @@ function WaggleDetailPage() {
   const [waggleDetail, setWaggleDetail] = useState({});
   const [waggleId, setWaggleId] = useState(0);
   const [isLiked, setIsLiked] = useState(false);
-  const [likeCount, setLikeCount] = useState(0); // 추가
+  const [likeCount, setLikeCount] = useState(0);
   const { boardId } = useParams();
   const navigate = useNavigate();
 
@@ -18,7 +18,7 @@ function WaggleDetailPage() {
       setWaggleDetail(data.board);
       setWaggleId(data.waggleId);
       setIsLiked(data.isLiked);
-      setLikeCount(data.likeCount); // 좋아요 개수 업데이트
+      setLikeCount(likeCount);
     });
   }
 
@@ -44,9 +44,11 @@ function WaggleDetailPage() {
       if (isLiked) {
         await axios.delete(`/waggles/like/${waggleId}`);
         setIsLiked(false);
+        setLikeCount((prevCount) => prevCount - 1);
       } else {
         await axios.post(`/waggles/like/${waggleId}`);
         setIsLiked(true);
+        setLikeCount((prevCount) => prevCount + 1);
       }
     } catch (error) {
       console.error("좋아요 처리 중 에러 발생:", error);

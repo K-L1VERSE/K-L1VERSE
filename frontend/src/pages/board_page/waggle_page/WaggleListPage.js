@@ -25,6 +25,8 @@ function WaggleListPage() {
       } else {
         setWaggleList((prevWaggles) => [...prevWaggles, ...newWaggles]);
       }
+    } catch (error) {
+      console.error("와글 목록을 불러오는 중 오류 발생:", error);
     } finally {
       setLoading(false);
     }

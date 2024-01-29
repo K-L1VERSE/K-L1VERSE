@@ -40,14 +40,13 @@ function WaggleRegistPage() {
         await axios.put(`/waggles/${boardId}`, requestData);
         navigate(`/waggle/${boardId}`);
       } else {
-        // 새로운 waggle 게시물 생성
         const response = await axios.post("/waggles", requestData);
         const boardTemp = response.data.board;
         boardId = boardTemp.boardId;
         navigate(`/waggle/${boardId}`);
       }
     } catch (error) {
-      console.error("Waggle 게시물 작성 또는 수정 중 에러 발생:", error);
+      // console.error("Waggle 게시물 작성 또는 수정 중 에러 발생:", error);
     }
   };
 
