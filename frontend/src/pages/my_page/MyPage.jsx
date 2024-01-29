@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import UserInfo from "../../components/mypage/UserInfo";
+import UserProfile from "../../components/mypage/UserProfile";
 import axios from "../../api/axios";
 // import mockAxios from "../../api/mockAxios";
 
@@ -7,13 +7,15 @@ import RadioGroup from "../../components/common/RadioGroup";
 import Radio from "../../components/common/Radio";
 import MyWagle from "../../components/mypage/MyWagle";
 import BadgeButton from "../../components/mypage/BadgeButton";
+import LogoutButton from "../../components/mypage/LogoutButton";
+import Usergoal from "../../components/mypage/Usergoal";
 
 function MyPage() {
   const [user, setUser] = useState({
     userId: "",
     nickname: "",
     profile: "",
-    mainBadge: "",
+    mainBadge: "0",
     goal: 0,
     accurate: 0.0,
     totalBet: 0,
@@ -77,8 +79,9 @@ function MyPage() {
 
   return (
     <div>
-      <UserInfo user={user} />
-      <BadgeButton />
+      <UserProfile user={user} />
+      <Usergoal user={user} />
+      <BadgeButton mainBadge={user.mainBadge} />
       <div>
         <RadioGroup>
           <Radio
