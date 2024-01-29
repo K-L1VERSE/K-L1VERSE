@@ -1,5 +1,6 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import TodayMatchItem from "./TodayMatchItem";
+import { getTodayMatch } from "../../api/match";
 
 function TodayMatch() {
   const data = [
@@ -22,6 +23,18 @@ function TodayMatch() {
       awayScore: "3",
     },
   ];
+
+  const [matches, setMatches] = useState([]);
+
+  useEffect(() => {
+    // get today match
+    getTodayMatch(({ data }) => {
+      setMatches(data);
+    }),
+      (error) => {
+        console.error(error);
+      };
+  }, []);
 
   return (
     <div>
