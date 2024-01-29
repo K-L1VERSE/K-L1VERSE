@@ -1,7 +1,33 @@
 import { useState } from "react";
+import styled from "styled-components";
+
 import axios from "../../api/authAxios";
 
-function BadgeButton() {
+import { ReactComponent as BadgeBackground } from "../../assets/BadgeBackground.svg";
+import Badge1 from "../../assets/daegu.png";
+
+const BadgeContainer = styled.div`
+  display: flex;
+  width: 32px;
+  height: 32px;
+  padding: 4px;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+
+  border-radius: 30px;
+`;
+
+const BadgeImage = styled.div`
+  width: ${18}px;
+  height: ${18}px;
+
+  position: absolute;
+  // left: 7px;
+  // top: 5px;
+`;
+
+function BadgeButton({ mainBadge }) {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const badgeCodeList = [
     "1",
@@ -112,11 +138,21 @@ function BadgeButton() {
     }
   };
 
+  console.log("mainBadge : ", mainBadge);
+
   return (
     <div>
-      <button type="button" onClick={openModal}>
-        뱃지
-      </button>
+      <BadgeContainer>
+        <BadgeBackground onClick={openModal} />
+        <BadgeImage onClick={openModal}>
+          <img
+            alt="뱃지"
+            src={`/badge/badge${mainBadge || 0}.png`}
+            width={18}
+            height={18}
+          />
+        </BadgeImage>
+      </BadgeContainer>
       {isModalOpen && (
         <div className="modal">
           {/* 모달 내용 */}

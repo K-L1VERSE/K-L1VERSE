@@ -1,6 +1,7 @@
 package com.kl1verse.UserServer.domain.user.controller;
 
 
+import com.kl1verse.UserServer.domain.auth.service.AuthService;
 import com.kl1verse.UserServer.domain.auth.JwtUtil;
 import com.kl1verse.UserServer.domain.auth.dto.res.ReIssueResDto;
 import com.kl1verse.UserServer.domain.notification.dto.req.MessageReqDto;
@@ -34,6 +35,8 @@ import org.springframework.web.bind.annotation.RestController;
 public class UserController {
 
     private final MypageServiceImpl mypageService;
+    private final AuthService authService;
+    
     private final JwtUtil jwtUtil;
     private final UserRepository userRepository;
     private final StringRedisTemplate redisTemplate;
@@ -51,6 +54,13 @@ public class UserController {
         return ResponseEntity.ok(mypageService.getUserInfo(request));
     }
 
+    @GetMapping
+    public ResponseEntity<?> logout(HttpServletRequest request) {
+        authService.signOut(request);
+
+        return ResponseEntity.ok().build();
+    }
+    
     @GetMapping("/access_token/reissue")
     public ResponseEntity<?> accessTokenReIssue(HttpServletRequest request) {
         log.info("access token reissue");
