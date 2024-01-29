@@ -36,12 +36,6 @@ public class WaggleLikeServiceImpl implements WaggleLikeService {
         return null;
     }
 
-//  @Override
-//  public void unlikeWaggle(Long waggleId, Long userId) {
-//    Waggle waggle = Waggle.builder().waggleId(waggleId).build();
-//    waggleLikeRepository.deleteByWaggleIdAndUserId(waggle, userId);
-//  }
-
 
     @Override
     public void unlikeWaggle(Long waggleId, Long userId) {
