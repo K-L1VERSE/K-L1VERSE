@@ -1,6 +1,6 @@
 import { useRecoilState } from "recoil";
 import { NotificationState } from "../../global/NotificationState";
-import axios from "../../api/authAxios";
+import axios from "../../api/axios";
 import { useEffect } from "react";
 
 function Notification() {
@@ -9,7 +9,7 @@ function Notification() {
     console.log("notificationState", notificationState);
 
     useEffect(() => {
-        axios.get("/users/notifications/read")
+        axios.get("/user/users/notifications/read")
         .then((res) => {
             setNotificationState((prev) => ({
             ...prev,

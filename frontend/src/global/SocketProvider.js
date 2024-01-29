@@ -4,7 +4,7 @@ import Stomp from "webstomp-client";
 import { NotificationState } from "./NotificationState";
 import { useSetRecoilState, useRecoilState } from "recoil";
 import { UserState } from "./UserState";
-import axios from "../api/authAxios";
+import axios from "../api/axios";
 
 export const SocketContext = createContext();
 
@@ -48,7 +48,7 @@ const SocketProvider = ({ children }) => {
             connectSocket();
 
             // 알림 목록 불러오기
-            axios.get("/users/notifications")
+            axios.get("/user/users/notifications")
             .then((res) => {
                 console.log(res.data);
         
