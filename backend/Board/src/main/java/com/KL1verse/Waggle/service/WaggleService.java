@@ -2,6 +2,7 @@ package com.KL1verse.Waggle.service;
 
 import com.KL1verse.Board.dto.req.SearchBoardConditionDto;
 import com.KL1verse.Waggle.dto.req.WaggleDTO;
+import java.util.List;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
@@ -19,10 +20,11 @@ public interface WaggleService {
 
     Page<WaggleDTO> getAllWaggleList(Pageable pageable);
 
-//    List<WaggleDTO> getMostRecentWaggles(int count);
-
     Page<WaggleDTO> searchWagglesWithLikes(SearchBoardConditionDto searchCondition, Pageable pageable);
 
     Page<WaggleDTO> getAllWagglesWithLikes(Pageable pageable);
+
+    List<WaggleDTO> getMostRecentWaggles(int count);
+
 }
 

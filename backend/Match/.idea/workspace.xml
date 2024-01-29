@@ -1,0 +1,355 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="28d638e8-7727-48af-8c38-2002f58f12d8" name="S10P12A409-369 [FE] 메인페이지 공지사항 개발" comment="[Feat] 공지사항, 핫클립, 노스트라다무스, 챗봇 완료 &#10;&#10;- &#10;&#10;&#10;&#10;[Resolves] S10P12A409-369&#10;[Ref] &#10;[Related to]">
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/KL1verse/match/kafka/KafkaConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/KL1verse/match/kafka/KafkaConfig.java" afterDir="false" />
+    </list>
+    <list id="a0c7810e-23c4-4b5b-9b34-2e4da1d77e3f" name="Changes" comment="[Fix][BE] 분배했는지 확인하고 분배 추가&#10;&#10;- &#10;&#10; [BE] 베팅골 분배하기&#10;&#10;[Resolves] S10P12A409&#10;[Ref] &#10;[Related to]" />
+    <list id="8f9b1d4a-caa9-4a69-ba59-b89b546ae82f" name="S10P12A409-364 [BE] 메인 페이지 관련 API" comment="[커밋 타입] 제목&#10;&#10;- &#10;&#10; [BE] 메인 페이지 관련 API&#10;&#10;[Resolves] S10P12A409-364 &#10;[Ref] &#10;[Related to]" />
+    <list id="edb32333-d606-4235-864f-6a94070f9c52" name="S10P12A409-365 [FE] 메인페이지 공지사항 개발" comment="[커밋 타입] 제목&#10;&#10;- &#10;&#10; [FE] 메인페이지 공지사항 개발&#10;&#10;[Resolves] S10P12A409-365 &#10;[Ref] &#10;[Related to]" />
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="ExternalProjectsData">
+    <projectState path="$PROJECT_DIR$">
+      <ProjectState />
+    </projectState>
+  </component>
+  <component name="ExternalProjectsManager">
+    <system id="GRADLE">
+      <state>
+        <task path="$PROJECT_DIR$">
+          <activation />
+        </task>
+        <projects_view>
+          <tree_state>
+            <expand>
+              <path>
+                <item name="" type="6a2764b6:ExternalProjectsStructure$RootNode" />
+                <item name="Match" type="f1a62948:ProjectNode" />
+              </path>
+              <path>
+                <item name="" type="6a2764b6:ExternalProjectsStructure$RootNode" />
+                <item name="Match" type="f1a62948:ProjectNode" />
+                <item name="Run Configurations" type="7b0102dc:RunConfigurationsNode" />
+              </path>
+            </expand>
+            <select />
+          </tree_state>
+        </projects_view>
+      </state>
+    </system>
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_BRANCH_BY_REPOSITORY">
+      <map>
+        <entry key="$PROJECT_DIR$/../.." value="feature-common/S10P12A409-365/main-notice" />
+      </map>
+    </option>
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/../.." />
+  </component>
+  <component name="ProjectColorInfo">{
+  &quot;associatedIndex&quot;: 7
+}</component>
+  <component name="ProjectId" id="2bNeMqFcxrpbZhbeMrZCO5tbY6n" />
+  <component name="ProjectLevelVcsManager">
+    <ConfirmationsSetting value="2" id="Add" />
+  </component>
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;Gradle.Build Match.executor&quot;: &quot;Run&quot;,
+    &quot;Gradle.Match.executor&quot;: &quot;Run&quot;,
+    &quot;RequestMappingsPanelOrder0&quot;: &quot;0&quot;,
+    &quot;RequestMappingsPanelOrder1&quot;: &quot;1&quot;,
+    &quot;RequestMappingsPanelWidth0&quot;: &quot;75&quot;,
+    &quot;RequestMappingsPanelWidth1&quot;: &quot;75&quot;,
+    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;Spring Boot.MatchApplication.executor&quot;: &quot;Run&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;Merging feature-common/S10P12A409-365/main-notice&quot;,
+    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
+    &quot;last_opened_file_path&quot;: &quot;C:/Users/SSAFY/IdeaProjects/S10P12A409&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;tasks.servers&quot;,
+    &quot;start.from.branch&quot;: &quot;feature-common/S10P12A409-365/main-notice&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+  },
+  &quot;keyToStringList&quot;: {
+    &quot;DatabaseDriversLRU&quot;: [
+      &quot;mariadb&quot;
+    ]
+  }
+}</component>
+  <component name="RunManager" selected="Spring Boot.MatchApplication">
+    <configuration name="Match" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
+      <ExternalSystemSettings>
+        <option name="executionName" />
+        <option name="externalProjectPath" value="$PROJECT_DIR$" />
+        <option name="externalSystemIdString" value="GRADLE" />
+        <option name="scriptParameters" />
+        <option name="taskDescriptions">
+          <list />
+        </option>
+        <option name="taskNames">
+          <list />
+        </option>
+        <option name="vmOptions" />
+      </ExternalSystemSettings>
+      <ExternalSystemDebugServerProcess>true</ExternalSystemDebugServerProcess>
+      <ExternalSystemReattachDebugProcess>true</ExternalSystemReattachDebugProcess>
+      <DebugAllEnabled>false</DebugAllEnabled>
+      <RunAsTest>false</RunAsTest>
+      <method v="2" />
+    </configuration>
+    <configuration name="All in match" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="Match" />
+      <option name="PACKAGE_NAME" value="" />
+      <option name="TEST_OBJECT" value="package" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="MatchApplicationTests" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="Match.test" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="com.KL1verse.match.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="com.KL1verse.match" />
+      <option name="MAIN_CLASS_NAME" value="com.KL1verse.match.MatchApplicationTests" />
+      <option name="TEST_OBJECT" value="class" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="MatchApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot" nameIsGenerated="true">
+      <option name="FRAME_DEACTIVATION_UPDATE_POLICY" value="UpdateClassesAndResources" />
+      <module name="Match.main" />
+      <option name="SPRING_BOOT_MAIN_CLASS" value="com.KL1verse.match.MatchApplication" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <recent_temporary>
+      <list>
+        <item itemvalue="JUnit.MatchApplicationTests" />
+        <item itemvalue="JUnit.All in match" />
+        <item itemvalue="Gradle.Match" />
+        <item itemvalue="JUnit.MatchApplicationTests" />
+        <item itemvalue="JUnit.All in match" />
+      </list>
+    </recent_temporary>
+  </component>
+  <component name="SharedIndexes">
+    <attachedChunks>
+      <set>
+        <option value="jdk-17.0.9-corretto-17.0.9-f644763e9732-ebaef533" />
+      </set>
+    </attachedChunks>
+  </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task id="Default" summary="Default task">
+      <branch name="feature-match/S10P12A409-265/calendar-component" repository="C:\Users\SSAFY\IdeaProjects\S10P12A409" />
+      <changelist id="a0c7810e-23c4-4b5b-9b34-2e4da1d77e3f" name="Changes" comment="[Fix][BE] 분배했는지 확인하고 분배 추가&#10;&#10;- &#10;&#10; [BE] 베팅골 분배하기&#10;&#10;[Resolves] S10P12A409&#10;[Ref] &#10;[Related to]" />
+      <created>1706059919421</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1706067029278</updated>
+      <workItem from="1706059921581" duration="3804000" />
+    </task>
+    <task id="S10P12A409-364" summary="[BE] 메인 페이지 관련 API">
+      <branch name="feature-match/S10P12A409-265/calendar-component" repository="C:\Users\SSAFY\IdeaProjects\S10P12A409" original="true" />
+      <branch name="feature-match/S10P12A409-364/main-api" repository="C:\Users\SSAFY\IdeaProjects\S10P12A409" />
+      <changelist id="8f9b1d4a-caa9-4a69-ba59-b89b546ae82f" name="S10P12A409-364 [BE] 메인 페이지 관련 API" comment="[커밋 타입] 제목&#10;&#10;- &#10;&#10; [BE] 메인 페이지 관련 API&#10;&#10;[Resolves] S10P12A409-364 &#10;[Ref] &#10;[Related to]" />
+      <created>1706066496459</created>
+      <option name="issue" value="true" />
+      <url>https://ssafy.atlassian.net/browse/S10P12A409-364</url>
+      <option name="number" value="364" />
+      <option name="presentableId" value="S10P12A409-364" />
+      <option name="project" value="S10P12A409" />
+      <updated>1706067106946</updated>
+      <workItem from="1706067029711" duration="78000" />
+    </task>
+    <task id="S10P12A409-362" summary="[BE] 메인페이지 노스트라다무스 API 개발">
+      <branch name="origin/feature-match/S10P12A409-364/main-api" repository="C:\Users\SSAFY\IdeaProjects\S10P12A409" original="true" />
+      <branch name="feature-match/S10P12A409-362/nostradamus" repository="C:\Users\SSAFY\IdeaProjects\S10P12A409" />
+      <created>1706061867067</created>
+      <option name="issue" value="true" />
+      <url>https://ssafy.atlassian.net/browse/S10P12A409-362</url>
+      <option name="number" value="362" />
+      <option name="presentableId" value="S10P12A409-362" />
+      <option name="project" value="S10P12A409" />
+      <updated>1706078699940</updated>
+      <workItem from="1706067107787" duration="502000" />
+      <workItem from="1706071571759" duration="13000" />
+      <workItem from="1706071593254" duration="56000" />
+      <workItem from="1706074316547" duration="572000" />
+      <workItem from="1706076587428" duration="1386000" />
+      <workItem from="1706078267161" duration="433000" />
+    </task>
+    <task id="S10P12A409-365" summary="[FE] 메인페이지 공지사항 개발">
+      <branch name="origin/feature-common/S10P12A409-1/common" repository="C:\Users\SSAFY\IdeaProjects\S10P12A409" original="true" />
+      <branch name="feature-common/S10P12A409-365/main-notice" repository="C:\Users\SSAFY\IdeaProjects\S10P12A409" />
+      <changelist id="edb32333-d606-4235-864f-6a94070f9c52" name="S10P12A409-365 [FE] 메인페이지 공지사항 개발" comment="[커밋 타입] 제목&#10;&#10;- &#10;&#10; [FE] 메인페이지 공지사항 개발&#10;&#10;[Resolves] S10P12A409-365 &#10;[Ref] &#10;[Related to]" />
+      <created>1706077266500</created>
+      <option name="issue" value="true" />
+      <url>https://ssafy.atlassian.net/browse/S10P12A409-365</url>
+      <option name="number" value="365" />
+      <option name="presentableId" value="S10P12A409-365" />
+      <option name="project" value="S10P12A409" />
+      <updated>1706491579228</updated>
+      <workItem from="1706078700598" duration="184000" />
+      <workItem from="1706491516349" duration="21000" />
+      <workItem from="1706491573433" duration="6000" />
+    </task>
+    <task active="true" id="S10P12A409-369" summary="[FE] 메인페이지 공지사항 개발">
+      <branch name="feature-common/S10P12A409-365/main-notice" repository="C:\Users\SSAFY\IdeaProjects\S10P12A409" original="true" />
+      <branch name="feature-common/S10P12A409-369/main-notice-detail" repository="C:\Users\SSAFY\IdeaProjects\S10P12A409" />
+      <changelist id="28d638e8-7727-48af-8c38-2002f58f12d8" name="S10P12A409-369 [FE] 메인페이지 공지사항 개발" comment="[커밋 타입] 제목&#10;&#10;- &#10;&#10; [FE] 메인페이지 공지사항 개발&#10;&#10;[Resolves] S10P12A409-369 &#10;[Ref] &#10;[Related to]" />
+      <created>1706077934690</created>
+      <option name="issue" value="true" />
+      <url>https://ssafy.atlassian.net/browse/S10P12A409-369</url>
+      <option name="number" value="369" />
+      <option name="presentableId" value="S10P12A409-369" />
+      <option name="project" value="S10P12A409" />
+      <updated>1706491579228</updated>
+      <workItem from="1706078884775" duration="2613000" />
+      <workItem from="1706085877788" duration="224000" />
+      <workItem from="1706139380010" duration="5089000" />
+      <workItem from="1706228853319" duration="8276000" />
+      <workItem from="1706260951387" duration="970000" />
+      <workItem from="1706322111960" duration="1207000" />
+      <workItem from="1706487363221" duration="2258000" />
+      <workItem from="1706491537377" duration="36000" />
+      <workItem from="1706491579444" duration="828000" />
+    </task>
+    <task id="LOCAL-00001" summary="[WIP][FE] 메인페이지 공지사항 개발 중&#10;&#10;- &#10;&#10; [FE] 메인페이지 공지사항 개발&#10;&#10;[Resolves] S10P12A409-369 &#10;[Ref] &#10;[Related to]">
+      <option name="closed" value="true" />
+      <created>1706170933523</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1706170933523</updated>
+    </task>
+    <task id="LOCAL-00002" summary="[WIP][FE] 메인페이지 공지사항 개발 중&#10;&#10;- &#10;&#10; [FE] 메인페이지 공지사항 개발&#10;&#10;[Resolves] S10P12A409-369 &#10;[Ref] &#10;[Related to]">
+      <option name="closed" value="true" />
+      <created>1706171683369</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1706171683369</updated>
+    </task>
+    <task id="LOCAL-00003" summary="[Fix] master -&gt; feature-common/S10P12A409-369/main-notice-detail merge&#10;&#10;- &#10;&#10; [FE] 메인페이지 공지사항 개발&#10;&#10;[Resolves] S10P12A409-369 &#10;[Ref] &#10;[Related to]">
+      <option name="closed" value="true" />
+      <created>1706172069723</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1706172069723</updated>
+    </task>
+    <task id="LOCAL-00004" summary="[Fix] application.yml db 정보 수정&#10;&#10;- &#10;&#10;&#10;&#10;[Resolves] S10P12A409&#10;[Ref] &#10;[Related to]">
+      <option name="closed" value="true" />
+      <created>1706233414968</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1706233414968</updated>
+    </task>
+    <task id="LOCAL-00005" summary="[Feat] 메인페이지 공지사항 개발  &#10;&#10;- &#10;&#10;&#10;&#10;[Resolves] S10P12A409-369&#10;[Ref] &#10;[Related to]">
+      <option name="closed" value="true" />
+      <created>1706256747737</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1706256747737</updated>
+    </task>
+    <task id="LOCAL-00006" summary="[Fix] merge feature-common/S10P12A409-369/main-notice-detail -&gt;  feature-common/S10P12A409-365/main-notice &#10;&#10;- &#10;&#10;&#10;&#10;[Resolves] S10P12A409-365&#10;[Ref] &#10;[Related to]">
+      <option name="closed" value="true" />
+      <created>1706257126590</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1706257126590</updated>
+    </task>
+    <task id="LOCAL-00007" summary="[Feat] 공지사항, 핫클립, 노스트라다무스, 챗봇 완료 &#10;&#10;- &#10;&#10;&#10;&#10;[Resolves] S10P12A409-369&#10;[Ref] &#10;[Related to]">
+      <option name="closed" value="true" />
+      <created>1706491741365</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1706491741365</updated>
+    </task>
+    <option name="localTasksCounter" value="8" />
+    <option name="branchNameFormat" value="feature-domain/${id}/[작업명_영어로]" />
+    <servers>
+      <JIRA url="https://ssafy.atlassian.net">
+        <option name="apiType" value="REST_2_0" />
+        <commitMessageFormat>[커밋 타입] 제목
+
+### description
+- 
+
+### jira issue summary :
+ {summary}
+
+### issue tracking
+[Resolves] {id} 
+[Ref] 
+[Related to]</commitMessageFormat>
+        <option name="inCloud" value="true" />
+        <option name="jiraVersion" value="1001.0.0-SNAPSHOT" />
+        <option name="shouldFormatCommitMessage" value="true" />
+        <username>sulim0314@naver.com</username>
+      </JIRA>
+    </servers>
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State>
+              <option name="COLUMN_ID_WIDTH">
+                <map>
+                  <entry key="Table.Default.Author.ColumnIdWidth" value="45" />
+                  <entry key="Table.Default.Date.ColumnIdWidth" value="51" />
+                  <entry key="Table.Space.CommitStatus.ColumnIdWidth" value="51" />
+                </map>
+              </option>
+            </State>
+          </value>
+        </entry>
+      </map>
+    </option>
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="[Fix][BE] 분배했는지 확인하고 분배 추가&#10;&#10;- &#10;&#10; [BE] 베팅골 분배하기&#10;&#10;[Resolves] S10P12A409&#10;[Ref] &#10;[Related to]" />
+    <MESSAGE value="[커밋 타입] 제목&#10;&#10;- &#10;&#10; [BE] 메인 페이지 관련 API&#10;&#10;[Resolves] S10P12A409-364 &#10;[Ref] &#10;[Related to]" />
+    <MESSAGE value="[WIP][FE] 메인페이지 공지사항 개발 중&#10;&#10;- &#10;&#10; [FE] 메인페이지 공지사항 개발&#10;&#10;[Resolves] S10P12A409-369 &#10;[Ref] &#10;[Related to]" />
+    <MESSAGE value="[Fix] master -&gt; feature-common/S10P12A409-369/main-notice-detail merge&#10;&#10;- &#10;&#10; [FE] 메인페이지 공지사항 개발&#10;&#10;[Resolves] S10P12A409-369 &#10;[Ref] &#10;[Related to]" />
+    <MESSAGE value="[Fix] application.yml db 정보 수정&#10;&#10;- &#10;&#10;&#10;&#10;[Resolves] S10P12A409&#10;[Ref] &#10;[Related to]" />
+    <MESSAGE value="[Feat] 메인페이지 공지사항 개발  &#10;&#10;- &#10;&#10;&#10;&#10;[Resolves] S10P12A409-369&#10;[Ref] &#10;[Related to]" />
+    <MESSAGE value="[Fix] merge feature-common/S10P12A409-369/main-notice-detail -&gt;  feature-common/S10P12A409-365/main-notice &#10;&#10;- &#10;&#10;&#10;&#10;[Resolves] S10P12A409-365&#10;[Ref] &#10;[Related to]" />
+    <MESSAGE value="[Feat] 공지사항, 핫클립, 노스트라다무스, 챗봇 완료 &#10;&#10;- &#10;&#10;&#10;&#10;[Resolves] S10P12A409-369&#10;[Ref] &#10;[Related to]" />
+    <option name="LAST_COMMIT_MESSAGE" value="[Feat] 공지사항, 핫클립, 노스트라다무스, 챗봇 완료 &#10;&#10;- &#10;&#10;&#10;&#10;[Resolves] S10P12A409-369&#10;[Ref] &#10;[Related to]" />
+  </component>
+</project>

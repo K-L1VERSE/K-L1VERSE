@@ -1,33 +1,47 @@
 package com.KL1verse.match.betting.service;
 
-import com.KL1verse.match.betting.dto.req.BettingRequest;
-import com.KL1verse.match.kafka.KafkaMatchProducer;
-import jakarta.servlet.http.HttpServletRequest;
+import com.KL1verse.match.betting.repository.BettingRepository;
+import com.KL1verse.match.betting.repository.entity.Betting;
+import com.KL1verse.match.match.repository.MatchRepository;
+import com.KL1verse.match.match.repository.entity.Match;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.kafka.clients.producer.KafkaProducer;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
 @RequiredArgsConstructor
 @Slf4j
 public class BettingServiceImpl implements BettingService {
 
-    private final KafkaMatchProducer kafkaMatchProducer;
+    private final BettingRepository bettingRepository;
+    private final MatchRepository matchRepository;
+
+    @Autowired
+    private ObjectMapper objectMapper;
 
     @Override
-    public void betting(HttpServletRequest request, BettingRequest bettingRequest) {
-        // 베팅하는 메서드임
-        /*
-        일단 베팅을 한다. (Match도메인 Betting Table, 포트 8040)
-        -> 베팅한 유저 골이 db에서 -됨 (User도메인 User Table, 포트 8010)
-        경기가 끝난다.
-        -> 진 사람 : 그대로
-        -> 이긴 사람 : 배율대로 나눠주기
-            -> 배팅한 유저 골이 db에서 +됨 (User도메인 User Table, 포트 8010)
-        * */
+    @Transactional
+    public void bettingCancel(String bettingId) {
 
-        kafkaMatchProducer.sendMessage("userId-betting", "userId 보내드립니다");
+        Betting betting = bettingRepository.findById(Integer.parseInt(bettingId)).orElseThrow();
+
+        Match match = matchRepository.findById(betting.getMatchId()).orElseThrow();
+
+        if (betting.getBettingTeamId() == match.getHomeTeamId()) {
+            int newAmount = match.getHomeBettingAmount() - betting.getAmount();
+            matchRepository.updateHomeBettingAmount(match.getMatchId(), newAmount);
+        } else if (betting.getBettingTeamId() == match.getAwayTeamId()) {
+            int newAmount = match.getAwayBettingAmount() - betting.getAmount();
+            matchRepository.updateAwayBettingAmount(match.getMatchId(), newAmount);
+        } else {
+            int newAmount = match.getDrawBettingAmount() - betting.getAmount();
+            matchRepository.updateDrawBettingAmount(match.getMatchId(), newAmount);
+        }
+
+        bettingRepository.deleteById(Integer.parseInt(bettingId));
 
     }
 

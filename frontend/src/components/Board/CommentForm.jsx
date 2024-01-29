@@ -1,49 +1,54 @@
+// CommentForm.jsx
+
 import React, { useState } from "react";
 import axios from "../../api/axios";
 
 function CommentForm({ boardId, parentId, onCommentSubmit }) {
-  const [commentContent, setCommentContent] = useState("");
+  const [content, setContent] = useState("");
+  const [isEditMode, setIsEditMode] = useState(false);
 
-  const handleCommentSubmit = async (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
 
     try {
-      const response = await axios.post("/comments", {
-        content: commentContent,
-        boardId: boardId,
-        parentId: parentId || null,
-      });
-
-      // 댓글 입력 필드를 비웁니다.
-      setCommentContent("");
-
-      // 부모 컴포넌트에 새 댓글을 알립니다.
-      if (onCommentSubmit) {
-        onCommentSubmit(response.data);
+      if (isEditMode) {
+        await axios.put(`/comments/${parentId || boardId}`, {
+          content,
+        });
+        setIsEditMode(false);
+      } else {
+        await axios.post(`/comments/${parentId || boardId}`, {
+          content,
+        });
       }
+
+      onCommentSubmit();
+
+      setContent("");
     } catch (error) {
-      console.error("댓글 작성 중 에러 발생:", error);
+      // console.error("댓글 작성 또는 수정 중 에러 발생:", error);
     }
   };
 
   return (
-    <div>
-      <h2>{parentId ? "대댓글 작성하기" : "댓글 작성하기"}</h2>
-      <form onSubmit={handleCommentSubmit}>
+    <form onSubmit={handleSubmit}>
+      <label>
+        댓글 내용:
         <textarea
-          value={commentContent}
-          onChange={(e) => setCommentContent(e.target.value)}
-          placeholder={
-            parentId ? "대댓글을 작성하세요..." : "댓글을 작성하세요..."
-          }
+          value={content}
+          onChange={(e) => setContent(e.target.value)}
           required
         />
-        <br />
-        <button type="submit">
-          {parentId ? "대댓글 작성하기" : "댓글 작성하기"}
+      </label>
+      <button type="submit">
+        {isEditMode ? "댓글 수정 완료" : "댓글 작성"}
+      </button>
+      {isEditMode && (
+        <button type="button" onClick={() => setIsEditMode(false)}>
+          수정 취소
         </button>
-      </form>
-    </div>
+      )}
+    </form>
   );
 }
 

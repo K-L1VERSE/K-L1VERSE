@@ -15,6 +15,7 @@ import org.springframework.beans.BeanUtils;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -153,5 +154,16 @@ public class WaggleServiceImpl implements WaggleService {
 //            .user(String.valueOf(waggleDTO.getBoard().getUser()))
             .build());
         return waggle;
+    }
+
+    @Override
+    public List<WaggleDTO> getMostRecentWaggles(int count) {
+        List<Waggle> recentWaggles = waggleRepository.findAll(
+            PageRequest.of(0, count, Sort.by(Sort.Direction.DESC, "board.createAt"))
+        ).getContent();
+
+        return recentWaggles.stream()
+            .map(this::convertToDTO)
+            .collect(Collectors.toList());
     }
 }

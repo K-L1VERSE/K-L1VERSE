@@ -3,6 +3,7 @@ package com.KL1verse.Waggle.controller;
 import com.KL1verse.Board.dto.req.SearchBoardConditionDto;
 import com.KL1verse.Waggle.dto.req.WaggleDTO;
 import com.KL1verse.Waggle.service.WaggleService;
+import java.util.List;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -75,29 +76,10 @@ public class WaggleController {
         return ResponseEntity.ok(waggles);
     }
 
-//    @GetMapping("/pages")
-//    public ResponseEntity<Page<WaggleDTO>> getAllWagglesPaged(Pageable pageable) {
-//        Page<WaggleDTO> waggles = waggleService.getAllWaggleList(pageable);
-//        return ResponseEntity.ok(waggles);
-//    }
-
-//    @GetMapping("/searchPaged")
-//    public ResponseEntity<Page<WaggleDTO>> searchWagglesPaged(
-//        @RequestParam(required = false) String keyword,
-//        Pageable pageable
-//    ) {
-//        SearchBoardConditionDto searchCondition = SearchBoardConditionDto.builder()
-//            .keyword(keyword)
-//            .build();
-//        Page<WaggleDTO> waggles = waggleService.searchWaggles(searchCondition, pageable);
-//        return ResponseEntity.ok(waggles);
-//    }
-
-//    @GetMapping("/recent/{count}")
-//    public ResponseEntity<List<WaggleDTO>> getMostRecentWaggles(@PathVariable int count) {
-//        List<WaggleDTO> recentWaggles = waggleService.getMostRecentWaggles(count);
-//        return ResponseEntity.ok(recentWaggles);
-//    }
-
+    @GetMapping("/recent/{count}")
+    public ResponseEntity<List<WaggleDTO>> getMostRecentWaggles(@PathVariable int count) {
+        List<WaggleDTO> recentWaggles = waggleService.getMostRecentWaggles(count);
+        return ResponseEntity.ok(recentWaggles);
+    }
 
 }

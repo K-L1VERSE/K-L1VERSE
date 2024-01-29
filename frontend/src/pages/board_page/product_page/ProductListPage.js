@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import { useNavigate, Link } from "react-router-dom";
 import axios from "../../../api/axios";
 import BoardTopNavBar from "../../../components/Board/BoardTopNavBar";
@@ -6,28 +6,55 @@ import BoardTopNavBar from "../../../components/Board/BoardTopNavBar";
 function ProductListPage() {
   const navigate = useNavigate();
   const [productList, setProductList] = useState([]);
+  const [page, setPage] = useState(0);
+  const [hasMore, setHasMore] = useState(true);
+  const [loading, setLoading] = useState(false);
 
   /* Product 전체 글 가져오기 */
+  const fetchProductList = useCallback(async () => {
+    try {
+      setLoading(true);
+      const response = await axios.get(`/products/pages?page=${page}&size=30`);
+      const newProducts = response.data.content;
 
-  const getProductList = () => {
-    axios
-      .get(`/products`)
-      .then(({ data }) => {
-        setProductList(data);
-      })
-      .catch((err) => {
-        console.log("Product 게시판 목록을 불러오는 중 에러 발생:", err);
-      });
+      if (newProducts.length === 0) {
+        setHasMore(false);
+      } else {
+        setProductList((prevProducts) => [...prevProducts, ...newProducts]);
+      }
+    } finally {
+      setLoading(false);
+    }
+  }, [page]);
+
+  useEffect(() => {
+    if (hasMore) {
+      fetchProductList();
+    }
+  }, [hasMore, fetchProductList]);
+
+  function handleRegistProductClick() {
+    navigate("/productRegist");
+  }
+
+  const handleScroll = () => {
+    const windowHeight = window.innerHeight;
+    const documentHeight = document.documentElement.scrollHeight;
+    const scrollTop = window.scrollY;
+    const distanceFromBottom = documentHeight - scrollTop - windowHeight;
+
+    if (distanceFromBottom < 200 && !loading && hasMore) {
+      setPage((prevPage) => prevPage + 1);
+    }
   };
 
   useEffect(() => {
-    getProductList();
-  }, []);
+    window.addEventListener("scroll", handleScroll);
 
-  function handleRegistProductClick() {
-    // "중고거래 글 작성" 버튼 클릭 시 ProductRegistPage로 이동
-    navigate("/productRegist");
-  }
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+    };
+  }, [handleScroll]);
 
   return (
     <div>
@@ -42,9 +69,8 @@ function ProductListPage() {
           </tr>
         </thead>
         <tbody>
-          {productList.map((product) => (
-            <tr key={product.board.boardId}>
-              {/* 클릭 시 상세 페이지로 이동하도록 Link 사용 */}
+          {productList.map((product, index) => (
+            <tr key={index}>
               <td>
                 <Link to={`/products/${product.board.boardId}`}>
                   {product.board.title}
@@ -55,6 +81,8 @@ function ProductListPage() {
           ))}
         </tbody>
       </table>
+      {loading && <p>Loading...</p>}
+      {!hasMore && <p>No more data</p>}
     </div>
   );
 }
