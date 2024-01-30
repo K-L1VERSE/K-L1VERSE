@@ -5,42 +5,22 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="28d638e8-7727-48af-8c38-2002f58f12d8" name="S10P12A409-369 [FE] 메인페이지 공지사항 개발" comment="[Feat] 공지사항, 핫클립, 노스트라다무스, 챗봇 완료 &#10;&#10;- &#10;&#10;&#10;&#10;[Resolves] S10P12A409-369&#10;[Ref] &#10;[Related to]">
-      <change beforePath="$PROJECT_DIR$/../Board/src/main/java/com/KL1verse/Comment/config/CorsConfig.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Board/src/main/resources/application.yml" beforeDir="false" afterPath="$PROJECT_DIR$/../Board/src/main/resources/application.yml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gradle/8.4/checksums/checksums.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/8.4/checksums/checksums.lock" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gradle/8.4/checksums/md5-checksums.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/8.4/checksums/md5-checksums.bin" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gradle/8.4/checksums/sha1-checksums.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/8.4/checksums/sha1-checksums.bin" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gradle/8.4/executionHistory/executionHistory.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/8.4/executionHistory/executionHistory.bin" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gradle/8.4/executionHistory/executionHistory.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/8.4/executionHistory/executionHistory.lock" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gradle/8.4/fileHashes/fileHashes.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/8.4/fileHashes/fileHashes.bin" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gradle/8.4/fileHashes/fileHashes.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/8.4/fileHashes/fileHashes.lock" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gradle/8.4/fileHashes/resourceHashesCache.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/8.4/fileHashes/resourceHashesCache.bin" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gradle/buildOutputCleanup/buildOutputCleanup.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/buildOutputCleanup/buildOutputCleanup.lock" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gradle/buildOutputCleanup/outputFiles.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/buildOutputCleanup/outputFiles.bin" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gradle/file-system.probe" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/file-system.probe" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/dataSources/d4de4990-c842-4b9f-8e18-98e63de79246.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources/d4de4990-c842-4b9f-8e18-98e63de79246.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/modules.xml" beforeDir="false" />
+      <change afterPath="$PROJECT_DIR$/../UserServer/src/main/java/com/kl1verse/UserServer/domain/s3/repository/FileRepository.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../UserServer/src/main/java/com/kl1verse/UserServer/domain/s3/repository/UserImageRepository.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../UserServer/src/main/java/com/kl1verse/UserServer/domain/s3/repository/entity/File.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../UserServer/src/main/java/com/kl1verse/UserServer/domain/s3/repository/entity/UserImage.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../UserServer/src/main/java/com/kl1verse/UserServer/domain/s3/service/FileService.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../UserServer/src/main/java/com/kl1verse/UserServer/domain/s3/service/UserImageService.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/tmp/compileJava/previous-compilation-data.bin" beforeDir="false" afterPath="$PROJECT_DIR$/build/tmp/compileJava/previous-compilation-data.bin" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../frontend/public/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/../../frontend/public/index.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../UserServer/src/main/java/com/kl1verse/UserServer/domain/auth/service/AuthService.java" beforeDir="false" afterPath="$PROJECT_DIR$/../UserServer/src/main/java/com/kl1verse/UserServer/domain/auth/service/AuthService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../UserServer/src/main/java/com/kl1verse/UserServer/domain/betting/BettingEntity.java" beforeDir="false" afterPath="$PROJECT_DIR$/../UserServer/src/main/java/com/kl1verse/UserServer/domain/betting/BettingEntity.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../UserServer/src/main/java/com/kl1verse/UserServer/domain/kafka/consumer/KafkaMatchNotificationConsumer.java" beforeDir="false" afterPath="$PROJECT_DIR$/../UserServer/src/main/java/com/kl1verse/UserServer/domain/kafka/consumer/KafkaMatchNotificationConsumer.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../UserServer/src/main/java/com/kl1verse/UserServer/domain/user/controller/UserController.java" beforeDir="false" afterPath="$PROJECT_DIR$/../UserServer/src/main/java/com/kl1verse/UserServer/domain/user/controller/UserController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../UserServer/src/main/java/com/kl1verse/UserServer/domain/user/service/MypageServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/../UserServer/src/main/java/com/kl1verse/UserServer/domain/user/service/MypageServiceImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../UserServer/src/main/resources/application.yml" beforeDir="false" afterPath="$PROJECT_DIR$/../UserServer/src/main/resources/application.yml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../../frontend/src/api/axios.js" beforeDir="false" afterPath="$PROJECT_DIR$/../../frontend/src/api/axios.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../frontend/src/api/match.js" beforeDir="false" afterPath="$PROJECT_DIR$/../../frontend/src/api/match.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../frontend/src/api/waggle.js" beforeDir="false" afterPath="$PROJECT_DIR$/../../frontend/src/api/waggle.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../frontend/src/components/main/Board.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/../../frontend/src/components/main/Board.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../frontend/src/components/main/Hotclip.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/../../frontend/src/components/main/Hotclip.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../frontend/src/components/main/Nostradamus.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/../../frontend/src/components/main/Nostradamus.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../frontend/src/components/main/Notice.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/../../frontend/src/components/main/Notice.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../frontend/src/components/main/Survey.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/../../frontend/src/components/main/Survey.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../frontend/src/global/formatDate.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../frontend/src/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/../../frontend/src/index.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../frontend/src/pages/board_page/product_page/ProductRegistPage.js" beforeDir="false" afterPath="$PROJECT_DIR$/../../frontend/src/pages/board_page/product_page/ProductRegistPage.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../frontend/src/components/mypage/UserProfile.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/../../frontend/src/components/mypage/UserProfile.jsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../../frontend/src/pages/login_page/GoogleRedirection.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/../../frontend/src/pages/login_page/GoogleRedirection.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../frontend/src/pages/main_page/MainPage.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/../../frontend/src/pages/main_page/MainPage.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../frontend/src/styles/main-styles/BoardItemStyle.js" beforeDir="false" afterPath="$PROJECT_DIR$/../../frontend/src/styles/main-styles/BoardItemStyle.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../frontend/src/styles/main-styles/MainStyle.js" beforeDir="false" afterPath="$PROJECT_DIR$/../../frontend/src/styles/main-styles/MainStyle.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../frontend/src/styles/main-styles/TodayMatchStyle.js" beforeDir="false" afterPath="$PROJECT_DIR$/../../frontend/src/styles/main-styles/TodayMatchStyle.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../frontend/src/styles/main-styles/hotclipStyle.js" beforeDir="false" afterPath="$PROJECT_DIR$/../../frontend/src/styles/main-styles/hotclipStyle.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../frontend/src/styles/main-styles/nostradamusStyle.js" beforeDir="false" afterPath="$PROJECT_DIR$/../../frontend/src/styles/main-styles/nostradamusStyle.js" afterDir="false" />
     </list>
     <list id="a0c7810e-23c4-4b5b-9b34-2e4da1d77e3f" name="Changes" comment="[Fix][BE] 분배했는지 확인하고 분배 추가&#10;&#10;- &#10;&#10; [BE] 베팅골 분배하기&#10;&#10;[Resolves] S10P12A409&#10;[Ref] &#10;[Related to]" />
     <list id="8f9b1d4a-caa9-4a69-ba59-b89b546ae82f" name="S10P12A409-364 [BE] 메인 페이지 관련 API" comment="[커밋 타입] 제목&#10;&#10;- &#10;&#10; [BE] 메인 페이지 관련 API&#10;&#10;[Resolves] S10P12A409-364 &#10;[Ref] &#10;[Related to]" />
@@ -67,6 +47,11 @@
               <path>
                 <item name="" type="6a2764b6:ExternalProjectsStructure$RootNode" />
                 <item name="Match" type="f1a62948:ProjectNode" />
+              </path>
+              <path>
+                <item name="" type="6a2764b6:ExternalProjectsStructure$RootNode" />
+                <item name="Match" type="f1a62948:ProjectNode" />
+                <item name="Run Configurations" type="7b0102dc:RunConfigurationsNode" />
               </path>
             </expand>
             <select />
@@ -105,9 +90,9 @@
     "RunOnceActivity.OpenProjectViewOnStart": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "Spring Boot.MatchApplication.executor": "Run",
-    "git-widget-placeholder": "feature-match/S10P12A409-291/communityComponent",
+    "git-widget-placeholder": "feature-user/S10P12A409-439/file",
     "kotlin-language-version-configured": "true",
-    "last_opened_file_path": "C:/Users/SSAFY/sh/S10P12A409/backend/UserServer/build.gradle",
+    "last_opened_file_path": "C:/Users/SSAFY/IdeaProjects/S10P12A409",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.tslint": "true",
     "node.js.selected.package.eslint": "(autodetect)",
@@ -117,12 +102,12 @@
     "start.from.branch": "feature-common/S10P12A409-365/main-notice",
     "vue.rearranger.settings.migration": "true"
   },
-  "keyToStringList": {
-    "DatabaseDriversLRU": [
-      "mariadb"
+  &quot;keyToStringList&quot;: {
+    &quot;DatabaseDriversLRU&quot;: [
+      &quot;mariadb&quot;
     ]
   }
-}]]></component>
+}</component>
   <component name="RunManager" selected="Spring Boot.MatchApplication">
     <configuration name="Match" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
       <ExternalSystemSettings>
@@ -268,8 +253,8 @@
       <workItem from="1706487363221" duration="2258000" />
       <workItem from="1706491537377" duration="36000" />
       <workItem from="1706491579444" duration="828000" />
-      <workItem from="1706517559556" duration="700000" />
-      <workItem from="1706573562014" duration="1992000" />
+      <workItem from="1706571110994" duration="4287000" />
+      <workItem from="1706578734472" duration="920000" />
     </task>
     <task id="LOCAL-00001" summary="[WIP][FE] 메인페이지 공지사항 개발 중&#10;&#10;- &#10;&#10; [FE] 메인페이지 공지사항 개발&#10;&#10;[Resolves] S10P12A409-369 &#10;[Ref] &#10;[Related to]">
       <option name="closed" value="true" />
@@ -362,9 +347,9 @@
             <State>
               <option name="COLUMN_ID_WIDTH">
                 <map>
-                  <entry key="Table.Default.Author.ColumnIdWidth" value="45" />
-                  <entry key="Table.Default.Date.ColumnIdWidth" value="51" />
-                  <entry key="Table.Space.CommitStatus.ColumnIdWidth" value="51" />
+                  <entry key="Table.Default.Author.ColumnIdWidth" value="77" />
+                  <entry key="Table.Default.Date.ColumnIdWidth" value="157" />
+                  <entry key="Table.Space.CommitStatus.ColumnIdWidth" value="15" />
                 </map>
               </option>
             </State>
@@ -382,7 +367,6 @@
     <MESSAGE value="[Feat] 메인페이지 공지사항 개발  &#10;&#10;- &#10;&#10;&#10;&#10;[Resolves] S10P12A409-369&#10;[Ref] &#10;[Related to]" />
     <MESSAGE value="[Fix] merge feature-common/S10P12A409-369/main-notice-detail -&gt;  feature-common/S10P12A409-365/main-notice &#10;&#10;- &#10;&#10;&#10;&#10;[Resolves] S10P12A409-365&#10;[Ref] &#10;[Related to]" />
     <MESSAGE value="[Feat] 공지사항, 핫클립, 노스트라다무스, 챗봇 완료 &#10;&#10;- &#10;&#10;&#10;&#10;[Resolves] S10P12A409-369&#10;[Ref] &#10;[Related to]" />
-    <MESSAGE value="[커밋 타입] 제목&#10;&#10;- &#10;&#10; [FE] 메인페이지 커뮤니티 - 중고 컴포넌트 개발&#10;&#10;[Resolves] S10P12A409-291 &#10;[Ref] &#10;[Related to]" />
-    <option name="LAST_COMMIT_MESSAGE" value="[커밋 타입] 제목&#10;&#10;- &#10;&#10; [FE] 메인페이지 커뮤니티 - 중고 컴포넌트 개발&#10;&#10;[Resolves] S10P12A409-291 &#10;[Ref] &#10;[Related to]" />
+    <option name="LAST_COMMIT_MESSAGE" value="[Feat] 공지사항, 핫클립, 노스트라다무스, 챗봇 완료 &#10;&#10;- &#10;&#10;&#10;&#10;[Resolves] S10P12A409-369&#10;[Ref] &#10;[Related to]" />
   </component>
 </project>

@@ -80,10 +80,6 @@ function App() {
 
               {/* 마이 페이지 */}
               <Route path="/mypage" element={<MyPage />} />
-
-              <Route path="/survey" element={<StartPage />} />
-              <Route path="/question/:questionNum" element={<QuestionPage />} />
-              <Route path="/result" element={<ResultPage />} />
             </Route>
           </Routes>
         </BrowserRouter>

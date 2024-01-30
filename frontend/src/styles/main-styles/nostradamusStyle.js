@@ -29,7 +29,10 @@ export const NostraContainer = styled.div`
     width: 50%;
   }
   .winBet {
-    width: 30%;
+    width: 25%;
+  }
+  .accurate {
+    width: 15%;
   }
 
   .tableTitle {

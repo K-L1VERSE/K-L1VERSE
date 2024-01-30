@@ -4,11 +4,11 @@ FROM openjdk:17-jdk
 LABEL maintainer="ignuy"
 # Add a volume to /tmp
 VOLUME /tmp
-# Make port 8010 available to the world outside this container
-EXPOSE 8010
+# Make port 8000 available to the world outside this container
+EXPOSE 8000
 # The application's jar file
-ARG JAR_FILE=./build/libs/UserServer-0.0.1-SNAPSHOT.jar
+ARG JAR_FILE=./build/libs/Gateway-0.0.1-SNAPSHOT.jar
 # Add the application's jar to the container
-COPY ${JAR_FILE} userServer.jar
+COPY ${JAR_FILE} gateway.jar
 # Run the jar file
-ENTRYPOINT ["java","-jar","-Duser.timezone=Asia/Seoul","/userServer.jar"]
+ENTRYPOINT ["java","-jar","-Duser.timezone=Asia/Seoul","/gateway.jar"]
