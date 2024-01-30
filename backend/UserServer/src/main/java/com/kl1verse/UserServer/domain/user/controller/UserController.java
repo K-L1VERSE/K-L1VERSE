@@ -17,6 +17,7 @@ import com.kl1verse.UserServer.global.ResponseCode;
 import jakarta.servlet.http.HttpServletRequest;
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Map;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.redis.core.StringRedisTemplate;
@@ -25,6 +26,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -116,6 +118,12 @@ public class UserController {
             .date(LocalDateTime.now())
             .build());
         return ResponseEntity.ok("OK");
+    }
+
+    @PostMapping("/profile")
+    public ResponseEntity<?> updateProfile(HttpServletRequest request, @RequestBody Map<String, String> map) {
+        mypageService.updateProfile(request, map.get("profile"));
+        return ResponseEntity.ok().build();
     }
 
 }

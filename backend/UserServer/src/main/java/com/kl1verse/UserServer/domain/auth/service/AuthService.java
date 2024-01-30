@@ -10,6 +10,12 @@ import com.kl1verse.UserServer.domain.auth.repository.entity.Token;
 import com.kl1verse.UserServer.domain.notification.dto.req.MessageReqDto;
 import com.kl1verse.UserServer.domain.notification.dto.req.MessageReqDto.NotificationType;
 import com.kl1verse.UserServer.domain.notification.service.NotificationService;
+import com.kl1verse.UserServer.domain.s3.repository.FileRepository;
+import com.kl1verse.UserServer.domain.s3.repository.UserImageRepository;
+import com.kl1verse.UserServer.domain.s3.repository.entity.File;
+import com.kl1verse.UserServer.domain.s3.repository.entity.UserImage;
+import com.kl1verse.UserServer.domain.s3.service.FileService;
+import com.kl1verse.UserServer.domain.s3.service.UserImageService;
 import com.kl1verse.UserServer.domain.user.exception.UserException;
 import com.kl1verse.UserServer.domain.user.repository.UserRepository;
 import com.kl1verse.UserServer.domain.user.repository.entity.User;
@@ -45,6 +51,8 @@ public class AuthService {
     private final PasswordEncoder passwordEncoder;
     private final StringRedisTemplate redisTemplate;
     private final NotificationService notificationService;
+    private final UserImageService userImageService;
+    private final FileService fileService;
 
     // 회원 가입 여부 확인
     public boolean isExistUser(String email, String domain) {
@@ -72,6 +80,9 @@ public class AuthService {
             .goal(1000)
             .build();
         userRepository.save(user);
+
+        File file = fileService.saveFile(signUpReqDto.getProfile());
+        userImageService.saveUserImage(user, file);
     }
 
     // 로그인
