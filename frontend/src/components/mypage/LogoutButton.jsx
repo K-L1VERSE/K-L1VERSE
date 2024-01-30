@@ -1,7 +1,7 @@
 import React from "react";
 
 import { useRecoilState } from "recoil";
-import { userState } from "../../global/UserState";
+import { UserState } from "../../global/UserState";
 
 import axios from "../../api/axios";
 // import mockAxios from "../../api/mockAxios";

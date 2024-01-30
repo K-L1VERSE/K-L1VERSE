@@ -1,3 +1,6 @@
+server:
+  port: 8020
+
 spring:
   jpa:
     hibernate:
