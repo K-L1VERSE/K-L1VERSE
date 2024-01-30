@@ -1,7 +1,8 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import BadgeButton from "./BadgeButton";
 import LogoutButton from "./LogoutButton";
+import EditNicknameModal from "./EditNicknameModal";
 import { Navigate, useNavigate } from "react-router-dom";
 
 const ProfileTitleContainer = styled.div`
@@ -115,6 +116,16 @@ function UserInfo({ user }) {
     console.log("user정보 수정");
   }, [user]);
 
+  const [isModalOpen, setIsModalOpen] = useState(false);
+
+  const handleModalOpen = () => {
+    setIsModalOpen(true);
+  };
+
+  const handleModalClose = () => {
+    setIsModalOpen(false);
+  };
+
   return (
     <div>
       <ProfileTitleContainer>
@@ -123,7 +134,7 @@ function UserInfo({ user }) {
             <ProfileTitleIcon>👤</ProfileTitleIcon>
             <ProfileTitleText>프로필</ProfileTitleText>
           </ProfileTitleContent>
-          <ProfileEditContent>
+          <ProfileEditContent onClick={handleModalOpen}>
             <ProfileEditIcon>🛠️</ProfileEditIcon>
             <ProfileEditText>수정</ProfileEditText>
           </ProfileEditContent>
@@ -138,6 +149,13 @@ function UserInfo({ user }) {
           <LogoutButton />
         </UserInfoContainer>
       </ProfileTitleContainer>
+
+      {/* EditNickname Modal */}
+      {isModalOpen && (
+        <EditNicknameModal
+          setModalOpen={setIsModalOpen}
+        />
+      )}
     </div>
   );
 }

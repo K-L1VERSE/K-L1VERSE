@@ -18,14 +18,18 @@ import com.kl1verse.UserServer.global.ResponseCode;
 import jakarta.servlet.http.HttpServletRequest;
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Map;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.redis.core.StringRedisTemplate;
+import org.springframework.data.repository.query.Param;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -119,8 +123,13 @@ public class UserController {
         return ResponseEntity.ok("OK");
     }
 
-    @PostMapping("/nickname")
-    public ResponseEntity<?> updateNickname(HttpServletRequest request, NicknameUpdateReqDto nicknameUpdateReqDto) {
+    @PostMapping("/check-nickname")
+    public ResponseEntity<?> checkNicknameAvailable(HttpServletRequest request, @RequestBody Map<String, String> map) {
+        return ResponseEntity.ok().body(mypageService.checkNicknameAvailable(request, map.get("nickname")));
+    }
+
+    @PutMapping("/nickname")
+    public ResponseEntity<?> updateNickname(HttpServletRequest request, @RequestBody NicknameUpdateReqDto nicknameUpdateReqDto) {
         mypageService.updateNickname(request, nicknameUpdateReqDto);
         return ResponseEntity.ok().build();
     }
