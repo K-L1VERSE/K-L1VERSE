@@ -12,7 +12,6 @@ export const NostraContainer = styled.div`
     width: 95%;
     max-width: 25rem;
     font-size: 0.8rem;
-
     text-align: center;
     color: #595959;
 

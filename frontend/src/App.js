@@ -37,18 +37,23 @@ function App() {
       <SocketProvider>
         <BrowserRouter>
           <Routes>
+            {/* 로그인 페이지 */}
+            <Route path="/login" element={<LoginPage />} />
+
+            {/* 로그아웃 페이지 */}
+            <Route path="/logout" element={<LogoutPage />} />
+
+            {/* 로그인 리다이렉션 페이지 */}
+            <Route path="/KakaoAuth" element={<KaKaoRedirection />} />
+            <Route path="/GoogleAuth" element={<GoogleRedirection />} />
+            <Route path="/NaverAuth" element={<NaverRedirection />} />
+
             <Route path="/" element={<Navbar />}>
               {/* 메인 페이지 */}
               <Route index element={<MainPage />} />
 
-              {/* 로그인 페이지 */}
-              <Route path="/login" element={<LoginPage />} />
-
               {/* 알림 페이지 */}
               <Route path="/notification" element={<Notification />} />
-
-              {/* 로그인 페이지 */}
-              <Route path="/login" element={<LoginPage />} />
 
               {/* 설문 페이지 */}
               <Route path="/survey" element={<StartPage />} />
@@ -69,14 +74,6 @@ function App() {
               <Route path="/product" element={<ProductListPage />} />
               <Route path="/product/:boardId" element={<ProductDetailPage />} />
               <Route path="/productRegist" element={<ProductRegistPage />} />
-
-              {/* 로그아웃 페이지 */}
-              <Route path="/logout" element={<LogoutPage />} />
-
-              {/* 로그인 리다이렉션 페이지 */}
-              <Route path="/KakaoAuth" element={<KaKaoRedirection />} />
-              <Route path="/GoogleAuth" element={<GoogleRedirection />} />
-              <Route path="/NaverAuth" element={<NaverRedirection />} />
 
               {/* 경기 페이지 */}
               <Route path="/match" element={<MatchPage />} />
