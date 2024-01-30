@@ -8,6 +8,7 @@ import com.kl1verse.UserServer.domain.user.repository.UserRepository;
 import com.kl1verse.UserServer.domain.user.repository.entity.User;
 import com.kl1verse.UserServer.global.ResponseCode;
 import jakarta.servlet.http.HttpServletRequest;
+import java.util.Optional;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -55,6 +56,22 @@ public class MypageServiceImpl {
             .build();
     }
 
+    public Boolean checkNicknameAvailable(HttpServletRequest request, String nickname) {
+        String requestToken = jwtUtil.resolveToken(request);
+        String email = jwtUtil.extractUserNameFromExpiredToken(requestToken);
+        String domain = jwtUtil.extractUserDomainFromExpiredToken(requestToken);
+
+        userRepository.findByEmailAndDomain(email, domain).orElseThrow(
+            () -> new UserException(ResponseCode.INVALID_USER_INFO));
+
+        Optional<User> existNickname = userRepository.findByNickname(nickname);
+        if(existNickname.isPresent()) {
+            return false;
+        } else{
+            return true;
+        }
+    }
+
     @Transactional
     public void updateNickname(HttpServletRequest request, NicknameUpdateReqDto nicknameUpdateReqDto) {
         String requestToken = jwtUtil.resolveToken(request);
@@ -67,6 +84,8 @@ public class MypageServiceImpl {
         if(user.getNickname().equals(nicknameUpdateReqDto.getNickname())) {
             throw new UserException(ResponseCode.NICKNAME_EQUAL);
         }
+
+        log.info("newNickname = {}", nicknameUpdateReqDto.getNickname());
 
         if(user.getGoal() < 10000) {
             throw new UserException(ResponseCode.NOT_ENOUGH_GOAL);
