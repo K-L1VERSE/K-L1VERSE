@@ -34,7 +34,7 @@ export default function Nostradamus() {
             <td className="rank"></td>
             <td className="nickname">닉네임</td>
             <td className="widBet">횟수</td>
-            <td classNAme="accurate">적중률</td>
+            <td>적중률</td>
           </tr>
         </table>
         {data.map((item, index) => (
@@ -43,7 +43,7 @@ export default function Nostradamus() {
               <td className="rank">{index + 1}</td>
               <td className="nickname">{item.nickname}</td>
               <td className="widBet">{item.winBet}</td>
-              <td classNAme="accurate">{item.accurate}%</td>
+              <td>{item.accurate}%</td>
             </tr>
           </table>
         ))}
