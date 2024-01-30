@@ -7,10 +7,15 @@ import com.KL1verse.Board.repository.entity.Board;
 import com.KL1verse.Mate.dto.req.MateDTO;
 import com.KL1verse.Mate.repository.MateRepository;
 import com.KL1verse.Mate.repository.entity.Mate;
+import com.KL1verse.Waggle.repository.entity.Waggle;
 import java.time.LocalDateTime;
+import java.util.List;
+import java.util.stream.Collectors;
 import org.springframework.beans.BeanUtils;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -112,6 +117,17 @@ public class MateServiceImpl implements MateService {
         Pageable pageable) {
         Page<Mate> mates = mateRepository.findByBoard_CreateAtBetween(startDate, endDate, pageable);
         return mates.map(this::convertToDTO);
+    }
+
+    @Override
+    public List<MateDTO> getMostRecentProducts(int count) {
+        List<Mate> recentMates = mateRepository.findAll(
+            PageRequest.of(0, count, Sort.by(Sort.Direction.DESC, "board.createAt"))
+        ).getContent();
+
+        return recentMates.stream()
+            .map(this::convertToDTO)
+            .collect(Collectors.toList());
     }
 
     private MateDTO convertToDTO(Mate mate) {
