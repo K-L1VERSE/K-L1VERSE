@@ -14,7 +14,7 @@ import MainPage from "./pages/main_page/MainPage";
 import MatchPage from "./pages/match_page/MatchPage";
 
 import LoginPage from "./pages/login_page/LoginPage";
-import MyPage from "./pages/mypage/MyPage";
+import MyPage from "./pages/my_page/MyPage";
 import Navbar from "./pages/nav/Navbar";
 import SocketProvider from "./global/SocketProvider";
 import LogoutPage from "./pages/logout_page/LogoutPage";
