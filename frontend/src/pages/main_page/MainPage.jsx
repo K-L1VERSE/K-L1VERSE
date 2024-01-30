@@ -1,14 +1,11 @@
 import React from "react";
-<<<<<<< HEAD
 import Board from "../../components/main/Board";
 import { Category, Title, AllBtn } from "../../styles/main-styles/MainStyle";
 import TodayMatch from "../../components/main/TodayMatch";
-=======
 import Notice from "../../components/main/Notice";
 import Hotclip from "../../components/main/Hotclip";
 import Nostradamus from "../../components/main/Nostradamus";
 import Survey from "../../components/main/Survey";
->>>>>>> 97fea671e9cdd2ebff857e910b2a742dec0fda9d
 
 function MainPage() {
   (function () {
@@ -52,12 +49,8 @@ function MainPage() {
 
   return (
     <div>
-      {/* 공지사항 컨테이너, 각 컨테이너 밑에 컴포넌트 개발해주세요. */}
-<<<<<<< HEAD
-      <div>index</div>
-=======
+      {/* 공지사항 컨테이너*/}
       <Notice />
->>>>>>> 97fea671e9cdd2ebff857e910b2a742dec0fda9d
       {/* 커뮤니티 컨테이너 */}
       <Category>
         <Title>💬 커뮤니티</Title>
@@ -71,19 +64,14 @@ function MainPage() {
       </Category>
       <TodayMatch />
       {/* 핫클립 컨테이너 */}
-<<<<<<< HEAD
-      <div>index</div>
-      {/* 노스트라다무스 컨테이너 */}
-      <div>index</div>
-      {/* 성향설문 버튼 */}
-      <div>index</div>
-=======
       <Hotclip />
       {/* 노스트라다무스 컨테이너 */}
-      {/* <Nostradamus /> */}
+      <Category>
+        <Title>🎯 노스트라다무스 랭킹</Title>
+      </Category>
+      <Nostradamus />
       {/* 성향설문 버튼 */}
       <Survey />
->>>>>>> 97fea671e9cdd2ebff857e910b2a742dec0fda9d
     </div>
   );
 }

@@ -9,8 +9,8 @@ export const TodayMatchItemhWrap = styled.div`
 `;
 export const Date = styled.div`
   /* background-color: yellow; */
-  font-size: 0.8rem;
-  width: 6.5rem;
+  font-size: 0.75rem;
+  width: 7rem;
   display: flex;
   align-items: center;
 `;
@@ -21,9 +21,9 @@ export const Team = styled.div`
   flex-direction: row;
   justify-content: space-between;
   padding: 0.3rem;
+  font-size: 0.85rem;
 `;
 export const Name = styled.div`
-  font-size: 1.1rem;
   font-weight: bold;
   padding: 0 1rem;
   width: 10rem;
@@ -31,7 +31,7 @@ export const Name = styled.div`
   display: flex;
   align-items: center;
   img {
-    width: 2rem;
+    width: 1.7rem;
     margin-right: 0.3rem;
   }
 `;

@@ -1,6 +1,7 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
 import { RecoilRoot } from "recoil";
+import GlobalStyle from "../src/styles/global/GlobalStyle";
 
 import App from "./App";
 import reportWebVitals from "./reportWebVitals";
@@ -9,6 +10,7 @@ const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
   // <React.StrictMode>
   <RecoilRoot>
+    <GlobalStyle />
     <App />
   </RecoilRoot>,
   // </React.StrictMode>,

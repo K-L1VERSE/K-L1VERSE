@@ -19,13 +19,13 @@ function Board() {
         console.error(error);
       };
     // get mate posts
-    getLatestMate(({ data }) => {
-      setMate(data);
-      console.log(data);
-    }),
-      (error) => {
-        console.error(error);
-      };
+    // getLatestMate(({ data }) => {
+    //   setMate(data);
+    //   console.log("mate", data);
+    // }),
+    //   (error) => {
+    //     console.error(error);
+    //   };
     // get product posts
     getLatestProduct(({ data }) => {
       setProduct(data);

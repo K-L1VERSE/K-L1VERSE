@@ -1,25 +1,17 @@
 import styled from "styled-components";
 
 export const HotClipContainer = styled.div`
-  left: 0;
-  right: 0;
-  height: 12.5rem;
   background-color: #f4f4f4;
-  color: #002266;
-  font-size: 1.1rem;
   padding: 0.6rem 0.6rem;
-`;
-
-export const Img = styled.img`
-  width: 1.1rem;
-  margin-right: 0.3rem;
+  margin: 2rem 0;
 `;
 
 export const VideoWrapper = styled.div`
   display: flex;
   white-space: nowrap;
   overflow-x: auto;
-  height: 10.4rem;
+  padding: 1rem 0.5rem;
+  /* background-color: red; */
 
   &::-webkit-scrollbar {
     height: 7.5px;

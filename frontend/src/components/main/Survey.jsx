@@ -5,7 +5,7 @@ import {
   SurveyButton,
   Img1,
   Img2,
-} from "../../styles/main-styles/surveyStyle";
+} from "../../styles/main-styles/SurveyStyle";
 import text1 from "../../assets/text1.png";
 import badges from "../../assets/badges.png";
 

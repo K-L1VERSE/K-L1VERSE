@@ -16,17 +16,17 @@ export const Type = styled.div`
     props.type == 0 ? "#fee8de" : props.type == 1 ? "#E3FAEF" : "#E5EDFB"};
   color: ${(props) =>
     props.type == 0 ? "#f07e3d" : props.type == 1 ? "#16B368" : "#578CEA"};
-  font-size: 0.85rem;
+  font-size: 0.75rem;
   padding: 0.3em;
   border-radius: 0.3rem;
-  /* font-weight: bold; */
   text-align: center;
   display: inline-block;
+  font-family: "Pretendard-Regular";
 `;
 
 export const Text = styled.div`
-  font-size: 0.95rem;
-  font-weight: bold;
+  font-size: 0.85rem;
+  font-family: "Pretendard-Regular";
   padding-top: 0.5rem;
   color: #595959;
 `;
@@ -36,13 +36,16 @@ export const Post = styled.div`
   display: flex;
   flex-direction: row;
   justify-content: space-between;
-  font-size: 0.9rem;
+
   padding-top: 0.7rem;
   color: #595959;
 `;
-export const Title = styled.div``;
+export const Title = styled.div`
+  font-size: 0.85rem;
+`;
 
 export const Date = styled.div`
   text-align: right;
   width: 5rem;
+  font-size: 0.7rem;
 `;
