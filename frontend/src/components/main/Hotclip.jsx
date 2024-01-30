@@ -20,12 +20,12 @@ export default function Hotclip() {
         const mm = String(today.getMonth() + 1).padStart(2, "0");
         const dd = String(today.getDate()).padStart(2, "0");
 
-        const response = await ourAxios.get("/youtubes");
+        const response = await ourAxios.get("/match/youtubes");
         const savedAt = response.data.savedAt.split("T")[0];
         const dateStr = `${yyyy}-${mm}-${dd}`;
 
         if (savedAt === dateStr) {
-          const videoList = await ourAxios.get("/youtubes/list");
+          const videoList = await ourAxios.get("/match/youtubes/list");
           setVideos(videoList.data);
         } else {
           const response = await axios.get(
@@ -39,7 +39,7 @@ export default function Hotclip() {
             };
           });
 
-          await ourAxios.post("/youtubes", { items: newVideos });
+          await ourAxios.post("/match/youtubes", { items: newVideos });
 
           setVideos(newVideos);
         }

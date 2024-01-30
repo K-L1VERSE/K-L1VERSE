@@ -1,6 +1,6 @@
 import axios from "./axios";
 
-const url = "surveys";
+const url = "survey/surveys";
 
 // surveyId 보내기
 export function getSurvey(surveyId) {

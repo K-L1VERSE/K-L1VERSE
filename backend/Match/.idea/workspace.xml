@@ -43,7 +43,17 @@
         </task>
         <projects_view>
           <tree_state>
-            <expand />
+            <expand>
+              <path>
+                <item name="" type="6a2764b6:ExternalProjectsStructure$RootNode" />
+                <item name="Match" type="f1a62948:ProjectNode" />
+              </path>
+              <path>
+                <item name="" type="6a2764b6:ExternalProjectsStructure$RootNode" />
+                <item name="Match" type="f1a62948:ProjectNode" />
+                <item name="Run Configurations" type="7b0102dc:RunConfigurationsNode" />
+              </path>
+            </expand>
             <select />
           </tree_state>
         </projects_view>
@@ -92,12 +102,12 @@
     "start.from.branch": "feature-common/S10P12A409-365/main-notice",
     "vue.rearranger.settings.migration": "true"
   },
-  "keyToStringList": {
-    "DatabaseDriversLRU": [
-      "mariadb"
+  &quot;keyToStringList&quot;: {
+    &quot;DatabaseDriversLRU&quot;: [
+      &quot;mariadb&quot;
     ]
   }
-}]]></component>
+}</component>
   <component name="RunManager" selected="Spring Boot.MatchApplication">
     <configuration name="Match" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
       <ExternalSystemSettings>
@@ -243,6 +253,8 @@
       <workItem from="1706487363221" duration="2258000" />
       <workItem from="1706491537377" duration="36000" />
       <workItem from="1706491579444" duration="828000" />
+      <workItem from="1706571110994" duration="4287000" />
+      <workItem from="1706578734472" duration="920000" />
     </task>
     <task id="LOCAL-00001" summary="[WIP][FE] 메인페이지 공지사항 개발 중&#10;&#10;- &#10;&#10; [FE] 메인페이지 공지사항 개발&#10;&#10;[Resolves] S10P12A409-369 &#10;[Ref] &#10;[Related to]">
       <option name="closed" value="true" />
@@ -335,9 +347,9 @@
             <State>
               <option name="COLUMN_ID_WIDTH">
                 <map>
-                  <entry key="Table.Default.Author.ColumnIdWidth" value="45" />
-                  <entry key="Table.Default.Date.ColumnIdWidth" value="51" />
-                  <entry key="Table.Space.CommitStatus.ColumnIdWidth" value="51" />
+                  <entry key="Table.Default.Author.ColumnIdWidth" value="77" />
+                  <entry key="Table.Default.Date.ColumnIdWidth" value="157" />
+                  <entry key="Table.Space.CommitStatus.ColumnIdWidth" value="15" />
                 </map>
               </option>
             </State>
