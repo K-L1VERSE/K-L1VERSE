@@ -12,7 +12,7 @@ function ProductDetailPage() {
 
   /* product 상세 정보 가져오기 */
   function getProductDetail() {
-    axios.get(`/products/${boardId}`).then(({ data }) => {
+    axios.get(`/board/products/${boardId}`).then(({ data }) => {
       setProductDetail(data.board);
       // setProductId(data.productId);
     });
@@ -28,7 +28,7 @@ function ProductDetailPage() {
 
   const handleDeleteBtn = async () => {
     try {
-      await axios.delete(`/products/${boardId}`);
+      await axios.delete(`/board/products/${boardId}`);
       navigate("/product");
     } catch (error) {
       // console.error("글 삭제 중 에러 발생:", error);

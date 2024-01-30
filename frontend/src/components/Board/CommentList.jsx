@@ -11,7 +11,7 @@ function CommentList({ boardId }) {
   useEffect(() => {
     const fetchComments = async () => {
       try {
-        const response = await axios.get(`/comments/list/${boardId}`);
+        const response = await axios.get(`/board/comments/list/${boardId}`);
         setComments(response.data);
       } catch (error) {
         // console.error("댓글을 불러오는 중 에러 발생:", error);
@@ -23,7 +23,7 @@ function CommentList({ boardId }) {
 
   const handleCommentSubmit = async () => {
     try {
-      const response = await axios.get(`/comments/list/${boardId}`);
+      const response = await axios.get(`/board/comments/list/${boardId}`);
       setComments(response.data);
     } catch (error) {
       console.error("댓글을 다시 불러오는 중 에러 발생:", error);

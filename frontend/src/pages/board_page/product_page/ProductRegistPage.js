@@ -43,10 +43,10 @@ function ProductRegistPage() {
       };
 
       if (isUpdateMode) {
-        await axios.put(`/products/${boardId}`, requestData);
+        await axios.put(`/board/products/${boardId}`, requestData);
         navigate(`/product/${boardId}`);
       } else {
-        const response = await axios.post("/products", requestData);
+        const response = await axios.post("/board/products", requestData);
         const boardTemp = response.data.board;
         boardId = boardTemp.boardId;
         navigate(`/product/${boardId}`);

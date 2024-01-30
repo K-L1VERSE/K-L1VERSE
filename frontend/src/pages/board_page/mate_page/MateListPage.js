@@ -19,7 +19,7 @@ function MateListPage() {
     try {
       setLoading(true);
       const response = await axios.get(
-        `/mates/pages?page=${page}&size=30&sort=board.createAt,desc`,
+        `/board/mates/pages?page=${page}&size=30&sort=board.createAt,desc`,
       );
       const newMates = response.data.content;
 

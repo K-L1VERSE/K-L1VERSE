@@ -17,8 +17,8 @@ function GoogleRedirection() {
 
       /* access Token 받고 전역 변수로 관리 */
       setUserState({
-        nickname: res.data.nickname, 
-        profile: res.data.profile, 
+        nickname: res.data.nickname,
+        profile: res.data.profile,
         accessToken: res.data.accessToken,
         email: res.data.email,
         domain: res.data.domain,
@@ -26,7 +26,7 @@ function GoogleRedirection() {
       });
 
       /* 성공시 홈화면으로 */
-      // window.location.href = "/";
+      window.location.href = "/";
     })
     .catch((err) => {
       console.log(err);

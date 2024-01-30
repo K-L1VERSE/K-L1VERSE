@@ -14,7 +14,7 @@ function WaggleDetailPage() {
 
   /* waggle 상세 정보 가져오기 */
   function getWaggleDetail() {
-    axios.get(`/waggles/${boardId}`).then(({ data }) => {
+    axios.get(`/board/waggles/${boardId}`).then(({ data }) => {
       setWaggleDetail(data.board);
       setWaggleId(data.waggleId);
       setIsLiked(data.isLiked);
@@ -32,7 +32,7 @@ function WaggleDetailPage() {
 
   const handleDeleteBtn = async () => {
     try {
-      await axios.delete(`/waggles/${boardId}`);
+      await axios.delete(`/board/waggles/${boardId}`);
       navigate("/waggle");
     } catch (error) {
       // console.error("글 삭제 중 에러 발생:", error);
@@ -42,13 +42,25 @@ function WaggleDetailPage() {
   const handleLikeClick = async () => {
     try {
       if (isLiked) {
-        await axios.delete(`/waggles/like/${waggleId}`);
+        await axios.delete(`/board/waggles/like/${waggleId}`, {
+          data: {
+            userId,
+          },
+        });
         setIsLiked(false);
         setLikeCount((prevCount) => prevCount - 1);
       } else {
-        await axios.post(`/waggles/like/${waggleId}`);
+        const response = await axios.post(`/board/waggles/like/${waggleId}`, {
+          userId,
+        });
         setIsLiked(true);
         setLikeCount((prevCount) => prevCount + 1);
+        // 응답이 정상적으로 반환되었는지 확인 후 출력
+        if (response && response.data) {
+          console.log("좋아요 응답:", response.data);
+        } else {
+          console.error("좋아요 응답이 올바르지 않습니다.");
+        }
       }
     } catch (error) {
       console.error("좋아요 처리 중 에러 발생:", error);

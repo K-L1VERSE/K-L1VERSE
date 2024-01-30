@@ -12,12 +12,12 @@ function CommentForm({ boardId, parentId, onCommentSubmit }) {
 
     try {
       if (isEditMode) {
-        await axios.put(`/comments/${parentId || boardId}`, {
+        await axios.put(`/board/comments/${parentId || boardId}`, {
           content,
         });
         setIsEditMode(false);
       } else {
-        await axios.post(`/comments/${parentId || boardId}`, {
+        await axios.post(`/board/comments/${parentId || boardId}`, {
           content,
         });
       }

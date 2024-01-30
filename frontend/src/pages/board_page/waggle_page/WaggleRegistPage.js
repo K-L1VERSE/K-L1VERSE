@@ -37,10 +37,10 @@ function WaggleRegistPage() {
       };
 
       if (isUpdateMode) {
-        await axios.put(`/waggles/${boardId}`, requestData);
+        await axios.put(`/board/waggles/${boardId}`, requestData);
         navigate(`/waggle/${boardId}`);
       } else {
-        const response = await axios.post("/waggles", requestData);
+        const response = await axios.post("/board/waggles", requestData);
         const boardTemp = response.data.board;
         boardId = boardTemp.boardId;
         navigate(`/waggle/${boardId}`);

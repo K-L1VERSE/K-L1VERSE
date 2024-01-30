@@ -37,10 +37,10 @@ function MateRegistPage() {
       };
 
       if (isUpdateMode) {
-        axios.put(`/mates/${boardId}`, requestData);
+        axios.put(`/board/mates/${boardId}`, requestData);
         navigate(`/mate/${boardId}`);
       } else {
-        const response = await axios.post("/mates", requestData);
+        const response = await axios.post("/board/mates", requestData);
         const boardTemp = response.data.board;
         boardId = boardTemp.boardId;
         navigate(`/mate/${boardId}`);

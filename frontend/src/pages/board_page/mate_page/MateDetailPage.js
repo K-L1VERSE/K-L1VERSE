@@ -13,7 +13,7 @@ function MateDetailPage() {
   /* mate 상세 정보 가져오기 */
   function getMateDetail() {
     console.log(boardId);
-    axios.get(`/mates/${boardId}`).then(({ data }) => {
+    axios.get(`/board/mates/${boardId}`).then(({ data }) => {
       setMateDetail(data.board);
       setMateId(data.mateId);
     });
@@ -29,7 +29,7 @@ function MateDetailPage() {
 
   const handleDeleteBtn = async () => {
     try {
-      await axios.delete(`/waggles/${boardId}`);
+      await axios.delete(`/board/waggles/${boardId}`);
       navigate("/waggle");
     } catch (error) {
       // console.error("글 삭제 중 에러 발생:", error);

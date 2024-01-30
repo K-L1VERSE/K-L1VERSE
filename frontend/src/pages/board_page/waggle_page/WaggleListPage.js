@@ -18,7 +18,7 @@ function WaggleListPage() {
     try {
       setLoading(true);
       const response = await axios.get(
-        `/waggles/pages?page=${page}&size=30&sort=board.createAt,desc`,
+        `/board/waggles/pages?page=${page}&size=30&sort=board.createAt,desc`,
       );
       const newWaggles = response.data.content;
 
@@ -32,25 +32,12 @@ function WaggleListPage() {
             ),
         );
 
-        setWaggleList((prevWaggles) => [
-          ...uniqueWaggles.reverse(),
-          ...prevWaggles,
-        ]);
+        setWaggleList((prevWaggles) => [...prevWaggles, ...uniqueWaggles]);
       }
     } finally {
       setLoading(false);
     }
   }, [page, waggleList]);
-
-  useEffect(() => {
-    if (hasMore) {
-      fetchWaggleList();
-    }
-  }, [hasMore, fetchWaggleList]);
-
-  const handleWriteWaggleClick = () => {
-    navigate("/waggleRegist");
-  };
 
   const handleScroll = useCallback(() => {
     const windowHeight = window.innerHeight;
@@ -64,12 +51,22 @@ function WaggleListPage() {
   }, [loading, hasMore]);
 
   useEffect(() => {
+    if (hasMore) {
+      fetchWaggleList();
+    }
+  }, [fetchWaggleList, hasMore, page]);
+
+  useEffect(() => {
     window.addEventListener("scroll", handleScroll);
 
     return () => {
       window.removeEventListener("scroll", handleScroll);
     };
   }, [handleScroll]);
+
+  const handleWriteWaggleClick = () => {
+    navigate("/waggleRegist");
+  };
 
   return (
     <div>

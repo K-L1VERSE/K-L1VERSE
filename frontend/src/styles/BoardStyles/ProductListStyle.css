@@ -74,18 +74,18 @@
   display: inline-block;
   width: 64px;
   padding: 5px 10px;
-  border-radius: 5px; /* Rounded corners */
-  margin-bottom: 10px; /* Adjust as needed */
+  border-radius: 5px;
+  margin-bottom: 10px;
 }
 
 .deal-status-green {
-  background-color: #4caf50; /* Green background color for 거래 가능 */
-  color: white; /* White text color */
+  background-color: #4caf50;
+  color: white;
 }
 
 .deal-status-orange {
-  background-color: #ff9800; /* Orange background color for 거래 완료 */
-  color: white; /* White text color */
+  background-color: #ff9800;
+  color: white;
 }
 
 /* Title */

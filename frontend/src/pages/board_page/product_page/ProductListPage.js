@@ -19,7 +19,7 @@ function ProductListPage() {
     try {
       setLoading(true);
       const response = await axios.get(
-        `/products/pages?page=${page}&size=30&sort=board.createAt,desc`,
+        `/board/products/pages?page=${page}&size=30&sort=board.createAt,desc`,
       );
       const newProducts = response.data.content;
 
