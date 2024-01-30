@@ -33,9 +33,6 @@ export const NostraContainer = styled.div`
   .winBet {
     width: 30%;
   }
-  .accurate {
-    width: 10%;
-  }
 `;
 
 export const Img = styled.img`

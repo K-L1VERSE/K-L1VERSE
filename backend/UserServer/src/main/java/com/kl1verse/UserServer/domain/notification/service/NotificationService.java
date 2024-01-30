@@ -1,7 +1,9 @@
 package com.kl1verse.UserServer.domain.notification.service;
 
 import com.kl1verse.UserServer.domain.auth.JwtUtil;
+import com.kl1verse.UserServer.domain.kafka.dto.req.NotificationListReqDto;
 import com.kl1verse.UserServer.domain.notification.dto.req.MessageReqDto;
+import com.kl1verse.UserServer.domain.notification.dto.req.MessageReqDto.NotificationType;
 import com.kl1verse.UserServer.domain.notification.dto.res.NotificationResDto;
 import com.kl1verse.UserServer.domain.notification.repository.NotificationRepository;
 import com.kl1verse.UserServer.domain.notification.repository.entity.Notification;
@@ -13,6 +15,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.messaging.simp.SimpMessageSendingOperations;
@@ -43,12 +46,54 @@ public class NotificationService {
             .uri(messageReqDto.getUri())
             .readFlag(false)
             .type(messageReqDto.getType())
-            .createdAt(LocalDateTime.now())
+            .createdAt(messageReqDto.getDate())
             .build();
 
         notificationRepository.save(notification);
+        NotificationResDto notificationResDto = NotificationResDto.builder()
+            .uri(messageReqDto.getUri())
+            .content(messageReqDto.getMessage())
+            .readFlag(false)
+            .type(messageReqDto.getType())
+            .build();
 
-        sendingOperations.convertAndSend("/topic/notification/" + user.getEmail()+":"+user.getDomain(), messageReqDto);
+        sendingOperations.convertAndSend("/topic/notification/" + user.getEmail()+":"+user.getDomain(), notificationResDto);
+    }
+
+    /*
+    * Notification.save() Transaction을 한꺼번에 처리하기 위해 복수 알림 처리를 위한 메소드
+    */
+    @Transactional
+    public void sendNotifications(List<MessageReqDto> messageReqDtoList) {
+
+        for(MessageReqDto messageReqDto : messageReqDtoList) {
+            log.info("Notification Event: {}", messageReqDto.getType().toString() + " / " + messageReqDto.getMessage());
+
+            Optional<User> userOptional = userRepository.findById(messageReqDto.getUserId());
+            if(userOptional.isEmpty()) {
+                continue;
+            }
+            User user = userOptional.get();
+
+            Notification notification = Notification.builder()
+                .user(user)
+                .content(messageReqDto.getMessage())
+                .uri(messageReqDto.getUri())
+                .readFlag(false)
+                .type(messageReqDto.getType())
+                .createdAt(messageReqDto.getDate())
+                .build();
+
+            notificationRepository.save(notification);
+            NotificationResDto notificationResDto = NotificationResDto.builder()
+                .uri(messageReqDto.getUri())
+                .content(messageReqDto.getMessage())
+                .readFlag(false)
+                .type(messageReqDto.getType())
+                .build();
+
+            sendingOperations.convertAndSend("/topic/notification/" + user.getEmail()+":"+user.getDomain(), notificationResDto);
+        }
     }
 
     public List<NotificationResDto> getNotifications(HttpServletRequest request) {

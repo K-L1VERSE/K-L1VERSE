@@ -1,5 +1,6 @@
 package com.kl1verse.UserServer.domain.notification.dto.req;
 
+import java.time.LocalDateTime;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -19,6 +20,6 @@ public class MessageReqDto {
     private Integer userId;
     private String message;
     private String uri;
-    private String date;
+    private LocalDateTime date;
 
 }

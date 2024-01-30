@@ -55,7 +55,7 @@ function MainPage() {
       {/* 핫클립 컨테이너 */}
       <Hotclip />
       {/* 노스트라다무스 컨테이너 */}
-      <Nostradamus />
+      {/* <Nostradamus /> */}
       {/* 성향설문 버튼 */}
       <Survey />
     </div>
