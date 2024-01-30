@@ -10,6 +10,8 @@ function ProductRegistPage() {
 
   const [title, setTitle] = useState("");
   const [content, setContent] = useState("");
+  const [price, setPrice] = useState(0);
+  const [dealFlag, setDealFlag] = useState(false);
   const [isUpdateMode, setIsUpdateMode] = useState(false);
 
   const location = useLocation();
@@ -20,6 +22,8 @@ function ProductRegistPage() {
       boardApi.getProduct(boardId).then((data) => {
         setTitle(data.board.title);
         setContent(data.board.content);
+        setPrice(data.price);
+        setDealFlag(data.dealFlag);
         setIsUpdateMode(true);
       });
     }
@@ -35,19 +39,22 @@ function ProductRegistPage() {
           title,
           content,
         },
+        price,
+        dealFlag,
       };
 
       if (isUpdateMode) {
-        axios.put(`/products/${boardId}`, requestData.board);
+        await axios.put(`/products/${boardId}`, requestData);
+        navigate(`/product/${boardId}`);
       } else {
-        axios.post("/products", requestData).then((response) => {
-          const boardTemp = response.data.board;
-          boardId = boardTemp.boardId;
-          navigate(`/products/${boardId}`);
-        });
+        const response = await axios.post("/products", requestData);
+        const boardTemp = response.data.board;
+        boardId = boardTemp.boardId;
+        navigate(`/product/${boardId}`);
       }
     } catch (error) {
-      // console.error("Product 게시물 작성 또는 수정 중 에러 발생:", error);
+      // Handle errors
+      console.error("Product 게시물 작성 또는 수정 중 에러 발생:", error);
     }
   };
 
@@ -67,6 +74,20 @@ function ProductRegistPage() {
         <textarea
           value={content}
           onChange={(e) => setContent(e.target.value)}
+        />
+        <br />
+        가격:
+        <input
+          type="number"
+          value={price}
+          onChange={(e) => setPrice(e.target.value)}
+        />
+        <br />
+        거래 여부:
+        <input
+          type="checkbox"
+          checked={dealFlag}
+          onChange={(e) => setDealFlag(e.target.checked)}
         />
         <br />
         <button type="submit">{isUpdateMode ? "수정하기" : "작성하기"}</button>
