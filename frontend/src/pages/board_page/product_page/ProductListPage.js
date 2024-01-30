@@ -5,6 +5,8 @@ import BoardTopNavBar from "../../../components/Board/BoardTopNavBar";
 import ProductItemCard from "../../../components/Board/ProductItemCard";
 import { formatRelativeTime } from "../../../components/Board/dateFormat";
 
+import "../../../styles/BoardStyles/ProductListStyle.css";
+
 function ProductListPage() {
   const navigate = useNavigate();
   const [productList, setProductList] = useState([]);
@@ -16,7 +18,9 @@ function ProductListPage() {
   const fetchProductList = useCallback(async () => {
     try {
       setLoading(true);
-      const response = await axios.get(`/products/pages?page=${page}&size=30`);
+      const response = await axios.get(
+        `/products/pages?page=${page}&size=30&sort=board.createAt,desc`,
+      );
       const newProducts = response.data.content;
 
       if (newProducts.length === 0) {

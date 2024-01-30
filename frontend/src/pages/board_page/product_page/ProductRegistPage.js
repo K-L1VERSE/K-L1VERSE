@@ -35,7 +35,6 @@ function ProductRegistPage() {
     try {
       const requestData = {
         board: {
-          boardType: "PRODUCT",
           title,
           content,
         },
@@ -53,7 +52,6 @@ function ProductRegistPage() {
         navigate(`/product/${boardId}`);
       }
     } catch (error) {
-      // Handle errors
       console.error("Product 게시물 작성 또는 수정 중 에러 발생:", error);
     }
   };

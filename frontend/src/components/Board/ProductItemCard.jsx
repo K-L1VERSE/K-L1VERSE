@@ -36,7 +36,7 @@ function ProductItemCard({ product, formatRelativeTime }) {
           댓글 {product.board.commentCount} |
         </div>
         <div className="product-created-at">
-          생성일: {formatRelativeTime(product.board.createAt)}
+          {formatRelativeTime(product.board.createAt)}
         </div>
       </div>
       <div className="separator" />

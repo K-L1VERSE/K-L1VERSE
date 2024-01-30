@@ -2,9 +2,10 @@ import React, { useState, useEffect, useCallback } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "../../../api/axios";
 import BoardTopNavBar from "../../../components/Board/BoardTopNavBar";
-import "../../../styles/BoardStyles/WaggleListStyle.css";
 import WaggleItemCard from "../../../components/Board/WaggleItemCard";
 import { formatRelativeTime } from "../../../components/Board/dateFormat";
+
+import "../../../styles/BoardStyles/WaggleListStyle.css";
 
 function WaggleListPage() {
   const [waggleList, setWaggleList] = useState([]);
@@ -36,8 +37,6 @@ function WaggleListPage() {
           ...prevWaggles,
         ]);
       }
-    } catch (error) {
-      console.error("와글 목록을 불러오는 중 오류 발생:", error);
     } finally {
       setLoading(false);
     }

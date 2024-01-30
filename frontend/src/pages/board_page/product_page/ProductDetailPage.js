@@ -6,13 +6,15 @@ import CommentList from "../../../components/Board/CommentList";
 
 function ProductDetailPage() {
   const [productDetail, setProductDetail] = useState({});
+  // const [productId, setProductId] = useState(0);
   const { boardId } = useParams();
   const navigate = useNavigate();
 
   /* product 상세 정보 가져오기 */
   function getProductDetail() {
     axios.get(`/products/${boardId}`).then(({ data }) => {
-      setProductDetail(data);
+      setProductDetail(data.board);
+      // setProductId(data.productId);
     });
   }
 
@@ -34,30 +36,18 @@ function ProductDetailPage() {
   };
 
   return (
-    <div>
+    <div className="container">
       <BoardTopNavBar />
-      <h1>Product 상세 정보</h1>
+      <div className="product-detail-box">
+        <p>
+          <strong>{productDetail.title}</strong>
+        </p>
+        <p>{productDetail.content}</p>
+      </div>
+      <div onClick={() => handleUpdateBtn()}>수정하기</div>
+      <div onClick={() => handleDeleteBtn()}>삭제하기</div>
 
-      {productDetail.board && (
-        <>
-          <p>
-            <strong>Title:</strong> {productDetail.board.title}
-          </p>
-          <p>
-            <strong>Content:</strong> {productDetail.board.content}
-          </p>
-          <p>
-            <strong>Price:</strong> {productDetail.price}
-          </p>
-          <p>
-            <strong>Deal Flag:</strong> {productDetail.dealFlag ? "Yes" : "No"}
-          </p>
-          <div onClick={() => handleUpdateBtn()}>수정하기</div>
-          <div onClick={() => handleDeleteBtn()}>삭제하기</div>
-
-          <CommentList boardId={boardId} />
-        </>
-      )}
+      <CommentList boardId={boardId} />
     </div>
   );
 }
