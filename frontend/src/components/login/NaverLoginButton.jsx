@@ -4,11 +4,9 @@ import styled from "styled-components";
 import NaverImg from "../../assets/login_button/naver_img.png";
 
 function NaverLoginButton() {
-  // const NAVER_RESPONSE_TYPE = "code"
-  const { NAVER_REDIRECT_URI } = process.env;
-  const { NAVER_STATE } = process.env;
-  // const NAVER_SCOPE = "profile"
-  const { NAVER_CLIENT_ID } = process.env;
+  const NAVER_REDIRECT_URI = process.env.REACT_APP_NAVER_REDIRECT_URI;
+  const NAVER_STATE = process.env.REACT_APP_NAVER_STATE;
+  const NAVER_CLIENT_ID = process.env.REACT_APP_NAVER_CLIENT_ID;
   const NAVER_AUTH_URL = `https://nid.naver.com/oauth2.0/authorize?response_type=code&client_id=${NAVER_CLIENT_ID}&redirect_uri=${NAVER_REDIRECT_URI}&state=${NAVER_STATE}`;
 
   const handleLogin = () => {
