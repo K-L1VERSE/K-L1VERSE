@@ -1,5 +1,6 @@
 import React from "react";
 import { Outlet, useNavigate } from "react-router-dom";
+import { useRecoilState } from "recoil";
 import { ReactComponent as MyPageIcon } from "../../assets/icon/mypage-icon.svg";
 import { ReactComponent as NotificationIcon } from "../../assets/icon/notification-icon.svg";
 import { ReactComponent as ScheduleIcon } from "../../assets/icon/schedule-icon.svg";
@@ -11,7 +12,6 @@ import {
   Contents,
 } from "../../styles/navbar-styles/NavbarStyle";
 import Logo from "../../assets/K-L1VERSE(white).png";
-import { useRecoilState } from "recoil";
 import { NotificationState } from "../../global/NotificationState";
 
 export default function Header() {
@@ -59,6 +59,10 @@ export default function Header() {
 
   const navigate = useNavigate();
 
+  const goMatchSchedule = () => {
+    navigate("/matchSchedule");
+  };
+
   const goMain = () => {
     navigate("/");
   };
@@ -78,7 +82,7 @@ export default function Header() {
       </Contents>
       <Nav>
         <NavItem>
-          <ScheduleIcon />
+          <ScheduleIcon onClick={goMatchSchedule} />
           <Text>경기일정</Text>
         </NavItem>
         <NavItem>
@@ -103,7 +107,7 @@ export default function Header() {
                 height: "3px",
                 padding: "2px",
               }}
-            ></div>
+            />
           )}
           <Text>알림</Text>
         </NavItem>

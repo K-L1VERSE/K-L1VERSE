@@ -10,7 +10,6 @@ import Survey from "../../components/main/Survey";
 function MainPage() {
   return (
     <div>
-      {/* 공지사항 컨테이너*/}
       <Notice />
       {/* 커뮤니티 컨테이너 */}
       <Category>

@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from "react";
+import React from "react";
 import {
   NoticeBar,
   NoticeBar1,
@@ -9,7 +9,7 @@ import {
 
 export default function Notice() {
   const contentText =
-    "출석하면 5골이 적립됩니다 🎈 글 쓰면 5골이 적립됩니다 💙 출석하면 5골이 적립됩니다 🎈 글 쓰면 5골이 적립됩니다 💙 출석하면 5골이 적립됩니다 🎈 글 쓰면 5골이 적립됩니다 💙 출석하면 5골이 적립됩니다 🎈 글 쓰면 5골이 적립됩니다 💙 ";
+    "출석하면 10골이 적립됩니다 🎈 글 쓰면 10골이 적립됩니다 💙 출석하면 10골이 적립됩니다 🎈 글 쓰면 10골이 적립됩니다 💙 출석하면 10골이 적립됩니다 🎈 글 쓰면 10골이 적립됩니다 💙 출석하면 10골이 적립됩니다 🎈 글 쓰면 10골이 적립됩니다 💙 ";
   return (
     <div>
       <NoticeBar>

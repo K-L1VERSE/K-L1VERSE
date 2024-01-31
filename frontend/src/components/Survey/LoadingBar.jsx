@@ -1,4 +1,3 @@
-// LoadingBar.js
 import React, { useState, useEffect } from "react";
 import {
   Progress,
@@ -7,8 +6,7 @@ import {
   Kfont,
 } from "../../styles/SurveyStyles/LoadingBarStyle";
 
-const LoadingBar = () => {
-  console.log("LoadingBar rendering");
+function LoadingBar() {
   const [done, setDone] = useState(0);
 
   useEffect(() => {
@@ -48,6 +46,6 @@ const LoadingBar = () => {
       <Done style={style}>{done}%</Done>
     </Progress>
   );
-};
+}
 
 export default LoadingBar;
