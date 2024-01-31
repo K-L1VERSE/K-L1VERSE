@@ -4,16 +4,18 @@ import com.KL1verse.Board.dto.req.BoardDTO;
 import com.KL1verse.Board.dto.req.SearchBoardConditionDto;
 import com.KL1verse.Board.repository.BoardRepository;
 import com.KL1verse.Board.repository.entity.Board;
-import com.KL1verse.Comment.repository.CommentRepository;
 import com.KL1verse.Mate.dto.req.MateDTO;
 import com.KL1verse.Mate.repository.MateRepository;
 import com.KL1verse.Mate.repository.entity.Mate;
+import com.KL1verse.Waggle.repository.entity.Waggle;
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.stream.Collectors;
 import org.springframework.beans.BeanUtils;
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -65,22 +67,6 @@ public class MateServiceImpl implements MateService {
         mateRepository.deleteById(mateToDelete.getMateId());
     }
 
-    //    @Override
-//    public Page<MateDTO> searchMates(SearchBoardConditionDto searchCondition, Pageable pageable) {
-//        Page<Mate> mates;
-//
-//        if (searchCondition != null && searchCondition.getKeyword() != null) {
-//            mates = mateRepository.findByBoard_TitleContainingOrBoard_ContentContaining(
-//                searchCondition.getKeyword(),
-//                searchCondition.getKeyword(),
-//                pageable
-//            );
-//        } else {
-//            mates = mateRepository.findAll(pageable);
-//        }
-//
-//        return mates.map(this::convertToDTO);
-//    }
     @Override
     public Page<MateDTO> searchMates(SearchBoardConditionDto searchCondition, Pageable pageable) {
         Page<Mate> mates;
@@ -112,12 +98,6 @@ public class MateServiceImpl implements MateService {
         });
     }
 
-//    @Override
-//    public Page<MateDTO> getAllMateList(Pageable pageable) {
-//        Page<Mate> mates = mateRepository.findByBoard_BoardType(Board.BoardType.MATE, pageable);
-//        return mates.map(this::convertToDTO);
-//    }
-
     @Override
     public Page<MateDTO> getAllMateList(Pageable pageable) {
         Page<Mate> mates = mateRepository.findByBoard_BoardType(Board.BoardType.MATE, pageable);
@@ -138,9 +118,6 @@ public class MateServiceImpl implements MateService {
             return mateDTO;
         });
     }
-
-
-
 
     private Mate findMateByBoardId(Long boardId) {
         Page<Mate> mates = mateRepository.findByBoard_BoardId(boardId, Pageable.unpaged());
@@ -188,6 +165,17 @@ public class MateServiceImpl implements MateService {
 
             return mateDTO;
         });
+    }
+
+    @Override
+    public List<MateDTO> getMostRecentProducts(int count) {
+        List<Mate> recentMates = mateRepository.findAll(
+            PageRequest.of(0, count, Sort.by(Sort.Direction.DESC, "board.createAt"))
+        ).getContent();
+
+        return recentMates.stream()
+            .map(this::convertToDTO)
+            .collect(Collectors.toList());
     }
 
     private MateDTO convertToDTO(Mate mate) {
