@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import axios from "../../../api/axios";
-import BoardTopNavBar from "../../../components/Board/BoardTopNavBar";
-import CommentList from "../../../components/Board/CommentList";
+import BoardTopNavBar from "../../../components/board/BoardTopNavBar";
+import CommentList from "../../../components/board/CommentList";
 
 function ProductDetailPage() {
   const [productDetail, setProductDetail] = useState({});

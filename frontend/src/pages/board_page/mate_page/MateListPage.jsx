@@ -2,14 +2,14 @@ import React, { useState, useEffect, useCallback } from "react";
 import { useNavigate } from "react-router-dom";
 // import Calendar from "react-calendar";
 import axios from "../../../api/axios";
-import BoardTopNavBar from "../../../components/Board/BoardTopNavBar";
+import BoardTopNavBar from "../../../components/board/BoardTopNavBar";
 import {
   MateHeader,
   MateHeaderH2,
   MateHeaderButton,
   MateListContainer,
 } from "../../../styles/BoardStyles/MateListStyle";
-import MateItemCard from "../../../components/Board/MateItemCard";
+import MateItemCard from "../../../components/board/MateItemCard";
 
 function MateListPage() {
   const [mateList, setMateList] = useState([]);
