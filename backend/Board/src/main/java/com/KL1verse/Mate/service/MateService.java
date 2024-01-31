@@ -26,5 +26,5 @@ public interface MateService {
     Page<MateDTO> getMatesByDateRange(LocalDateTime startDate, LocalDateTime endDate,
         Pageable pageable);
 
-    List<MateDTO> getMostRecentProducts(int count);
+    List<MateDTO> getMostRecentMates(int count);
 }
