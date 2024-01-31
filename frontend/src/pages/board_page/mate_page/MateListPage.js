@@ -26,22 +26,19 @@ function MateListPage() {
       if (newMates.length === 0) {
         setHasMore(false);
       } else {
-        setMateList((prevMates) => [...prevMates, ...newMates]);
+        const uniqueMates = newMates.filter(
+          (newMate) =>
+            !mateList.some(
+              (mate) => mate.board.boardId === newMate.board.boardId,
+            ),
+        );
+
+        setMateList((prevMates) => [...prevMates, ...uniqueMates]);
       }
     } finally {
       setLoading(false);
     }
-  }, [page]);
-
-  useEffect(() => {
-    if (hasMore) {
-      fetchMateList();
-    }
-  }, [hasMore, fetchMateList]);
-
-  const handleWriteMateClick = () => {
-    navigate("/mateRegist");
-  };
+  }, [page, mateList]);
 
   const handleScroll = useCallback(() => {
     const windowHeight = window.innerHeight;
@@ -55,12 +52,22 @@ function MateListPage() {
   }, [loading, hasMore]);
 
   useEffect(() => {
+    if (hasMore) {
+      fetchMateList();
+    }
+  }, [fetchMateList, hasMore, page]);
+
+  useEffect(() => {
     window.addEventListener("scroll", handleScroll);
 
     return () => {
       window.removeEventListener("scroll", handleScroll);
     };
   }, [handleScroll]);
+
+  const handleWriteMateClick = () => {
+    navigate("/mateRegist");
+  };
 
   const handleCalendarToggle = () => {
     setIsOpen(!isOpen);

@@ -29,8 +29,8 @@ function MateDetailPage() {
 
   const handleDeleteBtn = async () => {
     try {
-      await axios.delete(`/board/waggles/${boardId}`);
-      navigate("/waggle");
+      await axios.delete(`/board/mates/${boardId}`);
+      navigate("/mate");
     } catch (error) {
       // console.error("글 삭제 중 에러 발생:", error);
     }
