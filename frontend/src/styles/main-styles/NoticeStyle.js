@@ -26,7 +26,7 @@ export const AnimatedTitle = styled.div`
   height: auto;
   padding-top: 0.2rem;
   padding-bottom: 0.5rem;
-  font-size: 0.85rem;
+  font-size: 0.75rem;
   height: auto;
   overflow-x: hidden;
   overflow-y: hidden;

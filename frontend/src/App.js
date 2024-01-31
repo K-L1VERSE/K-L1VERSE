@@ -11,7 +11,6 @@ import NaverRedirection from "./pages/login_page/NaverRedirection";
 import GoogleRedirection from "./pages/login_page/GoogleRedirection";
 
 import MainPage from "./pages/main_page/MainPage";
-import MatchPage from "./pages/match_page/MatchPage";
 import LoginPage from "./pages/login_page/LoginPage";
 import MyPage from "./pages/my_page/MyPage";
 import Navbar from "./pages/nav/Navbar";
@@ -30,6 +29,10 @@ import MateRegistPage from "./pages/board_page/mate_page/MateRegistPage";
 import ProductListPage from "./pages/board_page/product_page/ProductListPage";
 import ProductDetailPage from "./pages/board_page/product_page/ProductDetailPage";
 import ProductRegistPage from "./pages/board_page/product_page/ProductRegistPage";
+
+import MatchSchedulePage from "./pages/match_page/MatchSchedulePage";
+import MatchDetailPage from "./pages/match_page/MatchDetailPage";
+import MatchChattingPage from "./pages/match_page/MatchChattingPage";
 
 function App() {
   return (
@@ -75,8 +78,18 @@ function App() {
               <Route path="/product/:boardId" element={<ProductDetailPage />} />
               <Route path="/productRegist" element={<ProductRegistPage />} />
 
-              {/* 경기 페이지 */}
-              <Route path="/match" element={<MatchPage />} />
+              {/* 경기 일정 페이지 */}
+              <Route path="/matchSchedule" element={<MatchSchedulePage />} />
+              {/* 경기 상세 페이지 */}
+              <Route
+                path="/matchDetail/:matchId"
+                element={<MatchDetailPage />}
+              />
+              {/* 경기 채팅 페이지 */}
+              <Route
+                path="/matchChatting/:matchId"
+                element={<MatchChattingPage />}
+              />
 
               {/* 마이 페이지 */}
               <Route path="/mypage" element={<MyPage />} />
