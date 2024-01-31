@@ -1,6 +1,4 @@
-/* eslint-disable */
 import React, { useState, useEffect } from "react";
-// import QuizCard from "../../components/Survey/Quizcard";
 import { useParams, useLocation, useNavigate } from "react-router-dom";
 import {
   NumberContainer,
@@ -12,13 +10,12 @@ import {
 } from "../../styles/SurveyStyles/QuizCardStyle";
 
 import { getQuestion, submitResult } from "../../api/survey";
-import { SurveyTop } from "../../styles/SurveyStyles/SurveyTop";
-import { ToLeftImg } from "../../styles/SurveyStyles/SurveyTop";
+import { SurveyTop, ToLeftImg } from "../../styles/SurveyStyles/SurveyTop";
 import ToLeftPng from "../../assets/ToLeft.png";
 
 function QuestionPage() {
   const params = useParams();
-  const questionId = parseInt(params.questionNum);
+  const questionId = parseInt(params.questionNum, 10);
 
   const nav = useNavigate();
   const location = useLocation();
@@ -26,29 +23,25 @@ function QuestionPage() {
   const [question, setQuestion] = useState("");
   const [answers, setAnswers] = useState([]);
 
-  let result = location.state?.result || [];
+  const result = location.state?.result || [];
 
   useEffect(() => {
-    // 질문 내용 가져오기
     getQuestion(questionId)
       .then((data) => {
         setQuestion(data.content);
         setAnswers(data.answers);
       })
-      .catch((e) => {});
-
-    // 선택지 내용 가져오기
+      .catch(() => {});
   }, [questionId]);
 
   function handleClick(answerId) {
     result[questionId - 1] = answerId;
     if (questionId === 7) {
-      console.log("result: ", result);
       submitResult(result)
         .then((teamId) => {
           nav("/result", { state: { teamId } });
         })
-        .catch((error) => {});
+        .catch(() => {});
     } else {
       nav(`/question/${questionId + 1}`, { state: { result } });
     }
@@ -69,7 +62,7 @@ function QuestionPage() {
         나와 맞는 구단 알아보기
       </SurveyTop>
       <NumberContainer>
-        {questionId == 1 && <div></div>}
+        {questionId === 1 && <div />}
         {questionId >= 2 && (
           <PreviousButton onClick={() => handleBeforeClick()}>←</PreviousButton>
         )}

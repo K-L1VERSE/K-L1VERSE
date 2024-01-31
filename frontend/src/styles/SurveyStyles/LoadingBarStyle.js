@@ -1,4 +1,3 @@
-// LoadingBarStyles.js
 import styled from "styled-components";
 
 export const Progress = styled.div`
@@ -7,7 +6,7 @@ export const Progress = styled.div`
   border-radius: 20px;
   width: 80%;
   margin: 0 auto;
-  margin-top: 8rem;
+  margin-top: 5rem;
   font-weight: bold;
 `;
 
@@ -32,10 +31,12 @@ export const Done = styled.div`
 export const Text = styled.span`
   font-size: 1.5em;
   color: #b5c3ff;
+  font-family: "Pretendard-Bold";
 `;
 
 export const Kfont = styled.div`
   font-size: 1.7em;
   color: #001b79;
+  padding-top: 0.5rem;
   padding-bottom: 1rem;
 `;
