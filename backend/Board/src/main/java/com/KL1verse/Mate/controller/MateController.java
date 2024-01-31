@@ -45,6 +45,7 @@ public class MateController {
             .body(createdMate);
     }
 
+
     @PutMapping("/{boardId}")
     public ResponseEntity<MateDTO> updateMate(@PathVariable Long boardId,
         @RequestBody MateDTO mateDto) {
@@ -111,7 +112,7 @@ public class MateController {
 
     @GetMapping("/recent/{count}")
     public ResponseEntity<List<MateDTO>> getMostRecentMates(@PathVariable int count) {
-        List<MateDTO> recentMates = mateService.getMostRecentProducts(count);
+        List<MateDTO> recentMates = mateService.getMostRecentMates(count);
         return ResponseEntity.ok(recentMates);
     }
 

@@ -58,13 +58,6 @@ public class WaggleController {
         return ResponseEntity.noContent().build();
     }
 
-
-    @GetMapping("/pages")
-    public ResponseEntity<Page<WaggleDTO>> getAllWagglesPaged(Pageable pageable) {
-        Page<WaggleDTO> waggles = waggleService.getAllWaggleList(pageable);
-        return ResponseEntity.ok(waggles);
-    }
-
     @GetMapping("/searchPaged")
     public ResponseEntity<Page<WaggleDTO>> searchWagglesPaged(
         @RequestParam(required = false) String keyword,
@@ -73,7 +66,13 @@ public class WaggleController {
         SearchBoardConditionDto searchCondition = SearchBoardConditionDto.builder()
             .keyword(keyword)
             .build();
-        Page<WaggleDTO> waggles = waggleService.searchWaggles(searchCondition, pageable);
+        Page<WaggleDTO> waggles = waggleService.searchWagglesWithLikes(searchCondition, pageable);
+        return ResponseEntity.ok(waggles);
+    }
+
+    @GetMapping("/pages")
+    public ResponseEntity<Page<WaggleDTO>> getAllWagglesPaged(Pageable pageable) {
+        Page<WaggleDTO> waggles = waggleService.getAllWagglesWithLikes(pageable);
         return ResponseEntity.ok(waggles);
     }
 
@@ -82,4 +81,5 @@ public class WaggleController {
         List<WaggleDTO> recentWaggles = waggleService.getMostRecentWaggles(count);
         return ResponseEntity.ok(recentWaggles);
     }
+
 }

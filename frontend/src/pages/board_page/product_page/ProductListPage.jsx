@@ -1,7 +1,16 @@
+// ProductListPage.js
 import React, { useState, useEffect, useCallback } from "react";
-import { useNavigate, Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import axios from "../../../api/axios";
 import BoardTopNavBar from "../../../components/Board/BoardTopNavBar";
+import ProductItemCard from "../../../components/Board/ProductItemCard";
+import { formatRelativeTime } from "../../../components/Board/dateFormat";
+import {
+  ProductHeader,
+  ProductHeaderH2,
+  ProductHeaderButton,
+  ProductListContainer,
+} from "../../../styles/BoardStyles/ProductListStyle";
 
 function ProductListPage() {
   const navigate = useNavigate();
@@ -14,7 +23,9 @@ function ProductListPage() {
   const fetchProductList = useCallback(async () => {
     try {
       setLoading(true);
-      const response = await axios.get(`/products/pages?page=${page}&size=30`);
+      const response = await axios.get(
+        `/board/products/pages?page=${page}&size=30&sort=board.createAt,desc`,
+      );
       const newProducts = response.data.content;
 
       if (newProducts.length === 0) {
@@ -56,33 +67,31 @@ function ProductListPage() {
     };
   }, [handleScroll]);
 
+  const handleRegistProductButtonClick = () => {
+    handleRegistProductClick();
+  };
+
   return (
     <div>
       <BoardTopNavBar />
-      <h1>📦너에겐 필요없지만 나에게 꼭 필요한 굿즈 구합니다</h1>
-      <button onClick={handleRegistProductClick}>🖋글쓰기</button>
-      <table border="1">
-        <thead>
-          <tr>
-            <th>제목</th>
-            <th>글 내용</th>
-          </tr>
-        </thead>
-        <tbody>
-          {productList.map((product, index) => (
-            <tr key={index}>
-              <td>
-                <Link to={`/products/${product.board.boardId}`}>
-                  {product.board.title}
-                </Link>
-              </td>
-              <td>{product.board.content}</td>
-            </tr>
-          ))}
-        </tbody>
-      </table>
-      {loading && <p>Loading...</p>}
-      {!hasMore && <p>No more data</p>}
+      <ProductHeader>
+        <ProductHeaderH2>
+          📦너에겐 필요없지만 나에게 꼭 필요한 굿즈
+        </ProductHeaderH2>
+        <ProductHeaderButton onClick={handleRegistProductButtonClick}>
+          🖋글쓰기
+        </ProductHeaderButton>
+      </ProductHeader>
+
+      <ProductListContainer>
+        {productList.map((product) => (
+          <ProductItemCard
+            key={product.productId}
+            product={product}
+            formatRelativeTime={formatRelativeTime}
+          />
+        ))}
+      </ProductListContainer>
     </div>
   );
 }

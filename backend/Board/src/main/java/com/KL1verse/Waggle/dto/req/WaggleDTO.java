@@ -18,7 +18,7 @@ public class WaggleDTO {
 
     private BoardDTO board;
 
-
+    private Integer likesCount;
 }
 
 

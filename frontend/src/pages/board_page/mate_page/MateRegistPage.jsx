@@ -7,7 +7,6 @@ import * as boardApi from "../../../api/mate";
 
 function MateRegistPage() {
   const navigate = useNavigate();
-  // const { mateId } = useParams();
 
   const [title, setTitle] = useState("");
   const [content, setContent] = useState("");
@@ -32,20 +31,19 @@ function MateRegistPage() {
     try {
       const requestData = {
         board: {
-          boardType: "MATE",
-          title: title,
-          content: content,
+          title,
+          content,
         },
       };
 
       if (isUpdateMode) {
-        axios.put(`/mates/${boardId}`, requestData.board);
+        axios.put(`/board/mates/${boardId}`, requestData);
+        navigate(`/mate/${boardId}`);
       } else {
-        axios.post("/mates", requestData).then((response) => {
-          const boardTemp = response.data.board;
-          boardId = boardTemp.boardId;
-          navigate(`/mates/${boardId}`);
-        });
+        const response = await axios.post("/board/mates", requestData);
+        const boardTemp = response.data.board;
+        boardId = boardTemp.boardId;
+        navigate(`/mate/${boardId}`);
       }
     } catch (error) {
       // console.error("Mate 게시물 작성 또는 수정 중 에러 발생:", error);
