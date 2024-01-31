@@ -116,4 +116,10 @@ public class MateController {
         return ResponseEntity.ok(recentMates);
     }
 
+    @GetMapping("/matesByMatchList")
+    public ResponseEntity<Page<MateDTO>> getMatesByMatchList(@RequestParam(required = false) List<Integer> matchIds, Pageable pageable) {
+        Page<MateDTO> mates = mateService.getMatesByMatchList(matchIds, pageable);
+        return ResponseEntity.ok(mates);
+    }
+
 }

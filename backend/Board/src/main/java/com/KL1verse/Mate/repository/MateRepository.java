@@ -25,6 +25,7 @@ public interface MateRepository extends JpaRepository<Mate, Long> {
     Page<Mate> findByBoard_CreateAtBetween(LocalDateTime startDate, LocalDateTime endDate,
         Pageable pageable);
 
+    Page<Mate> findByMatchIdIn(List<Integer> matchIds, Pageable pageable);
 
 
 
