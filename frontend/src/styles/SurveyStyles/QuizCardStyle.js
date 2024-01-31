@@ -4,10 +4,10 @@ export const Question = styled.div`
   text-align: center;
 `;
 
-// ?
-export const Spacer = styled.div`
-  height: 4rem;
-`;
+// // ?
+// export const Spacer = styled.div`
+//   height: 4rem;
+// `;
 
 export const NumberContainer = styled.div`
   display: flex;
@@ -21,13 +21,14 @@ export const Number = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 0.9rem;
+  font-size: 1rem;
   background-color: #3261c1;
   font-weight: bold;
   color: white;
   border-radius: 30px;
-  height: 2rem;
-  width: 4rem;
+  height: 2.2rem;
+  width: 4.2rem;
+  padding-bottom: 0.1rem;
 `;
 
 export const PreviousButton = styled.button`

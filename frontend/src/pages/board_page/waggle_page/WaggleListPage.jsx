@@ -1,11 +1,16 @@
+// WaggleListPage.jsx
 import React, { useState, useEffect, useCallback } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "../../../api/axios";
 import BoardTopNavBar from "../../../components/Board/BoardTopNavBar";
 import WaggleItemCard from "../../../components/Board/WaggleItemCard";
 import { formatRelativeTime } from "../../../components/Board/dateFormat";
-
-import "../../../styles/BoardStyles/WaggleListStyle.css";
+import {
+  WaggleHeader,
+  WaggleHeaderH2,
+  WaggleHeaderButton,
+  WaggleListContainer,
+} from "../../../styles/BoardStyles/WaggleListStyle";
 
 function WaggleListPage() {
   const [waggleList, setWaggleList] = useState([]);
@@ -71,12 +76,14 @@ function WaggleListPage() {
   return (
     <div>
       <BoardTopNavBar />
-      <div className="waggle-header">
-        <h2>와글와글 떠들어주세요</h2>
-        <button onClick={handleWriteWaggleClick}>🖋글쓰기</button>
-      </div>
+      <WaggleHeader>
+        <WaggleHeaderH2>와글와글 떠들어주세요</WaggleHeaderH2>
+        <WaggleHeaderButton onClick={handleWriteWaggleClick}>
+          🖋글쓰기
+        </WaggleHeaderButton>
+      </WaggleHeader>
 
-      <div className="waggle-list">
+      <WaggleListContainer>
         {waggleList.map((waggle, index) => (
           <WaggleItemCard
             key={index}
@@ -84,7 +91,7 @@ function WaggleListPage() {
             formatRelativeTime={formatRelativeTime}
           />
         ))}
-      </div>
+      </WaggleListContainer>
     </div>
   );
 }

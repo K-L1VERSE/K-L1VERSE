@@ -1,8 +1,18 @@
 // ProductItemCard.jsx
-
 import React from "react";
 import { Link } from "react-router-dom";
-import "../../styles/BoardStyles/ProductListStyle.css";
+import {
+  ProductItemContainer,
+  DealStatusGreen,
+  DealStatusOrange,
+  ProductItemTitle,
+  ProductItemContent,
+  ProductItemInfoSection,
+  ProductItemPrice,
+  ProductItemComment,
+  ProductItemCreatedAt,
+  ProductItemSeparator,
+} from "../../styles/BoardStyles/ProductListStyle";
 
 function ProductItemCard({ product, formatRelativeTime }) {
   const dealStatusClass = product.dealFlag
@@ -10,37 +20,39 @@ function ProductItemCard({ product, formatRelativeTime }) {
     : "deal-status-green";
 
   return (
-    <div className="product-item">
-      <div className={`deal-status ${dealStatusClass}`}>
-        {product.dealFlag ? "거래완료" : "거래가능"}
-      </div>
-      <div className="title">
+    <ProductItemContainer>
+      {product.dealFlag ? (
+        <DealStatusOrange>거래완료</DealStatusOrange>
+      ) : (
+        <DealStatusGreen>거래가능</DealStatusGreen>
+      )}
+      <ProductItemTitle>
         <Link
           to={`/product/${product.board.boardId}`}
           style={{ textDecoration: "none" }}
         >
           {product.board.title}
         </Link>
-      </div>
-      <div className="content">
+      </ProductItemTitle>
+      <ProductItemContent>
         <Link
           to={`/product/${product.board.boardId}`}
           style={{ textDecoration: "none" }}
         >
           <p>{product.board.content}</p>
         </Link>
-      </div>
-      <div className="info-section">
-        <div className="product-price">가격: {product.price}원</div>
-        <div className="product-comment">
+      </ProductItemContent>
+      <ProductItemInfoSection>
+        <ProductItemPrice>가격: {product.price}원</ProductItemPrice>
+        <ProductItemComment>
           댓글 {product.board.commentCount} |
-        </div>
-        <div className="product-created-at">
+        </ProductItemComment>
+        <ProductItemCreatedAt>
           {formatRelativeTime(product.board.createAt)}
-        </div>
-      </div>
-      <div className="separator" />
-    </div>
+        </ProductItemCreatedAt>
+      </ProductItemInfoSection>
+      <ProductItemSeparator />
+    </ProductItemContainer>
   );
 }
 

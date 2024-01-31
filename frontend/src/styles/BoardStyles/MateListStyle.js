@@ -1,5 +1,8 @@
-/* waggle-header */
-.waggle-header {
+// MateListStyles.js
+
+import styled from "styled-components";
+
+export const MateHeader = styled.div`
   display: flex;
   flex-direction: row;
   align-items: center;
@@ -7,10 +10,9 @@
   gap: 8px;
   width: 100%;
   justify-content: flex-start;
-}
+`;
 
-/* 와글와글 떠들어주세요 */
-.waggle-header h2 {
+export const MateHeaderH2 = styled.h2`
   margin: 0 auto;
   width: auto;
   height: 20px;
@@ -19,18 +21,16 @@
   font-size: 20px;
   line-height: 20px;
   color: #222222;
-}
+`;
 
-/* nav 요소에 적용 */
-.waggle-header nav {
+export const MateHeaderNav = styled.nav`
   display: flex;
   justify-content: space-between;
   align-items: center;
   width: 100%;
-}
+`;
 
-/* 글쓰기 버튼 */
-.waggle-header button {
+export const MateHeaderButton = styled.button`
   display: flex;
   flex-direction: row;
   align-items: center;
@@ -47,19 +47,16 @@
   line-height: 14px;
   color: #002266;
   white-space: nowrap;
-}
+`;
 
-/* =========================================================== */
-
-/* waggle-list container */
-.waggle-list {
+export const MateListContainer = styled.div`
   display: flex;
   flex-direction: column;
   padding: 0;
   justify-content: flex-start;
-}
+`;
 
-.waggle-item {
+export const MateItemContainer = styled.div`
   display: flex;
   flex-direction: column;
   width: 380px;
@@ -68,10 +65,9 @@
   text-align: left;
   text-decoration: none;
   color: inherit;
-}
+`;
 
-/* Title */
-.waggle-item .title {
+export const MateItemTitle = styled.div`
   width: 100%;
   height: 17px;
   font-family: "Pretendard";
@@ -81,10 +77,9 @@
   line-height: 17px;
   color: #222222;
   text-decoration: none;
-}
+`;
 
-/* Content */
-.waggle-item .content p {
+export const MateItemContent = styled.div`
   width: 100%;
   height: 17px;
   font-family: "Pretendard";
@@ -94,19 +89,15 @@
   line-height: 17px;
   color: #a9a9a9;
   text-decoration: none;
-}
+`;
 
-/* Like, Comment, CreatedAt Section */
-
-.waggle-item .info-section {
+export const MateItemInfoSection = styled.div`
   display: flex;
   gap: 8px;
   align-items: center;
-}
+`;
 
-.waggle-item .waggle-like,
-.waggle-item .waggle-comment,
-.waggle-item .waggle-created-at {
+export const MateItemCreated = styled.div`
   width: auto;
   height: 13px;
   font-family: "Pretendard";
@@ -115,12 +106,11 @@
   font-size: 11px;
   line-height: 13px;
   color: #595959;
-}
+`;
 
-/* Header Separator */
-.waggle-item .separator {
+export const MateItemSeparator = styled.div`
   width: 380px;
   height: 1px;
   background: #f4f4f4;
   margin-top: 10px;
-}
+`;

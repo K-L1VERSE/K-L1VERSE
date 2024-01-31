@@ -5,7 +5,7 @@ import {
   AnimatedTitle,
   Track,
   Content,
-} from "../../styles/main-styles/noticeStyle";
+} from "../../styles/main-styles/NoticeStyle";
 
 export default function Notice() {
   const contentText =
