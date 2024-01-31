@@ -1,5 +1,6 @@
-import axios from "../../api/axios";
 import { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
+import axios from "../../api/axios";
 import {
   TitleContainer,
   TitleText,
@@ -10,9 +11,8 @@ import {
   ConfirmContainer,
   ConfirmTextContainer,
   ConfirmText,
+  BadgeImageStyle,
 } from "../../styles/mypage-styles/badgeStyle";
-import { BadgeImageStyle } from "../../styles/mypage-styles/badgeStyle";
-import { useNavigate } from "react-router-dom";
 
 function Badge() {
 
