@@ -8,9 +8,9 @@ spring:
   datasource:
     driver-class-name: org.mariadb.jdbc.Driver
 #    ssafy
-#    url: jdbc:mariadb://localhost:3306/dev
-#    username: root
-#    password: 1234
+    url: jdbc:mariadb://localhost:3306/dev
+    username: root
+    password: 1234
 
 #    home
 #    url: jdbc:mariadb://localhost:3307/dev
@@ -18,9 +18,9 @@ spring:
 #    password: 1234
 #
 #    remote
-    url: jdbc:mariadb://stg-yswa-kr-practice-db-master.mariadb.database.azure.com:3306/s10p12a409
-    username: S10P12A409
-    password: kp7Ad1kzRN
+#    url: jdbc:mariadb://stg-yswa-kr-practice-db-master.mariadb.database.azure.com:3306/s10p12a409
+#    username: S10P12A409
+#    password: kp7Ad1kzRN
 
   # kafka 설정
   kafka:

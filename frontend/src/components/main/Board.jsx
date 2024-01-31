@@ -11,22 +11,19 @@ function Board() {
   const [product, setProduct] = useState([]);
 
   useEffect(() => {
-    // get waggle posts
     getLatestWaggle(({ data }) => {
       setWaggle(data);
     }),
       (error) => {
         console.error(error);
       };
-    // get mate posts
-    // getLatestMate(({ data }) => {
-    //   setMate(data);
-    //   console.log("mate", data);
-    // }),
-    //   (error) => {
-    //     console.error(error);
-    //   };
-    // get product posts
+    getLatestMate(({ data }) => {
+      setMate(data);
+      console.log("mate", data);
+    }),
+      (error) => {
+        console.error(error);
+      };
     getLatestProduct(({ data }) => {
       setProduct(data);
     }),

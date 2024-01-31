@@ -79,6 +79,7 @@ function CommentList({ boardId }) {
               <>
                 <p>{comment.content}</p>
                 <button
+                  type="button"
                   onClick={() => {
                     setEditingCommentId(comment.commentId);
                     setEditingCommentContent(comment.content);
@@ -86,7 +87,10 @@ function CommentList({ boardId }) {
                 >
                   수정
                 </button>
-                <button onClick={() => handleCommentDelete(comment.commentId)}>
+                <button
+                  type="button"
+                  onClick={() => handleCommentDelete(comment.commentId)}
+                >
                   삭제
                 </button>
               </>

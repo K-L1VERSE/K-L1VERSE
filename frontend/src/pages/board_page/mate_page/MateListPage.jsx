@@ -1,15 +1,15 @@
 import React, { useState, useEffect, useCallback } from "react";
 import { useNavigate } from "react-router-dom";
-import Calendar from "react-calendar";
+// import Calendar from "react-calendar";
 import axios from "../../../api/axios";
-import BoardTopNavBar from "../../../components/Board/BoardTopNavBar";
+import BoardTopNavBar from "../../../components/board/BoardTopNavBar";
 import {
   MateHeader,
   MateHeaderH2,
   MateHeaderButton,
   MateListContainer,
 } from "../../../styles/BoardStyles/MateListStyle";
-import MateItemCard from "../../../components/Board/MateItemCard";
+import MateItemCard from "../../../components/board/MateItemCard";
 
 function MateListPage() {
   const [mateList, setMateList] = useState([]);
@@ -17,8 +17,8 @@ function MateListPage() {
   const [hasMore, setHasMore] = useState(true);
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
-  const [value, onChange] = useState(new Date());
-  const [isOpen, setIsOpen] = useState(false);
+  // const [value, onChange] = useState(new Date());
+  // const [isOpen, setIsOpen] = useState(false);
 
   const fetchMateList = useCallback(async () => {
     try {
@@ -74,9 +74,9 @@ function MateListPage() {
     navigate("/mateRegist");
   };
 
-  const handleCalendarToggle = () => {
-    setIsOpen(!isOpen);
-  };
+  // const handleCalendarToggle = () => {
+  //   setIsOpen(!isOpen);
+  // };
 
   return (
     <div>
@@ -88,12 +88,12 @@ function MateListPage() {
           🖋글쓰기
         </MateHeaderButton>
       </MateHeader>
-      <button onClick={handleCalendarToggle}>📆</button>
-      {isOpen && <Calendar onChange={onChange} value={value} />}
+      {/* <button onClick={handleCalendarToggle}>📆</button> */}
+      {/* {isOpen && <Calendar onChange={onChange} value={value} />} */}
 
       <MateListContainer>
-        {mateList.map((mate, index) => (
-          <MateItemCard key={index} mate={mate} />
+        {mateList.map((mate) => (
+          <MateItemCard key={mate.mateId} mate={mate} />
         ))}
       </MateListContainer>
       {loading && <p>Loading...</p>}

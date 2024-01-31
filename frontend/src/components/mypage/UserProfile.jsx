@@ -1,8 +1,13 @@
 import React, { useEffect, useState } from "react";
+import { Navigate, useNavigate } from "react-router-dom";
+
 import styled from "styled-components";
 import BadgeButton from "./BadgeButton";
 import LogoutButton from "./LogoutButton";
+
 import axios from "../../api/axios";
+
+import EditNicknameModal from "./EditNicknameModal";
 
 const ProfileTitleContainer = styled.div`
   display: inline-flex;
@@ -154,6 +159,16 @@ function UserInfo({ user }) {
   useEffect(() => {
     console.log("프로필 이미지 수정");
   }, [selectedImage]);
+  
+  const [isModalOpen, setIsModalOpen] = useState(false);
+
+  const handleModalOpen = () => {
+    setIsModalOpen(true);
+  };
+
+  const handleModalClose = () => {
+    setIsModalOpen(false);
+  };
 
   return (
     <div>
@@ -163,7 +178,7 @@ function UserInfo({ user }) {
             <ProfileTitleIcon>👤</ProfileTitleIcon>
             <ProfileTitleText>프로필</ProfileTitleText>
           </ProfileTitleContent>
-          <ProfileEditContent>
+          <ProfileEditContent onClick={handleModalOpen}>
             <ProfileEditIcon>🛠️</ProfileEditIcon>
             <ProfileEditText>수정</ProfileEditText>
           </ProfileEditContent>
@@ -186,6 +201,13 @@ function UserInfo({ user }) {
           <LogoutButton />
         </UserInfoContainer>
       </ProfileTitleContainer>
+
+      {/* EditNickname Modal */}
+      {isModalOpen && (
+        <EditNicknameModal
+          setModalOpen={setIsModalOpen}
+        />
+      )}
     </div>
   );
 }
