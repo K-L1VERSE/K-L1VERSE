@@ -109,13 +109,5 @@ public class MateController {
         return ResponseEntity.ok(mates);
     }
 
-    @GetMapping("/searchByMatchIds")
-    public ResponseEntity<Page<MateDTO>> searchMatesByMatchIds(
-        @RequestParam List<Integer> matchIds,
-        Pageable pageable
-    ) {
-        Page<MateDTO> mates = mateService.getMatesByMatchIds(matchIds, pageable);
-        return ResponseEntity.ok(mates);
 
-    }
 }
