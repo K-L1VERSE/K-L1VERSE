@@ -6,8 +6,6 @@ import axios from "../../api/axios";
 import RadioGroup from "../../components/common/RadioGroup";
 import Radio from "../../components/common/Radio";
 import MyWagle from "../../components/mypage/MyWagle";
-import BadgeButton from "../../components/mypage/BadgeButton";
-import LogoutButton from "../../components/mypage/LogoutButton";
 import Usergoal from "../../components/mypage/Usergoal";
 
 function MyPage() {
@@ -43,9 +41,7 @@ function MyPage() {
       .then(({ data }) => {
         setUser(data);
       })
-      .catch((err) => {
-        console.log(err);
-      });
+      .catch(() => {});
   };
 
   useEffect(() => {
@@ -58,24 +54,17 @@ function MyPage() {
   /* 카테고리 변경 시 호출될 훅 */
   const getMyWagle = () => {
     const url = `/wagles?user_id=${user.userId}&category=${category}&pageno=${page}`;
-    console.log(url);
     axios
       .get(url)
       .then(({ data }) => {
-        console.log(data);
         setMyWagle(data);
       })
-      .catch((err) => {
-        console.log(err);
-      });
+      .catch(() => {});
   };
 
   useEffect(() => {
-    console.log(`${category}로 변경됨`);
     getMyWagle();
   }, [category]);
-
-  console.log(user);
 
   return (
     <div>
