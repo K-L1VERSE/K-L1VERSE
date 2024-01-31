@@ -9,8 +9,10 @@ import com.KL1verse.Mate.dto.req.MateDTO;
 import com.KL1verse.Mate.repository.MateRepository;
 import com.KL1verse.Mate.repository.entity.Mate;
 import java.time.LocalDateTime;
+import java.util.List;
 import org.springframework.beans.BeanUtils;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
@@ -137,6 +139,18 @@ public class MateServiceImpl implements MateService {
         });
     }
 
+    @Override
+    public Page<MateDTO> getMatesByMatchIds(List<Integer> matchIds, Pageable pageable) {
+        List<Mate> mates = mateRepository.findByMatchId(matchIds);
+        // If you want to paginate the result, you can create a sublist based on the pageable information.
+        int start = (int) pageable.getOffset();
+        int end = (start + pageable.getPageSize()) > mates.size() ? mates.size() : (start + pageable.getPageSize());
+        List<Mate> sublist = mates.subList(start, end);
+        return new PageImpl<>(sublist, pageable, mates.size()).map(this::convertToDTO);
+    }
+
+
+
     private Mate findMateByBoardId(Long boardId) {
         Page<Mate> mates = mateRepository.findByBoard_BoardId(boardId, Pageable.unpaged());
         if (mates.isEmpty()) {
@@ -164,7 +178,8 @@ public class MateServiceImpl implements MateService {
     }
 
     @Override
-    public Page<MateDTO> getMatesByDateRange(LocalDateTime startDate, LocalDateTime endDate, Pageable pageable) {
+    public Page<MateDTO> getMatesByDateRange(LocalDateTime startDate, LocalDateTime endDate,
+        Pageable pageable) {
         Page<Mate> mates = mateRepository.findByBoard_CreateAtBetween(startDate, endDate, pageable);
 
         return mates.map(mate -> {
@@ -176,7 +191,6 @@ public class MateServiceImpl implements MateService {
                 Integer commentCount = commentRepository.countCommentsByBoardId(boardId);
                 // Board 엔티티에 commentCount 필드가 있다고 가정
 
-
                 // MateDTO 내의 BoardDTO에 댓글 수 설정
                 mateDTO.getBoard().setCommentCount(commentCount != null ? commentCount : 0);
             }
@@ -184,6 +198,7 @@ public class MateServiceImpl implements MateService {
             return mateDTO;
         });
     }
+
     private MateDTO convertToDTO(Mate mate) {
         MateDTO mateDTO = new MateDTO();
         BeanUtils.copyProperties(mate, mateDTO);

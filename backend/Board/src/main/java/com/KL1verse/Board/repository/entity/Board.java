@@ -55,8 +55,6 @@ public class Board {
     @Column(name = "delete_at")
     private LocalDateTime deleteAt;
 
-    //    @ManyToOne
-//    @JoinColumn(name = "user_id")
     @Column(name = "user_id")
     private String user;
 
