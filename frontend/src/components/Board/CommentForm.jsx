@@ -32,14 +32,12 @@ function CommentForm({ boardId, parentId, onCommentSubmit }) {
 
   return (
     <form onSubmit={handleSubmit}>
-      <label>
-        <textarea
-          value={content}
-          onChange={(e) => setContent(e.target.value)}
-          required
-          placeholder="댓글을 작성하세요."
-        />
-      </label>
+      <textarea
+        value={content}
+        onChange={(e) => setContent(e.target.value)}
+        required
+        placeholder="댓글을 작성하세요."
+      />
       <button type="submit">
         {isEditMode ? "댓글 수정 완료" : "댓글 작성"}
       </button>

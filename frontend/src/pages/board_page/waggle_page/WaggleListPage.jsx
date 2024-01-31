@@ -84,9 +84,9 @@ function WaggleListPage() {
       </WaggleHeader>
 
       <WaggleListContainer>
-        {waggleList.map((waggle, index) => (
+        {waggleList.map((waggle) => (
           <WaggleItemCard
-            key={index}
+            key={waggle.waggleId}
             waggle={waggle}
             formatRelativeTime={formatRelativeTime}
           />

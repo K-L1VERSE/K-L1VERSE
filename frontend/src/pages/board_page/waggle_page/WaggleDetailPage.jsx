@@ -44,14 +44,14 @@ function WaggleDetailPage() {
       if (isLiked) {
         await axios.delete(`/board/waggles/like/${waggleId}`, {
           data: {
-            userId,
+            // userId,
           },
         });
         setIsLiked(false);
         setLikeCount((prevCount) => prevCount - 1);
       } else {
         const response = await axios.post(`/board/waggles/like/${waggleId}`, {
-          userId,
+          // userId,
         });
         setIsLiked(true);
         setLikeCount((prevCount) => prevCount + 1);
@@ -67,6 +67,12 @@ function WaggleDetailPage() {
     }
   };
 
+  const handleKeyDown = (event, clickHandler) => {
+    if (event.key === "Enter") {
+      clickHandler();
+    }
+  };
+
   return (
     <div className="container">
       <BoardTopNavBar />
@@ -76,12 +82,24 @@ function WaggleDetailPage() {
         </p>
         <p>{waggleDetail.content}</p>
       </div>
-      <div onClick={() => handleUpdateBtn()}>수정하기</div>
-      <div onClick={() => handleDeleteBtn()}>삭제하기</div>
+      <button
+        type="button"
+        onClick={handleUpdateBtn}
+        onKeyDown={(e) => handleKeyDown(e, handleUpdateBtn)}
+      >
+        수정하기
+      </button>
+      <button
+        type="button"
+        onClick={handleDeleteBtn}
+        onKeyDown={(e) => handleKeyDown(e, handleDeleteBtn)}
+      >
+        삭제하기
+      </button>
 
       {/* 좋아요 버튼 및 개수 표시 */}
       <div>
-        <button onClick={handleLikeClick}>{isLiked ? "♥︎" : "♡"}</button>
+        {/* <button onClick={handleLikeClick}>{isLiked ? "♥︎" : "♡"}</button> */}
         <span>좋아요 {likeCount}개</span>
       </div>
 

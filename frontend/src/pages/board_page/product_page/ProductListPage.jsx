@@ -67,6 +67,10 @@ function ProductListPage() {
     };
   }, [handleScroll]);
 
+  const handleRegistProductButtonClick = () => {
+    handleRegistProductClick();
+  };
+
   return (
     <div>
       <BoardTopNavBar />
@@ -74,15 +78,15 @@ function ProductListPage() {
         <ProductHeaderH2>
           📦너에겐 필요없지만 나에게 꼭 필요한 굿즈
         </ProductHeaderH2>
-        <ProductHeaderButton onClick={handleRegistProductClick}>
+        <ProductHeaderButton onClick={handleRegistProductButtonClick}>
           🖋글쓰기
         </ProductHeaderButton>
       </ProductHeader>
 
       <ProductListContainer>
-        {productList.map((product, index) => (
+        {productList.map((product) => (
           <ProductItemCard
-            key={index}
+            key={product.productId}
             product={product}
             formatRelativeTime={formatRelativeTime}
           />

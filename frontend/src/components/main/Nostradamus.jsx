@@ -3,17 +3,14 @@ import { NostraContainer } from "../../styles/main-styles/NostradamusStyle";
 import { getNostradamus } from "../../api/nostradamus";
 
 export default function Nostradamus() {
-  const [data, setData] = useState([]);
+  const [rank, setRank] = useState([]);
 
   useEffect(() => {
     getNostradamus(
       ({ data }) => {
-        setData(data);
-        console.log(data);
+        setRank(data);
       },
-      (error) => {
-        console.log(error);
-      },
+      () => {},
     );
   }, []);
 
@@ -30,7 +27,7 @@ export default function Nostradamus() {
             </tr>
           </thead>
           <tbody>
-            {data.map((item, index) => (
+            {rank.map((item, index) => (
               <tr key={index}>
                 <td className="rank">{index + 1}</td>
                 <td className="nickname">{item.nickname}</td>
