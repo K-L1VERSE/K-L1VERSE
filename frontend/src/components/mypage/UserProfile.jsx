@@ -1,7 +1,8 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import BadgeButton from "./BadgeButton";
 import LogoutButton from "./LogoutButton";
+import axios from "../../api/axios";
 
 const ProfileTitleContainer = styled.div`
   display: inline-flex;
@@ -94,6 +95,10 @@ const UserProfile = styled.img`
     lightgray 50% / cover no-repeat;
 `;
 
+const UserProfileInput = styled.input`
+  display: none; // 숨김
+`;
+
 const UserNickName = styled.div`
   color: var(--gray1, #222);
   font-family: Pretendard;
@@ -114,6 +119,42 @@ function UserInfo({ user }) {
     console.log("user정보 수정");
   }, [user]);
 
+  const [selectedImage, setSelectedImage] = useState(null);
+
+  /* 프로필 이미지 선택 시 처리 함수 */
+  const handleImageChange = (event) => {
+    const file = event.target.files[0];
+
+    if (file) {
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        setSelectedImage(reader.result);
+      };
+
+      const formData = new FormData();
+      formData.append("file", file);
+
+      axios.post("/user/file/upload", formData)
+      .then((res) => {
+        axios.post("/user/users/profile", { profile: res.data.url })
+        .then((res) => {
+          reader.readAsDataURL(file);
+        })
+        .catch((err) => {
+          console.log(err);
+        })
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+    }
+  };
+
+  /* 이미지를 선택할 때마다 호출될 훅 */
+  useEffect(() => {
+    console.log("프로필 이미지 수정");
+  }, [selectedImage]);
+
   return (
     <div>
       <ProfileTitleContainer>
@@ -129,7 +170,15 @@ function UserInfo({ user }) {
         </ProfileTitleHeader>
         <UserInfoContainer>
           <UserInfoContent>
-            <UserProfile />
+          <label htmlFor="profileImageInput">
+            <UserProfile src={selectedImage || user.profile}/>
+          </label>
+          <UserProfileInput
+            type="file"
+            id="profileImageInput"
+            accept="image/*"
+            onChange={handleImageChange}
+            />
             <BadgeButton />
             <UserNickName>김민재굉장하다{user.nickname}</UserNickName>
           </UserInfoContent>

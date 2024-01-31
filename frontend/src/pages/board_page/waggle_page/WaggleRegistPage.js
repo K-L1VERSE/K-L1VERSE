@@ -57,8 +57,6 @@ function WaggleRegistPage() {
       <BoardTopNavBar />
       <h1>{isUpdateMode ? "Waggle 게시물 수정" : "Waggle 게시물 작성"}</h1>
       <form onSubmit={handleSubmit}>
-        {" "}
-        */}
         <br />
         제목:
         <input

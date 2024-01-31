@@ -1,6 +1,9 @@
 package com.kl1verse.UserServer.domain.user.service;
 
 import com.kl1verse.UserServer.domain.auth.JwtUtil;
+import com.kl1verse.UserServer.domain.s3.repository.entity.File;
+import com.kl1verse.UserServer.domain.s3.service.FileService;
+import com.kl1verse.UserServer.domain.s3.service.UserImageService;
 import com.kl1verse.UserServer.domain.user.dto.res.MypageResponseDto;
 import com.kl1verse.UserServer.domain.user.exception.UserException;
 import com.kl1verse.UserServer.domain.user.repository.UserRepository;
@@ -10,6 +13,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
 @Slf4j
@@ -18,6 +22,8 @@ public class MypageServiceImpl {
 
     private final UserRepository userRepository;
     private final JwtUtil jwtUtil;
+    private final UserImageService userImageService;
+    private final FileService fileService;
 
     public MypageResponseDto getUserInfo(HttpServletRequest request) {
         /*
@@ -51,5 +57,21 @@ public class MypageServiceImpl {
             .totalBet(user.getTotalBet())
             .winBet(user.getWinBet())
             .build();
+    }
+
+    @Transactional
+    public void updateProfile(HttpServletRequest request, String profile) {
+        String requestToken = jwtUtil.resolveToken(request);
+        String email = jwtUtil.extractUserNameFromExpiredToken(requestToken);
+        String domain = jwtUtil.extractUserDomainFromExpiredToken(requestToken);
+
+        User user = userRepository.findByEmailAndDomain(email, domain).orElseThrow(
+            () -> new UserException(ResponseCode.INVALID_USER_INFO));
+
+        user.setProfile(profile);
+        userRepository.save(user);
+
+        File file = fileService.saveFile(profile);
+        userImageService.saveUserImage(user, file);
     }
 }

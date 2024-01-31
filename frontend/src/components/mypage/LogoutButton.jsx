@@ -7,7 +7,7 @@ import axios from "../../api/axios";
 // import mockAxios from "../../api/mockAxios";
 
 function LogoutButton() {
-  const [isLogin, setIsLogin] = useRecoilState(userState);
+  const [isLogin, setIsLogin] = useRecoilState(UserState);
   const logout = () => {
     axios.get("/users/logout").then(({ data }) => {
       // 로그아웃 전역 상태 관리

@@ -1,13 +1,13 @@
 import styled from "styled-components";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faHourglassHalf } from "@fortawesome/free-solid-svg-icons";
-import LoginLogo from "../../components/login/LoginLogo";
 
-import React, { useContext, useEffect } from "react";
 import { useSetRecoilState } from "recoil";
 
 import axios from "../../api/axios";
 import { UserState } from "../../global/UserState";
+
+import LoginLogo from "../../components/login/LoginLogo";
 
 function GoogleRedirection() {
   const PARAMS = new URL(document.location).searchParams;

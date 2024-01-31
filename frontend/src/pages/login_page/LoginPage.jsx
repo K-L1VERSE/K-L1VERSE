@@ -8,7 +8,6 @@ import KakaoLoginButton from "../../components/login/KakaoLoginButton";
 import LoginLogo from "../../components/login/LoginLogo";
 
 function LoginPage() {
-
   return (
     <div>
       <LoginLogo />
