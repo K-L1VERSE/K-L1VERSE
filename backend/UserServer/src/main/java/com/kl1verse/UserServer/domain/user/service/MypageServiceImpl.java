@@ -99,7 +99,8 @@ public class MypageServiceImpl {
         String email = jwtUtil.extractUserNameFromExpiredToken(requestToken);
         String domain = jwtUtil.extractUserDomainFromExpiredToken(requestToken);
 
-
+        User user = userRepository.findByEmailAndDomain(email, domain).orElseThrow(
+            () -> new UserException(ResponseCode.INVALID_USER_INFO));
 
         if(user.getNickname().equals(nicknameUpdateReqDto.getNickname())) {
             throw new UserException(ResponseCode.NICKNAME_EQUAL);
