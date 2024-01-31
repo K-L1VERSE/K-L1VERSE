@@ -1,33 +1,38 @@
-// MateItemCard.jsx
-
 import React from "react";
 import { Link } from "react-router-dom";
-import "../../styles/BoardStyles/MateListStyle.css";
+import {
+  MateItemContainer,
+  MateItemTitle,
+  MateItemContent,
+  MateItemInfoSection,
+  MateItemCreated,
+  MateItemSeparator,
+} from "../../styles/BoardStyles/MateListStyle";
 
 function MateItemCard({ mate }) {
   return (
-    <div className="mate-item">
-      <div className="title">
+    <MateItemContainer>
+      <MateItemTitle>
         <Link
           to={`/mate/${mate.board.boardId}`}
           style={{ textDecoration: "none" }}
         >
           {mate.board.title}
         </Link>
-      </div>
-      <div className="content">
+      </MateItemTitle>
+      <MateItemContent>
         <Link
           to={`/mate/${mate.board.boardId}`}
           style={{ textDecoration: "none" }}
         >
           <p>{mate.board.content}</p>
         </Link>
-      </div>
-      <div className="info-section">
-        <div className="mate-created-at" />
-      </div>
-      <div className="separator" />
-    </div>
+      </MateItemContent>
+      <MateItemInfoSection>
+        <MateItemCreated />
+      </MateItemInfoSection>
+      <MateItemSeparator />
+    </MateItemContainer>
   );
 }
 

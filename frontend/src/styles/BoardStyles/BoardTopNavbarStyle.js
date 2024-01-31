@@ -1,73 +1,54 @@
-/* BoardTopNavbar.css */
+// BoardTopNavbarStyles.js
 
-.board-top-navbar {
-  /* Auto layout */
+import styled from "styled-components";
+
+export const BoardTopNavbarContainer = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: flex-end;
   align-items: flex-start;
   padding: 12px 16px;
   gap: 20px;
-
-  /* position: absolute; */
   width: 390px;
   height: 89px;
   left: 0px;
   top: 68px;
-}
+`;
 
-.board-top-navbar h1 {
-  /* 커뮤니티 */
-  /* font-family: ""; */
+export const Title = styled.h1`
   font-style: normal;
   font-weight: 700;
   font-size: 16px;
   line-height: 19px;
   color: #002266;
-}
+`;
 
-.board-top-navbar nav {
-  /* Auto layout */
+export const Nav = styled.nav`
   display: flex;
   flex-direction: row;
   align-items: center;
   padding: 0px;
   gap: 13px;
-
   width: 358px;
   height: 19px;
+`;
 
-  /* Inside auto layout */
-  flex: none;
-  order: 0;
-  align-self: stretch;
-  flex-grow: 0;
-}
-
-.board-top-navbar button {
-  /* Auto layout */
+export const Button = styled.button`
   display: flex;
   flex-direction: row;
   align-items: center;
   padding: 5px 6px;
   gap: 4px;
-
   width: auto;
   height: 26px;
-
   background-color: #dddddd;
   color: #a5a5a5;
   border-radius: 3px;
   border: none;
 
-  /* Inside auto layout */
-  flex: none;
-  order: 0;
-  flex-grow: 0;
-}
-
-.board-top-navbar button.active {
-  background: #f7e4dc; /* 배경색 변경 */
-  color: #f09168; /* 글자색 변경 */
-  font-weight: bold;
-}
+  &.active {
+    background: #f7e4dc;
+    color: #f09168;
+    font-weight: bold;
+  }
+`;

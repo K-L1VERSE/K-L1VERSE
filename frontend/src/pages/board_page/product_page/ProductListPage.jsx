@@ -1,11 +1,16 @@
+// ProductListPage.js
 import React, { useState, useEffect, useCallback } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "../../../api/axios";
 import BoardTopNavBar from "../../../components/Board/BoardTopNavBar";
 import ProductItemCard from "../../../components/Board/ProductItemCard";
 import { formatRelativeTime } from "../../../components/Board/dateFormat";
-
-import "../../../styles/BoardStyles/ProductListStyle.css";
+import {
+  ProductHeader,
+  ProductHeaderH2,
+  ProductHeaderButton,
+  ProductListContainer,
+} from "../../../styles/BoardStyles/ProductListStyle";
 
 function ProductListPage() {
   const navigate = useNavigate();
@@ -65,12 +70,16 @@ function ProductListPage() {
   return (
     <div>
       <BoardTopNavBar />
-      <div className="product-header">
-        <h2>📦너에겐 필요없지만 나에게 꼭 필요한 굿즈 구합니다</h2>
-        <button onClick={handleRegistProductClick}>🖋글쓰기</button>
-      </div>
+      <ProductHeader>
+        <ProductHeaderH2>
+          📦너에겐 필요없지만 나에게 꼭 필요한 굿즈
+        </ProductHeaderH2>
+        <ProductHeaderButton onClick={handleRegistProductClick}>
+          🖋글쓰기
+        </ProductHeaderButton>
+      </ProductHeader>
 
-      <div className="product-list">
+      <ProductListContainer>
         {productList.map((product, index) => (
           <ProductItemCard
             key={index}
@@ -78,7 +87,7 @@ function ProductListPage() {
             formatRelativeTime={formatRelativeTime}
           />
         ))}
-      </div>
+      </ProductListContainer>
     </div>
   );
 }

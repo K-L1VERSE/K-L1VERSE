@@ -3,7 +3,12 @@ import { useNavigate } from "react-router-dom";
 import Calendar from "react-calendar";
 import axios from "../../../api/axios";
 import BoardTopNavBar from "../../../components/Board/BoardTopNavBar";
-import "../../../styles/BoardStyles/MateListStyle.css";
+import {
+  MateHeader,
+  MateHeaderH2,
+  MateHeaderButton,
+  MateListContainer,
+} from "../../../styles/BoardStyles/MateListStyle";
 import MateItemCard from "../../../components/Board/MateItemCard";
 
 function MateListPage() {
@@ -76,18 +81,21 @@ function MateListPage() {
   return (
     <div>
       <BoardTopNavBar />
-      <div className="mate-header">
-        <h2>저랑 같이 응원 갈래욤?</h2>
-        <button onClick={handleWriteMateClick}> 🖋글쓰기</button>
-      </div>
+      <MateHeader>
+        <MateHeaderH2>저랑 같이 응원 갈래욤?</MateHeaderH2>
+        <MateHeaderButton onClick={handleWriteMateClick}>
+          {" "}
+          🖋글쓰기
+        </MateHeaderButton>
+      </MateHeader>
       <button onClick={handleCalendarToggle}>📆</button>
       {isOpen && <Calendar onChange={onChange} value={value} />}
 
-      <div className="mate-list">
+      <MateListContainer>
         {mateList.map((mate, index) => (
           <MateItemCard key={index} mate={mate} />
         ))}
-      </div>
+      </MateListContainer>
       {loading && <p>Loading...</p>}
       {!hasMore && <p>No more data</p>}
     </div>
