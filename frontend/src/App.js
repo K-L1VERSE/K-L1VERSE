@@ -14,6 +14,7 @@ import MainPage from "./pages/main_page/MainPage";
 import MatchPage from "./pages/match_page/MatchPage";
 import LoginPage from "./pages/login_page/LoginPage";
 import MyPage from "./pages/my_page/MyPage";
+import Badge from "./pages/my_page/Badge";
 import Navbar from "./pages/nav/Navbar";
 import SocketProvider from "./global/SocketProvider";
 import LogoutPage from "./pages/logout_page/LogoutPage";
@@ -80,6 +81,7 @@ function App() {
 
               {/* 마이 페이지 */}
               <Route path="/mypage" element={<MyPage />} />
+              <Route path="/badge" element={<Badge />} />
             </Route>
           </Routes>
         </BrowserRouter>

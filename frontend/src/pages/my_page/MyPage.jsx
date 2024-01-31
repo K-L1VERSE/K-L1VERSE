@@ -39,7 +39,7 @@ function MyPage() {
   /* 유저 정보 가져오기 */
   const getUserInfo = () => {
     axios
-      .get("/users")
+      .get("/user/users/mypage")
       .then(({ data }) => {
         setUser(data);
       })
@@ -81,7 +81,6 @@ function MyPage() {
     <div>
       <UserProfile user={user} />
       <Usergoal user={user} />
-      <BadgeButton mainBadge={user.mainBadge} />
       <div>
         <RadioGroup>
           <Radio

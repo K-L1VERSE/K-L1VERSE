@@ -7,6 +7,14 @@ spring:
       ddl-auto: update
   datasource:
     driver-class-name: org.mariadb.jdbc.Driver
-    url: jdbc:mariadb://stg-yswa-kr-practice-db-master.mariadb.database.azure.com:3306/S10P12A409
-    username: S10P12A409
-    password: kp7Ad1kzRN
+
+#    ssafy
+    url: jdbc:mariadb://localhost:3306/dev
+    username: root
+    password: 1234
+
+    # remote
+#    url: jdbc:mariadb://stg-yswa-kr-practice-db-master.mariadb.database.azure.com:3306/S10P12A409
+#    username: S10P12A409
+#    password: kp7Ad1kzRN
+
