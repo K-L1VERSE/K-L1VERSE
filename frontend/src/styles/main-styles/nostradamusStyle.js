@@ -16,7 +16,7 @@ export const NostraContainer = styled.div`
     color: #595959;
 
     tr {
-      height: 1.5rem;
+      height: 1.8rem;
     }
   }
 

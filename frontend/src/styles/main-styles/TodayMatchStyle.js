@@ -1,24 +1,29 @@
 import styled from "styled-components";
 
+export const TodayMatchWarp = styled.div``;
+
 export const TodayMatchItemhWrap = styled.div`
-  /* background-color: red; */
   display: flex;
-  flex-direction: row;
+  /* display: inline-block; */
   margin: 0 0.8rem;
   padding: 0.5rem;
+  /* background-color: red; */
 `;
+
 export const Date = styled.div`
   /* background-color: yellow; */
   font-size: 0.75rem;
-  width: 7rem;
+  width: 30vw;
   display: flex;
   align-items: center;
 `;
-export const Teams = styled.div``;
-export const Team = styled.div`
+export const Teams = styled.div`
+  width: 70vw;
   /* background-color: blue; */
+`;
+
+export const Team = styled.div`
   display: flex;
-  flex-direction: row;
   justify-content: space-between;
   padding: 0.3rem;
   font-size: 0.85rem;

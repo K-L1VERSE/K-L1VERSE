@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import {
   TodayMatchItemhWrap,
   Date,
@@ -45,7 +45,7 @@ function TodayMatchItem({ match }) {
 
   return (
     <TodayMatchItemhWrap>
-      <Date>{formatDate(match.date)}</Date>
+      <Date>{formatDate(match.matchAt)}</Date>
       <Teams>
         <Team>
           <Name>
