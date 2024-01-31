@@ -23,7 +23,7 @@ function QuestionPage() {
   const nav = useNavigate();
   const location = useLocation();
 
-  const [question, setQuestion] = useState("question");
+  const [question, setQuestion] = useState("");
   const [answers, setAnswers] = useState([]);
 
   let result = location.state?.result || [];

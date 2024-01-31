@@ -1,12 +1,9 @@
 import styled from "styled-components";
 
 export const SurveyTop = styled.div`
-  left: 0;
-  right: 0;
   font-size: 0.9rem;
   font-weight: bold;
-  padding-top: 1rem;
-  padding-bottom: 2rem;
+  padding: 1.7rem 0;
   display: flex;
   justify-content: left;
 `;

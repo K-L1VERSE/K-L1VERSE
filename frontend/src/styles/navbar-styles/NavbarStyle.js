@@ -25,7 +25,8 @@ export const NavItem = styled.div`
   align-items: center;
 
   img {
-    background-color: #002fa5;
+    /* background-color: #002fa5; */
+    background: radial-gradient(circle at center, #002fa5 40%, #002277 100%);
     padding: 7px;
     border-radius: 35px;
     /* position: absolute;
@@ -36,6 +37,7 @@ export const NavItem = styled.div`
 
   &:hover {
     cursor: pointer;
+    opacity: 80%;
   }
 `;
 

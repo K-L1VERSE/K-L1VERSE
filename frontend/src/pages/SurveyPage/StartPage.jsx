@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
 import { useNavigate } from "react-router-dom";
 import { Main, StartButton } from "../../styles/SurveyStyles/StartCardStyle";
 import { SurveyTop } from "../../styles/SurveyStyles/SurveyTop";

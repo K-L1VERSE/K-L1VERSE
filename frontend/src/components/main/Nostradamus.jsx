@@ -1,34 +1,25 @@
 import React, { useState, useEffect } from "react";
-import {
-  NostraContainer,
-  Img,
-  NostraTitle,
-} from "../../styles/main-styles/nostradamusStyle";
-import dart from "../../assets/dart.png";
-import axios from "../../api/axios";
+import { NostraContainer } from "../../styles/main-styles/NostradamusStyle";
+import { getNostradamus } from "../../api/nostradamus";
 
 export default function Nostradamus() {
   const [data, setData] = useState([]);
 
   useEffect(() => {
-    const fetchData = async () => {
-      axios.get(`/user/nostradamus`).then((response) => {
-        setData(response.data);
-      });
-    };
-
-    fetchData();
+    getNostradamus(
+      ({ data }) => {
+        setData(data);
+        console.log(data);
+      },
+      (error) => {
+        console.log(error);
+      },
+    );
   }, []);
 
   return (
     <div>
       <NostraContainer>
-        <NostraTitle>
-          <Img src={dart} />
-          <div>
-            <b>노스트라다무스 랭킹</b>
-          </div>
-        </NostraTitle>
         <table>
           <thead>
             <tr className="tableTitle">
