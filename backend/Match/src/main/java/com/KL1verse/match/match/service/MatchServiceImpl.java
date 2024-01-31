@@ -60,6 +60,8 @@ public class MatchServiceImpl implements MatchService {
 
             matchListResponses.add(MatchListResponse.builder()
                 .matchId(match.getMatchId())
+                .homeTeamId(match.getHomeTeamId())
+                .awayTeamId(match.getAwayTeamId())
                 .homeTeamName(matchRepository.findOneByTeamId(match.getHomeTeamId()))
                 .awayTeamName(matchRepository.findOneByTeamId(match.getAwayTeamId()))
                 .matchAt(match.getMatchAt())
@@ -242,6 +244,8 @@ public class MatchServiceImpl implements MatchService {
         for (Match match : matchList) {
             matchListResponse.add(MatchListResponse.builder()
                 .matchId(match.getMatchId())
+                .homeTeamId(match.getHomeTeamId())
+                .awayTeamId(match.getAwayTeamId())
                 .homeTeamName(matchRepository.findOneByTeamId(match.getHomeTeamId()))
                 .awayTeamName(matchRepository.findOneByTeamId(match.getAwayTeamId()))
                 .matchAt(match.getMatchAt())
