@@ -6,6 +6,7 @@ import com.KL1verse.Mate.service.MateService;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.time.LocalDateTime;
+import java.util.List;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
@@ -42,6 +43,7 @@ public class MateController {
         return ResponseEntity.created(new URI("/mates/" + createdMate.getMateId()))
             .body(createdMate);
     }
+
 
     @PutMapping("/{boardId}")
     public ResponseEntity<MateDTO> updateMate(@PathVariable Long boardId,
@@ -107,5 +109,13 @@ public class MateController {
         return ResponseEntity.ok(mates);
     }
 
+    @GetMapping("/searchByMatchIds")
+    public ResponseEntity<Page<MateDTO>> searchMatesByMatchIds(
+        @RequestParam List<Integer> matchIds,
+        Pageable pageable
+    ) {
+        Page<MateDTO> mates = mateService.getMatesByMatchIds(matchIds, pageable);
+        return ResponseEntity.ok(mates);
 
+    }
 }

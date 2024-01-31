@@ -4,12 +4,15 @@ import com.KL1verse.Board.dto.req.BoardDTO;
 import com.KL1verse.Board.dto.req.SearchBoardConditionDto;
 import com.KL1verse.Board.repository.BoardRepository;
 import com.KL1verse.Board.repository.entity.Board;
+import com.KL1verse.Comment.repository.CommentRepository;
 import com.KL1verse.Mate.dto.req.MateDTO;
 import com.KL1verse.Mate.repository.MateRepository;
 import com.KL1verse.Mate.repository.entity.Mate;
 import java.time.LocalDateTime;
+import java.util.List;
 import org.springframework.beans.BeanUtils;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
@@ -19,9 +22,13 @@ public class MateServiceImpl implements MateService {
     private final MateRepository mateRepository;
     private final BoardRepository boardRepository;
 
-    public MateServiceImpl(MateRepository mateRepository, BoardRepository boardRepository) {
+    private final CommentRepository commentRepository;
+
+    public MateServiceImpl(MateRepository mateRepository, BoardRepository boardRepository,
+        CommentRepository commentRepository) {
         this.mateRepository = mateRepository;
         this.boardRepository = boardRepository;
+        this.commentRepository = commentRepository;
     }
 
     @Override
@@ -58,6 +65,22 @@ public class MateServiceImpl implements MateService {
         mateRepository.deleteById(mateToDelete.getMateId());
     }
 
+    //    @Override
+//    public Page<MateDTO> searchMates(SearchBoardConditionDto searchCondition, Pageable pageable) {
+//        Page<Mate> mates;
+//
+//        if (searchCondition != null && searchCondition.getKeyword() != null) {
+//            mates = mateRepository.findByBoard_TitleContainingOrBoard_ContentContaining(
+//                searchCondition.getKeyword(),
+//                searchCondition.getKeyword(),
+//                pageable
+//            );
+//        } else {
+//            mates = mateRepository.findAll(pageable);
+//        }
+//
+//        return mates.map(this::convertToDTO);
+//    }
     @Override
     public Page<MateDTO> searchMates(SearchBoardConditionDto searchCondition, Pageable pageable) {
         Page<Mate> mates;
@@ -72,14 +95,61 @@ public class MateServiceImpl implements MateService {
             mates = mateRepository.findAll(pageable);
         }
 
-        return mates.map(this::convertToDTO);
+        // 댓글 수를 가져와서 설정
+        return mates.map(mate -> {
+            MateDTO mateDTO = convertToDTO(mate);
+
+            // Mate과 연관된 Board의 댓글 수 가져오기
+            if (mate.getBoard() != null) {
+                Long boardId = mate.getBoard().getBoardId();
+                Integer commentCount = commentRepository.countCommentsByBoardId(boardId);
+
+                // MateDTO 내의 BoardDTO에 댓글 수 설정
+                mateDTO.getBoard().setCommentCount(commentCount != null ? commentCount : 0);
+            }
+
+            return mateDTO;
+        });
     }
+
+//    @Override
+//    public Page<MateDTO> getAllMateList(Pageable pageable) {
+//        Page<Mate> mates = mateRepository.findByBoard_BoardType(Board.BoardType.MATE, pageable);
+//        return mates.map(this::convertToDTO);
+//    }
 
     @Override
     public Page<MateDTO> getAllMateList(Pageable pageable) {
         Page<Mate> mates = mateRepository.findByBoard_BoardType(Board.BoardType.MATE, pageable);
-        return mates.map(this::convertToDTO);
+
+        return mates.map(mate -> {
+            MateDTO mateDTO = convertToDTO(mate);
+
+            // Mate과 연관된 Board의 댓글 수 가져오기
+            if (mate.getBoard() != null) {
+
+                Long boardId = mate.getBoard().getBoardId();
+                Integer commentCount = commentRepository.countCommentsByBoardId(boardId);
+
+                // MateDTO 내의 BoardDTO에 댓글 수  설정
+                mateDTO.getBoard().setCommentCount(commentCount != null ? commentCount : 0);
+            }
+
+            return mateDTO;
+        });
     }
+
+    @Override
+    public Page<MateDTO> getMatesByMatchIds(List<Integer> matchIds, Pageable pageable) {
+        List<Mate> mates = mateRepository.findByMatchId(matchIds);
+        // If you want to paginate the result, you can create a sublist based on the pageable information.
+        int start = (int) pageable.getOffset();
+        int end = (start + pageable.getPageSize()) > mates.size() ? mates.size() : (start + pageable.getPageSize());
+        List<Mate> sublist = mates.subList(start, end);
+        return new PageImpl<>(sublist, pageable, mates.size()).map(this::convertToDTO);
+    }
+
+
 
     private Mate findMateByBoardId(Long boardId) {
         Page<Mate> mates = mateRepository.findByBoard_BoardId(boardId, Pageable.unpaged());
@@ -111,7 +181,22 @@ public class MateServiceImpl implements MateService {
     public Page<MateDTO> getMatesByDateRange(LocalDateTime startDate, LocalDateTime endDate,
         Pageable pageable) {
         Page<Mate> mates = mateRepository.findByBoard_CreateAtBetween(startDate, endDate, pageable);
-        return mates.map(this::convertToDTO);
+
+        return mates.map(mate -> {
+            MateDTO mateDTO = convertToDTO(mate);
+
+            // Mate과 연관된 Board의 댓글 수 가져오기
+            if (mate.getBoard() != null) {
+                Long boardId = mate.getBoard().getBoardId();
+                Integer commentCount = commentRepository.countCommentsByBoardId(boardId);
+                // Board 엔티티에 commentCount 필드가 있다고 가정
+
+                // MateDTO 내의 BoardDTO에 댓글 수 설정
+                mateDTO.getBoard().setCommentCount(commentCount != null ? commentCount : 0);
+            }
+
+            return mateDTO;
+        });
     }
 
     private MateDTO convertToDTO(Mate mate) {
