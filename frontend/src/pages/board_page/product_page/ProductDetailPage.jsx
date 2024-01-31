@@ -35,6 +35,12 @@ function ProductDetailPage() {
     }
   };
 
+  const handleKeyDown = (event, clickHandler) => {
+    if (event.key === "Enter") {
+      clickHandler();
+    }
+  };
+
   return (
     <div className="container">
       <BoardTopNavBar />
@@ -44,8 +50,20 @@ function ProductDetailPage() {
         </p>
         <p>{productDetail.content}</p>
       </div>
-      <div onClick={() => handleUpdateBtn()}>수정하기</div>
-      <div onClick={() => handleDeleteBtn()}>삭제하기</div>
+      <button
+        type="button"
+        onClick={handleUpdateBtn}
+        onKeyDown={(e) => handleKeyDown(e, handleUpdateBtn)}
+      >
+        수정하기
+      </button>
+      <button
+        type="button"
+        onClick={handleDeleteBtn}
+        onKeyDown={(e) => handleKeyDown(e, handleDeleteBtn)}
+      >
+        삭제하기
+      </button>
 
       <CommentList boardId={boardId} />
     </div>
