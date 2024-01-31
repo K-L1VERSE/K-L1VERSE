@@ -5,12 +5,12 @@ import { useEffect } from "react";
 
 function Notification() {
 
-    const [notificationState, setNotificationState] = useRecoilState(NotificationState);
-    console.log("notificationState", notificationState);
+    const [notificationState, setNotificationState] = useRecoilState(NotificationState)
 
     useEffect(() => {
         axios.get("/user/users/notifications/read")
-        .then((res) => {
+            .then((res) => {
+            console.log(res);
             setNotificationState((prev) => ({
             ...prev,
             notifications: [...prev.notifications, ...prev.newNotifications],
