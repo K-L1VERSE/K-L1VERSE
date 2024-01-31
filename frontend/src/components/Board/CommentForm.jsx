@@ -33,11 +33,11 @@ function CommentForm({ boardId, parentId, onCommentSubmit }) {
   return (
     <form onSubmit={handleSubmit}>
       <label>
-        댓글 내용:
         <textarea
           value={content}
           onChange={(e) => setContent(e.target.value)}
           required
+          placeholder="댓글을 작성하세요."
         />
       </label>
       <button type="submit">

@@ -26,7 +26,6 @@ public interface MateService {
     Page<MateDTO> getMatesByDateRange(LocalDateTime startDate, LocalDateTime endDate,
         Pageable pageable);
 
-    Page<MateDTO> getMatesByMatchIds(List<Integer> matchIds, Pageable pageable);
 
 
 

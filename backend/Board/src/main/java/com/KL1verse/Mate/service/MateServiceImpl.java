@@ -139,15 +139,6 @@ public class MateServiceImpl implements MateService {
         });
     }
 
-    @Override
-    public Page<MateDTO> getMatesByMatchIds(List<Integer> matchIds, Pageable pageable) {
-        List<Mate> mates = mateRepository.findByMatchId(matchIds);
-        // If you want to paginate the result, you can create a sublist based on the pageable information.
-        int start = (int) pageable.getOffset();
-        int end = (start + pageable.getPageSize()) > mates.size() ? mates.size() : (start + pageable.getPageSize());
-        List<Mate> sublist = mates.subList(start, end);
-        return new PageImpl<>(sublist, pageable, mates.size()).map(this::convertToDTO);
-    }
 
 
 

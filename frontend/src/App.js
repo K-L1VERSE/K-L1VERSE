@@ -2,9 +2,9 @@ import { BrowserRouter, Route, Routes } from "react-router-dom";
 
 import React from "react";
 
-import StartPage from "./pages/SurveyPage/StartPage";
-import QuestionPage from "./pages/SurveyPage/QuestionPage";
-import ResultPage from "./pages/SurveyPage/ResultPage";
+// import StartPage from "./pages/SurveyPage/StartPage";
+// import QuestionPage from "./pages/SurveyPage/QuestionPage";
+// import ResultPage from "./pages/SurveyPage/ResultPage";
 
 import KaKaoRedirection from "./pages/login_page/KaKaoRedirection";
 import NaverRedirection from "./pages/login_page/NaverRedirection";
@@ -14,7 +14,7 @@ import MainPage from "./pages/main_page/MainPage";
 import MatchPage from "./pages/match_page/MatchPage";
 
 import LoginPage from "./pages/login_page/LoginPage";
-import MyPage from "./pages/mypage/MyPage";
+// import MyPage from "./pages/my_page/MyPage";
 import Navbar from "./pages/nav/Navbar";
 import SocketProvider from "./global/SocketProvider";
 import LogoutPage from "./pages/logout_page/LogoutPage";
@@ -52,9 +52,9 @@ function App() {
               <Route path="/login" element={<LoginPage />} />
 
               {/* 설문 페이지 */}
-              <Route path="/survey" element={<StartPage />} />
+              {/* <Route path="/survey" element={<StartPage />} />
               <Route path="/question/:questionNum" element={<QuestionPage />} />
-              <Route path="/result" element={<ResultPage />} />
+              <Route path="/result" element={<ResultPage />} /> */}
 
               {/* 와글 페이지 */}
               <Route path="/waggle" element={<WaggleListPage />} />
@@ -83,11 +83,11 @@ function App() {
               <Route path="/match" element={<MatchPage />} />
 
               {/* 마이 페이지 */}
-              <Route path="/mypage" element={<MyPage />} />
+              {/* <Route path="/mypage" element={<MyPage />} />
 
               <Route path="/survey" element={<StartPage />} />
               <Route path="/question/:questionNum" element={<QuestionPage />} />
-              <Route path="/result" element={<ResultPage />} />
+              <Route path="/result" element={<ResultPage />} /> */}
             </Route>
           </Routes>
         </BrowserRouter>

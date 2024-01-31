@@ -1,12 +1,11 @@
-/* eslint-disable react/button-has-type */
-// CommentList.jsx
-
 import React, { useState, useEffect } from "react";
 import axios from "../../api/axios";
 import CommentForm from "./CommentForm";
 
 function CommentList({ boardId }) {
   const [comments, setComments] = useState([]);
+  const [editingCommentId, setEditingCommentId] = useState(null);
+  const [editingCommentContent, setEditingCommentContent] = useState("");
 
   useEffect(() => {
     const fetchComments = async () => {
@@ -14,7 +13,7 @@ function CommentList({ boardId }) {
         const response = await axios.get(`/board/comments/list/${boardId}`);
         setComments(response.data);
       } catch (error) {
-        // console.error("댓글을 불러오는 중 에러 발생:", error);
+        console.error("댓글을 불러오는 중 에러 발생:", error);
       }
     };
 
@@ -30,31 +29,35 @@ function CommentList({ boardId }) {
     }
   };
 
-  const handleCommentUpdate = (commentId, updatedContent) => {
-    const commentIndex = comments.findIndex(
-      (comment) => comment.commentId === commentId,
-    );
+  const handleCommentUpdate = async (commentId, updatedContent) => {
+    try {
+      // 서버에 댓글 업데이트 요청 보내기
+      await axios.put(`/board/comments/${commentId}`, {
+        content: updatedContent,
+      });
 
-    const updatedComment = { ...comments[commentIndex] };
+      // 댓글 업데이트 후 새로운 댓글 목록을 가져와서 설정
+      const response = await axios.get(`/board/comments/list/${boardId}`);
+      setComments(response.data);
 
-    updatedComment.content = updatedContent;
-
-    const updatedComments = [...comments];
-    updatedComments[commentIndex] = updatedComment;
-
-    setComments(updatedComments);
+      // 수정 상태 종료
+      setEditingCommentId(null);
+      setEditingCommentContent("");
+    } catch (error) {
+      console.error("댓글 업데이트 중 에러 발생:", error);
+    }
   };
 
   const handleCommentDelete = async (commentId) => {
     try {
       // 댓글 삭제 요청 보내기
-      await axios.delete(`/comments/${commentId}`);
+      await axios.delete(`/board/comments/${commentId}`);
 
       setComments((prevComments) =>
         prevComments.filter((comment) => comment.commentId !== commentId),
       );
     } catch (error) {
-      // console.error("댓글 삭제 중 에러 발생:", error);
+      console.error("댓글 삭제 중 에러 발생:", error);
     }
   };
 
@@ -64,27 +67,38 @@ function CommentList({ boardId }) {
       <ul>
         {comments.map((comment) => (
           <li key={comment.commentId}>
-            <p>{comment.content}</p>
-            <button
-              onClick={() => {
-                const updatedContent = prompt(
-                  "수정할 내용을 입력하세요",
-                  comment.content,
-                );
-                if (updatedContent !== null) {
-                  handleCommentUpdate(comment.commentId, updatedContent);
+            {editingCommentId === comment.commentId ? (
+              <CommentForm
+                boardId={boardId}
+                onCommentSubmit={(updatedContent) =>
+                  handleCommentUpdate(comment.commentId, updatedContent)
                 }
-              }}
-            >
-              수정
-            </button>
-            <button onClick={() => handleCommentDelete(comment.commentId)}>
-              삭제
-            </button>
+                defaultContent={editingCommentContent}
+              />
+            ) : (
+              <>
+                <p>{comment.content}</p>
+                <button
+                  onClick={() => {
+                    setEditingCommentId(comment.commentId);
+                    setEditingCommentContent(comment.content);
+                  }}
+                >
+                  수정
+                </button>
+                <button onClick={() => handleCommentDelete(comment.commentId)}>
+                  삭제
+                </button>
+              </>
+            )}
           </li>
         ))}
       </ul>
-      <CommentForm boardId={boardId} onCommentSubmit={handleCommentSubmit} />
+      <CommentForm
+        boardId={boardId}
+        onCommentSubmit={handleCommentSubmit}
+        defaultContent={editingCommentContent}
+      />
     </div>
   );
 }
