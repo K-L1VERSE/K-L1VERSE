@@ -8,23 +8,18 @@ function WaggleDetailPage() {
   const [waggleDetail, setWaggleDetail] = useState({});
   const [waggleId, setWaggleId] = useState(0);
   const [isLiked, setIsLiked] = useState(false);
-  const [likeCount, setLikeCount] = useState(0); // 추가
+  const [likeCount, setLikeCount] = useState(0);
   const { boardId } = useParams();
   const navigate = useNavigate();
 
   /* waggle 상세 정보 가져오기 */
   function getWaggleDetail() {
-    axios
-      .get(`/waggles/${boardId}`)
-      .then(({ data }) => {
-        setWaggleDetail(data.board);
-        setWaggleId(data.waggleId);
-        setIsLiked(data.isLiked);
-        setLikeCount(data.likeCount); // 좋아요 개수 업데이트
-      })
-      .catch((err) => {
-        // console.log("Waggle 상세 정보를 불러오는 중 에러 발생:", err);
-      });
+    axios.get(`/board/waggles/${boardId}`).then(({ data }) => {
+      setWaggleDetail(data.board);
+      setWaggleId(data.waggleId);
+      setIsLiked(data.isLiked);
+      setLikeCount(likeCount);
+    });
   }
 
   useEffect(() => {
@@ -37,7 +32,7 @@ function WaggleDetailPage() {
 
   const handleDeleteBtn = async () => {
     try {
-      await axios.delete(`/waggles/${boardId}`);
+      await axios.delete(`/board/waggles/${boardId}`);
       navigate("/waggle");
     } catch (error) {
       // console.error("글 삭제 중 에러 발생:", error);
@@ -46,33 +41,47 @@ function WaggleDetailPage() {
 
   const handleLikeClick = async () => {
     try {
-      const response = isLiked
-        ? await axios.delete(`/waggles/like/${boardId}`)
-        : await axios.post(`/waggles/like/${boardId}`);
-      setIsLiked(!isLiked);
-      setWaggleDetail(response.data.board);
-      setLikeCount(response.data.likeCount);
+      if (isLiked) {
+        await axios.delete(`/board/waggles/like/${waggleId}`, {
+          data: {
+            userId,
+          },
+        });
+        setIsLiked(false);
+        setLikeCount((prevCount) => prevCount - 1);
+      } else {
+        const response = await axios.post(`/board/waggles/like/${waggleId}`, {
+          userId,
+        });
+        setIsLiked(true);
+        setLikeCount((prevCount) => prevCount + 1);
+        // 응답이 정상적으로 반환되었는지 확인 후 출력
+        if (response && response.data) {
+          console.log("좋아요 응답:", response.data);
+        } else {
+          console.error("좋아요 응답이 올바르지 않습니다.");
+        }
+      }
     } catch (error) {
-      // console.error("좋아요 처리 중 에러 발생:", error);
+      console.error("좋아요 처리 중 에러 발생:", error);
     }
   };
 
   return (
-    <div>
+    <div className="container">
       <BoardTopNavBar />
-      <h1>Waggle 상세 정보</h1>
-      <p>
-        <strong>Title:</strong> {waggleDetail.title} {waggleId} {boardId}
-      </p>
-      <p>
-        <strong>Content:</strong> {waggleDetail.content}
-      </p>
+      <div className="waggle-detail-box">
+        <p>
+          <strong>{waggleDetail.title}</strong>
+        </p>
+        <p>{waggleDetail.content}</p>
+      </div>
       <div onClick={() => handleUpdateBtn()}>수정하기</div>
       <div onClick={() => handleDeleteBtn()}>삭제하기</div>
 
       {/* 좋아요 버튼 및 개수 표시 */}
       <div>
-        <button onClick={handleLikeClick}>{isLiked ? "♡" : "♥︎"}</button>
+        <button onClick={handleLikeClick}>{isLiked ? "♥︎" : "♡"}</button>
         <span>좋아요 {likeCount}개</span>
       </div>
 

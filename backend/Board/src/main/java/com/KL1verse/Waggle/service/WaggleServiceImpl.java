@@ -5,15 +5,18 @@ import com.KL1verse.Board.dto.req.BoardDTO;
 import com.KL1verse.Board.dto.req.SearchBoardConditionDto;
 import com.KL1verse.Board.repository.BoardRepository;
 import com.KL1verse.Board.repository.entity.Board;
+import com.KL1verse.Comment.repository.CommentRepository;
 import com.KL1verse.Waggle.dto.req.WaggleDTO;
 import com.KL1verse.Waggle.repository.WaggleRepository;
 import com.KL1verse.Waggle.repository.entity.Waggle;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 import org.springframework.beans.BeanUtils;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
@@ -24,9 +27,13 @@ public class WaggleServiceImpl implements WaggleService {
     private final WaggleRepository waggleRepository;
     private final BoardRepository boardRepository;
 
-    public WaggleServiceImpl(WaggleRepository waggleRepository, BoardRepository boardRepository) {
+    private final CommentRepository commentRepository;
+
+    public WaggleServiceImpl(WaggleRepository waggleRepository, BoardRepository boardRepository,
+        CommentRepository commentRepository) {
         this.waggleRepository = waggleRepository;
         this.boardRepository = boardRepository;
+        this.commentRepository = commentRepository;
     }
 
     @Override
@@ -63,8 +70,36 @@ public class WaggleServiceImpl implements WaggleService {
     }
 
 
+    //    @Override
+//    public Page<WaggleDTO> searchWagglesWithLikes(SearchBoardConditionDto searchCondition, Pageable pageable) {
+//        Page<Waggle> waggles;
+//
+//        if (searchCondition != null && searchCondition.getKeyword() != null) {
+//            waggles = waggleRepository.findByBoard_TitleContainingOrBoard_ContentContaining(
+//                searchCondition.getKeyword(),
+//                searchCondition.getKeyword(),
+//                pageable
+//            );
+//        } else {
+//            waggles = waggleRepository.findAll(pageable);
+//        }
+//
+//        return waggles.map(waggle -> {
+//            WaggleDTO waggleDTO = convertToDTO(waggle);
+//
+//            // Waggle과 연관된 Board의 댓글 수 가져오기
+//            Long boardId = waggle.getBoard().getBoardId();
+//            Integer commentCount = commentRepository.countCommentsByBoardId(boardId);
+//
+//            // WaggleDTO 내의 BoardDTO에 댓글 수 설정
+//            waggleDTO.getBoard().setCommentCount(commentCount != null ? commentCount : 0);
+//
+//            return waggleDTO;
+//        });
+//    }
     @Override
-    public Page<WaggleDTO> searchWagglesWithLikes(SearchBoardConditionDto searchCondition, Pageable pageable) {
+    public Page<WaggleDTO> searchWagglesWithLikes(SearchBoardConditionDto searchCondition,
+        Pageable pageable) {
         Page<Waggle> waggles;
 
         if (searchCondition != null && searchCondition.getKeyword() != null) {
@@ -77,14 +112,51 @@ public class WaggleServiceImpl implements WaggleService {
             waggles = waggleRepository.findAll(pageable);
         }
 
-        return waggles.map(this::convertToDTO);
+        // 좋아요 수를 가져와서 설정
+        List<Object[]> likesCounts = waggleRepository.getLikesCountForEachWaggle();
+
+        return waggles.map(waggle -> {
+            WaggleDTO waggleDTO = convertToDTO(waggle);
+
+            // Waggle과 연관된 Board의 댓글 수 가져오기
+            Long boardId = waggle.getBoard().getBoardId();
+            Integer commentCount = commentRepository.countCommentsByBoardId(boardId);
+
+            // WaggleDTO 내의 BoardDTO에 댓글 수 설정
+            waggleDTO.getBoard().setCommentCount(commentCount != null ? commentCount : 0);
+
+            // 좋아요 수 설정
+            for (Object[] result : likesCounts) {
+                Waggle waggleResult = (Waggle) result[0];
+                if (waggleResult.getWaggleId().equals(waggle.getWaggleId())) {
+                    Long totalLikes = (Long) result[1];
+                    int likesCount = (totalLikes != null) ? totalLikes.intValue() : 0;
+                    waggleDTO.setLikesCount(likesCount);
+                    break;
+                }
+            }
+
+            return waggleDTO;
+        });
     }
 
     @Override
     public Page<WaggleDTO> getAllWaggleList(Pageable pageable) {
         Page<Waggle> waggles = waggleRepository.findByBoard_BoardType(Board.BoardType.WAGGLE,
             pageable);
-        return waggles.map(this::convertToDTO);
+
+        return waggles.map(waggle -> {
+            WaggleDTO waggleDTO = convertToDTO(waggle);
+
+            // Waggle과 연관된 Board의 댓글 수 가져오기
+            Long boardId = waggle.getBoard().getBoardId();
+            Integer commentCount = commentRepository.countCommentsByBoardId(boardId);
+
+            // WaggleDTO 내의 BoardDTO에 댓글 수 설정
+            waggleDTO.getBoard().setCommentCount(commentCount != null ? commentCount : 0);
+
+            return waggleDTO;
+        });
     }
 
     private Waggle findWaggleByBoardId(Long boardId) {
@@ -104,20 +176,66 @@ public class WaggleServiceImpl implements WaggleService {
         existingWaggle.getBoard().setContent(waggleDto.getBoard().getContent());
     }
 
+//    @Override
+//    public Page<WaggleDTO> getAllWagglesWithLikes(Pageable pageable) {
+//        List<Object[]> likesCounts = waggleRepository.getLikesCountForEachWaggle();
+//        List<WaggleDTO> wagglesWithLikes = convertToDTOListWithLikes(likesCounts);
+//        return new PageImpl<>(wagglesWithLikes, pageable, wagglesWithLikes.size());
+//    }
+
     @Override
     public Page<WaggleDTO> getAllWagglesWithLikes(Pageable pageable) {
+        // 좋아요 수를 가져오는 쿼리 실행
         List<Object[]> likesCounts = waggleRepository.getLikesCountForEachWaggle();
-        List<WaggleDTO> wagglesWithLikes = convertToDTOListWithLikes(likesCounts);
-        return new PageImpl<>(wagglesWithLikes, pageable, wagglesWithLikes.size());
+
+        // 페이지네이션된 모든 Waggle 가져오기
+        Page<Waggle> waggles = waggleRepository.findAll(pageable);
+
+        // 좋아요 수와 댓글 수를 설정하여 DTO로 변환
+        List<WaggleDTO> wagglesWithLikes = waggles.getContent().stream()
+            .map(waggle -> {
+                WaggleDTO waggleDTO = convertToDTO(waggle);
+
+                // Waggle과 연관된 Board의 댓글 수 가져오기
+                Long boardId = waggle.getBoard().getBoardId();
+                Integer commentCount = commentRepository.countCommentsByBoardId(boardId);
+
+                // WaggleDTO 내의 BoardDTO에 댓글 수 설정
+                waggleDTO.getBoard().setCommentCount(commentCount != null ? commentCount : 0);
+
+                // 좋아요 수 설정
+                for (Object[] result : likesCounts) {
+                    Waggle waggleResult = (Waggle) result[0];
+                    if (waggleResult.getWaggleId().equals(waggle.getWaggleId())) {
+                        Long totalLikes = (Long) result[1];
+                        int likesCount = (totalLikes != null) ? totalLikes.intValue() : 0;
+                        waggleDTO.setLikesCount(likesCount);
+                        break;
+                    }
+                }
+
+                return waggleDTO;
+            })
+            .collect(Collectors.toList());
+
+        return new PageImpl<>(wagglesWithLikes, pageable, waggles.getTotalElements());
     }
+
 
     private List<WaggleDTO> convertToDTOListWithLikes(List<Object[]> likesCounts) {
         List<WaggleDTO> wagglesWithLikes = new ArrayList<>();
         for (Object[] result : likesCounts) {
             Waggle waggle = (Waggle) result[0];
             Long totalLikes = (Long) result[1];
+            Integer commentCount = commentRepository.countCommentsByBoardId(
+                waggle.getBoard().getBoardId());
+
+            // 좋아요 개수가 null이 아니라면 그 값을 사용, null이면 0으로 설정
+            int likesCount = (totalLikes != null) ? totalLikes.intValue() : 0;
+
             WaggleDTO waggleDTO = convertToDTO(waggle);
-            waggleDTO.setLikesCount(totalLikes.intValue());
+            waggleDTO.setLikesCount(likesCount);
+            waggleDTO.getBoard().setCommentCount(commentCount != null ? commentCount : 0);
             wagglesWithLikes.add(waggleDTO);
         }
         return wagglesWithLikes;
@@ -135,6 +253,7 @@ public class WaggleServiceImpl implements WaggleService {
             .createAt(waggle.getBoard().getCreateAt())
             .updateAt(waggle.getBoard().getUpdateAt())
             .deleteAt(waggle.getBoard().getDeleteAt())
+            .commentCount(0)
 //            .user(Long.valueOf(waggle.getBoard().getUser()))
             .build());
         return waggleDTO;
@@ -151,6 +270,7 @@ public class WaggleServiceImpl implements WaggleService {
             .createAt(waggleDTO.getBoard().getCreateAt())
             .updateAt(waggleDTO.getBoard().getUpdateAt())
             .deleteAt(waggleDTO.getBoard().getDeleteAt())
+
 //            .user(String.valueOf(waggleDTO.getBoard().getUser()))
             .build());
         return waggle;

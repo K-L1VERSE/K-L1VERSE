@@ -2,6 +2,7 @@
 
 import React from "react";
 import { Link } from "react-router-dom";
+import "../../styles/BoardStyles/WaggleListStyle.css";
 
 function WaggleItemCard({ waggle, formatRelativeTime }) {
   return (
@@ -23,7 +24,7 @@ function WaggleItemCard({ waggle, formatRelativeTime }) {
         </Link>
       </div>
       <div className="info-section">
-        <div className="waggle-like">좋아요 {waggle.board.likeCount} |</div>
+        <div className="waggle-like">좋아요 {waggle.likesCount} |</div>
         <div className="waggle-comment">댓글 {waggle.board.commentCount} |</div>
         <div className="waggle-created-at">
           {formatRelativeTime(waggle.board.createAt)}

@@ -7,18 +7,18 @@ import { UserState } from "../../global/UserState";
 function KaKaoRedirection() {
   const PARAMS = new URL(document.location).searchParams;
   const KAKAO_CODE = PARAMS.get("code");
-  
+
   const setUserState = useSetRecoilState(UserState);
 
   const request = axios
-    .get(`/login/oauth/code/kakao?code=${KAKAO_CODE}`)
+    .get(`/user/login/oauth/code/kakao?code=${KAKAO_CODE}`)
     .then((res) => {
       console.log(res);
 
       /* access Token 받고 전역 변수로 관리 */
       setUserState({
-        nickname: res.data.nickname, 
-        profile: res.data.profile, 
+        nickname: res.data.nickname,
+        profile: res.data.profile,
         accessToken: res.data.accessToken,
         email: res.data.email,
         domain: res.data.domain,

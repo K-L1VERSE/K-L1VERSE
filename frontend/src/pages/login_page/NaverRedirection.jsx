@@ -18,7 +18,7 @@ function NaverRedirection() {
   const setUserState = useSetRecoilState(UserState);
 
   const request = axios
-    .get(`/login/oauth/code/naver?code=${NAVER_CODE}`)
+    .get(`/user/login/oauth/code/naver?code=${NAVER_CODE}`)
     .then((res) => {
       console.log(res);
 

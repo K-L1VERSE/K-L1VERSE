@@ -16,19 +16,19 @@ function BoardTopNavbar() {
       <h1>💬 커뮤니티</h1>
       <nav>
         <button
-          className={location.pathname === "/waggle" ? "active" : ""}
+          className={location.pathname.includes("/waggle") ? "active" : ""}
           onClick={() => handleNavigate("/waggle")}
         >
           ⚽️ 와글와글
         </button>
         <button
-          className={location.pathname === "/mate" ? "active" : ""}
+          className={location.pathname.includes("/mate") ? "active" : ""}
           onClick={() => handleNavigate("/mate")}
         >
           👋🏻 직관 메이트
         </button>
         <button
-          className={location.pathname === "/product" ? "active" : ""}
+          className={location.pathname.includes("/product") ? "active" : ""}
           onClick={() => handleNavigate("/product")}
         >
           📦 중고거래
