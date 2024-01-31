@@ -45,6 +45,7 @@ public class MateController {
             .body(createdMate);
     }
 
+
     @PutMapping("/{boardId}")
     public ResponseEntity<MateDTO> updateMate(@PathVariable Long boardId,
         @RequestBody MateDTO mateDto) {

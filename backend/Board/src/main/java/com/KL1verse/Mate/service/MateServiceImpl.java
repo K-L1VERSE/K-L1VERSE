@@ -24,9 +24,13 @@ public class MateServiceImpl implements MateService {
     private final MateRepository mateRepository;
     private final BoardRepository boardRepository;
 
-    public MateServiceImpl(MateRepository mateRepository, BoardRepository boardRepository) {
+    private final CommentRepository commentRepository;
+
+    public MateServiceImpl(MateRepository mateRepository, BoardRepository boardRepository,
+        CommentRepository commentRepository) {
         this.mateRepository = mateRepository;
         this.boardRepository = boardRepository;
+        this.commentRepository = commentRepository;
     }
 
     @Override
@@ -77,13 +81,42 @@ public class MateServiceImpl implements MateService {
             mates = mateRepository.findAll(pageable);
         }
 
-        return mates.map(this::convertToDTO);
+        // 댓글 수를 가져와서 설정
+        return mates.map(mate -> {
+            MateDTO mateDTO = convertToDTO(mate);
+
+            // Mate과 연관된 Board의 댓글 수 가져오기
+            if (mate.getBoard() != null) {
+                Long boardId = mate.getBoard().getBoardId();
+                Integer commentCount = commentRepository.countCommentsByBoardId(boardId);
+
+                // MateDTO 내의 BoardDTO에 댓글 수 설정
+                mateDTO.getBoard().setCommentCount(commentCount != null ? commentCount : 0);
+            }
+
+            return mateDTO;
+        });
     }
 
     @Override
     public Page<MateDTO> getAllMateList(Pageable pageable) {
         Page<Mate> mates = mateRepository.findByBoard_BoardType(Board.BoardType.MATE, pageable);
-        return mates.map(this::convertToDTO);
+
+        return mates.map(mate -> {
+            MateDTO mateDTO = convertToDTO(mate);
+
+            // Mate과 연관된 Board의 댓글 수 가져오기
+            if (mate.getBoard() != null) {
+
+                Long boardId = mate.getBoard().getBoardId();
+                Integer commentCount = commentRepository.countCommentsByBoardId(boardId);
+
+                // MateDTO 내의 BoardDTO에 댓글 수  설정
+                mateDTO.getBoard().setCommentCount(commentCount != null ? commentCount : 0);
+            }
+
+            return mateDTO;
+        });
     }
 
     private Mate findMateByBoardId(Long boardId) {
@@ -116,7 +149,22 @@ public class MateServiceImpl implements MateService {
     public Page<MateDTO> getMatesByDateRange(LocalDateTime startDate, LocalDateTime endDate,
         Pageable pageable) {
         Page<Mate> mates = mateRepository.findByBoard_CreateAtBetween(startDate, endDate, pageable);
-        return mates.map(this::convertToDTO);
+
+        return mates.map(mate -> {
+            MateDTO mateDTO = convertToDTO(mate);
+
+            // Mate과 연관된 Board의 댓글 수 가져오기
+            if (mate.getBoard() != null) {
+                Long boardId = mate.getBoard().getBoardId();
+                Integer commentCount = commentRepository.countCommentsByBoardId(boardId);
+                // Board 엔티티에 commentCount 필드가 있다고 가정
+
+                // MateDTO 내의 BoardDTO에 댓글 수 설정
+                mateDTO.getBoard().setCommentCount(commentCount != null ? commentCount : 0);
+            }
+
+            return mateDTO;
+        });
     }
 
     @Override
