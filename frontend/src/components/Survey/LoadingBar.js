@@ -1,34 +1,53 @@
-// // LoadingBar.js
-// import React, { useState } from "react";
-// import {
-//   Progress,
-//   Done,
-//   Text,
-// } from "../../styles/SurveyStyles/LoadingBarStyle";
+// LoadingBar.js
+import React, { useState, useEffect } from "react";
+import {
+  Progress,
+  Done,
+  Text,
+  Kfont,
+} from "../../styles/SurveyStyles/LoadingBarStyle";
 
-// const LoadingBar = ({ done }) => {
-//   console.log("LoadingBar rendering");
-//   const [style, setStyle] = useState({});
-//   setTimeout(() => {
-//     const newStyle = {
-//       opacity: 1,
-//       width: `${done}%`,
-//     };
-//     setStyle(newStyle);
-//   }, 300);
+const LoadingBar = () => {
+  console.log("LoadingBar rendering");
+  const [done, setDone] = useState(0);
 
-//   return (
-//     <Progress>
-//       <Text>
-//         나와 비슷한
-//         <br />
-//         <Text style={{ fontSize: "1.7em", color: "#001B79" }}>케이리그</Text>
-//         <br />
-//         구단을 분석 중입니다.
-//       </Text>
-//       <Done style={style}>{done}%</Done>
-//     </Progress>
-//   );
-// };
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setDone((prevDone) => {
+        if (prevDone >= 100) {
+          clearInterval(interval);
+          return 100;
+        }
+        return prevDone + 2;
+      });
+    }, 50);
+    return () => clearInterval(interval);
+  }, []);
 
-// export default LoadingBar;
+  const style = {
+    opacity: 1,
+    width: `${done}%`,
+  };
+
+  return (
+    <Progress>
+      <Text>
+        나와 비슷한
+        <br />
+        <Kfont>K-League</Kfont>
+        구단을 분석 중입니다
+        <br />
+        <br />
+        <img
+          src="https://raw.githubusercontent.com/Tarikul-Islam-Anik/Animated-Fluent-Emojis/master/Emojis/Smilies/Blue%20Heart.png"
+          alt="Blue Heart"
+          width="100"
+          height="100"
+        />
+      </Text>
+      <Done style={style}>{done}%</Done>
+    </Progress>
+  );
+};
+
+export default LoadingBar;
