@@ -1,3 +1,4 @@
+import { useState } from "react";
 import styled from "styled-components";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faHourglassHalf } from "@fortawesome/free-solid-svg-icons";
@@ -15,26 +16,28 @@ function GoogleRedirection() {
 
   const setUserState = useSetRecoilState(UserState);
 
-  axios
-    .get(`/user/login/oauth/code/google?code=${GOOGLE_CODE}`)
-    .then((res) => {
-      /* access Token 받고 전역 변수로 관리 */
-      setUserState({
-        nickname: res.data.nickname,
-        profile: res.data.profile,
-        accessToken: res.data.accessToken,
-        email: res.data.email,
-        domain: res.data.domain,
-        isLoggedIn: true,
-      });
-      console.log(res);
+  useState(() => {
+    axios
+      .get(`/user/login/oauth/code/google?code=${GOOGLE_CODE}`)
+      .then((res) => {
+        /* access Token 받고 전역 변수로 관리 */
+        setUserState({
+          nickname: res.data.nickname,
+          profile: res.data.profile,
+          accessToken: res.data.accessToken,
+          email: res.data.email,
+          domain: res.data.domain,
+          isLoggedIn: true,
+        });
+        console.log(res);
 
-      /* 성공시 홈화면으로 */
-      // window.location.href = "/";
-    })
-    .catch(() => {
-      window.location.href = "/login";
-    });
+        /* 성공시 홈화면으로 */
+        // window.location.href = "/";
+      })
+      .catch(() => {
+        window.location.href = "/login";
+      });
+  }, []);
 
   return (
     <div>
