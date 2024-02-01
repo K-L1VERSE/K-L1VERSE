@@ -2,21 +2,24 @@ server:
   port: 8030
 
 spring:
+  profiles:
+    active: dev
+
   jpa:
     hibernate:
       ddl-auto: update
   datasource:
     driver-class-name: org.mariadb.jdbc.Driver
 
-    # ssafy
-    # url: jdbc:mariadb://localhost:3306
-    # username: root
-    # password: 1234
+#    # ssafy
+#    url: jdbc:mariadb://localhost:3306
+#    username: root
+#    password: 0000
 
     # remote
-    url: jdbc:mariadb://stg-yswa-kr-practice-db-master.mariadb.database.azure.com:3306/S10P12A409
-    username: S10P12A409
-    password: kp7Ad1kzRN
+#    url: jdbc:mariadb://stg-yswa-kr-practice-db-master.mariadb.database.azure.com:3306/S10P12A409
+#    username: S10P12A409
+#    password: kp7Ad1kzRN
 
 #spring:
 #  jpa:
@@ -27,4 +30,4 @@ spring:
 #    url: jdbc:mariadb://stg-yswa-kr-practice-db-master.mariadb.database.azure.com:3306/S10P12A409
 #    username: S10P12A409
 #    password: kp7Ad1kzRN
-#
+

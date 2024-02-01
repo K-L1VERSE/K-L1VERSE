@@ -8,6 +8,7 @@ import java.net.URISyntaxException;
 import java.util.List;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -45,13 +46,20 @@ public class ProductController {
 
     @PutMapping("/{boardId}")
     public ResponseEntity<ProductDTO> updateProduct(@PathVariable Long boardId,
-        @RequestBody ProductDTO productDto) {
+        @RequestBody ProductDTO productDto, @RequestParam int userId) {
+        if (!productService.isProductOwner(boardId, userId)) {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
+        }
+
         ProductDTO updatedProduct = productService.updateProduct(boardId, productDto);
         return ResponseEntity.ok(updatedProduct);
     }
 
     @DeleteMapping("/{boardId}")
-    public ResponseEntity<Void> deleteProduct(@PathVariable Long boardId) {
+    public ResponseEntity<Void> deleteProduct(@PathVariable Long boardId, @RequestParam int userId) {
+        if (!productService.isProductOwner(boardId, userId)) {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
+        }
         productService.deleteProduct(boardId);
         return ResponseEntity.noContent().build();
     }

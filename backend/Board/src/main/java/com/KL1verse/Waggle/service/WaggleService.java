@@ -14,9 +14,8 @@ public interface WaggleService {
 
     WaggleDTO updateWaggle(Long BoardId, WaggleDTO waggleDto);
 
-    void deleteWaggle(Long BoardId);
+    void deleteWaggle(Long boardId, int userId);
 
-//    Page<WaggleDTO> searchWaggles(SearchBoardConditionDto searchCondition, Pageable pageable);
 
     Page<WaggleDTO> getAllWaggleList(Pageable pageable);
 
@@ -25,6 +24,8 @@ public interface WaggleService {
     Page<WaggleDTO> getAllWagglesWithLikes(Pageable pageable);
 
     List<WaggleDTO> getMostRecentWaggles(int count);
+
+    boolean isWaggleOwner(Long boardId, int userId);
 
 }
 

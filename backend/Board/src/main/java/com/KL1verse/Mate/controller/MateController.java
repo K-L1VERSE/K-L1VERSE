@@ -1,5 +1,6 @@
 package com.KL1verse.Mate.controller;
 
+import com.KL1verse.Board.dto.req.BoardDTO;
 import com.KL1verse.Board.dto.req.SearchBoardConditionDto;
 import com.KL1verse.Mate.dto.req.MateDTO;
 import com.KL1verse.Mate.service.MateService;
@@ -10,6 +11,7 @@ import java.time.LocalDateTime;
 import java.util.List;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -45,19 +47,41 @@ public class MateController {
             .body(createdMate);
     }
 
-
     @PutMapping("/{boardId}")
     public ResponseEntity<MateDTO> updateMate(@PathVariable Long boardId,
-        @RequestBody MateDTO mateDto) {
-        MateDTO updatedMate = mateService.updateMate(boardId, mateDto);
+        @RequestBody MateDTO mateDtO, @RequestParam int userId) {
+        // Check ownership before updating
+        if (!mateService.isMateOwner(boardId, userId)) {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
+        }
+
+        MateDTO updatedMate = mateService.updateMate(boardId, mateDtO);
         return ResponseEntity.ok(updatedMate);
     }
 
     @DeleteMapping("/{boardId}")
-    public ResponseEntity<Void> deleteMate(@PathVariable Long boardId) {
-        mateService.deleteMate(boardId);
+    public ResponseEntity<Void> deleteBoard(@PathVariable Long boardId, @RequestParam int userId) {
+        // Check ownership before deleting
+        if (!mateService.isMateOwner(boardId, userId)) {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
+        }
+
+        mateService.deleteMate(boardId, userId);
         return ResponseEntity.noContent().build();
     }
+
+//    @PutMapping("/{boardId}")
+//    public ResponseEntity<MateDTO> updateMate(@PathVariable Long boardId,
+//        @RequestBody MateDTO mateDto, @RequestParam int userId) {
+//        MateDTO updatedMate = mateService.updateMate(boardId, mateDto);
+//        return ResponseEntity.ok(updatedMate);
+//    }
+
+//    @DeleteMapping("/{boardId}")
+//    public ResponseEntity<Void> deleteMate(@PathVariable Long boardId, @RequestParam int userId) {
+//        mateService.deleteMate(boardId);
+//        return ResponseEntity.noContent().build();
+//    }
 
     @GetMapping("/pages")
     public ResponseEntity<Page<MateDTO>> getAllMatesPaged(Pageable pageable) {

@@ -23,6 +23,8 @@ public interface ProductService {
 
     List<ProductDTO> getMostRecentProducts(int count);
 
+    boolean isProductOwner(Long boardId, int userId);
+
 }
 
 

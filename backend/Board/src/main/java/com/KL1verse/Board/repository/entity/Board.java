@@ -56,7 +56,7 @@ public class Board {
     private LocalDateTime deleteAt;
 
     @Column(name = "user_id")
-    private String user;
+    private int userId;
 
 
 }

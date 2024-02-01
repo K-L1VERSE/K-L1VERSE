@@ -2,6 +2,7 @@ package com.KL1verse.Mate.service;
 
 import com.KL1verse.Board.dto.req.BoardDTO;
 import com.KL1verse.Board.dto.req.SearchBoardConditionDto;
+import com.KL1verse.Board.exception.UnauthorizedException;
 import com.KL1verse.Board.repository.BoardRepository;
 import com.KL1verse.Board.repository.entity.Board;
 import com.KL1verse.Comment.repository.CommentRepository;
@@ -58,15 +59,44 @@ public class MateServiceImpl implements MateService {
     }
 
     @Override
-    public void deleteMate(Long boardId) {
+    public void deleteMate(Long boardId, int userId) {
         Mate mateToDelete = findMateByBoardId(boardId);
 
-        if (mateToDelete != null) {
-            mateToDelete.getBoard().setDeleteAt(LocalDateTime.now());
+        // 로그인한 사용자가 Mate 게시물의 소유자인지 확인
+        if (mateToDelete.getBoard().getUserId() == userId) {
+            if (mateToDelete != null) {
+                mateToDelete.getBoard().setDeleteAt(LocalDateTime.now());
+            }
+            mateRepository.deleteById(mateToDelete.getMateId());
+        } else {
+            throw new UnauthorizedException("게시글을 삭제할 권한이 없습니다.");
         }
-
-        mateRepository.deleteById(mateToDelete.getMateId());
     }
+
+    @Override
+    public boolean isMateOwner(Long boardId, int userId) {
+        Mate mate = findMateByBoardId(boardId);
+        return mate.getBoard().getUserId() == userId;
+    }
+
+//    @Override
+//    public MateDTO updateMate(Long boardId, MateDTO mateDto) {
+//        Mate existingMate = findMateByBoardId(boardId);
+//        updateExistingMate(existingMate, mateDto);
+//        Mate updatedMate = mateRepository.save(existingMate);
+//        return convertToDTO(updatedMate);
+//    }
+//
+//    @Override
+//    public void deleteMate(Long boardId, int userId) {
+//        Mate mateToDelete = findMateByBoardId(boardId);
+//
+//        if (mateToDelete != null) {
+//            mateToDelete.getBoard().setDeleteAt(LocalDateTime.now());
+//        }
+//
+//        mateRepository.deleteById(mateToDelete.getMateId());
+//    }
 
     //    @Override
 //    public Page<MateDTO> searchMates(SearchBoardConditionDto searchCondition, Pageable pageable) {
@@ -230,7 +260,7 @@ public class MateServiceImpl implements MateService {
             .createAt(mate.getBoard().getCreateAt())
             .updateAt(mate.getBoard().getUpdateAt())
             .deleteAt(mate.getBoard().getDeleteAt())
-//        .user(Long.valueOf(mate.getBoard().getUser()))
+            .userId(mate.getBoard().getUserId())
             .build());
         return mateDTO;
     }
@@ -246,7 +276,7 @@ public class MateServiceImpl implements MateService {
             .createAt(mateDTO.getBoard().getCreateAt())
             .updateAt(mateDTO.getBoard().getUpdateAt())
             .deleteAt(mateDTO.getBoard().getDeleteAt())
-//        .user(String.valueOf(mateDTO.getBoard().getUser()))
+            .userId(mateDTO.getBoard().getUserId())
             .build());
         return mate;
     }

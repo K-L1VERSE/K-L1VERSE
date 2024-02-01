@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
@@ -29,22 +30,7 @@ public class CommentController {
         this.commentLikeService = commentLikeService;
     }
 
-    // Get Comment by ID
-    @GetMapping("/{commentId}")
-    public ResponseEntity<CommentDTO> getCommentById(@PathVariable Long commentId) {
-        // 사용자 ID를 가져오는 방법을 구현한다고 가정하고 이를 서비스에 전달
 
-        Long requestingUserId = 123L; // 사용자 ID를 가져오는 메서드를 구현
-        CommentDTO comment = commentService.getCommentById(commentId, requestingUserId);
-
-        if (comment == null) {
-            // 비밀 댓글에 대한 권한이 없는 경우 처리
-            return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
-            // 또는 다른 적절한 응답을 반환할 수 있습니다.
-        }
-
-        return ResponseEntity.ok(comment);
-    }
 
     @PostMapping("/{boardId}")
     public ResponseEntity<CommentDTO> createComment(@PathVariable Long boardId, @RequestBody CommentDTO commentDTO) {
@@ -57,14 +43,21 @@ public class CommentController {
     // Update Comment by ID
     @PutMapping("/{commentId}")
     public ResponseEntity<CommentDTO> updateComment(@PathVariable Long commentId,
-        @RequestBody CommentDTO commentDTO) {
+        @RequestBody CommentDTO commentDTO, @RequestParam int userId) {
+
+        if (!commentService.isCommentOwner(commentId, userId)) {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
+        }
         CommentDTO updatedComment = commentService.updateComment(commentId, commentDTO);
         return ResponseEntity.ok(updatedComment);
     }
 
     // Delete Comment by ID
     @DeleteMapping("/{commentId}")
-    public ResponseEntity<Void> deleteComment(@PathVariable Long commentId) {
+    public ResponseEntity<Void> deleteComment(@PathVariable Long commentId, @RequestParam int userId) {
+        if (!commentService.isCommentOwner(commentId, userId)) {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
+        }
         commentService.deleteComment(commentId);
         return ResponseEntity.noContent().build();
     }

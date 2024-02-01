@@ -3,10 +3,12 @@ package com.KL1verse.Waggle.controller;
 import com.KL1verse.Board.dto.req.SearchBoardConditionDto;
 import com.KL1verse.Waggle.dto.req.WaggleDTO;
 import com.KL1verse.Waggle.service.WaggleService;
+import java.security.Principal;
 import java.util.List;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -46,17 +48,31 @@ public class WaggleController {
 
     @PutMapping("/{boardId}")
     public ResponseEntity<WaggleDTO> updateWaggle(@PathVariable Long boardId,
-        @RequestBody WaggleDTO waggleDto) {
+        @RequestBody WaggleDTO waggleDto, @RequestParam int userId) {
+
+        // 로그인한 사용자가 Waggle 게시물의 소유자인지 확인
+        if (!waggleService.isWaggleOwner(boardId, userId)) {
+            // 권한이 없는 액세스
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
+        }
+
         WaggleDTO updatedWaggle = waggleService.updateWaggle(boardId, waggleDto);
         return ResponseEntity.ok(updatedWaggle);
     }
 
 
     @DeleteMapping("/{boardId}")
-    public ResponseEntity<Void> deleteWaggle(@PathVariable Long boardId) {
-        waggleService.deleteWaggle(boardId);
+    public ResponseEntity<Void> deleteWaggle(@PathVariable Long boardId, @RequestParam int userId) {
+        // 로그인한 사용자가 Waggle 게시물의 소유자인지 확인
+        if (!waggleService.isWaggleOwner(boardId, userId)) {
+            // 권한이 없는 액세스
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
+        }
+
+        waggleService.deleteWaggle(boardId, userId);
         return ResponseEntity.noContent().build();
     }
+
 
     @GetMapping("/searchPaged")
     public ResponseEntity<Page<WaggleDTO>> searchWagglesPaged(

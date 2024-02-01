@@ -3,6 +3,7 @@ package com.KL1verse.Waggle.service;
 
 import com.KL1verse.Board.dto.req.BoardDTO;
 import com.KL1verse.Board.dto.req.SearchBoardConditionDto;
+import com.KL1verse.Board.exception.UnauthorizedException;
 import com.KL1verse.Board.repository.BoardRepository;
 import com.KL1verse.Board.repository.entity.Board;
 import com.KL1verse.Comment.repository.CommentRepository;
@@ -60,13 +61,24 @@ public class WaggleServiceImpl implements WaggleService {
     }
 
     @Override
-    public void deleteWaggle(Long boardId) {
+    public void deleteWaggle(Long boardId, int userId) {
         Waggle waggleToDelete = findWaggleByBoardId(boardId);
 
-        if (waggleToDelete != null) {
-            waggleToDelete.getBoard().setDeleteAt(LocalDateTime.now());
+        // 로그인한 사용자가 Waggle 게시물의 소유자인지 확인
+        if (waggleToDelete.getBoard().getUserId() == userId) {
+            if (waggleToDelete != null) {
+                waggleToDelete.getBoard().setDeleteAt(LocalDateTime.now());
+            }
+            waggleRepository.deleteById(waggleToDelete.getWaggleId());
+        } else {
+            throw new UnauthorizedException("Unauthorized access to delete Waggle.");
         }
-        waggleRepository.deleteById(waggleToDelete.getWaggleId());
+    }
+
+    @Override
+    public boolean isWaggleOwner(Long boardId, int userId) {
+        Waggle waggle = findWaggleByBoardId(boardId);
+        return waggle.getBoard().getUserId() == userId;
     }
 
 
@@ -254,7 +266,7 @@ public class WaggleServiceImpl implements WaggleService {
             .updateAt(waggle.getBoard().getUpdateAt())
             .deleteAt(waggle.getBoard().getDeleteAt())
             .commentCount(0)
-//            .user(Long.valueOf(waggle.getBoard().getUser()))
+            .userId(waggle.getBoard().getUserId())
             .build());
         return waggleDTO;
     }
@@ -270,8 +282,7 @@ public class WaggleServiceImpl implements WaggleService {
             .createAt(waggleDTO.getBoard().getCreateAt())
             .updateAt(waggleDTO.getBoard().getUpdateAt())
             .deleteAt(waggleDTO.getBoard().getDeleteAt())
-
-//            .user(String.valueOf(waggleDTO.getBoard().getUser()))
+            .userId(waggleDTO.getBoard().getUserId())
             .build());
         return waggle;
     }

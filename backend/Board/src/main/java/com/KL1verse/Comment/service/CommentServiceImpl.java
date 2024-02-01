@@ -45,11 +45,11 @@ public class CommentServiceImpl implements CommentService {
 
     private boolean isAuthorized(Comment comment, Long requestingUserId) {
         // 요청한 사용자가 댓글 작성자 또는 게시물 작성자인지 확인
-        String boardUserIdString = comment.getBoardId().getUser();
-        Long boardUserId = (boardUserIdString != null) ? Long.valueOf(boardUserIdString) : null;
+        int boardUserId = comment.getBoardId().getUserId(); // 변환 없이 사용
         Long commentUserId = comment.getUserId();
-        return requestingUserId.equals(commentUserId) || requestingUserId.equals(boardUserId);
+        return requestingUserId.equals(commentUserId) || (requestingUserId.intValue() == boardUserId);
     }
+
 
 
     @Override
@@ -107,6 +107,13 @@ public class CommentServiceImpl implements CommentService {
         existingComment.setDeleteAt(LocalDateTime.now());
         commentRepository.save(existingComment);
         log.info("Comment {} is deleted : ", commentId);
+    }
+
+    @Override
+    public boolean isCommentOwner(Long commentId, int userId) {
+        Comment comment = commentRepository.findById(commentId)
+            .orElseThrow(() -> new RuntimeException("Comment not found with id: " + commentId));
+        return comment.getUserId() == userId;
     }
 
 
