@@ -29,7 +29,7 @@ function GoogleRedirection() {
       console.log("응답:!@!@!@", res.data);
 
       /* 성공시 홈화면으로 */
-      // window.location.href = "/";
+      window.location.href = "/";
     })
     .catch(() => {
       // window.location.href = "/login";
