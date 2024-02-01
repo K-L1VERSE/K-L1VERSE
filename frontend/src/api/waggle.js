@@ -1,4 +1,6 @@
 import axios from "./axios";
+import { useRecoilState } from "recoil";
+import { UserState } from "../global/UserState";
 
 const gateway = "board";
 const url = "waggles";
@@ -13,13 +15,25 @@ export function getWaggleList(page, size, success, fail) {
 }
 
 export function getWaggleDetail(boardId) {
-  return axios
-    .get(`/${gateway}/${url}/${boardId}`)
-    .then((response) => response.data);
+  axios.get(`/${gateway}/${url}/${boardId}`).then((response) => response.data);
 }
 
 export function createWaggle(board) {
-  axios.post(`/${gateway}/${url}`, board).then((response) => response.data);
+  const [userState] = useRecoilState(UserState); // Destructure the result of useRecoilState
+  const { userId, accessToken } = userState;
+
+  const requestData = {
+    board: {
+      boardType: "WAGGLE",
+      title: board.title,
+      content: board.content,
+      userId: userId,
+    },
+  };
+
+  return axios
+    .post(`/${gateway}/${url}`, requestData)
+    .then((response) => response.data);
 }
 
 export function updateWaggle(board) {

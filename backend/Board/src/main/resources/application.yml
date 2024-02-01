@@ -12,7 +12,7 @@ spring:
     driver-class-name: org.mariadb.jdbc.Driver
 
 #    ssafy
-    url: jdbc:mariadb://localhost:3306/dev
+    url: jdbc:mariadb://localhost:3306/dev?allowPublicKeyRetrieval=true&useSSL=false
     username: root
     password: 1234
 

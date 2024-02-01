@@ -2,8 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 import axios from "../../../api/axios";
 import BoardTopNavBar from "../../../components/board/BoardTopNavBar";
-
-import { getWaggleDetail } from "../../../api/waggle";
+import WaggleForm from "../../../styles/BoardStyles/BoardCreateStyle";
 
 function WaggleRegistPage() {
   const navigate = useNavigate();
@@ -50,24 +49,14 @@ function WaggleRegistPage() {
     <div>
       <BoardTopNavBar />
       <h1>{isUpdateMode ? "Waggle 게시물 수정" : "Waggle 게시물 작성"}</h1>
-      <form onSubmit={handleSubmit}>
-        {" "}
-        <br />
-        제목:
-        <input
-          type="text"
-          value={title}
-          onChange={(e) => setTitle(e.target.value)}
-        />
-        <br />
-        내용:
-        <textarea
-          value={content}
-          onChange={(e) => setContent(e.target.value)}
-        />
-        <br />
-        <button type="submit">{isUpdateMode ? "수정하기" : "작성하기"}</button>
-      </form>
+      <WaggleForm
+        title={title}
+        content={content}
+        onTitleChange={(e) => setTitle(e.target.value)}
+        onContentChange={(e) => setContent(e.target.value)}
+        onSubmit={handleSubmit}
+        buttonText={isUpdateMode ? "수정하기" : "작성하기"}
+      />
     </div>
   );
 }
