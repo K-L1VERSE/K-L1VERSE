@@ -13,11 +13,11 @@ import LoginLogo from "../../components/login/LoginLogo";
 function GoogleRedirection() {
   const PARAMS = new URL(document.location).searchParams;
   const GOOGLE_CODE = PARAMS.get("code");
-
+  console.log(PARAMS);
   // const setUserState = useSetRecoilState(UserState);
 
   useEffect(() => {
-    console.log("Code: ", ${GOOGLE_CODE});
+    console.log("Code: ", GOOGLE_CODE);
     axios
       .get(`/user/login/oauth/code/google?code=${GOOGLE_CODE}`)
       .then((res) => {
