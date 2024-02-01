@@ -40,9 +40,9 @@ public class MatchServiceImpl implements MatchService {
 
     @Override
     @Transactional
-    public List<MatchListResponse> getMatchList(int month) {
+    public List<MatchListResponse> getMatchList(int year, int month) {
 
-        List<Match> matchList = matchRepository.findByMonth(month);
+        List<Match> matchList = matchRepository.findByYearAndMonth(year, month);
         List<MatchListResponse> matchListResponses = new ArrayList<>();
 
         for (Match match : matchList) {

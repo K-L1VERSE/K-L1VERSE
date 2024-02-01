@@ -22,9 +22,9 @@ public class MatchController {
 
     private final MatchService matchService;
 
-    @GetMapping("/{month}")
-    public ResponseEntity<List<MatchListResponse>> getMatchList(@PathVariable("month") int month) {
-        List<MatchListResponse> matchList = matchService.getMatchList(month);
+    @GetMapping("/{year}/{month}")
+    public ResponseEntity<List<MatchListResponse>> getMatchList(@PathVariable("year") int year, @PathVariable("month") int month) {
+        List<MatchListResponse> matchList = matchService.getMatchList(year, month);
         return new ResponseEntity<>(matchList, HttpStatus.OK);
     }
 
