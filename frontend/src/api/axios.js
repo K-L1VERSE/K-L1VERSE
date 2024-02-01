@@ -1,7 +1,7 @@
 import axios from "axios";
 
 const instance = axios.create({
-  baseURL: "http://i10a409.p.ssafy.io:8000",
+  baseURL: "https://i10a409.p.ssafy.io:8000",
   params: {},
 });
 
