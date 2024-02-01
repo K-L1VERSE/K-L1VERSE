@@ -31,6 +31,11 @@ function GoogleRedirection() {
         // });
         console.log(res);
 
+        setTimeout(function () {
+          console.log(res);
+          console.log("Works!");
+        }, 10000);
+
         /* 성공시 홈화면으로 */
         // window.location.href = "/";
       })
