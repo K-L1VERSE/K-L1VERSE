@@ -31,3 +31,22 @@ spring:
 #    username: S10P12A409
 #    password: kp7Ad1kzRN
 
+cloud:
+  aws:
+    s3:
+      bucket: k-l1verse
+    credentials:
+      access-key: AKIA4X5JVVJBRX7QSL5G
+      secret-key: 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
+    region:
+      static: ap-northeast-2
+
+jwt:
+  secretKey: 413F4428472B4B6250655368566D5970337336763979244226452948404D6351
+  # 배포
+  accessExpirationTime: 3600 # 1시간
+  refreshExpirationTime: 86400 # 1일
+  # 로컬
+#  accessExpirationTime: 10 # 10초
+#  refreshExpirationTime: 60 # 60초
+

@@ -24,6 +24,7 @@ public class BoardDTO {
     private LocalDateTime updateAt;
     private LocalDateTime deleteAt;
     private Integer commentCount;
+    private String boardImage;
 
 
 

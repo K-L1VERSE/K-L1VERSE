@@ -14,7 +14,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
@@ -55,23 +54,24 @@ public class CommentController {
         return ResponseEntity.noContent().build();
     }
 
+    @PostMapping("/list/{boardId}")
+    public ResponseEntity<List<CommentDTO>> getAllCommentsByBoardId(
+        @PathVariable Long boardId,
+        @RequestBody CommentDTO commentDTO) {
 
-    @GetMapping("/list/{boardId}")
-    public ResponseEntity<List<CommentDTO>> getAllCommentsByBoardId(@PathVariable Long boardId,
-        @RequestParam(value = "requestingUserId", required = false) Long requestingUserId) {
+        Long requestingUserId = commentDTO.getUserId();
+
         if (requestingUserId == null) {
             return ResponseEntity.badRequest().build();
         }
-        List<CommentDTO> comments = commentService.getAllCommentsByBoardId(boardId,
-                requestingUserId)
 
+        List<CommentDTO> comments = commentService.getAllCommentsByBoardId(boardId, requestingUserId)
             .stream()
             .filter(comment -> comment.getDeleteAt() == null)
             .collect(Collectors.toList());
 
         return ResponseEntity.ok(comments);
     }
-
 
     @PostMapping("/{parentCommentId}/replies")
     public ResponseEntity<CommentDTO> createReply(@PathVariable Long parentCommentId,
