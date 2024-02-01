@@ -30,7 +30,7 @@ function GoogleRedirection() {
         //   domain: res.data.domain,
         //   isLoggedIn: true,
         // });
-        console.log("응답:!@!@!@", res);
+        console.log("응답:!@!@!@", res.data);
 
         /* 성공시 홈화면으로 */
         // window.location.href = "/";
