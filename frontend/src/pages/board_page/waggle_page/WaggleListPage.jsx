@@ -3,13 +3,12 @@ import React, { useState, useEffect, useCallback } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "../../../api/axios";
 import BoardTopNavBar from "../../../components/board/BoardTopNavBar";
-import WaggleItemCard from "../../../components/board/WaggleItemCard";
+import WaggleContainer from "../../../components/board/WaggleContainer";
 import { formatRelativeTime } from "../../../components/board/dateFormat";
 import {
   WaggleHeader,
   WaggleHeaderH2,
   WaggleHeaderButton,
-  WaggleListContainer,
 } from "../../../styles/BoardStyles/WaggleListStyle";
 
 function WaggleListPage() {
@@ -83,15 +82,10 @@ function WaggleListPage() {
         </WaggleHeaderButton>
       </WaggleHeader>
 
-      <WaggleListContainer>
-        {waggleList.map((waggle) => (
-          <WaggleItemCard
-            key={waggle.waggleId}
-            waggle={waggle}
-            formatRelativeTime={formatRelativeTime}
-          />
-        ))}
-      </WaggleListContainer>
+      <WaggleContainer
+        waggleList={waggleList}
+        formatRelativeTime={formatRelativeTime}
+      />
     </div>
   );
 }
