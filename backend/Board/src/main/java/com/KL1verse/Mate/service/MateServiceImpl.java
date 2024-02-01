@@ -190,6 +190,35 @@ public class MateServiceImpl implements MateService {
         });
     }
 
+    @Override
+    public Page<MateDTO> getMatesByMatchList(List<Integer> matchIds, Pageable pageable) {
+        Page<Mate> mates;
+
+        if (matchIds != null && !matchIds.isEmpty()) {
+            mates = mateRepository.findByMatchIdIn(matchIds, pageable);
+        } else {
+            mates = mateRepository.findAll(pageable);
+        }
+
+        return mates.map(mate -> {
+            MateDTO mateDTO = convertToDTO(mate);
+
+            // Mate과 연관된 Board의 댓글 수 가져오기
+            if (mate.getBoard() != null) {
+                Long boardId = mate.getBoard().getBoardId();
+                Integer commentCount = commentRepository.countCommentsByBoardId(boardId);
+
+                // MateDTO 내의 BoardDTO에 댓글 수 설정
+                mateDTO.getBoard().setCommentCount(commentCount != null ? commentCount : 0);
+            }
+
+            // 추가적인 로직을 여기에 추가
+
+            return mateDTO;
+        });
+    }
+
+
     private MateDTO convertToDTO(Mate mate) {
         MateDTO mateDTO = new MateDTO();
         BeanUtils.copyProperties(mate, mateDTO);
