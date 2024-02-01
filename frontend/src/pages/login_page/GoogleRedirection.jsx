@@ -31,11 +31,20 @@ function GoogleRedirection() {
         // });
         console.log(res);
 
+        setTimeout(function () {
+          console.log(res);
+          console.log("Works!");
+        }, 10000);
+
         /* 성공시 홈화면으로 */
         // window.location.href = "/";
       })
-      .catch(() => {
-        window.location.href = "/login";
+      .catch((err) => {
+        setTimeout(function () {
+          console.log(err);
+          console.log("Works!");
+        }, 10000);
+        // window.location.href = "/login";
       });
   }, []);
 
