@@ -12,11 +12,11 @@ function LogoutButton() {
       .get(`/user/auth/sign-out`)
       .then(() => {
         resetUserState();
-        window.location.href = "http://localhost:3000/login";
+        window.location.href = "http://i10a409.p.ssafy.io/login";
       })
       .catch(() => {
         resetUserState();
-        window.location.href = "http://localhost:3000/login";
+        window.location.href = "http://i10a409.p.ssafy.io/login";
       });
   }, []);
 }
