@@ -1,4 +1,3 @@
-import { useEffect } from "react";
 import styled from "styled-components";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faHourglassHalf } from "@fortawesome/free-solid-svg-icons";
@@ -13,36 +12,28 @@ import LoginLogo from "../../components/login/LoginLogo";
 function GoogleRedirection() {
   const PARAMS = new URL(document.location).searchParams;
   const GOOGLE_CODE = PARAMS.get("code");
-  console.log(PARAMS);
-  // const setUserState = useSetRecoilState(UserState);
+  const setUserState = useSetRecoilState(UserState);
 
-  useEffect(() => {
-    console.log("Code: ", GOOGLE_CODE);
-    axios
-      .get(`/user/login/oauth/code/google?code=${GOOGLE_CODE}`)
-      .then((res) => {
-        /* access Token 받고 전역 변수로 관리 */
-        // setUserState({
-        //   nickname: res.data.nickname,
-        //   profile: res.data.profile,
-        //   accessToken: res.data.accessToken,
-        //   email: res.data.email,
-        //   domain: res.data.domain,
-        //   isLoggedIn: true,
-        // });
-        console.log("응답:!@!@!@", res.data);
-
-        /* 성공시 홈화면으로 */
-        // window.location.href = "/";
-      })
-      .catch((err) => {
-        setTimeout(function () {
-          console.log(err);
-          console.log("Works!");
-        }, 10000);
-        // window.location.href = "/login";
+  axios
+    .get(`/user/login/oauth/code/google?code=${GOOGLE_CODE}`)
+    .then((res) => {
+      /* access Token 받고 전역 변수로 관리 */
+      setUserState({
+        nickname: res.data.nickname,
+        profile: res.data.profile,
+        accessToken: res.data.accessToken,
+        email: res.data.email,
+        domain: res.data.domain,
+        isLoggedIn: true,
       });
-  }, []);
+      console.log("응답:!@!@!@", res.data);
+
+      /* 성공시 홈화면으로 */
+      // window.location.href = "/";
+    })
+    .catch(() => {
+      // window.location.href = "/login";
+    });
 
   return (
     <div>
