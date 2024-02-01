@@ -22,14 +22,6 @@ function WaggleDetailPage() {
   const { boardId } = useParams();
   const navigate = useNavigate();
 
-  function TitleComponent({ title }) {
-    return <Title>{title}</Title>;
-  }
-
-  function ContentComponent({ content }) {
-    return <Content>{content}</Content>;
-  }
-
   function getWaggleDetail() {
     axios.get(`/board/waggles/${boardId}`).then(({ data }) => {
       setWaggleDetail(data.board);
@@ -88,9 +80,8 @@ function WaggleDetailPage() {
     <Container>
       <BoardTopNavBar />
       <WaggleDetailBox>
-        <TitleComponent title={waggleDetail.title} />
-        <ContentComponent content={waggleDetail.content} />
-
+        <Title>{waggleDetail.title}</Title>
+        <Content>{waggleDetail.content}</Content>
         {/* 좋아요 버튼 및 개수 표시 */}
         <div>
           <LikeButton onClick={handleLikeClick}>
