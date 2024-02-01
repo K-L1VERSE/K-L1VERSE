@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import axios from "../../../api/axios";
-import BoardTopNavBar from "../../../components/Board/BoardTopNavBar";
-import CommentList from "../../../components/Board/CommentList";
+import BoardTopNavBar from "../../../components/board/BoardTopNavBar";
+import CommentList from "../../../components/board/CommentList";
 
 function MateDetailPage() {
   const [mateDetail, setMateDetail] = useState({});
@@ -12,7 +12,6 @@ function MateDetailPage() {
 
   /* mate 상세 정보 가져오기 */
   function getMateDetail() {
-    console.log(boardId);
     axios.get(`/board/mates/${boardId}`).then(({ data }) => {
       setMateDetail(data.board);
       setMateId(data.mateId);
@@ -36,6 +35,12 @@ function MateDetailPage() {
     }
   };
 
+  const handleKeyDown = (event, clickHandler) => {
+    if (event.key === "Enter") {
+      clickHandler();
+    }
+  };
+
   return (
     <div className="container">
       <BoardTopNavBar />
@@ -46,8 +51,20 @@ function MateDetailPage() {
         </p>
         <p>{mateDetail.content}</p>
       </div>
-      <div onClick={() => handleUpdateBtn()}>수정하기</div>
-      <div onClick={() => handleDeleteBtn()}>삭제하기</div>
+      <button
+        type="button"
+        onClick={handleUpdateBtn}
+        onKeyDown={(e) => handleKeyDown(e, handleUpdateBtn)}
+      >
+        수정하기
+      </button>
+      <button
+        type="button"
+        onClick={handleDeleteBtn}
+        onKeyDown={(e) => handleKeyDown(e, handleDeleteBtn)}
+      >
+        삭제하기
+      </button>
 
       <CommentList boardId={boardId} />
     </div>

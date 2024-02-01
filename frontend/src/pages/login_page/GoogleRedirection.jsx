@@ -12,14 +12,11 @@ import LoginLogo from "../../components/login/LoginLogo";
 function GoogleRedirection() {
   const PARAMS = new URL(document.location).searchParams;
   const GOOGLE_CODE = PARAMS.get("code");
-
   const setUserState = useSetRecoilState(UserState);
 
-  const request = axios
+  axios
     .get(`/user/login/oauth/code/google?code=${GOOGLE_CODE}`)
     .then((res) => {
-      console.log(res);
-
       /* access Token 받고 전역 변수로 관리 */
       setUserState({
         nickname: res.data.nickname,
@@ -29,16 +26,14 @@ function GoogleRedirection() {
         domain: res.data.domain,
         isLoggedIn: true,
       });
+      console.log("응답:!@!@!@", res.data);
 
       /* 성공시 홈화면으로 */
-      window.location.href = "/";
+      // window.location.href = "/";
     })
-    .catch((err) => {
-      console.log(err);
+    .catch(() => {
       // window.location.href = "/login";
     });
-
-  console.log(request);
 
   return (
     <div>

@@ -13,8 +13,6 @@ function NaverLoginButton() {
     window.location.href = NAVER_AUTH_URL;
   };
 
-  console.log(NAVER_REDIRECT_URI);
-
   return (
     <NaverLoginContainer>
       <NaverLogo src={NaverImg} alt="네이버 로고" onClick={handleLogin} />

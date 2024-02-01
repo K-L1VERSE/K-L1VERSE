@@ -10,9 +10,9 @@ import {
 
 // ************ 날짜 yyyy-mm-dd 형태로 변환 ************
 export function formatDate(date) {
-  let d = new window.Date(date);
+  const d = new window.Date(date);
 
-  let weekdays = [
+  const weekdays = [
     "일요일",
     "월요일",
     "화요일",
@@ -21,27 +21,14 @@ export function formatDate(date) {
     "금요일",
     "토요일",
   ];
-  let formattedDate =
-    d.getFullYear() +
-    "-" +
-    ("0" + (d.getMonth() + 1)).slice(-2) +
-    "-" +
-    ("0" + d.getDate()).slice(-2) +
-    " " +
-    weekdays[d.getDay()] +
-    " " +
-    ("0" + d.getHours()).slice(-2) +
-    ":" +
-    ("0" + d.getMinutes()).slice(-2);
+  const formattedDate = `${d.getFullYear()}-${("0" + (d.getMonth() + 1)).slice(-2)}-${("0" + d.getDate()).slice(-2)} ${weekdays[d.getDay()]} ${("0" + d.getHours()).slice(-2)}:${("0" + d.getMinutes()).slice(-2)}`;
 
   return formattedDate;
 }
 
 function TodayMatchItem({ match }) {
-  const homeTeamsrc =
-    process.env.PUBLIC_URL + "/badge/badge" + match.homeTeamId + ".png";
-  const awayTeamsrc =
-    process.env.PUBLIC_URL + "/badge/badge" + match.awayTeamId + ".png";
+  const homeTeamsrc = `${process.env.PUBLIC_URL}/badge/badge${match.homeTeamId}.png`;
+  const awayTeamsrc = `${process.env.PUBLIC_URL}/badge/badge${match.awayTeamId}.png`;
 
   return (
     <TodayMatchItemhWrap>

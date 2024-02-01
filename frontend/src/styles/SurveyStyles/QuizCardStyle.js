@@ -4,11 +4,6 @@ export const Question = styled.div`
   text-align: center;
 `;
 
-// // ?
-// export const Spacer = styled.div`
-//   height: 4rem;
-// `;
-
 export const NumberContainer = styled.div`
   display: flex;
   justify-content: space-between;
@@ -18,12 +13,12 @@ export const NumberContainer = styled.div`
 `;
 
 export const Number = styled.div`
+  font-family: "Pretendard-Regular";
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 1rem;
+  font-size: 1.1rem;
   background-color: #3261c1;
-  font-weight: bold;
   color: white;
   border-radius: 30px;
   height: 2.2rem;
@@ -60,6 +55,7 @@ export const SingleQuestion = styled.div`
 `;
 
 export const ChoiceButton = styled.button`
+  font-family: "Pretendard-Regular";
   border: 0.0625rem solid #cdd8ec;
   border-radius: 8px;
   width: 80%;
@@ -71,7 +67,6 @@ export const ChoiceButton = styled.button`
   margin-bottom: 0.7rem;
   transition: background-color 0.3s ease;
   &:hover {
-    font-weight: bold;
     color: white;
     background-color: #b4d4ff;
     cursor: pointer;

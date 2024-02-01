@@ -1,8 +1,7 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
 import { Main, StartButton } from "../../styles/SurveyStyles/StartCardStyle";
-import { SurveyTop } from "../../styles/SurveyStyles/SurveyTop";
-import { ToLeftImg } from "../../styles/SurveyStyles/SurveyTop";
+import { SurveyTop, ToLeftImg } from "../../styles/SurveyStyles/SurveyTop";
 import ToLeftPng from "../../assets/ToLeft.png";
 
 function StartPage() {

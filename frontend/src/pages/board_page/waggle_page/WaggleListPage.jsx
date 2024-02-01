@@ -2,9 +2,9 @@
 import React, { useState, useEffect, useCallback } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "../../../api/axios";
-import BoardTopNavBar from "../../../components/Board/BoardTopNavBar";
-import WaggleItemCard from "../../../components/Board/WaggleItemCard";
-import { formatRelativeTime } from "../../../components/Board/dateFormat";
+import BoardTopNavBar from "../../../components/board/BoardTopNavBar";
+import WaggleItemCard from "../../../components/board/WaggleItemCard";
+import { formatRelativeTime } from "../../../components/board/dateFormat";
 import {
   WaggleHeader,
   WaggleHeaderH2,
@@ -84,9 +84,9 @@ function WaggleListPage() {
       </WaggleHeader>
 
       <WaggleListContainer>
-        {waggleList.map((waggle, index) => (
+        {waggleList.map((waggle) => (
           <WaggleItemCard
-            key={index}
+            key={waggle.waggleId}
             waggle={waggle}
             formatRelativeTime={formatRelativeTime}
           />

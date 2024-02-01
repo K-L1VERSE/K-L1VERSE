@@ -2,9 +2,9 @@
 import React, { useState, useEffect, useCallback } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "../../../api/axios";
-import BoardTopNavBar from "../../../components/Board/BoardTopNavBar";
-import ProductItemCard from "../../../components/Board/ProductItemCard";
-import { formatRelativeTime } from "../../../components/Board/dateFormat";
+import BoardTopNavBar from "../../../components/board/BoardTopNavBar";
+import ProductItemCard from "../../../components/board/ProductItemCard";
+import { formatRelativeTime } from "../../../components/board/dateFormat";
 import {
   ProductHeader,
   ProductHeaderH2,
@@ -67,6 +67,10 @@ function ProductListPage() {
     };
   }, [handleScroll]);
 
+  const handleRegistProductButtonClick = () => {
+    handleRegistProductClick();
+  };
+
   return (
     <div>
       <BoardTopNavBar />
@@ -74,15 +78,15 @@ function ProductListPage() {
         <ProductHeaderH2>
           📦너에겐 필요없지만 나에게 꼭 필요한 굿즈
         </ProductHeaderH2>
-        <ProductHeaderButton onClick={handleRegistProductClick}>
+        <ProductHeaderButton onClick={handleRegistProductButtonClick}>
           🖋글쓰기
         </ProductHeaderButton>
       </ProductHeader>
 
       <ProductListContainer>
-        {productList.map((product, index) => (
+        {productList.map((product) => (
           <ProductItemCard
-            key={index}
+            key={product.productId}
             product={product}
             formatRelativeTime={formatRelativeTime}
           />
