@@ -3,7 +3,7 @@ import { useNavigate, useLocation } from "react-router-dom";
 import axios from "../../../api/axios";
 import BoardTopNavBar from "../../../components/board/BoardTopNavBar";
 
-import * as boardApi from "../../../api/mate";
+import { getMate } from "../../../api/mate";
 
 function MateRegistPage() {
   const navigate = useNavigate();
@@ -17,7 +17,7 @@ function MateRegistPage() {
 
   useEffect(() => {
     if (boardId) {
-      boardApi.getBoard(boardId).then((data) => {
+      getMate(boardId).then((data) => {
         setTitle(data.board.title);
         setContent(data.board.content);
         setIsUpdateMode(true);

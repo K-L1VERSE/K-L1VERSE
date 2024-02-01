@@ -3,20 +3,24 @@ import axios from "./axios";
 const gateway = "board";
 const url = "products";
 
+export function getProductList(page, size, success, fail) {
+  axios
+    .get(
+      `/${gateway}/${url}/pages?page=${page}&size=${size}&sort=board.createAt,desc`,
+    )
+    .then(success)
+    .catch(fail);
+}
 export function getProduct(boardId) {
-  return axios
-    .get(`/${gateway}/${url}/${boardId}`)
-    .then((response) => response.data);
+  axios.get(`/${gateway}/${url}/${boardId}`).then((response) => response.data);
 }
 
 export function createProduct(board) {
-  return axios
-    .post(`/${gateway}/${url}`, board)
-    .then((response) => response.data);
+  axios.post(`/${gateway}/${url}`, board).then((response) => response.data);
 }
 
 export function updateProduct(board) {
-  return axios
+  axios
     .put(`/${gateway}/${url}/${board.boardId}`, board)
     .then((response) => response.data);
 }

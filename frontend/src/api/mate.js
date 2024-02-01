@@ -3,21 +3,25 @@ import axios from "./axios";
 const gateway = "board";
 const url = "mates";
 
-// boardId 보내기
-export function getBoard(boardId) {
-  return axios
-    .get(`/${gateway}/${url}/${boardId}`)
-    .then((response) => response.data);
+export function getMateList(page, size, success, fail) {
+  axios
+    .get(
+      `/${gateway}/${url}/pages?page=${page}&size=${size}&sort=board.createAt,desc`,
+    )
+    .then(success)
+    .catch(fail);
 }
 
-export function createBoard(board) {
-  return axios
-    .post(`/${gateway}/${url}`, board)
-    .then((response) => response.data);
+export function getMate(boardId) {
+  axios.get(`/${gateway}/${url}/${boardId}`).then((response) => response.data);
 }
 
-export function updateBoard(board) {
-  return axios
+export function createMate(board) {
+  axios.post(`/${gateway}/${url}`, board).then((response) => response.data);
+}
+
+export function updateMate(board) {
+  axios
     .put(`/${gateway}/${url}/${board.boardId}`, board)
     .then((response) => response.data);
 }

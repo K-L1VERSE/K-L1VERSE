@@ -3,11 +3,10 @@ import { useNavigate, useLocation } from "react-router-dom";
 import axios from "../../../api/axios";
 import BoardTopNavBar from "../../../components/board/BoardTopNavBar";
 
-import * as boardApi from "../../../api/waggle";
+import { getWaggleDetail } from "../../../api/waggle";
 
 function WaggleRegistPage() {
   const navigate = useNavigate();
-
   const [title, setTitle] = useState("");
   const [content, setContent] = useState("");
   const [isUpdateMode, setIsUpdateMode] = useState(false);
@@ -16,14 +15,11 @@ function WaggleRegistPage() {
   let boardId = location.state ? location.state.boardId : null;
 
   useEffect(() => {
-    if (boardId) {
-      boardApi.getBoard(boardId).then((data) => {
-        setTitle(data.board.title);
-        setContent(data.board.content);
-        setIsUpdateMode(true);
-      });
+    if (location.state && location.state.board) {
+      setTitle(location.state.board.title);
+      setContent(location.state.board.content);
     }
-  }, [boardId]);
+  }, [location]);
 
   const handleSubmit = async (event) => {
     event.preventDefault();
