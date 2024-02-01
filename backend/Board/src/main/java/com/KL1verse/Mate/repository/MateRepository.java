@@ -1,7 +1,6 @@
 package com.KL1verse.Mate.repository;
 
 import com.KL1verse.Board.repository.entity.Board;
-import com.KL1verse.Mate.dto.req.MateDTO;
 import com.KL1verse.Mate.repository.entity.Mate;
 import java.time.LocalDateTime;
 import java.util.List;

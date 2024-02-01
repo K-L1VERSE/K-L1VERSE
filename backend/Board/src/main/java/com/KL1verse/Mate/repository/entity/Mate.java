@@ -34,10 +34,10 @@ public class Mate {
     private Board board;
 
     @Column(name = "total")
-    private int total; // 총 인원수
+    private int total;
 
     @Column(name = "full_flag")
-    private boolean fullFlag; // 인원수가 다 찼는지 여부
+    private boolean fullFlag;
 
     @Column(name = "match_id")
     private int matchId;

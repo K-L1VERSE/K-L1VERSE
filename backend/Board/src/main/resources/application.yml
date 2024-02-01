@@ -2,6 +2,9 @@ server:
   port: 8030
 
 spring:
+  profiles:
+    active: dev
+
   jpa:
     hibernate:
       ddl-auto: update

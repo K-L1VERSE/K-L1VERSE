@@ -22,10 +22,12 @@ import lombok.ToString;
 @Setter
 @ToString
 public class Answer {
+
     @Id
     @Column(name = "answer_id")
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long answerId;;
+    private Long answerId;
+    ;
 
     @Column(name = "content")
     private String content;
