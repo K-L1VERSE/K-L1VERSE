@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from "react";
+import axios from "axios";
 import {
   HotClipContainer,
   VideoWrapper,
   VideoContainer,
 } from "../../styles/main-styles/HotclipStyle";
-import axios from "axios";
 import { Title } from "../../styles/main-styles/MainStyle";
 import { getSavedAt, getYoutubeList, postYoutube } from "../../api/youtube";
 
@@ -25,9 +25,7 @@ export default function Hotclip() {
             ({ data }) => {
               setVideos(data);
             },
-            (error) => {
-              console.log(error);
-            },
+            () => {},
           );
         } else {
           axios
@@ -46,19 +44,13 @@ export default function Hotclip() {
                 () => {
                   setVideos(newVideos);
                 },
-                (error) => {
-                  console.log(error);
-                },
+                () => {},
               );
             })
-            .catch((error) => {
-              console.log(error);
-            });
+            .catch(() => {});
         }
       },
-      (error) => {
-        console.log(error);
-      },
+      () => {},
     );
   }, []);
 
@@ -67,15 +59,16 @@ export default function Hotclip() {
       <HotClipContainer>
         <Title>💖 HOT</Title>
         <VideoWrapper>
-          {videos.map((video, index) => (
-            <VideoContainer key={index}>
+          {videos.map((video) => (
+            <VideoContainer key={video.youtubeId}>
               <iframe
+                title={video.youtubeId}
                 id="ytplayer"
                 type="text/html"
                 width="265"
                 src={`https://www.youtube.com/embed/${video.youtubeId}?controls=1&fs=0&modestbranding=1&color=white`}
                 frameBorder="0"
-              ></iframe>
+              />
             </VideoContainer>
           ))}
         </VideoWrapper>

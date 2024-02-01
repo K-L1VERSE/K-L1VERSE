@@ -1,9 +1,7 @@
-// TeamImage.js
-/* eslint-disable */
 import React, { useState, useEffect } from "react";
 import PropTypes from "prop-types"; // PropTypes 추가
 
-const TeamImage = ({ teamId }) => {
+function TeamImage({ teamId }) {
   const teamImages = {
     1: "/images/surveyResult/ulsan_mita.jpg",
     2: "/images/surveyResult/pohang_soidori.png",
@@ -34,12 +32,22 @@ const TeamImage = ({ teamId }) => {
     return null; // 이미지가 없을 경우 아무것도 렌더링하지 않음
   }
 
-  return <img src={teamImage} style={{ maxWidth: "100%", height: "auto" }} />;
-};
+  return (
+    <img
+      src={teamImage}
+      alt="teamImage"
+      style={{ maxWidth: "100%", height: "auto" }}
+    />
+  );
+}
 
 // PropTypes 추가
 TeamImage.propTypes = {
-  teamId: PropTypes.number, // number 타입으로 변경
+  teamId: PropTypes.string,
+};
+
+TeamImage.defaultProps = {
+  teamId: 0,
 };
 
 export default TeamImage;

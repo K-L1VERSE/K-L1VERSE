@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 import axios from "../../../api/axios";
-import BoardTopNavBar from "../../../components/Board/BoardTopNavBar";
+import BoardTopNavBar from "../../../components/board/BoardTopNavBar";
 
 import * as boardApi from "../../../api/mate";
 

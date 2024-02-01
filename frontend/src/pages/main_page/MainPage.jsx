@@ -10,28 +10,22 @@ import Survey from "../../components/main/Survey";
 function MainPage() {
   return (
     <div>
-      {/* 공지사항 컨테이너*/}
       <Notice />
-      {/* 커뮤니티 컨테이너 */}
       <Category>
         <Title>💬 커뮤니티</Title>
         <AllBtn>전체보기</AllBtn>
       </Category>
       <Board />
-      {/* 오늘의 경기 컨테이너 */}
       <Category>
         <Title>🏁 오늘의 경기</Title>
         <AllBtn>전체보기</AllBtn>
       </Category>
       <TodayMatch />
-      {/* 핫클립 컨테이너 */}
       <Hotclip />
-      {/* 노스트라다무스 컨테이너 */}
       <Category>
         <Title>🎯 노스트라다무스 랭킹</Title>
       </Category>
       <Nostradamus />
-      {/* 성향설문 버튼 */}
       <Survey />
     </div>
   );

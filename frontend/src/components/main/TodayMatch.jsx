@@ -11,9 +11,7 @@ function TodayMatch() {
     getTodayMatch(({ data }) => {
       setMatches(data);
     }),
-      (error) => {
-        console.error(error);
-      };
+      () => {};
   }, []);
 
   return (
