@@ -32,9 +32,8 @@ const SocketProvider = ({ children }) => {
     console.log("isLoggedIn: ", userState.isLoggedIn);
 
     const connectSocket = () => {
-      const socket = new SockJS(
-        "https://i10a409.p.ssafy.io:8010/ws/notification",
-      );
+      const domain = process.env.REACT_APP_DOMAIN;
+      const socket = new SockJS(`${domain}:8010/ws/notification`);
       const stomp = Stomp.over(socket);
 
       stomp.connect({}, (frame) => {
