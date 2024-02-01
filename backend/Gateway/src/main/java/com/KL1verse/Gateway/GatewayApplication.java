@@ -31,6 +31,7 @@ public class GatewayApplication {
 			.before(rewritePath("/user/(?<segment>.*)", "/${segment}"))
 			.after(((serverRequest, serverResponse) -> {
                 try {
+					log.info("url = {}", serverRequest.path());
                     log.info("body = {}", serverRequest.body(String.class));
                 } catch (ServletException e) {
                     throw new RuntimeException(e);
