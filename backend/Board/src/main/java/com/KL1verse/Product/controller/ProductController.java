@@ -45,21 +45,16 @@ public class ProductController {
     }
 
     @PutMapping("/{boardId}")
-    public ResponseEntity<ProductDTO> updateProduct(@PathVariable Long boardId,
-        @RequestBody ProductDTO productDto, @RequestParam int userId) {
-        if (!productService.isProductOwner(boardId, userId)) {
-            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
-        }
+    public ResponseEntity<ProductDTO> updateProduct(@PathVariable Long boardId, @RequestBody ProductDTO productDto) {
 
         ProductDTO updatedProduct = productService.updateProduct(boardId, productDto);
         return ResponseEntity.ok(updatedProduct);
     }
 
+
     @DeleteMapping("/{boardId}")
-    public ResponseEntity<Void> deleteProduct(@PathVariable Long boardId, @RequestParam int userId) {
-        if (!productService.isProductOwner(boardId, userId)) {
-            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
-        }
+    public ResponseEntity<Void> deleteProduct(@PathVariable Long boardId) {
+
         productService.deleteProduct(boardId);
         return ResponseEntity.noContent().build();
     }

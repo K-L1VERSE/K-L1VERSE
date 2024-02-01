@@ -43,21 +43,16 @@ public class CommentController {
     // Update Comment by ID
     @PutMapping("/{commentId}")
     public ResponseEntity<CommentDTO> updateComment(@PathVariable Long commentId,
-        @RequestBody CommentDTO commentDTO, @RequestParam int userId) {
+        @RequestBody CommentDTO commentDTO) {
 
-        if (!commentService.isCommentOwner(commentId, userId)) {
-            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
-        }
         CommentDTO updatedComment = commentService.updateComment(commentId, commentDTO);
         return ResponseEntity.ok(updatedComment);
     }
 
     // Delete Comment by ID
     @DeleteMapping("/{commentId}")
-    public ResponseEntity<Void> deleteComment(@PathVariable Long commentId, @RequestParam int userId) {
-        if (!commentService.isCommentOwner(commentId, userId)) {
-            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
-        }
+    public ResponseEntity<Void> deleteComment(@PathVariable Long commentId) {
+
         commentService.deleteComment(commentId);
         return ResponseEntity.noContent().build();
     }

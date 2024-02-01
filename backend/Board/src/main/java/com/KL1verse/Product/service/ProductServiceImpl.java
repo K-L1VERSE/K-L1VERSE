@@ -69,11 +69,7 @@ public class ProductServiceImpl implements ProductService {
     }
 
 
-    @Override
-    public boolean isProductOwner(Long boardId, int userId) {
-        Product product = findProductByBoardId(boardId);
-        return product.getBoard().getUserId() == userId;
-    }
+
 
 
     @Override

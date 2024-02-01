@@ -109,12 +109,6 @@ public class CommentServiceImpl implements CommentService {
         log.info("Comment {} is deleted : ", commentId);
     }
 
-    @Override
-    public boolean isCommentOwner(Long commentId, int userId) {
-        Comment comment = commentRepository.findById(commentId)
-            .orElseThrow(() -> new RuntimeException("Comment not found with id: " + commentId));
-        return comment.getUserId() == userId;
-    }
 
 
     @Override

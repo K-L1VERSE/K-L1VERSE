@@ -50,6 +50,7 @@ public class MateServiceImpl implements MateService {
         return convertToDTO(createdMate);
     }
 
+
     @Override
     public MateDTO updateMate(Long boardId, MateDTO mateDto) {
         Mate existingMate = findMateByBoardId(boardId);
@@ -59,44 +60,15 @@ public class MateServiceImpl implements MateService {
     }
 
     @Override
-    public void deleteMate(Long boardId, int userId) {
+    public void deleteMate(Long boardId) {
         Mate mateToDelete = findMateByBoardId(boardId);
 
-        // 로그인한 사용자가 Mate 게시물의 소유자인지 확인
-        if (mateToDelete.getBoard().getUserId() == userId) {
-            if (mateToDelete != null) {
-                mateToDelete.getBoard().setDeleteAt(LocalDateTime.now());
-            }
-            mateRepository.deleteById(mateToDelete.getMateId());
-        } else {
-            throw new UnauthorizedException("게시글을 삭제할 권한이 없습니다.");
+        if (mateToDelete != null) {
+            mateToDelete.getBoard().setDeleteAt(LocalDateTime.now());
         }
-    }
 
-    @Override
-    public boolean isMateOwner(Long boardId, int userId) {
-        Mate mate = findMateByBoardId(boardId);
-        return mate.getBoard().getUserId() == userId;
+        mateRepository.deleteById(mateToDelete.getMateId());
     }
-
-//    @Override
-//    public MateDTO updateMate(Long boardId, MateDTO mateDto) {
-//        Mate existingMate = findMateByBoardId(boardId);
-//        updateExistingMate(existingMate, mateDto);
-//        Mate updatedMate = mateRepository.save(existingMate);
-//        return convertToDTO(updatedMate);
-//    }
-//
-//    @Override
-//    public void deleteMate(Long boardId, int userId) {
-//        Mate mateToDelete = findMateByBoardId(boardId);
-//
-//        if (mateToDelete != null) {
-//            mateToDelete.getBoard().setDeleteAt(LocalDateTime.now());
-//        }
-//
-//        mateRepository.deleteById(mateToDelete.getMateId());
-//    }
 
     //    @Override
 //    public Page<MateDTO> searchMates(SearchBoardConditionDto searchCondition, Pageable pageable) {

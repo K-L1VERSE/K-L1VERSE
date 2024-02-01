@@ -18,8 +18,6 @@ public interface CommentService {
 
     List<CommentDTO> getAllRepliesByParentId(Long parentId);
 
-    boolean isCommentOwner(Long commentId, int userId);
-
     CommentDTO createReply(Long parentCommentId, CommentDTO replyDTO);
 
 

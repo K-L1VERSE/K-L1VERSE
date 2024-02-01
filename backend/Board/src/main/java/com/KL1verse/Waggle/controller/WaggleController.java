@@ -47,14 +47,8 @@ public class WaggleController {
 
 
     @PutMapping("/{boardId}")
-    public ResponseEntity<WaggleDTO> updateWaggle(@PathVariable Long boardId,
-        @RequestBody WaggleDTO waggleDto, @RequestParam int userId) {
+    public ResponseEntity<WaggleDTO> updateWaggle(@PathVariable Long boardId, @RequestBody WaggleDTO waggleDto) {
 
-        // 로그인한 사용자가 Waggle 게시물의 소유자인지 확인
-        if (!waggleService.isWaggleOwner(boardId, userId)) {
-            // 권한이 없는 액세스
-            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
-        }
 
         WaggleDTO updatedWaggle = waggleService.updateWaggle(boardId, waggleDto);
         return ResponseEntity.ok(updatedWaggle);
@@ -62,14 +56,10 @@ public class WaggleController {
 
 
     @DeleteMapping("/{boardId}")
-    public ResponseEntity<Void> deleteWaggle(@PathVariable Long boardId, @RequestParam int userId) {
+    public ResponseEntity<Void> deleteWaggle(@PathVariable Long boardId) {
         // 로그인한 사용자가 Waggle 게시물의 소유자인지 확인
-        if (!waggleService.isWaggleOwner(boardId, userId)) {
-            // 권한이 없는 액세스
-            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
-        }
 
-        waggleService.deleteWaggle(boardId, userId);
+        waggleService.deleteWaggle(boardId);
         return ResponseEntity.noContent().build();
     }
 

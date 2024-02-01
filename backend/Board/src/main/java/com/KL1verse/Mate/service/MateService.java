@@ -15,7 +15,7 @@ public interface MateService {
 
     MateDTO updateMate(Long boardId, MateDTO mateDto);
 
-    void deleteMate(Long boardId, int userId);
+    void deleteMate(Long boardId);
 
     Page<MateDTO> searchMates(SearchBoardConditionDto searchCondition, Pageable pageable);
 
@@ -30,5 +30,4 @@ public interface MateService {
 
     Page<MateDTO> getMatesByMatchList(List<Integer> matchIds, Pageable pageable);
 
-    boolean isMateOwner(Long boardId, int userId);
 }

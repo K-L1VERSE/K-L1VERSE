@@ -61,25 +61,19 @@ public class WaggleServiceImpl implements WaggleService {
     }
 
     @Override
-    public void deleteWaggle(Long boardId, int userId) {
+    public void deleteWaggle(Long boardId) {
         Waggle waggleToDelete = findWaggleByBoardId(boardId);
 
         // 로그인한 사용자가 Waggle 게시물의 소유자인지 확인
-        if (waggleToDelete.getBoard().getUserId() == userId) {
+
             if (waggleToDelete != null) {
                 waggleToDelete.getBoard().setDeleteAt(LocalDateTime.now());
             }
             waggleRepository.deleteById(waggleToDelete.getWaggleId());
-        } else {
-            throw new UnauthorizedException("Unauthorized access to delete Waggle.");
-        }
+
     }
 
-    @Override
-    public boolean isWaggleOwner(Long boardId, int userId) {
-        Waggle waggle = findWaggleByBoardId(boardId);
-        return waggle.getBoard().getUserId() == userId;
-    }
+
 
 
     //    @Override
