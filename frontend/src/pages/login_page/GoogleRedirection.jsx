@@ -17,6 +17,7 @@ function GoogleRedirection() {
   // const setUserState = useSetRecoilState(UserState);
 
   useEffect(() => {
+    console.log("Code: ", ${GOOGLE_CODE});
     axios
       .get(`/user/login/oauth/code/google?code=${GOOGLE_CODE}`)
       .then((res) => {
@@ -29,12 +30,7 @@ function GoogleRedirection() {
         //   domain: res.data.domain,
         //   isLoggedIn: true,
         // });
-        console.log(res);
-
-        setTimeout(function () {
-          console.log(res);
-          console.log("Works!");
-        }, 10000);
+        console.log("응답:!@!@!@", res);
 
         /* 성공시 홈화면으로 */
         // window.location.href = "/";
