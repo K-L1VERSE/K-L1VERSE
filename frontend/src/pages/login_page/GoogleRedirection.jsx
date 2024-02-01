@@ -39,8 +39,12 @@ function GoogleRedirection() {
         /* 성공시 홈화면으로 */
         // window.location.href = "/";
       })
-      .catch(() => {
-        window.location.href = "/login";
+      .catch((err) => {
+        setTimeout(function () {
+          console.log(err);
+          console.log("Works!");
+        }, 10000);
+        // window.location.href = "/login";
       });
   }, []);
 
