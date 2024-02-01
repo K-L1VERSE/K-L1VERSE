@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
@@ -56,13 +57,16 @@ public class CommentController {
 
 
     @GetMapping("/list/{boardId}")
-    public ResponseEntity<List<CommentDTO>> getAllCommentsByBoardId(@PathVariable Long boardId) {
-
-        Long requestingUserId = 1232245L;
+    public ResponseEntity<List<CommentDTO>> getAllCommentsByBoardId(@PathVariable Long boardId,
+        @RequestParam(value = "requestingUserId", required = false) Long requestingUserId) {
+        if (requestingUserId == null) {
+            return ResponseEntity.badRequest().build();
+        }
         List<CommentDTO> comments = commentService.getAllCommentsByBoardId(boardId,
                 requestingUserId)
+
             .stream()
-            .filter(comment -> comment.getDeleteAt() == null) // delete_at이 비어 있으면 포함
+            .filter(comment -> comment.getDeleteAt() == null)
             .collect(Collectors.toList());
 
         return ResponseEntity.ok(comments);
