@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect } from "react";
 import styled from "styled-components";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faHourglassHalf } from "@fortawesome/free-solid-svg-icons";
@@ -16,7 +16,7 @@ function GoogleRedirection() {
 
   const setUserState = useSetRecoilState(UserState);
 
-  useState(() => {
+  useEffect(() => {
     axios
       .get(`/user/login/oauth/code/google?code=${GOOGLE_CODE}`)
       .then((res) => {
