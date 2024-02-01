@@ -17,6 +17,8 @@ public class CorsConfig {
         config.addAllowedOrigin("http://localhost:8080");
         config.addAllowedOrigin("http://localhost:3000");
         config.addAllowedOrigin("http://70.12.50.57:8080");
+        config.addAllowedOrigin("https://i10a409.p.ssafy.io");
+        config.addAllowedOrigin("http://i10a409.p.ssafy.io");
         config.addAllowedHeader("*");
         config.addAllowedMethod("*");
 

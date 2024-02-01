@@ -2,9 +2,9 @@
 import React, { useState, useEffect, useCallback } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "../../../api/axios";
-import BoardTopNavBar from "../../../components/Board/BoardTopNavBar";
-import ProductItemCard from "../../../components/Board/ProductItemCard";
-import { formatRelativeTime } from "../../../components/Board/dateFormat";
+import BoardTopNavBar from "../../../components/board/BoardTopNavBar";
+import ProductItemCard from "../../../components/board/ProductItemCard";
+import { formatRelativeTime } from "../../../components/board/dateFormat";
 import {
   ProductHeader,
   ProductHeaderH2,

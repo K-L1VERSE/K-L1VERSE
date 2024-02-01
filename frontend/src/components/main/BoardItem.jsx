@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
 import {
   Title,
   Type,
@@ -10,19 +10,19 @@ import {
 
 // ************ 날짜 yyyy-mm-dd 형태로 변환 ************
 function formatDate(date) {
-  var d = new window.Date(date);
-  var month = "" + (d.getMonth() + 1);
-  var day = "" + d.getDate();
-  var year = d.getFullYear();
-  if (month.length < 2) month = "0" + month;
-  if (day.length < 2) day = "0" + day;
+  const d = new window.Date(date);
+  let month = `${d.getMonth() + 1}`;
+  let day = `${d.getDate()}`;
+  const year = d.getFullYear();
+  if (month.length < 2) month = `0${month}`;
+  if (day.length < 2) day = `0${day}`;
   return [year, month, day].join("-");
 }
 
 // ************ 제목 글자 수 제한 ************
 function truncateText(text, maxLength) {
   if (text && text.length > maxLength) {
-    return text.slice(0, maxLength) + "..";
+    return `${text.slice(0, maxLength)}..`;
   }
   return text;
 }
