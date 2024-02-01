@@ -3,12 +3,10 @@ package com.KL1verse.Waggle.controller;
 import com.KL1verse.Board.dto.req.SearchBoardConditionDto;
 import com.KL1verse.Waggle.dto.req.WaggleDTO;
 import com.KL1verse.Waggle.service.WaggleService;
-import java.security.Principal;
 import java.util.List;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -47,8 +45,8 @@ public class WaggleController {
 
 
     @PutMapping("/{boardId}")
-    public ResponseEntity<WaggleDTO> updateWaggle(@PathVariable Long boardId, @RequestBody WaggleDTO waggleDto) {
-
+    public ResponseEntity<WaggleDTO> updateWaggle(@PathVariable Long boardId,
+        @RequestBody WaggleDTO waggleDto) {
 
         WaggleDTO updatedWaggle = waggleService.updateWaggle(boardId, waggleDto);
         return ResponseEntity.ok(updatedWaggle);
@@ -57,7 +55,6 @@ public class WaggleController {
 
     @DeleteMapping("/{boardId}")
     public ResponseEntity<Void> deleteWaggle(@PathVariable Long boardId) {
-        // 로그인한 사용자가 Waggle 게시물의 소유자인지 확인
 
         waggleService.deleteWaggle(boardId);
         return ResponseEntity.noContent().build();

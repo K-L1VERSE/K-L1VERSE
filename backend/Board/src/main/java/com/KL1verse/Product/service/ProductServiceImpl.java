@@ -5,7 +5,6 @@ import com.KL1verse.Board.dto.req.SearchBoardConditionDto;
 import com.KL1verse.Board.repository.BoardRepository;
 import com.KL1verse.Board.repository.entity.Board;
 import com.KL1verse.Comment.repository.CommentRepository;
-import com.KL1verse.Mate.repository.entity.Mate;
 import com.KL1verse.Product.dto.req.ProductDTO;
 import com.KL1verse.Product.repository.ProductRepository;
 import com.KL1verse.Product.repository.entity.Product;
@@ -25,7 +24,7 @@ public class ProductServiceImpl implements ProductService {
     private final ProductRepository productRepository;
     private final BoardRepository boardRepository;
 
-    private  final CommentRepository commentRepository;
+    private final CommentRepository commentRepository;
 
     public ProductServiceImpl(ProductRepository productRepository,
         BoardRepository boardRepository, CommentRepository commentRepository) {
@@ -69,11 +68,9 @@ public class ProductServiceImpl implements ProductService {
     }
 
 
-
-
-
     @Override
-    public Page<ProductDTO> searchProducts(SearchBoardConditionDto searchCondition, Pageable pageable) {
+    public Page<ProductDTO> searchProducts(SearchBoardConditionDto searchCondition,
+        Pageable pageable) {
         Page<Product> products;
 
         if (searchCondition != null && searchCondition.getKeyword() != null) {
@@ -89,13 +86,11 @@ public class ProductServiceImpl implements ProductService {
         return products.map(product -> {
             ProductDTO productDTO = convertToDTO(product);
 
-            // Product과 연관된 Board의 댓글 수 가져오기
             if (product.getBoard() != null) {
-                // Board 엔티티에 commentCount 필드가 있다고 가정
+
                 Long boardId = product.getBoard().getBoardId();
                 Integer commentCount = commentRepository.countCommentsByBoardId(boardId);
 
-                // ProductDTO 내의 BoardDTO에 댓글 수 설정
                 productDTO.getBoard().setCommentCount(commentCount != null ? commentCount : 0);
             }
 
@@ -110,13 +105,11 @@ public class ProductServiceImpl implements ProductService {
         return products.map(product -> {
             ProductDTO productDTO = convertToDTO(product);
 
-            // Product과 연관된 Board의 댓글 수 가져오기
             if (product.getBoard() != null) {
-                // Board 엔티티에 commentCount 필드가 있다고 가정
+
                 Long boardId = product.getBoard().getBoardId();
                 Integer commentCount = commentRepository.countCommentsByBoardId(boardId);
 
-                // ProductDTO 내의 BoardDTO에 댓글 수 설정
                 productDTO.getBoard().setCommentCount(commentCount != null ? commentCount : 0);
             }
 

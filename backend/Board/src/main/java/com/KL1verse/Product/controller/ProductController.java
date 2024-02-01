@@ -8,7 +8,6 @@ import java.net.URISyntaxException;
 import java.util.List;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -45,7 +44,8 @@ public class ProductController {
     }
 
     @PutMapping("/{boardId}")
-    public ResponseEntity<ProductDTO> updateProduct(@PathVariable Long boardId, @RequestBody ProductDTO productDto) {
+    public ResponseEntity<ProductDTO> updateProduct(@PathVariable Long boardId,
+        @RequestBody ProductDTO productDto) {
 
         ProductDTO updatedProduct = productService.updateProduct(boardId, productDto);
         return ResponseEntity.ok(updatedProduct);

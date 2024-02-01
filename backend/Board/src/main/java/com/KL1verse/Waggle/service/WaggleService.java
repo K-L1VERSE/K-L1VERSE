@@ -19,12 +19,12 @@ public interface WaggleService {
 
     Page<WaggleDTO> getAllWaggleList(Pageable pageable);
 
-    Page<WaggleDTO> searchWagglesWithLikes(SearchBoardConditionDto searchCondition, Pageable pageable);
+    Page<WaggleDTO> searchWagglesWithLikes(SearchBoardConditionDto searchCondition,
+        Pageable pageable);
 
     Page<WaggleDTO> getAllWagglesWithLikes(Pageable pageable);
 
     List<WaggleDTO> getMostRecentWaggles(int count);
-
 
 
 }

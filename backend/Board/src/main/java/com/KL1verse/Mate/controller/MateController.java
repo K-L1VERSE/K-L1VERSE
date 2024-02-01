@@ -1,17 +1,14 @@
 package com.KL1verse.Mate.controller;
 
-import com.KL1verse.Board.dto.req.BoardDTO;
 import com.KL1verse.Board.dto.req.SearchBoardConditionDto;
 import com.KL1verse.Mate.dto.req.MateDTO;
 import com.KL1verse.Mate.service.MateService;
-import com.KL1verse.Product.dto.req.ProductDTO;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.time.LocalDateTime;
 import java.util.List;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -46,7 +43,6 @@ public class MateController {
         return ResponseEntity.created(new URI("/mates/" + createdMate.getMateId()))
             .body(createdMate);
     }
-
 
 
     @PutMapping("/{boardId}")
@@ -120,7 +116,8 @@ public class MateController {
     }
 
     @GetMapping("/matesByMatchList")
-    public ResponseEntity<Page<MateDTO>> getMatesByMatchList(@RequestParam(required = false) List<Integer> matchIds, Pageable pageable) {
+    public ResponseEntity<Page<MateDTO>> getMatesByMatchList(
+        @RequestParam(required = false) List<Integer> matchIds, Pageable pageable) {
         Page<MateDTO> mates = mateService.getMatesByMatchList(matchIds, pageable);
         return ResponseEntity.ok(mates);
     }

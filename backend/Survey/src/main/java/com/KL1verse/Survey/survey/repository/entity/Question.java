@@ -22,14 +22,13 @@ import lombok.ToString;
 @Setter
 @ToString
 public class Question {
+
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "question_id")
     private Long questionId;
 
     private String content;
-
-
 
 
     @ManyToOne
