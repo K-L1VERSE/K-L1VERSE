@@ -11,4 +11,4 @@ ARG JAR_FILE=./build/libs/UserServer-0.0.1-SNAPSHOT.jar
 # Add the application's jar to the container
 COPY ${JAR_FILE} userServer.jar
 # Run the jar file
-ENTRYPOINT ["java","-jar","-Duser.timezone=Asia/Seoul","/userServer.jar"]
+ENTRYPOINT ["java","-jar","-Duser.timezone=Asia/Seoul", "-Dspring.profiles.active=deploy", "/userServer.jar"]
