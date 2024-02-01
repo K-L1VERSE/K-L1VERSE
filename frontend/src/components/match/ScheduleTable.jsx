@@ -61,7 +61,9 @@ export default function ScheduleTable({ year, month, data }) {
                     <td key={dayIndex}>
                       {dayData.matches.length > 0 ? (
                         dayData.matches.map((match, matchIndex) => (
-                          <MatchDetailButton match={match} />
+                          <div>
+                            <MatchDetailButton match={match} />
+                          </div>
                         ))
                       ) : (
                         <div>X</div>

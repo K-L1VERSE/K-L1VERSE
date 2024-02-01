@@ -1,11 +1,12 @@
 import React from "react";
+import { ScheduleSelect } from "../../styles/MatchStyles/MatchScheduleStyle";
 
 export default function SelectContainer({ year, setYear, month, setMonth }) {
   const years = [2024, 2025];
   const months = Array.from({ length: 12 }, (_, i) => i + 1);
 
   return (
-    <div>
+    <ScheduleSelect>
       <select value={year} onChange={(e) => setYear(e.target.value)}>
         {years.map((y) => (
           <option key={y} value={y}>
@@ -20,6 +21,6 @@ export default function SelectContainer({ year, setYear, month, setMonth }) {
           </option>
         ))}
       </select>
-    </div>
+    </ScheduleSelect>
   );
 }
