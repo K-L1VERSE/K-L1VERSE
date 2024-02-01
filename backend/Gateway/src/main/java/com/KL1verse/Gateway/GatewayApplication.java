@@ -6,7 +6,10 @@ import static org.springframework.cloud.gateway.server.mvc.handler.GatewayRouter
 import static org.springframework.cloud.gateway.server.mvc.handler.HandlerFunctions.http;
 import static org.springframework.cloud.gateway.server.mvc.predicate.GatewayRequestPredicates.path;
 
+import jakarta.servlet.ServletException;
+import java.io.IOException;
 import lombok.extern.slf4j.Slf4j;
+import org.json.simple.JSONObject;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
@@ -26,6 +29,16 @@ public class GatewayApplication {
 		return route("AUTH-SERVICE")
 			.route(path("/user/login/**", "/user/auth/**"), http("http://i10a409.p.ssafy.io:8010"))
 			.before(rewritePath("/user/(?<segment>.*)", "/${segment}"))
+			.after(((serverRequest, serverResponse) -> {
+                try {
+                    log.info("body = {}", serverRequest.body(String.class));
+                } catch (ServletException e) {
+                    throw new RuntimeException(e);
+                } catch (IOException e) {
+                    throw new RuntimeException(e);
+                }
+                return serverResponse;
+			}))
 			.build();
 	}
 
