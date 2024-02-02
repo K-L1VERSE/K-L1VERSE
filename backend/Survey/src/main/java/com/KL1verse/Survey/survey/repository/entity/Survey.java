@@ -20,7 +20,6 @@ import lombok.ToString;
 @Setter
 @ToString
 public class Survey {
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "survey_id")

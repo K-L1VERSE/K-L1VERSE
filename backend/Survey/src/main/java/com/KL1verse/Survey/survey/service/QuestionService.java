@@ -4,7 +4,6 @@ import com.KL1verse.Survey.survey.dto.req.QuestionDTO;
 
 
 public interface QuestionService {
-
     QuestionDTO getQuestionById(Long questionId);
 }
 

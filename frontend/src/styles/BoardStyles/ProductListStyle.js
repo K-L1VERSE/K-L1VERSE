@@ -84,19 +84,6 @@ export const DealStatusOrange = styled(DealStatus)`
   color: white;
 `;
 
-export const ProductItemWriter = styled.div`
-  width: 100%;
-  height: 17px;
-  font-family: "Pretendard";
-  font-style: normal;
-  font-weight: 400;
-  font-size: 14px;
-  line-height: 17px;
-  color: #a9a9a9;
-  text-decoration: none;
-  margin-bottom: 8px;
-`;
-
 export const ProductItemTitle = styled.div`
   width: 100%;
   height: 17px;

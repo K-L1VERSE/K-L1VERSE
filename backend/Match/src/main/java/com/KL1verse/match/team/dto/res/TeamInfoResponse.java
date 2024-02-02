@@ -21,8 +21,6 @@ public class TeamInfoResponse {
     private int teamId;
     private String teamName;
     private String description;
-    private String song;
     private List<Member> members;
-
 
 }

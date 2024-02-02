@@ -10,9 +10,8 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface MatchRepository extends JpaRepository<Match, Integer> {
 
-    @Query(value = "SELECT * FROM game WHERE YEAR(match_at) = :year and MONTH(match_at) = :month", nativeQuery = true)
-    List<Match> findByYearAndMonth(@Param("year") int year, @Param("month") int month);
-
+    @Query(value = "SELECT * FROM game WHERE MONTH(match_at) = :month", nativeQuery = true)
+    List<Match> findByMonth(@Param("month") int month);
 
     @Query(value = "SELECT team_name FROM team WHERE team_id = :teamId", nativeQuery = true)
     String findOneByTeamId(@Param("teamId") int teamId);

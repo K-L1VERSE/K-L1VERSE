@@ -27,7 +27,4 @@ public interface MateService {
         Pageable pageable);
 
     List<MateDTO> getMostRecentMates(int count);
-
-    Page<MateDTO> getMatesByMatchList(List<Integer> matchIds, Pageable pageable);
-
 }

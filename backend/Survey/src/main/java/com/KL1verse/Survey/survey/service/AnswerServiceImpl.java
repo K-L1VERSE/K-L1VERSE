@@ -25,9 +25,10 @@ public class AnswerServiceImpl implements AnswerService {
 
         for (Answer answer : answers) {
             AnswerDTO answerDTO = new AnswerDTO();
+            // 현재 Answer 객체의 속성을 AnswerDTO 객체로 복사
 
             BeanUtils.copyProperties(answer, answerDTO);
-
+            // 생성된 AnswerDTO 객체를 answerDTOs 목록에 추가
             answerDTOs.add(answerDTO);
         }
 

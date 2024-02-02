@@ -1,8 +1,7 @@
+import GlobalStyle from "../src/styles/global/GlobalStyle";
 import React from "react";
 import ReactDOM from "react-dom/client";
 import { RecoilRoot } from "recoil";
-
-import GlobalStyle from "./styles/global/GlobalStyle";
 
 import App from "./App";
 import reportWebVitals from "./reportWebVitals";

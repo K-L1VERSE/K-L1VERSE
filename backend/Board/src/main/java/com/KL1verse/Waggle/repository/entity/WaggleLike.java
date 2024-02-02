@@ -22,7 +22,6 @@ import lombok.Setter;
 @AllArgsConstructor
 @NoArgsConstructor
 public class WaggleLike {
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "likes_id")
