@@ -9,4 +9,3 @@ spring:
       ddl-auto: update
   datasource:
     driver-class-name: org.mariadb.jdbc.Driver
-

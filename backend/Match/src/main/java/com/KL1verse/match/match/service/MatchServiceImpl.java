@@ -7,7 +7,6 @@ import com.KL1verse.match.match.dto.res.TimelineResponse;
 import com.KL1verse.match.match.repository.MatchRepository;
 import com.KL1verse.match.match.repository.TimelineRepository;
 import com.KL1verse.match.match.repository.entity.Match;
-import com.KL1verse.match.match.repository.entity.Match.MatchStatus;
 import com.KL1verse.match.match.repository.entity.Timeline;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
@@ -41,22 +40,21 @@ public class MatchServiceImpl implements MatchService {
 
     @Override
     @Transactional
-    public List<MatchListResponse> getMatchList(int year, int month) {
+    public List<MatchListResponse> getMatchList(int month) {
 
-        List<Match> matchList = matchRepository.findByYearAndMonth(year, month);
+        List<Match> matchList = matchRepository.findByMonth(month);
         List<MatchListResponse> matchListResponses = new ArrayList<>();
 
         for (Match match : matchList) {
             LocalDateTime now = LocalDateTime.now();
             LocalDateTime matchAt = match.getMatchAt();
-
             if (now.getYear() == matchAt.getYear() && now.getMonthValue() == matchAt.getMonthValue()
                 && now.getDayOfMonth() == matchAt.getDayOfMonth()
                 && now.getHour() == matchAt.getHour()) {
-                match.setStatus(MatchStatus.during);
+                match.setStatus("during");
             }
 
-            if (match.getStatus().equals(MatchStatus.during)) {
+            if (match.getStatus().equals("during")) {
                 getScore(match);
             }
 
@@ -69,7 +67,6 @@ public class MatchServiceImpl implements MatchService {
                 .matchAt(match.getMatchAt())
                 .homeScore(match.getHomeScore())
                 .awayScore(match.getAwayScore())
-                .status(match.getStatus())
                 .build());
         }
 
@@ -86,10 +83,10 @@ public class MatchServiceImpl implements MatchService {
         if (now.getYear() == matchAt.getYear() && now.getMonthValue() == matchAt.getMonthValue()
             && now.getDayOfMonth() == matchAt.getDayOfMonth()
             && now.getHour() == matchAt.getHour()) {
-            match.setStatus(MatchStatus.during);
+            match.setStatus("during");
         }
 
-        if (match.getStatus().equals(MatchStatus.during)) {
+        if (match.getStatus().equals("during")) {
             getScore(match);
         }
 
@@ -100,12 +97,10 @@ public class MatchServiceImpl implements MatchService {
             .awayTeamName(matchRepository.findOneByTeamId(match.getAwayTeamId()))
             .homeBettingAmount(match.getHomeBettingAmount())
             .awayBettingAmount(match.getAwayBettingAmount())
-            .drawBettingAmount(match.getDrawBettingAmount())
             .matchAt(match.getMatchAt())
-            .status(match.getStatus().toString())
+            .status(match.getStatus())
             .homeScore(match.getHomeScore())
             .awayScore(match.getAwayScore())
-            .home(match.getHome())
             .build();
     }
 
@@ -151,7 +146,7 @@ public class MatchServiceImpl implements MatchService {
             if (matchDay == gameDay && matchHomeTeamName.equals(gameHomeTeamName)
                 && matchAwayTeamName.equals(gameAwayTeamName)) {
                 if (element.getAsJsonObject().getAsJsonObject("endYn").getAsString().equals("Y")) {
-                    match.setStatus(MatchStatus.done);
+                    match.setStatus("done");
                     break;
                 }
                 int gameId = element.getAsJsonObject().getAsJsonObject("gameId").getAsInt();

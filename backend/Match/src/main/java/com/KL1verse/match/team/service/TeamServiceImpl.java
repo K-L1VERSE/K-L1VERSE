@@ -29,7 +29,6 @@ public class TeamServiceImpl implements TeamService {
             .teamName(team.getTeamName())
             .description(team.getTeamDescription())
             .members(member)
-            .song(teamRepository.findBySongId(team.getSongId()))
             .build();
 
     }

@@ -67,19 +67,6 @@ export const MateItemContainer = styled.div`
   color: inherit;
 `;
 
-export const MateItemWriter = styled.div`
-  width: 100%;
-  height: 17px;
-  font-family: "Pretendard";
-  font-style: normal;
-  font-weight: 400;
-  font-size: 14px;
-  line-height: 17px;
-  color: #a9a9a9;
-  text-decoration: none;
-  margin-bottom: 8px;
-`;
-
 export const MateItemTitle = styled.div`
   width: 100%;
   height: 17px;

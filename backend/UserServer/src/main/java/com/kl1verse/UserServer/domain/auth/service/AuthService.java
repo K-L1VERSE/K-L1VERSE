@@ -140,7 +140,6 @@ public class AuthService {
             .nickname(user.getNickname())
             .profile(user.getProfile())
             .domain(user.getDomain())
-            .userId(user.getId())
             .build();
     }
 

@@ -1,20 +1,8 @@
 import React, { useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
-import { useRecoilState } from "recoil";
 import axios from "../../../api/axios";
-import { updateWaggle } from "../../../api/waggle";
 import BoardTopNavBar from "../../../components/board/BoardTopNavBar";
 import CommentList from "../../../components/board/CommentList";
-import {
-  Container,
-  WaggleDetailBox,
-  Title,
-  Content,
-  Button,
-  LikeButton,
-  LikeCount,
-} from "../../../styles/BoardStyles/BoardDetailStyle";
-import { UserState } from "../../../global/UserState";
 
 function WaggleDetailPage() {
   const [waggleDetail, setWaggleDetail] = useState({});
@@ -23,14 +11,14 @@ function WaggleDetailPage() {
   const [likeCount, setLikeCount] = useState(0);
   const { boardId } = useParams();
   const navigate = useNavigate();
-  const { nickname } = useRecoilState(UserState)[0];
 
+  /* waggle 상세 정보 가져오기 */
   function getWaggleDetail() {
     axios.get(`/board/waggles/${boardId}`).then(({ data }) => {
       setWaggleDetail(data.board);
       setWaggleId(data.waggleId);
       setIsLiked(data.isLiked);
-      setLikeCount(data.likeCount);
+      setLikeCount(likeCount);
     });
   }
 
@@ -38,33 +26,33 @@ function WaggleDetailPage() {
     getWaggleDetail();
   }, [boardId]);
 
-  const handleUpdateBtn = () => {
-    updateWaggle(waggleDetail)
-      .then(() => {
-        navigate(`/waggle/${boardId}`);
-      })
-      .catch((error) => {
-        console.error("Error in handleUpdateBtn:", error);
-      });
-  };
+  function handleUpdateBtn() {
+    navigate("/waggleRegist", { state: { boardId: waggleDetail.boardId } });
+  }
 
   const handleDeleteBtn = async () => {
     try {
       await axios.delete(`/board/waggles/${boardId}`);
       navigate("/waggle");
     } catch (error) {
-      console.error("글 삭제 중 에러 발생:", error);
+      // console.error("글 삭제 중 에러 발생:", error);
     }
   };
 
   const handleLikeClick = async () => {
     try {
       if (isLiked) {
-        await axios.delete(`/board/waggles/like/${waggleId}`);
+        await axios.delete(`/board/waggles/like/${waggleId}`, {
+          data: {
+            // userId,
+          },
+        });
         setIsLiked(false);
         setLikeCount((prevCount) => prevCount - 1);
       } else {
-        const response = await axios.post(`/board/waggles/like/${waggleId}`);
+        const response = await axios.post(`/board/waggles/like/${waggleId}`, {
+          // userId,
+        });
         setIsLiked(true);
         setLikeCount((prevCount) => prevCount + 1);
         // 응답이 정상적으로 반환되었는지 확인 후 출력
@@ -79,31 +67,45 @@ function WaggleDetailPage() {
     }
   };
 
+  const handleKeyDown = (event, clickHandler) => {
+    if (event.key === "Enter") {
+      clickHandler();
+    }
+  };
+
   return (
-    <Container>
+    <div className="container">
       <BoardTopNavBar />
-      <WaggleDetailBox>
-        {nickname}
-        <Title>{waggleDetail.title}</Title>
-        <Content>{waggleDetail.content}</Content>
-        {/* 좋아요 버튼 및 개수 표시 */}
-        <div>
-          <LikeButton onClick={handleLikeClick}>
-            {isLiked ? "♥︎" : "♡"}
-          </LikeButton>
-          <LikeCount>좋아요 {likeCount}개</LikeCount>
-        </div>
-      </WaggleDetailBox>
+      <div className="waggle-detail-box">
+        <p>
+          <strong>{waggleDetail.title}</strong>
+        </p>
+        <p>{waggleDetail.content}</p>
+      </div>
+      <button
+        type="button"
+        onClick={handleUpdateBtn}
+        onKeyDown={(e) => handleKeyDown(e, handleUpdateBtn)}
+      >
+        수정하기
+      </button>
+      <button
+        type="button"
+        onClick={handleDeleteBtn}
+        onKeyDown={(e) => handleKeyDown(e, handleDeleteBtn)}
+      >
+        삭제하기
+      </button>
 
-      <Button type="button" onClick={handleUpdateBtn}>
-        수정
-      </Button>
-      <Button type="button" onClick={handleDeleteBtn}>
-        삭제
-      </Button>
+      {/* 좋아요 버튼 및 개수 표시 */}
+      <div>
+        {/* <button onClick={handleLikeClick}>{isLiked ? "♥︎" : "♡"}</button> */}
+        <span>좋아요 {likeCount}개</span>
+      </div>
 
+      {/* 댓글 목록을 표시하는 컴포넌트 추가 */}
       <CommentList boardId={boardId} />
-    </Container>
+    </div>
   );
 }
 

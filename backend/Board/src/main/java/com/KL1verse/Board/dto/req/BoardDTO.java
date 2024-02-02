@@ -19,12 +19,11 @@ public class BoardDTO {
     private BoardType boardType;
     private String title;
     private String content;
-    private Integer userId;
+    private Long user;
     private LocalDateTime createAt;
     private LocalDateTime updateAt;
     private LocalDateTime deleteAt;
     private Integer commentCount;
-    private String boardImage;
 
 
 

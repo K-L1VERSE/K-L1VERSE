@@ -17,7 +17,7 @@ instance.interceptors.request.use(
     if (recoilData) {
       // 요청 헤더에 accessToken 추가
       accessToken = JSON.parse(recoilData).userState.accessToken;
-      config.headers.Authorization = `Bearer ${accessToken}`;
+      config.headers["Authorization"] = `Bearer ${accessToken}`;
     }
 
     return config;

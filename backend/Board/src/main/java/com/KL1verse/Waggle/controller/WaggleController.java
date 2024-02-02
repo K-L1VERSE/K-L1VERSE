@@ -47,7 +47,6 @@ public class WaggleController {
     @PutMapping("/{boardId}")
     public ResponseEntity<WaggleDTO> updateWaggle(@PathVariable Long boardId,
         @RequestBody WaggleDTO waggleDto) {
-
         WaggleDTO updatedWaggle = waggleService.updateWaggle(boardId, waggleDto);
         return ResponseEntity.ok(updatedWaggle);
     }
@@ -55,11 +54,9 @@ public class WaggleController {
 
     @DeleteMapping("/{boardId}")
     public ResponseEntity<Void> deleteWaggle(@PathVariable Long boardId) {
-
         waggleService.deleteWaggle(boardId);
         return ResponseEntity.noContent().build();
     }
-
 
     @GetMapping("/searchPaged")
     public ResponseEntity<Page<WaggleDTO>> searchWagglesPaged(

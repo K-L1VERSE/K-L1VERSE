@@ -1,60 +1,52 @@
 import React, { useState, useEffect } from "react";
-import { useRecoilState } from "recoil";
 import { useNavigate, useLocation } from "react-router-dom";
+import axios from "../../../api/axios";
 import BoardTopNavBar from "../../../components/board/BoardTopNavBar";
-import ResigistCard from "../../../components/board/ResigistCard";
-import { createMate, updateMate } from "../../../api/mate";
-import { UserState } from "../../../global/UserState";
+
+import * as boardApi from "../../../api/mate";
 
 function MateRegistPage() {
   const navigate = useNavigate();
+
   const [title, setTitle] = useState("");
   const [content, setContent] = useState("");
-  const [isUpdateMode] = useState(false);
-  const { userId } = useRecoilState(UserState)[0];
+  const [isUpdateMode, setIsUpdateMode] = useState(false);
 
   const location = useLocation();
+  let boardId = location.state ? location.state.boardId : null;
+
   useEffect(() => {
-    if (location.state && location.state.board) {
-      setTitle(location.state.board.title);
-      setContent(location.state.board.content);
+    if (boardId) {
+      boardApi.getBoard(boardId).then((data) => {
+        setTitle(data.board.title);
+        setContent(data.board.content);
+        setIsUpdateMode(true);
+      });
     }
-  }, [location]);
+  }, [boardId]);
 
-  const boardId = location.state ? location.state.boardId : null;
+  const handleSubmit = async (event) => {
+    event.preventDefault();
 
-  const handleSubmit = () => {
-    if (isUpdateMode) {
-      updateMate(
-        {
-          board: {
-            title,
-            content,
-          },
+    try {
+      const requestData = {
+        board: {
+          title,
+          content,
         },
-        boardId,
-        () => {
-          navigate(`/mate/${boardId}`);
-        },
-        () => {},
-      );
-    } else {
-      createMate(
-        {
-          board: {
-            boardType: "MATE",
-            title,
-            content,
-            userId,
-          },
-        },
-        ({ data }) => {
-          navigate(`/mate/${data.board.boardId}`);
-        },
-        () => {
-          console.error("Mate 게시물 작성 중 에러 발생");
-        },
-      );
+      };
+
+      if (isUpdateMode) {
+        axios.put(`/board/mates/${boardId}`, requestData);
+        navigate(`/mate/${boardId}`);
+      } else {
+        const response = await axios.post("/board/mates", requestData);
+        const boardTemp = response.data.board;
+        boardId = boardTemp.boardId;
+        navigate(`/mate/${boardId}`);
+      }
+    } catch (error) {
+      // console.error("Mate 게시물 작성 또는 수정 중 에러 발생:", error);
     }
   };
 
@@ -62,14 +54,22 @@ function MateRegistPage() {
     <div>
       <BoardTopNavBar />
       <h1>{isUpdateMode ? "Mate 게시물 수정" : "Mate 게시물 작성"}</h1>
-      <ResigistCard
-        title={title}
-        content={content}
-        onTitleChange={(e) => setTitle(e.target.value)}
-        onContentChange={(e) => setContent(e.target.value)}
-        onSubmit={handleSubmit}
-        buttonText={isUpdateMode ? "수정하기" : "작성하기"}
-      />
+      <form onSubmit={handleSubmit}>
+        제목:
+        <input
+          type="text"
+          value={title}
+          onChange={(e) => setTitle(e.target.value)}
+        />
+        <br />
+        내용:
+        <textarea
+          value={content}
+          onChange={(e) => setContent(e.target.value)}
+        />
+        <br />
+        <button type="submit">{isUpdateMode ? "수정하기" : "작성하기"}</button>
+      </form>
     </div>
   );
 }

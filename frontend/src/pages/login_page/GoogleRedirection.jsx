@@ -24,7 +24,6 @@ function GoogleRedirection() {
         accessToken: res.data.accessToken,
         email: res.data.email,
         domain: res.data.domain,
-        userId: res.data.userId,
         isLoggedIn: true,
       });
       console.log("응답:!@!@!@", res.data);

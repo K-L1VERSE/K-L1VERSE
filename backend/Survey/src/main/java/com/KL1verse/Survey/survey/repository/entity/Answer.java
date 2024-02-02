@@ -24,8 +24,8 @@ import lombok.ToString;
 public class Answer {
     @Id
     @Column(name = "answer_id")
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long answerId;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long answerId;;
 
     @Column(name = "content")
     private String content;

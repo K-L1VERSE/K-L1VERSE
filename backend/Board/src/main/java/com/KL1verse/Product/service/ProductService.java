@@ -23,7 +23,6 @@ public interface ProductService {
 
     List<ProductDTO> getMostRecentProducts(int count);
 
-
 }
 
 

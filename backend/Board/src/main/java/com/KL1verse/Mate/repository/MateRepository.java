@@ -1,6 +1,7 @@
 package com.KL1verse.Mate.repository;
 
 import com.KL1verse.Board.repository.entity.Board;
+import com.KL1verse.Mate.dto.req.MateDTO;
 import com.KL1verse.Mate.repository.entity.Mate;
 import java.time.LocalDateTime;
 import java.util.List;
@@ -24,7 +25,6 @@ public interface MateRepository extends JpaRepository<Mate, Long> {
     Page<Mate> findByBoard_CreateAtBetween(LocalDateTime startDate, LocalDateTime endDate,
         Pageable pageable);
 
-    Page<Mate> findByMatchIdIn(List<Integer> matchIds, Pageable pageable);
 
 
 

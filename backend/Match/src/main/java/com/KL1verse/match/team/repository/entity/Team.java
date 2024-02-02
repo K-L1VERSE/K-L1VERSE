@@ -35,7 +35,4 @@ public class Team {
     @Column(name = "team_description")
     private String teamDescription;
 
-    @Column(name = "song_id")
-    private int songId;
-
 }
