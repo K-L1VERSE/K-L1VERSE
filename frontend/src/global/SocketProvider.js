@@ -54,6 +54,9 @@ const SocketProvider = ({ children }) => {
       connectSocket();
 
       // 알림 목록 불러오기
+      console.log("토큰: ", userState.accessToken);
+      console.log("알림 가져오기");
+
       axios
         .get("/user/users/notifications")
         .then((res) => {
