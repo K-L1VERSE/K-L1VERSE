@@ -1,7 +1,7 @@
 import axios from "axios";
 
 const instance = axios.create({
-  baseURL: "http://localhost:8000",
+  baseURL: "https://i10a409.p.ssafy.io:8000",
   params: {},
 });
 
@@ -57,7 +57,7 @@ instance.interceptors.response.use(
 
     if (err.response && err.response.status === 401) {
       // UNAUTHORIZED 응답이면 로그인 페이지로 리다이렉션
-      window.location.href = "http://i10a409.P.ssafy.io/logout";
+      // window.location.href = "http://i10a409.P.ssafy.io/logout";
     }
   },
 );

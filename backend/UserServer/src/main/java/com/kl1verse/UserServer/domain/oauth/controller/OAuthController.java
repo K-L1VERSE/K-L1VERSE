@@ -29,6 +29,12 @@ public class OAuthController {
     public ResponseEntity<SignInResDto> socialLogin(@RequestParam(name = "code") String code, @PathVariable(name = "registrationId") String registrationId) {
         log.info("code = {}", code);
         log.info("registrationId = {}", registrationId);
-        return ResponseEntity.ok().body(oAuthService.socialLogin(code, registrationId));
+        SignInResDto signInResDto = oAuthService.socialLogin(code, registrationId);
+        log.info("accessToken = {}", signInResDto.getAccessToken());
+        log.info("email = {}", signInResDto.getEmail());
+        log.info("profile = {}", signInResDto.getProfile());
+        log.info("name = {}", signInResDto.getDomain());
+
+        return ResponseEntity.ok().body(signInResDto);
     }
 }
