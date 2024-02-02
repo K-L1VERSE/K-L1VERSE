@@ -7,16 +7,18 @@ import { UserState } from "../../global/UserState";
 function LogoutButton() {
   const resetUserState = useResetRecoilState(UserState);
 
+  const domain = process.env.REACT_APP_DOMAIN;
+
   useEffect(() => {
     axios
       .get(`/user/auth/sign-out`)
       .then(() => {
         resetUserState();
-        window.location.href = "http://i10a409.p.ssafy.io/login";
+        window.location.href = `${domain}/login`;
       })
       .catch(() => {
         resetUserState();
-        window.location.href = "http://i10a409.p.ssafy.io/login";
+        window.location.href = `${domain}/login`;
       });
   }, []);
 }

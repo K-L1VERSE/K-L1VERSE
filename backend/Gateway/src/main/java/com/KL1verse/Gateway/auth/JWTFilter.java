@@ -3,6 +3,7 @@ package com.KL1verse.Gateway.auth;
 import com.KL1verse.Gateway.auth.JwtUtil.Status;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.cloud.gateway.server.mvc.filter.FilterFunctions;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Component;
@@ -20,6 +21,9 @@ import static org.springframework.cloud.gateway.server.mvc.filter.FilterFunction
 @Slf4j
 public class JWTFilter {
 
+    @Value("${domain}")
+    private static String domain;
+
     public static HandlerFilterFunction<ServerResponse, ServerResponse> instrument() {
         return (request, next) -> {
             List<String> tokenList = request.headers().header("Authorization");
@@ -31,7 +35,7 @@ public class JWTFilter {
                  */
                 log.info("Access Token is null");
                 return ServerResponse.status(HttpStatus.UNAUTHORIZED)
-                        .header("Location", "http://localhost:3000/login")
+                        .header("Location", domain+":3000/login")
                         .build();
             }
 
@@ -44,7 +48,7 @@ public class JWTFilter {
                  */
                 log.info("Access Token invalid");
                 return ServerResponse.status(HttpStatus.UNAUTHORIZED)
-                        .header("Location", "http://localhost:3000/login")
+                        .header("Location", domain+":3000/login")
                         .build();
             } else if(JwtUtil.isValidAccessToken(token) == Status.EXPIRED) {
                 /*

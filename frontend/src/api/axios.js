@@ -1,7 +1,9 @@
 import axios from "axios";
 
+const domain = process.env.REACT_APP_DOMAIN;
+
 const instance = axios.create({
-  baseURL: "https://i10a409.p.ssafy.io:8000",
+  baseURL: `${domain}:8000`,
   params: {},
 });
 
@@ -15,7 +17,7 @@ instance.interceptors.request.use(
     if (recoilData) {
       // 요청 헤더에 accessToken 추가
       accessToken = JSON.parse(recoilData).userState.accessToken;
-      config.headers["Authorization"] = `Bearer ${accessToken}`;
+      config.headers.Authorization = `Bearer ${accessToken}`;
     }
 
     return config;
@@ -57,7 +59,7 @@ instance.interceptors.response.use(
 
     if (err.response && err.response.status === 401) {
       // UNAUTHORIZED 응답이면 로그인 페이지로 리다이렉션
-      // window.location.href = "http://i10a409.P.ssafy.io/logout";
+      window.location.href = `${domain}/logout`;
     }
   },
 );

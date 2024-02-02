@@ -1,73 +1,71 @@
-// WaggleListPage.jsx
-import React, { useState, useEffect, useCallback } from "react";
+import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import axios from "../../../api/axios";
+import { getWaggleList } from "../../../api/waggle";
 import BoardTopNavBar from "../../../components/board/BoardTopNavBar";
-import WaggleItemCard from "../../../components/board/WaggleItemCard";
+import WaggleContainer from "../../../components/board/WaggleContainer";
 import { formatRelativeTime } from "../../../components/board/dateFormat";
 import {
   WaggleHeader,
   WaggleHeaderH2,
   WaggleHeaderButton,
-  WaggleListContainer,
 } from "../../../styles/BoardStyles/WaggleListStyle";
 
 function WaggleListPage() {
   const [waggleList, setWaggleList] = useState([]);
   const [page, setPage] = useState(0);
   const [hasMore, setHasMore] = useState(true);
-  const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
 
-  const fetchWaggleList = useCallback(async () => {
-    try {
-      setLoading(true);
-      const response = await axios.get(
-        `/board/waggles/pages?page=${page}&size=30&sort=board.createAt,desc`,
-      );
-      const newWaggles = response.data.content;
+  function getWaggles() {
+    getWaggleList(
+      page,
+      30,
+      ({ data }) => {
+        if (!data.content) {
+          setHasMore(false);
+        } else {
+          setWaggleList([...waggleList, ...data.content]);
+          setPage(page + 1);
+        }
+      },
+      () => {},
+    );
+  }
 
-      if (newWaggles.length === 0) {
-        setHasMore(false);
+  useEffect(() => {
+    getWaggles();
+  }, []);
+
+  const [isBottom, setIsBottom] = useState(false);
+
+  if (hasMore) {
+    const handleScroll = () => {
+      const scrollTop =
+        (document.documentElement && document.documentElement.scrollTop) ||
+        document.body.scrollTop;
+      const scrollHeight =
+        (document.documentElement && document.documentElement.scrollHeight) ||
+        document.body.scrollHeight;
+      if (scrollTop + window.innerHeight >= scrollHeight) {
+        setIsBottom(true);
       } else {
-        const uniqueWaggles = newWaggles.filter(
-          (newWaggle) =>
-            !waggleList.some(
-              (waggle) => waggle.board.boardId === newWaggle.board.boardId,
-            ),
-        );
-
-        setWaggleList((prevWaggles) => [...prevWaggles, ...uniqueWaggles]);
+        setIsBottom(false);
       }
-    } finally {
-      setLoading(false);
-    }
-  }, [page, waggleList]);
-
-  const handleScroll = useCallback(() => {
-    const windowHeight = window.innerHeight;
-    const documentHeight = document.documentElement.scrollHeight;
-    const scrollTop = window.scrollY;
-    const distanceFromBottom = documentHeight - scrollTop - windowHeight;
-
-    if (distanceFromBottom < 200 && !loading && hasMore) {
-      setPage((prevPage) => prevPage + 1);
-    }
-  }, [loading, hasMore]);
-
-  useEffect(() => {
-    if (hasMore) {
-      fetchWaggleList();
-    }
-  }, [fetchWaggleList, hasMore, page]);
-
-  useEffect(() => {
-    window.addEventListener("scroll", handleScroll);
-
-    return () => {
-      window.removeEventListener("scroll", handleScroll);
     };
-  }, [handleScroll]);
+
+    useEffect(() => {
+      window.addEventListener("scroll", handleScroll);
+      return () => {
+        window.removeEventListener("scroll", handleScroll);
+      };
+    }, []);
+  }
+
+  useEffect(() => {
+    if (isBottom) {
+      getWaggles();
+    }
+  }, [isBottom]);
 
   const handleWriteWaggleClick = () => {
     navigate("/waggleRegist");
@@ -83,15 +81,11 @@ function WaggleListPage() {
         </WaggleHeaderButton>
       </WaggleHeader>
 
-      <WaggleListContainer>
-        {waggleList.map((waggle) => (
-          <WaggleItemCard
-            key={waggle.waggleId}
-            waggle={waggle}
-            formatRelativeTime={formatRelativeTime}
-          />
-        ))}
-      </WaggleListContainer>
+      <WaggleContainer
+        waggleList={waggleList}
+        formatRelativeTime={formatRelativeTime}
+      />
+      {!hasMore && <p>No more data</p>}
     </div>
   );
 }

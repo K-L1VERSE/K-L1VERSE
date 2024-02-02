@@ -11,11 +11,13 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface WaggleRepository extends JpaRepository<Waggle, Long> {
+
     Page<Waggle> findByBoard_BoardType(Board.BoardType boardType, Pageable pageable);
 
     Page<Waggle> findByBoard_BoardId(Long boardId, Pageable pageable);
 
-    Page<Waggle> findByBoard_TitleContainingOrBoard_ContentContaining(String titleKeyword, String contentKeyword, Pageable pageable);
+    Page<Waggle> findByBoard_TitleContainingOrBoard_ContentContaining(String titleKeyword,
+        String contentKeyword, Pageable pageable);
 
 
     @Query("SELECT w, COUNT(l.likesId) " +

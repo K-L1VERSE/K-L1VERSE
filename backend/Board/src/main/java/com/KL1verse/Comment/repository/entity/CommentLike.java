@@ -22,7 +22,7 @@ import lombok.Setter;
 public class CommentLike {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "comment_like_id")
     private Long commentLikeId;
 

@@ -34,7 +34,7 @@ public class Board {
 
     @Id
     @Column(name = "board_id")
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long boardId;
 
     @Enumerated(EnumType.STRING)
@@ -56,7 +56,7 @@ public class Board {
     private LocalDateTime deleteAt;
 
     @Column(name = "user_id")
-    private String user;
+    private Integer userId;
 
 
 }

@@ -26,7 +26,7 @@ public class KafkaBettingWinConsumer {
     private ObjectMapper objectMapper;
 
     @Transactional
-//    @KafkaListener(topics = "winner-info", groupId = "user-group")
+    @KafkaListener(topics = "winner-info", groupId = "user-group")
     public void divideGoal(String winnerInfoJson) {
 
         Winner winner = null;

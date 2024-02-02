@@ -11,4 +11,4 @@ ARG JAR_FILE=./build/libs/Board-0.0.1-SNAPSHOT.jar
 # Add the application's jar to the container
 COPY ${JAR_FILE} board.jar
 # Run the jar file
-ENTRYPOINT ["java","-jar","-Duser.timezone=Asia/Seoul","/board.jar"]
+ENTRYPOINT ["java","-jar","-Duser.timezone=Asia/Seoul", "-Dspring.profiles.active=deploy", "/board.jar"]
