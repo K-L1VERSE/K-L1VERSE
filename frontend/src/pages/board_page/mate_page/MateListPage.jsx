@@ -1,7 +1,7 @@
-import React, { useState, useEffect, useCallback } from "react";
+import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 // import Calendar from "react-calendar";
-import axios from "../../../api/axios";
+import { getMateList } from "../../../api/mate";
 import BoardTopNavBar from "../../../components/board/BoardTopNavBar";
 import {
   MateHeader,
@@ -14,60 +14,60 @@ function MateListPage() {
   const [mateList, setMateList] = useState([]);
   const [page, setPage] = useState(0);
   const [hasMore, setHasMore] = useState(true);
-  const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
   // const [value, onChange] = useState(new Date());
   // const [isOpen, setIsOpen] = useState(false);
 
-  const fetchMateList = useCallback(async () => {
-    try {
-      setLoading(true);
-      const response = await axios.get(
-        `/board/mates/pages?page=${page}&size=30&sort=board.createAt,desc`,
-      );
-      const newMates = response.data.content;
+  function getMates() {
+    getMateList(
+      page,
+      30,
+      ({ data }) => {
+        if (!data.content) {
+          setHasMore(false);
+        } else {
+          setMateList([...mateList, ...data.content]);
+          setPage(page + 1);
+        }
+      },
+      () => {},
+    );
+  }
 
-      if (newMates.length === 0) {
-        setHasMore(false);
+  useEffect(() => {
+    getMates();
+  }, []);
+
+  const [isBottom, setIsBottom] = useState(false);
+
+  if (hasMore) {
+    const handleScroll = () => {
+      const scrollTop =
+        (document.documentElement && document.documentElement.scrollTop) ||
+        document.body.scrollTop;
+      const scrollHeight =
+        (document.documentElement && document.documentElement.scrollHeight) ||
+        document.body.scrollHeight;
+      if (scrollTop + window.innerHeight >= scrollHeight) {
+        setIsBottom(true);
       } else {
-        const uniqueMates = newMates.filter(
-          (newMate) =>
-            !mateList.some(
-              (mate) => mate.board.boardId === newMate.board.boardId,
-            ),
-        );
-
-        setMateList((prevMates) => [...prevMates, ...uniqueMates]);
+        setIsBottom(false);
       }
-    } finally {
-      setLoading(false);
-    }
-  }, [page, mateList]);
-
-  const handleScroll = useCallback(() => {
-    const windowHeight = window.innerHeight;
-    const documentHeight = document.documentElement.scrollHeight;
-    const scrollTop = window.scrollY;
-    const distanceFromBottom = documentHeight - scrollTop - windowHeight;
-
-    if (distanceFromBottom < 200 && !loading && hasMore) {
-      setPage((prevPage) => prevPage + 1);
-    }
-  }, [loading, hasMore]);
-
-  useEffect(() => {
-    if (hasMore) {
-      fetchMateList();
-    }
-  }, [fetchMateList, hasMore, page]);
-
-  useEffect(() => {
-    window.addEventListener("scroll", handleScroll);
-
-    return () => {
-      window.removeEventListener("scroll", handleScroll);
     };
-  }, [handleScroll]);
+
+    useEffect(() => {
+      window.addEventListener("scroll", handleScroll);
+      return () => {
+        window.removeEventListener("scroll", handleScroll);
+      };
+    }, []);
+  }
+
+  useEffect(() => {
+    if (isBottom) {
+      getMates();
+    }
+  }, [isBottom]);
 
   const handleWriteMateClick = () => {
     navigate("/mateRegist");
@@ -83,16 +83,17 @@ function MateListPage() {
       <MateHeader>
         <MateHeaderH2>저랑 같이 응원 갈래욤?</MateHeaderH2>
         <MateHeaderButton onClick={handleWriteMateClick}>
-          {" "}
           🖋글쓰기
         </MateHeaderButton>
       </MateHeader>
       {/* <button onClick={handleCalendarToggle}>📆</button> */}
       {/* {isOpen && <Calendar onChange={onChange} value={value} />} */}
 
-      <MateContainer mateList={mateList} />
-
-      {loading && <p>Loading...</p>}
+      <MateListContainer>
+        {mateList.map((mate) => (
+          <MateItemCard key={mate.mateId} mate={mate} />
+        ))}
+      </MateListContainer>
       {!hasMore && <p>No more data</p>}
     </div>
   );

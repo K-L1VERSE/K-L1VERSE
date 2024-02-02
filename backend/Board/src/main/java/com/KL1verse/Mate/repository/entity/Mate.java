@@ -26,7 +26,7 @@ public class Mate {
 
     @Id
     @Column(name = "mate_id")
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long mateId;
 
     @ManyToOne

@@ -1,6 +1,14 @@
 import React, { useState, useEffect } from "react";
 import axios from "../../api/axios";
 import CommentForm from "./CommentForm";
+import {
+  ListContainer,
+  CommentItem,
+  CommentContent,
+  ButtonContainer,
+  EditButton,
+  DeleteButton,
+} from "../../styles/BoardStyles/CommentStyle";
 
 function CommentList({ boardId }) {
   const [comments, setComments] = useState([]);
@@ -62,11 +70,11 @@ function CommentList({ boardId }) {
   };
 
   return (
-    <div>
+    <ListContainer>
       <h2>댓글 목록</h2>
       <ul>
         {comments.map((comment) => (
-          <li key={comment.commentId}>
+          <CommentItem key={comment.commentId}>
             {editingCommentId === comment.commentId ? (
               <CommentForm
                 boardId={boardId}
@@ -77,25 +85,27 @@ function CommentList({ boardId }) {
               />
             ) : (
               <>
-                <p>{comment.content}</p>
-                <button
-                  type="button"
-                  onClick={() => {
-                    setEditingCommentId(comment.commentId);
-                    setEditingCommentContent(comment.content);
-                  }}
-                >
-                  수정
-                </button>
-                <button
-                  type="button"
-                  onClick={() => handleCommentDelete(comment.commentId)}
-                >
-                  삭제
-                </button>
+                <CommentContent>{comment.content}</CommentContent>
+                <ButtonContainer>
+                  <EditButton
+                    type="button"
+                    onClick={() => {
+                      setEditingCommentId(comment.commentId);
+                      setEditingCommentContent(comment.content);
+                    }}
+                  >
+                    수정
+                  </EditButton>
+                  <DeleteButton
+                    type="button"
+                    onClick={() => handleCommentDelete(comment.commentId)}
+                  >
+                    삭제
+                  </DeleteButton>
+                </ButtonContainer>
               </>
             )}
-          </li>
+          </CommentItem>
         ))}
       </ul>
       <CommentForm
@@ -103,7 +113,7 @@ function CommentList({ boardId }) {
         onCommentSubmit={handleCommentSubmit}
         defaultContent={editingCommentContent}
       />
-    </div>
+    </ListContainer>
   );
 }
 
