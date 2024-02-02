@@ -8,6 +8,10 @@ import com.KL1verse.Comment.repository.CommentRepository;
 import com.KL1verse.Mate.dto.req.MateDTO;
 import com.KL1verse.Mate.repository.MateRepository;
 import com.KL1verse.Mate.repository.entity.Mate;
+import com.KL1verse.Waggle.repository.entity.Waggle;
+import com.KL1verse.s3.repository.entity.File;
+import com.KL1verse.s3.service.BoardImageService;
+import com.KL1verse.s3.service.FileService;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -23,19 +27,30 @@ public class MateServiceImpl implements MateService {
 
     private final MateRepository mateRepository;
     private final BoardRepository boardRepository;
+    private final FileService fileService;
+
+    private final BoardImageService boardImageService;
 
     private final CommentRepository commentRepository;
 
     public MateServiceImpl(MateRepository mateRepository, BoardRepository boardRepository,
+        FileService fileService, BoardImageService boardImageService,
         CommentRepository commentRepository) {
         this.mateRepository = mateRepository;
         this.boardRepository = boardRepository;
+        this.fileService = fileService;
+        this.boardImageService = boardImageService;
         this.commentRepository = commentRepository;
     }
 
     @Override
     public MateDTO getMateById(Long boardId) {
         Mate mate = findMateByBoardId(boardId);
+
+        MateDTO mateDTO = convertToDTO(mate);
+        int commentCount = commentRepository.countCommentsByBoardId(boardId);
+        mateDTO.getBoard().setCommentCount(commentCount);
+
         return convertToDTO(mate);
     }
 
@@ -44,6 +59,10 @@ public class MateServiceImpl implements MateService {
         Mate mate = convertToEntity(mateDto);
         Board board = saveBoard(mate.getBoard());
         mate.setBoard(board);
+
+        File file = fileService.saveFile(mateDto.getBoard().getBoardImage());
+        boardImageService.saveBoardImage(board, file);
+
         Mate createdMate = mateRepository.save(mate);
         return convertToDTO(createdMate);
     }
@@ -53,7 +72,14 @@ public class MateServiceImpl implements MateService {
     public MateDTO updateMate(Long boardId, MateDTO mateDto) {
         Mate existingMate = findMateByBoardId(boardId);
         updateExistingMate(existingMate, mateDto);
+
+        Board board = existingMate.getBoard();
+        board.setBoardImage(mateDto.getBoard().getBoardImage());
+
         Mate updatedMate = mateRepository.save(existingMate);
+        File file = fileService.saveFile(mateDto.getBoard().getBoardImage());
+        boardImageService.saveBoardImage(board, file);
+
         return convertToDTO(updatedMate);
     }
 
@@ -187,11 +213,16 @@ public class MateServiceImpl implements MateService {
     private MateDTO convertToDTO(Mate mate) {
         MateDTO mateDTO = new MateDTO();
         BeanUtils.copyProperties(mate, mateDTO);
-        mateDTO.setBoard(BoardDTO.builder().boardId(mate.getBoard().getBoardId())
+        mateDTO.setBoard(BoardDTO.builder()
+            .boardId(mate.getBoard().getBoardId())
             .boardType(mate.getBoard().getBoardType()).title(mate.getBoard().getTitle())
             .content(mate.getBoard().getContent()).createAt(mate.getBoard().getCreateAt())
             .updateAt(mate.getBoard().getUpdateAt()).deleteAt(mate.getBoard().getDeleteAt())
-            .userId(mate.getBoard().getUserId()).build());
+            .boardImage(mate.getBoard().getBoardImage())
+            .userId(mate.getBoard().getUserId())
+            .commentCount(commentRepository.countCommentsByBoardId(mate.getBoard().getBoardId()))
+            .build());
+
         return mateDTO;
     }
 
@@ -202,6 +233,7 @@ public class MateServiceImpl implements MateService {
             .boardType(mateDTO.getBoard().getBoardType()).title(mateDTO.getBoard().getTitle())
             .content(mateDTO.getBoard().getContent()).createAt(mateDTO.getBoard().getCreateAt())
             .updateAt(mateDTO.getBoard().getUpdateAt()).deleteAt(mateDTO.getBoard().getDeleteAt())
+            .boardImage(mateDTO.getBoard().getBoardImage())
             .userId(mateDTO.getBoard().getUserId()).build());
         return mate;
     }
