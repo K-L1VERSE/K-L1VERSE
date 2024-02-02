@@ -19,7 +19,7 @@ public class BoardDTO {
     private BoardType boardType;
     private String title;
     private String content;
-    private int userId;
+    private Integer userId;
     private LocalDateTime createAt;
     private LocalDateTime updateAt;
     private LocalDateTime deleteAt;
