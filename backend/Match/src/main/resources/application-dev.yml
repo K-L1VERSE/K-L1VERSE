@@ -12,6 +12,7 @@ spring:
 
   # kafka 설정
   kafka:
+    bootstrap-servers: localhost:9092
     consumer:
       bootstrap-servers: localhost:9092
       group-id: match-group # 여기만 다름

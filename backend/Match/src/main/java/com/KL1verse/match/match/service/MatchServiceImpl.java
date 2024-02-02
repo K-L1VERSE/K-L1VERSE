@@ -7,6 +7,7 @@ import com.KL1verse.match.match.dto.res.TimelineResponse;
 import com.KL1verse.match.match.repository.MatchRepository;
 import com.KL1verse.match.match.repository.TimelineRepository;
 import com.KL1verse.match.match.repository.entity.Match;
+import com.KL1verse.match.match.repository.entity.Match.MatchStatus;
 import com.KL1verse.match.match.repository.entity.Timeline;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
@@ -51,10 +52,10 @@ public class MatchServiceImpl implements MatchService {
             if (now.getYear() == matchAt.getYear() && now.getMonthValue() == matchAt.getMonthValue()
                 && now.getDayOfMonth() == matchAt.getDayOfMonth()
                 && now.getHour() == matchAt.getHour()) {
-                match.setStatus("during");
+                match.setStatus(MatchStatus.during);
             }
 
-            if (match.getStatus().equals("during")) {
+            if (match.getStatus().equals(MatchStatus.during)) {
                 getScore(match);
             }
 
@@ -83,10 +84,10 @@ public class MatchServiceImpl implements MatchService {
         if (now.getYear() == matchAt.getYear() && now.getMonthValue() == matchAt.getMonthValue()
             && now.getDayOfMonth() == matchAt.getDayOfMonth()
             && now.getHour() == matchAt.getHour()) {
-            match.setStatus("during");
+            match.setStatus(MatchStatus.during);
         }
 
-        if (match.getStatus().equals("during")) {
+        if (match.getStatus().equals(MatchStatus.during)) {
             getScore(match);
         }
 
@@ -98,7 +99,7 @@ public class MatchServiceImpl implements MatchService {
             .homeBettingAmount(match.getHomeBettingAmount())
             .awayBettingAmount(match.getAwayBettingAmount())
             .matchAt(match.getMatchAt())
-            .status(match.getStatus())
+            .status(match.getStatus().toString())
             .homeScore(match.getHomeScore())
             .awayScore(match.getAwayScore())
             .build();
@@ -146,7 +147,7 @@ public class MatchServiceImpl implements MatchService {
             if (matchDay == gameDay && matchHomeTeamName.equals(gameHomeTeamName)
                 && matchAwayTeamName.equals(gameAwayTeamName)) {
                 if (element.getAsJsonObject().getAsJsonObject("endYn").getAsString().equals("Y")) {
-                    match.setStatus("done");
+                    match.setStatus(MatchStatus.done);
                     break;
                 }
                 int gameId = element.getAsJsonObject().getAsJsonObject("gameId").getAsInt();

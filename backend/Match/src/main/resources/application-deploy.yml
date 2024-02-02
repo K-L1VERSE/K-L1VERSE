@@ -6,13 +6,14 @@ spring:
 
     # kafka 설정
   kafka:
+    bootstrap-servers: i10a409.p.ssafy.io:9092
     consumer:
-      bootstrap-servers: localhost:9092
+      bootstrap-servers: i10a409.p.ssafy.io:9092
       group-id: match-group # 여기만 다름
       key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
       value-deserializer: org.apache.kafka.common.serialization.StringDeserializer
     producer:
-      bootstrap-servers: localhost:9092
+      bootstrap-servers: i10a409.p.ssafy.io:9092
       key-serializer: org.apache.kafka.common.serialization.StringSerializer
       value-serializer: org.apache.kafka.common.serialization.StringSerializer
 
