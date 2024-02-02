@@ -9,10 +9,14 @@ import com.KL1verse.Comment.repository.CommentRepository;
 import com.KL1verse.Waggle.dto.req.WaggleDTO;
 import com.KL1verse.Waggle.repository.WaggleRepository;
 import com.KL1verse.Waggle.repository.entity.Waggle;
+import com.KL1verse.s3.repository.entity.File;
+import com.KL1verse.s3.service.BoardImageService;
+import com.KL1verse.s3.service.FileService;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.BeanUtils;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
@@ -20,42 +24,80 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
+@Slf4j
 @Service
 public class WaggleServiceImpl implements WaggleService {
 
     private final WaggleRepository waggleRepository;
     private final BoardRepository boardRepository;
 
+    private final FileService fileService;
+
+    private final BoardImageService boardImageService;
+
     private final CommentRepository commentRepository;
 
     public WaggleServiceImpl(WaggleRepository waggleRepository, BoardRepository boardRepository,
+        FileService fileService,
+        BoardImageService boardImageService,
         CommentRepository commentRepository) {
         this.waggleRepository = waggleRepository;
         this.boardRepository = boardRepository;
+        this.fileService = fileService;
+        this.boardImageService = boardImageService;
         this.commentRepository = commentRepository;
     }
 
     @Override
     public WaggleDTO getWaggleById(Long boardId) {
         Waggle waggle = findWaggleByBoardId(boardId);
-        return convertToDTO(waggle);
+
+        WaggleDTO waggleDTO = convertToDTO(waggle);
+
+        int likesCount = waggleRepository.getLikesCountForEachWaggle().stream()
+            .filter(result -> ((Waggle) result[0]).getWaggleId().equals(waggle.getWaggleId()))
+            .map(result -> ((Long) result[1]).intValue())
+            .findFirst()
+            .orElse(0);
+
+        waggleDTO.setLikesCount(likesCount);
+
+        int commentCount = commentRepository.countCommentsByBoardId(boardId);
+        waggleDTO.getBoard().setCommentCount(commentCount);
+
+        return waggleDTO;
     }
+
 
     @Override
     public WaggleDTO createWaggle(WaggleDTO waggleDto) {
         Waggle waggle = convertToEntity(waggleDto);
         Board board = saveBoard(waggle.getBoard());
-        waggle.setBoard(board);
+
+        File file = fileService.saveFile(waggleDto.getBoard().getBoardImage());
+        boardImageService.saveBoardImage(board, file);
+
         Waggle createdWaggle = waggleRepository.save(waggle);
+
         return convertToDTO(createdWaggle);
     }
 
+
+    @Transactional
     @Override
     public WaggleDTO updateWaggle(Long boardId, WaggleDTO waggleDto) {
         Waggle existingWaggle = findWaggleByBoardId(boardId);
         updateExistingWaggle(existingWaggle, waggleDto);
+
+        Board board = existingWaggle.getBoard();
+        board.setBoardImage(waggleDto.getBoard().getBoardImage());
+
         Waggle updatedWaggle = waggleRepository.save(existingWaggle);
+        File file = fileService.saveFile(waggleDto.getBoard().getBoardImage());
+        boardImageService.saveBoardImage(board, file);
+
         return convertToDTO(updatedWaggle);
     }
 
@@ -121,7 +163,14 @@ public class WaggleServiceImpl implements WaggleService {
             Long boardId = waggle.getBoard().getBoardId();
             Integer commentCount = commentRepository.countCommentsByBoardId(boardId);
 
+            Integer likesCount = waggleRepository.getLikesCountForEachWaggle().stream()
+                .filter(result -> ((Waggle) result[0]).getWaggleId().equals(waggle.getWaggleId()))
+                .map(result -> ((Long) result[1]).intValue())
+                .findFirst()
+                .orElse(0);
+
             waggleDTO.getBoard().setCommentCount(commentCount != null ? commentCount : 0);
+            waggleDTO.setLikesCount(likesCount);
 
             return waggleDTO;
         });
@@ -211,6 +260,8 @@ public class WaggleServiceImpl implements WaggleService {
             .deleteAt(waggle.getBoard().getDeleteAt())
             .commentCount(0)
             .userId(waggle.getBoard().getUserId())
+            .boardImage(waggle.getBoard().getBoardImage())
+            .boardType(waggle.getBoard().getBoardType())
             .build());
         return waggleDTO;
     }
@@ -227,6 +278,8 @@ public class WaggleServiceImpl implements WaggleService {
             .updateAt(waggleDTO.getBoard().getUpdateAt())
             .deleteAt(waggleDTO.getBoard().getDeleteAt())
             .userId(waggleDTO.getBoard().getUserId())
+            .boardImage(waggleDTO.getBoard().getBoardImage())
+            .boardType(waggleDTO.getBoard().getBoardType())
             .build());
         return waggle;
     }
