@@ -11,6 +11,8 @@ import {
   WaggleItemSeparator,
 } from "../../styles/BoardStyles/WaggleListStyle";
 import { UserState } from "../../global/UserState";
+import { ReactComponent as LikeCount } from "../../assets/icon/likecount-icon.svg";
+import { ReactComponent as Comment } from "../../assets/icon/comment-icon.svg";
 
 function WaggleItemCard({ waggle, formatRelativeTime }) {
   const { nickname } = useRecoilState(UserState)[0];
@@ -35,10 +37,12 @@ function WaggleItemCard({ waggle, formatRelativeTime }) {
       </WaggleItemContent>
       <WaggleItemInfoSection>
         <WaggleItemInfoItem className="waggle-like">
-          좋아요 {waggle.likesCount} |
+          <LikeCount />
+          좋아요 {waggle.likesCount}
         </WaggleItemInfoItem>
         <WaggleItemInfoItem className="waggle-comment">
-          댓글 {waggle.board.commentCount} |
+          <Comment />
+          댓글 {waggle.board.commentCount}
         </WaggleItemInfoItem>
         <WaggleItemInfoItem>
           {formatRelativeTime(waggle.board.createAt)}

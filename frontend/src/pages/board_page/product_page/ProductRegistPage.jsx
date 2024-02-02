@@ -2,9 +2,11 @@ import React, { useState, useEffect } from "react";
 import { useRecoilState } from "recoil";
 import { useNavigate, useLocation } from "react-router-dom";
 import BoardTopNavBar from "../../../components/board/BoardTopNavBar";
-import ResigistCard from "../../../components/board/ResigistCard";
+import ResigistCard from "../../../components/board/RegistCard";
 import { createProduct, updateProduct } from "../../../api/product";
 import { UserState } from "../../../global/UserState";
+
+import { RegistCardContainer } from "../../../styles/BoardStyles/BoardCreateStyle";
 
 function ProductRegistPage() {
   const navigate = useNavigate();
@@ -45,6 +47,8 @@ function ProductRegistPage() {
             boardType: "PRODUCT",
             title,
             content,
+            price,
+
             userId,
           },
         },
@@ -59,7 +63,7 @@ function ProductRegistPage() {
   };
 
   return (
-    <div>
+    <RegistCardContainer>
       <BoardTopNavBar />
       <h1>{isUpdateMode ? "Product 게시물 수정" : "Product 게시물 작성"}</h1>
       <ResigistCard
@@ -70,7 +74,7 @@ function ProductRegistPage() {
         onSubmit={handleSubmit}
         buttonText={isUpdateMode ? "수정하기" : "작성하기"}
       />
-    </div>
+    </RegistCardContainer>
   );
 }
 

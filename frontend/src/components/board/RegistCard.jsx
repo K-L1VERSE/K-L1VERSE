@@ -5,7 +5,7 @@ import {
   SubmitButton,
 } from "../../styles/BoardStyles/BoardCreateStyle";
 
-export default function ResigistCard({
+export default function RegistCard({
   title,
   content,
   onTitleChange,

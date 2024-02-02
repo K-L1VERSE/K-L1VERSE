@@ -3,6 +3,7 @@ import { useParams, useNavigate } from "react-router-dom";
 import axios from "../../../api/axios";
 import BoardTopNavBar from "../../../components/board/BoardTopNavBar";
 import CommentList from "../../../components/board/CommentList";
+import { Container } from "../../../styles/BoardStyles/BoardDetailStyle";
 
 function ProductDetailPage() {
   const [productDetail, setProductDetail] = useState({});
@@ -42,7 +43,7 @@ function ProductDetailPage() {
   };
 
   return (
-    <div className="container">
+    <Container>
       <BoardTopNavBar />
       <div className="product-detail-box">
         <p>
@@ -66,7 +67,7 @@ function ProductDetailPage() {
       </button>
 
       <CommentList boardId={boardId} />
-    </div>
+    </Container>
   );
 }
 

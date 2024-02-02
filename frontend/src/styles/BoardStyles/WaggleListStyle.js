@@ -73,7 +73,7 @@ export const WaggleItemWriter = styled.div`
   font-weight: 400;
   font-size: 14px;
   line-height: 17px;
-  color: #a9a9a9;
+  color: black;
   text-decoration: none;
   margin-bottom: 8px;
 `;

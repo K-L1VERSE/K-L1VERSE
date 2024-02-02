@@ -24,6 +24,28 @@ export function updateWaggle(board, boardId, success, fail) {
   axios.put(`/${gateway}/${url}/${boardId}`, board).then(success).catch(fail);
 }
 
+export function deleteWaggle(boardId, success, fail) {
+  axios.delete(`/${gateway}/${url}/${boardId}`).then(success).catch(fail);
+}
+
 export function getLatestWaggle(success, fail) {
   axios.get(`/${gateway}/${url}/recent/2`).then(success).catch(fail);
+}
+
+export function likeWaggle(board, waggleId, success, fail) {
+  axios
+    .post(`/${gateway}/${url}/like/${waggleId}`, board)
+    .then(success)
+    .catch(fail);
+}
+
+export function unlikeWaggle(board, waggleId, success, fail) {
+  axios
+    .delete(`/${gateway}/${url}/likes/${waggleId}`, board)
+    .then(success)
+    .catch(fail);
+}
+
+export function likeCount(waggleId, success, fail) {
+  axios.get(`/${gateway}/${url}/like/${waggleId}`).then(success).catch(fail);
 }

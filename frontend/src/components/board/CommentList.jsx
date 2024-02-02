@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from "react";
-import axios from "../../api/axios";
 import CommentForm from "./CommentForm";
 import {
   ListContainer,
@@ -9,66 +8,71 @@ import {
   EditButton,
   DeleteButton,
 } from "../../styles/BoardStyles/CommentStyle";
+import { createComment, getCommentList } from "../../api/comment";
 
 function CommentList({ boardId }) {
   const [comments, setComments] = useState([]);
-  const [editingCommentId, setEditingCommentId] = useState(null);
-  const [editingCommentContent, setEditingCommentContent] = useState("");
+  const [CommentId, setCommentId] = useState(null);
+  const [content, setContent] = useState("");
+  const [updateComment, setUpdateComment] = useState("");
+
+function getComments() {
+  getCommentList(
+    boardId,
+    ({ data }) => {
+      setComments(data);
+    },
+    () => {},
+  )
 
   useEffect(() => {
-    const fetchComments = async () => {
-      try {
-        const response = await axios.get(`/board/comments/list/${boardId}`);
-        setComments(response.data);
-      } catch (error) {
-        console.error("댓글을 불러오는 중 에러 발생:", error);
+    getComments();
+  }, []);
+
+  const [isBottom, setIsBottom] = useState(false);
+
+  if (hasMore) {
+    const handleScroll = () => {
+      const scrollTop =
+        (document.documentElement && document.documentElement.scrollTop) ||
+        document.body.scrollTop;
+      const scrollHeight =
+        (document.documentElement && document.documentElement.scrollHeight) ||
+        document.body.scrollHeight;
+      if (scrollTop + window.innerHeight >= scrollHeight) {
+        setIsBottom(true);
+      } else {
+        setIsBottom(false);
       }
     };
 
-    fetchComments();
-  }, [boardId]);
+    useEffect(() => {
+      window.addEventListener("scroll", handleScroll);
+      return () => {
+        window.removeEventListener("scroll", handleScroll);
+      };
+    }, []);
+  }
 
-  const handleCommentSubmit = async () => {
-    try {
-      const response = await axios.get(`/board/comments/list/${boardId}`);
-      setComments(response.data);
-    } catch (error) {
-      console.error("댓글을 다시 불러오는 중 에러 발생:", error);
+  useEffect(() => {
+    if (isBottom) {
+      getWaggles();
     }
+  }, [isBottom]);
+
+  const handleWriteWaggleClick = () => {
+    navigate("/commentRegist");
   };
 
-  const handleCommentUpdate = async (commentId, updatedContent) => {
-    try {
-      // 서버에 댓글 업데이트 요청 보내기
-      await axios.put(`/board/comments/${commentId}`, {
-        content: updatedContent,
-      });
-
-      // 댓글 업데이트 후 새로운 댓글 목록을 가져와서 설정
-      const response = await axios.get(`/board/comments/list/${boardId}`);
-      setComments(response.data);
-
-      // 수정 상태 종료
-      setEditingCommentId(null);
-      setEditingCommentContent("");
-    } catch (error) {
-      console.error("댓글 업데이트 중 에러 발생:", error);
-    }
+  const handleUpdateBtn = () => {
+    updateWaggle(waggleDetail, boardId).then(() => {
+      navigate(`/waggle/${boardId}`);
+    });
   };
 
-  const handleCommentDelete = async (commentId) => {
-    try {
-      // 댓글 삭제 요청 보내기
-      await axios.delete(`/board/comments/${commentId}`);
-
-      setComments((prevComments) =>
-        prevComments.filter((comment) => comment.commentId !== commentId),
-      );
-    } catch (error) {
-      console.error("댓글 삭제 중 에러 발생:", error);
-    }
+  const handleDeleteBtn = () => {
+    deleteWaggle(boardId);
   };
-
   return (
     <ListContainer>
       <h2>댓글 목록</h2>
@@ -90,8 +94,8 @@ function CommentList({ boardId }) {
                   <EditButton
                     type="button"
                     onClick={() => {
-                      setEditingCommentId(comment.commentId);
-                      setEditingCommentContent(comment.content);
+                      setUpdateCommentId(comment.commentId);
+                      setUpdateCommentContent(comment.content);
                     }}
                   >
                     수정

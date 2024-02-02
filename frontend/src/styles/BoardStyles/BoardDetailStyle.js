@@ -14,6 +14,12 @@ export const WaggleDetailBox = styled.div`
   border-radius: 8px; /* Added border-radius for a rounded look */
 `;
 
+export const User = styled.div`
+  display: flex;
+  align-items: center;
+  margin-bottom: 10px;
+`;
+
 export const Title = styled.p`
   margin: 0;
   font-size: 1.5em;
@@ -44,6 +50,7 @@ export const LikeButton = styled.button`
   background-color: transparent;
   border: none;
   cursor: pointer;
+  margin-top: 10px;
   margin-right: 10px;
 
   &:hover {

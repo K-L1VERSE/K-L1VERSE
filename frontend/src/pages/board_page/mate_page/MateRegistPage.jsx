@@ -2,9 +2,11 @@ import React, { useState, useEffect } from "react";
 import { useRecoilState } from "recoil";
 import { useNavigate, useLocation } from "react-router-dom";
 import BoardTopNavBar from "../../../components/board/BoardTopNavBar";
-import ResigistCard from "../../../components/board/ResigistCard";
+import RegistCard from "../../../components/board/RegistCard";
 import { createMate, updateMate } from "../../../api/mate";
 import { UserState } from "../../../global/UserState";
+
+import { RegistCardContainer } from "../../../styles/BoardStyles/BoardCreateStyle";
 
 function MateRegistPage() {
   const navigate = useNavigate();
@@ -59,10 +61,10 @@ function MateRegistPage() {
   };
 
   return (
-    <div>
+    <RegistCardContainer>
       <BoardTopNavBar />
       <h1>{isUpdateMode ? "Mate 게시물 수정" : "Mate 게시물 작성"}</h1>
-      <ResigistCard
+      <RegistCard
         title={title}
         content={content}
         onTitleChange={(e) => setTitle(e.target.value)}
@@ -70,7 +72,7 @@ function MateRegistPage() {
         onSubmit={handleSubmit}
         buttonText={isUpdateMode ? "수정하기" : "작성하기"}
       />
-    </div>
+    </RegistCardContainer>
   );
 }
 

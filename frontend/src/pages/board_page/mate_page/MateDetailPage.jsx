@@ -3,6 +3,7 @@ import { useParams, useNavigate } from "react-router-dom";
 import axios from "../../../api/axios";
 import BoardTopNavBar from "../../../components/board/BoardTopNavBar";
 import CommentList from "../../../components/board/CommentList";
+import { Container } from "../../../styles/BoardStyles/BoardDetailStyle";
 
 function MateDetailPage() {
   const [mateDetail, setMateDetail] = useState({});
@@ -42,7 +43,7 @@ function MateDetailPage() {
   };
 
   return (
-    <div className="container">
+    <Container>
       <BoardTopNavBar />
       <h1>Mate 상세 정보</h1>
       <div className="mate-detail-box">
@@ -67,7 +68,7 @@ function MateDetailPage() {
       </button>
 
       <CommentList boardId={boardId} />
-    </div>
+    </Container>
   );
 }
 
