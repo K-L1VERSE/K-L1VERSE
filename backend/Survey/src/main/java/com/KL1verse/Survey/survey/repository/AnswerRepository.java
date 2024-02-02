@@ -7,6 +7,7 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface AnswerRepository extends JpaRepository<Answer, Long> {
+
     List<Answer> findByQuestionQuestionId(Long questionId);
 
 }

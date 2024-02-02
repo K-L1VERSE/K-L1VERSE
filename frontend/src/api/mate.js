@@ -1,16 +1,29 @@
 import axios from "./axios";
 
-// boardId 보내기
-export function getBoard(boardId) {
-  return axios.get(`/mates/${boardId}`).then((response) => response.data);
+const gateway = "board";
+const url = "mates";
+
+export function getMateList(page, size, success, fail) {
+  axios
+    .get(
+      `/${gateway}/${url}/pages?page=${page}&size=${size}&sort=board.createAt,desc`,
+    )
+    .then(success)
+    .catch(fail);
 }
 
-export function createBoard(board) {
-  return axios.post("/mates", board).then((response) => response.data);
+export function getMateDetail(boardId) {
+  axios.get(`/${gateway}/${url}/${boardId}`).then((response) => response.data);
 }
 
-export function updateBoard(board) {
-  return axios
-    .put(`/mates/${board.boardId}`, board)
-    .then((response) => response.data);
+export function createMate(board, success, fail) {
+  axios.post(`/${gateway}/${url}`, board).then(success).catch(fail);
+}
+
+export function updateMate(board, boardId, success, fail) {
+  axios.put(`/${gateway}/${url}/${boardId}`, board).then(success).catch(fail);
+}
+
+export function getLatestMate(success, fail) {
+  axios.get(`/${gateway}/${url}/recent/2`).then(success).catch(fail);
 }

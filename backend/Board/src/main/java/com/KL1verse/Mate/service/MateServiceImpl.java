@@ -4,13 +4,18 @@ import com.KL1verse.Board.dto.req.BoardDTO;
 import com.KL1verse.Board.dto.req.SearchBoardConditionDto;
 import com.KL1verse.Board.repository.BoardRepository;
 import com.KL1verse.Board.repository.entity.Board;
+import com.KL1verse.Comment.repository.CommentRepository;
 import com.KL1verse.Mate.dto.req.MateDTO;
 import com.KL1verse.Mate.repository.MateRepository;
 import com.KL1verse.Mate.repository.entity.Mate;
 import java.time.LocalDateTime;
+import java.util.List;
+import java.util.stream.Collectors;
 import org.springframework.beans.BeanUtils;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -19,9 +24,13 @@ public class MateServiceImpl implements MateService {
     private final MateRepository mateRepository;
     private final BoardRepository boardRepository;
 
-    public MateServiceImpl(MateRepository mateRepository, BoardRepository boardRepository) {
+    private final CommentRepository commentRepository;
+
+    public MateServiceImpl(MateRepository mateRepository, BoardRepository boardRepository,
+        CommentRepository commentRepository) {
         this.mateRepository = mateRepository;
         this.boardRepository = boardRepository;
+        this.commentRepository = commentRepository;
     }
 
     @Override
@@ -38,6 +47,7 @@ public class MateServiceImpl implements MateService {
         Mate createdMate = mateRepository.save(mate);
         return convertToDTO(createdMate);
     }
+
 
     @Override
     public MateDTO updateMate(Long boardId, MateDTO mateDto) {
@@ -58,27 +68,50 @@ public class MateServiceImpl implements MateService {
         mateRepository.deleteById(mateToDelete.getMateId());
     }
 
+
     @Override
     public Page<MateDTO> searchMates(SearchBoardConditionDto searchCondition, Pageable pageable) {
         Page<Mate> mates;
 
         if (searchCondition != null && searchCondition.getKeyword() != null) {
             mates = mateRepository.findByBoard_TitleContainingOrBoard_ContentContaining(
-                searchCondition.getKeyword(),
-                searchCondition.getKeyword(),
-                pageable
-            );
+                searchCondition.getKeyword(), searchCondition.getKeyword(), pageable);
         } else {
             mates = mateRepository.findAll(pageable);
         }
 
-        return mates.map(this::convertToDTO);
+        return mates.map(mate -> {
+            MateDTO mateDTO = convertToDTO(mate);
+
+            if (mate.getBoard() != null) {
+                Long boardId = mate.getBoard().getBoardId();
+                Integer commentCount = commentRepository.countCommentsByBoardId(boardId);
+
+                mateDTO.getBoard().setCommentCount(commentCount != null ? commentCount : 0);
+            }
+
+            return mateDTO;
+        });
     }
+
 
     @Override
     public Page<MateDTO> getAllMateList(Pageable pageable) {
         Page<Mate> mates = mateRepository.findByBoard_BoardType(Board.BoardType.MATE, pageable);
-        return mates.map(this::convertToDTO);
+
+        return mates.map(mate -> {
+            MateDTO mateDTO = convertToDTO(mate);
+
+            if (mate.getBoard() != null) {
+
+                Long boardId = mate.getBoard().getBoardId();
+                Integer commentCount = commentRepository.countCommentsByBoardId(boardId);
+
+                mateDTO.getBoard().setCommentCount(commentCount != null ? commentCount : 0);
+            }
+
+            return mateDTO;
+        });
     }
 
     private Mate findMateByBoardId(Long boardId) {
@@ -98,7 +131,7 @@ public class MateServiceImpl implements MateService {
         existingMate.getBoard().setContent(mateDto.getBoard().getContent());
         existingMate.setFullFlag(mateDto.isFullFlag());
         existingMate.setTotal(mateDto.getTotal());
-        // 추가적인 업데이트 로직을 여기에 추가
+
     }
 
     @Override
@@ -111,38 +144,72 @@ public class MateServiceImpl implements MateService {
     public Page<MateDTO> getMatesByDateRange(LocalDateTime startDate, LocalDateTime endDate,
         Pageable pageable) {
         Page<Mate> mates = mateRepository.findByBoard_CreateAtBetween(startDate, endDate, pageable);
-        return mates.map(this::convertToDTO);
+
+        return mates.map(mate -> {
+            MateDTO mateDTO = convertToDTO(mate);
+
+            if (mate.getBoard() != null) {
+                Long boardId = mate.getBoard().getBoardId();
+                Integer commentCount = commentRepository.countCommentsByBoardId(boardId);
+
+                mateDTO.getBoard().setCommentCount(commentCount != null ? commentCount : 0);
+            }
+
+            return mateDTO;
+        });
     }
+
+    @Override
+    public Page<MateDTO> getMatesByMatchList(List<Integer> matchIds, Pageable pageable) {
+        Page<Mate> mates;
+
+        if (matchIds != null && !matchIds.isEmpty()) {
+            mates = mateRepository.findByMatchIdIn(matchIds, pageable);
+        } else {
+            mates = mateRepository.findAll(pageable);
+        }
+
+        return mates.map(mate -> {
+            MateDTO mateDTO = convertToDTO(mate);
+
+            if (mate.getBoard() != null) {
+                Long boardId = mate.getBoard().getBoardId();
+                Integer commentCount = commentRepository.countCommentsByBoardId(boardId);
+
+                mateDTO.getBoard().setCommentCount(commentCount != null ? commentCount : 0);
+            }
+
+            return mateDTO;
+        });
+    }
+
 
     private MateDTO convertToDTO(Mate mate) {
         MateDTO mateDTO = new MateDTO();
         BeanUtils.copyProperties(mate, mateDTO);
-        mateDTO.setBoard(BoardDTO.builder()
-            .boardId(mate.getBoard().getBoardId())
-            .boardType(mate.getBoard().getBoardType())
-            .title(mate.getBoard().getTitle())
-            .content(mate.getBoard().getContent())
-            .createAt(mate.getBoard().getCreateAt())
-            .updateAt(mate.getBoard().getUpdateAt())
-            .deleteAt(mate.getBoard().getDeleteAt())
-//        .user(Long.valueOf(mate.getBoard().getUser()))
-            .build());
+        mateDTO.setBoard(BoardDTO.builder().boardId(mate.getBoard().getBoardId())
+            .boardType(mate.getBoard().getBoardType()).title(mate.getBoard().getTitle())
+            .content(mate.getBoard().getContent()).createAt(mate.getBoard().getCreateAt())
+            .updateAt(mate.getBoard().getUpdateAt()).deleteAt(mate.getBoard().getDeleteAt())
+            .userId(mate.getBoard().getUserId()).build());
         return mateDTO;
     }
 
     private Mate convertToEntity(MateDTO mateDTO) {
         Mate mate = new Mate();
         BeanUtils.copyProperties(mateDTO, mate);
-        mate.setBoard(Board.builder()
-            .boardId(mateDTO.getBoard().getBoardId())
-            .boardType(mateDTO.getBoard().getBoardType())
-            .title(mateDTO.getBoard().getTitle())
-            .content(mateDTO.getBoard().getContent())
-            .createAt(mateDTO.getBoard().getCreateAt())
-            .updateAt(mateDTO.getBoard().getUpdateAt())
-            .deleteAt(mateDTO.getBoard().getDeleteAt())
-//        .user(String.valueOf(mateDTO.getBoard().getUser()))
-            .build());
+        mate.setBoard(Board.builder().boardId(mateDTO.getBoard().getBoardId())
+            .boardType(mateDTO.getBoard().getBoardType()).title(mateDTO.getBoard().getTitle())
+            .content(mateDTO.getBoard().getContent()).createAt(mateDTO.getBoard().getCreateAt())
+            .updateAt(mateDTO.getBoard().getUpdateAt()).deleteAt(mateDTO.getBoard().getDeleteAt())
+            .userId(mateDTO.getBoard().getUserId()).build());
         return mate;
+    }
+
+    public List<MateDTO> getMostRecentMates(int count) {
+        List<Mate> recentMates = mateRepository.findAll(
+            PageRequest.of(0, count, Sort.by(Sort.Direction.DESC, "board.createAt"))).getContent();
+
+        return recentMates.stream().map(this::convertToDTO).collect(Collectors.toList());
     }
 }

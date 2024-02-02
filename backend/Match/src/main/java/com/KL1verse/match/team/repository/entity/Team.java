@@ -25,7 +25,7 @@ import lombok.ToString;
 public class Team {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "team_id")
     private Integer teamId;
 
@@ -34,5 +34,8 @@ public class Team {
 
     @Column(name = "team_description")
     private String teamDescription;
+
+    @Column(name = "song_id")
+    private int songId;
 
 }

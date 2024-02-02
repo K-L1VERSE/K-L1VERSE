@@ -14,6 +14,7 @@ import lombok.Setter;
 @AllArgsConstructor
 @NoArgsConstructor
 public class CommentDTO {
+
     private Long commentId;
     private Long userId;
     private String content;
@@ -24,4 +25,5 @@ public class CommentDTO {
     private LocalDateTime updateAt;
     private LocalDateTime deleteAt;
     private boolean isSecret;
+    private int likesCount;
 }

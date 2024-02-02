@@ -12,6 +12,7 @@ import com.KL1verse.kafka.producer.KafkaBoardNotificationProducer;
 import java.time.LocalDateTime;
 import java.util.Collections;
 import java.util.List;
+import java.util.Objects;
 import java.util.stream.Collectors;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -33,7 +34,7 @@ public class CommentServiceImpl implements CommentService {
             .orElseThrow(() -> new RuntimeException("Comment not found with id: " + commentId));
 
         if (comment.isSecret() && !isAuthorized(comment, requestingUserId)) {
-            // 비밀 댓글에 대한 권한이 없는 경우 처리
+
             return null;
         }
 
@@ -42,11 +43,11 @@ public class CommentServiceImpl implements CommentService {
 
 
     private boolean isAuthorized(Comment comment, Long requestingUserId) {
-        // 요청한 사용자가 댓글 작성자 또는 게시물 작성자인지 확인
-        Long commentUserId = comment.getUserId();
-        Long boardUserId = Long.valueOf(comment.getBoardId().getUser());
 
-        return requestingUserId.equals(commentUserId) || requestingUserId.equals(boardUserId);
+        int boardUserId = comment.getBoardId().getUserId();
+        Long commentUserId = comment.getUserId();
+        return requestingUserId.equals(commentUserId) || (requestingUserId.intValue()
+            == boardUserId);
     }
 
 
@@ -82,6 +83,7 @@ public class CommentServiceImpl implements CommentService {
             .boardId(createdComment.getBoardId().getBoardId())
             .userId(createdComment.getUserId())
             .isSecret(createdComment.isSecret())
+            .likesCount(0)
             .parentId(
                 createdComment.getParentId() != null ? createdComment.getParentId().getCommentId()
                     : null)
@@ -93,11 +95,8 @@ public class CommentServiceImpl implements CommentService {
         Comment existingComment = commentRepository.findById(commentId)
             .orElseThrow(() -> new RuntimeException("Comment not found with id: " + commentId));
 
-        // 업데이트할 내용을 DTO에서 가져와서 existingComment에 설정
         existingComment.setContent(commentDTO.getContent());
-        // 필요한 다른 필드들도 업데이트
 
-        // 업데이트된 Comment를 저장
         Comment updatedComment = commentRepository.save(existingComment);
         return convertToDTO(updatedComment);
     }
@@ -112,7 +111,6 @@ public class CommentServiceImpl implements CommentService {
             throw new RuntimeException("Comment {} already deleted " + commentId);
         }
 
-        // delete_at 필드를 현재 타임스탬프로 설정하여 소프트 삭제
         existingComment.setDeleteAt(LocalDateTime.now());
         commentRepository.save(existingComment);
         log.info("Comment {} is deleted : ", commentId);
@@ -141,34 +139,109 @@ public class CommentServiceImpl implements CommentService {
             .userId(createdReply.getUserId())
             .isSecret(createdReply.isSecret())
             .boardId(createdReply.getBoardId().getBoardId())
+            .likesCount(0)
             .build();
     }
 
-
     @Override
     public List<CommentDTO> getAllCommentsByBoardId(Long boardId, Long requestingUserId) {
-        List<Comment> comments = commentRepository.findByBoardId_BoardId(boardId);
 
-        return comments.stream()
-            .filter(comment -> comment.getParentId() == null) // 부모 댓글만 가져옴
-            .map(comment -> {
-                if (comment.isSecret() && !isAuthorized(comment, requestingUserId)) {
-                    // 댓글이 비밀이고 사용자가 권한이 없는 경우 적절한 메시지 표시
-                    CommentDTO secretComment = new CommentDTO();
-                    secretComment.setContent("비밀 댓글입니다.");
-                    secretComment.setUpdateAt(comment.getUpdateAt());
-                    secretComment.setDeleteAt(comment.getDeleteAt());
-                    secretComment.setCommentId(comment.getCommentId());
-                    secretComment.setCreateAt(comment.getCreateAt());
-                    secretComment.setSecret(comment.isSecret());
-                    secretComment.setReplies(Collections.emptyList()); // 비밀 댓글에 대한 답글 가져오기 불필요
-                    secretComment.setBoardId(comment.getBoardId().getBoardId());
-                    return secretComment;
+        List<Object[]> commentsWithLikesCount = commentRepository.findCommentsWithLikesCountByBoardId(
+            boardId);
+
+        return commentsWithLikesCount.stream()
+            .map(result -> {
+                Comment comment = (Comment) result[0];
+                Long likesCount = (Long) result[1];
+
+                CommentDTO commentDTO = convertToDTO(comment);
+                Integer commentLikesCount = commentRepository.findLikesCountByCommentId(
+                    comment.getCommentId());
+                commentDTO.setLikesCount(commentLikesCount != null ? commentLikesCount : 0);
+
+                if (comment.getParentId() == null) {
+
+                    if (comment.isSecret() && !isAuthorized(comment, requestingUserId)) {
+
+                        CommentDTO secretComment = new CommentDTO();
+                        secretComment.setContent("비밀 댓글입니다.");
+                        secretComment.setUpdateAt(comment.getUpdateAt());
+                        secretComment.setDeleteAt(comment.getDeleteAt());
+                        secretComment.setCommentId(comment.getCommentId());
+                        secretComment.setCreateAt(comment.getCreateAt());
+                        secretComment.setSecret(comment.isSecret());
+
+                        List<CommentDTO> secretReplies = comment.getReplies().stream()
+                            .map(reply -> {
+                                if (reply.isSecret() && !isAuthorized(reply, requestingUserId)) {
+                                  
+                                    CommentDTO secretReply = new CommentDTO();
+                                    secretReply.setContent("비밀 대댓글입니다.");
+                                    secretReply.setUpdateAt(reply.getUpdateAt());
+                                    secretReply.setDeleteAt(reply.getDeleteAt());
+                                    secretReply.setCommentId(reply.getCommentId());
+                                    secretReply.setCreateAt(reply.getCreateAt());
+                                    secretReply.setParentId(reply.getParentId().getCommentId());
+                                    secretReply.setSecret(reply.isSecret());
+                                    secretReply.setReplies(Collections.emptyList());
+                                    secretReply.setBoardId(reply.getBoardId().getBoardId());
+
+                                    Integer secretReplyLikesCount = commentRepository.findLikesCountByCommentId(
+                                        reply.getCommentId());
+                                    secretReply.setLikesCount(
+                                        secretReplyLikesCount != null ? secretReplyLikesCount : 0);
+
+                                    return secretReply;
+                                } else {
+
+                                    return convertToDTOWithReplies(reply, requestingUserId);
+                                }
+                            })
+                            .collect(Collectors.toList());
+                        secretComment.setReplies(secretReplies);
+
+                        secretComment.setBoardId(comment.getBoardId().getBoardId());
+                        secretComment.setLikesCount(likesCount.intValue());
+                        return secretComment;
+                    } else {
+
+                        List<CommentDTO> replies = comment.getReplies().stream()
+                            .map(reply -> {
+                                if (reply.isSecret() && !isAuthorized(reply, requestingUserId)) {
+
+                                    CommentDTO secretReply = new CommentDTO();
+                                    secretReply.setContent("비밀 대댓글입니다.");
+                                    secretReply.setUpdateAt(reply.getUpdateAt());
+                                    secretReply.setDeleteAt(reply.getDeleteAt());
+                                    secretReply.setCommentId(reply.getCommentId());
+                                    secretReply.setCreateAt(reply.getCreateAt());
+                                    secretReply.setParentId(reply.getParentId().getCommentId());
+                                    secretReply.setSecret(reply.isSecret());
+                                    secretReply.setReplies(Collections.emptyList());
+                                    secretReply.setBoardId(reply.getBoardId().getBoardId());
+
+                                    Integer secretReplyLikesCount = commentRepository.findLikesCountByCommentId(
+                                        reply.getCommentId());
+                                    secretReply.setLikesCount(
+                                        secretReplyLikesCount != null ? secretReplyLikesCount : 0);
+
+                                    return secretReply;
+                                } else {
+
+                                    return convertToDTOWithReplies(reply, requestingUserId);
+                                }
+                            })
+                            .collect(Collectors.toList());
+
+                        commentDTO.setReplies(replies);
+                        return commentDTO;
+                    }
                 } else {
-                    // 비밀이 아닌 댓글에 대해 재귀적으로 답글 가져오기
-                    return convertToDTOWithReplies(comment, requestingUserId);
+
+                    return null;
                 }
             })
+            .filter(Objects::nonNull)
             .filter(commentDTO -> commentDTO.getDeleteAt() == null)
             .collect(Collectors.toList());
     }
@@ -178,7 +251,7 @@ public class CommentServiceImpl implements CommentService {
         List<CommentDTO> replyDTOs = comment.getReplies().stream()
             .map(reply -> {
                 if (reply.isSecret() && !isAuthorized(reply, requestingUserId)) {
-                    // 답글이 비밀이고 사용자가 권한이 없는 경우 적절한 메시지 표시
+
                     CommentDTO secretReply = new CommentDTO();
                     secretReply.setContent("비밀 대댓글입니다.");
                     secretReply.setUpdateAt(reply.getUpdateAt());
@@ -187,16 +260,23 @@ public class CommentServiceImpl implements CommentService {
                     secretReply.setCreateAt(reply.getCreateAt());
                     secretReply.setParentId(reply.getParentId().getCommentId());
                     secretReply.setSecret(reply.isSecret());
-                    secretReply.setReplies(Collections.emptyList()); // 비밀 대댓글에 대한 답글 가져오기 불필요
+                    secretReply.setReplies(Collections.emptyList());
                     secretReply.setBoardId(reply.getBoardId().getBoardId());
+
+                    Integer secretReplyLikesCount = commentRepository.findLikesCountByCommentId(
+                        reply.getCommentId());
+                    secretReply.setLikesCount(
+                        secretReplyLikesCount != null ? secretReplyLikesCount : 0);
+
                     return secretReply;
                 } else {
-                    // 비밀이 아닌 답글에 대해 재귀적으로 답글 가져오기
+
                     return convertToDTOWithReplies(reply, requestingUserId);
                 }
             })
             .collect(Collectors.toList());
         commentDTO.setReplies(replyDTOs);
+
         return commentDTO;
     }
 
@@ -208,7 +288,7 @@ public class CommentServiceImpl implements CommentService {
             .map(comment -> {
                 CommentDTO replyDTO = new CommentDTO();
                 if (comment.isSecret()) {
-                    // 비밀 댓글에 대한 처리
+
                     replyDTO.setContent("비밀 댓글입니다.");
                     replyDTO.setUpdateAt(comment.getUpdateAt());
                     replyDTO.setDeleteAt(comment.getDeleteAt());
@@ -218,7 +298,7 @@ public class CommentServiceImpl implements CommentService {
                     replyDTO.setReplies(comment.getReplies().stream().map(this::convertToDTO)
                         .collect(Collectors.toList()));
                     replyDTO.setBoardId(comment.getBoardId().getBoardId());
-                    // replyDTO.setParentId(comment.getParentId().getCommentId());
+
                 } else {
                     replyDTO = convertToDTO(comment);
                 }
@@ -234,6 +314,10 @@ public class CommentServiceImpl implements CommentService {
         BeanUtils.copyProperties(comment, commentDTO);
         commentDTO.setBoardId(comment.getBoardId().getBoardId());
         commentDTO.setUserId(comment.getUserId());
+
+        Integer likesCount = commentRepository.findLikesCountByCommentId(comment.getCommentId());
+        commentDTO.setLikesCount(likesCount);
+
         commentDTO.setParentId(
             comment.getParentId() != null ? comment.getParentId().getCommentId() : null);
         commentDTO.setReplies(
@@ -241,6 +325,7 @@ public class CommentServiceImpl implements CommentService {
 
         return commentDTO;
     }
+
 
     private Comment convertToEntity(CommentDTO commentDTO) {
         Comment comment = new Comment();

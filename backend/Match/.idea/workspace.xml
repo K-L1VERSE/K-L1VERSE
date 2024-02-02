@@ -5,26 +5,22 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="28d638e8-7727-48af-8c38-2002f58f12d8" name="S10P12A409-369 [FE] 메인페이지 공지사항 개발" comment="[Feat] 공지사항, 핫클립, 노스트라다무스, 챗봇 완료 &#10;&#10;- &#10;&#10;&#10;&#10;[Resolves] S10P12A409-369&#10;[Ref] &#10;[Related to]">
-      <change afterPath="$PROJECT_DIR$/../Board/src/main/java/com/KL1verse/kafka/KafkaConfig.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../Board/src/main/java/com/KL1verse/kafka/KafkaProducer.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../Board/src/main/java/com/KL1verse/kafka/dto/res/BoardNotificationResDto.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../Board/src/main/java/com/KL1verse/kafka/producer/KafkaBoardNotificationProducer.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../UserServer/src/main/java/com/kl1verse/UserServer/domain/kafka/consumer/KafkaBoardNotificationConsumer.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../UserServer/src/main/java/com/kl1verse/UserServer/domain/kafka/dto/req/BoardNotificationReqDto.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Board/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/../Board/build.gradle" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Board/src/main/java/com/KL1verse/Board/repository/BoardRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/../Board/src/main/java/com/KL1verse/Board/repository/BoardRepository.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Board/src/main/java/com/KL1verse/Comment/service/CommentServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/../Board/src/main/java/com/KL1verse/Comment/service/CommentServiceImpl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Board/src/main/resources/application.yml" beforeDir="false" afterPath="$PROJECT_DIR$/../Board/src/main/resources/application.yml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gradle/8.4/executionHistory/executionHistory.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/8.4/executionHistory/executionHistory.bin" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gradle/8.4/executionHistory/executionHistory.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/8.4/executionHistory/executionHistory.lock" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gradle/8.4/fileHashes/fileHashes.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/8.4/fileHashes/fileHashes.bin" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gradle/8.4/fileHashes/fileHashes.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/8.4/fileHashes/fileHashes.lock" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gradle/buildOutputCleanup/buildOutputCleanup.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/buildOutputCleanup/buildOutputCleanup.lock" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../UserServer/src/main/java/com/kl1verse/UserServer/domain/s3/repository/FileRepository.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../UserServer/src/main/java/com/kl1verse/UserServer/domain/s3/repository/UserImageRepository.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../UserServer/src/main/java/com/kl1verse/UserServer/domain/s3/repository/entity/File.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../UserServer/src/main/java/com/kl1verse/UserServer/domain/s3/repository/entity/UserImage.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../UserServer/src/main/java/com/kl1verse/UserServer/domain/s3/service/FileService.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../UserServer/src/main/java/com/kl1verse/UserServer/domain/s3/service/UserImageService.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/build.gradle" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/resources/main/application.yml" beforeDir="false" afterPath="$PROJECT_DIR$/build/resources/main/application.yml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/application.yml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/application.yml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../UserServer/src/main/java/com/kl1verse/UserServer/domain/auth/service/AuthService.java" beforeDir="false" afterPath="$PROJECT_DIR$/../UserServer/src/main/java/com/kl1verse/UserServer/domain/auth/service/AuthService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../UserServer/src/main/java/com/kl1verse/UserServer/domain/betting/BettingEntity.java" beforeDir="false" afterPath="$PROJECT_DIR$/../UserServer/src/main/java/com/kl1verse/UserServer/domain/betting/BettingEntity.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../UserServer/src/main/java/com/kl1verse/UserServer/domain/kafka/consumer/KafkaMatchNotificationConsumer.java" beforeDir="false" afterPath="$PROJECT_DIR$/../UserServer/src/main/java/com/kl1verse/UserServer/domain/kafka/consumer/KafkaMatchNotificationConsumer.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../UserServer/src/main/java/com/kl1verse/UserServer/domain/user/controller/UserController.java" beforeDir="false" afterPath="$PROJECT_DIR$/../UserServer/src/main/java/com/kl1verse/UserServer/domain/user/controller/UserController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../UserServer/src/main/java/com/kl1verse/UserServer/domain/user/service/MypageServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/../UserServer/src/main/java/com/kl1verse/UserServer/domain/user/service/MypageServiceImpl.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../UserServer/src/main/resources/application.yml" beforeDir="false" afterPath="$PROJECT_DIR$/../UserServer/src/main/resources/application.yml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../frontend/src/api/axios.js" beforeDir="false" afterPath="$PROJECT_DIR$/../../frontend/src/api/axios.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../frontend/src/components/mypage/UserProfile.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/../../frontend/src/components/mypage/UserProfile.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../frontend/src/pages/login_page/GoogleRedirection.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/../../frontend/src/pages/login_page/GoogleRedirection.jsx" afterDir="false" />
     </list>
     <list id="a0c7810e-23c4-4b5b-9b34-2e4da1d77e3f" name="Changes" comment="[Fix][BE] 분배했는지 확인하고 분배 추가&#10;&#10;- &#10;&#10; [BE] 베팅골 분배하기&#10;&#10;[Resolves] S10P12A409&#10;[Ref] &#10;[Related to]" />
     <list id="8f9b1d4a-caa9-4a69-ba59-b89b546ae82f" name="S10P12A409-364 [BE] 메인 페이지 관련 API" comment="[커밋 타입] 제목&#10;&#10;- &#10;&#10; [BE] 메인 페이지 관련 API&#10;&#10;[Resolves] S10P12A409-364 &#10;[Ref] &#10;[Related to]" />
@@ -47,7 +43,17 @@
         </task>
         <projects_view>
           <tree_state>
-            <expand />
+            <expand>
+              <path>
+                <item name="" type="6a2764b6:ExternalProjectsStructure$RootNode" />
+                <item name="Match" type="f1a62948:ProjectNode" />
+              </path>
+              <path>
+                <item name="" type="6a2764b6:ExternalProjectsStructure$RootNode" />
+                <item name="Match" type="f1a62948:ProjectNode" />
+                <item name="Run Configurations" type="7b0102dc:RunConfigurationsNode" />
+              </path>
+            </expand>
             <select />
           </tree_state>
         </projects_view>
@@ -73,28 +79,28 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;Gradle.Build Match.executor&quot;: &quot;Run&quot;,
-    &quot;Gradle.Match.executor&quot;: &quot;Run&quot;,
-    &quot;RequestMappingsPanelOrder0&quot;: &quot;0&quot;,
-    &quot;RequestMappingsPanelOrder1&quot;: &quot;1&quot;,
-    &quot;RequestMappingsPanelWidth0&quot;: &quot;75&quot;,
-    &quot;RequestMappingsPanelWidth1&quot;: &quot;75&quot;,
-    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;Spring Boot.MatchApplication.executor&quot;: &quot;Run&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;feature-api/S10P12A409-3&quot;,
-    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
-    &quot;last_opened_file_path&quot;: &quot;C:/Users/SSAFY/Desktop/k-l1verse/S10P12A409/backend/Board&quot;,
-    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
-    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
-    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
-    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
-    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;tasks.servers&quot;,
-    &quot;start.from.branch&quot;: &quot;feature-common/S10P12A409-365/main-notice&quot;,
-    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "Gradle.Build Match.executor": "Run",
+    "Gradle.Match.executor": "Run",
+    "RequestMappingsPanelOrder0": "0",
+    "RequestMappingsPanelOrder1": "1",
+    "RequestMappingsPanelWidth0": "75",
+    "RequestMappingsPanelWidth1": "75",
+    "RunOnceActivity.OpenProjectViewOnStart": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "Spring Boot.MatchApplication.executor": "Run",
+    "git-widget-placeholder": "feature-user/S10P12A409-439/file",
+    "kotlin-language-version-configured": "true",
+    "last_opened_file_path": "C:/Users/SSAFY/IdeaProjects/S10P12A409",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs_package_manager_path": "npm",
+    "settings.editor.selected.configurable": "tasks.servers",
+    "start.from.branch": "feature-common/S10P12A409-365/main-notice",
+    "vue.rearranger.settings.migration": "true"
   },
   &quot;keyToStringList&quot;: {
     &quot;DatabaseDriversLRU&quot;: [
@@ -247,6 +253,8 @@
       <workItem from="1706487363221" duration="2258000" />
       <workItem from="1706491537377" duration="36000" />
       <workItem from="1706491579444" duration="828000" />
+      <workItem from="1706571110994" duration="4287000" />
+      <workItem from="1706578734472" duration="920000" />
     </task>
     <task id="LOCAL-00001" summary="[WIP][FE] 메인페이지 공지사항 개발 중&#10;&#10;- &#10;&#10; [FE] 메인페이지 공지사항 개발&#10;&#10;[Resolves] S10P12A409-369 &#10;[Ref] &#10;[Related to]">
       <option name="closed" value="true" />
@@ -339,9 +347,9 @@
             <State>
               <option name="COLUMN_ID_WIDTH">
                 <map>
-                  <entry key="Table.Default.Author.ColumnIdWidth" value="45" />
-                  <entry key="Table.Default.Date.ColumnIdWidth" value="51" />
-                  <entry key="Table.Space.CommitStatus.ColumnIdWidth" value="51" />
+                  <entry key="Table.Default.Author.ColumnIdWidth" value="77" />
+                  <entry key="Table.Default.Date.ColumnIdWidth" value="157" />
+                  <entry key="Table.Space.CommitStatus.ColumnIdWidth" value="15" />
                 </map>
               </option>
             </State>

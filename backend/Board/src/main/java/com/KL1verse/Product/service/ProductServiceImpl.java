@@ -4,6 +4,7 @@ import com.KL1verse.Board.dto.req.BoardDTO;
 import com.KL1verse.Board.dto.req.SearchBoardConditionDto;
 import com.KL1verse.Board.repository.BoardRepository;
 import com.KL1verse.Board.repository.entity.Board;
+import com.KL1verse.Comment.repository.CommentRepository;
 import com.KL1verse.Product.dto.req.ProductDTO;
 import com.KL1verse.Product.repository.ProductRepository;
 import com.KL1verse.Product.repository.entity.Product;
@@ -23,10 +24,13 @@ public class ProductServiceImpl implements ProductService {
     private final ProductRepository productRepository;
     private final BoardRepository boardRepository;
 
+    private final CommentRepository commentRepository;
+
     public ProductServiceImpl(ProductRepository productRepository,
-        BoardRepository boardRepository) {
+        BoardRepository boardRepository, CommentRepository commentRepository) {
         this.productRepository = productRepository;
         this.boardRepository = boardRepository;
+        this.commentRepository = commentRepository;
     }
 
     @Override
@@ -63,6 +67,7 @@ public class ProductServiceImpl implements ProductService {
         productRepository.deleteById(productToDelete.getProductId());
     }
 
+
     @Override
     public Page<ProductDTO> searchProducts(SearchBoardConditionDto searchCondition,
         Pageable pageable) {
@@ -78,13 +83,38 @@ public class ProductServiceImpl implements ProductService {
             products = productRepository.findAll(pageable);
         }
 
-        return products.map(this::convertToDTO);
+        return products.map(product -> {
+            ProductDTO productDTO = convertToDTO(product);
+
+            if (product.getBoard() != null) {
+
+                Long boardId = product.getBoard().getBoardId();
+                Integer commentCount = commentRepository.countCommentsByBoardId(boardId);
+
+                productDTO.getBoard().setCommentCount(commentCount != null ? commentCount : 0);
+            }
+
+            return productDTO;
+        });
     }
 
     @Override
     public Page<ProductDTO> getAllProductList(Pageable pageable) {
         Page<Product> products = productRepository.findAll(pageable);
-        return products.map(this::convertToDTO);
+
+        return products.map(product -> {
+            ProductDTO productDTO = convertToDTO(product);
+
+            if (product.getBoard() != null) {
+
+                Long boardId = product.getBoard().getBoardId();
+                Integer commentCount = commentRepository.countCommentsByBoardId(boardId);
+
+                productDTO.getBoard().setCommentCount(commentCount != null ? commentCount : 0);
+            }
+
+            return productDTO;
+        });
     }
 
     @Override
@@ -129,7 +159,7 @@ public class ProductServiceImpl implements ProductService {
             .createAt(product.getBoard().getCreateAt())
             .updateAt(product.getBoard().getUpdateAt())
             .deleteAt(product.getBoard().getDeleteAt())
-//        .user(Long.valueOf(product.getBoard().getUser()))
+            .userId(product.getBoard().getUserId())
             .build());
         return productDTO;
     }
@@ -145,7 +175,7 @@ public class ProductServiceImpl implements ProductService {
             .createAt(productDTO.getBoard().getCreateAt())
             .updateAt(productDTO.getBoard().getUpdateAt())
             .deleteAt(productDTO.getBoard().getDeleteAt())
-//        .user(String.valueOf(productDTO.getBoard().getUser()))
+            .userId(productDTO.getBoard().getUserId())
             .build());
         return product;
     }

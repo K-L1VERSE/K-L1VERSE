@@ -47,6 +47,7 @@ public class WaggleController {
     @PutMapping("/{boardId}")
     public ResponseEntity<WaggleDTO> updateWaggle(@PathVariable Long boardId,
         @RequestBody WaggleDTO waggleDto) {
+
         WaggleDTO updatedWaggle = waggleService.updateWaggle(boardId, waggleDto);
         return ResponseEntity.ok(updatedWaggle);
     }
@@ -54,16 +55,11 @@ public class WaggleController {
 
     @DeleteMapping("/{boardId}")
     public ResponseEntity<Void> deleteWaggle(@PathVariable Long boardId) {
+
         waggleService.deleteWaggle(boardId);
         return ResponseEntity.noContent().build();
     }
 
-
-    @GetMapping("/pages")
-    public ResponseEntity<Page<WaggleDTO>> getAllWagglesPaged(Pageable pageable) {
-        Page<WaggleDTO> waggles = waggleService.getAllWaggleList(pageable);
-        return ResponseEntity.ok(waggles);
-    }
 
     @GetMapping("/searchPaged")
     public ResponseEntity<Page<WaggleDTO>> searchWagglesPaged(
@@ -73,7 +69,13 @@ public class WaggleController {
         SearchBoardConditionDto searchCondition = SearchBoardConditionDto.builder()
             .keyword(keyword)
             .build();
-        Page<WaggleDTO> waggles = waggleService.searchWaggles(searchCondition, pageable);
+        Page<WaggleDTO> waggles = waggleService.searchWagglesWithLikes(searchCondition, pageable);
+        return ResponseEntity.ok(waggles);
+    }
+
+    @GetMapping("/pages")
+    public ResponseEntity<Page<WaggleDTO>> getAllWagglesPaged(Pageable pageable) {
+        Page<WaggleDTO> waggles = waggleService.getAllWagglesWithLikes(pageable);
         return ResponseEntity.ok(waggles);
     }
 
@@ -82,4 +84,5 @@ public class WaggleController {
         List<WaggleDTO> recentWaggles = waggleService.getMostRecentWaggles(count);
         return ResponseEntity.ok(recentWaggles);
     }
+
 }

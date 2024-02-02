@@ -1,6 +1,10 @@
 server:
   port: 8000
 
+spring:
+  profiles:
+    active: deploy
+
 #spring:
 #  cloud:
 #    gateway:

@@ -13,6 +13,7 @@
     "@testing-library/user-event": "^13.5.0",
     "axios": "^1.6.5",
     "circular-json": "^0.5.9",
+    "hangul-js": "^0.2.6",
     "jquery": "^3.7.1",
     "moment": "^2.29.4",
     "prop-types": "^15.8.1",

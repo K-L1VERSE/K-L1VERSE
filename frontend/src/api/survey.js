@@ -1,13 +1,6 @@
 import axios from "./axios";
 
-const url = "surveys";
-
-// surveyId 보내기
-export function getSurvey(surveyId) {
-  return axios.get(`/${url}/${surveyId}`).then((response) => {
-    return response.data;
-  });
-}
+const url = "survey/surveys";
 
 // 질문 내용 조회
 export function getQuestion(questionNum) {

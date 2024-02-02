@@ -11,10 +11,9 @@ import NaverRedirection from "./pages/login_page/NaverRedirection";
 import GoogleRedirection from "./pages/login_page/GoogleRedirection";
 
 import MainPage from "./pages/main_page/MainPage";
-import MatchPage from "./pages/match_page/MatchPage";
-
 import LoginPage from "./pages/login_page/LoginPage";
-import MyPage from "./pages/mypage/MyPage";
+import MyPage from "./pages/my_page/MyPage";
+import Badge from "./pages/my_page/Badge";
 import Navbar from "./pages/nav/Navbar";
 import SocketProvider from "./global/SocketProvider";
 import LogoutPage from "./pages/logout_page/LogoutPage";
@@ -32,24 +31,33 @@ import ProductListPage from "./pages/board_page/product_page/ProductListPage";
 import ProductDetailPage from "./pages/board_page/product_page/ProductDetailPage";
 import ProductRegistPage from "./pages/board_page/product_page/ProductRegistPage";
 
+import MatchSchedulePage from "./pages/match_page/MatchSchedulePage";
+import MatchDetailPage from "./pages/match_page/MatchDetailPage";
+import MatchChattingPage from "./pages/match_page/MatchChattingPage";
+
 function App() {
   return (
     <div className="App">
       <SocketProvider>
         <BrowserRouter>
           <Routes>
+            {/* 로그인 페이지 */}
+            <Route path="/login" element={<LoginPage />} />
+
+            {/* 로그아웃 페이지 */}
+            <Route path="/logout" element={<LogoutPage />} />
+
+            {/* 로그인 리다이렉션 페이지 */}
+            <Route path="/KakaoAuth" element={<KaKaoRedirection />} />
+            <Route path="/GoogleAuth" element={<GoogleRedirection />} />
+            <Route path="/NaverAuth" element={<NaverRedirection />} />
+
             <Route path="/" element={<Navbar />}>
               {/* 메인 페이지 */}
               <Route index element={<MainPage />} />
 
-              {/* 로그인 페이지 */}
-              <Route path="/login" element={<LoginPage />} />
-
               {/* 알림 페이지 */}
               <Route path="/notification" element={<Notification />} />
-
-              {/* 로그인 페이지 */}
-              <Route path="/login" element={<LoginPage />} />
 
               {/* 설문 페이지 */}
               <Route path="/survey" element={<StartPage />} />
@@ -71,23 +79,22 @@ function App() {
               <Route path="/product/:boardId" element={<ProductDetailPage />} />
               <Route path="/productRegist" element={<ProductRegistPage />} />
 
-              {/* 로그아웃 페이지 */}
-              <Route path="/logout" element={<LogoutPage />} />
-
-              {/* 로그인 리다이렉션 페이지 */}
-              <Route path="/KakaoAuth" element={<KaKaoRedirection />} />
-              <Route path="/GoogleAuth" element={<GoogleRedirection />} />
-              <Route path="/NaverAuth" element={<NaverRedirection />} />
-
-              {/* 경기 페이지 */}
-              <Route path="/match" element={<MatchPage />} />
+              {/* 경기 일정 페이지 */}
+              <Route path="/matchSchedule" element={<MatchSchedulePage />} />
+              {/* 경기 상세 페이지 */}
+              <Route
+                path="/matchDetail/:matchId"
+                element={<MatchDetailPage />}
+              />
+              {/* 경기 채팅 페이지 */}
+              <Route
+                path="/matchChatting/:matchId"
+                element={<MatchChattingPage />}
+              />
 
               {/* 마이 페이지 */}
               <Route path="/mypage" element={<MyPage />} />
-
-              <Route path="/survey" element={<StartPage />} />
-              <Route path="/question/:questionNum" element={<QuestionPage />} />
-              <Route path="/result" element={<ResultPage />} />
+              <Route path="/badge" element={<Badge />} />
             </Route>
           </Routes>
         </BrowserRouter>

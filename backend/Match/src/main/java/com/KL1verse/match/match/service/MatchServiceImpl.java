@@ -7,6 +7,7 @@ import com.KL1verse.match.match.dto.res.TimelineResponse;
 import com.KL1verse.match.match.repository.MatchRepository;
 import com.KL1verse.match.match.repository.TimelineRepository;
 import com.KL1verse.match.match.repository.entity.Match;
+import com.KL1verse.match.match.repository.entity.Match.MatchStatus;
 import com.KL1verse.match.match.repository.entity.Timeline;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
@@ -40,31 +41,35 @@ public class MatchServiceImpl implements MatchService {
 
     @Override
     @Transactional
-    public List<MatchListResponse> getMatchList(int month) {
+    public List<MatchListResponse> getMatchList(int year, int month) {
 
-        List<Match> matchList = matchRepository.findByMonth(month);
+        List<Match> matchList = matchRepository.findByYearAndMonth(year, month);
         List<MatchListResponse> matchListResponses = new ArrayList<>();
 
         for (Match match : matchList) {
             LocalDateTime now = LocalDateTime.now();
             LocalDateTime matchAt = match.getMatchAt();
+
             if (now.getYear() == matchAt.getYear() && now.getMonthValue() == matchAt.getMonthValue()
                 && now.getDayOfMonth() == matchAt.getDayOfMonth()
                 && now.getHour() == matchAt.getHour()) {
-                match.setStatus("during");
+                match.setStatus(MatchStatus.during);
             }
 
-            if (match.getStatus().equals("during")) {
+            if (match.getStatus().equals(MatchStatus.during)) {
                 getScore(match);
             }
 
             matchListResponses.add(MatchListResponse.builder()
                 .matchId(match.getMatchId())
+                .homeTeamId(match.getHomeTeamId())
+                .awayTeamId(match.getAwayTeamId())
                 .homeTeamName(matchRepository.findOneByTeamId(match.getHomeTeamId()))
                 .awayTeamName(matchRepository.findOneByTeamId(match.getAwayTeamId()))
                 .matchAt(match.getMatchAt())
                 .homeScore(match.getHomeScore())
                 .awayScore(match.getAwayScore())
+                .status(match.getStatus().toString())
                 .build());
         }
 
@@ -81,10 +86,10 @@ public class MatchServiceImpl implements MatchService {
         if (now.getYear() == matchAt.getYear() && now.getMonthValue() == matchAt.getMonthValue()
             && now.getDayOfMonth() == matchAt.getDayOfMonth()
             && now.getHour() == matchAt.getHour()) {
-            match.setStatus("during");
+            match.setStatus(MatchStatus.during);
         }
 
-        if (match.getStatus().equals("during")) {
+        if (match.getStatus().equals(MatchStatus.during)) {
             getScore(match);
         }
 
@@ -95,10 +100,12 @@ public class MatchServiceImpl implements MatchService {
             .awayTeamName(matchRepository.findOneByTeamId(match.getAwayTeamId()))
             .homeBettingAmount(match.getHomeBettingAmount())
             .awayBettingAmount(match.getAwayBettingAmount())
+            .drawBettingAmount(match.getDrawBettingAmount())
             .matchAt(match.getMatchAt())
-            .status(match.getStatus())
+            .status(match.getStatus().toString())
             .homeScore(match.getHomeScore())
             .awayScore(match.getAwayScore())
+            .home(match.getHome())
             .build();
     }
 
@@ -144,7 +151,7 @@ public class MatchServiceImpl implements MatchService {
             if (matchDay == gameDay && matchHomeTeamName.equals(gameHomeTeamName)
                 && matchAwayTeamName.equals(gameAwayTeamName)) {
                 if (element.getAsJsonObject().getAsJsonObject("endYn").getAsString().equals("Y")) {
-                    match.setStatus("done");
+                    match.setStatus(MatchStatus.done);
                     break;
                 }
                 int gameId = element.getAsJsonObject().getAsJsonObject("gameId").getAsInt();
@@ -242,6 +249,8 @@ public class MatchServiceImpl implements MatchService {
         for (Match match : matchList) {
             matchListResponse.add(MatchListResponse.builder()
                 .matchId(match.getMatchId())
+                .homeTeamId(match.getHomeTeamId())
+                .awayTeamId(match.getAwayTeamId())
                 .homeTeamName(matchRepository.findOneByTeamId(match.getHomeTeamId()))
                 .awayTeamName(matchRepository.findOneByTeamId(match.getAwayTeamId()))
                 .matchAt(match.getMatchAt())

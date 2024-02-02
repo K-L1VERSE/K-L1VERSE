@@ -12,7 +12,7 @@ import org.springframework.transaction.annotation.Transactional;
 @Service
 public interface MatchService {
 
-    List<MatchListResponse> getMatchList(int month);
+    List<MatchListResponse> getMatchList(int year, int month);
 
     MatchDetailResponse getMatchDetail(int matchId);
 

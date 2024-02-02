@@ -1,26 +1,26 @@
-import React, { useEffect } from "react";
-import axios from "../../api/authAxios";
+import { useEffect } from "react";
 import { useResetRecoilState } from "recoil";
+
+import axios from "../../api/authAxios";
 import { UserState } from "../../global/UserState";
 
 function LogoutButton() {
+  const resetUserState = useResetRecoilState(UserState);
 
-    const resetUserState = useResetRecoilState(UserState);
+  const domain = process.env.REACT_APP_DOMAIN;
 
-    useEffect(() => {
-        const request = axios
-            .get(`/auth/sign-out`)
-            .then((res) => {
-                console.log(res);
-                resetUserState();
-                window.location.href = 'http://localhost:3000/login';
-            })
-            .catch((err) => {
-                console.log(err);
-                resetUserState();
-                window.location.href = 'http://localhost:3000/login';
-            });
-    }, []);
+  useEffect(() => {
+    axios
+      .get(`/user/auth/sign-out`)
+      .then(() => {
+        resetUserState();
+        window.location.href = `${domain}/login`;
+      })
+      .catch(() => {
+        resetUserState();
+        window.location.href = `${domain}/login`;
+      });
+  }, []);
 }
 
 export default LogoutButton;

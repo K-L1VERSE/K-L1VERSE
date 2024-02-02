@@ -35,6 +35,10 @@ module.exports = {
     "react/jsx-filename-extension": 0,
     "react/jsx-one-expression-per-line": 0,
     "react/prop-types": "off",
+    "react/function-component-definition": [
+      2,
+      { namedComponents: ["arrow-function", "function-declaration"] },
+    ],
     "no-nested-ternary": 0,
     "prettier/prettier": ["error", { endOfLine: "auto" }],
     "import/prefer-default-export": "off",
@@ -46,21 +50,6 @@ module.exports = {
         peerDependencies: false,
       },
     ],
-  },
-  settings: {
-    "import/resolver": {
-      node: {
-        paths: ["src"],
-      },
-    },
-  },
-  settings: {
-    "import/resolver": {
-      node: {
-        extensions: [".js", ".jsx", ".ts", ".tsx"],
-        paths: ["src"],
-      },
-    },
   },
   settings: {
     "import/resolver": {

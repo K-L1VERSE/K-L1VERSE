@@ -3,6 +3,7 @@ package com.KL1verse.Mate.service;
 import com.KL1verse.Board.dto.req.SearchBoardConditionDto;
 import com.KL1verse.Mate.dto.req.MateDTO;
 import java.time.LocalDateTime;
+import java.util.List;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
@@ -24,4 +25,9 @@ public interface MateService {
 
     Page<MateDTO> getMatesByDateRange(LocalDateTime startDate, LocalDateTime endDate,
         Pageable pageable);
+
+    List<MateDTO> getMostRecentMates(int count);
+
+    Page<MateDTO> getMatesByMatchList(List<Integer> matchIds, Pageable pageable);
+
 }

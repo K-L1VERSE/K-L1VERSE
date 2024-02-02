@@ -1,7 +1,33 @@
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
+import styled from "styled-components";
+
 import axios from "../../api/authAxios";
 
-function BadgeButton() {
+import { ReactComponent as BadgeBackground } from "../../assets/BadgeBackground.svg";
+
+const BadgeContainer = styled.div`
+  display: flex;
+  width: 32px;
+  height: 32px;
+  padding: 4px;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+
+  border-radius: 30px;
+`;
+
+const BadgeImage = styled.div`
+  width: ${18}px;
+  height: ${18}px;
+
+  position: absolute;
+  // left: 7px;
+  // top: 5px;
+`;
+
+function BadgeButton({ mainBadge }) {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const badgeCodeList = [
     "1",
@@ -58,6 +84,11 @@ function BadgeButton() {
     setIsModalOpen(false);
   };
 
+  const navigate = useNavigate();
+  const goBadge = () => {
+    navigate("/badge");
+  }
+
   const handleBuyBadge = (index) => {
     const confirmPurchase = window.confirm("뱃지를 구매하시겠습니까?");
 
@@ -112,39 +143,21 @@ function BadgeButton() {
     }
   };
 
+  console.log("mainBadge : ", mainBadge);
+
   return (
     <div>
-      <button type="button" onClick={openModal}>
-        뱃지
-      </button>
-      {isModalOpen && (
-        <div className="modal">
-          {/* 모달 내용 */}
-          <div>
-            <button type="button" onClick={closeModal}>
-              &times;
-            </button>
-            <p>
-              {badgeList &&
-                badgeList.map((isBadgeEarned, index) => (
-                  <img
-                    key={index}
-                    src={`/badge/badge${index + 1}.png`}
-                    alt={`badge${index + 1}`}
-                    width={60}
-                    height={60}
-                    style={{
-                      filter: isBadgeEarned ? "none" : "grayscale(100%)",
-                    }}
-                    onClick={() =>
-                      !isBadgeEarned ? handleBuyBadge(index) : wearBadge(index)
-                    }
-                  />
-                ))}
-            </p>
-          </div>
-        </div>
-      )}
+      <BadgeContainer>
+        <BadgeBackground />
+        <BadgeImage onClick={goBadge}>
+          <img
+            alt="뱃지"
+            src={`/badge/badge${mainBadge || 0}.png`}
+            width={18}
+            height={18}
+          />
+        </BadgeImage>
+      </BadgeContainer>
     </div>
   );
 }

@@ -10,8 +10,9 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface MatchRepository extends JpaRepository<Match, Integer> {
 
-    @Query(value = "SELECT * FROM game WHERE MONTH(match_at) = :month", nativeQuery = true)
-    List<Match> findByMonth(@Param("month") int month);
+    @Query(value = "SELECT * FROM game WHERE YEAR(match_at) = :year and MONTH(match_at) = :month", nativeQuery = true)
+    List<Match> findByYearAndMonth(@Param("year") int year, @Param("month") int month);
+
 
     @Query(value = "SELECT team_name FROM team WHERE team_id = :teamId", nativeQuery = true)
     String findOneByTeamId(@Param("teamId") int teamId);
@@ -32,7 +33,7 @@ public interface MatchRepository extends JpaRepository<Match, Integer> {
         @Param("drawBettingAmount") int drawBettingAmount);
 
     @Query(value = "UPDATE game SET goal_divided = :bool WHERE match_id = :matchId", nativeQuery = true)
-    void updateGoalDivided(@Param("matchId") int matchId, @Param("bool") int bool);
+    void updateGoalDivided(@Param("matchId") int matchId, @Param("bool") Boolean bool);
 
     @Query(value = "SELECT COUNT(t) FROM timeline t WHERE t.match_id = :matchId", nativeQuery = true)
     int countById(@Param("matchId") int matchId);

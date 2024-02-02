@@ -6,7 +6,11 @@ import static org.springframework.cloud.gateway.server.mvc.handler.GatewayRouter
 import static org.springframework.cloud.gateway.server.mvc.handler.HandlerFunctions.http;
 import static org.springframework.cloud.gateway.server.mvc.predicate.GatewayRequestPredicates.path;
 
+import jakarta.servlet.ServletException;
+import java.io.IOException;
 import lombok.extern.slf4j.Slf4j;
+import org.json.simple.JSONObject;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
@@ -17,6 +21,9 @@ import org.springframework.web.servlet.function.ServerResponse;
 @SpringBootApplication
 public class GatewayApplication {
 
+	@Value("${domain}")
+	private String domain;
+
 	public static void main(String[] args) {
 		SpringApplication.run(GatewayApplication.class, args);
 	}
@@ -24,7 +31,7 @@ public class GatewayApplication {
 	@Bean
 	public RouterFunction<ServerResponse> getAuthServiceRoute() {
 		return route("AUTH-SERVICE")
-			.route(path("/user/login/**", "/user/auth/**"), http("http://localhost:8010"))
+			.route(path("/user/login/**", "/user/auth/**"), http(domain+":8010"))
 			.before(rewritePath("/user/(?<segment>.*)", "/${segment}"))
 			.build();
 	}
@@ -32,7 +39,7 @@ public class GatewayApplication {
 	@Bean
 	public RouterFunction<ServerResponse> getUserServiceRoute() {
 		return route("USER-SERVICE")
-			.route(path("/user/**"), http("http://localhost:8010"))
+			.route(path("/user/**"), http(domain+":8010"))
 			.before(rewritePath("/user/(?<segment>.*)", "/${segment}"))
 			.filter(instrument())
 			.build();
@@ -41,7 +48,7 @@ public class GatewayApplication {
 	@Bean
 	public RouterFunction<ServerResponse> getSurveyServiceRoute() {
 		return route("SURVEY-SERVICE")
-			.route(path("/survey/**"), http("http://localhost:8020"))
+			.route(path("/survey/**"), http(domain+":8020"))
 			.before(rewritePath("/survey/(?<segment>.*)", "/${segment}"))
 			.filter(instrument())
 			.build();
@@ -50,7 +57,7 @@ public class GatewayApplication {
 	@Bean
 	public RouterFunction<ServerResponse> getBoardServiceRoute() {
 		return route("BOARD-SERVICE")
-			.route(path("/board/**"), http("http://localhost:8030"))
+			.route(path("/board/**"), http(domain+":8030"))
 			.before(rewritePath("/board/(?<segment>.*)", "/${segment}"))
 			.filter(instrument())
 			.build();
@@ -59,7 +66,7 @@ public class GatewayApplication {
 	@Bean
 	public RouterFunction<ServerResponse> getMatchServiceRoute() {
 		return route("MATCH-SERVICE")
-			.route(path("/match/**"), http("http://localhost:8040"))
+			.route(path("/match/**"), http(domain+":8040"))
 			.before(rewritePath("/match/(?<segment>.*)", "/${segment}"))
 			.filter(instrument())
 			.build();
