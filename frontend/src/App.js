@@ -34,6 +34,7 @@ import ProductRegistPage from "./pages/board_page/product_page/ProductRegistPage
 import MatchSchedulePage from "./pages/match_page/MatchSchedulePage";
 import MatchDetailPage from "./pages/match_page/MatchDetailPage";
 import MatchChattingPage from "./pages/match_page/MatchChattingPage";
+import SettingPage from "./pages/my_page/SettingPage";
 
 function App() {
   return (
@@ -95,6 +96,7 @@ function App() {
               {/* 마이 페이지 */}
               <Route path="/mypage" element={<MyPage />} />
               <Route path="/badge" element={<Badge />} />
+              <Route path="/setting" element={<SettingPage />} />
             </Route>
           </Routes>
         </BrowserRouter>
