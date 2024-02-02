@@ -20,9 +20,11 @@ public class MatchDetailResponse {
     private String awayTeamName;
     private int homeBettingAmount;
     private int awayBettingAmount;
+    private int drawBettingAmount;
     private LocalDateTime matchAt;
     private String status;
     private int homeScore;
     private int awayScore;
+    private String home;
 
 }
