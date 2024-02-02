@@ -3,14 +3,13 @@ import React, { useState, useEffect, useCallback } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "../../../api/axios";
 import BoardTopNavBar from "../../../components/board/BoardTopNavBar";
-import ProductItemCard from "../../../components/board/ProductItemCard";
 import { formatRelativeTime } from "../../../components/board/dateFormat";
 import {
   ProductHeader,
   ProductHeaderH2,
   ProductHeaderButton,
-  ProductListContainer,
 } from "../../../styles/BoardStyles/ProductListStyle";
+import ProductContainer from "../../../components/board/ProductContainer";
 
 function ProductListPage() {
   const navigate = useNavigate();
@@ -83,15 +82,10 @@ function ProductListPage() {
         </ProductHeaderButton>
       </ProductHeader>
 
-      <ProductListContainer>
-        {productList.map((product) => (
-          <ProductItemCard
-            key={product.productId}
-            product={product}
-            formatRelativeTime={formatRelativeTime}
-          />
-        ))}
-      </ProductListContainer>
+      <ProductContainer
+        productList={productList}
+        formatRelativeTime={formatRelativeTime}
+      />
     </div>
   );
 }
