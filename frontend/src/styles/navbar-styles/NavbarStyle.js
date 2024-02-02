@@ -25,19 +25,16 @@ export const NavItem = styled.div`
   align-items: center;
 
   img {
-    /* background-color: #002fa5; */
     background: radial-gradient(circle at center, #002fa5 40%, #002277 100%);
-    padding: 7px;
-    border-radius: 35px;
-    /* position: absolute;
-    top: -1rem;
-    left: 50%;
-    transform: translateX(-50%); */
+    padding: 9px 7px 7px 7.5px;
+    border-radius: 50%;
   }
+
+  transition: opacity 0.3s ease;
 
   &:hover {
     cursor: pointer;
-    opacity: 80%;
+    opacity: 85%;
   }
 `;
 
