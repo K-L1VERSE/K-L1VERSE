@@ -24,7 +24,7 @@ import org.hibernate.annotations.DynamicUpdate;
 public class Timeline {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "timeline_id")
     private int timelineId;
 

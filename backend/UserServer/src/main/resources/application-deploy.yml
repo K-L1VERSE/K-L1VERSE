@@ -31,3 +31,5 @@ oauth:
     redirect-uri: https://i10a409.p.ssafy.io/NaverAuth/
   kakao:
     redirect-uri: https://i10a409.p.ssafy.io/KakaoAuth/
+
+domain: https://i10a409.p.ssafy.io

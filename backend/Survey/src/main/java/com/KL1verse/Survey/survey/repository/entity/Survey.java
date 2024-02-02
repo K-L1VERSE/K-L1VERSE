@@ -21,7 +21,7 @@ import lombok.ToString;
 @ToString
 public class Survey {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "survey_id")
     private Long surveyId;
 

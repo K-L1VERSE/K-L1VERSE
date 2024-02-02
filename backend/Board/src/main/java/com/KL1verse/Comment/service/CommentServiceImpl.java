@@ -45,10 +45,9 @@ public class CommentServiceImpl implements CommentService {
 
     private boolean isAuthorized(Comment comment, Long requestingUserId) {
         // 요청한 사용자가 댓글 작성자 또는 게시물 작성자인지 확인
-        String boardUserIdString = comment.getBoardId().getUser();
-        Long boardUserId = (boardUserIdString != null) ? Long.valueOf(boardUserIdString) : null;
+        int boardUserId = comment.getBoardId().getUserId();
         Long commentUserId = comment.getUserId();
-        return requestingUserId.equals(commentUserId) || requestingUserId.equals(boardUserId);
+        return requestingUserId.equals(commentUserId) || (requestingUserId.intValue() == boardUserId);
     }
 
 
@@ -140,7 +139,8 @@ public class CommentServiceImpl implements CommentService {
     @Override
     public List<CommentDTO> getAllCommentsByBoardId(Long boardId, Long requestingUserId) {
         // 좋아요 개수와 함께 댓글을 가져오기 위해 업데이트된 쿼리 사용
-        List<Object[]> commentsWithLikesCount = commentRepository.findCommentsWithLikesCountByBoardId(boardId);
+        List<Object[]> commentsWithLikesCount = commentRepository.findCommentsWithLikesCountByBoardId(
+            boardId);
 
         return commentsWithLikesCount.stream()
             .map(result -> {
@@ -148,7 +148,8 @@ public class CommentServiceImpl implements CommentService {
                 Long likesCount = (Long) result[1];
 
                 CommentDTO commentDTO = convertToDTO(comment);
-                Integer commentLikesCount = commentRepository.findLikesCountByCommentId(comment.getCommentId());
+                Integer commentLikesCount = commentRepository.findLikesCountByCommentId(
+                    comment.getCommentId());
                 commentDTO.setLikesCount(commentLikesCount != null ? commentLikesCount : 0);
 
                 if (comment.getParentId() == null) {
@@ -197,8 +198,10 @@ public class CommentServiceImpl implements CommentService {
                     secretReply.setReplies(Collections.emptyList()); // 비밀 대댓글에 대한 답글 가져오기 불필요
                     secretReply.setBoardId(reply.getBoardId().getBoardId());
 
-                    Integer secretReplyLikesCount = commentRepository.findLikesCountByCommentId(reply.getCommentId());
-                    secretReply.setLikesCount(secretReplyLikesCount != null ? secretReplyLikesCount : 0);
+                    Integer secretReplyLikesCount = commentRepository.findLikesCountByCommentId(
+                        reply.getCommentId());
+                    secretReply.setLikesCount(
+                        secretReplyLikesCount != null ? secretReplyLikesCount : 0);
 
                     return secretReply;
                 } else {

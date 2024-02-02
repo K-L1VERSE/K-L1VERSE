@@ -25,7 +25,7 @@ import lombok.ToString;
 @ToString
 public class Weight {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @ManyToOne

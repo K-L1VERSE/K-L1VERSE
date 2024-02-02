@@ -31,6 +31,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -53,6 +54,9 @@ public class AuthService {
     private final NotificationService notificationService;
     private final UserImageService userImageService;
     private final FileService fileService;
+
+    @Value("${domain}")
+    private String domain;
 
     // 회원 가입 여부 확인
     public boolean isExistUser(String email, String domain) {
@@ -78,6 +82,8 @@ public class AuthService {
             .profile(signUpReqDto.getProfile())
             .domain(signUpReqDto.getDomain())
             .goal(1000)
+            .totalBet(0)
+            .winBet(0)
             .build();
         userRepository.save(user);
 
@@ -111,7 +117,7 @@ public class AuthService {
                         .userId(user.getId())
                         .type(NotificationType.GOAL)
                         .message("출석 보상으로 100골을 지급 받았습니다.")
-                        .uri("http://localhost:3000/mypage")
+                        .uri(domain+"/mypage")
                         .date(LocalDateTime.now())
                         .build());
         } else {
