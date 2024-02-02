@@ -8,6 +8,9 @@ import com.KL1verse.Comment.repository.CommentRepository;
 import com.KL1verse.Product.dto.req.ProductDTO;
 import com.KL1verse.Product.repository.ProductRepository;
 import com.KL1verse.Product.repository.entity.Product;
+import com.KL1verse.s3.repository.entity.File;
+import com.KL1verse.s3.service.BoardImageService;
+import com.KL1verse.s3.service.FileService;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -24,18 +27,31 @@ public class ProductServiceImpl implements ProductService {
     private final ProductRepository productRepository;
     private final BoardRepository boardRepository;
 
+    private final FileService fileService;
+
+    private final BoardImageService boardImageService;
+
     private final CommentRepository commentRepository;
 
     public ProductServiceImpl(ProductRepository productRepository,
-        BoardRepository boardRepository, CommentRepository commentRepository) {
+        BoardRepository boardRepository, FileService fileService,
+        BoardImageService boardImageService, CommentRepository commentRepository) {
         this.productRepository = productRepository;
         this.boardRepository = boardRepository;
+        this.fileService = fileService;
+        this.boardImageService = boardImageService;
         this.commentRepository = commentRepository;
     }
 
     @Override
     public ProductDTO getProductById(Long boardId) {
         Product product = findProductByBoardId(boardId);
+
+        ProductDTO productDTO = convertToDTO(product);
+
+        int commentCount = commentRepository.countCommentsByBoardId(boardId);
+        productDTO.getBoard().setCommentCount(commentCount);
+
         return convertToDTO(product);
     }
 
@@ -44,6 +60,10 @@ public class ProductServiceImpl implements ProductService {
         Product product = convertToEntity(productDto);
         Board board = saveBoard(product.getBoard());
         product.setBoard(board);
+
+        File file = fileService.saveFile(productDto.getBoard().getBoardImage());
+        boardImageService.saveBoardImage(board, file);
+
         Product createdProduct = productRepository.save(product);
         return convertToDTO(createdProduct);
     }
@@ -52,7 +72,15 @@ public class ProductServiceImpl implements ProductService {
     public ProductDTO updateProduct(Long boardId, ProductDTO productDto) {
         Product existingProduct = findProductByBoardId(boardId);
         updateExistingProduct(existingProduct, productDto);
+
+        Board board = existingProduct.getBoard();
+        board.setBoardImage(productDto.getBoard().getBoardImage());
+
         Product updatedProduct = productRepository.save(existingProduct);
+
+        File file = fileService.saveFile(productDto.getBoard().getBoardImage());
+        boardImageService.saveBoardImage(board, file);
+
         return convertToDTO(updatedProduct);
     }
 
@@ -160,6 +188,8 @@ public class ProductServiceImpl implements ProductService {
             .updateAt(product.getBoard().getUpdateAt())
             .deleteAt(product.getBoard().getDeleteAt())
             .userId(product.getBoard().getUserId())
+            .boardImage(product.getBoard().getBoardImage())
+            .commentCount(commentRepository.countCommentsByBoardId(product.getBoard().getBoardId()))
             .build());
         return productDTO;
     }
@@ -176,6 +206,7 @@ public class ProductServiceImpl implements ProductService {
             .updateAt(productDTO.getBoard().getUpdateAt())
             .deleteAt(productDTO.getBoard().getDeleteAt())
             .userId(productDTO.getBoard().getUserId())
+            .boardImage(productDTO.getBoard().getBoardImage())
             .build());
         return product;
     }
