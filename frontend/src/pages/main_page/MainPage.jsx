@@ -1,4 +1,5 @@
 import React from "react";
+import { useNavigate } from "react-router-dom";
 import Board from "../../components/main/Board";
 import { Category, Title, AllBtn } from "../../styles/main-styles/MainStyle";
 import TodayMatch from "../../components/main/TodayMatch";
@@ -8,12 +9,18 @@ import Nostradamus from "../../components/main/Nostradamus";
 import Survey from "../../components/main/Survey";
 
 function MainPage() {
+  const navigate = useNavigate();
+
+  function handleAllBtn() {
+    navigate("/waggle");
+  }
+
   return (
     <div>
       <Notice />
       <Category>
         <Title>💬 커뮤니티</Title>
-        <AllBtn>전체보기</AllBtn>
+        <AllBtn onClick={handleAllBtn}>전체보기</AllBtn>
       </Category>
       <Board />
       <Category>
