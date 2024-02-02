@@ -50,12 +50,6 @@ public class WaggleServiceImpl implements WaggleService {
         this.commentRepository = commentRepository;
     }
 
-//    @Override
-//    public WaggleDTO getWaggleById(Long boardId) {
-//        Waggle waggle = findWaggleByBoardId(boardId);
-//        return convertToDTO(waggle);
-//    }
-
     @Override
     public WaggleDTO getWaggleById(Long boardId) {
         Waggle waggle = findWaggleByBoardId(boardId);
