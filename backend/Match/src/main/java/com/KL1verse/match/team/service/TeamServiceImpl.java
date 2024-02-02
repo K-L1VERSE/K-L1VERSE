@@ -22,7 +22,7 @@ public class TeamServiceImpl implements TeamService {
     @Override
     public TeamInfoResponse getTeamInfo(int id) {
         Team team = teamRepository.findByTeamId(id);
-        List<Member> member = memberRepository.findByTeamId(id);
+        List<Member> member = memberRepository.findByTeamTeamId(id);
 
         return TeamInfoResponse.builder()
             .teamId(team.getTeamId())
