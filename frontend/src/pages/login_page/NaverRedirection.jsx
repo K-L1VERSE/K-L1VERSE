@@ -33,7 +33,7 @@ function NaverRedirection() {
       window.location.href = "/";
     })
     .catch(() => {
-      window.location.href = "/login";
+      // window.location.href = "/login";
     });
 
   return (
