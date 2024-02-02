@@ -20,6 +20,7 @@ import lombok.ToString;
 @Setter
 @ToString
 public class Survey {
+
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "survey_id")

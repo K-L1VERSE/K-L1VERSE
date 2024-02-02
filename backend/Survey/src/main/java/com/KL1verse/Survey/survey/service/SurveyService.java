@@ -5,7 +5,9 @@ import java.util.List;
 
 
 public interface SurveyService {
+
     int recommendTeam(List<Long> userSelection);
+
     SurveyDTO getSurveyById(Long surveyId);
 }
 

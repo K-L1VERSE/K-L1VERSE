@@ -13,6 +13,6 @@ import lombok.Setter;
 @NoArgsConstructor
 public class SearchBoardConditionDto {
 
-    private String keyword; // 검색어 필드
+    private String keyword;
 
 }
