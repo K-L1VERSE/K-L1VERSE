@@ -1,8 +1,9 @@
 import React, { createContext, useEffect, useState } from "react";
 import SockJS from "sockjs-client";
 import Stomp from "webstomp-client";
-import { NotificationState } from "./NotificationState";
 import { useSetRecoilState, useRecoilState } from "recoil";
+
+import { NotificationState } from "./NotificationState";
 import { UserState } from "./UserState";
 import axios from "../api/axios";
 
@@ -31,7 +32,9 @@ const SocketProvider = ({ children }) => {
     console.log("isLoggedIn: ", userState.isLoggedIn);
 
     const connectSocket = () => {
-      const socket = new SockJS("http://localhost:8010/ws/notification");
+      const socket = new SockJS(
+        "https://i10a409.p.ssafy.io:8010/ws/notification",
+      );
       const stomp = Stomp.over(socket);
 
       stomp.connect({}, (frame) => {

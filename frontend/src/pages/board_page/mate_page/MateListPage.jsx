@@ -7,9 +7,8 @@ import {
   MateHeader,
   MateHeaderH2,
   MateHeaderButton,
-  MateListContainer,
 } from "../../../styles/BoardStyles/MateListStyle";
-import MateItemCard from "../../../components/board/MateItemCard";
+import MateContainer from "../../../components/board/MateContainer";
 
 function MateListPage() {
   const [mateList, setMateList] = useState([]);

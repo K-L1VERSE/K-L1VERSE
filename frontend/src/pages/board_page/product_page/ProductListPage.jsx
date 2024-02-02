@@ -3,14 +3,13 @@ import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { getProductList } from "../../../api/product";
 import BoardTopNavBar from "../../../components/board/BoardTopNavBar";
-import ProductItemCard from "../../../components/board/ProductItemCard";
 import { formatRelativeTime } from "../../../components/board/dateFormat";
 import {
   ProductHeader,
   ProductHeaderH2,
   ProductHeaderButton,
-  ProductListContainer,
 } from "../../../styles/BoardStyles/ProductListStyle";
+import ProductContainer from "../../../components/board/ProductContainer";
 
 function ProductListPage() {
   const navigate = useNavigate();

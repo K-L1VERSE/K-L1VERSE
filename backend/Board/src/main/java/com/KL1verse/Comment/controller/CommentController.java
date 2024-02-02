@@ -54,20 +54,24 @@ public class CommentController {
         return ResponseEntity.noContent().build();
     }
 
+    @PostMapping("/list/{boardId}")
+    public ResponseEntity<List<CommentDTO>> getAllCommentsByBoardId(
+        @PathVariable Long boardId,
+        @RequestBody CommentDTO commentDTO) {
 
-    @GetMapping("/list/{boardId}")
-    public ResponseEntity<List<CommentDTO>> getAllCommentsByBoardId(@PathVariable Long boardId) {
+        Long requestingUserId = commentDTO.getUserId();
 
-        Long requestingUserId = 1232245L;
-        List<CommentDTO> comments = commentService.getAllCommentsByBoardId(boardId,
-                requestingUserId)
+        if (requestingUserId == null) {
+            return ResponseEntity.badRequest().build();
+        }
+
+        List<CommentDTO> comments = commentService.getAllCommentsByBoardId(boardId, requestingUserId)
             .stream()
-            .filter(comment -> comment.getDeleteAt() == null) // delete_at이 비어 있으면 포함
+            .filter(comment -> comment.getDeleteAt() == null)
             .collect(Collectors.toList());
 
         return ResponseEntity.ok(comments);
     }
-
 
     @PostMapping("/{parentCommentId}/replies")
     public ResponseEntity<CommentDTO> createReply(@PathVariable Long parentCommentId,

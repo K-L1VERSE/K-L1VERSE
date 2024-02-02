@@ -132,7 +132,6 @@ public class CommentServiceImpl implements CommentService {
             .build();
     }
 
-
     @Override
     public List<CommentDTO> getAllCommentsByBoardId(Long boardId, Long requestingUserId) {
 
@@ -160,13 +159,71 @@ public class CommentServiceImpl implements CommentService {
                         secretComment.setCommentId(comment.getCommentId());
                         secretComment.setCreateAt(comment.getCreateAt());
                         secretComment.setSecret(comment.isSecret());
-                        secretComment.setReplies(Collections.emptyList());
+
+                        List<CommentDTO> secretReplies = comment.getReplies().stream()
+                            .map(reply -> {
+                                if (reply.isSecret() && !isAuthorized(reply, requestingUserId)) {
+                                  
+                                    CommentDTO secretReply = new CommentDTO();
+                                    secretReply.setContent("비밀 대댓글입니다.");
+                                    secretReply.setUpdateAt(reply.getUpdateAt());
+                                    secretReply.setDeleteAt(reply.getDeleteAt());
+                                    secretReply.setCommentId(reply.getCommentId());
+                                    secretReply.setCreateAt(reply.getCreateAt());
+                                    secretReply.setParentId(reply.getParentId().getCommentId());
+                                    secretReply.setSecret(reply.isSecret());
+                                    secretReply.setReplies(Collections.emptyList());
+                                    secretReply.setBoardId(reply.getBoardId().getBoardId());
+
+                                    Integer secretReplyLikesCount = commentRepository.findLikesCountByCommentId(
+                                        reply.getCommentId());
+                                    secretReply.setLikesCount(
+                                        secretReplyLikesCount != null ? secretReplyLikesCount : 0);
+
+                                    return secretReply;
+                                } else {
+
+                                    return convertToDTOWithReplies(reply, requestingUserId);
+                                }
+                            })
+                            .collect(Collectors.toList());
+                        secretComment.setReplies(secretReplies);
+
                         secretComment.setBoardId(comment.getBoardId().getBoardId());
                         secretComment.setLikesCount(likesCount.intValue());
                         return secretComment;
                     } else {
 
-                        return convertToDTOWithReplies(comment, requestingUserId);
+                        List<CommentDTO> replies = comment.getReplies().stream()
+                            .map(reply -> {
+                                if (reply.isSecret() && !isAuthorized(reply, requestingUserId)) {
+
+                                    CommentDTO secretReply = new CommentDTO();
+                                    secretReply.setContent("비밀 대댓글입니다.");
+                                    secretReply.setUpdateAt(reply.getUpdateAt());
+                                    secretReply.setDeleteAt(reply.getDeleteAt());
+                                    secretReply.setCommentId(reply.getCommentId());
+                                    secretReply.setCreateAt(reply.getCreateAt());
+                                    secretReply.setParentId(reply.getParentId().getCommentId());
+                                    secretReply.setSecret(reply.isSecret());
+                                    secretReply.setReplies(Collections.emptyList());
+                                    secretReply.setBoardId(reply.getBoardId().getBoardId());
+
+                                    Integer secretReplyLikesCount = commentRepository.findLikesCountByCommentId(
+                                        reply.getCommentId());
+                                    secretReply.setLikesCount(
+                                        secretReplyLikesCount != null ? secretReplyLikesCount : 0);
+
+                                    return secretReply;
+                                } else {
+
+                                    return convertToDTOWithReplies(reply, requestingUserId);
+                                }
+                            })
+                            .collect(Collectors.toList());
+
+                        commentDTO.setReplies(replies);
+                        return commentDTO;
                     }
                 } else {
 

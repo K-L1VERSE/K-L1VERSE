@@ -2,13 +2,12 @@ import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { getWaggleList } from "../../../api/waggle";
 import BoardTopNavBar from "../../../components/board/BoardTopNavBar";
-import WaggleItemCard from "../../../components/board/WaggleItemCard";
+import WaggleContainer from "../../../components/board/WaggleContainer";
 import { formatRelativeTime } from "../../../components/board/dateFormat";
 import {
   WaggleHeader,
   WaggleHeaderH2,
   WaggleHeaderButton,
-  WaggleListContainer,
 } from "../../../styles/BoardStyles/WaggleListStyle";
 
 function WaggleListPage() {
