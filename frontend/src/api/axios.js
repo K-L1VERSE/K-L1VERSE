@@ -1,7 +1,9 @@
 import axios from "axios";
 
+const domain = process.env.REACT_APP_DOMAIN;
+
 const instance = axios.create({
-  baseURL: "https://i10a409.p.ssafy.io:8000",
+  baseURL: `${domain}:8000`,
   params: {},
 });
 
@@ -57,7 +59,7 @@ instance.interceptors.response.use(
 
     if (err.response && err.response.status === 401) {
       // UNAUTHORIZED 응답이면 로그인 페이지로 리다이렉션
-      // window.location.href = "http://i10a409.P.ssafy.io/logout";
+      window.location.href = `${domain}/logout`;
     }
   },
 );
