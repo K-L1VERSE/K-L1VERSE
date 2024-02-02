@@ -3,7 +3,6 @@ package com.KL1verse.Mate.controller;
 import com.KL1verse.Board.dto.req.SearchBoardConditionDto;
 import com.KL1verse.Mate.dto.req.MateDTO;
 import com.KL1verse.Mate.service.MateService;
-import com.KL1verse.Product.dto.req.ProductDTO;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.time.LocalDateTime;
@@ -114,6 +113,13 @@ public class MateController {
     public ResponseEntity<List<MateDTO>> getMostRecentMates(@PathVariable int count) {
         List<MateDTO> recentMates = mateService.getMostRecentMates(count);
         return ResponseEntity.ok(recentMates);
+    }
+
+    @GetMapping("/matesByMatchList")
+    public ResponseEntity<Page<MateDTO>> getMatesByMatchList(
+        @RequestParam(required = false) List<Integer> matchIds, Pageable pageable) {
+        Page<MateDTO> mates = mateService.getMatesByMatchList(matchIds, pageable);
+        return ResponseEntity.ok(mates);
     }
 
 }

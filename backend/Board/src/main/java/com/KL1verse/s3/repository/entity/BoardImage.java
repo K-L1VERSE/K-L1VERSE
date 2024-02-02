@@ -1,6 +1,7 @@
-package com.KL1verse.Mate.repository.entity;
+package com.KL1verse.s3.repository.entity;
 
 import com.KL1verse.Board.repository.entity.Board;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -8,39 +9,33 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToOne;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import lombok.ToString;
 
-@Entity(name = "mate")
-@Getter
-@Builder
-@AllArgsConstructor
 @NoArgsConstructor
+@AllArgsConstructor
+@Builder
+@Getter
 @Setter
-@ToString
-public class Mate {
+@Entity(name = "board_image")
+public class BoardImage {
 
     @Id
-    @Column(name = "mate_id")
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long mateId;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "board_image_id")
+    private Long Id;
 
     @ManyToOne
+    @JsonIgnore
     @JoinColumn(name = "board_id")
     private Board board;
 
-    @Column(name = "total")
-    private int total;
-
-    @Column(name = "full_flag")
-    private boolean fullFlag;
-
-    @Column(name = "match_id")
-    private int matchId;
-
-
+    @OneToOne
+    @JsonIgnore
+    @JoinColumn(name = "file_id")
+    private File file;
 }

@@ -1,7 +1,5 @@
 package com.KL1verse.Survey.survey.repository.entity;
 
-import com.KL1verse.Survey.survey.repository.entity.Answer;
-import com.KL1verse.Survey.survey.repository.entity.Team;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;

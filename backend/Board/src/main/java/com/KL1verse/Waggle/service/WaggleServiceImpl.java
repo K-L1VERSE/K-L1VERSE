@@ -67,36 +67,10 @@ public class WaggleServiceImpl implements WaggleService {
             waggleToDelete.getBoard().setDeleteAt(LocalDateTime.now());
         }
         waggleRepository.deleteById(waggleToDelete.getWaggleId());
+
     }
 
 
-    //    @Override
-//    public Page<WaggleDTO> searchWagglesWithLikes(SearchBoardConditionDto searchCondition, Pageable pageable) {
-//        Page<Waggle> waggles;
-//
-//        if (searchCondition != null && searchCondition.getKeyword() != null) {
-//            waggles = waggleRepository.findByBoard_TitleContainingOrBoard_ContentContaining(
-//                searchCondition.getKeyword(),
-//                searchCondition.getKeyword(),
-//                pageable
-//            );
-//        } else {
-//            waggles = waggleRepository.findAll(pageable);
-//        }
-//
-//        return waggles.map(waggle -> {
-//            WaggleDTO waggleDTO = convertToDTO(waggle);
-//
-//            // Waggle과 연관된 Board의 댓글 수 가져오기
-//            Long boardId = waggle.getBoard().getBoardId();
-//            Integer commentCount = commentRepository.countCommentsByBoardId(boardId);
-//
-//            // WaggleDTO 내의 BoardDTO에 댓글 수 설정
-//            waggleDTO.getBoard().setCommentCount(commentCount != null ? commentCount : 0);
-//
-//            return waggleDTO;
-//        });
-//    }
     @Override
     public Page<WaggleDTO> searchWagglesWithLikes(SearchBoardConditionDto searchCondition,
         Pageable pageable) {
@@ -112,20 +86,16 @@ public class WaggleServiceImpl implements WaggleService {
             waggles = waggleRepository.findAll(pageable);
         }
 
-        // 좋아요 수를 가져와서 설정
         List<Object[]> likesCounts = waggleRepository.getLikesCountForEachWaggle();
 
         return waggles.map(waggle -> {
             WaggleDTO waggleDTO = convertToDTO(waggle);
 
-            // Waggle과 연관된 Board의 댓글 수 가져오기
             Long boardId = waggle.getBoard().getBoardId();
             Integer commentCount = commentRepository.countCommentsByBoardId(boardId);
 
-            // WaggleDTO 내의 BoardDTO에 댓글 수 설정
             waggleDTO.getBoard().setCommentCount(commentCount != null ? commentCount : 0);
 
-            // 좋아요 수 설정
             for (Object[] result : likesCounts) {
                 Waggle waggleResult = (Waggle) result[0];
                 if (waggleResult.getWaggleId().equals(waggle.getWaggleId())) {
@@ -148,11 +118,9 @@ public class WaggleServiceImpl implements WaggleService {
         return waggles.map(waggle -> {
             WaggleDTO waggleDTO = convertToDTO(waggle);
 
-            // Waggle과 연관된 Board의 댓글 수 가져오기
             Long boardId = waggle.getBoard().getBoardId();
             Integer commentCount = commentRepository.countCommentsByBoardId(boardId);
 
-            // WaggleDTO 내의 BoardDTO에 댓글 수 설정
             waggleDTO.getBoard().setCommentCount(commentCount != null ? commentCount : 0);
 
             return waggleDTO;
@@ -176,34 +144,23 @@ public class WaggleServiceImpl implements WaggleService {
         existingWaggle.getBoard().setContent(waggleDto.getBoard().getContent());
     }
 
-//    @Override
-//    public Page<WaggleDTO> getAllWagglesWithLikes(Pageable pageable) {
-//        List<Object[]> likesCounts = waggleRepository.getLikesCountForEachWaggle();
-//        List<WaggleDTO> wagglesWithLikes = convertToDTOListWithLikes(likesCounts);
-//        return new PageImpl<>(wagglesWithLikes, pageable, wagglesWithLikes.size());
-//    }
 
     @Override
     public Page<WaggleDTO> getAllWagglesWithLikes(Pageable pageable) {
-        // 좋아요 수를 가져오는 쿼리 실행
+
         List<Object[]> likesCounts = waggleRepository.getLikesCountForEachWaggle();
 
-        // 페이지네이션된 모든 Waggle 가져오기
         Page<Waggle> waggles = waggleRepository.findAll(pageable);
 
-        // 좋아요 수와 댓글 수를 설정하여 DTO로 변환
         List<WaggleDTO> wagglesWithLikes = waggles.getContent().stream()
             .map(waggle -> {
                 WaggleDTO waggleDTO = convertToDTO(waggle);
 
-                // Waggle과 연관된 Board의 댓글 수 가져오기
                 Long boardId = waggle.getBoard().getBoardId();
                 Integer commentCount = commentRepository.countCommentsByBoardId(boardId);
 
-                // WaggleDTO 내의 BoardDTO에 댓글 수 설정
                 waggleDTO.getBoard().setCommentCount(commentCount != null ? commentCount : 0);
 
-                // 좋아요 수 설정
                 for (Object[] result : likesCounts) {
                     Waggle waggleResult = (Waggle) result[0];
                     if (waggleResult.getWaggleId().equals(waggle.getWaggleId())) {
@@ -230,7 +187,6 @@ public class WaggleServiceImpl implements WaggleService {
             Integer commentCount = commentRepository.countCommentsByBoardId(
                 waggle.getBoard().getBoardId());
 
-            // 좋아요 개수가 null이 아니라면 그 값을 사용, null이면 0으로 설정
             int likesCount = (totalLikes != null) ? totalLikes.intValue() : 0;
 
             WaggleDTO waggleDTO = convertToDTO(waggle);
@@ -254,7 +210,7 @@ public class WaggleServiceImpl implements WaggleService {
             .updateAt(waggle.getBoard().getUpdateAt())
             .deleteAt(waggle.getBoard().getDeleteAt())
             .commentCount(0)
-//            .user(Long.valueOf(waggle.getBoard().getUser()))
+            .userId(waggle.getBoard().getUserId())
             .build());
         return waggleDTO;
     }
@@ -270,8 +226,7 @@ public class WaggleServiceImpl implements WaggleService {
             .createAt(waggleDTO.getBoard().getCreateAt())
             .updateAt(waggleDTO.getBoard().getUpdateAt())
             .deleteAt(waggleDTO.getBoard().getDeleteAt())
-
-//            .user(String.valueOf(waggleDTO.getBoard().getUser()))
+            .userId(waggleDTO.getBoard().getUserId())
             .build());
         return waggle;
     }

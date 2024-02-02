@@ -1,31 +1,30 @@
-package com.KL1verse.Survey.survey.repository.entity;
+package com.KL1verse.s3.repository.entity;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import java.time.LocalDateTime;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import lombok.ToString;
 
-@Entity(name = "team1")
-@Getter
-@Builder
-@AllArgsConstructor
 @NoArgsConstructor
+@AllArgsConstructor
+@Builder
+@Getter
 @Setter
-@ToString
-public class Team {
+@Entity(name = "file")
+public class File {
 
     @Id
-    @Column(name = "team_id")
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "file_id")
     private Long id;
 
-    @Column(name = "name")
-    private String name;
+    private String uri;
+    private LocalDateTime createdAt;
 }
