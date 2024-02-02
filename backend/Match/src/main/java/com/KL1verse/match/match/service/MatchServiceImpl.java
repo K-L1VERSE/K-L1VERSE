@@ -69,7 +69,7 @@ public class MatchServiceImpl implements MatchService {
                 .matchAt(match.getMatchAt())
                 .homeScore(match.getHomeScore())
                 .awayScore(match.getAwayScore())
-                .status(match.getStatus())
+                .status(match.getStatus().toString())
                 .build());
         }
 
