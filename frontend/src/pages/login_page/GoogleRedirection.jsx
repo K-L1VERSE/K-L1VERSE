@@ -12,7 +12,6 @@ import LoginLogo from "../../components/login/LoginLogo";
 function GoogleRedirection() {
   const PARAMS = new URL(document.location).searchParams;
   const GOOGLE_CODE = PARAMS.get("code");
-
   const setUserState = useSetRecoilState(UserState);
 
   axios
@@ -27,12 +26,13 @@ function GoogleRedirection() {
         domain: res.data.domain,
         isLoggedIn: true,
       });
+      console.log("응답:!@!@!@", res.data);
 
       /* 성공시 홈화면으로 */
-      window.location.href = "/";
+      // window.location.href = "/";
     })
     .catch(() => {
-      window.location.href = "/login";
+      // window.location.href = "/login";
     });
 
   return (

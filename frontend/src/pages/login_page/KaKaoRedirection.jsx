@@ -21,6 +21,8 @@ function KaKaoRedirection() {
     .get(`/user/login/oauth/code/kakao?code=${KAKAO_CODE}`)
     .then((res) => {
       /* access Token 받고 전역 변수로 관리 */
+      console.log(res.data);
+
       setUserState({
         nickname: res.data.nickname,
         profile: res.data.profile,
