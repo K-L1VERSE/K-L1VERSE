@@ -48,9 +48,10 @@ public class MatchServiceImpl implements MatchService {
         for (Match match : matchList) {
             LocalDateTime now = LocalDateTime.now();
             LocalDateTime matchAt = match.getMatchAt();
+
             if (now.getYear() == matchAt.getYear() && now.getMonthValue() == matchAt.getMonthValue()
                 && now.getDayOfMonth() == matchAt.getDayOfMonth()
-                && now.getHour() == matchAt.getHour()) {
+                && now.getHour() == matchAt.getHour() && now.getMinute() == matchAt.getMinute()) {
                 match.setStatus("during");
             }
 
@@ -67,6 +68,7 @@ public class MatchServiceImpl implements MatchService {
                 .matchAt(match.getMatchAt())
                 .homeScore(match.getHomeScore())
                 .awayScore(match.getAwayScore())
+                .status(match.getStatus())
                 .build());
         }
 
@@ -97,10 +99,12 @@ public class MatchServiceImpl implements MatchService {
             .awayTeamName(matchRepository.findOneByTeamId(match.getAwayTeamId()))
             .homeBettingAmount(match.getHomeBettingAmount())
             .awayBettingAmount(match.getAwayBettingAmount())
+            .drawBettingAmount(match.getDrawBettingAmount())
             .matchAt(match.getMatchAt())
             .status(match.getStatus())
             .homeScore(match.getHomeScore())
             .awayScore(match.getAwayScore())
+            .home(match.getHome())
             .build();
     }
 

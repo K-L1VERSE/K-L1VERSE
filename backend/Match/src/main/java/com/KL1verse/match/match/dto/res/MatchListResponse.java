@@ -22,5 +22,6 @@ public class MatchListResponse {
     private LocalDateTime matchAt;
     private int homeScore;
     private int awayScore;
+    private String status;
 
 }

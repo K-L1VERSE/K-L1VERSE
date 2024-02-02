@@ -33,7 +33,7 @@ public class GatewayApplication {
                 try {
 					log.info("url = {}", serverRequest.path());
                     log.info("body = {}", serverRequest.body(String.class));
-					log.info("serverResponse = {}", serverResponse.toString());
+
                 } catch (ServletException e) {
                     throw new RuntimeException(e);
                 } catch (IOException e) {

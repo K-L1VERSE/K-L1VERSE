@@ -1,4 +1,5 @@
 import React from "react";
+import { useNavigate } from "react-router-dom";
 import Board from "../../components/main/Board";
 import { Category, Title, AllBtn } from "../../styles/main-styles/MainStyle";
 import TodayMatch from "../../components/main/TodayMatch";
@@ -8,6 +9,12 @@ import Nostradamus from "../../components/main/Nostradamus";
 import Survey from "../../components/main/Survey";
 
 function MainPage() {
+  const navigate = useNavigate();
+
+  const goMatchSchedule = () => {
+    navigate("/matchSchedule");
+  };
+
   return (
     <div>
       <Notice />
@@ -18,7 +25,7 @@ function MainPage() {
       <Board />
       <Category>
         <Title>🏁 오늘의 경기</Title>
-        <AllBtn>전체보기</AllBtn>
+        <AllBtn onClick={goMatchSchedule}>전체보기</AllBtn>
       </Category>
       <TodayMatch />
       <Hotclip />
