@@ -34,9 +34,18 @@ module.exports = {
     "react/prefer-stateless-function": 0,
     "react/jsx-filename-extension": 0,
     "react/jsx-one-expression-per-line": 0,
+    "react/prop-types": "off",
     "no-nested-ternary": 0,
     "prettier/prettier": ["error", { endOfLine: "auto" }],
     "import/prefer-default-export": "off",
+    "import/no-extraneous-dependencies": [
+      "error",
+      {
+        devDependencies: false,
+        optionalDependencies: false,
+        peerDependencies: false,
+      },
+    ],
   },
   settings: {
     "import/resolver": {
