@@ -11,6 +11,10 @@ import Survey from "../../components/main/Survey";
 function MainPage() {
   const navigate = useNavigate();
 
+  function handleAllBtn() {
+    navigate("/waggle");
+  }
+
   const goMatchSchedule = () => {
     navigate("/matchSchedule");
   };
@@ -20,7 +24,7 @@ function MainPage() {
       <Notice />
       <Category>
         <Title>💬 커뮤니티</Title>
-        <AllBtn>전체보기</AllBtn>
+        <AllBtn onClick={handleAllBtn}>전체보기</AllBtn>
       </Category>
       <Board />
       <Category>

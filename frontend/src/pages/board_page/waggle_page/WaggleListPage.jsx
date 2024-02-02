@@ -81,15 +81,10 @@ function WaggleListPage() {
         </WaggleHeaderButton>
       </WaggleHeader>
 
-      <WaggleListContainer>
-        {waggleList.map((waggle) => (
-          <WaggleItemCard
-            key={waggle.waggleId}
-            waggle={waggle}
-            formatRelativeTime={formatRelativeTime}
-          />
-        ))}
-      </WaggleListContainer>
+      <WaggleContainer
+        waggleList={waggleList}
+        formatRelativeTime={formatRelativeTime}
+      />
       {!hasMore && <p>No more data</p>}
     </div>
   );

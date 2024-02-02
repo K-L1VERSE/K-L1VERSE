@@ -89,11 +89,7 @@ function MateListPage() {
       {/* <button onClick={handleCalendarToggle}>📆</button> */}
       {/* {isOpen && <Calendar onChange={onChange} value={value} />} */}
 
-      <MateListContainer>
-        {mateList.map((mate) => (
-          <MateItemCard key={mate.mateId} mate={mate} />
-        ))}
-      </MateListContainer>
+      <MateContainer mateList={mateList} />
       {!hasMore && <p>No more data</p>}
     </div>
   );

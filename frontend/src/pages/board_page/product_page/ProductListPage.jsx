@@ -84,15 +84,10 @@ function ProductListPage() {
         </ProductHeaderButton>
       </ProductHeader>
 
-      <ProductListContainer>
-        {productList.map((product) => (
-          <ProductItemCard
-            key={product.productId}
-            product={product}
-            formatRelativeTime={formatRelativeTime}
-          />
-        ))}
-      </ProductListContainer>
+      <ProductContainer
+        productList={productList}
+        formatRelativeTime={formatRelativeTime}
+      />
       {!hasMore && <p>No more data</p>}
     </div>
   );
