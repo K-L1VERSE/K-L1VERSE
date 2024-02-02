@@ -9,6 +9,7 @@ export const Share = styled.div`
 export const ShareBox = styled.div`
   display: flex;
   margin: 10px;
+  margin-left: 50px;
   button {
     display: flex;
     width: 100%;

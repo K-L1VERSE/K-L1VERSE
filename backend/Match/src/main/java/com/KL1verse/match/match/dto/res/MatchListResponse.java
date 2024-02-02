@@ -15,10 +15,13 @@ import lombok.Setter;
 public class MatchListResponse {
 
     private int matchId;
+    private int homeTeamId;
+    private int awayTeamId;
     private String homeTeamName;
     private String awayTeamName;
     private LocalDateTime matchAt;
     private int homeScore;
     private int awayScore;
+    private String status;
 
 }

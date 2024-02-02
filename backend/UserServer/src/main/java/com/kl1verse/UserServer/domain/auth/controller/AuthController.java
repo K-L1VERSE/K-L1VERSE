@@ -6,6 +6,7 @@ import com.kl1verse.UserServer.domain.auth.dto.res.SignInResDto;
 import com.kl1verse.UserServer.domain.auth.service.AuthService;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -19,7 +20,6 @@ import org.springframework.web.bind.annotation.RestController;
 public class AuthController {
 
     private final AuthService authService;
-
 
     @PostMapping("/sign-up")
     public ResponseEntity<Void> signUp(@RequestBody SignUpReqDto signUpReqDto) {
