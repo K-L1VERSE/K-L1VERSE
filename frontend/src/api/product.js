@@ -11,18 +11,17 @@ export function getProductList(page, size, success, fail) {
     .then(success)
     .catch(fail);
 }
-export function getProduct(boardId) {
+
+export function getProductDetail(boardId) {
   axios.get(`/${gateway}/${url}/${boardId}`).then((response) => response.data);
 }
 
-export function createProduct(board) {
-  axios.post(`/${gateway}/${url}`, board).then((response) => response.data);
+export function createProduct(board, success, fail) {
+  axios.post(`/${gateway}/${url}`, board).then(success).catch(fail);
 }
 
-export function updateProduct(board) {
-  axios
-    .put(`/${gateway}/${url}/${board.boardId}`, board)
-    .then((response) => response.data);
+export function updateProduct(board, boardId, success, fail) {
+  axios.put(`/${gateway}/${url}/${boardId}`, board).then(success).catch(fail);
 }
 
 export function getLatestProduct(success, fail) {

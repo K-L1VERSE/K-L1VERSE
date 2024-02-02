@@ -12,18 +12,16 @@ export function getMateList(page, size, success, fail) {
     .catch(fail);
 }
 
-export function getMate(boardId) {
+export function getMateDetail(boardId) {
   axios.get(`/${gateway}/${url}/${boardId}`).then((response) => response.data);
 }
 
-export function createMate(board) {
-  axios.post(`/${gateway}/${url}`, board).then((response) => response.data);
+export function createMate(board, success, fail) {
+  axios.post(`/${gateway}/${url}`, board).then(success).catch(fail);
 }
 
-export function updateMate(board) {
-  axios
-    .put(`/${gateway}/${url}/${board.boardId}`, board)
-    .then((response) => response.data);
+export function updateMate(board, boardId, success, fail) {
+  axios.put(`/${gateway}/${url}/${boardId}`, board).then(success).catch(fail);
 }
 
 export function getLatestMate(success, fail) {

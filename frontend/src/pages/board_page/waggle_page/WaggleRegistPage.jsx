@@ -1,18 +1,19 @@
 import React, { useState, useEffect } from "react";
+import { useRecoilState } from "recoil";
 import { useNavigate, useLocation } from "react-router-dom";
-import axios from "../../../api/axios";
 import BoardTopNavBar from "../../../components/board/BoardTopNavBar";
-import WaggleForm from "../../../styles/BoardStyles/BoardCreateStyle";
+import ResigistCard from "../../../components/board/ResigistCard";
+import { createWaggle, updateWaggle } from "../../../api/waggle";
+import { UserState } from "../../../global/UserState";
 
 function WaggleRegistPage() {
   const navigate = useNavigate();
   const [title, setTitle] = useState("");
   const [content, setContent] = useState("");
-  const [isUpdateMode, setIsUpdateMode] = useState(false);
+  const [isUpdateMode] = useState(false);
+  const { userId } = useRecoilState(UserState)[0];
 
   const location = useLocation();
-  let boardId = location.state ? location.state.boardId : null;
-
   useEffect(() => {
     if (location.state && location.state.board) {
       setTitle(location.state.board.title);
@@ -20,28 +21,40 @@ function WaggleRegistPage() {
     }
   }, [location]);
 
-  const handleSubmit = async (event) => {
-    event.preventDefault();
+  const boardId = location.state ? location.state.boardId : null;
 
-    try {
-      const requestData = {
-        board: {
-          title,
-          content,
+  const handleSubmit = () => {
+    if (isUpdateMode) {
+      updateWaggle(
+        {
+          board: {
+            title,
+            content,
+          },
         },
-      };
-
-      if (isUpdateMode) {
-        await axios.put(`/board/waggles/${boardId}`, requestData);
-        navigate(`/waggle/${boardId}`);
-      } else {
-        const response = await axios.post("/board/waggles", requestData);
-        const boardTemp = response.data.board;
-        boardId = boardTemp.boardId;
-        navigate(`/waggle/${boardId}`);
-      }
-    } catch (error) {
-      // console.error("Waggle 게시물 작성 또는 수정 중 에러 발생:", error);
+        boardId,
+        () => {
+          navigate(`/waggle/${boardId}`);
+        },
+        () => {},
+      );
+    } else {
+      createWaggle(
+        {
+          board: {
+            boardType: "WAGGLE",
+            title,
+            content,
+            userId,
+          },
+        },
+        ({ data }) => {
+          navigate(`/waggle/${data.board.boardId}`);
+        },
+        () => {
+          console.error("Waggle 게시물 작성 중 에러 발생");
+        },
+      );
     }
   };
 
@@ -49,7 +62,7 @@ function WaggleRegistPage() {
     <div>
       <BoardTopNavBar />
       <h1>{isUpdateMode ? "Waggle 게시물 수정" : "Waggle 게시물 작성"}</h1>
-      <WaggleForm
+      <ResigistCard
         title={title}
         content={content}
         onTitleChange={(e) => setTitle(e.target.value)}

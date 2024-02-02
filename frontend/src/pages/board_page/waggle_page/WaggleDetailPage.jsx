@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
+import { useRecoilState } from "recoil";
 import axios from "../../../api/axios";
 import { updateWaggle } from "../../../api/waggle";
 import BoardTopNavBar from "../../../components/board/BoardTopNavBar";
@@ -13,6 +14,7 @@ import {
   LikeButton,
   LikeCount,
 } from "../../../styles/BoardStyles/BoardDetailStyle";
+import { UserState } from "../../../global/UserState";
 
 function WaggleDetailPage() {
   const [waggleDetail, setWaggleDetail] = useState({});
@@ -21,6 +23,7 @@ function WaggleDetailPage() {
   const [likeCount, setLikeCount] = useState(0);
   const { boardId } = useParams();
   const navigate = useNavigate();
+  const { nickname } = useRecoilState(UserState)[0];
 
   function getWaggleDetail() {
     axios.get(`/board/waggles/${boardId}`).then(({ data }) => {
@@ -80,6 +83,7 @@ function WaggleDetailPage() {
     <Container>
       <BoardTopNavBar />
       <WaggleDetailBox>
+        {nickname}
         <Title>{waggleDetail.title}</Title>
         <Content>{waggleDetail.content}</Content>
         {/* 좋아요 버튼 및 개수 표시 */}

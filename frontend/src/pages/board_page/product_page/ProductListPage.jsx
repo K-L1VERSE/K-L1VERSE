@@ -18,7 +18,6 @@ function ProductListPage() {
   const [page, setPage] = useState(0);
   const [hasMore, setHasMore] = useState(true);
 
-  /* Product 전체 글 가져오기 */
   function getProducts() {
     getProductList(
       page,
