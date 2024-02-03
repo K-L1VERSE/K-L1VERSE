@@ -12,6 +12,7 @@ function ProductRegistPage() {
   const navigate = useNavigate();
   const [title, setTitle] = useState("");
   const [content, setContent] = useState("");
+  const [price, setPrice] = useState(0);
   const [isUpdateMode] = useState(false);
   const { userId } = useRecoilState(UserState)[0];
 
@@ -20,6 +21,7 @@ function ProductRegistPage() {
     if (location.state && location.state.board) {
       setTitle(location.state.board.title);
       setContent(location.state.board.content);
+      setPrice(location.state.board.price);
     }
   }, [location]);
 

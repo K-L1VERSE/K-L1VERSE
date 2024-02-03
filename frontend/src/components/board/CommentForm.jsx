@@ -1,17 +1,16 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useRecoilState } from "recoil";
 import { useNavigate, useLocation } from "react-router-dom";
-import axios from "../../api/axios";
-import { UserState } from "../../../global/UserState";
+import { UserState } from "../../global/UserState";
 import {
   Form,
   TextArea,
   SubmitButton,
   CancelButton,
 } from "../../styles/BoardStyles/CommentStyle";
-import { updateComment } from "../../api/comment";
+import { updateComment, createComment } from "../../api/comment";
 
-function CommentForm({ boardId, parentId, onCommentSubmit }) {
+function CommentForm({ boardId, onCommentSubmit }) {
   const navigate = useNavigate();
   const [content, setContent] = useState("");
   const [isUpdateMode, setIsUpdateMode] = useState(false);
@@ -20,46 +19,37 @@ function CommentForm({ boardId, parentId, onCommentSubmit }) {
   const location = useLocation();
   useEffect(() => {
     if (location.state && location.state.board) {
-      setTitle(location.state.board.title);
-      setContent(location.state.board.content);
+      setContent(location.state.comment.content);
     }
   }, [location]);
 
-  const boardId = location.state ? location.state.boardId : null;
+  // const boardId = location.state ? location.state.boardId : null;
 
-  const handleSubmit =  () => {
-      if (isUpdateMode) {
-        updateComment(
-          {
-            board: {
-              content,
-            },
+  const handleSubmit = () => {
+    if (isUpdateMode) {
+      updateComment(
+        {
+          board: {
+            content,
           },
-          boardId,
-          () => {
-            setIsUpdateMode(false);
-          },
-          () => {},
-        );
-      } else {
-        createComment(
-          {
-            board: {
-              boardType: "COMMENT",
-              content,
-              userId,
-            },
-          },
-          ({ data }) => {
-            navigate(`/waggle/${boardId}`);
-          },
-          () => {},
-        );  
-      }
-
-      onCommentSubmit();
-
-      setContent("");
+        },
+        boardId,
+        () => {
+          setIsUpdateMode(false);
+        },
+        () => {},
+      );
+    } else {
+      createComment(
+        {
+          content,
+          userId,
+        },
+        () => {
+          navigate(`/waggle/${boardId}`);
+        },
+        () => {},
+      );
     }
   };
 

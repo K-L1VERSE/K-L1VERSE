@@ -49,6 +49,17 @@ export const ListContainer = styled.div`
   margin-top: 20px;
 `;
 
+export const CommentListContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  width: 380px;
+  margin-top: 20px;
+  margin-left: 40px;
+  text-align: left;
+  text-decoration: none;
+  color: inherit;
+`;
+
 export const CommentItem = styled.li`
   margin-bottom: 20px;
   border-bottom: 1px solid #ccc;
