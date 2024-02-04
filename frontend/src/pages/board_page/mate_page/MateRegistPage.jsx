@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useRecoilState } from "recoil";
 import { useNavigate, useLocation } from "react-router-dom";
 import BoardTopNavBar from "../../../components/board/BoardTopNavBar";
-import RegistCard from "../../../components/board/RegistCard";
+import WaggleRegistCard from "../../../components/board/WaggleRegistCard";
 import { createMate, updateMate } from "../../../api/mate";
 import { UserState } from "../../../global/UserState";
 
@@ -64,7 +64,7 @@ function MateRegistPage() {
     <RegistCardContainer>
       <BoardTopNavBar />
       <h1>{isUpdateMode ? "Mate 게시물 수정" : "Mate 게시물 작성"}</h1>
-      <RegistCard
+      <WaggleRegistCard
         title={title}
         content={content}
         onTitleChange={(e) => setTitle(e.target.value)}

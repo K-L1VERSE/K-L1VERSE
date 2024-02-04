@@ -5,7 +5,7 @@ import {
   SubmitButton,
 } from "../../styles/BoardStyles/BoardCreateStyle";
 
-export default function RegistCard({
+export default function WaggleRegistCard({
   title,
   content,
   onTitleChange,

@@ -1,4 +1,4 @@
-import styled from "styled-components";
+import styled, { css } from "styled-components";
 
 export const Container = styled.div`
   max-width: 800px;
@@ -29,6 +29,36 @@ export const Title = styled.p`
 
 export const Content = styled.p`
   margin: 0;
+`;
+
+export const Price = styled.p`
+  margin: 0;
+  font-size: 1em;
+  color: #333; // Adjust color as needed
+`;
+
+export const DealFlag = styled.p`
+  margin: 0;
+  font-size: 1em;
+  color: #333; // Adjust color as needed
+
+  ${(props) =>
+    props.dealFlag &&
+    css`
+      background-color: #4caf50; /* Green color for 거래가능 */
+      color: #fff;
+      padding: 5px;
+      border-radius: 5px;
+    `}
+
+  ${(props) =>
+    !props.dealFlag &&
+    css`
+      background-color: #ff9800; /* Orange color for 거래완료 */
+      color: #fff;
+      padding: 5px;
+      border-radius: 5px;
+    `}
 `;
 
 export const Button = styled.button`

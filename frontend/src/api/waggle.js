@@ -20,7 +20,7 @@ export function createWaggle(board, success, fail) {
   axios.post(`/${gateway}/${url}`, board).then(success).catch(fail);
 }
 
-export function updateWaggle(board, boardId, success, fail) {
+export function updateWaggle(boardId, board, success, fail) {
   axios.put(`/${gateway}/${url}/${boardId}`, board).then(success).catch(fail);
 }
 

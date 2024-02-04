@@ -3,36 +3,53 @@ import { useParams, useNavigate } from "react-router-dom";
 import axios from "../../../api/axios";
 import BoardTopNavBar from "../../../components/board/BoardTopNavBar";
 import CommentList from "../../../components/board/CommentList";
-import { Container } from "../../../styles/BoardStyles/BoardDetailStyle";
+import {
+  Container,
+  WaggleDetailBox,
+  User,
+  Title,
+  Content,
+  UpdateButton,
+  DeleteButton,
+  DealFlag,
+} from "../../../styles/BoardStyles/BoardDetailStyle";
+import {
+  DealStatusGreen,
+  DealStatusOrange,
+} from "../../../styles/BoardStyles/ProductListStyle";
 
 function ProductDetailPage() {
   const [productDetail, setProductDetail] = useState({});
-  // const [productId, setProductId] = useState(0);
+  const [price, setPrice] = useState(0);
+  const [dealFlag, setDealFlag] = useState(false);
   const { boardId } = useParams();
   const navigate = useNavigate();
 
   /* product 상세 정보 가져오기 */
-  function getProductDetail() {
-    axios.get(`/board/products/${boardId}`).then(({ data }) => {
-      setProductDetail(data.board);
-      // setProductId(data.productId);
-    });
-  }
-
   useEffect(() => {
+    async function getProductDetail() {
+      try {
+        const { data } = await axios.get(`/board/products/${boardId}`);
+        setProductDetail(data.board);
+        setPrice(data.price);
+        setDealFlag(data.dealFlag);
+      } catch (error) {
+        // Handle error
+      }
+    }
     getProductDetail();
   }, [boardId]);
 
-  function handleUpdateBtn() {
+  const handleUpdateBtn = () => {
     navigate("/productRegist", { state: { boardId: productDetail.boardId } });
-  }
+  };
 
   const handleDeleteBtn = async () => {
     try {
       await axios.delete(`/board/products/${boardId}`);
       navigate("/product");
     } catch (error) {
-      // console.error("글 삭제 중 에러 발생:", error);
+      // Handle error
     }
   };
 
@@ -45,27 +62,39 @@ function ProductDetailPage() {
   return (
     <Container>
       <BoardTopNavBar />
-      <div className="product-detail-box">
-        <p>
-          <strong>{productDetail.title}</strong>
-        </p>
-        <p>{productDetail.content}</p>
-      </div>
-      <button
-        type="button"
+      <WaggleDetailBox>
+        <User>
+          <p>Username: {productDetail.username}</p>
+        </User>
+        {dealFlag ? (
+          <DealStatusOrange>거래완료</DealStatusOrange>
+        ) : (
+          <DealStatusGreen>거래가능</DealStatusGreen>
+        )}
+        <div
+          style={{
+            display: "flex",
+            justifyContent: "space-between",
+            marginBottom: "10px",
+          }}
+        >
+          <Title>{productDetail.title}</Title>
+        </div>
+        <Content>{productDetail.content}</Content>
+        <p>Price: {price}</p>
+      </WaggleDetailBox>
+      <UpdateButton
         onClick={handleUpdateBtn}
         onKeyDown={(e) => handleKeyDown(e, handleUpdateBtn)}
       >
         수정하기
-      </button>
-      <button
-        type="button"
+      </UpdateButton>
+      <DeleteButton
         onClick={handleDeleteBtn}
         onKeyDown={(e) => handleKeyDown(e, handleDeleteBtn)}
       >
         삭제하기
-      </button>
-
+      </DeleteButton>
       <CommentList boardId={boardId} />
     </Container>
   );

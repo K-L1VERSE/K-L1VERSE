@@ -48,7 +48,7 @@ function WaggleDetailPage() {
   }, [boardId]);
 
   const handleUpdateBtn = () => {
-    updateWaggle(waggleDetail, boardId).then(() => {
+    updateWaggle(boardId, waggleDetail, () => {
       navigate(`/waggle/${boardId}`);
     });
   };
