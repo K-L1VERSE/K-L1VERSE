@@ -1,10 +1,10 @@
 server:
   port: 8010
-  ssl:
-    enabled: true
-    key-store: classpath:/keystore.p12
-    key-store-type: PKCS12
-    key-store-password: 1234
+#  ssl:
+#    enabled: true
+#    key-store: classpath:/keystore.p12
+#    key-store-type: PKCS12
+#    key-store-password: 1234
 
 spring:
   profiles:
@@ -36,7 +36,7 @@ oauth:
   google:
     client-id: 651679120216-gedguefmg8lgjhi8vul42c48r9305mol.apps.googleusercontent.com
     client-secret: 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
-    redirect-uri: https://i10a409.p.ssafy.io/GoogleAuth
+    redirect-uri: http://localhost:3000/GoogleAuth
     token-uri: https://oauth2.googleapis.com/token
     resource-uri: https://www.googleapis.com/oauth2/v2/userinfo
     login-uri: https://accounts.google.com/o/oauth2/auth?client_id=651679120216-aedflji7ia436usf2vv2342hjkqnpmi8.apps.googleusercontent.com&redirect_uri=http://localhost:8080/login/oauth/code/google&response_type=code&scope=https://www.googleapis.com/auth/userinfo.email https://www.googleapis.com/auth/userinfo.profile&access_type=offline

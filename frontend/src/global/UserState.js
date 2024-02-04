@@ -12,6 +12,7 @@ export const UserState = atom({
     email: "",
     domain: "",
     isLoggedIn: false,
+    userId: "",
   },
   effects_UNSTABLE: [persistAtom],
 });

@@ -54,7 +54,6 @@ function Chat() {
       isUser: sender === "test", // 현재 사용자가 보낸 메시지인지 구분
     };
 
-    // 서버에 메시지를 보내기 전에 메시지 목록에 메시지를 추가합니다.
     setMessages((messages) => [
       ...messages,
       {

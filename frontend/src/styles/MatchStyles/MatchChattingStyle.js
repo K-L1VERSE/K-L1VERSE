@@ -48,7 +48,7 @@ export const SenderImg = styled.div`
 export const OnlyMsg = styled.div`
   background-color: #f1f1f1;
   padding: 0.5rem;
-  max-width: 13rem;
+  max-width: 14rem;
   border-radius: 0 1rem 0 1rem;
 `;
 

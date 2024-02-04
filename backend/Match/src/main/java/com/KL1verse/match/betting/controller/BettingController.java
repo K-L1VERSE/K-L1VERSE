@@ -33,6 +33,7 @@ public class BettingController {
     @PostMapping
     public ResponseEntity<?> betting(@RequestBody BettingRequest bettingRequest) {
         kafkaBettingProducer.betting(bettingRequest);
+        log.info("bettingRequest: {}==========================", bettingRequest);
         return new ResponseEntity<>("success", HttpStatus.OK);
     }
 

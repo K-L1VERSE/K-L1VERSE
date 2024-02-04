@@ -27,7 +27,7 @@ public class GatewayApplication {
 	@Bean
 	public RouterFunction<ServerResponse> getAuthServiceRoute() {
 		return route("AUTH-SERVICE")
-			.route(path("/user/login/**", "/user/auth/**"), http("https://i10a409.p.ssafy.io:8010"))
+			.route(path("/user/login/**", "/user/auth/**"), http("http://localhost:8010"))
 			.before(rewritePath("/user/(?<segment>.*)", "/${segment}"))
 			.after(((serverRequest, serverResponse) -> {
                 try {
@@ -47,7 +47,7 @@ public class GatewayApplication {
 	@Bean
 	public RouterFunction<ServerResponse> getUserServiceRoute() {
 		return route("USER-SERVICE")
-			.route(path("/user/**"), http("https://i10a409.p.ssafy.io:8010"))
+			.route(path("/user/**"), http("http://localhost:8010"))
 			.before(rewritePath("/user/(?<segment>.*)", "/${segment}"))
 			.filter(instrument())
 			.build();
@@ -56,7 +56,7 @@ public class GatewayApplication {
 	@Bean
 	public RouterFunction<ServerResponse> getSurveyServiceRoute() {
 		return route("SURVEY-SERVICE")
-			.route(path("/survey/**"), http("https://i10a409.p.ssafy.io:8020"))
+			.route(path("/survey/**"), http("http://localhost:8020"))
 			.before(rewritePath("/survey/(?<segment>.*)", "/${segment}"))
 			.filter(instrument())
 			.build();
@@ -65,7 +65,7 @@ public class GatewayApplication {
 	@Bean
 	public RouterFunction<ServerResponse> getBoardServiceRoute() {
 		return route("BOARD-SERVICE")
-			.route(path("/board/**"), http("https://i10a409.p.ssafy.io:8030"))
+			.route(path("/board/**"), http("http://localhost:8030"))
 			.before(rewritePath("/board/(?<segment>.*)", "/${segment}"))
 			.filter(instrument())
 			.build();
@@ -74,7 +74,7 @@ public class GatewayApplication {
 	@Bean
 	public RouterFunction<ServerResponse> getMatchServiceRoute() {
 		return route("MATCH-SERVICE")
-			.route(path("/match/**"), http("https://i10a409.p.ssafy.io:8040"))
+			.route(path("/match/**"), http("http://localhost:8040"))
 			.before(rewritePath("/match/(?<segment>.*)", "/${segment}"))
 			.filter(instrument())
 			.build();
