@@ -1,6 +1,7 @@
 import axios from "axios";
 
 const domain = process.env.REACT_APP_DOMAIN;
+const domainAndPort = process.env.REACT_APP_DOMAIN_AND_PORT;
 
 const instance = axios.create({
   baseURL: `${domain}:8000`,
@@ -59,7 +60,7 @@ instance.interceptors.response.use(
 
     if (err.response && err.response.status === 401) {
       // UNAUTHORIZED 응답이면 로그인 페이지로 리다이렉션
-      window.location.href = `${domain}/logout`;
+      window.location.href = `${domainAndPort}/login`;
     }
   },
 );
