@@ -16,7 +16,7 @@ public class BoardNotificationResDto {
         COMMENT, LIKE
     }
 
-    String userId;
+    Integer userId;
     String message;
     String uri;
     BoardNotificationType type;

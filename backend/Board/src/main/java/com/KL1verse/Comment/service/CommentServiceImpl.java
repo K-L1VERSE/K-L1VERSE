@@ -63,11 +63,11 @@ public class CommentServiceImpl implements CommentService {
 
         Comment createdComment = commentRepository.save(comment);
 
-        String userNickname = boardRepository.findNicknameByUserId(Long.parseLong(board.getUser()));
+        String userNickname = boardRepository.findNicknameByUserId(board.getUserId());
         kafkaBoardNotificationProducer.boardNotification(
             BoardNotificationResDto.builder()
                 .type(BoardNotificationType.COMMENT)
-                .userId(board.getUser())
+                .userId(board.getUserId())
                 .uri("http://localhost:3000/" + board.getBoardType().toString().toLowerCase() + String.valueOf(board.getBoardId()))
                 .message(userNickname + "님이 새로운 댓글을 달았습니다.")
                 .build()

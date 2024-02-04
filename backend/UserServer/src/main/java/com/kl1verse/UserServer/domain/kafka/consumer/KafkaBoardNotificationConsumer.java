@@ -37,7 +37,7 @@ public class KafkaBoardNotificationConsumer {
             boardNotificationReqDto = objectMapper.readValue(boardNotificationDataJson,
                 BoardNotificationReqDto.class);
 
-            Integer userId = Integer.parseInt(boardNotificationReqDto.getUserId());
+            Integer userId = boardNotificationReqDto.getUserId();
             MessageReqDto messageReqDto = MessageReqDto.builder()
                 .type(boardNotificationReqDto.getType() == BoardNotificationType.COMMENT ? NotificationType.COMMENT : NotificationType.LIKE)
                 .message(boardNotificationReqDto.getMessage())
