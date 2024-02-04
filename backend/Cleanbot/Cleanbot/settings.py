@@ -43,6 +43,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     "bot.apps.BotConfig",
     'rest_framework',
+    'kafka',
 ]
 
 MIDDLEWARE = [
