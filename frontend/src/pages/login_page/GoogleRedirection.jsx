@@ -27,7 +27,6 @@ function GoogleRedirection() {
         userId: res.data.userId,
         isLoggedIn: true,
       });
-      console.log("응답:!@!@!@", res.data);
 
       /* 성공시 홈화면으로 */
       window.location.href = "/";

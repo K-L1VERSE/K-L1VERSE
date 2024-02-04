@@ -6,28 +6,27 @@ import com.KL1verse.Board.repository.entity.Board;
 import com.KL1verse.Comment.dto.req.CommentDTO;
 import com.KL1verse.Comment.repository.CommentRepository;
 import com.KL1verse.Comment.repository.entity.Comment;
+import com.KL1verse.kafka.dto.res.BoardNotificationResDto;
+import com.KL1verse.kafka.dto.res.BoardNotificationResDto.BoardNotificationType;
+import com.KL1verse.kafka.producer.KafkaBoardNotificationProducer;
 import java.time.LocalDateTime;
 import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
 
 @Slf4j
 @Service
+@RequiredArgsConstructor
 public class CommentServiceImpl implements CommentService {
 
     private final CommentRepository commentRepository;
     private final BoardRepository boardRepository;
-
-    public CommentServiceImpl(CommentRepository commentRepository,
-        BoardRepository boardRepository) {
-        this.commentRepository = commentRepository;
-        this.boardRepository = boardRepository;
-    }
-
+    private final KafkaBoardNotificationProducer kafkaBoardNotificationProducer;
 
     @Override
     public CommentDTO getCommentById(Long commentId, Long requestingUserId) {
@@ -63,6 +62,18 @@ public class CommentServiceImpl implements CommentService {
         comment.setBoardId(board);
 
         Comment createdComment = commentRepository.save(comment);
+
+        String userNickname = boardRepository.findNicknameByUserId(Long.parseLong(board.getUser()));
+        kafkaBoardNotificationProducer.boardNotification(
+            BoardNotificationResDto.builder()
+                .type(BoardNotificationType.COMMENT)
+                .userId(board.getUser())
+                .uri("http://localhost:3000/" + board.getBoardType().toString().toLowerCase() + String.valueOf(board.getBoardId()))
+                .message(userNickname + "님이 새로운 댓글을 달았습니다.")
+                .build()
+        );
+
+
         return CommentDTO.builder()
             .commentId(createdComment.getCommentId())
             .content(createdComment.getContent())

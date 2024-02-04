@@ -29,8 +29,6 @@ const SocketProvider = ({ children }) => {
   };
 
   useEffect(() => {
-    console.log("isLoggedIn: ", userState.isLoggedIn);
-
     const connectSocket = () => {
       const domain = process.env.REACT_APP_DOMAIN;
       const socket = new SockJS(`${domain}:8010/ws/notification`);
@@ -40,7 +38,6 @@ const SocketProvider = ({ children }) => {
         stomp.subscribe(
           `/topic/notification/${userState.email}:${userState.domain}`,
           (message) => {
-            console.log(message);
             recvNotification(JSON.parse(message.body));
           },
         );
@@ -49,17 +46,20 @@ const SocketProvider = ({ children }) => {
       setStompClient(stomp);
     };
 
-    if (userState.isLoggedIn) {
-      console.log("Socket Connected!!!");
+    if (
+      userState.isLoggedIn &&
+      ![
+        "/login",
+        "/logout",
+        "/KakaoAuth",
+        "/GoogleAuth",
+        "/NaverAuth",
+      ].includes(window.location.pathname)
+    ) {
       connectSocket();
-
-      // 알림 목록 불러오기
       axios
         .get("/user/users/notifications")
         .then((res) => {
-          console.log(res.data);
-
-          // 기존 알림 상태를 덮어쓰기
           setNotification({
             notifications: res.data.filter(
               (notification) => notification.readFlag,
@@ -69,20 +69,13 @@ const SocketProvider = ({ children }) => {
             ),
           });
         })
-        .catch((err) => {
-          console.log(err);
-        });
-    } else {
-      if (stompClient) {
-        console.log("Socket Disconnected!!!");
-        stompClient.disconnect();
-        setStompClient(null);
-      }
+        .catch(() => {});
+    } else if (!userState.isLoggedIn && stompClient) {
+      stompClient.disconnect();
+      setStompClient(null);
     }
-
     return () => {
       if (!userState.isLoggedIn && stompClient) {
-        console.log("Socket Disconnected!!!");
         stompClient.disconnect();
         setStompClient(null);
       }

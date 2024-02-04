@@ -25,7 +25,7 @@ public class Badge {
     private Integer id;
 
     @JsonIgnore
-    @OneToOne
+    @ManyToOne
     @JoinColumn(name = "badge_detail_id")
     private BadgeDetail badgeDetail;
 
