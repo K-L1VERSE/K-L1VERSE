@@ -11,7 +11,6 @@ import {
   Content,
   UpdateButton,
   DeleteButton,
-  DealFlag,
 } from "../../../styles/BoardStyles/BoardDetailStyle";
 import {
   DealStatusGreen,

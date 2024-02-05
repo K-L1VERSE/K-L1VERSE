@@ -92,7 +92,7 @@ public class WaggleServiceImpl implements WaggleService {
         updateExistingWaggle(existingWaggle, waggleDto);
 
         Board board = existingWaggle.getBoard();
-        board.setBoardImage(waggleDto.getBoard().getBoardImage());
+//        board.setBoardImage(waggleDto.getBoard().getBoardImage());
 
         Waggle updatedWaggle = waggleRepository.save(existingWaggle);
         File file = fileService.saveFile(waggleDto.getBoard().getBoardImage());
@@ -260,7 +260,7 @@ public class WaggleServiceImpl implements WaggleService {
             .deleteAt(waggle.getBoard().getDeleteAt())
             .commentCount(0)
             .userId(waggle.getBoard().getUserId())
-            .boardImage(waggle.getBoard().getBoardImage())
+//            .boardImage(waggle.getBoard().getBoardImage())
             .boardType(waggle.getBoard().getBoardType())
             .build());
         return waggleDTO;
@@ -278,7 +278,7 @@ public class WaggleServiceImpl implements WaggleService {
             .updateAt(waggleDTO.getBoard().getUpdateAt())
             .deleteAt(waggleDTO.getBoard().getDeleteAt())
             .userId(waggleDTO.getBoard().getUserId())
-            .boardImage(waggleDTO.getBoard().getBoardImage())
+//            .boardImage(waggleDTO.getBoard().getBoardImage())
             .boardType(waggleDTO.getBoard().getBoardType())
             .build());
         return waggle;

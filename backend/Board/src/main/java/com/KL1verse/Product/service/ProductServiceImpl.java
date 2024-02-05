@@ -74,7 +74,7 @@ public class ProductServiceImpl implements ProductService {
         updateExistingProduct(existingProduct, productDto);
 
         Board board = existingProduct.getBoard();
-        board.setBoardImage(productDto.getBoard().getBoardImage());
+//        board.setBoardImage(productDto.getBoard().getBoardImage());
 
         Product updatedProduct = productRepository.save(existingProduct);
 
@@ -188,7 +188,7 @@ public class ProductServiceImpl implements ProductService {
             .updateAt(product.getBoard().getUpdateAt())
             .deleteAt(product.getBoard().getDeleteAt())
             .userId(product.getBoard().getUserId())
-            .boardImage(product.getBoard().getBoardImage())
+//            .boardImage(product.getBoard().getBoardImage())
             .commentCount(commentRepository.countCommentsByBoardId(product.getBoard().getBoardId()))
             .build());
         return productDTO;
@@ -206,7 +206,7 @@ public class ProductServiceImpl implements ProductService {
             .updateAt(productDTO.getBoard().getUpdateAt())
             .deleteAt(productDTO.getBoard().getDeleteAt())
             .userId(productDTO.getBoard().getUserId())
-            .boardImage(productDTO.getBoard().getBoardImage())
+//            .boardImage(productDTO.getBoard().getBoardImage())
             .build());
         return product;
     }

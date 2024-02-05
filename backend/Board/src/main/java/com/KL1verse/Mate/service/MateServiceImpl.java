@@ -74,7 +74,7 @@ public class MateServiceImpl implements MateService {
         updateExistingMate(existingMate, mateDto);
 
         Board board = existingMate.getBoard();
-        board.setBoardImage(mateDto.getBoard().getBoardImage());
+//        board.setBoardImage(mateDto.getBoard().getBoardImage());
 
         Mate updatedMate = mateRepository.save(existingMate);
         File file = fileService.saveFile(mateDto.getBoard().getBoardImage());
@@ -218,7 +218,7 @@ public class MateServiceImpl implements MateService {
             .boardType(mate.getBoard().getBoardType()).title(mate.getBoard().getTitle())
             .content(mate.getBoard().getContent()).createAt(mate.getBoard().getCreateAt())
             .updateAt(mate.getBoard().getUpdateAt()).deleteAt(mate.getBoard().getDeleteAt())
-            .boardImage(mate.getBoard().getBoardImage())
+//            .boardImage(mate.getBoard().getBoardImage())
             .userId(mate.getBoard().getUserId())
             .commentCount(commentRepository.countCommentsByBoardId(mate.getBoard().getBoardId()))
             .build());
@@ -233,7 +233,7 @@ public class MateServiceImpl implements MateService {
             .boardType(mateDTO.getBoard().getBoardType()).title(mateDTO.getBoard().getTitle())
             .content(mateDTO.getBoard().getContent()).createAt(mateDTO.getBoard().getCreateAt())
             .updateAt(mateDTO.getBoard().getUpdateAt()).deleteAt(mateDTO.getBoard().getDeleteAt())
-            .boardImage(mateDTO.getBoard().getBoardImage())
+//            .boardImage(mateDTO.getBoard().getBoardImage())
             .userId(mateDTO.getBoard().getUserId()).build());
         return mate;
     }

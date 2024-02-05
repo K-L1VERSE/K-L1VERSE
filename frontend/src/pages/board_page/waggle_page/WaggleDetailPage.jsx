@@ -18,7 +18,7 @@ import {
   Content,
   Button,
   LikeButton,
-  LikeCount,
+  // LikeCount,
 } from "../../../styles/BoardStyles/BoardDetailStyle";
 import { UserState } from "../../../global/UserState";
 
@@ -97,7 +97,7 @@ function WaggleDetailPage() {
               style={{ width: "24px", height: "24px" }}
             />
           </LikeButton>
-          <LikeCount>좋아요 {likeCount}개</LikeCount>
+          {/* <LikeCount>좋아요 {likeCount}개</LikeCount> */}
         </div>
       </WaggleDetailBox>
 

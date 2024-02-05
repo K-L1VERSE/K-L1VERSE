@@ -10,7 +10,7 @@ import {
 } from "../../styles/BoardStyles/CommentStyle";
 import { updateComment, createComment } from "../../api/comment";
 
-function CommentForm({ boardId, onCommentSubmit }) {
+function CommentForm({ boardId }) {
   const navigate = useNavigate();
   const [content, setContent] = useState("");
   const [isUpdateMode, setIsUpdateMode] = useState(false);

@@ -1,31 +1,23 @@
 import React, { useState, useEffect } from "react";
 import { useRecoilState } from "recoil";
-import axios from "../../api/axios";
-
-import CommentForm from "./CommentForm";
-import CommentContainer from "./CommentContainer"; // Import CommentContainer
+import CommentContainer from "./CommentContainer";
 import { ListContainer } from "../../styles/BoardStyles/CommentStyle";
-import {
-  getCommentList,
-  createComment,
-  updateComment,
-  deleteComment,
-} from "../../api/comment";
+import { getCommentList, likeComment, unlikeComment } from "../../api/comment";
 import { formatRelativeTime } from "./dateFormat";
 import { UserState } from "../../global/UserState";
+import CommentForm from "./CommentForm";
 
 function CommentList({ boardId }) {
-  const [content] = useState("");
   const [commentList, setCommentList] = useState([]);
   const [commentDetail, setCommentDetail] = useState({});
   const [commentId, setCommentId] = useState(null);
   const [isLiked, setIsLiked] = useState(false);
   const [likeCount, setLikeCount] = useState(0);
-  const [editingCommentContent, setEditingCommentContent] = useState("");
   const { userId } = useRecoilState(UserState)[0];
 
   function getComments() {
     getCommentList(
+      boardId,
       ({ data }) => {
         setCommentList([...commentList, ...data.content]);
         setCommentDetail(data.board);
@@ -41,29 +33,27 @@ function CommentList({ boardId }) {
     getComments();
   }, []);
 
-  // const handleLikeClick = () => {
-  //   if (isLiked) {
-  //     unlikeComment(
-  //       { userId },
-  //       waggleId,
-  //       () => {
-  //         setIsLiked(false);
-  //         setLikeCount((prevCount) => prevCount - 1);
-  //       },
-  //       () => {},
-  //     );
-  //   } else {
-  //     likeComment(
-  //       { userId },
-  //       waggleId,
-  //       () => {
-  //         setIsLiked(true);
-  //         setLikeCount((prevCount) => prevCount + 1);
-  //       },
-  //       () => {},
-  //     );
-  //   }
-  // };
+  const handleLikeClick = () => {
+    if (isLiked) {
+      unlikeComment(
+        boardId,
+        () => {
+          setIsLiked(false);
+          setLikeCount((prevCount) => prevCount - 1);
+        },
+        () => {},
+      );
+    } else {
+      likeComment(
+        boardId,
+        () => {
+          setIsLiked(true);
+          setLikeCount((prevCount) => prevCount + 1);
+        },
+        () => {},
+      );
+    }
+  };
 
   return (
     <ListContainer>
@@ -71,7 +61,9 @@ function CommentList({ boardId }) {
       <CommentContainer
         commentList={commentList}
         formatRelativeTime={formatRelativeTime}
+        handleLikeClick={handleLikeClick}
       />
+      <CommentForm commentId={commentId} />
     </ListContainer>
   );
 }

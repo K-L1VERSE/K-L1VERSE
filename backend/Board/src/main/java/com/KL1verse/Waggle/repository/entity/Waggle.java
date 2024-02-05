@@ -26,7 +26,7 @@ public class Waggle {
 
     @Id
     @Column(name = "waggle_id")
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long waggleId;
 
     @ManyToOne

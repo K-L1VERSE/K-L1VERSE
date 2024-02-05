@@ -25,15 +25,15 @@ import lombok.ToString;
 public class Member {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "member_id")
     private Integer memberId;
 
-//    @ManyToOne
-//    @JoinColumn(name = "team_id")
-//    private Team team;
-@Column(name = "team_id")
-    private Integer teamId;
+    @ManyToOne
+    @JoinColumn(name = "team_id")
+    private Team team;
+//@Column(name = "team_id")
+//    private Integer teamId;
 
     private String name;
 

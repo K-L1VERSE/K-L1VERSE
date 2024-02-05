@@ -10,6 +10,7 @@ import java.util.List;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -23,6 +24,9 @@ public class KafkaMatchNotificationProducer {
     @Autowired
     private ObjectMapper objectMapper;
 
+    @Value("${domain}")
+    private String domain;
+
     public void matchNotification(int matchId) {
 
         // matchId로 betting한 userId 찾기
@@ -35,7 +39,7 @@ public class KafkaMatchNotificationProducer {
 
         MatchNotificationResDto matchNotificationResDto = MatchNotificationResDto.builder()
             .userIdList(userIdList)
-            .uri("http://localhost:3000/matches/" + String.valueOf(matchId))
+            .uri(domain+"/matches/" + String.valueOf(matchId))
             .build();
 
         // kafka로 보내기

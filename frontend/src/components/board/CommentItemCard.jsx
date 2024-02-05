@@ -1,5 +1,4 @@
 import React from "react";
-import CommentForm from "./CommentForm";
 import {
   CommentItem,
   CommentContent,
@@ -10,42 +9,36 @@ import {
 
 function CommentItemCard({
   comment,
-  editingCommentId,
   handleUpdateBtn,
   handleDeleteBtn,
+  handleLikeClick,
 }) {
   return (
     <CommentItem key={comment.commentId}>
-      {editingCommentId === comment.commentId ? (
-        <CommentForm
-          boardId={comment.boardId}
-          onCommentSubmit={(updatedContent) =>
-            handleUpdateBtn(comment.commentId, updatedContent)
-          }
-          onCancel={() => handleUpdateBtn(null, "")} // Add onCancel prop
-          defaultContent={comment.content}
-        />
-      ) : (
-        <>
-          <CommentContent>{comment.content}</CommentContent>
-          <ButtonContainer>
-            <EditButton
-              type="button"
-              onClick={() => {
-                handleUpdateBtn(comment.commentId, comment.content);
-              }}
-            >
-              수정
-            </EditButton>
-            <DeleteButton
-              type="button"
-              onClick={() => handleDeleteBtn(comment.commentId)}
-            >
-              삭제
-            </DeleteButton>
-          </ButtonContainer>
-        </>
+      <CommentContent>{comment.content}</CommentContent>
+      {handleLikeClick && (
+        <ButtonContainer>
+          <EditButton type="button" onClick={handleLikeClick}>
+            좋아요
+          </EditButton>
+        </ButtonContainer>
       )}
+      <ButtonContainer>
+        <EditButton
+          type="button"
+          onClick={() => {
+            handleUpdateBtn(comment.commentId, comment.content);
+          }}
+        >
+          수정
+        </EditButton>
+        <DeleteButton
+          type="button"
+          onClick={() => handleDeleteBtn(comment.commentId)}
+        >
+          삭제
+        </DeleteButton>
+      </ButtonContainer>
     </CommentItem>
   );
 }
