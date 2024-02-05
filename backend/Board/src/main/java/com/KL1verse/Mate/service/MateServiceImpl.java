@@ -8,6 +8,8 @@ import com.KL1verse.Comment.repository.CommentRepository;
 import com.KL1verse.Mate.dto.req.MateDTO;
 import com.KL1verse.Mate.repository.MateRepository;
 import com.KL1verse.Mate.repository.entity.Mate;
+import com.KL1verse.kafka.dto.res.BoardCleanbotCheckResDto;
+import com.KL1verse.kafka.producer.KafkaBoardCleanbotProducer;
 import com.KL1verse.Waggle.repository.entity.Waggle;
 import com.KL1verse.s3.repository.entity.File;
 import com.KL1verse.s3.service.BoardImageService;
@@ -15,6 +17,7 @@ import com.KL1verse.s3.service.FileService;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.stream.Collectors;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.BeanUtils;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -23,6 +26,7 @@ import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 @Service
+@RequiredArgsConstructor
 public class MateServiceImpl implements MateService {
 
     private final MateRepository mateRepository;
@@ -32,16 +36,8 @@ public class MateServiceImpl implements MateService {
     private final BoardImageService boardImageService;
 
     private final CommentRepository commentRepository;
+    private final KafkaBoardCleanbotProducer kafkaBoardCleanbotProducer;
 
-    public MateServiceImpl(MateRepository mateRepository, BoardRepository boardRepository,
-        FileService fileService, BoardImageService boardImageService,
-        CommentRepository commentRepository) {
-        this.mateRepository = mateRepository;
-        this.boardRepository = boardRepository;
-        this.fileService = fileService;
-        this.boardImageService = boardImageService;
-        this.commentRepository = commentRepository;
-    }
 
     @Override
     public MateDTO getMateById(Long boardId) {
@@ -64,6 +60,14 @@ public class MateServiceImpl implements MateService {
         boardImageService.saveBoardImage(board, file);
 
         Mate createdMate = mateRepository.save(mate);
+
+        BoardCleanbotCheckResDto boardCleanbotCheckResDto = BoardCleanbotCheckResDto.builder()
+            .id(createdMate.getBoard().getBoardId())
+            .content(createdMate.getBoard().getContent())
+            .domain("board")
+            .build();
+        kafkaBoardCleanbotProducer.boardCleanbotCheck(boardCleanbotCheckResDto);
+
         return convertToDTO(createdMate);
     }
 
@@ -79,6 +83,14 @@ public class MateServiceImpl implements MateService {
         Mate updatedMate = mateRepository.save(existingMate);
         File file = fileService.saveFile(mateDto.getBoard().getBoardImage());
         boardImageService.saveBoardImage(board, file);
+
+
+        BoardCleanbotCheckResDto boardCleanbotCheckResDto = BoardCleanbotCheckResDto.builder()
+            .id(boardId)
+            .content(mateDto.getBoard().getContent())
+            .domain("board")
+            .build();
+        kafkaBoardCleanbotProducer.boardCleanbotCheck(boardCleanbotCheckResDto);
 
         return convertToDTO(updatedMate);
     }

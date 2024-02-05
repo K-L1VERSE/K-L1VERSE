@@ -27,7 +27,4 @@ public interface MateRepository extends JpaRepository<Mate, Long> {
     Page<Mate> findByMatchIdIn(List<Integer> matchIds, Pageable pageable);
 
 
-
-
-
 }
