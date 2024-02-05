@@ -5,6 +5,7 @@ import React from "react";
 import StartPage from "./pages/SurveyPage/StartPage";
 import QuestionPage from "./pages/SurveyPage/QuestionPage";
 import ResultPage from "./pages/SurveyPage/ResultPage";
+import KakaoPage from "./pages/SurveyPage/KakaoPage";
 
 import KaKaoRedirection from "./pages/login_page/KaKaoRedirection";
 import NaverRedirection from "./pages/login_page/NaverRedirection";
@@ -64,6 +65,7 @@ function App() {
               <Route path="/survey" element={<StartPage />} />
               <Route path="/question/:questionNum" element={<QuestionPage />} />
               <Route path="/result" element={<ResultPage />} />
+              <Route path="/kakao" element={<KakaoPage />} />
 
               {/* 와글 페이지 */}
               <Route path="/waggle" element={<WaggleListPage />} />
