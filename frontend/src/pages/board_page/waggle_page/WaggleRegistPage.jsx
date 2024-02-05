@@ -13,8 +13,9 @@ function WaggleRegistPage() {
   const [boardId, setBoardId] = useState(null);
   const [title, setTitle] = useState("");
   const [content, setContent] = useState("");
+  const [image, setImage] = useState(null);
   const [isUpdateMode, setIsUpdateMode] = useState(false);
-  const { userId } = useRecoilState(UserState)[0];
+  const { userId, nickname } = useRecoilState(UserState)[0];
 
   const location = useLocation();
 
@@ -28,15 +29,19 @@ function WaggleRegistPage() {
   }, [location]);
 
   const handleSubmit = () => {
+    const formData = new FormData();
+    formData.append("title", title);
+    formData.append("content", content);
+    formData.append("userId", userId);
+    formData.append("nickname", nickname);
+    if (image) {
+      formData.append("image", image);
+    }
+
     if (isUpdateMode) {
       updateWaggle(
         boardId,
-        {
-          board: {
-            title,
-            content,
-          },
-        },
+        { board: formData },
         () => {
           navigate(`/waggle/${boardId}`);
         },
@@ -44,14 +49,7 @@ function WaggleRegistPage() {
       );
     } else {
       createWaggle(
-        {
-          board: {
-            boardType: "WAGGLE",
-            title,
-            content,
-            userId,
-          },
-        },
+        { board: formData },
         ({ data }) => {
           navigate(`/waggle/${data.board.boardId}`);
         },
@@ -69,6 +67,7 @@ function WaggleRegistPage() {
         content={content}
         onTitleChange={(e) => setTitle(e.target.value)}
         onContentChange={(e) => setContent(e.target.value)}
+        onImageChange={(e) => setImage(e.target.files[0])}
         onSubmit={handleSubmit}
         buttonText={isUpdateMode ? "수정하기" : "작성하기"}
       />

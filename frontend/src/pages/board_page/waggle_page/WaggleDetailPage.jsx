@@ -27,7 +27,7 @@ function WaggleDetailPage() {
   const [likeCount, setLikeCount] = useState(0);
   const { boardId } = useParams();
   const navigate = useNavigate();
-  const { userId, nickname } = useRecoilState(UserState)[0];
+  const { userId } = useRecoilState(UserState)[0];
 
   function getWaggleDetail() {
     axios.get(`/board/waggles/${boardId}`).then(({ data }) => {
@@ -88,9 +88,17 @@ function WaggleDetailPage() {
     <Container>
       <BoardTopNavBar />
       <WaggleDetailBox>
-        <User>{nickname}</User>
+        <User>{waggleDetail.nickname}</User>
         <Title>{waggleDetail.title}</Title>
         <Content>{waggleDetail.content}</Content>
+
+        {/* {waggleDetail.imagePath && (
+          <img
+            src={waggleDetail.imagePath}
+            alt="Waggle Image"
+            style={{ maxWidth: "100%", maxHeight: "400px", margin: "20px 0" }}
+          />
+        )} */}
         {/* 좋아요 버튼 및 개수 표시 */}
         <div>
           <LikeButton onClick={handleLikeClick}>

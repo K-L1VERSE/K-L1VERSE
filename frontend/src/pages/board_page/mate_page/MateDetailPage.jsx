@@ -19,7 +19,7 @@ function MateDetailPage() {
   const [mateDetail, setMateDetail] = useState({});
   const { boardId } = useParams();
   const navigate = useNavigate();
-  const { nickname } = useRecoilState(UserState)[0];
+  const {} = useRecoilState(UserState)[0];
 
   /* mate 상세 정보 가져오기 */
   function getMateDetail() {
@@ -56,7 +56,7 @@ function MateDetailPage() {
     <Container>
       <BoardTopNavBar />
       <WaggleDetailBox>
-        <User>{nickname}</User>
+        <User>{mateDetail.nickname}</User>
         <Title>{mateDetail.title}</Title>
         <Content>{mateDetail.content}</Content>
       </WaggleDetailBox>

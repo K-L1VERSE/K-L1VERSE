@@ -27,7 +27,7 @@ function ProductDetailPage() {
   const [dealFlag, setDealFlag] = useState(false);
   const { boardId } = useParams();
   const navigate = useNavigate();
-  const { userId, nickname } = useRecoilState(UserState)[0];
+  const { userId } = useRecoilState(UserState)[0];
 
   /* product 상세 정보 가져오기 */
   function getProductDetail() {
@@ -68,7 +68,7 @@ function ProductDetailPage() {
       <BoardTopNavBar />
       <WaggleDetailBox>
         <User>
-          <p>Username: {productDetail.username}</p>
+          <p>Username: {productDetail.nickname}</p>
         </User>
         {dealFlag ? (
           <DealStatusOrange>거래완료</DealStatusOrange>
