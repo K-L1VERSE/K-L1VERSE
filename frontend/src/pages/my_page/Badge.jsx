@@ -7,6 +7,8 @@ import {
   ConfirmContainer,
   ConfirmTextContainer,
   ConfirmText,
+  PurchaseTextContainer,
+  PurchaseText,
 } from "../../styles/mypage-styles/badgeStyle";
 import BadgeList from "./BadgeList";
 
@@ -42,7 +44,7 @@ function Badge() {
   ];
 
   const [badgeList, setBadgeList] = useState([
-    false,
+    true,
     false,
     false,
     false,
@@ -55,6 +57,8 @@ function Badge() {
     false,
     false,
   ]);
+
+  const [selectedBadge, setSelectedBadge] = useState(0);
 
   useEffect(() => {
     const temp = [...badgeList];
@@ -72,6 +76,11 @@ function Badge() {
       .catch(() => {});
   }, []);
 
+  const navigate = useNavigate();
+  const goMypage = () => {
+    navigate("/mypage");
+  };
+
   const wearBadge = (index) => {
     const confirmWear = window.confirm("뱃지를 착용하시겠습니까?");
 
@@ -83,6 +92,7 @@ function Badge() {
         })
         .then(() => {
           alert("뱃지 착용이 완료되었습니다.");
+          goMypage();
         })
         .catch(() => {});
     }
@@ -117,11 +127,6 @@ function Badge() {
     }
   };
 
-  const navigate = useNavigate();
-  const goMypage = () => {
-    navigate("/mypage");
-  };
-
   return (
     <div>
       <TitleContainer>
@@ -129,16 +134,27 @@ function Badge() {
       </TitleContainer>
       <BadgeList
         badgeList={badgeList}
-        wearBadge={wearBadge}
-        handleBuyBadge={handleBuyBadge}
         badgeNameList={badgeNameList}
         badgeCodeList={badgeCodeList}
+        setSelectedBadge={setSelectedBadge}
       />
-      <ConfirmContainer>
-        <ConfirmTextContainer>
-          <ConfirmText onClick={goMypage}>확인</ConfirmText>
-        </ConfirmTextContainer>
-      </ConfirmContainer>
+      {badgeList[selectedBadge] === true ? (
+        <ConfirmContainer>
+          <ConfirmTextContainer>
+            <ConfirmText onClick={() => wearBadge(selectedBadge)}>
+              확인
+            </ConfirmText>
+          </ConfirmTextContainer>
+        </ConfirmContainer>
+      ) : (
+        <ConfirmContainer>
+          <PurchaseTextContainer>
+            <PurchaseText onClick={() => handleBuyBadge(selectedBadge)}>
+              -1000
+            </PurchaseText>
+          </PurchaseTextContainer>
+        </ConfirmContainer>
+      )}
     </div>
   );
 }
