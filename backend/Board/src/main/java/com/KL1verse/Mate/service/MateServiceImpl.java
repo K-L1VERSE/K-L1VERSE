@@ -8,9 +8,8 @@ import com.KL1verse.Comment.repository.CommentRepository;
 import com.KL1verse.Mate.dto.req.MateDTO;
 import com.KL1verse.Mate.repository.MateRepository;
 import com.KL1verse.Mate.repository.entity.Mate;
-import com.KL1verse.kafka.dto.res.BoardCleanbotCheckResDto;
+import com.KL1verse.kafka.dto.req.BoardCleanbotCheckReqDto;
 import com.KL1verse.kafka.producer.KafkaBoardCleanbotProducer;
-import com.KL1verse.Waggle.repository.entity.Waggle;
 import com.KL1verse.s3.repository.entity.File;
 import com.KL1verse.s3.service.BoardImageService;
 import com.KL1verse.s3.service.FileService;
@@ -61,12 +60,12 @@ public class MateServiceImpl implements MateService {
 
         Mate createdMate = mateRepository.save(mate);
 
-        BoardCleanbotCheckResDto boardCleanbotCheckResDto = BoardCleanbotCheckResDto.builder()
+        BoardCleanbotCheckReqDto boardCleanbotCheckReqDto = BoardCleanbotCheckReqDto.builder()
             .id(createdMate.getBoard().getBoardId())
             .content(createdMate.getBoard().getContent())
             .domain("board")
             .build();
-        kafkaBoardCleanbotProducer.boardCleanbotCheck(boardCleanbotCheckResDto);
+        kafkaBoardCleanbotProducer.boardCleanbotCheck(boardCleanbotCheckReqDto);
 
         return convertToDTO(createdMate);
     }
@@ -85,12 +84,12 @@ public class MateServiceImpl implements MateService {
         boardImageService.saveBoardImage(board, file);
 
 
-        BoardCleanbotCheckResDto boardCleanbotCheckResDto = BoardCleanbotCheckResDto.builder()
+        BoardCleanbotCheckReqDto boardCleanbotCheckReqDto = BoardCleanbotCheckReqDto.builder()
             .id(boardId)
             .content(mateDto.getBoard().getContent())
             .domain("board")
             .build();
-        kafkaBoardCleanbotProducer.boardCleanbotCheck(boardCleanbotCheckResDto);
+        kafkaBoardCleanbotProducer.boardCleanbotCheck(boardCleanbotCheckReqDto);
 
         return convertToDTO(updatedMate);
     }
