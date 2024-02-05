@@ -8,12 +8,15 @@ import com.KL1verse.Comment.repository.CommentRepository;
 import com.KL1verse.Product.dto.req.ProductDTO;
 import com.KL1verse.Product.repository.ProductRepository;
 import com.KL1verse.Product.repository.entity.Product;
+import com.KL1verse.kafka.dto.res.BoardCleanbotCheckResDto;
+import com.KL1verse.kafka.producer.KafkaBoardCleanbotProducer;
 import com.KL1verse.s3.repository.entity.File;
 import com.KL1verse.s3.service.BoardImageService;
 import com.KL1verse.s3.service.FileService;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.stream.Collectors;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.BeanUtils;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -22,6 +25,7 @@ import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 @Service
+@RequiredArgsConstructor
 public class ProductServiceImpl implements ProductService {
 
     private final ProductRepository productRepository;
@@ -32,16 +36,7 @@ public class ProductServiceImpl implements ProductService {
     private final BoardImageService boardImageService;
 
     private final CommentRepository commentRepository;
-
-    public ProductServiceImpl(ProductRepository productRepository,
-        BoardRepository boardRepository, FileService fileService,
-        BoardImageService boardImageService, CommentRepository commentRepository) {
-        this.productRepository = productRepository;
-        this.boardRepository = boardRepository;
-        this.fileService = fileService;
-        this.boardImageService = boardImageService;
-        this.commentRepository = commentRepository;
-    }
+    private final KafkaBoardCleanbotProducer kafkaBoardCleanbotProducer;
 
     @Override
     public ProductDTO getProductById(Long boardId) {
@@ -65,6 +60,14 @@ public class ProductServiceImpl implements ProductService {
         boardImageService.saveBoardImage(board, file);
 
         Product createdProduct = productRepository.save(product);
+
+        BoardCleanbotCheckResDto boardCleanbotCheckResDto = BoardCleanbotCheckResDto.builder()
+            .id(createdProduct.getBoard().getBoardId())
+            .content(createdProduct.getBoard().getContent())
+            .domain("board")
+            .build();
+        kafkaBoardCleanbotProducer.boardCleanbotCheck(boardCleanbotCheckResDto);
+
         return convertToDTO(createdProduct);
     }
 
@@ -80,6 +83,14 @@ public class ProductServiceImpl implements ProductService {
 
         File file = fileService.saveFile(productDto.getBoard().getBoardImage());
         boardImageService.saveBoardImage(board, file);
+
+
+        BoardCleanbotCheckResDto boardCleanbotCheckResDto = BoardCleanbotCheckResDto.builder()
+            .id(boardId)
+            .content(productDto.getBoard().getContent())
+            .domain("board")
+            .build();
+        kafkaBoardCleanbotProducer.boardCleanbotCheck(boardCleanbotCheckResDto);
 
         return convertToDTO(updatedProduct);
     }
