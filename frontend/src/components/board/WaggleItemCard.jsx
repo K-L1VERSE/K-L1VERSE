@@ -1,18 +1,22 @@
-// WaggleItemCard.jsx
 import React from "react";
+import { useRecoilState } from "recoil";
 import { Link } from "react-router-dom";
 import {
   WaggleItemContainer,
+  WaggleItemWriter,
   WaggleItemTitle,
   WaggleItemContent,
   WaggleItemInfoSection,
   WaggleItemInfoItem,
   WaggleItemSeparator,
 } from "../../styles/BoardStyles/WaggleListStyle";
+import { UserState } from "../../global/UserState";
 
 function WaggleItemCard({ waggle, formatRelativeTime }) {
+  const { nickname } = useRecoilState(UserState)[0];
   return (
     <WaggleItemContainer>
+      <WaggleItemWriter>{nickname}</WaggleItemWriter>
       <WaggleItemTitle>
         <Link
           to={`/waggle/${waggle.board.boardId}`}

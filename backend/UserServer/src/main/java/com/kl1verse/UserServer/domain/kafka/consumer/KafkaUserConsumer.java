@@ -59,7 +59,7 @@ public class KafkaUserConsumer {
     }
 
     // test
-//    @KafkaListener(topics = "betting-test", groupId = "user-group") // match-group아님, 현재 groupID !
+    @KafkaListener(topics = "betting-test", groupId = "user-group") // match-group아님, 현재 groupID !
     public void kafkaTest(String data){
         System.out.println(data);
         System.out.println("UserServer KafkaTest Consumer에서 받았습니다아아 11");

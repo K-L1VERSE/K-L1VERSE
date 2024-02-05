@@ -29,6 +29,7 @@ function KaKaoRedirection() {
         accessToken: res.data.accessToken,
         email: res.data.email,
         domain: res.data.domain,
+        userId: res.data.userId,
         isLoggedIn: true,
       });
 
@@ -36,7 +37,7 @@ function KaKaoRedirection() {
       window.location.href = "/";
     })
     .catch(() => {
-      window.location.href = "/login";
+      // window.location.href = "/login";
     });
 
   return (

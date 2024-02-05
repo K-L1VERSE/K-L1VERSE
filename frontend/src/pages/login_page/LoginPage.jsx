@@ -9,25 +9,27 @@ import LoginLogo from "../../components/login/LoginLogo";
 
 function LoginPage() {
   return (
-    <div>
+    <Box>
       <LoginLogo />
-
       <LoginButtonContainer>
         <KakaoLoginButton />
         <NaverLoginButton />
         <GoogleLoginButton />
       </LoginButtonContainer>
-    </div>
+    </Box>
   );
 }
+
+const Box = styled.div`
+  margin: 0 auto;
+  margin-top: 6rem;
+`;
 
 const LoginButtonContainer = styled.div`
   display: flex;
   flex-direction: column;
   gap: 0.7rem;
-
   height: 15rem;
-
   justify-content: center;
   align-items: center;
 `;

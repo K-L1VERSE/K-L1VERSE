@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import { useRecoilState } from "recoil";
 import styled from "styled-components";
@@ -11,12 +11,26 @@ import * as bettingApi from "../../api/betting";
 import { UserState } from "../../global/UserState";
 
 export default function BettingContainer({ match }) {
-  const { userId } = useRecoilState(UserState)[0];
-  console.log(UserState);
   const [userState] = useRecoilState(UserState);
-  console.log("userId : " + userState.userId);
-  console.log("userId : " + userId);
   const { matchId } = useParams();
+  const [betComplete, setBetComplete] = useState(false);
+  useEffect(() => {
+    const checkBetting = async () => {
+      const response = await bettingApi.checkBetting({
+        matchId,
+        userId: userState.userId,
+      });
+      // response.data === 0 : 아직 베팅 안함
+      // response.data === 1 : 이미 베팅함
+      if (response.data === 0) {
+        console.log(`베팅 아직 안했음 : ${response.data}`);
+      } else {
+        setBetComplete(true);
+        console.log(`이미 베팅했음 : ${response.data}`);
+      }
+    };
+    checkBetting();
+  }, [matchId, userState.userId]);
   const { homeBettingAmount } = match;
   const { drawBettingAmount } = match;
   const { awayBettingAmount } = match;
@@ -138,7 +152,11 @@ export default function BettingContainer({ match }) {
             onChange={(e) => setBettingAmount(e.target.value)}
           />{" "}
           골
-          <button type="button" onClick={handleBettingClick}>
+          <button
+            type="button"
+            onClick={handleBettingClick}
+            disabled={betComplete}
+          >
             베팅
           </button>
         </div>

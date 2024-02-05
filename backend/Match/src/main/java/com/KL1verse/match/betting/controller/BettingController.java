@@ -1,6 +1,7 @@
 package com.KL1verse.match.betting.controller;
 
 import com.KL1verse.match.betting.dto.req.BettingRequest;
+import com.KL1verse.match.betting.service.BettingService;
 import com.KL1verse.match.kafka.KafkaProducer;
 import com.KL1verse.match.kafka.producer.KafkaBettingProducer;
 import com.KL1verse.match.kafka.producer.KafkaBettingWinProducer;
@@ -13,6 +14,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 @Controller
 @RequestMapping("/bettings")
@@ -23,12 +25,7 @@ public class BettingController {
     private final KafkaProducer kafkaProducer;
     private final KafkaBettingProducer kafkaBettingProducer;
     private final KafkaBettingWinProducer kafkaBettingWinProducer;
-
-    @GetMapping("/betting")
-    public ResponseEntity<?> bettingWinTest() {
-        kafkaBettingWinProducer.bettingWin(1, 2);
-        return new ResponseEntity<>("success", HttpStatus.OK);
-    }
+    private final BettingService bettingService;
 
     @PostMapping
     public ResponseEntity<?> betting(@RequestBody BettingRequest bettingRequest) {
@@ -38,8 +35,20 @@ public class BettingController {
     }
 
     @GetMapping
-    public ResponseEntity<?> test() {
-        kafkaProducer.sendMessage("betting-test", "match도메인에서 info 보내드립니다");
+    public ResponseEntity<?> checkBetting(@RequestParam("matchId") int matchId, @RequestParam("userId") int userId) {
+        int n = bettingService.checkBetting(matchId, userId);
+        log.info("n: {}==========================", n);
+        if(n == 0) {
+            return new ResponseEntity<>("0", HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>("1", HttpStatus.OK);
+        }
+    }
+
+
+    @GetMapping("/betting")
+    public ResponseEntity<?> bettingWinTest() {
+        kafkaBettingWinProducer.bettingWin(1, 2);
         return new ResponseEntity<>("success", HttpStatus.OK);
     }
 

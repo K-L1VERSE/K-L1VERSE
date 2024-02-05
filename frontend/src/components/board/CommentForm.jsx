@@ -1,7 +1,11 @@
-// CommentForm.jsx
-
 import React, { useState } from "react";
 import axios from "../../api/axios";
+import {
+  Form,
+  TextArea,
+  SubmitButton,
+  CancelButton,
+} from "../../styles/BoardStyles/CommentStyle";
 
 function CommentForm({ boardId, parentId, onCommentSubmit }) {
   const [content, setContent] = useState("");
@@ -30,23 +34,30 @@ function CommentForm({ boardId, parentId, onCommentSubmit }) {
     }
   };
 
+  const handleKeyDown = (e) => {
+    if (e.keyCode === 13 && !e.shiftKey) {
+      handleSubmit(e);
+    }
+  };
+
   return (
-    <form onSubmit={handleSubmit}>
-      <textarea
+    <Form onSubmit={handleSubmit}>
+      <TextArea
         value={content}
         onChange={(e) => setContent(e.target.value)}
+        onKeyDown={handleKeyDown}
         required
         placeholder="댓글을 작성하세요."
       />
-      <button type="submit">
+      <SubmitButton type="submit">
         {isEditMode ? "댓글 수정 완료" : "댓글 작성"}
-      </button>
+      </SubmitButton>
       {isEditMode && (
-        <button type="button" onClick={() => setIsEditMode(false)}>
+        <CancelButton type="button" onClick={() => setIsEditMode(false)}>
           수정 취소
-        </button>
+        </CancelButton>
       )}
-    </form>
+    </Form>
   );
 }
 

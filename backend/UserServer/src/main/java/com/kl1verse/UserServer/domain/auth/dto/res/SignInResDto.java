@@ -15,4 +15,5 @@ public class SignInResDto {
     private String nickname;
     private String profile;
     private String domain;
+    private Integer userId;
 }

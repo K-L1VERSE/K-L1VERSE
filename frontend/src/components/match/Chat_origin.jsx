@@ -11,7 +11,7 @@ function Chat() {
   const [stompClient, setStompClient] = useState(null);
 
   useEffect(() => {
-    const socket = new SockJS("http://localhost:8040/ws/chat");
+    const socket = new SockJS("http://localhost:3000/ws/chat");
     const stomp = Stomp.over(socket);
 
     // This effect runs only once when the component mounts
@@ -32,18 +32,19 @@ function Chat() {
     };
   }, [roomId]); // Empty dependency array ensures this effect runs only once on mount
 
-  const sendMessage = () => {
-    const data = {
-      type: "TALK",
-      roomId: roomId,
-      sender: sender,
-      message: message,
-      date: moment().format(),
-    };
+  setMessages((messages) => [
+    ...messages,
+    {
+      type: data.type,
+      sender: data.sender,
+      message: data.message,
+      isUser: data.isUser,
+    },
+  ]);
 
-    stompClient.send("/app/chat/message", JSON.stringify(data), []);
-    setMessage("");
-  };
+  stompClient.send("/app/chat/message", JSON.stringify(data), []);
+  setMessage("");
+};
 
   const recvMessage = (recv) => {
     setMessages((messages) => [

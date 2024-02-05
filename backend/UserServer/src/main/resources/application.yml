@@ -1,10 +1,5 @@
 server:
   port: 8010
-#  ssl:
-#    enabled: true
-#    key-store: classpath:/keystore.p12
-#    key-store-type: PKCS12
-#    key-store-password: 1234
 
 spring:
   profiles:
@@ -12,18 +7,6 @@ spring:
   jpa:
     hibernate:
       ddl-auto: update
-
-  # kafka 설정
-  kafka:
-    consumer:
-      bootstrap-servers: localhost:9092
-      group-id: user-group # 여기만 다름
-      key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
-      value-deserializer: org.apache.kafka.common.serialization.StringDeserializer
-    producer:
-      bootstrap-servers: localhost:9092
-      key-serializer: org.apache.kafka.common.serialization.StringSerializer
-      value-serializer: org.apache.kafka.common.serialization.StringSerializer
 
   # redis 설정
   data:
@@ -36,14 +19,12 @@ oauth:
   google:
     client-id: 651679120216-gedguefmg8lgjhi8vul42c48r9305mol.apps.googleusercontent.com
     client-secret: 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
-    redirect-uri: http://localhost:3000/GoogleAuth
     token-uri: https://oauth2.googleapis.com/token
     resource-uri: https://www.googleapis.com/oauth2/v2/userinfo
     login-uri: https://accounts.google.com/o/oauth2/auth?client_id=651679120216-aedflji7ia436usf2vv2342hjkqnpmi8.apps.googleusercontent.com&redirect_uri=http://localhost:8080/login/oauth/code/google&response_type=code&scope=https://www.googleapis.com/auth/userinfo.email https://www.googleapis.com/auth/userinfo.profile&access_type=offline
   naver:
     client-id: eXJ_cTAVvlCn3lXE5sY6
     client-secret: YG20ejWAar
-    redirect-uri: https://i10a409.p.ssafy.io/NaverAuth/
     token-uri: https://nid.naver.com/oauth2.0/token
     resource-uri: https://openapi.naver.com/v1/nid/me
     state: 1234asdf
@@ -51,7 +32,6 @@ oauth:
   kakao:
     client-id: 4762e8102a9a8a8096d725c00ae8205d
     client-secret:
-    redirect-uri: https://i10a409.p.ssafy.io/KakaoAuth/
     token-uri: https://kauth.kakao.com/oauth/token
     resource-uri: https://kapi.kakao.com/v2/user/me
     login-uri:
