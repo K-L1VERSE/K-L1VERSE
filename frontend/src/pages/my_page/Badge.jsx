@@ -12,8 +12,8 @@ import BadgeList from "./BadgeList";
 
 function Badge() {
   const badgeCodeList = [
-    "01",
-    "02",
+    "1",
+    "2",
     "3",
     "4",
     "5",
