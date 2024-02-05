@@ -28,6 +28,7 @@
     "recoil-persist": "^5.1.0",
     "sockjs-client": "^1.6.1",
     "styled-components": "^6.1.8",
+    "sweetalert2": "^11.10.5",
     "web-vitals": "^2.1.4",
     "webstomp-client": "^1.2.6"
   },
