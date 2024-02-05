@@ -1,12 +1,13 @@
 import React, { useEffect, useState } from "react";
 import { Category, Title } from "../../styles/main-styles/MainStyle";
 import {
+  TeamPageWrap,
   TeamItem,
   TeamName,
   TeamWrap,
 } from "../../styles/teamStyles/TeamStyle";
 import TeamInfoItem from "../../components/team/TeamInfoItem";
-import { getTeamInfo } from "../../api/team";
+// import { getTeamInfo } from "../../api/team";
 
 function TeamInfoPage() {
   const teamInfo = {
@@ -173,28 +174,31 @@ function TeamInfoPage() {
     },
   ];
 
-  const [id, setId] = useState(1);
+  const [selectedId, setSelectedId] = useState(1);
+  // const [teamInfo, setTeamInfo] = useState();
+  // const [memberInfo, setMemberInfo] = useState();
+
   useEffect(() => {
     // getTeamInfo(
-    //   id,
+    //   selectedId,
     //   () => {},
     //   () => {},
     // );
-  }, [id]);
+  }, [selectedId]);
 
   const clickId = (id) => {
-    setId(id);
+    setSelectedId(id);
   };
 
   return (
-    <div>
+    <TeamPageWrap>
       <Category>
         <Title>⚽️ 팀정보</Title>
       </Category>
       <TeamWrap>
         {teams.map((team) => (
           <TeamItem
-            focus={team.id === id}
+            focus={team.id === selectedId}
             key={team.id}
             onClick={() => clickId(team.id)}
           >
@@ -207,7 +211,7 @@ function TeamInfoPage() {
         ))}
       </TeamWrap>
       <TeamInfoItem teamInfo={teamInfo} />
-    </div>
+    </TeamPageWrap>
   );
 }
 

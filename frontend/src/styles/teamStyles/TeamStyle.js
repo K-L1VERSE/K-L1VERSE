@@ -2,6 +2,10 @@ import styled from "styled-components";
 
 // ******************** TeamInfoPage ********************
 
+export const TeamPageWrap = styled.div`
+  margin-top: 1.5rem;
+`;
+
 export const TeamWrap = styled.div`
   display: flex;
   flex-wrap: wrap;
@@ -109,8 +113,10 @@ export const Member = styled.div`
   color: #222222;
   font-size: 0.8rem;
   margin: 0.5rem 1.4rem 0.5rem 0.3rem;
+  text-align: center;
   img {
     width: 2.7rem;
+    border-radius: 50%;
   }
 `;
 
@@ -121,5 +127,5 @@ export const Backno = styled.div`
 `;
 
 export const MemberName = styled.div`
-  font-size: 0.8rem;
+  font-size: 0.75rem;
 `;
