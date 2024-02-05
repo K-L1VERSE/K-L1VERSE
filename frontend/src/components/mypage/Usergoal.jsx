@@ -67,6 +67,14 @@ function Usergoal({ user }) {
       <Item>
         <ItemContent>
           <ItemTitle>
+            <ItemTitleText>베팅 횟수</ItemTitleText>
+          </ItemTitle>
+          <ItemText>{user.totalBet}</ItemText>
+        </ItemContent>
+      </Item>
+      <Item>
+        <ItemContent>
+          <ItemTitle>
             <ItemTitleText>적중률</ItemTitleText>
           </ItemTitle>
           <ItemText>{user.accurate}%</ItemText>

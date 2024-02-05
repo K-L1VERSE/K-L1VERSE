@@ -46,7 +46,7 @@ function MyPage() {
 
   useEffect(() => {
     getUserInfo();
-  }, []);
+  }, [user]);
 
   const [page, setPage] = useState(1);
   const [category, setCategory] = useState();
@@ -68,7 +68,7 @@ function MyPage() {
 
   return (
     <div>
-      <UserProfile user={user} />
+      <UserProfile user={user} setUser={setUser} />
       <Usergoal user={user} />
       <div>
         <RadioGroup>

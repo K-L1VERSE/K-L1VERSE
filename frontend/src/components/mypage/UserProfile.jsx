@@ -1,5 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Navigate, useNavigate } from "react-router-dom";
+import { useSetRecoilState } from "recoil";
+import { UserState } from "../../global/UserState";
 
 import styled from "styled-components";
 import BadgeButton from "./BadgeButton";
@@ -113,16 +115,18 @@ const UserNickName = styled.div`
   line-height: normal;
 `;
 
-function UserInfo({ user }) {
+function UserInfo({ user, setUser }) {
   /* 유저 닉네임 변경 버튼 이벤트 */
   const editUserInfo = () => {
     console.log("editUserInfo");
   };
 
-  /* 유저 정보 바뀔 때마다 호출될 훅 */
-  useEffect(() => {
-    console.log("user정보 수정");
-  }, [user]);
+  // /* 유저 정보 바뀔 때마다 호출될 훅 */
+  // useEffect(() => {
+  //   console.log("user정보 수정");
+  // }, [user]);
+
+  const setUserState = useSetRecoilState(UserState);
 
   const [selectedImage, setSelectedImage] = useState(null);
 
@@ -139,19 +143,24 @@ function UserInfo({ user }) {
       const formData = new FormData();
       formData.append("file", file);
 
-      axios.post("/user/file/upload", formData)
-      .then((res) => {
-        axios.post("/user/users/profile", { profile: res.data.url })
+      axios
+        .post("/user/file/upload", formData)
         .then((res) => {
-          reader.readAsDataURL(file);
+          const url = res.data.url;
+          axios
+            .post("/user/users/profile", { profile: res.data.url })
+            .then((res) => {
+              reader.readAsDataURL(file);
+              setUserState((prev) => ({ ...prev, profile: url }));
+              setUser((prev) => ({ ...prev, profile: url }));
+            })
+            .catch((err) => {
+              console.log(err);
+            });
         })
         .catch((err) => {
           console.log(err);
-        })
-      })
-      .catch((err) => {
-        console.log(err);
-      });
+        });
     }
   };
 
@@ -159,7 +168,7 @@ function UserInfo({ user }) {
   useEffect(() => {
     console.log("프로필 이미지 수정");
   }, [selectedImage]);
-  
+
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   const handleModalOpen = () => {
@@ -185,14 +194,14 @@ function UserInfo({ user }) {
         </ProfileTitleHeader>
         <UserInfoContainer>
           <UserInfoContent>
-          <label htmlFor="profileImageInput">
-            <UserProfile src={selectedImage || user.profile}/>
-          </label>
-          <UserProfileInput
-            type="file"
-            id="profileImageInput"
-            accept="image/*"
-            onChange={handleImageChange}
+            <label htmlFor="profileImageInput">
+              <UserProfile src={selectedImage || user.profile} />
+            </label>
+            <UserProfileInput
+              type="file"
+              id="profileImageInput"
+              accept="image/*"
+              onChange={handleImageChange}
             />
             <BadgeButton />
             <UserNickName>김민재굉장하다{user.nickname}</UserNickName>
@@ -206,6 +215,8 @@ function UserInfo({ user }) {
       {isModalOpen && (
         <EditNicknameModal
           setModalOpen={setIsModalOpen}
+          user={user}
+          setUser={setUser}
         />
       )}
     </div>

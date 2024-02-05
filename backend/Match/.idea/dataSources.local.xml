@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
-  <component name="dataSourceStorageLocal" created-in="IU-233.13135.103">
+  <component name="dataSourceStorageLocal" created-in="IU-233.14015.106">
     <data-source name="@stg-yswa-kr-practice-db-master.mariadb.database.azure.com" uuid="d4de4990-c842-4b9f-8e18-98e63de79246">
       <database-info product="MySQL" version="5.6.47.0" jdbc-version="4.2" driver-name="MariaDB Connector/J" driver-version="3.0.7" dbms="MARIADB" exact-version="10.3.23" exact-driver-version="3.0">
         <extra-name-characters>#@</extra-name-characters>
