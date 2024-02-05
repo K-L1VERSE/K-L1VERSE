@@ -1,21 +1,30 @@
 import React, { useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
+import { useRecoilState } from "recoil";
 import axios from "../../../api/axios";
 import BoardTopNavBar from "../../../components/board/BoardTopNavBar";
 import CommentList from "../../../components/board/CommentList";
-import { Container } from "../../../styles/BoardStyles/BoardDetailStyle";
+import {
+  Button,
+  Container,
+  Content,
+  User,
+  WaggleDetailBox,
+} from "../../../styles/BoardStyles/BoardDetailStyle";
+import { UserState } from "../../../global/UserState";
+import { deleteMate } from "../../../api/mate";
+import { Title } from "../../../styles/BoardStyles/BoardTopNavbarStyle";
 
 function MateDetailPage() {
   const [mateDetail, setMateDetail] = useState({});
-  const [, setMateId] = useState(0);
   const { boardId } = useParams();
   const navigate = useNavigate();
+  const { nickname } = useRecoilState(UserState)[0];
 
   /* mate 상세 정보 가져오기 */
   function getMateDetail() {
     axios.get(`/board/mates/${boardId}`).then(({ data }) => {
       setMateDetail(data.board);
-      setMateId(data.mateId);
     });
   }
 
@@ -23,50 +32,41 @@ function MateDetailPage() {
     getMateDetail();
   }, [boardId]);
 
-  function handleUpdateBtn() {
-    navigate("/mateRegist", { state: { boardId: mateDetail.boardId } });
-  }
-
-  const handleDeleteBtn = async () => {
-    try {
-      await axios.delete(`/board/mates/${boardId}`);
-      navigate("/mate");
-    } catch (error) {
-      // console.error("글 삭제 중 에러 발생:", error);
-    }
+  const handleUpdateBtn = () => {
+    navigate("/mateRegist", { state: { board: mateDetail } });
   };
 
-  const handleKeyDown = (event, clickHandler) => {
-    if (event.key === "Enter") {
-      clickHandler();
-    }
+  const handleDeleteBtn = () => {
+    deleteMate(
+      boardId,
+      () => {
+        navigate("/mate");
+      },
+      () => {},
+    );
   };
+
+  // const handleKeyDown = (event, clickHandler) => {
+  //   if (event.key === "Enter") {
+  //     clickHandler();
+  //   }
+  // };
 
   return (
     <Container>
       <BoardTopNavBar />
-      <h1>Mate 상세 정보</h1>
-      <div className="mate-detail-box">
-        <p>
-          <strong>{mateDetail.title}</strong>
-        </p>
-        <p>{mateDetail.content}</p>
-      </div>
-      <button
-        type="button"
-        onClick={handleUpdateBtn}
-        onKeyDown={(e) => handleKeyDown(e, handleUpdateBtn)}
-      >
-        수정하기
-      </button>
-      <button
-        type="button"
-        onClick={handleDeleteBtn}
-        onKeyDown={(e) => handleKeyDown(e, handleDeleteBtn)}
-      >
-        삭제하기
-      </button>
+      <WaggleDetailBox>
+        <User>{nickname}</User>
+        <Title>{mateDetail.title}</Title>
+        <Content>{mateDetail.content}</Content>
+      </WaggleDetailBox>
 
+      <Button type="button" onClick={handleUpdateBtn}>
+        수정
+      </Button>
+      <Button type="button" onClick={handleDeleteBtn}>
+        삭제
+      </Button>
       <CommentList boardId={boardId} />
     </Container>
   );

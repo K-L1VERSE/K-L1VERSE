@@ -10,31 +10,32 @@ import { RegistCardContainer } from "../../../styles/BoardStyles/BoardCreateStyl
 
 function MateRegistPage() {
   const navigate = useNavigate();
+  const [boardId, setBoardId] = useState(null);
   const [title, setTitle] = useState("");
   const [content, setContent] = useState("");
-  const [isUpdateMode] = useState(false);
+  const [isUpdateMode, setIsUpdateMode] = useState(false);
   const { userId } = useRecoilState(UserState)[0];
 
   const location = useLocation();
   useEffect(() => {
     if (location.state && location.state.board) {
+      setBoardId(location.state.board.boardId);
       setTitle(location.state.board.title);
       setContent(location.state.board.content);
+      setIsUpdateMode(true);
     }
   }, [location]);
-
-  const boardId = location.state ? location.state.boardId : null;
 
   const handleSubmit = () => {
     if (isUpdateMode) {
       updateMate(
+        boardId,
         {
           board: {
             title,
             content,
           },
         },
-        boardId,
         () => {
           navigate(`/mate/${boardId}`);
         },
@@ -53,9 +54,7 @@ function MateRegistPage() {
         ({ data }) => {
           navigate(`/mate/${data.board.boardId}`);
         },
-        () => {
-          console.error("Mate 게시물 작성 중 에러 발생");
-        },
+        () => {},
       );
     }
   };

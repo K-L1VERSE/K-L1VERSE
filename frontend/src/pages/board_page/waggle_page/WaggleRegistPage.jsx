@@ -10,20 +10,22 @@ import { RegistCardContainer } from "../../../styles/BoardStyles/BoardCreateStyl
 
 function WaggleRegistPage() {
   const navigate = useNavigate();
+  const [boardId, setBoardId] = useState(null);
   const [title, setTitle] = useState("");
   const [content, setContent] = useState("");
-  const [isUpdateMode] = useState(false);
+  const [isUpdateMode, setIsUpdateMode] = useState(false);
   const { userId } = useRecoilState(UserState)[0];
 
   const location = useLocation();
+
   useEffect(() => {
     if (location.state && location.state.board) {
+      setBoardId(location.state.board.boardId);
       setTitle(location.state.board.title);
       setContent(location.state.board.content);
+      setIsUpdateMode(true);
     }
   }, [location]);
-
-  const boardId = location.state ? location.state.boardId : null;
 
   const handleSubmit = () => {
     if (isUpdateMode) {

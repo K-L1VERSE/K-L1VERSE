@@ -2,12 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { useRecoilState } from "recoil";
 import axios from "../../../api/axios";
-import {
-  deleteWaggle,
-  likeWaggle,
-  unlikeWaggle,
-  updateWaggle,
-} from "../../../api/waggle";
+import { deleteWaggle, likeWaggle, unlikeWaggle } from "../../../api/waggle";
 import BoardTopNavBar from "../../../components/board/BoardTopNavBar";
 import CommentList from "../../../components/board/CommentList";
 import {
@@ -18,7 +13,7 @@ import {
   Content,
   Button,
   LikeButton,
-  // LikeCount,
+  LikeCount,
 } from "../../../styles/BoardStyles/BoardDetailStyle";
 import { UserState } from "../../../global/UserState";
 
@@ -48,13 +43,21 @@ function WaggleDetailPage() {
   }, [boardId]);
 
   const handleUpdateBtn = () => {
-    updateWaggle(boardId, waggleDetail, () => {
-      navigate(`/waggle/${boardId}`);
+    navigate(`/waggleRegist`, {
+      state: {
+        board: waggleDetail,
+      },
     });
   };
 
   const handleDeleteBtn = () => {
-    deleteWaggle(boardId);
+    deleteWaggle(
+      boardId,
+      () => {
+        navigate("/waggle");
+      },
+      () => {},
+    );
   };
 
   const handleLikeClick = () => {
@@ -97,7 +100,7 @@ function WaggleDetailPage() {
               style={{ width: "24px", height: "24px" }}
             />
           </LikeButton>
-          {/* <LikeCount>좋아요 {likeCount}개</LikeCount> */}
+          <LikeCount>좋아요 {likeCount}개</LikeCount>
         </div>
       </WaggleDetailBox>
 

@@ -8,8 +8,7 @@ import { UserState } from "../../global/UserState";
 import CommentForm from "./CommentForm";
 
 function CommentList({ boardId }) {
-  const [commentList, setCommentList] = useState([]);
-  const [commentDetail, setCommentDetail] = useState({});
+  const [comment, setComment] = useState([]);
   const [commentId, setCommentId] = useState(null);
   const [isLiked, setIsLiked] = useState(false);
   const [likeCount, setLikeCount] = useState(0);
@@ -18,12 +17,9 @@ function CommentList({ boardId }) {
   function getComments() {
     getCommentList(
       boardId,
+      userId,
       ({ data }) => {
-        setCommentList([...commentList, ...data.content]);
-        setCommentDetail(data.board);
-        setCommentId(data.commentId);
-        setIsLiked(data.isLiked);
-        setLikeCount(data.likeCount);
+        setComment(data);
       },
       () => {},
     );
@@ -59,7 +55,7 @@ function CommentList({ boardId }) {
     <ListContainer>
       <h2>댓글 목록</h2>
       <CommentContainer
-        commentList={commentList}
+        commentList={comment}
         formatRelativeTime={formatRelativeTime}
         handleLikeClick={handleLikeClick}
       />

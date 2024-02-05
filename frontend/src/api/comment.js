@@ -3,8 +3,8 @@ import axios from "./axios";
 const gateway = "board";
 const url = "comments";
 
-export function getCommentList(boardId, success, fail) {
-  axios.get(`/${gateway}/${url}/list/${boardId}`).then(success).catch(fail);
+export function getCommentList(boardId, board, success, fail) {
+  axios.post(`/${gateway}/${url}/list/${boardId}`).then(success).catch(fail);
 }
 
 export function createComment(boardId, comment, success, fail) {

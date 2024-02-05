@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
+import { useRecoilState } from "recoil";
 import axios from "../../../api/axios";
 import BoardTopNavBar from "../../../components/board/BoardTopNavBar";
 import CommentList from "../../../components/board/CommentList";
@@ -16,47 +17,51 @@ import {
   DealStatusGreen,
   DealStatusOrange,
 } from "../../../styles/BoardStyles/ProductListStyle";
+import { UserState } from "../../../global/UserState";
+import { deleteProduct } from "../../../api/product";
 
 function ProductDetailPage() {
   const [productDetail, setProductDetail] = useState({});
+  const [productId, setProductId] = useState(0);
   const [price, setPrice] = useState(0);
   const [dealFlag, setDealFlag] = useState(false);
   const { boardId } = useParams();
   const navigate = useNavigate();
+  const { userId, nickname } = useRecoilState(UserState)[0];
 
   /* product 상세 정보 가져오기 */
+  function getProductDetail() {
+    axios.get(`/board/products/${boardId}`).then(({ data }) => {
+      setProductId(data.productId);
+      setProductDetail(data.board);
+      setPrice(data.price);
+      setDealFlag(data.dealFlag);
+    });
+  }
+
   useEffect(() => {
-    async function getProductDetail() {
-      try {
-        const { data } = await axios.get(`/board/products/${boardId}`);
-        setProductDetail(data.board);
-        setPrice(data.price);
-        setDealFlag(data.dealFlag);
-      } catch (error) {
-        // Handle error
-      }
-    }
     getProductDetail();
   }, [boardId]);
 
   const handleUpdateBtn = () => {
-    navigate("/productRegist", { state: { boardId: productDetail.boardId } });
+    navigate("/productRegist", { state: { board: productDetail } });
   };
 
   const handleDeleteBtn = async () => {
-    try {
-      await axios.delete(`/board/products/${boardId}`);
-      navigate("/product");
-    } catch (error) {
-      // Handle error
-    }
+    deleteProduct(
+      boardId,
+      () => {
+        navigate("/product");
+      },
+      () => {},
+    );
   };
 
-  const handleKeyDown = (event, clickHandler) => {
-    if (event.key === "Enter") {
-      clickHandler();
-    }
-  };
+  // const handleKeyDown = (event, clickHandler) => {
+  //   if (event.key === "Enter") {
+  //     clickHandler();
+  //   }
+  // };
 
   return (
     <Container>
@@ -82,18 +87,8 @@ function ProductDetailPage() {
         <Content>{productDetail.content}</Content>
         <p>Price: {price}</p>
       </WaggleDetailBox>
-      <UpdateButton
-        onClick={handleUpdateBtn}
-        onKeyDown={(e) => handleKeyDown(e, handleUpdateBtn)}
-      >
-        수정하기
-      </UpdateButton>
-      <DeleteButton
-        onClick={handleDeleteBtn}
-        onKeyDown={(e) => handleKeyDown(e, handleDeleteBtn)}
-      >
-        삭제하기
-      </DeleteButton>
+      <UpdateButton onClick={handleUpdateBtn}>수정하기</UpdateButton>
+      <DeleteButton onClick={handleDeleteBtn}>삭제하기</DeleteButton>
       <CommentList boardId={boardId} />
     </Container>
   );
