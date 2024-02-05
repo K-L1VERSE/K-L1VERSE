@@ -16,7 +16,11 @@ import com.KL1verse.kafka.dto.req.BoardCleanbotCheckReqDto;
 import com.KL1verse.kafka.producer.KafkaBoardCleanbotProducer;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -64,11 +68,12 @@ public class WaggleServiceImpl implements WaggleService {
 
         return waggleDTO;
     }
-
-
     @Override
     public WaggleDTO createWaggle(WaggleDTO waggleDto) {
         Waggle waggle = convertToEntity(waggleDto);
+        Set<String> hashtags = extractHashtags(waggleDto.getBoard().getContent());
+        waggle.setHashtags(hashtags);
+
         Board board = saveBoard(waggle.getBoard());
 
         File file = fileService.saveFile(waggleDto.getBoard().getBoardImage());
@@ -86,7 +91,6 @@ public class WaggleServiceImpl implements WaggleService {
         return convertToDTO(createdWaggle);
     }
 
-
     @Transactional
     @Override
     public WaggleDTO updateWaggle(Long boardId, WaggleDTO waggleDto) {
@@ -95,6 +99,9 @@ public class WaggleServiceImpl implements WaggleService {
 
         Board board = existingWaggle.getBoard();
 //        board.setBoardImage(waggleDto.getBoard().getBoardImage());
+
+        Set<String> hashtags = extractHashtags(waggleDto.getBoard().getContent());
+        existingWaggle.setHashtags(hashtags);
 
         Waggle updatedWaggle = waggleRepository.save(existingWaggle);
         File file = fileService.saveFile(waggleDto.getBoard().getBoardImage());
@@ -110,6 +117,49 @@ public class WaggleServiceImpl implements WaggleService {
 
         return convertToDTO(updatedWaggle);
     }
+
+    // extractHashtags 메서드 추가
+    private Set<String> extractHashtags(String content) {
+        Set<String> hashtags = new HashSet<>();
+        Pattern pattern = Pattern.compile("#(\\w+)");
+        Matcher matcher = pattern.matcher(content);
+
+        while (matcher.find()) {
+            hashtags.add(matcher.group(1));
+        }
+
+        return hashtags;
+    }
+
+//    @Override
+//    public WaggleDTO createWaggle(WaggleDTO waggleDto) {
+//        Waggle waggle = convertToEntity(waggleDto);
+//        Board board = saveBoard(waggle.getBoard());
+//
+//        File file = fileService.saveFile(waggleDto.getBoard().getBoardImage());
+//        boardImageService.saveBoardImage(board, file);
+//
+//        Waggle createdWaggle = waggleRepository.save(waggle);
+//
+//        return convertToDTO(createdWaggle);
+//    }
+//
+//
+//    @Transactional
+//    @Override
+//    public WaggleDTO updateWaggle(Long boardId, WaggleDTO waggleDto) {
+//        Waggle existingWaggle = findWaggleByBoardId(boardId);
+//        updateExistingWaggle(existingWaggle, waggleDto);
+//
+//        Board board = existingWaggle.getBoard();
+//        board.setBoardImage(waggleDto.getBoard().getBoardImage());
+//
+//        Waggle updatedWaggle = waggleRepository.save(existingWaggle);
+//        File file = fileService.saveFile(waggleDto.getBoard().getBoardImage());
+//        boardImageService.saveBoardImage(board, file);
+//
+//        return convertToDTO(updatedWaggle);
+//    }
 
     @Override
     public void deleteWaggle(Long boardId) {
@@ -273,6 +323,7 @@ public class WaggleServiceImpl implements WaggleService {
 //            .boardImage(waggle.getBoard().getBoardImage())
             .boardType(waggle.getBoard().getBoardType())
             .build());
+        waggleDTO.setHashtags(new ArrayList<>(waggle.getHashtags()));
         return waggleDTO;
     }
 
