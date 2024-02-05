@@ -26,6 +26,6 @@ public interface WaggleService {
 
     List<WaggleDTO> getMostRecentWaggles(int count);
 
-
+    void blockedByCleanbotCheck(Long boardId);
 }
 
