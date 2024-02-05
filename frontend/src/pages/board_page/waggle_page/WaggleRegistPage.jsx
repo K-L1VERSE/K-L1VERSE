@@ -13,7 +13,7 @@ function WaggleRegistPage() {
   const [boardId, setBoardId] = useState(null);
   const [title, setTitle] = useState("");
   const [content, setContent] = useState("");
-  const [image, setImage] = useState(null);
+  const [boardImage, setBoardImage] = useState(null);
   const [isUpdateMode, setIsUpdateMode] = useState(false);
   const { userId, nickname } = useRecoilState(UserState)[0];
 
@@ -24,24 +24,22 @@ function WaggleRegistPage() {
       setBoardId(location.state.board.boardId);
       setTitle(location.state.board.title);
       setContent(location.state.board.content);
+      setBoardImage(location.state.board.boardImage);
       setIsUpdateMode(true);
     }
   }, [location]);
 
   const handleSubmit = () => {
-    const formData = new FormData();
-    formData.append("title", title);
-    formData.append("content", content);
-    formData.append("userId", userId);
-    formData.append("nickname", nickname);
-    if (image) {
-      formData.append("image", image);
-    }
-
     if (isUpdateMode) {
       updateWaggle(
         boardId,
-        { board: formData },
+        {
+          board: {
+            title,
+            content,
+            boardImage,
+          },
+        },
         () => {
           navigate(`/waggle/${boardId}`);
         },
@@ -49,7 +47,16 @@ function WaggleRegistPage() {
       );
     } else {
       createWaggle(
-        { board: formData },
+        {
+          board: {
+            boardType: "WAGGLE",
+            title,
+            content,
+            userId,
+            // nickname,
+            boardImage,
+          },
+        },
         ({ data }) => {
           navigate(`/waggle/${data.board.boardId}`);
         },
@@ -61,13 +68,13 @@ function WaggleRegistPage() {
   return (
     <RegistCardContainer>
       <BoardTopNavBar />
-      <h1>{isUpdateMode ? "Waggle 수정중.." : "Waggle 작성중.."}</h1>
+      <h1>{isUpdateMode ? "Waggle 수정" : "Waggle 글쓰기"}</h1>
       <RegistCard
         title={title}
         content={content}
         onTitleChange={(e) => setTitle(e.target.value)}
         onContentChange={(e) => setContent(e.target.value)}
-        onImageChange={(e) => setImage(e.target.files[0])}
+        onImageChange={(e) => setBoardImage(e.target.files[0])}
         onSubmit={handleSubmit}
         buttonText={isUpdateMode ? "수정하기" : "작성하기"}
       />

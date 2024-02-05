@@ -11,7 +11,7 @@ export const WaggleDetailBox = styled.div`
   border: 1px solid #ccc;
   padding: 20px;
   margin-bottom: 20px;
-  border-radius: 8px; /* Added border-radius for a rounded look */
+  border-radius: 8px;
 `;
 
 export const User = styled.div`

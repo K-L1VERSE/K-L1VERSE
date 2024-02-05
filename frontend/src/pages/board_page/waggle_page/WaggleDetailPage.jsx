@@ -92,14 +92,14 @@ function WaggleDetailPage() {
         <Title>{waggleDetail.title}</Title>
         <Content>{waggleDetail.content}</Content>
 
-        {/* {waggleDetail.imagePath && (
+        {waggleDetail.boardImage && (
           <img
-            src={waggleDetail.imagePath}
+            src={waggleDetail.boardImage}
             alt="Waggle Image"
             style={{ maxWidth: "100%", maxHeight: "400px", margin: "20px 0" }}
           />
-        )} */}
-        {/* 좋아요 버튼 및 개수 표시 */}
+        )}
+
         <div>
           <LikeButton onClick={handleLikeClick}>
             <img

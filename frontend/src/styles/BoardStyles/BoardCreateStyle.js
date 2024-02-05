@@ -31,6 +31,38 @@ export const TextArea = styled.textarea`
   border: 1px solid #ccc;
   border-radius: 4px;
   font-size: 16px;
+  resize: none;
+`;
+
+export const FileInputContainer = styled.label`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  margin-bottom: 10px;
+  cursor: pointer;
+`;
+
+export const FileInput = styled.input`
+  display: none;
+`;
+
+export const FileInputLabel = styled.span`
+  width: 72px;
+  height: 72px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  background: #ffffff;
+  border: 1px solid #ebebeb;
+  border-radius: 4px;
+  cursor: pointer;
+
+  img {
+    width: 24px;
+    height: 24px;
+  }
 `;
 
 export const SubmitButton = styled.button`

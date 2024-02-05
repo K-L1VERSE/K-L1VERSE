@@ -15,8 +15,9 @@ function ProductRegistPage() {
   const [content, setContent] = useState("");
   const [price, setPrice] = useState(0);
   const [dealFlag, setDealFlag] = useState(false);
+  const [boardImage, setBoardImage] = useState(null);
   const [isUpdateMode, setIsUpdateMode] = useState(false);
-  const { userId } = useRecoilState(UserState)[0];
+  const { userId, nickname } = useRecoilState(UserState)[0];
 
   const location = useLocation();
   useEffect(() => {
@@ -26,6 +27,7 @@ function ProductRegistPage() {
       setContent(location.state.board.content);
       setPrice(location.state.board.price);
       setDealFlag(location.state.board.dealFlag);
+      setBoardImage(location.state.board.boardImage);
       setIsUpdateMode(true);
     }
   }, [location]);
@@ -38,6 +40,7 @@ function ProductRegistPage() {
           board: {
             title,
             content,
+            boardImage,
           },
           price,
           dealFlag,
@@ -55,6 +58,8 @@ function ProductRegistPage() {
             title,
             content,
             userId,
+            // nickname,
+            boardImage,
           },
           price,
           dealFlag,
@@ -79,6 +84,7 @@ function ProductRegistPage() {
         onTitleChange={(e) => setTitle(e.target.value)}
         onContentChange={(e) => setContent(e.target.value)}
         onPriceChange={(e) => setPrice(e.target.value)}
+        onImageChange={(e) => setBoardImage(e.target.files[0])}
         onSubmit={handleSubmit}
         buttonText={isUpdateMode ? "수정하기" : "작성하기"}
       />
