@@ -1,9 +1,9 @@
-import React from "react";
+import React, { useEffect } from "react";
 import styled from "styled-components";
 
 const UsergoalContainer = styled.div`
   display: inline-flex;
-  width: 390px;
+  width: 358px;
   padding: 0px 16px;
   align-items: flex-start;
   gap: 12px;
@@ -54,6 +54,10 @@ const ItemText = styled.div`
 `;
 
 function Usergoal({ user }) {
+  useEffect(() => {
+    console.log("user 정보 수정");
+  }, [user]);
+
   return (
     <UsergoalContainer>
       <Item>

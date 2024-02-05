@@ -121,10 +121,10 @@ function UserInfo({ user, setUser }) {
     console.log("editUserInfo");
   };
 
-  // /* 유저 정보 바뀔 때마다 호출될 훅 */
-  // useEffect(() => {
-  //   console.log("user정보 수정");
-  // }, [user]);
+  /* 유저 정보 바뀔 때마다 호출될 훅 */
+  useEffect(() => {
+    console.log("user정보 수정");
+  }, [user]);
 
   const setUserState = useSetRecoilState(UserState);
 
@@ -152,7 +152,11 @@ function UserInfo({ user, setUser }) {
             .then((res) => {
               reader.readAsDataURL(file);
               setUserState((prev) => ({ ...prev, profile: url }));
-              setUser((prev) => ({ ...prev, profile: url }));
+              setUser(() => {
+                const temp = { ...user };
+                temp.profile = url;
+                return temp;
+              });
             })
             .catch((err) => {
               console.log(err);
@@ -180,7 +184,14 @@ function UserInfo({ user, setUser }) {
   };
 
   return (
-    <div>
+    <div
+      style={{
+        display: "flex",
+        flexDirection: "column",
+        alignItems: "center",
+        gap: "20px",
+      }}
+    >
       <ProfileTitleContainer>
         <ProfileTitleHeader>
           <ProfileTitleContent>
@@ -204,10 +215,8 @@ function UserInfo({ user, setUser }) {
               onChange={handleImageChange}
             />
             <BadgeButton />
-            <UserNickName>김민재굉장하다{user.nickname}</UserNickName>
+            <UserNickName>{user.nickname}</UserNickName>
           </UserInfoContent>
-
-          <LogoutButton />
         </UserInfoContainer>
       </ProfileTitleContainer>
 
