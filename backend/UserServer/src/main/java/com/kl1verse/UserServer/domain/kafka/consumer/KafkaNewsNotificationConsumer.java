@@ -40,7 +40,7 @@ public class KafkaNewsNotificationConsumer {
             String badgeDetailId = newsNotificationListReqDto.getBadgeDetailId();
             log.info(badgeDetailId);
 
-            List<User> userList = userRepository.findByTeamCode(badgeDetailId);
+            List<User> userList = userRepository.findByBadgeDetailId(badgeDetailId);
 
             List<MessageReqDto> messageReqDtoList = new ArrayList<>();
             for(User user : userList) {
