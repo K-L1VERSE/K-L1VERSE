@@ -1,6 +1,8 @@
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
+import Swal from "sweetalert2";
 import axios from "../../api/axios";
+
 import {
   TitleContainer,
   TitleText,
@@ -82,49 +84,88 @@ function Badge() {
   };
 
   const wearBadge = (index) => {
-    const confirmWear = window.confirm("뱃지를 착용하시겠습니까?");
-
-    if (confirmWear) {
-      /* axios로 뱃지 착용 코드 보내기 */
-      axios
-        .post(`/user/badges/wear`, {
-          code: badgeCodeList[index],
-        })
-        .then(() => {
-          alert("뱃지 착용이 완료되었습니다.");
-          goMypage();
-        })
-        .catch(() => {});
-    }
+    // const confirmWear = window.confirm("뱃지를 착용하시겠습니까?");
+    Swal.fire({
+      title: "뱃지를 착용하시겠습니까?",
+      icon: "question",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "착용",
+      cancelButtonText: "취소",
+    }).then((result) => {
+      if (result.isConfirmed) {
+        axios
+          .post(`/user/badges/wear`, {
+            code: badgeCodeList[index],
+          })
+          .then(() => {
+            Swal.fire("뱃지 착용이 완료되었습니다.");
+            // alert("뱃지 착용이 완료되었습니다.");
+            goMypage();
+          })
+          .catch(() => {
+            Swal.fire({
+              icon: "error",
+              title: "잠시 후 다시 시도해주세요.",
+            });
+            // alert("잠시 후 다시 시도해주세요.");
+          });
+      }
+    });
   };
 
   const handleBuyBadge = (index) => {
-    const confirmPurchase = window.confirm("뱃지를 구매하시겠습니까?");
+    // const confirmPurchase = window.confirm("뱃지를 구매하시겠습니까?");
 
-    if (confirmPurchase) {
-      /* axios로 뱃지 구매 코드 보내기 */
-      axios
-        .post(`/user/badges`, {
-          code: badgeCodeList[index],
-        })
-        .then((res) => {
-          if (res.data.code === 1002) {
-            alert("포인트가 부족합니다.");
-          } else if (res.data.code === 1200) {
-            alert("잘못된 요청입니다.");
-          }
+    Swal.fire({
+      title: "뱃지를 구매하시겠습니까?",
+      icon: "question",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "착용",
+      cancelButtonText: "취소",
+    }).then((result) => {
+      if (result.isConfirmed) {
+        /* axios로 뱃지 구매 코드 보내기 */
+        axios
+          .post(`/user/badges`, {
+            code: badgeCodeList[index],
+          })
+          .then((res) => {
+            // if (res.data.code === 1002) {
+            //   Swal.fire({
+            //     icon: "error",
+            //     title: "포인트가 부족합니다.",
+            //   });
+            //   // alert("포인트가 부족합니다.");
+            // } else if (res.data.code === 1200) {
+            //   Swal.fire({
+            //     icon: "error",
+            //     title: "잘못된 요청입니다.",
+            //   });
+            //   // alert("잘못된 요청입니다.");
+            // }
 
-          alert("뱃지 구매가 완료되었습니다.");
-          setBadgeList(() => {
-            const newBadgeList = [...badgeList];
-            newBadgeList[index] = true;
-            return newBadgeList;
+            Swal.fire("뱃지 구매가 완료되었습니다.");
+            // alert("뱃지 구매가 완료되었습니다.");
+            setBadgeList(() => {
+              const newBadgeList = [...badgeList];
+              newBadgeList[index] = true;
+              return newBadgeList;
+            });
+
+            wearBadge(index);
+          })
+          .catch(() => {
+            Swal.fire({
+              icon: "error",
+              title: "잠시 후 다시 시도해주세요.",
+            });
           });
-
-          wearBadge(index);
-        })
-        .catch(() => {});
-    }
+      }
+    });
   };
 
   return (
