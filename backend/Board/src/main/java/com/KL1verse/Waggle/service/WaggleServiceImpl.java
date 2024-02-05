@@ -12,7 +12,7 @@ import com.KL1verse.Waggle.repository.entity.Waggle;
 import com.KL1verse.s3.repository.entity.File;
 import com.KL1verse.s3.service.BoardImageService;
 import com.KL1verse.s3.service.FileService;
-import com.KL1verse.kafka.dto.res.BoardCleanbotCheckResDto;
+import com.KL1verse.kafka.dto.req.BoardCleanbotCheckReqDto;
 import com.KL1verse.kafka.producer.KafkaBoardCleanbotProducer;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -76,12 +76,12 @@ public class WaggleServiceImpl implements WaggleService {
 
         Waggle createdWaggle = waggleRepository.save(waggle);
 
-        BoardCleanbotCheckResDto boardCleanbotCheckResDto = BoardCleanbotCheckResDto.builder()
+        BoardCleanbotCheckReqDto boardCleanbotCheckReqDto = BoardCleanbotCheckReqDto.builder()
             .id(createdWaggle.getBoard().getBoardId())
             .content(createdWaggle.getBoard().getContent())
             .domain("board")
             .build();
-        kafkaBoardCleanbotProducer.boardCleanbotCheck(boardCleanbotCheckResDto);
+        kafkaBoardCleanbotProducer.boardCleanbotCheck(boardCleanbotCheckReqDto);
 
         return convertToDTO(createdWaggle);
     }
@@ -101,12 +101,12 @@ public class WaggleServiceImpl implements WaggleService {
         boardImageService.saveBoardImage(board, file);
 
 
-        BoardCleanbotCheckResDto boardCleanbotCheckResDto = BoardCleanbotCheckResDto.builder()
+        BoardCleanbotCheckReqDto boardCleanbotCheckReqDto = BoardCleanbotCheckReqDto.builder()
             .id(boardId)
             .content(waggleDto.getBoard().getContent())
             .domain("board")
             .build();
-        kafkaBoardCleanbotProducer.boardCleanbotCheck(boardCleanbotCheckResDto);
+        kafkaBoardCleanbotProducer.boardCleanbotCheck(boardCleanbotCheckReqDto);
 
         return convertToDTO(updatedWaggle);
     }
@@ -303,5 +303,12 @@ public class WaggleServiceImpl implements WaggleService {
         return recentWaggles.stream()
             .map(this::convertToDTO)
             .collect(Collectors.toList());
+    }
+
+    @Override
+    public void blockedByCleanbotCheck(Long boardId) {
+        Waggle waggle = findWaggleByBoardId(boardId);
+        waggle.getBoard().setDeleteAt(LocalDateTime.now());
+        waggleRepository.save(waggle);
     }
 }

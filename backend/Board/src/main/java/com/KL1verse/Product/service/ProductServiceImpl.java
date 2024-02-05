@@ -8,7 +8,7 @@ import com.KL1verse.Comment.repository.CommentRepository;
 import com.KL1verse.Product.dto.req.ProductDTO;
 import com.KL1verse.Product.repository.ProductRepository;
 import com.KL1verse.Product.repository.entity.Product;
-import com.KL1verse.kafka.dto.res.BoardCleanbotCheckResDto;
+import com.KL1verse.kafka.dto.req.BoardCleanbotCheckReqDto;
 import com.KL1verse.kafka.producer.KafkaBoardCleanbotProducer;
 import com.KL1verse.s3.repository.entity.File;
 import com.KL1verse.s3.service.BoardImageService;
@@ -61,12 +61,12 @@ public class ProductServiceImpl implements ProductService {
 
         Product createdProduct = productRepository.save(product);
 
-        BoardCleanbotCheckResDto boardCleanbotCheckResDto = BoardCleanbotCheckResDto.builder()
+        BoardCleanbotCheckReqDto boardCleanbotCheckReqDto = BoardCleanbotCheckReqDto.builder()
             .id(createdProduct.getBoard().getBoardId())
             .content(createdProduct.getBoard().getContent())
             .domain("board")
             .build();
-        kafkaBoardCleanbotProducer.boardCleanbotCheck(boardCleanbotCheckResDto);
+        kafkaBoardCleanbotProducer.boardCleanbotCheck(boardCleanbotCheckReqDto);
 
         return convertToDTO(createdProduct);
     }
@@ -85,12 +85,12 @@ public class ProductServiceImpl implements ProductService {
         boardImageService.saveBoardImage(board, file);
 
 
-        BoardCleanbotCheckResDto boardCleanbotCheckResDto = BoardCleanbotCheckResDto.builder()
+        BoardCleanbotCheckReqDto boardCleanbotCheckReqDto = BoardCleanbotCheckReqDto.builder()
             .id(boardId)
             .content(productDto.getBoard().getContent())
             .domain("board")
             .build();
-        kafkaBoardCleanbotProducer.boardCleanbotCheck(boardCleanbotCheckResDto);
+        kafkaBoardCleanbotProducer.boardCleanbotCheck(boardCleanbotCheckReqDto);
 
         return convertToDTO(updatedProduct);
     }
