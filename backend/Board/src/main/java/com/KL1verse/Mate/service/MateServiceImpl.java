@@ -21,6 +21,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
 public class MateServiceImpl implements MateService {
@@ -54,6 +55,7 @@ public class MateServiceImpl implements MateService {
         return convertToDTO(mate);
     }
 
+    @Transactional
     @Override
     public MateDTO createMate(MateDTO mateDto) {
         Mate mate = convertToEntity(mateDto);
@@ -68,6 +70,7 @@ public class MateServiceImpl implements MateService {
     }
 
 
+    @Transactional
     @Override
     public MateDTO updateMate(Long boardId, MateDTO mateDto) {
         Mate existingMate = findMateByBoardId(boardId);

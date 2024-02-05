@@ -20,6 +20,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
 public class ProductServiceImpl implements ProductService {
@@ -54,7 +55,7 @@ public class ProductServiceImpl implements ProductService {
 
         return convertToDTO(product);
     }
-
+    @Transactional
     @Override
     public ProductDTO createProduct(ProductDTO productDto) {
         Product product = convertToEntity(productDto);
@@ -67,7 +68,7 @@ public class ProductServiceImpl implements ProductService {
         Product createdProduct = productRepository.save(product);
         return convertToDTO(createdProduct);
     }
-
+    @Transactional
     @Override
     public ProductDTO updateProduct(Long boardId, ProductDTO productDto) {
         Product existingProduct = findProductByBoardId(boardId);
