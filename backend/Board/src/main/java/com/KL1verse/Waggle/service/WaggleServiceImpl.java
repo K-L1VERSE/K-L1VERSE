@@ -12,10 +12,13 @@ import com.KL1verse.Waggle.repository.entity.Waggle;
 import com.KL1verse.s3.repository.entity.File;
 import com.KL1verse.s3.service.BoardImageService;
 import com.KL1verse.s3.service.FileService;
+import com.KL1verse.kafka.dto.res.BoardCleanbotCheckResDto;
+import com.KL1verse.kafka.producer.KafkaBoardCleanbotProducer;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.BeanUtils;
 import org.springframework.data.domain.Page;
@@ -28,6 +31,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 @Slf4j
 @Service
+@RequiredArgsConstructor
 public class WaggleServiceImpl implements WaggleService {
 
     private final WaggleRepository waggleRepository;
@@ -38,17 +42,8 @@ public class WaggleServiceImpl implements WaggleService {
     private final BoardImageService boardImageService;
 
     private final CommentRepository commentRepository;
+    private final KafkaBoardCleanbotProducer kafkaBoardCleanbotProducer;
 
-    public WaggleServiceImpl(WaggleRepository waggleRepository, BoardRepository boardRepository,
-        FileService fileService,
-        BoardImageService boardImageService,
-        CommentRepository commentRepository) {
-        this.waggleRepository = waggleRepository;
-        this.boardRepository = boardRepository;
-        this.fileService = fileService;
-        this.boardImageService = boardImageService;
-        this.commentRepository = commentRepository;
-    }
 
     @Override
     public WaggleDTO getWaggleById(Long boardId) {
@@ -81,6 +76,13 @@ public class WaggleServiceImpl implements WaggleService {
 
         Waggle createdWaggle = waggleRepository.save(waggle);
 
+        BoardCleanbotCheckResDto boardCleanbotCheckResDto = BoardCleanbotCheckResDto.builder()
+            .id(createdWaggle.getBoard().getBoardId())
+            .content(createdWaggle.getBoard().getContent())
+            .domain("board")
+            .build();
+        kafkaBoardCleanbotProducer.boardCleanbotCheck(boardCleanbotCheckResDto);
+
         return convertToDTO(createdWaggle);
     }
 
@@ -97,6 +99,14 @@ public class WaggleServiceImpl implements WaggleService {
         Waggle updatedWaggle = waggleRepository.save(existingWaggle);
         File file = fileService.saveFile(waggleDto.getBoard().getBoardImage());
         boardImageService.saveBoardImage(board, file);
+
+
+        BoardCleanbotCheckResDto boardCleanbotCheckResDto = BoardCleanbotCheckResDto.builder()
+            .id(boardId)
+            .content(waggleDto.getBoard().getContent())
+            .domain("board")
+            .build();
+        kafkaBoardCleanbotProducer.boardCleanbotCheck(boardCleanbotCheckResDto);
 
         return convertToDTO(updatedWaggle);
     }
