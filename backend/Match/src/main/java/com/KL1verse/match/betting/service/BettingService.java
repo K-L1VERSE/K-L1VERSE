@@ -7,4 +7,6 @@ public interface BettingService {
 
     void bettingCancel(String bettingId);
 
+    int checkBetting(int matchId, int userId);
+
 }

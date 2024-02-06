@@ -139,19 +139,21 @@ function UserInfo({ user }) {
       const formData = new FormData();
       formData.append("file", file);
 
-      axios.post("/user/file/upload", formData)
-      .then((res) => {
-        axios.post("/user/users/profile", { profile: res.data.url })
+      axios
+        .post("/user/file/upload", formData)
         .then((res) => {
-          reader.readAsDataURL(file);
+          axios
+            .post("/user/users/profile", { profile: res.data.url })
+            .then((res) => {
+              reader.readAsDataURL(file);
+            })
+            .catch((err) => {
+              console.log(err);
+            });
         })
         .catch((err) => {
           console.log(err);
-        })
-      })
-      .catch((err) => {
-        console.log(err);
-      });
+        });
     }
   };
 
@@ -159,7 +161,7 @@ function UserInfo({ user }) {
   useEffect(() => {
     console.log("프로필 이미지 수정");
   }, [selectedImage]);
-  
+
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   const handleModalOpen = () => {
@@ -185,14 +187,14 @@ function UserInfo({ user }) {
         </ProfileTitleHeader>
         <UserInfoContainer>
           <UserInfoContent>
-          <label htmlFor="profileImageInput">
-            <UserProfile src={selectedImage || user.profile}/>
-          </label>
-          <UserProfileInput
-            type="file"
-            id="profileImageInput"
-            accept="image/*"
-            onChange={handleImageChange}
+            <label htmlFor="profileImageInput">
+              <UserProfile src={selectedImage || user.profile} />
+            </label>
+            <UserProfileInput
+              type="file"
+              id="profileImageInput"
+              accept="image/*"
+              onChange={handleImageChange}
             />
             <BadgeButton />
             <UserNickName>김민재굉장하다{user.nickname}</UserNickName>
@@ -203,11 +205,7 @@ function UserInfo({ user }) {
       </ProfileTitleContainer>
 
       {/* EditNickname Modal */}
-      {isModalOpen && (
-        <EditNicknameModal
-          setModalOpen={setIsModalOpen}
-        />
-      )}
+      {isModalOpen && <EditNicknameModal setModalOpen={setIsModalOpen} />}
     </div>
   );
 }
