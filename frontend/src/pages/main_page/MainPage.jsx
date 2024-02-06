@@ -16,6 +16,10 @@ function MainPage() {
     navigate("/waggle");
   }
 
+  const goMatchSchedule = () => {
+    navigate("/matchSchedule");
+  };
+
   return (
     <div>
       <Notice />
@@ -26,7 +30,7 @@ function MainPage() {
       <Board />
       <Category>
         <Title>🏁 오늘의 경기</Title>
-        <AllBtn>전체보기</AllBtn>
+        <AllBtn onClick={goMatchSchedule}>전체보기</AllBtn>
       </Category>
       <TodayMatch />
       <Hotclip />
