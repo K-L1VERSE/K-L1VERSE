@@ -4,6 +4,7 @@ import com.KL1verse.Comment.repository.entity.Comment;
 import java.util.List;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 @Repository
@@ -25,4 +26,8 @@ public interface CommentRepository extends JpaRepository<Comment, Long> {
 
     @Query("SELECT COUNT(c) FROM comment c WHERE c.boardId.boardId = :boardId AND c.deleteAt IS NULL")
     Integer countCommentsByBoardId(Long boardId);
+
+    @Query(value = "SELECT u.nickname FROM user u JOIN comment c ON c.user_id = u.user_id WHERE c.user_id = :userId", nativeQuery = true)
+    List<Object[]> findUserNickname(@Param("userId") Integer userId);
+
 }

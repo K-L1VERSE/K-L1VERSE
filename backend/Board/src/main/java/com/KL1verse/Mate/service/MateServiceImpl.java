@@ -52,7 +52,14 @@ public class MateServiceImpl implements MateService {
         int commentCount = commentRepository.countCommentsByBoardId(boardId);
         mateDTO.getBoard().setCommentCount(commentCount);
 
-        return convertToDTO(mate);
+        Integer userId = mateDTO.getBoard().getUserId();
+        List<Object[]> nicknameResult = mateRepository.findUserNickname(userId);
+
+
+        String userNickname = (String) nicknameResult.get(0)[0];
+        mateDTO.getBoard().setNickname(userNickname);
+
+        return mateDTO;
     }
 
     @Transactional
@@ -65,8 +72,17 @@ public class MateServiceImpl implements MateService {
         File file = fileService.saveFile(mateDto.getBoard().getBoardImage());
         boardImageService.saveBoardImage(board, file);
 
+        Integer userId = mateDto.getBoard().getUserId();
+        List<Object[]> nicknameResult = mateRepository.findUserNickname(userId);
+        String userNickname = nicknameResult.isEmpty() ? null : (String) nicknameResult.get(0)[0];
+
         Mate createdMate = mateRepository.save(mate);
-        return convertToDTO(createdMate);
+
+        MateDTO createdMateDTO = convertToDTO(createdMate);
+        createdMateDTO.getBoard().setNickname(userNickname);
+
+
+        return createdMateDTO;
     }
 
 
@@ -119,6 +135,13 @@ public class MateServiceImpl implements MateService {
                 mateDTO.getBoard().setCommentCount(commentCount != null ? commentCount : 0);
             }
 
+            Integer userId = mateDTO.getBoard().getUserId();
+            List<Object[]> nicknameResult = mateRepository.findUserNickname(userId);
+
+
+            String userNickname = (String) nicknameResult.get(0)[0];
+            mateDTO.getBoard().setNickname(userNickname);
+
             return mateDTO;
         });
     }
@@ -138,6 +161,12 @@ public class MateServiceImpl implements MateService {
 
                 mateDTO.getBoard().setCommentCount(commentCount != null ? commentCount : 0);
             }
+
+            Integer userId = mateDTO.getBoard().getUserId();
+            List<Object[]> nicknameResult = mateRepository.findUserNickname(userId);
+            String userNickname = nicknameResult.isEmpty() ? null : (String) nicknameResult.get(0)[0];
+            mateDTO.getBoard().setNickname(userNickname);
+
 
             return mateDTO;
         });
@@ -207,6 +236,11 @@ public class MateServiceImpl implements MateService {
 
                 mateDTO.getBoard().setCommentCount(commentCount != null ? commentCount : 0);
             }
+
+            Integer userId = mateDTO.getBoard().getUserId();
+            List<Object[]> nicknameResult = mateRepository.findUserNickname(userId);
+            String userNickname = nicknameResult.isEmpty() ? null : (String) nicknameResult.get(0)[0];
+            mateDTO.getBoard().setNickname(userNickname);
 
             return mateDTO;
         });

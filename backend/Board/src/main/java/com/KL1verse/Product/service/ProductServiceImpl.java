@@ -5,6 +5,7 @@ import com.KL1verse.Board.dto.req.SearchBoardConditionDto;
 import com.KL1verse.Board.repository.BoardRepository;
 import com.KL1verse.Board.repository.entity.Board;
 import com.KL1verse.Comment.repository.CommentRepository;
+import com.KL1verse.Mate.dto.req.MateDTO;
 import com.KL1verse.Product.dto.req.ProductDTO;
 import com.KL1verse.Product.repository.ProductRepository;
 import com.KL1verse.Product.repository.entity.Product;
@@ -53,7 +54,14 @@ public class ProductServiceImpl implements ProductService {
         int commentCount = commentRepository.countCommentsByBoardId(boardId);
         productDTO.getBoard().setCommentCount(commentCount);
 
-        return convertToDTO(product);
+        Integer userId = productDTO.getBoard().getUserId();
+        List<Object[]> nicknameResult = productRepository.findUserNickname(userId);
+
+
+        String userNickname = (String) nicknameResult.get(0)[0];
+        productDTO.getBoard().setNickname(userNickname);
+
+        return productDTO;
     }
     @Transactional
     @Override
@@ -65,8 +73,16 @@ public class ProductServiceImpl implements ProductService {
         File file = fileService.saveFile(productDto.getBoard().getBoardImage());
         boardImageService.saveBoardImage(board, file);
 
+        Integer userId = productDto.getBoard().getUserId();
+        List<Object[]> nicknameResult = productRepository.findUserNickname(userId);
+        String userNickname = nicknameResult.isEmpty() ? null : (String) nicknameResult.get(0)[0];
+
         Product createdProduct = productRepository.save(product);
-        return convertToDTO(createdProduct);
+
+        ProductDTO createdProductDTO = convertToDTO(createdProduct);
+        createdProductDTO.getBoard().setNickname(userNickname);
+
+        return createdProductDTO;
     }
     @Transactional
     @Override
@@ -123,6 +139,13 @@ public class ProductServiceImpl implements ProductService {
                 productDTO.getBoard().setCommentCount(commentCount != null ? commentCount : 0);
             }
 
+            Integer userId = productDTO.getBoard().getUserId();
+            List<Object[]> nicknameResult = productRepository.findUserNickname(userId);
+
+
+            String userNickname = (String) nicknameResult.get(0)[0];
+            productDTO.getBoard().setNickname(userNickname);
+
             return productDTO;
         });
     }
@@ -141,6 +164,11 @@ public class ProductServiceImpl implements ProductService {
 
                 productDTO.getBoard().setCommentCount(commentCount != null ? commentCount : 0);
             }
+
+            Integer userId = productDTO.getBoard().getUserId();
+            List<Object[]> nicknameResult = productRepository.findUserNickname(userId);
+            String userNickname = (String) nicknameResult.get(0)[0];
+            productDTO.getBoard().setNickname(userNickname);
 
             return productDTO;
         });

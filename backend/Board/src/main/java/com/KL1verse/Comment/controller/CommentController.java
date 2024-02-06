@@ -59,7 +59,7 @@ public class CommentController {
         @PathVariable Long boardId,
         @RequestBody CommentDTO commentDTO) {
 
-        Long requestingUserId = commentDTO.getUserId();
+        Long requestingUserId = Long.valueOf(commentDTO.getUserId());
 
         if (requestingUserId == null) {
             return ResponseEntity.badRequest().build();
