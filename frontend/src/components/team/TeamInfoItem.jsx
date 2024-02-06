@@ -13,7 +13,7 @@ import {
   Backno,
   MemberName,
   MembersWrap,
-} from "../../styles/TeamStyles/TeamStyle";
+} from "../../styles/teamStyles/TeamStyle";
 import Facebook from "../../assets/icon/facebook-icon.png";
 import Home from "../../assets/icon/home-icon.png";
 import Instagram from "../../assets/icon/instagram-icon.png";

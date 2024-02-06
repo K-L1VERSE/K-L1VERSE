@@ -1,10 +1,10 @@
 import React from "react";
 import ProductItemCard from "./ProductItemCard";
-import { ProductListContainer } from "../../styles/BoardStyles/ProductListStyle";
+import { ListContainer } from "../../styles/BoardStyles/BoardStyle";
 
 function ProductContainer({ productList, formatRelativeTime }) {
   return (
-    <ProductListContainer>
+    <ListContainer>
       {productList.map((product) => (
         <ProductItemCard
           key={product.productId}
@@ -12,7 +12,7 @@ function ProductContainer({ productList, formatRelativeTime }) {
           formatRelativeTime={formatRelativeTime}
         />
       ))}
-    </ProductListContainer>
+    </ListContainer>
   );
 }
 

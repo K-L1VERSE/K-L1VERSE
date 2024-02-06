@@ -1,71 +1,5 @@
 import styled from "styled-components";
 
-export const MateHeader = styled.div`
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  padding: 8px;
-  gap: 8px;
-  width: 100%;
-  justify-content: flex-start;
-`;
-
-export const MateHeaderH2 = styled.h2`
-  margin: 0 auto;
-  width: auto;
-  height: 20px;
-  font-style: normal;
-  font-weight: 700;
-  font-size: 20px;
-  line-height: 20px;
-  color: #222222;
-`;
-
-export const MateHeaderNav = styled.nav`
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  width: 100%;
-`;
-
-export const MateHeaderButton = styled.button`
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  padding: 0;
-  gap: 4px;
-  border: none;
-  background-color: transparent;
-  margin: 0 auto;
-  max-width: 40px;
-  height: 14px;
-  font-style: normal;
-  font-weight: 400;
-  font-size: 12px;
-  line-height: 14px;
-  color: #002266;
-  white-space: nowrap;
-`;
-
-export const MateListContainer = styled.div`
-  display: flex;
-  flex-direction: column;
-  padding: 0;
-  justify-content: flex-start;
-  font-family: "Pretendard-Regular";
-`;
-
-export const MateItemContainer = styled.div`
-  display: flex;
-  flex-direction: column;
-  width: 380px;
-  margin-top: 20px;
-  margin-left: 40px;
-  text-align: left;
-  text-decoration: none;
-  color: inherit;
-`;
-
 export const MateItemWriter = styled.div`
   width: 100%;
   height: 17px;
@@ -80,15 +14,15 @@ export const MateItemWriter = styled.div`
 `;
 
 export const MateItemTitle = styled.div`
-  width: 100%;
-  height: 17px;
   font-family: "Pretendard";
-  font-style: normal;
-  font-weight: 400;
   font-size: 14px;
   line-height: 17px;
-  color: #222222;
   text-decoration: none;
+  a {
+    color: #222222;
+    text-decoration: none;
+  }
+  background-color: antiquewhite;
 `;
 
 export const MateItemContent = styled.div`
@@ -101,6 +35,11 @@ export const MateItemContent = styled.div`
   line-height: 17px;
   color: #a9a9a9;
   text-decoration: none;
+
+  a {
+    color: #222222;
+    text-decoration: none;
+  }
 `;
 
 export const MateItemInfoSection = styled.div`
@@ -118,11 +57,4 @@ export const MateItemCreated = styled.div`
   font-size: 11px;
   line-height: 13px;
   color: #595959;
-`;
-
-export const MateItemSeparator = styled.div`
-  width: 380px;
-  height: 1px;
-  background: #f4f4f4;
-  margin-top: 10px;
 `;

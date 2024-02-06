@@ -1,7 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import {
-  ProductItemContainer,
   DealStatusGreen,
   DealStatusOrange,
   ProductItemTitle,
@@ -10,12 +9,12 @@ import {
   ProductItemPrice,
   ProductItemComment,
   ProductItemCreatedAt,
-  ProductItemSeparator,
 } from "../../styles/BoardStyles/ProductListStyle";
+import { ItemContainer } from "../../styles/BoardStyles/BoardStyle";
 
 function ProductItemCard({ product, formatRelativeTime }) {
   return (
-    <ProductItemContainer>
+    <ItemContainer>
       {product.dealFlag ? (
         <DealStatusOrange>거래완료</DealStatusOrange>
       ) : (
@@ -46,8 +45,7 @@ function ProductItemCard({ product, formatRelativeTime }) {
           {formatRelativeTime(product.board.createAt)}
         </ProductItemCreatedAt>
       </ProductItemInfoSection>
-      <ProductItemSeparator />
-    </ProductItemContainer>
+    </ItemContainer>
   );
 }
 

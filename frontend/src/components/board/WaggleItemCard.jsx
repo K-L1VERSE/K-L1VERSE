@@ -1,25 +1,24 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import {
-  WaggleItemContainer,
   WaggleItemWriter,
   WaggleItemTitle,
   WaggleItemContent,
   WaggleItemInfoSection,
   WaggleItemInfoItem,
-  WaggleItemSeparator,
 } from "../../styles/BoardStyles/WaggleListStyle";
 import { ReactComponent as LikeCount } from "../../assets/icon/likecount-icon.svg";
 import { ReactComponent as Comment } from "../../assets/icon/comment-icon.svg";
+import { ItemContainer } from "../../styles/BoardStyles/BoardStyle";
 
 function WaggleItemCard({ waggle, formatRelativeTime }) {
   return (
-    <WaggleItemContainer>
-      <WaggleItemWriter>{waggle.board.nickname}</WaggleItemWriter>
+    <ItemContainer>
+      <WaggleItemWriter>{waggle.nickname}</WaggleItemWriter>
       <WaggleItemTitle>
         <Link
           to={`/waggle/${waggle.board.boardId}`}
-          style={{ textDecoration: "none" }}
+          style={{ textDecoration: "none", color: "black" }}
         >
           {waggle.board.title}
         </Link>
@@ -45,8 +44,7 @@ function WaggleItemCard({ waggle, formatRelativeTime }) {
           {formatRelativeTime(waggle.board.createAt)}
         </WaggleItemInfoItem>
       </WaggleItemInfoSection>
-      <WaggleItemSeparator />
-    </WaggleItemContainer>
+    </ItemContainer>
   );
 }
 

@@ -1,17 +1,16 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import {
-  MateItemContainer,
   MateItemTitle,
   MateItemContent,
   MateItemInfoSection,
   MateItemCreated,
-  MateItemSeparator,
 } from "../../styles/BoardStyles/MateListStyle";
 import {
   DealStatusGreen,
   DealStatusOrange,
 } from "../../styles/BoardStyles/ProductListStyle";
+import { ItemContainer } from "../../styles/BoardStyles/BoardStyle";
 
 function MateItemCard({ mate }) {
   // const [matchDetail, setMatchDetail] = useState({});
@@ -25,7 +24,7 @@ function MateItemCard({ mate }) {
   // }, []);
 
   return (
-    <MateItemContainer>
+    <ItemContainer>
       {mate.fullFlag ? (
         <DealStatusOrange>모집완료</DealStatusOrange>
       ) : (
@@ -34,7 +33,7 @@ function MateItemCard({ mate }) {
       <MateItemTitle>
         <Link
           to={`/mate/${mate.board.boardId}`}
-          style={{ textDecoration: "none" }}
+          // style={{ textDecoration: "none", color: "black" }}
         >
           {mate.board.title}
         </Link>
@@ -50,8 +49,7 @@ function MateItemCard({ mate }) {
       <MateItemInfoSection>
         <MateItemCreated>{mate.createAt}</MateItemCreated>
       </MateItemInfoSection>
-      <MateItemSeparator />
-    </MateItemContainer>
+    </ItemContainer>
   );
 }
 

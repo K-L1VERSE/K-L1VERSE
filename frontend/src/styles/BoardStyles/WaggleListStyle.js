@@ -1,53 +1,5 @@
 import styled from "styled-components";
 
-export const WaggleHeader = styled.div`
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  padding: 8px;
-  gap: 8px;
-  width: 100%;
-  justify-content: flex-start;
-  font-family: "Pretendard-Regular";
-`;
-
-export const WaggleHeaderH2 = styled.h2`
-  margin: 0 auto;
-  width: auto;
-  height: 20px;
-  font-style: normal;
-  font-weight: 700;
-  font-size: 20px;
-  line-height: 20px;
-  color: #222222;
-`;
-
-export const WaggleHeaderNav = styled.nav`
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  width: 100%;
-`;
-
-export const WaggleHeaderButton = styled.button`
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  padding: 0;
-  gap: 4px;
-  border: none;
-  background-color: transparent;
-  margin: 0 auto;
-  max-width: 40px;
-  height: 14px;
-  font-style: normal;
-  font-weight: 400;
-  font-size: 12px;
-  line-height: 14px;
-  color: #002266;
-  white-space: nowrap;
-`;
-
 export const WaggleListContainer = styled.div`
   display: flex;
   flex-direction: column;
