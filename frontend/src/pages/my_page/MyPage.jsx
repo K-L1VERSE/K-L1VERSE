@@ -13,7 +13,12 @@ import {
   BoardList,
 } from "../../styles/mypage-styles/MypageStyle";
 
-import { Nav, Button } from "../../styles/BoardStyles/BoardTopNavbarStyle";
+import {
+  Nav,
+  WaggleButton,
+  MateButton,
+  ProductButton,
+} from "../../styles/BoardStyles/BoardTopNavbarStyle";
 import WaggleContainer from "../../components/board/WaggleContainer";
 
 function MyPage() {
@@ -86,24 +91,24 @@ function MyPage() {
       </BoardContainer>
       <BoardList>
         <Nav>
-          <Button
+          <WaggleButton
             className={category === "1" ? "active" : ""}
             onClick={() => setCategory("1")}
           >
             ⚽️ 와글와글
-          </Button>
-          <Button
+          </WaggleButton>
+          <MateButton
             className={category === "2" ? "active" : ""}
             onClick={() => setCategory("2")}
           >
             👋🏻 직관 메이트
-          </Button>
-          <Button
+          </MateButton>
+          <ProductButton
             className={category === "3" ? "active" : ""}
             onClick={() => setCategory("3")}
           >
             📦 중고거래
-          </Button>
+          </ProductButton>
         </Nav>
       </BoardList>
       <div>{WaggleContainer({ waggleList: myWagle })}</div>

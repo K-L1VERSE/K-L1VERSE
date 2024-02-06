@@ -39,8 +39,6 @@ import SettingPage from "./pages/my_page/SettingPage";
 
 import TeamInfoPage from "./pages/teamPage/TeamInfoPage";
 
-import SettingPage from "./pages/my_page/SettingPage";
-
 function App() {
   return (
     <div className="App">
