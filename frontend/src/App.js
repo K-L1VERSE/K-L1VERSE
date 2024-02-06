@@ -35,6 +35,9 @@ import ProductRegistPage from "./pages/board_page/product_page/ProductRegistPage
 import MatchSchedulePage from "./pages/match_page/MatchSchedulePage";
 import MatchDetailPage from "./pages/match_page/MatchDetailPage";
 import MatchChattingPage from "./pages/match_page/MatchChattingPage";
+
+import TeamInfoPage from "./pages/teamPage/TeamInfoPage";
+
 import SettingPage from "./pages/my_page/SettingPage";
 
 function App() {
@@ -94,6 +97,8 @@ function App() {
                 path="/matchChatting/:matchId"
                 element={<MatchChattingPage />}
               />
+              {/* 팀 정보 페이지 */}
+              <Route path="/team" element={<TeamInfoPage />} />
 
               {/* 마이 페이지 */}
               <Route path="/mypage" element={<MyPage />} />

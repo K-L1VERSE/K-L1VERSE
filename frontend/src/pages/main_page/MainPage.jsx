@@ -36,7 +36,7 @@ function MainPage() {
       <Category>
         <Title>🎯 노스트라다무스 랭킹</Title>
       </Category>
-      <Nostradamus />
+      {/* <Nostradamus /> */}
       <Survey />
     </div>
   );
