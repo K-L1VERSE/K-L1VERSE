@@ -13,6 +13,9 @@ import {
   BoardList,
 } from "../../styles/mypage-styles/MypageStyle";
 
+import { Nav, Button } from "../../styles/BoardStyles/BoardTopNavbarStyle";
+import WaggleContainer from "../../components/board/WaggleContainer";
+
 function MyPage() {
   const [user, setUser] = useState({
     userId: "",
@@ -82,38 +85,28 @@ function MyPage() {
         <BoardText>내가 작성한 글</BoardText>
       </BoardContainer>
       <BoardList>
-        <Radio
-          name="contact"
-          value="1"
-          defaultChecked
-          setCategory={setCategory}
-          selectedValue={selectedValue}
-          setSelectedValue={setSelectedValue}
-        >
-          와글
-        </Radio>
-        <Radio
-          name="contact"
-          value="2"
-          setCategory={setCategory}
-          selectedValue={selectedValue}
-          setSelectedValue={setSelectedValue}
-        >
-          직관 메이트
-        </Radio>
-        <Radio
-          name="contact"
-          value="3"
-          setCategory={setCategory}
-          selectedValue={selectedValue}
-          setSelectedValue={setSelectedValue}
-        >
-          중고
-        </Radio>
+        <Nav>
+          <Button
+            className={category === "1" ? "active" : ""}
+            onClick={() => setCategory("1")}
+          >
+            ⚽️ 와글와글
+          </Button>
+          <Button
+            className={category === "2" ? "active" : ""}
+            onClick={() => setCategory("2")}
+          >
+            👋🏻 직관 메이트
+          </Button>
+          <Button
+            className={category === "3" ? "active" : ""}
+            onClick={() => setCategory("3")}
+          >
+            📦 중고거래
+          </Button>
+        </Nav>
       </BoardList>
-      <div>
-        <MyWagle wagles={myWagle} />
-      </div>
+      <div>{WaggleContainer({ waggleList: myWagle })}</div>
     </div>
   );
 }

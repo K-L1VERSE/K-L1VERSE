@@ -19,6 +19,6 @@ export const BoardList = styled.div`
   display: flex;
   flex-direction: row;
   align-items: flex-end;
-  padding: 0.75rem 0 0 0.75rem;
+  padding: 1rem 0 0 1rem;
   gap: 0.75rem;
 `;
