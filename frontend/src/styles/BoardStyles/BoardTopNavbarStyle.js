@@ -1,5 +1,3 @@
-// BoardTopNavbarStyles.js
-
 import styled from "styled-components";
 
 export const BoardTopNavbarContainer = styled.div`
@@ -13,6 +11,7 @@ export const BoardTopNavbarContainer = styled.div`
   height: 89px;
   left: 0px;
   top: 68px;
+  font-family: "Pretendard-Regular";
 `;
 
 export const Title = styled.h1`

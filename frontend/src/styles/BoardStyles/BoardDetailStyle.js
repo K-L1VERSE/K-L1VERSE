@@ -4,6 +4,7 @@ export const Container = styled.div`
   max-width: 800px;
   margin: 0 auto;
   padding: 20px;
+  font-family: "Pretendard-Regular";
 `;
 
 export const WaggleDetailBox = styled.div`
@@ -34,13 +35,13 @@ export const Content = styled.p`
 export const Price = styled.p`
   margin: 0;
   font-size: 1em;
-  color: #333; // Adjust color as needed
+  color: #333;
 `;
 
 export const DealFlag = styled.p`
   margin: 0;
   font-size: 1em;
-  color: #333; // Adjust color as needed
+  color: #333;
 
   ${(props) =>
     props.dealFlag &&
@@ -55,6 +56,36 @@ export const DealFlag = styled.p`
     !props.dealFlag &&
     css`
       background-color: #ff9800; /* Orange color for 거래완료 */
+      color: #fff;
+      padding: 5px;
+      border-radius: 5px;
+    `}
+`;
+
+export const Total = styled.p`
+  margin: 0;
+  font-size: 1em;
+  color: #333;
+`;
+
+export const FullFlag = styled.p`
+  margin: 0;
+  font-size: 1em;
+  color: #333;
+
+  ${(props) =>
+    props.fullFlag &&
+    css`
+      background-color: #4caf50;
+      color: #fff;
+      padding: 5px;
+      border-radius: 5px;
+    `}
+
+  ${(props) =>
+    !props.fullFlag &&
+    css`
+      background-color: #ff9800;
       color: #fff;
       padding: 5px;
       border-radius: 5px;

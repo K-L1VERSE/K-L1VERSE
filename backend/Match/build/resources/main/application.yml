@@ -3,12 +3,10 @@ server:
 
 spring:
   profiles:
-    active: dev
+    active: deploy
   jpa:
     hibernate:
       ddl-auto: update
-  datasource:
-    driver-class-name: org.mariadb.jdbc.Driver
 
   # kafka 설정
   kafka:

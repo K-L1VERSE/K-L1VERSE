@@ -1,6 +1,5 @@
 import styled from "styled-components";
 
-// CommentForm
 export const Form = styled.form`
   margin-top: 20px;
   display: flex;
@@ -15,6 +14,17 @@ export const TextArea = styled.textarea`
   resize: none;
   flex: 1;
 `;
+
+export const CheckboxLabel = styled.label`
+  display: flex;
+  align-items: center;
+  margin-top: 8px;
+`;
+
+export const CheckboxInput = styled.input`
+  margin-right: 6px;
+`;
+
 export const SubmitButton = styled.button`
   background-color: #cdd8ec;
   color: #fff;

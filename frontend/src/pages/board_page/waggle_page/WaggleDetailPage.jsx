@@ -13,7 +13,7 @@ import {
   Content,
   Button,
   LikeButton,
-  LikeCount,
+  // LikeCount,
 } from "../../../styles/BoardStyles/BoardDetailStyle";
 import { UserState } from "../../../global/UserState";
 
@@ -24,7 +24,7 @@ function WaggleDetailPage() {
   const [waggleDetail, setWaggleDetail] = useState({});
   const [waggleId, setWaggleId] = useState(0);
   const [isLiked, setIsLiked] = useState(false);
-  const [likeCount, setLikeCount] = useState(0);
+  // const [likeCount, setLikeCount] = useState(0);
   const { boardId } = useParams();
   const navigate = useNavigate();
   const { userId } = useRecoilState(UserState)[0];
@@ -34,7 +34,7 @@ function WaggleDetailPage() {
       setWaggleDetail(data.board);
       setWaggleId(data.waggleId);
       setIsLiked(data.isLiked);
-      setLikeCount(data.likeCount);
+      // setLikeCount(data.likeCount);
     });
   }
 
@@ -67,7 +67,7 @@ function WaggleDetailPage() {
         waggleId,
         () => {
           setIsLiked(false);
-          setLikeCount((prevCount) => prevCount - 1);
+          // setLikeCount((prevCount) => prevCount - 1);
         },
         () => {},
       );
@@ -77,7 +77,7 @@ function WaggleDetailPage() {
         waggleId,
         () => {
           setIsLiked(true);
-          setLikeCount((prevCount) => prevCount + 1);
+          // setLikeCount((prevCount) => prevCount + 1);
         },
         () => {},
       );
@@ -92,23 +92,23 @@ function WaggleDetailPage() {
         <Title>{waggleDetail.title}</Title>
         <Content>{waggleDetail.content}</Content>
 
-        {waggleDetail.boardImage && (
+        {/* {waggleDetail.boardImage && (
           <img
             src={waggleDetail.boardImage}
             alt="Waggle Image"
             style={{ maxWidth: "100%", maxHeight: "400px", margin: "20px 0" }}
           />
-        )}
+        )} */}
 
         <div>
           <LikeButton onClick={handleLikeClick}>
             <img
-              src={isLiked ? UnlikeIcon : LikeIcon}
-              alt={isLiked ? "Unlike" : "Like"}
-              style={{ width: "24px", height: "24px" }}
+              src={isLiked ? LikeIcon : UnlikeIcon}
+              alt={isLiked ? "Like" : "Unlike"}
+              style={{ width: "20px", height: "20px" }}
             />
           </LikeButton>
-          <LikeCount>좋아요 {likeCount}개</LikeCount>
+          {/* <LikeCount>좋아요 {likeCount}개</LikeCount> */}
         </div>
       </WaggleDetailBox>
 

@@ -1,4 +1,5 @@
 import React from "react";
+import { Navigate } from "react-router-dom";
 import {
   CommentItem,
   CommentContent,
@@ -6,13 +7,31 @@ import {
   EditButton,
   DeleteButton,
 } from "../../styles/BoardStyles/CommentStyle";
+import { deleteComment, updateComment } from "../../api/comment";
 
-function CommentItemCard({
-  comment,
-  handleUpdateBtn,
-  handleDeleteBtn,
-  handleLikeClick,
-}) {
+function CommentItemCard({ boardId, comment, handleLikeClick }) {
+  const handleUpdateBtn = () => {
+    updateComment(
+      comment.commentId,
+      {
+        content: comment.content,
+        isSecret: comment.isSecret,
+      },
+      () => {},
+      () => {},
+    );
+  };
+
+  const handleDeleteBtn = (commentId) => {
+    deleteComment(
+      commentId,
+      () => {
+        Navigate(`/waggle/${boardId}`);
+      },
+      () => {},
+    );
+  };
+
   return (
     <CommentItem key={comment.commentId}>
       <CommentContent>{comment.content}</CommentContent>

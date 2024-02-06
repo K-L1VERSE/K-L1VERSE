@@ -14,6 +14,7 @@ export default function ProductRegistCard({
   content,
   price,
   dealFlag,
+  boardImage,
   onTitleChange,
   onContentChange,
   onPriceChange,
@@ -42,7 +43,12 @@ export default function ProductRegistCard({
       판매중
       <br />
       <FileInputContainer>
-        <FileInput type="file" onChange={onImageChange} accept="image/*" />
+        <FileInput
+          type="file"
+          value={boardImage}
+          onChange={onImageChange}
+          accept="image/*"
+        />
         <FileInputLabel>
           <img src={CameraIcon} alt="Camera Icon" />
         </FileInputLabel>

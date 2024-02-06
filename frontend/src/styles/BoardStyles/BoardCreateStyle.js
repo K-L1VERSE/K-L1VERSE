@@ -5,6 +5,7 @@ export const RegistCardContainer = styled.div`
   flex-direction: column;
   align-items: center;
   margin: 20px;
+  font-family: "Pretendard-Regular";
 `;
 
 export const Form = styled.form`
@@ -16,7 +17,6 @@ export const Form = styled.form`
 
 export const Input = styled.input`
   width: 300px;
-  margin-bottom: 10px;
   padding: 8px;
   border: 1px solid #ccc;
   border-radius: 4px;
@@ -27,6 +27,7 @@ export const TextArea = styled.textarea`
   width: 300px;
   height: 150px;
   margin-bottom: 10px;
+  margin-top: 10px;
   padding: 8px;
   border: 1px solid #ccc;
   border-radius: 4px;
