@@ -6,7 +6,6 @@ export const Header = styled.div`
   align-items: center;
   justify-content: space-between;
   margin: 0 1rem;
-  background-color: aqua;
 `;
 
 export const HeaderH2 = styled.h2`
@@ -17,7 +16,6 @@ export const HeaderH2 = styled.h2`
   font-size: 20px;
   line-height: 20px;
   color: #222222;
-  background-color: red;
 `;
 
 export const HeaderButton = styled.button`
@@ -35,7 +33,6 @@ export const ListContainer = styled.div`
   padding: 1rem;
   justify-content: flex-start;
   font-family: "Pretendard-Regular";
-  background-color: orange;
 `;
 
 export const ItemContainer = styled.div`
@@ -43,6 +40,28 @@ export const ItemContainer = styled.div`
   text-align: left;
   text-decoration: none;
   color: inherit;
-  background-color: yellow;
   border-bottom: 1px solid #f4f4f4;
+`;
+
+export const ItemWriter = styled.div`
+  font-size: 0.9rem;
+  color: black;
+  margin-bottom: 8px;
+`;
+
+export const ItemTitle = styled.div`
+  font-size: 1rem;
+  color: #222222;
+  a {
+    text-decoration: none;
+    color: inherit;
+  }
+`;
+
+export const ItemContent = styled.div`
+  font-size: 0.8rem;
+  a {
+    color: #a9a9a9;
+    text-decoration: none;
+  }
 `;

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import {
   MateItemTitle,
@@ -11,17 +11,20 @@ import {
   DealStatusOrange,
 } from "../../styles/BoardStyles/ProductListStyle";
 import { ItemContainer } from "../../styles/BoardStyles/BoardStyle";
+import { getMatchDetail } from "../../api/match";
 
 function MateItemCard({ mate }) {
-  // const [matchDetail, setMatchDetail] = useState({});
-  // function getMatchDetail() {
-  //   getMatchDetail(mate.matchId).then(({ data }) => {
-  //     setMatchDetail(data);
-  //   });
-  // }
-  // useEffect(() => {
-  //   getMatchDetail();
-  // }, []);
+  const [matchDetail, setMatchDetail] = useState({});
+
+  function getMatch() {
+    getMatchDetail(mate.matchId).then(({ data }) => {
+      console.log(data);
+      setMatchDetail(data);
+    });
+  }
+  useEffect(() => {
+    getMatch();
+  }, []);
 
   return (
     <ItemContainer>
@@ -35,7 +38,8 @@ function MateItemCard({ mate }) {
           to={`/mate/${mate.board.boardId}`}
           // style={{ textDecoration: "none", color: "black" }}
         >
-          {mate.board.title}
+          {matchDetail.HomeTeamName} vs {matchDetail.AwayTeamName}{" "}
+          {matchDetail.MatchDate}
         </Link>
       </MateItemTitle>
       <MateItemContent>

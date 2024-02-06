@@ -1,8 +1,10 @@
 import React, { useState, useEffect } from "react";
 import {
-  Input,
   TextArea,
+  NumberInput,
+  FlagInput,
   SubmitButton,
+  TitleInput,
 } from "../../styles/BoardStyles/BoardCreateStyle";
 import { getMatchList } from "../../api/match";
 
@@ -35,7 +37,7 @@ export default function MateRegistCard({
 
   return (
     <>
-      <Input
+      <TitleInput
         type="text"
         value={title}
         onChange={onTitleChange}
@@ -53,14 +55,14 @@ export default function MateRegistCard({
         ))}
       </select>
       <TextArea value={content} onChange={onContentChange} placeholder="내용" />
-      <Input
+      <NumberInput
         type="number"
         value={total}
         onChange={onTotalChange}
         placeholder="총 인원"
       />
       다 찼어요
-      <Input
+      <FlagInput
         type="checkbox"
         value={fullFlag}
         onChange={onFullFlagChange}

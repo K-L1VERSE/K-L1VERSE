@@ -1,36 +1,38 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import {
-  WaggleItemWriter,
-  WaggleItemTitle,
-  WaggleItemContent,
   WaggleItemInfoSection,
   WaggleItemInfoItem,
 } from "../../styles/BoardStyles/WaggleListStyle";
 import { ReactComponent as LikeCount } from "../../assets/icon/likecount-icon.svg";
 import { ReactComponent as Comment } from "../../assets/icon/comment-icon.svg";
-import { ItemContainer } from "../../styles/BoardStyles/BoardStyle";
+import {
+  ItemContainer,
+  ItemContent,
+  ItemTitle,
+  ItemWriter,
+} from "../../styles/BoardStyles/BoardStyle";
 
 function WaggleItemCard({ waggle, formatRelativeTime }) {
   return (
     <ItemContainer>
-      <WaggleItemWriter>{waggle.board.nickname}</WaggleItemWriter>
-      <WaggleItemTitle>
+      <ItemWriter>{waggle.board.nickname}</ItemWriter>
+      <ItemTitle>
         <Link
           to={`/waggle/${waggle.board.boardId}`}
           style={{ textDecoration: "none", color: "black" }}
         >
           {waggle.board.title}
         </Link>
-      </WaggleItemTitle>
-      <WaggleItemContent>
+      </ItemTitle>
+      <ItemContent>
         <Link
           to={`/waggle/${waggle.board.boardId}`}
           style={{ textDecoration: "none" }}
         >
           <p>{waggle.board.content}</p>
         </Link>
-      </WaggleItemContent>
+      </ItemContent>
       <WaggleItemInfoSection>
         <WaggleItemInfoItem className="waggle-like">
           <LikeCount />

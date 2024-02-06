@@ -1,46 +1,58 @@
 import styled from "styled-components";
 
+export const DetailTop = styled.div`
+  display: flex;
+  margin-left: 1rem;
+  margin-top: 1rem;
+  flex-direction: column;
+  font-family: "Pretendard-Regular";
+  font-size: 1.3rem;
+`;
+
 export const RegistCardContainer = styled.div`
   display: flex;
   flex-direction: column;
-  align-items: center;
   margin: 20px;
   font-family: "Pretendard-Regular";
 `;
 
 export const Form = styled.form`
-  margin-top: 20px;
-  display: flex;
   flex-direction: column;
-  align-items: center;
+  margin: 1rem;
 `;
 
-export const Input = styled.input`
-  width: 300px;
+export const TitleInput = styled.input`
+  width: 22rem;
   padding: 8px;
-  border: 1px solid #ccc;
+  border: 1px solid lightgrey;
   border-radius: 4px;
-  font-size: 16px;
+  font-size: 1rem;
 `;
 
 export const TextArea = styled.textarea`
-  width: 300px;
-  height: 150px;
-  margin-bottom: 10px;
-  margin-top: 10px;
+  width: 22rem;
+  height: 10rem;
   padding: 8px;
-  border: 1px solid #ccc;
+  border: 1px solid lightgrey;
   border-radius: 4px;
-  font-size: 16px;
+  font-size: 1rem;
   resize: none;
 `;
 
+export const PriceInput = styled.input`
+  padding: 0.2rem;
+  border: 1px solid lightgrey;
+  border-radius: 4px;
+  width: 5rem;
+`;
+
+export const NumberInput = styled.input``;
+
+export const FlagInput = styled.input``;
+
 export const FileInputContainer = styled.label`
   display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 4px;
-  margin-bottom: 10px;
+  margin-bottom: 1rem;
   cursor: pointer;
 `;
 
@@ -56,7 +68,7 @@ export const FileInputLabel = styled.span`
   justify-content: center;
   align-items: center;
   background: #ffffff;
-  border: 1px solid #ebebeb;
+  border: 1px solid lightgrey;
   border-radius: 4px;
   cursor: pointer;
 
@@ -73,5 +85,5 @@ export const SubmitButton = styled.button`
   border: none;
   border-radius: 4px;
   cursor: pointer;
-  font-size: 16px;
+  font-size: 1rem;
 `;
