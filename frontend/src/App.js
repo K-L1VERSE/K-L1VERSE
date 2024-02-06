@@ -35,6 +35,7 @@ import ProductRegistPage from "./pages/board_page/product_page/ProductRegistPage
 import MatchSchedulePage from "./pages/match_page/MatchSchedulePage";
 import MatchDetailPage from "./pages/match_page/MatchDetailPage";
 import MatchChattingPage from "./pages/match_page/MatchChattingPage";
+import SettingPage from "./pages/my_page/SettingPage";
 
 import TeamInfoPage from "./pages/teamPage/TeamInfoPage";
 

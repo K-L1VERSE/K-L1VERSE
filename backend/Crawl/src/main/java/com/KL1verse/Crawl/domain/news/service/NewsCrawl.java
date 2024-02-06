@@ -110,7 +110,7 @@ public class NewsCrawl {
                 .orElse(null);
     }
 
-    private List<NewsInfo> parseNewsList(String newsListJsonString) {
+    private List<String> parseNewsList(String newsListJsonString) {
         ObjectMapper objectMapper = new ObjectMapper();
         JsonNode newsListJsonNode = null;
         try {

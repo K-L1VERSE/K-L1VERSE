@@ -4,7 +4,9 @@ import {
   BoardTopNavbarContainer,
   Title,
   Nav,
-  Button,
+  WaggleButton,
+  MateButton,
+  ProductButton,
 } from "../../styles/BoardStyles/BoardTopNavbarStyle";
 
 function BoardTopNavbar() {
@@ -19,24 +21,24 @@ function BoardTopNavbar() {
     <BoardTopNavbarContainer>
       <Title>💬 커뮤니티</Title>
       <Nav>
-        <Button
+        <WaggleButton
           className={location.pathname.startsWith("/waggle") ? "active" : ""}
           onClick={() => handleNavigate("/waggle")}
         >
           ⚽️ 와글와글
-        </Button>
-        <Button
+        </WaggleButton>
+        <MateButton
           className={location.pathname.startsWith("/mate") ? "active" : ""}
           onClick={() => handleNavigate("/mate")}
         >
           👋🏻 직관 메이트
-        </Button>
-        <Button
+        </MateButton>
+        <ProductButton
           className={location.pathname.startsWith("/product") ? "active" : ""}
           onClick={() => handleNavigate("/product")}
         >
           📦 중고거래
-        </Button>
+        </ProductButton>
       </Nav>
     </BoardTopNavbarContainer>
   );

@@ -5,54 +5,110 @@ import com.KL1verse.Board.dto.req.SearchBoardConditionDto;
 import com.KL1verse.Board.repository.BoardRepository;
 import com.KL1verse.Board.repository.entity.Board;
 import com.KL1verse.Comment.repository.CommentRepository;
+import com.KL1verse.Mate.dto.req.MateDTO;
 import com.KL1verse.Product.dto.req.ProductDTO;
 import com.KL1verse.Product.repository.ProductRepository;
 import com.KL1verse.Product.repository.entity.Product;
+import com.KL1verse.kafka.dto.req.BoardCleanbotCheckReqDto;
+import com.KL1verse.kafka.producer.KafkaBoardCleanbotProducer;
+import com.KL1verse.s3.repository.entity.File;
+import com.KL1verse.s3.service.BoardImageService;
+import com.KL1verse.s3.service.FileService;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.stream.Collectors;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.BeanUtils;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
+@RequiredArgsConstructor
 public class ProductServiceImpl implements ProductService {
 
     private final ProductRepository productRepository;
     private final BoardRepository boardRepository;
 
-    private final CommentRepository commentRepository;
+    private final FileService fileService;
 
-    public ProductServiceImpl(ProductRepository productRepository,
-        BoardRepository boardRepository, CommentRepository commentRepository) {
-        this.productRepository = productRepository;
-        this.boardRepository = boardRepository;
-        this.commentRepository = commentRepository;
-    }
+    private final BoardImageService boardImageService;
+
+    private final CommentRepository commentRepository;
+    private final KafkaBoardCleanbotProducer kafkaBoardCleanbotProducer;
 
     @Override
     public ProductDTO getProductById(Long boardId) {
         Product product = findProductByBoardId(boardId);
-        return convertToDTO(product);
-    }
 
+        ProductDTO productDTO = convertToDTO(product);
+
+        int commentCount = commentRepository.countCommentsByBoardId(boardId);
+        productDTO.getBoard().setCommentCount(commentCount);
+
+        Integer userId = productDTO.getBoard().getUserId();
+        List<Object[]> nicknameResult = productRepository.findUserNickname(userId);
+
+
+        String userNickname = (String) nicknameResult.get(0)[0];
+        productDTO.getBoard().setNickname(userNickname);
+
+        return productDTO;
+    }
+    @Transactional
     @Override
     public ProductDTO createProduct(ProductDTO productDto) {
         Product product = convertToEntity(productDto);
         Board board = saveBoard(product.getBoard());
         product.setBoard(board);
-        Product createdProduct = productRepository.save(product);
-        return convertToDTO(createdProduct);
-    }
 
+        File file = fileService.saveFile(productDto.getBoard().getBoardImage());
+        boardImageService.saveBoardImage(board, file);
+
+        Integer userId = productDto.getBoard().getUserId();
+        List<Object[]> nicknameResult = productRepository.findUserNickname(userId);
+        String userNickname = nicknameResult.isEmpty() ? null : (String) nicknameResult.get(0)[0];
+
+        Product createdProduct = productRepository.save(product);
+
+        ProductDTO createdProductDTO = convertToDTO(createdProduct);
+        createdProductDTO.getBoard().setNickname(userNickname);
+
+        BoardCleanbotCheckReqDto boardCleanbotCheckReqDto = BoardCleanbotCheckReqDto.builder()
+            .id(createdProduct.getBoard().getBoardId())
+            .content(createdProduct.getBoard().getContent())
+            .domain("board")
+            .build();
+        kafkaBoardCleanbotProducer.boardCleanbotCheck(boardCleanbotCheckReqDto);
+
+        return createdProductDTO;
+    }
+    
+    @Transactional
     @Override
     public ProductDTO updateProduct(Long boardId, ProductDTO productDto) {
         Product existingProduct = findProductByBoardId(boardId);
         updateExistingProduct(existingProduct, productDto);
+
+        Board board = existingProduct.getBoard();
+//        board.setBoardImage(productDto.getBoard().getBoardImage());
+
         Product updatedProduct = productRepository.save(existingProduct);
+
+        File file = fileService.saveFile(productDto.getBoard().getBoardImage());
+        boardImageService.saveBoardImage(board, file);
+
+
+        BoardCleanbotCheckReqDto boardCleanbotCheckReqDto = BoardCleanbotCheckReqDto.builder()
+            .id(boardId)
+            .content(productDto.getBoard().getContent())
+            .domain("board")
+            .build();
+        kafkaBoardCleanbotProducer.boardCleanbotCheck(boardCleanbotCheckReqDto);
+
         return convertToDTO(updatedProduct);
     }
 
@@ -94,6 +150,13 @@ public class ProductServiceImpl implements ProductService {
                 productDTO.getBoard().setCommentCount(commentCount != null ? commentCount : 0);
             }
 
+            Integer userId = productDTO.getBoard().getUserId();
+            List<Object[]> nicknameResult = productRepository.findUserNickname(userId);
+
+
+            String userNickname = (String) nicknameResult.get(0)[0];
+            productDTO.getBoard().setNickname(userNickname);
+
             return productDTO;
         });
     }
@@ -112,6 +175,11 @@ public class ProductServiceImpl implements ProductService {
 
                 productDTO.getBoard().setCommentCount(commentCount != null ? commentCount : 0);
             }
+
+            Integer userId = productDTO.getBoard().getUserId();
+            List<Object[]> nicknameResult = productRepository.findUserNickname(userId);
+            String userNickname = (String) nicknameResult.get(0)[0];
+            productDTO.getBoard().setNickname(userNickname);
 
             return productDTO;
         });
@@ -160,6 +228,8 @@ public class ProductServiceImpl implements ProductService {
             .updateAt(product.getBoard().getUpdateAt())
             .deleteAt(product.getBoard().getDeleteAt())
             .userId(product.getBoard().getUserId())
+//            .boardImage(product.getBoard().getBoardImage())
+            .commentCount(commentRepository.countCommentsByBoardId(product.getBoard().getBoardId()))
             .build());
         return productDTO;
     }
@@ -176,6 +246,7 @@ public class ProductServiceImpl implements ProductService {
             .updateAt(productDTO.getBoard().getUpdateAt())
             .deleteAt(productDTO.getBoard().getDeleteAt())
             .userId(productDTO.getBoard().getUserId())
+//            .boardImage(productDTO.getBoard().getBoardImage())
             .build());
         return product;
     }

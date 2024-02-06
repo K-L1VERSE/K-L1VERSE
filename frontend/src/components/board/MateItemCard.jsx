@@ -8,10 +8,29 @@ import {
   MateItemCreated,
   MateItemSeparator,
 } from "../../styles/BoardStyles/MateListStyle";
+import {
+  DealStatusGreen,
+  DealStatusOrange,
+} from "../../styles/BoardStyles/ProductListStyle";
 
 function MateItemCard({ mate }) {
+  // const [matchDetail, setMatchDetail] = useState({});
+  // function getMatchDetail() {
+  //   getMatchDetail(mate.matchId).then(({ data }) => {
+  //     setMatchDetail(data);
+  //   });
+  // }
+  // useEffect(() => {
+  //   getMatchDetail();
+  // }, []);
+
   return (
     <MateItemContainer>
+      {mate.fullFlag ? (
+        <DealStatusOrange>모집완료</DealStatusOrange>
+      ) : (
+        <DealStatusGreen>모집중</DealStatusGreen>
+      )}
       <MateItemTitle>
         <Link
           to={`/mate/${mate.board.boardId}`}
@@ -29,7 +48,7 @@ function MateItemCard({ mate }) {
         </Link>
       </MateItemContent>
       <MateItemInfoSection>
-        <MateItemCreated />
+        <MateItemCreated>{mate.createAt}</MateItemCreated>
       </MateItemInfoSection>
       <MateItemSeparator />
     </MateItemContainer>

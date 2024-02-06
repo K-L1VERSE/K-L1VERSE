@@ -1,9 +1,10 @@
-import styled from "styled-components";
+import styled, { css } from "styled-components";
 
 export const Container = styled.div`
   max-width: 800px;
   margin: 0 auto;
   padding: 20px;
+  font-family: "Pretendard-Regular";
 `;
 
 export const WaggleDetailBox = styled.div`
@@ -11,7 +12,13 @@ export const WaggleDetailBox = styled.div`
   border: 1px solid #ccc;
   padding: 20px;
   margin-bottom: 20px;
-  border-radius: 8px; /* Added border-radius for a rounded look */
+  border-radius: 8px;
+`;
+
+export const User = styled.div`
+  display: flex;
+  align-items: center;
+  margin-bottom: 10px;
 `;
 
 export const Title = styled.p`
@@ -23,6 +30,66 @@ export const Title = styled.p`
 
 export const Content = styled.p`
   margin: 0;
+`;
+
+export const Price = styled.p`
+  margin: 0;
+  font-size: 1em;
+  color: #333;
+`;
+
+export const DealFlag = styled.p`
+  margin: 0;
+  font-size: 1em;
+  color: #333;
+
+  ${(props) =>
+    props.dealFlag &&
+    css`
+      background-color: #4caf50; /* Green color for 거래가능 */
+      color: #fff;
+      padding: 5px;
+      border-radius: 5px;
+    `}
+
+  ${(props) =>
+    !props.dealFlag &&
+    css`
+      background-color: #ff9800; /* Orange color for 거래완료 */
+      color: #fff;
+      padding: 5px;
+      border-radius: 5px;
+    `}
+`;
+
+export const Total = styled.p`
+  margin: 0;
+  font-size: 1em;
+  color: #333;
+`;
+
+export const FullFlag = styled.p`
+  margin: 0;
+  font-size: 1em;
+  color: #333;
+
+  ${(props) =>
+    props.fullFlag &&
+    css`
+      background-color: #4caf50;
+      color: #fff;
+      padding: 5px;
+      border-radius: 5px;
+    `}
+
+  ${(props) =>
+    !props.fullFlag &&
+    css`
+      background-color: #ff9800;
+      color: #fff;
+      padding: 5px;
+      border-radius: 5px;
+    `}
 `;
 
 export const Button = styled.button`
@@ -44,6 +111,7 @@ export const LikeButton = styled.button`
   background-color: transparent;
   border: none;
   cursor: pointer;
+  margin-top: 10px;
   margin-right: 10px;
 
   &:hover {
