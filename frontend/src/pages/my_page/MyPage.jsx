@@ -1,11 +1,7 @@
 import React, { useEffect, useState } from "react";
 import UserProfile from "../../components/mypage/UserProfile";
 import axios from "../../api/axios";
-// import mockAxios from "../../api/mockAxios";
 
-import RadioGroup from "../../components/common/RadioGroup";
-import Radio from "../../components/common/Radio";
-import MyWagle from "../../components/mypage/MyWagle";
 import Usergoal from "../../components/mypage/Usergoal";
 import {
   BoardContainer,
@@ -75,12 +71,12 @@ function MyPage() {
       .catch(() => {});
   };
 
+  const [selectedValue, setSelectedValue] = useState("");
+
   useEffect(() => {
     getMyWagle();
     console.log(selectedValue);
   }, [category]);
-
-  const [selectedValue, setSelectedValue] = useState("");
 
   return (
     <div>

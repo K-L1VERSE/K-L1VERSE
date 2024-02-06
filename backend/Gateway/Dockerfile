@@ -11,4 +11,4 @@ ARG JAR_FILE=./build/libs/Gateway-0.0.1-SNAPSHOT.jar
 # Add the application's jar to the container
 COPY ${JAR_FILE} gateway.jar
 # Run the jar file
-ENTRYPOINT ["java","-jar","-Duser.timezone=Asia/Seoul","/gateway.jar"]
+ENTRYPOINT ["java","-jar","-Dspring.profiles.active=deploy", "-Duser.timezone=Asia/Seoul","/gateway.jar"]
