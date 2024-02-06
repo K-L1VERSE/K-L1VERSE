@@ -134,7 +134,7 @@ public class AuthService {
         // refreshToken 생성
         jwtUtil.createRefreshToken(authentication, user);
 
-        return SignInResDto.builder()
+        SignInResDto signInResDto = SignInResDto.builder()
             .email(user.getEmail())
             .accessToken(accessToken)
             .nickname(user.getNickname())
@@ -142,6 +142,11 @@ public class AuthService {
             .domain(user.getDomain())
             .userId(user.getId())
             .build();
+
+        if(user.getWearBadge() != null) {
+            signInResDto.setMainBadge(user.getWearBadge().getBadgeDetail().getCode());
+        }
+        return signInResDto;
     }
 
     // 로그아웃

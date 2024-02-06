@@ -14,5 +14,6 @@ public class MessageReqDto {
     private String sender;
     private String message;
     private String date;
+    private String profile;
 
 }
