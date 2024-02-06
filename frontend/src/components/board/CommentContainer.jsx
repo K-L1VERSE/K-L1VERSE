@@ -7,6 +7,7 @@ function CommentContainer({ boardId, commentList, formatRelativeTime }) {
     <CommentListContainer>
       {commentList.map((comment) => (
         <CommentItemCard
+          key={comment.commentId}
           boardId={boardId}
           comment={comment}
           formatRelativeTime={formatRelativeTime}

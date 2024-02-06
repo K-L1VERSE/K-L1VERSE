@@ -5,7 +5,7 @@ import {
   TeamItem,
   TeamName,
   TeamWrap,
-} from "../../styles/teamStyles/TeamStyle";
+} from "../../styles/TeamStyles/TeamStyle";
 import TeamInfoItem from "../../components/team/TeamInfoItem";
 import { getTeamInfo } from "../../api/team";
 

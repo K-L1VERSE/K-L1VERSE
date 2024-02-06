@@ -19,7 +19,7 @@ function WaggleListPage() {
   function getWaggles() {
     getWaggleList(
       page,
-      30,
+      10,
       ({ data }) => {
         if (!data.content) {
           setHasMore(false);

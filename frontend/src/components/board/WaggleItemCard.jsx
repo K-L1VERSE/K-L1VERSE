@@ -14,7 +14,7 @@ import { ItemContainer } from "../../styles/BoardStyles/BoardStyle";
 function WaggleItemCard({ waggle, formatRelativeTime }) {
   return (
     <ItemContainer>
-      <WaggleItemWriter>{waggle.nickname}</WaggleItemWriter>
+      <WaggleItemWriter>{waggle.board.nickname}</WaggleItemWriter>
       <WaggleItemTitle>
         <Link
           to={`/waggle/${waggle.board.boardId}`}
