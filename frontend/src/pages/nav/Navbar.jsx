@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Outlet, useNavigate } from "react-router-dom";
 import { useRecoilState } from "recoil";
 import { ReactComponent as MyPageIcon } from "../../assets/icon/mypage-icon.svg";
@@ -10,6 +10,10 @@ import {
   Nav,
   NavItem,
   Contents,
+  navbarScheduleIcon,
+  navbarTeamInfoIcon,
+  navbarNotificationIcon,
+  navbarMyPageIcon,
 } from "../../styles/navbar-styles/NavbarStyle";
 import Logo from "../../assets/K-L1VERSE(white).png";
 import { NotificationState } from "../../global/NotificationState";
@@ -63,6 +67,10 @@ export default function Header() {
     navigate("/matchSchedule");
   };
 
+  const goTeam = () => {
+    navigate("/team");
+  };
+
   const goMain = () => {
     navigate("/");
   };
@@ -75,10 +83,25 @@ export default function Header() {
     navigate("/notification");
   };
 
-  const goTeam = () => {
-    navigate("/team");
-  };
+  const currentPath = window.location.pathname;
+  const [state, setState] = useState([false, false, false, false]);
 
+  useEffect(() => {
+    console.log("현재 path: ", currentPath);
+
+    if (currentPath === "/matchSchedule") {
+      setState([true, false, false, false, false]);
+    } else if (currentPath === "/teaminfo") {
+      setState([false, true, false, false, false]);
+    } else if (currentPath === "/") {
+      setState([false, false, false, false]);
+    } else if (currentPath === "/notification") {
+      setState([false, false, true, false]);
+    } else if (currentPath === "/mypage") {
+      setState([false, false, false, true]);
+    }
+  }, [currentPath]);
+  
   return (
     <>
       <Contents>
@@ -86,18 +109,18 @@ export default function Header() {
       </Contents>
       <Nav>
         <NavItem onClick={goMatchSchedule}>
-          <ScheduleIcon />
-          <Text>경기일정</Text>
+          {navbarScheduleIcon({ isSelected: state[0] })}
+          <Text isSelected={state[0]}>경기일정</Text>
         </NavItem>
         <NavItem onClick={goTeam}>
-          <TeaminfoIcon />
-          <Text>팀정보</Text>
+          {navbarTeamInfoIcon({ isSelected: state[1] })}
+          <Text isSelected={state[1]}>팀정보</Text>
         </NavItem>
         <NavItem onClick={goMain}>
           <img src={Logo} alt="logo" width={50} />
         </NavItem>
         <NavItem onClick={goNotification}>
-          <NotificationIcon />
+          {navbarNotificationIcon({ isSelected: state[2] })}
           {notificationState.newNotifications.length > 0 && (
             <div
               style={{
@@ -113,11 +136,12 @@ export default function Header() {
               }}
             />
           )}
-          <Text>알림</Text>
+          <Text isSelected={state[2]}>알림</Text>
         </NavItem>
         <NavItem onClick={goMypage}>
-          <MyPageIcon />
-          <Text>마이페이지</Text>
+          {/* <MyPageIcon /> */}
+          {navbarMyPageIcon({ isSelected: state[3] })}
+          <Text isSelected={state[3]}>마이페이지</Text>
         </NavItem>
       </Nav>
     </>
