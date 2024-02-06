@@ -4,9 +4,9 @@ spring:
     username: S10P12A409
     password: kp7Ad1kzRN
 
-#server:
-#  ssl:
-#    enabled: true
-#    key-store: classpath:/keystore.p12
-#    key-store-type: PKCS12
-#    key-store-password: 1234
+server:
+  ssl:
+    enabled: true
+    key-store: classpath:/keystore.p12
+    key-store-type: PKCS12
+    key-store-password: 1234
