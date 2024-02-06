@@ -11,6 +11,9 @@ import {
   ConfirmText,
   PurchaseTextContainer,
   PurchaseText,
+  DisabledConfirmContainer,
+  DisabledTextContainer,
+  DisabledText,
 } from "../../styles/mypage-styles/badgeStyle";
 import BadgeList from "./BadgeList";
 
@@ -60,7 +63,7 @@ function Badge() {
     false,
   ]);
 
-  const [selectedBadge, setSelectedBadge] = useState(0);
+  const [selectedBadge, setSelectedBadge] = useState(-1);
 
   useEffect(() => {
     const temp = [...badgeList];
@@ -187,6 +190,12 @@ function Badge() {
             </ConfirmText>
           </ConfirmTextContainer>
         </ConfirmContainer>
+      ) : selectedBadge === -1 ? (
+        <DisabledConfirmContainer>
+          <DisabledTextContainer>
+            <DisabledText>선택</DisabledText>
+          </DisabledTextContainer>
+        </DisabledConfirmContainer>
       ) : (
         <ConfirmContainer>
           <PurchaseTextContainer>

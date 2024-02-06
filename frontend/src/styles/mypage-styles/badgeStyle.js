@@ -104,6 +104,33 @@ export const PurchaseText = styled.div`
   line-height: 24px;
 `;
 
+export const DisabledConfirmContainer = styled.div`
+  display: flex;
+  justify-content: center;
+  width: 390px;
+  margin-top: 40px;
+`;
+
+export const DisabledTextContainer = styled.div`
+  display: flex;
+  width: 290px;
+  padding: 12px 24px;
+  flex-direction: column;
+  gap: 10px;
+  border-radius: 8px;
+  background-color: #f4f4f4;
+`;
+
+export const DisabledText = styled.div`
+  color: #000;
+  text-align: center;
+  font-family: Pretendard;
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: 24px;
+`;
+
 export const BadgeImageStyle = ({ code, isBadgeEarned }) => {
   return (
     <svg
