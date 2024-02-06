@@ -13,13 +13,13 @@ import {
   Backno,
   MemberName,
   MembersWrap,
-} from "../../styles/teamStyles/TeamStyle";
+} from "../../styles/TeamStyles/TeamStyle";
 import Facebook from "../../assets/icon/facebook-icon.png";
 import Home from "../../assets/icon/home-icon.png";
 import Instagram from "../../assets/icon/instagram-icon.png";
 import Youtube from "../../assets/icon/youtube-icon.png";
 
-function TeamInfoItem({ teamInfo }) {
+function TeamInfoItem({ teamInfo, coach, gk, df, mf, fw }) {
   const audioRef = useRef(null);
 
   const playAudio = () => {
@@ -45,25 +45,26 @@ function TeamInfoItem({ teamInfo }) {
         <RightItem>
           <TeamNameItem>{teamInfo.teamName}</TeamNameItem>
           <SocialItem>
-            <a href={teamInfo.instagram} target="_blank">
+            <a href={teamInfo.instagram} target="_blank" rel="noreferrer">
               <img src={Instagram} alt="instagram" />
             </a>
-            <a href={teamInfo.facebook} target="_blank">
-              <img src={Facebook} alt="facebook" />
-            </a>
-            <a href={teamInfo.youtube} target="_blank">
+            {teamInfo.facebook && (
+              <a href={teamInfo.facebook} target="_blank" rel="noreferrer">
+                <img src={Facebook} alt="facebook" />
+              </a>
+            )}
+            <a href={teamInfo.youtube} target="_blank" rel="noreferrer">
               <img src={Youtube} alt="youtube" />
             </a>
-            <a href={teamInfo.homepage} target="_blank">
+            <a href={teamInfo.homepage} target="_blank" rel="noreferrer">
               <img src={Home} alt="homepage" />
             </a>
-            <div onClick={playAudio}>
-              📣 응원가
-              <audio
-                ref={audioRef}
-                src="https://k-l1verse.s3.ap-northeast-2.amazonaws.com/응원가/울산-우리의+울산.mp3"
-              />
-            </div>
+            {teamInfo.song && (
+              <div onClick={playAudio}>
+                📣 응원가
+                <audio ref={audioRef} src={teamInfo.song} />
+              </div>
+            )}
           </SocialItem>
         </RightItem>
       </Top>
@@ -74,7 +75,7 @@ function TeamInfoItem({ teamInfo }) {
       <MembersWrap>
         <Position>감독/코치</Position>
         <Members>
-          {teamInfo.member.map((member) => (
+          {coach.map((member) => (
             <Member>
               <img src={member.profile} alt={member.name} />
               <Backno>{member.backNumber}</Backno>
@@ -86,7 +87,7 @@ function TeamInfoItem({ teamInfo }) {
       <MembersWrap>
         <Position>GK</Position>
         <Members>
-          {teamInfo.member.map((member) => (
+          {gk.map((member) => (
             <Member>
               <img src={member.profile} alt={member.name} />
               <Backno>{member.backNumber}</Backno>
@@ -98,7 +99,7 @@ function TeamInfoItem({ teamInfo }) {
       <MembersWrap>
         <Position>DK</Position>
         <Members>
-          {teamInfo.member.map((member) => (
+          {df.map((member) => (
             <Member>
               <img src={member.profile} alt={member.name} />
               <Backno>{member.backNumber}</Backno>
@@ -110,7 +111,7 @@ function TeamInfoItem({ teamInfo }) {
       <MembersWrap>
         <Position>MF</Position>
         <Members>
-          {teamInfo.member.map((member) => (
+          {mf.map((member) => (
             <Member>
               <img src={member.profile} alt={member.name} />
               <Backno>{member.backNumber}</Backno>
@@ -122,7 +123,7 @@ function TeamInfoItem({ teamInfo }) {
       <MembersWrap>
         <Position>FW</Position>
         <Members>
-          {teamInfo.member.map((member) => (
+          {fw.map((member) => (
             <Member>
               <img src={member.profile} alt={member.name} />
               <Backno>{member.backNumber}</Backno>

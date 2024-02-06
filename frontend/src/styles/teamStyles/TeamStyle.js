@@ -98,8 +98,8 @@ export const MembersWrap = styled.div`
 export const Members = styled.div`
   display: flex;
   flex-wrap: wrap;
-  /* width: 23rem;
-  margin: 0 auto; */
+  width: 23rem;
+  margin: 0 auto;
 `;
 
 export const Position = styled.div`
@@ -112,10 +112,12 @@ export const Position = styled.div`
 export const Member = styled.div`
   color: #222222;
   font-size: 0.8rem;
-  margin: 0.5rem 1.4rem 0.5rem 0.3rem;
+  margin: 0.7rem 1rem 0.5rem 0.3rem;
   text-align: center;
+  width: 3.3rem;
   img {
     width: 2.7rem;
+    height: 3.3rem;
     border-radius: 50%;
   }
 `;
@@ -128,4 +130,5 @@ export const Backno = styled.div`
 
 export const MemberName = styled.div`
   font-size: 0.75rem;
+  width: 3.3rem;
 `;
