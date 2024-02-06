@@ -83,8 +83,6 @@ export default function Header() {
   const [state, setState] = useState([false, false, false, false]);
 
   useEffect(() => {
-    console.log("현재 path: ", currentPath);
-
     if (currentPath === "/matchSchedule") {
       setState([true, false, false, false]);
     } else if (currentPath === "/team") {
