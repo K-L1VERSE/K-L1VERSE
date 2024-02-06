@@ -1,6 +1,6 @@
 spring:
   datasource:
-    url: jdbc:mariadb://i10a409.p.ssafy.io:5020/survey
+    url: jdbc:mariadb://3.39.6.237:5020/survey
     username: root
     password: KL1VERSE
 
