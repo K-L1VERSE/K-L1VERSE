@@ -49,16 +49,21 @@ public class MypageServiceImpl {
             accurate = (float) ((float) user.getWinBet() / user.getTotalBet() * 100.0);
         }
 
-        return MypageResponseDto.builder()
+        MypageResponseDto mypageResponseDto = MypageResponseDto.builder()
             .userId(user.getId())
             .nickname(user.getNickname())
             .profile(user.getProfile())
-            .mainBadge(user.getMainBadge())
             .goal(user.getGoal())
             .accurate(accurate)
             .totalBet(user.getTotalBet())
             .winBet(user.getWinBet())
             .build();
+
+        if(user.getWearBadge() != null) {
+            mypageResponseDto.setMainBadge(user.getWearBadge().getBadgeDetail().getCode());
+        }
+
+        return mypageResponseDto;
     }
 
     @Transactional

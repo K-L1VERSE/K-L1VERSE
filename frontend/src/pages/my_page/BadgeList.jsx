@@ -3,10 +3,9 @@ import BadgeGroup from "./BadgeGroup";
 
 function BadgeList({
   badgeList,
-  wearBadge,
-  handleBuyBadge,
   badgeNameList,
   badgeCodeList,
+  setSelectedBadge,
 }) {
   const badgesInGroupsOfFour = badgeCodeList.reduce((result, code, index) => {
     const groupIndex = Math.floor(index / 4);
@@ -24,10 +23,9 @@ function BadgeList({
           key={group[0]}
           codes={group}
           badgeList={badgeList}
-          wearBadge={wearBadge}
-          handleBuyBadge={handleBuyBadge}
           badgeNameList={badgeNameList}
           badgeCodeList={badgeCodeList}
+          setSelectedBadge={setSelectedBadge}
         />
       ))}
     </BadgeContainer>

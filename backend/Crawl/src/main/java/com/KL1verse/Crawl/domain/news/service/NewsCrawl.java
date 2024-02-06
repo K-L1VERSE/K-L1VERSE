@@ -39,19 +39,20 @@ public class NewsCrawl {
 
     @Getter
     @AllArgsConstructor
-    public static class teamInfo {
+    public static class TeamInfo {
         private String teamCode;
         private String teamName;
+        private String badgeDetialId;
     }
 
     private final RestTemplate restTemplate = new RestTemplate();
-    private final List<teamInfo> teamInfoList = List.of(
-            new teamInfo("01", "울산 HD"), new teamInfo("03", "포항 스틸러스"),
-            new teamInfo("04", "제주 유나이티드"), new teamInfo("05", "전북 현대 모터스"),
-            new teamInfo("09", "FC 서울"), new teamInfo("10", "대전 하나 시티즌"),
-            new teamInfo("17", "대구 FC"), new teamInfo("18", "인천 유나이티드"),
-            new teamInfo("21", "강원 FC"), new teamInfo("22", "광주 FC"),
-            new teamInfo("29", "수원 FC"), new teamInfo("35", "김천 상무"));
+    private final List<TeamInfo> teamInfoList = List.of(
+            new TeamInfo("01", "울산 HD", "1"), new TeamInfo("03", "포항 스틸러스", "2"),
+            new TeamInfo("04", "제주 유나이티드", "3"), new TeamInfo("05", "전북 현대 모터스", "4"),
+            new TeamInfo("09", "FC 서울", "5"), new TeamInfo("10", "대전 하나 시티즌", "6"),
+            new TeamInfo("17", "대구 FC", "7"), new TeamInfo("18", "인천 유나이티드", "8"),
+            new TeamInfo("21", "강원 FC", "9"), new TeamInfo("22", "광주 FC", "10"),
+            new TeamInfo("29", "수원 FC", "11"), new TeamInfo("35", "김천 상무", "12"));
 
     @Getter
     @AllArgsConstructor
@@ -76,13 +77,13 @@ public class NewsCrawl {
                 return;
             }
             log.info("Crawling K리그1 {} 뉴스...", teamInfo.getTeamName());
-            CrawlNewsTeam(teamInfo.getTeamCode());
+            CrawlNewsTeam(teamInfo);
         });
     }
 
-    private void CrawlNewsTeam(String teamCode) {
+    private void CrawlNewsTeam(TeamInfo teamInfo) {
         String newsListUrl = "https://m.sports.naver.com/team/news?category=kleague&teamCode=";
-        processCrawling(newsListUrl + teamCode, teamCode);
+        processCrawling(newsListUrl + teamInfo.getTeamCode(), teamInfo.getBadgeDetialId());
     }
 
     private HttpHeaders createHttpHeaders() {
@@ -109,7 +110,7 @@ public class NewsCrawl {
                 .orElse(null);
     }
 
-    private List<NewsInfo> parseNewsList(String newsListJsonString) {
+    private List<String> parseNewsList(String newsListJsonString) {
         ObjectMapper objectMapper = new ObjectMapper();
         JsonNode newsListJsonNode = null;
         try {
@@ -172,7 +173,7 @@ public class NewsCrawl {
         return newsContent;
     }
 
-    private void processCrawling(String url, String teamCode) {
+    private void processCrawling(String url, String badgeDetailId) {
         /*
         * Url로 Http GET 요청을 보내고, 응답을 받아온다.
         */
@@ -205,7 +206,7 @@ public class NewsCrawl {
             */
 
             NewsResDto newsResDto = new NewsResDto();
-            newsResDto.setTeamCode(teamCode);
+            newsResDto.setBadgeDetailId(badgeDetailId);
             List<String> titleList = new ArrayList<>();
             List<String> uriList = new ArrayList<>();
 

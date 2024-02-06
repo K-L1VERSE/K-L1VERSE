@@ -7,6 +7,14 @@ import RadioGroup from "../../components/common/RadioGroup";
 import Radio from "../../components/common/Radio";
 import MyWagle from "../../components/mypage/MyWagle";
 import Usergoal from "../../components/mypage/Usergoal";
+import {
+  BoardContainer,
+  BoardText,
+  BoardList,
+} from "../../styles/mypage-styles/MypageStyle";
+
+import { Nav, Button } from "../../styles/BoardStyles/BoardTopNavbarStyle";
+import WaggleContainer from "../../components/board/WaggleContainer";
 
 function MyPage() {
   const [user, setUser] = useState({
@@ -64,33 +72,41 @@ function MyPage() {
 
   useEffect(() => {
     getMyWagle();
+    console.log(selectedValue);
   }, [category]);
+
+  const [selectedValue, setSelectedValue] = useState("");
 
   return (
     <div>
-      <UserProfile user={user} />
+      <UserProfile user={user} setUser={setUser} />
       <Usergoal user={user} />
-      <div>
-        <RadioGroup>
-          <Radio
-            name="contact"
-            value="1"
-            defaultChecked
-            setCategory={setCategory}
+      <BoardContainer>
+        <BoardText>내가 작성한 글</BoardText>
+      </BoardContainer>
+      <BoardList>
+        <Nav>
+          <Button
+            className={category === "1" ? "active" : ""}
+            onClick={() => setCategory("1")}
           >
-            와글
-          </Radio>
-          <Radio name="contact" value="2" setCategory={setCategory}>
-            직관 메이트
-          </Radio>
-          <Radio name="contact" value="3" setCategory={setCategory}>
-            중고
-          </Radio>
-        </RadioGroup>
-      </div>
-      <div>
-        <MyWagle wagles={myWagle} />
-      </div>
+            ⚽️ 와글와글
+          </Button>
+          <Button
+            className={category === "2" ? "active" : ""}
+            onClick={() => setCategory("2")}
+          >
+            👋🏻 직관 메이트
+          </Button>
+          <Button
+            className={category === "3" ? "active" : ""}
+            onClick={() => setCategory("3")}
+          >
+            📦 중고거래
+          </Button>
+        </Nav>
+      </BoardList>
+      <div>{WaggleContainer({ waggleList: myWagle })}</div>
     </div>
   );
 }

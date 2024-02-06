@@ -6,7 +6,7 @@ import java.util.List;
 
 @Getter
 public class NewsNotificationListReqDto {
-    String teamCode;
+    String badgeDetailId;
     List<String> title;
     List<String> uri;
 }

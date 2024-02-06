@@ -34,22 +34,27 @@ export const ChattingBox = styled.div`
 export const MessageBox = styled.div`
   display: flex;
   margin-bottom: 0.5rem;
-  border: 2px solid orange;
 `;
 
-export const SenderImg = styled.div`
-  width: 3rem;
-  height: 3rem;
-  border: 2px solid yellow;
+export const OnlyNick = styled.div`
+  display: inline-block;
+`;
+
+export const SenderImg = styled.img`
+  width: 2.5rem;
+  height: 2.5rem;
+  border: 2px solid lightgray;
   border-radius: 50%;
   margin-right: 0.7rem;
 `;
 
 export const OnlyMsg = styled.div`
+  display: inline-block;
   background-color: #f1f1f1;
   padding: 0.5rem;
-  max-width: 13rem;
-  border-radius: 0 1rem 0 1rem;
+  max-width: 14rem;
+  border-radius: 0.1rem 1rem 1rem 1rem;
+  margin-top: 0.3rem;
 `;
 
 /* 밑에 채팅바 */

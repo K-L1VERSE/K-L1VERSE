@@ -4,10 +4,9 @@ import BadgeComponent from "./BadgeComponent";
 function BadgeGroup({
   codes,
   badgeList,
-  wearBadge,
-  handleBuyBadge,
   badgeNameList,
   badgeCodeList,
+  setSelectedBadge,
 }) {
   return (
     <BadgeLineContainer>
@@ -16,10 +15,9 @@ function BadgeGroup({
           key={code}
           code={code}
           badgeList={badgeList}
-          wearBadge={wearBadge}
-          handleBuyBadge={handleBuyBadge}
           badgeNameList={badgeNameList}
           badgeCodeList={badgeCodeList}
+          setSelectedBadge={setSelectedBadge}
         />
       ))}
     </BadgeLineContainer>

@@ -29,6 +29,8 @@ function KaKaoRedirection() {
         accessToken: res.data.accessToken,
         email: res.data.email,
         domain: res.data.domain,
+        userId: res.data.userId,
+        mainBadge: res.data.mainBadge,
         isLoggedIn: true,
       });
 
