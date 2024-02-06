@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import axios from "../../api/axios";
 import Hangul from "hangul-js";
+import Swal from "sweetalert2";
 import {
   ModalBackground,
   ModalContainer,
@@ -66,11 +67,18 @@ const EditNicknameModal = ({ setModalOpen, user, setUser }) => {
           nickname: newNickname,
         })
         .then((res) => {
-          console.log(res);
+          if (res.data.code === 1002) {
+            Swal.fire({
+              icon: "error",
+              title: "포인트가 부족합니다.",
+            });
+            setModalOpen(false);
+            return;
+          }
           setUser(() => {
             const prev = { ...user };
             prev.nickname = newNickname;
-            prev.goal -= 10000;
+            prev.goal -= 1000;
             return prev;
           });
           setModalOpen(false);

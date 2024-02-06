@@ -112,11 +112,11 @@ public class AuthService {
 
             // 100골 지급 (Todo... 골 지급 정책 정하기)
             log.info("user {}:{} today first login at {}", user.getEmail(), user.getDomain(), LocalDateTime.now());
-            user.setGoal(user.getGoal() + 100);
+            user.setGoal(user.getGoal() + 10);
             notificationService.sendNotification(MessageReqDto.builder()
                         .userId(user.getId())
                         .type(NotificationType.GOAL)
-                        .message("출석 보상으로 100골을 지급 받았습니다.")
+                        .message("출석 보상으로 10골을 지급 받았습니다.")
                         .uri(domain+"/mypage")
                         .date(LocalDateTime.now())
                         .build());
