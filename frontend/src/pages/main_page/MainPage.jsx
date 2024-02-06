@@ -1,3 +1,4 @@
+/* eslint-disable react/jsx-no-comment-textnodes */
 import React from "react";
 import { useNavigate } from "react-router-dom";
 import Board from "../../components/main/Board";
@@ -15,10 +16,6 @@ function MainPage() {
     navigate("/waggle");
   }
 
-  const goMatchSchedule = () => {
-    navigate("/matchSchedule");
-  };
-
   return (
     <div>
       <Notice />
@@ -29,7 +26,7 @@ function MainPage() {
       <Board />
       <Category>
         <Title>🏁 오늘의 경기</Title>
-        <AllBtn onClick={goMatchSchedule}>전체보기</AllBtn>
+        <AllBtn>전체보기</AllBtn>
       </Category>
       <TodayMatch />
       <Hotclip />
