@@ -162,8 +162,7 @@ function UserInfo({ user, setUser }) {
               console.log(err);
             });
         })
-        .catch(() => {
-        });
+        .catch(() => {});
     }
   };
 
@@ -213,7 +212,7 @@ function UserInfo({ user, setUser }) {
               accept="image/*"
               onChange={handleImageChange}
             />
-            <BadgeButton />
+            <BadgeButton mainBadge={user.mainBadge} />
             <UserNickName>{user.nickname}</UserNickName>
           </UserInfoContent>
         </UserInfoContainer>

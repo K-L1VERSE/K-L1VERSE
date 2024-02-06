@@ -1,5 +1,8 @@
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
+import { useSetRecoilState } from "recoil";
+import { UserState } from "../../global/UserState";
+
 import Swal from "sweetalert2";
 import axios from "../../api/axios";
 
@@ -61,6 +64,7 @@ function Badge() {
   ]);
 
   const [selectedBadge, setSelectedBadge] = useState(0);
+  const setUserState = useSetRecoilState(UserState);
 
   useEffect(() => {
     const temp = [...badgeList];
@@ -101,6 +105,11 @@ function Badge() {
           })
           .then(() => {
             Swal.fire("뱃지 착용이 완료되었습니다.");
+
+            setUserState((prev) => ({
+              ...prev,
+              mainBadge: badgeCodeList[index],
+            }));
             // alert("뱃지 착용이 완료되었습니다.");
             goMypage();
           })
@@ -134,29 +143,29 @@ function Badge() {
             code: badgeCodeList[index],
           })
           .then((res) => {
-            // if (res.data.code === 1002) {
-            //   Swal.fire({
-            //     icon: "error",
-            //     title: "포인트가 부족합니다.",
-            //   });
-            //   // alert("포인트가 부족합니다.");
-            // } else if (res.data.code === 1200) {
-            //   Swal.fire({
-            //     icon: "error",
-            //     title: "잘못된 요청입니다.",
-            //   });
-            //   // alert("잘못된 요청입니다.");
-            // }
+            if (res.data.code === 1002) {
+              Swal.fire({
+                icon: "error",
+                title: "포인트가 부족합니다.",
+              });
+              // alert("포인트가 부족합니다.");
+            } else if (res.data.code === 1200) {
+              Swal.fire({
+                icon: "error",
+                title: "잘못된 요청입니다.",
+              });
+              // alert("잘못된 요청입니다.");
+            } else {
+              Swal.fire("뱃지 구매가 완료되었습니다.");
+              // alert("뱃지 구매가 완료되었습니다.");
+              setBadgeList(() => {
+                const newBadgeList = [...badgeList];
+                newBadgeList[index] = true;
+                return newBadgeList;
+              });
 
-            Swal.fire("뱃지 구매가 완료되었습니다.");
-            // alert("뱃지 구매가 완료되었습니다.");
-            setBadgeList(() => {
-              const newBadgeList = [...badgeList];
-              newBadgeList[index] = true;
-              return newBadgeList;
-            });
-
-            wearBadge(index);
+              wearBadge(index);
+            }
           })
           .catch(() => {
             Swal.fire({
