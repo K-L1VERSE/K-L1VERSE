@@ -113,11 +113,11 @@ public class MypageServiceImpl {
 
         log.info("newNickname = {}", nicknameUpdateReqDto.getNickname());
 
-        if(user.getGoal() < 10000) {
+        if(user.getGoal() < 1000) {
             throw new UserException(ResponseCode.NOT_ENOUGH_GOAL);
         }
 
-        user.setGoal(user.getGoal() - 10000);
+        user.setGoal(user.getGoal() - 1000);
         user.setNickname(nicknameUpdateReqDto.getNickname());
         userRepository.save(user);
     }
