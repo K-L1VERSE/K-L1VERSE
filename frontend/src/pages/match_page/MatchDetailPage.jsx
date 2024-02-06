@@ -14,7 +14,6 @@ export default function MatchDetailPage() {
   useEffect(() => {
     const fetchData = async () => {
       const result = await getMatchDetail(matchId);
-      console.log(result);
       setData(result);
     };
     fetchData();

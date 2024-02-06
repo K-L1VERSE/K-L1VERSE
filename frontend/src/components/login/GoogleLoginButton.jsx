@@ -21,18 +21,18 @@ function GoogleLoginButton() {
 const LoginButton = styled.button`
   width: 183px;
   height: 45px;
+  padding-top: 10px;
   border: none;
   background-color: transparent;
   cursor: pointer;
-
-  border-radius: 6px;
   border: 1px solid #dcdcdc;
-
   background-image: url(${GoogleLoginImg});
   background-size: contain;
-
+  border-radius: 8px;
+  transition: box-shadow 0.5s ease;
   &:hover {
-    filter: brightness(0.7);
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
+    cursor: pointer;
   }
 `;
 

@@ -16,7 +16,6 @@ public class MessageController {
 
     @MessageMapping("/chat/message")
     public void enter(MessageReqDto message) {
-        log.info("Message: {}", message);
         sendingOperations.convertAndSend("/topic/chat/room/" + message.getRoomId(), message);
     }
 }

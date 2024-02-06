@@ -25,6 +25,7 @@ function GoogleRedirection() {
         email: res.data.email,
         domain: res.data.domain,
         userId: res.data.userId,
+        mainBadge: res.data.mainBadge,
         isLoggedIn: true,
       });
 
