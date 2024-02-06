@@ -7,6 +7,11 @@ import RadioGroup from "../../components/common/RadioGroup";
 import Radio from "../../components/common/Radio";
 import MyWagle from "../../components/mypage/MyWagle";
 import Usergoal from "../../components/mypage/Usergoal";
+import {
+  BoardContainer,
+  BoardText,
+  BoardList,
+} from "../../styles/mypage-styles/MypageStyle";
 
 function MyPage() {
   const [user, setUser] = useState({
@@ -64,30 +69,48 @@ function MyPage() {
 
   useEffect(() => {
     getMyWagle();
+    console.log(selectedValue);
   }, [category]);
+
+  const [selectedValue, setSelectedValue] = useState("");
 
   return (
     <div>
-      <UserProfile user={user} />
+      <UserProfile user={user} setUser={setUser} />
       <Usergoal user={user} />
-      <div>
-        <RadioGroup>
-          <Radio
-            name="contact"
-            value="1"
-            defaultChecked
-            setCategory={setCategory}
-          >
-            와글
-          </Radio>
-          <Radio name="contact" value="2" setCategory={setCategory}>
-            직관 메이트
-          </Radio>
-          <Radio name="contact" value="3" setCategory={setCategory}>
-            중고
-          </Radio>
-        </RadioGroup>
-      </div>
+      <BoardContainer>
+        <BoardText>내가 작성한 글</BoardText>
+      </BoardContainer>
+      <BoardList>
+        <Radio
+          name="contact"
+          value="1"
+          defaultChecked
+          setCategory={setCategory}
+          selectedValue={selectedValue}
+          setSelectedValue={setSelectedValue}
+        >
+          와글
+        </Radio>
+        <Radio
+          name="contact"
+          value="2"
+          setCategory={setCategory}
+          selectedValue={selectedValue}
+          setSelectedValue={setSelectedValue}
+        >
+          직관 메이트
+        </Radio>
+        <Radio
+          name="contact"
+          value="3"
+          setCategory={setCategory}
+          selectedValue={selectedValue}
+          setSelectedValue={setSelectedValue}
+        >
+          중고
+        </Radio>
+      </BoardList>
       <div>
         <MyWagle wagles={myWagle} />
       </div>
