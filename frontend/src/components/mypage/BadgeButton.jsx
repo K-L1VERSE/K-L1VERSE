@@ -87,7 +87,7 @@ function BadgeButton({ mainBadge }) {
   const navigate = useNavigate();
   const goBadge = () => {
     navigate("/badge");
-  }
+  };
 
   const handleBuyBadge = (index) => {
     const confirmPurchase = window.confirm("뱃지를 구매하시겠습니까?");

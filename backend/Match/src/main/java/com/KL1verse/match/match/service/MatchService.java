@@ -25,4 +25,5 @@ public interface MatchService {
     void saveTimeline(int matchYear, int gameId, int meetSeq, int matchId);
 
     List<TimelineResponse> getTimeline(int matchId);
+
 }

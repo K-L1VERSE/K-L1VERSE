@@ -45,4 +45,16 @@ public class BettingServiceImpl implements BettingService {
 
     }
 
+    @Override
+    public int checkBetting(int matchId, int userId) {
+
+        int n = bettingRepository.findNumByMatchIdAndUserId(matchId, userId);
+        log.info("n : {}=============================================", n);
+        if (n == 0) {
+            return 0;
+        } else {
+            return 1;
+        }
+    }
+
 }

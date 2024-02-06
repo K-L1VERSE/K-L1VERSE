@@ -115,7 +115,7 @@ const UserNickName = styled.div`
   line-height: normal;
 `;
 
-function UserInfo({ user }) {
+function UserInfo({ user, setUser }) {
   /* 유저 닉네임 변경 버튼 이벤트 */
   const editUserInfo = () => {
     console.log("editUserInfo");
@@ -152,14 +152,17 @@ function UserInfo({ user }) {
             .then((res) => {
               reader.readAsDataURL(file);
               setUserState((prev) => ({ ...prev, profile: url }));
+              setUser(() => {
+                const temp = { ...user };
+                temp.profile = url;
+                return temp;
+              });
             })
             .catch((err) => {
               console.log(err);
             });
         })
-        .catch((err) => {
-          console.log(err);
-        });
+        .catch(() => {});
     }
   };
 
@@ -179,7 +182,14 @@ function UserInfo({ user }) {
   };
 
   return (
-    <div>
+    <div
+      style={{
+        display: "flex",
+        flexDirection: "column",
+        alignItems: "center",
+        gap: "20px",
+      }}
+    >
       <ProfileTitleContainer>
         <ProfileTitleHeader>
           <ProfileTitleContent>
@@ -202,16 +212,20 @@ function UserInfo({ user }) {
               accept="image/*"
               onChange={handleImageChange}
             />
-            <BadgeButton />
-            <UserNickName>김민재굉장하다{user.nickname}</UserNickName>
+            <BadgeButton mainBadge={user.mainBadge} />
+            <UserNickName>{user.nickname}</UserNickName>
           </UserInfoContent>
-
-          <LogoutButton />
         </UserInfoContainer>
       </ProfileTitleContainer>
 
       {/* EditNickname Modal */}
-      {isModalOpen && <EditNicknameModal setModalOpen={setIsModalOpen} />}
+      {isModalOpen && (
+        <EditNicknameModal
+          setModalOpen={setIsModalOpen}
+          user={user}
+          setUser={setUser}
+        />
+      )}
     </div>
   );
 }

@@ -3,21 +3,21 @@ server:
 
 spring:
   profiles:
-    active: deploy
+    active: dev
 
 #spring:
-#  cloud:
-#    gateway:
-#      mvc:
-#        routes:
-#          - id: USER-LOGIN
-#            uri: http://localhost:8010
-#            predicates:
-#              - Path=/user/**
-#            filters:
-#              - RewritePath=/user/(?<segment>.*), /$\{segment}
+  cloud:
+    gateway:
+      mvc:
+        routes:
+          - id: USER-LOGIN
+            uri: http://localhost:8010
+            predicates:
+              - Path=/user/**
+            filters:
+              - RewritePath=/user/(?<segment>.*), /$\{segment}
 
-#          - id: USER-SERVICE-2
-#            uri: http://localhost:8010
-#            predicates:
-#              - Path=/login/**
+          - id: USER-SERVICE-2
+            uri: http://localhost:8010
+            predicates:
+              - Path=/login/**

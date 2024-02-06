@@ -1,3 +1,4 @@
+/* eslint-disable react/jsx-no-comment-textnodes */
 import React from "react";
 import { useNavigate } from "react-router-dom";
 import Board from "../../components/main/Board";
@@ -36,7 +37,7 @@ function MainPage() {
       <Category>
         <Title>🎯 노스트라다무스 랭킹</Title>
       </Category>
-      <Nostradamus />
+      {/* <Nostradamus /> */}
       <Survey />
     </div>
   );
