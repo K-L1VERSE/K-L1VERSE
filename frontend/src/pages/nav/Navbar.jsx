@@ -90,9 +90,9 @@ export default function Header() {
     console.log("현재 path: ", currentPath);
 
     if (currentPath === "/matchSchedule") {
-      setState([true, false, false, false, false]);
+      setState([true, false, false, false]);
     } else if (currentPath === "/teaminfo") {
-      setState([false, true, false, false, false]);
+      setState([false, true, false, false]);
     } else if (currentPath === "/") {
       setState([false, false, false, false]);
     } else if (currentPath === "/notification") {
@@ -101,7 +101,7 @@ export default function Header() {
       setState([false, false, false, true]);
     }
   }, [currentPath]);
-  
+
   return (
     <>
       <Contents>
