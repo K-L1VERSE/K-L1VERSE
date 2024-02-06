@@ -1,8 +1,8 @@
 spring:
   datasource:
-    url: jdbc:mariadb://stg-yswa-kr-practice-db-master.mariadb.database.azure.com:3306/S10P12A409
-    username: S10P12A409
-    password: kp7Ad1kzRN
+    url: jdbc:mariadb://i10a409.p.ssafy.io:5020/survey
+    username: root
+    password: KL1VERSE
 
 server:
   ssl:
