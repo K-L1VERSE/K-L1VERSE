@@ -57,8 +57,8 @@ function WaggleRegistPage() {
             boardImage,
           },
         },
-        ({ data }) => {
-          navigate(`/waggle/${data.board.boardId}`);
+        () => {
+          navigate(`/waggle/${boardId}`);
         },
         () => {},
       );
