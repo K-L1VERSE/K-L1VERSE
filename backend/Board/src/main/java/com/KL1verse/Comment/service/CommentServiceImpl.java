@@ -4,6 +4,7 @@ package com.KL1verse.Comment.service;
 import com.KL1verse.Board.repository.BoardRepository;
 import com.KL1verse.Board.repository.entity.Board;
 import com.KL1verse.Comment.dto.req.CommentDTO;
+import com.KL1verse.Comment.repository.CommentLikeRepository;
 import com.KL1verse.Comment.repository.CommentRepository;
 import com.KL1verse.Comment.repository.entity.Comment;
 import com.KL1verse.kafka.dto.res.BoardNotificationResDto;
@@ -27,6 +28,7 @@ public class CommentServiceImpl implements CommentService {
     private final CommentRepository commentRepository;
     private final BoardRepository boardRepository;
     private final KafkaBoardNotificationProducer kafkaBoardNotificationProducer;
+    private final CommentLikeRepository commentLikeRepository;
 
     @Override
     public CommentDTO getCommentById(Long commentId, Long requestingUserId) {
@@ -170,6 +172,10 @@ public class CommentServiceImpl implements CommentService {
                     comment.getUserId());
                 commentDTO.setNickname((String) userNickname.get(0)[0]); // Set the nickname
 
+
+                boolean isLiked = commentLikeRepository.findByUserIdAndCommentId_CommentId(requestingUserId, comment.getCommentId()).isPresent();
+                commentDTO.setLiked(isLiked);
+
                 if (comment.getParentId() == null) {
 
                     if (comment.isSecret() && !isAuthorized(comment, requestingUserId)) {
@@ -181,6 +187,7 @@ public class CommentServiceImpl implements CommentService {
                         secretComment.setCommentId(comment.getCommentId());
                         secretComment.setCreateAt(comment.getCreateAt());
                         secretComment.setSecret(comment.isSecret());
+                        secretComment.setLiked(isLiked);
 
                         List<CommentDTO> secretReplies = comment.getReplies().stream()
                             .map(reply -> {
@@ -196,6 +203,7 @@ public class CommentServiceImpl implements CommentService {
                                     secretReply.setSecret(reply.isSecret());
                                     secretReply.setReplies(Collections.emptyList());
                                     secretReply.setBoardId(reply.getBoardId().getBoardId());
+                                    secretReply.setLiked(isLiked);
 
                                     Integer secretReplyLikesCount = commentRepository.findLikesCountByCommentId(
                                         reply.getCommentId());
@@ -215,6 +223,7 @@ public class CommentServiceImpl implements CommentService {
                                         reply.getUserId());
                                     normalReply.setNickname(
                                         (String) replyNickname.get(0)[0]); // 닉네임 설정
+                                    normalReply.setLiked(isLiked);
                                     return normalReply;
                                 }
                             })
@@ -223,6 +232,7 @@ public class CommentServiceImpl implements CommentService {
 
                         secretComment.setBoardId(comment.getBoardId().getBoardId());
                         secretComment.setLikesCount(likesCount.intValue());
+                        secretComment.setLiked(isLiked);
                         return secretComment;
                     } else {
 
@@ -240,6 +250,7 @@ public class CommentServiceImpl implements CommentService {
                                     secretReply.setSecret(reply.isSecret());
                                     secretReply.setReplies(Collections.emptyList());
                                     secretReply.setBoardId(reply.getBoardId().getBoardId());
+                                    secretReply.setLiked(isLiked);
 
                                     Integer secretReplyLikesCount = commentRepository.findLikesCountByCommentId(
                                         reply.getCommentId());
@@ -260,6 +271,7 @@ public class CommentServiceImpl implements CommentService {
                                         reply.getUserId());
                                     normalReply.setNickname(
                                         (String) replyNickname.get(0)[0]); // 닉네임 설정
+                                    normalReply.setLiked(isLiked);
                                     return normalReply;
                                 }
                             })
@@ -267,6 +279,7 @@ public class CommentServiceImpl implements CommentService {
 
                         commentDTO.setReplies(replies);
                         commentDTO.setNickname((String) userNickname.get(0)[0]);
+                        commentDTO.setLiked(isLiked);
                         return commentDTO;
                     }
                 } else {
@@ -469,7 +482,6 @@ public class CommentServiceImpl implements CommentService {
 
         Integer likesCount = commentRepository.findLikesCountByCommentId(comment.getCommentId());
         commentDTO.setLikesCount(likesCount);
-
         commentDTO.setParentId(
             comment.getParentId() != null ? comment.getParentId().getCommentId() : null);
         commentDTO.setReplies(
