@@ -67,6 +67,10 @@ export default function Header() {
     navigate("/matchSchedule");
   };
 
+  const goTeam = () => {
+    navigate("/team");
+  };
+
   const goMain = () => {
     navigate("/");
   };
@@ -97,7 +101,7 @@ export default function Header() {
       setState([false, false, false, true]);
     }
   }, [currentPath]);
-
+  
   return (
     <>
       <Contents>
@@ -108,7 +112,7 @@ export default function Header() {
           {navbarScheduleIcon({ isSelected: state[0] })}
           <Text isSelected={state[0]}>경기일정</Text>
         </NavItem>
-        <NavItem>
+        <NavItem onClick={goTeam}>
           {navbarTeamInfoIcon({ isSelected: state[1] })}
           <Text isSelected={state[1]}>팀정보</Text>
         </NavItem>

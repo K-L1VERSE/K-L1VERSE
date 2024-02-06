@@ -1,6 +1,11 @@
 import styled from "styled-components";
 
-export const TodayMatchWarp = styled.div``;
+export const NoMatchText = styled.div`
+  font-size: 0.8rem;
+  color: gray;
+  text-align: center;
+  padding: 0.5rem 0;
+`;
 
 export const TodayMatchItemhWrap = styled.div`
   display: flex;
