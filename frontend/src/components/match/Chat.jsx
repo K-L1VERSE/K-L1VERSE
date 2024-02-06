@@ -113,16 +113,16 @@ function Chat() {
       console.log("currentMessage", currentMessage);
 
       if (currentMessage >= 1) {
-        const timeMinutesGap = moment
+        const timeDaysGap = moment
           .duration(
             moment().diff(
               moment(messages[messages.length - 4 - currentMessage].date),
             ),
           )
-          .asMinutes();
-        if (timeMinutesGap > 10) {
+          .asDays();
+        if (timeDaysGap > 1) {
           // 여기서 처리
-          alert("이전 메시지를 불러옵니다.");
+          // 문제점 채팅이 길어져서
         }
       }
     }
