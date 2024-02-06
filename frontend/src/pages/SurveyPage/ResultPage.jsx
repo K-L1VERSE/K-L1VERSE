@@ -69,6 +69,10 @@ function ResultPage() {
     navigate("/survey");
   };
 
+  const goKakao = () => {
+    navigate("/kakao");
+  };
+
   return (
     <div>
       {showResult && (
@@ -113,6 +117,9 @@ function ResultPage() {
           <ShareBox>
             <button type="button" onClick={handleRestart}>
               다시하기
+            </button>
+            <button type="button" onClick={goKakao}>
+              카카오톡 공유
             </button>
           </ShareBox>
         </div>

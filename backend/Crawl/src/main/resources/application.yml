@@ -1,0 +1,6 @@
+spring:
+    profiles:
+        active: deploy
+
+openai:
+    api-key: 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

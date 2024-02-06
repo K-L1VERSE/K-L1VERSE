@@ -13,7 +13,7 @@ import lombok.NoArgsConstructor;
 public class MessageReqDto {
 
     public static enum NotificationType {
-        COMMENT, LIKE, GOAL, MATCH
+        COMMENT, LIKE, GOAL, MATCH, NEWS
     }
 
     private NotificationType type;

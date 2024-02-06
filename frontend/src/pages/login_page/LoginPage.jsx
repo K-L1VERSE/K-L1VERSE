@@ -8,6 +8,8 @@ import KakaoLoginButton from "../../components/login/KakaoLoginButton";
 import LoginLogo from "../../components/login/LoginLogo";
 
 function LoginPage() {
+  localStorage.removeItem("recoil-persist");
+
   return (
     <Box>
       <LoginLogo />
