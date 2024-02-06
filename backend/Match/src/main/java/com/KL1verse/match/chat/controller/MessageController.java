@@ -2,6 +2,7 @@ package com.KL1verse.match.chat.controller;
 
 import com.KL1verse.match.chat.dto.req.MessageReqDto;
 import com.KL1verse.match.chat.dto.res.MessageResDto;
+import com.KL1verse.match.kafka.producer.KafkaCleanbotCheckProducer;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.messaging.handler.annotation.MessageMapping;
@@ -16,6 +17,7 @@ import java.util.concurrent.atomic.AtomicLong;
 public class MessageController {
 
     private final SimpMessageSendingOperations sendingOperations;
+    private final KafkaCleanbotCheckProducer kafkaCleanbotCheckProducer;
     private static final AtomicLong messageIdCounter = new AtomicLong(0);
 
     private static Long generateMessageId() {
@@ -37,5 +39,6 @@ public class MessageController {
         sendingOperations.convertAndSend("/topic/chat/room/" + messageReqDto.getRoomId(), message);
 
         // Kafka Producing
+        kafkaCleanbotCheckProducer.cleanbotCheck(message);
     }
 }
