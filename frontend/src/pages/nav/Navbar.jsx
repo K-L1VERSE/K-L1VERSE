@@ -1,10 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { Outlet, useNavigate } from "react-router-dom";
 import { useRecoilState } from "recoil";
-import { ReactComponent as MyPageIcon } from "../../assets/icon/mypage-icon.svg";
-import { ReactComponent as NotificationIcon } from "../../assets/icon/notification-icon.svg";
-import { ReactComponent as ScheduleIcon } from "../../assets/icon/schedule-icon.svg";
-import { ReactComponent as TeaminfoIcon } from "../../assets/icon/teaminfo-icon.svg";
 import {
   Text,
   Nav,
@@ -91,7 +87,7 @@ export default function Header() {
 
     if (currentPath === "/matchSchedule") {
       setState([true, false, false, false]);
-    } else if (currentPath === "/teaminfo") {
+    } else if (currentPath === "/team") {
       setState([false, true, false, false]);
     } else if (currentPath === "/") {
       setState([false, false, false, false]);
