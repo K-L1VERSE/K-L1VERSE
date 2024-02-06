@@ -23,6 +23,8 @@ repositories {
 }
 
 dependencies {
+	// Redis
+	implementation 'org.springframework.boot:spring-boot-starter-data-redis'
 
 	// web socket
 	implementation 'org.springframework.boot:spring-boot-starter-websocket'

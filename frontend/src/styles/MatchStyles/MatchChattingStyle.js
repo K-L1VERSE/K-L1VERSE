@@ -57,6 +57,12 @@ export const OnlyMsg = styled.div`
   margin-top: 0.3rem;
 `;
 
+export const MsgTime = styled.div`
+  font-size: 0.7rem;
+  color: gray;
+  margin-top: 0.2rem;
+`;
+
 /* 밑에 채팅바 */
 export const ChattingBar = styled.div`
   display: flex;

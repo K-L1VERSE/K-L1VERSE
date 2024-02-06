@@ -4,6 +4,7 @@ import { useRecoilState } from "recoil";
 import { useParams } from "react-router-dom";
 import Stomp from "webstomp-client";
 import moment from "moment";
+import axios from "../../api/axios";
 import {
   ChattingTop,
   ChattingBox,
@@ -13,6 +14,7 @@ import {
   MessageBox,
   OnlyNick,
   OnlyMsg,
+  MsgTime,
   SenderImg,
 } from "../../styles/MatchStyles/MatchChattingStyle";
 import { UserState } from "../../global/UserState";
@@ -28,6 +30,16 @@ function Chat() {
   const { profile } = userState;
   const sender = nickname;
 
+  const recvPrevMessages = () => {
+    axios
+      .get(`/match/chat/message/${roomId}`)
+      .then((response) => {
+        const { data } = response;
+        setMessages(data);
+      })
+      .catch(() => {});
+  };
+
   useEffect(() => {
     const domain = process.env.REACT_APP_DOMAIN;
     const socket = new SockJS(`${domain}:8040/ws/chat`);
@@ -41,6 +53,7 @@ function Chat() {
       });
     });
 
+    recvPrevMessages();
     // Set stompClient state to ensure it persists across re-renders
     setStompClient(stomp);
     console.log("stomp", stomp);
@@ -52,6 +65,8 @@ function Chat() {
   }, [roomId]); // Empty dependency array ensures this effect runs only once on mount
 
   const sendMessage = () => {
+    if (message === "") return;
+
     const data = {
       type: "TALK",
       roomId: Number(roomId),
@@ -87,6 +102,44 @@ function Chat() {
       chatBox.current.scrollTop = chatBox.current.scrollHeight;
     }
   }, [messages]);
+
+  const handleScroll = () => {
+    if (chatBox.current) {
+      const gap = 83.984;
+      const scrollTotalHeight = (messages.length - 4) * gap;
+      const currentMessage = Math.ceil(
+        (scrollTotalHeight - chatBox.current.scrollTop) / gap,
+      );
+      console.log("currentMessage", currentMessage);
+
+      if (currentMessage >= 1) {
+        const timeMinutesGap = moment
+          .duration(
+            moment().diff(
+              moment(messages[messages.length - 4 - currentMessage].date),
+            ),
+          )
+          .asMinutes();
+        if (timeMinutesGap > 10) {
+          // 여기서 처리
+          alert("이전 메시지를 불러옵니다.");
+        }
+      }
+    }
+  };
+
+  useEffect(() => {
+    if (chatBox.current) {
+      chatBox.current.addEventListener("scroll", handleScroll);
+    }
+
+    return () => {
+      if (chatBox.current) {
+        chatBox.current.removeEventListener("scroll", handleScroll);
+      }
+    };
+  }, []);
+
   return (
     <div style={{ border: "4px solid yellow" }}>
       <ChattingTop>커피는 TOP....</ChattingTop>
@@ -104,6 +157,11 @@ function Chat() {
                     <OnlyNick>{message.sender}</OnlyNick>
                   </div>
                   <OnlyMsg>{message.message}</OnlyMsg>
+                  <MsgTime>
+                    {moment(message.date, "YYYY-MM-DD HH:mm:ss").format(
+                      "MM-DD hh:mm",
+                    )}
+                  </MsgTime>
                 </div>
               </MessageBox>
             </div>
