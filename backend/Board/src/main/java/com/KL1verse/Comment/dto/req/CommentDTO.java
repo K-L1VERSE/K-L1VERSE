@@ -18,7 +18,7 @@ import lombok.ToString;
 public class CommentDTO {
 
     private Long commentId;
-    private Long userId;
+    private Integer userId;
     private String content;
     private Long boardId;
     private Long parentId;
@@ -28,4 +28,5 @@ public class CommentDTO {
     private LocalDateTime deleteAt;
     private boolean isSecret;
     private int likesCount;
+    private String nickname;
 }

@@ -34,7 +34,7 @@ public class Comment {
     private Long commentId;
 
     @Column(name = "user_id")
-    private Long userId;
+    private Integer userId;
 
     @Column(name = "content")
     private String content;

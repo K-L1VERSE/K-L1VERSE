@@ -66,6 +66,14 @@ public class WaggleServiceImpl implements WaggleService {
         int commentCount = commentRepository.countCommentsByBoardId(boardId);
         waggleDTO.getBoard().setCommentCount(commentCount);
 
+        Integer userId = waggleDTO.getBoard().getUserId();
+        List<Object[]> nicknameResult = waggleRepository.findUserNickname(userId);
+
+
+        String userNickname = (String) nicknameResult.get(0)[0];
+        waggleDTO.getBoard().setNickname(userNickname);
+
+
         return waggleDTO;
     }
     @Override
@@ -79,8 +87,15 @@ public class WaggleServiceImpl implements WaggleService {
         File file = fileService.saveFile(waggleDto.getBoard().getBoardImage());
         boardImageService.saveBoardImage(board, file);
 
+        Integer userId = waggleDto.getBoard().getUserId();
+        List<Object[]> nicknameResult = waggleRepository.findUserNickname(userId);
+        String userNickname = nicknameResult.isEmpty() ? null : (String) nicknameResult.get(0)[0];
+
         Waggle createdWaggle = waggleRepository.save(waggle);
 
+        WaggleDTO createdWaggleDTO = convertToDTO(createdWaggle);
+        createdWaggleDTO.getBoard().setNickname(userNickname);
+        
         BoardCleanbotCheckReqDto boardCleanbotCheckReqDto = BoardCleanbotCheckReqDto.builder()
             .id(createdWaggle.getBoard().getBoardId())
             .content(createdWaggle.getBoard().getContent())
@@ -88,7 +103,7 @@ public class WaggleServiceImpl implements WaggleService {
             .build();
         kafkaBoardCleanbotProducer.boardCleanbotCheck(boardCleanbotCheckReqDto);
 
-        return convertToDTO(createdWaggle);
+        return createdWaggleDTO;
     }
 
     @Transactional
@@ -208,6 +223,13 @@ public class WaggleServiceImpl implements WaggleService {
                 }
             }
 
+            Integer userId = waggleDTO.getBoard().getUserId();
+            List<Object[]> nicknameResult = waggleRepository.findUserNickname(userId);
+
+
+            String userNickname = (String) nicknameResult.get(0)[0];
+            waggleDTO.getBoard().setNickname(userNickname);
+
             return waggleDTO;
         });
     }
@@ -223,6 +245,7 @@ public class WaggleServiceImpl implements WaggleService {
             Long boardId = waggle.getBoard().getBoardId();
             Integer commentCount = commentRepository.countCommentsByBoardId(boardId);
 
+
             Integer likesCount = waggleRepository.getLikesCountForEachWaggle().stream()
                 .filter(result -> ((Waggle) result[0]).getWaggleId().equals(waggle.getWaggleId()))
                 .map(result -> ((Long) result[1]).intValue())
@@ -232,9 +255,16 @@ public class WaggleServiceImpl implements WaggleService {
             waggleDTO.getBoard().setCommentCount(commentCount != null ? commentCount : 0);
             waggleDTO.setLikesCount(likesCount);
 
+            Integer userId = waggleDTO.getBoard().getUserId();
+            List<Object[]> nicknameResult = waggleRepository.findUserNickname(userId);
+            String userNickname = nicknameResult.isEmpty() ? null : (String) nicknameResult.get(0)[0];
+            waggleDTO.getBoard().setNickname(userNickname);
+
             return waggleDTO;
         });
     }
+
+
 
     private Waggle findWaggleByBoardId(Long boardId) {
         Page<Waggle> waggles = waggleRepository.findByBoard_BoardId(boardId, Pageable.unpaged());
@@ -279,8 +309,14 @@ public class WaggleServiceImpl implements WaggleService {
                         break;
                     }
                 }
+                Integer userId = waggleDTO.getBoard().getUserId();
+                List<Object[]> nicknameResult = waggleRepository.findUserNickname(userId);
 
-                return waggleDTO;
+
+                    String userNickname = (String) nicknameResult.get(0)[0];
+                    waggleDTO.getBoard().setNickname(userNickname);
+
+                    return waggleDTO;
             })
             .collect(Collectors.toList());
 
@@ -310,6 +346,7 @@ public class WaggleServiceImpl implements WaggleService {
     private WaggleDTO convertToDTO(Waggle waggle) {
         WaggleDTO waggleDTO = new WaggleDTO();
         BeanUtils.copyProperties(waggle, waggleDTO);
+
         waggleDTO.setBoard(BoardDTO.builder()
             .boardId(waggle.getBoard().getBoardId())
             .boardType(waggle.getBoard().getBoardType())
