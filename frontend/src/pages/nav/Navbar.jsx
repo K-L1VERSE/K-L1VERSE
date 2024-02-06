@@ -75,17 +75,21 @@ export default function Header() {
     navigate("/notification");
   };
 
+  const goTeam = () => {
+    navigate("/team");
+  };
+
   return (
     <>
       <Contents>
         <Outlet />
       </Contents>
       <Nav>
-        <NavItem>
-          <ScheduleIcon onClick={goMatchSchedule} />
+        <NavItem onClick={goMatchSchedule}>
+          <ScheduleIcon />
           <Text>경기일정</Text>
         </NavItem>
-        <NavItem>
+        <NavItem onClick={goTeam}>
           <TeaminfoIcon />
           <Text>팀정보</Text>
         </NavItem>

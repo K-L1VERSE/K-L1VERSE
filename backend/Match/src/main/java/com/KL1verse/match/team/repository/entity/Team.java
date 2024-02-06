@@ -35,7 +35,15 @@ public class Team {
     @Column(name = "team_description")
     private String teamDescription;
 
+    private String homepage;
+
+    private String facebook;
+
+    private String instagram;
+
+    private String youtube;
+
     @Column(name = "song_id")
-    private int songId;
+    private Integer songId;
 
 }
