@@ -11,12 +11,12 @@ import {
   Content,
   UpdateButton,
   DeleteButton,
-  DealFlag,
 } from "../../../styles/BoardStyles/BoardDetailStyle";
 import {
   DealStatusGreen,
   DealStatusOrange,
 } from "../../../styles/BoardStyles/ProductListStyle";
+import { deleteProduct } from "../../../api/product";
 
 function ProductDetailPage() {
   const [productDetail, setProductDetail] = useState({});
@@ -26,37 +26,30 @@ function ProductDetailPage() {
   const navigate = useNavigate();
 
   /* product 상세 정보 가져오기 */
+  function getProductDetail() {
+    axios.get(`/board/products/${boardId}`).then(({ data }) => {
+      setProductDetail(data.board);
+      setPrice(data.price);
+      setDealFlag(data.dealFlag);
+    });
+  }
+
   useEffect(() => {
-    async function getProductDetail() {
-      try {
-        const { data } = await axios.get(`/board/products/${boardId}`);
-        setProductDetail(data.board);
-        setPrice(data.price);
-        setDealFlag(data.dealFlag);
-      } catch (error) {
-        // Handle error
-      }
-    }
     getProductDetail();
   }, [boardId]);
 
   const handleUpdateBtn = () => {
-    navigate("/productRegist", { state: { boardId: productDetail.boardId } });
+    navigate("/productRegist", { state: { board: productDetail } });
   };
 
   const handleDeleteBtn = async () => {
-    try {
-      await axios.delete(`/board/products/${boardId}`);
-      navigate("/product");
-    } catch (error) {
-      // Handle error
-    }
-  };
-
-  const handleKeyDown = (event, clickHandler) => {
-    if (event.key === "Enter") {
-      clickHandler();
-    }
+    deleteProduct(
+      boardId,
+      () => {
+        navigate("/product");
+      },
+      () => {},
+    );
   };
 
   return (
@@ -64,7 +57,7 @@ function ProductDetailPage() {
       <BoardTopNavBar />
       <WaggleDetailBox>
         <User>
-          <p>Username: {productDetail.username}</p>
+          <p>{productDetail.nickname}</p>
         </User>
         {dealFlag ? (
           <DealStatusOrange>거래완료</DealStatusOrange>
@@ -83,18 +76,8 @@ function ProductDetailPage() {
         <Content>{productDetail.content}</Content>
         <p>Price: {price}</p>
       </WaggleDetailBox>
-      <UpdateButton
-        onClick={handleUpdateBtn}
-        onKeyDown={(e) => handleKeyDown(e, handleUpdateBtn)}
-      >
-        수정하기
-      </UpdateButton>
-      <DeleteButton
-        onClick={handleDeleteBtn}
-        onKeyDown={(e) => handleKeyDown(e, handleDeleteBtn)}
-      >
-        삭제하기
-      </DeleteButton>
+      <UpdateButton onClick={handleUpdateBtn}>수정하기</UpdateButton>
+      <DeleteButton onClick={handleDeleteBtn}>삭제하기</DeleteButton>
       <CommentList boardId={boardId} />
     </Container>
   );

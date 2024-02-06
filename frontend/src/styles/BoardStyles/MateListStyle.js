@@ -1,5 +1,3 @@
-// MateListStyles.js
-
 import styled from "styled-components";
 
 export const MateHeader = styled.div`
@@ -54,6 +52,7 @@ export const MateListContainer = styled.div`
   flex-direction: column;
   padding: 0;
   justify-content: flex-start;
+  font-family: "Pretendard-Regular";
 `;
 
 export const MateItemContainer = styled.div`

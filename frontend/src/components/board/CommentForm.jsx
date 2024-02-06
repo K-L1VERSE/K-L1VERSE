@@ -1,39 +1,43 @@
 import React, { useState, useEffect } from "react";
 import { useRecoilState } from "recoil";
-import { useNavigate, useLocation } from "react-router-dom";
+import { useLocation } from "react-router-dom";
 import { UserState } from "../../global/UserState";
 import {
   Form,
   TextArea,
   SubmitButton,
   CancelButton,
+  CheckboxLabel,
+  CheckboxInput,
 } from "../../styles/BoardStyles/CommentStyle";
 import { updateComment, createComment } from "../../api/comment";
 
-function CommentForm({ boardId, onCommentSubmit }) {
-  const navigate = useNavigate();
+function CommentForm({ boardId, parentId }) {
   const [content, setContent] = useState("");
   const [isUpdateMode, setIsUpdateMode] = useState(false);
+  const [isSecret, setIsSecret] = useState(false); // Added state for isSecret
   const { userId } = useRecoilState(UserState)[0];
 
   const location = useLocation();
   useEffect(() => {
     if (location.state && location.state.board) {
       setContent(location.state.comment.content);
+      setIsSecret(location.state.comment.isSecret || false);
     }
   }, [location]);
-
-  // const boardId = location.state ? location.state.boardId : null;
 
   const handleSubmit = () => {
     if (isUpdateMode) {
       updateComment(
+        boardId,
         {
           board: {
             content,
+            boardId,
+            parentId: parentId || null,
+            isSecret,
           },
         },
-        boardId,
         () => {
           setIsUpdateMode(false);
         },
@@ -41,12 +45,17 @@ function CommentForm({ boardId, onCommentSubmit }) {
       );
     } else {
       createComment(
+        boardId,
         {
           content,
+          boardId,
+          parentId: parentId || null,
           userId,
+          isSecret,
         },
         () => {
-          navigate(`/waggle/${boardId}`);
+          setContent("");
+          setIsSecret(false);
         },
         () => {},
       );
@@ -68,6 +77,14 @@ function CommentForm({ boardId, onCommentSubmit }) {
         required
         placeholder="댓글을 작성하세요."
       />
+      <CheckboxLabel>
+        <CheckboxInput
+          type="checkbox"
+          checked={isSecret}
+          onChange={() => setIsSecret(!isSecret)}
+        />
+        <span>🔒비밀</span>
+      </CheckboxLabel>
       <SubmitButton type="submit">
         {isUpdateMode ? "댓글 수정 완료" : "댓글 작성"}
       </SubmitButton>

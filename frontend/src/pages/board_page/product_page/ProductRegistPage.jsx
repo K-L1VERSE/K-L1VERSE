@@ -10,35 +10,41 @@ import { RegistCardContainer } from "../../../styles/BoardStyles/BoardCreateStyl
 
 function ProductRegistPage() {
   const navigate = useNavigate();
+  const [boardId, setBoardId] = useState(null);
   const [title, setTitle] = useState("");
   const [content, setContent] = useState("");
   const [price, setPrice] = useState(0);
   const [dealFlag, setDealFlag] = useState(false);
-  const [isUpdateMode] = useState(false);
-  const { userId } = useRecoilState(UserState)[0];
+  const [boardImage, setBoardImage] = useState(null);
+  const [isUpdateMode, setIsUpdateMode] = useState(false);
+  const { userId, nickname } = useRecoilState(UserState)[0];
 
   const location = useLocation();
   useEffect(() => {
     if (location.state && location.state.board) {
+      setBoardId(location.state.board.boardId);
       setTitle(location.state.board.title);
       setContent(location.state.board.content);
       setPrice(location.state.board.price);
       setDealFlag(location.state.board.dealFlag);
+      setBoardImage(location.state.board.boardImage);
+      setIsUpdateMode(true);
     }
   }, [location]);
-
-  const boardId = location.state ? location.state.boardId : null;
 
   const handleSubmit = () => {
     if (isUpdateMode) {
       updateProduct(
+        boardId,
         {
           board: {
             title,
             content,
+            boardImage,
           },
+          price,
+          dealFlag,
         },
-        boardId,
         () => {
           navigate(`/product/${boardId}`);
         },
@@ -52,6 +58,8 @@ function ProductRegistPage() {
             title,
             content,
             userId,
+            // nickname,
+            boardImage,
           },
           price,
           dealFlag,
@@ -59,9 +67,7 @@ function ProductRegistPage() {
         ({ data }) => {
           navigate(`/product/${data.board.boardId}`);
         },
-        () => {
-          console.error("Product 게시물 작성 중 에러 발생");
-        },
+        () => {},
       );
     }
   };
@@ -78,6 +84,7 @@ function ProductRegistPage() {
         onTitleChange={(e) => setTitle(e.target.value)}
         onContentChange={(e) => setContent(e.target.value)}
         onPriceChange={(e) => setPrice(e.target.value)}
+        onImageChange={(e) => setBoardImage(e.target.files[0])}
         onSubmit={handleSubmit}
         buttonText={isUpdateMode ? "수정하기" : "작성하기"}
       />

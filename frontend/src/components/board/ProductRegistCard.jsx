@@ -3,17 +3,23 @@ import {
   Input,
   TextArea,
   SubmitButton,
+  FileInputContainer,
+  FileInput,
+  FileInputLabel,
 } from "../../styles/BoardStyles/BoardCreateStyle";
+import CameraIcon from "../../assets/icon/camera-icon.svg";
 
 export default function ProductRegistCard({
   title,
   content,
   price,
   dealFlag,
+  boardImage,
   onTitleChange,
   onContentChange,
   onPriceChange,
   onDealFlagChange,
+  onImageChange,
   onSubmit,
   buttonText,
 }) {
@@ -34,7 +40,20 @@ export default function ProductRegistCard({
         placeholder="가격"
       />
       <input type="checkbox" checked={dealFlag} onChange={onDealFlagChange} />
-      거래 가능
+      판매중
+      <br />
+      <FileInputContainer>
+        <FileInput
+          type="file"
+          value={boardImage}
+          onChange={onImageChange}
+          accept="image/*"
+        />
+        <FileInputLabel>
+          <img src={CameraIcon} alt="Camera Icon" />
+        </FileInputLabel>
+      </FileInputContainer>
+      <br />
       <SubmitButton onClick={onSubmit}>{buttonText}</SubmitButton>
     </>
   );

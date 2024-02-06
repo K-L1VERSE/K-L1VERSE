@@ -11,7 +11,7 @@ import org.springframework.stereotype.Service;
 @Service
 public class BoardServiceImpl implements BoardService {
 
-    private BoardRepository boardRepository;
+    private final BoardRepository boardRepository;
 
     public BoardServiceImpl(BoardRepository boardRepository) {
         this.boardRepository = boardRepository;

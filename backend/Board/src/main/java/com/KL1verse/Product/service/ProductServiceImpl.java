@@ -9,12 +9,15 @@ import com.KL1verse.Mate.dto.req.MateDTO;
 import com.KL1verse.Product.dto.req.ProductDTO;
 import com.KL1verse.Product.repository.ProductRepository;
 import com.KL1verse.Product.repository.entity.Product;
+import com.KL1verse.kafka.dto.req.BoardCleanbotCheckReqDto;
+import com.KL1verse.kafka.producer.KafkaBoardCleanbotProducer;
 import com.KL1verse.s3.repository.entity.File;
 import com.KL1verse.s3.service.BoardImageService;
 import com.KL1verse.s3.service.FileService;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.stream.Collectors;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.BeanUtils;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -24,6 +27,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 @Service
+@RequiredArgsConstructor
 public class ProductServiceImpl implements ProductService {
 
     private final ProductRepository productRepository;
@@ -34,16 +38,7 @@ public class ProductServiceImpl implements ProductService {
     private final BoardImageService boardImageService;
 
     private final CommentRepository commentRepository;
-
-    public ProductServiceImpl(ProductRepository productRepository,
-        BoardRepository boardRepository, FileService fileService,
-        BoardImageService boardImageService, CommentRepository commentRepository) {
-        this.productRepository = productRepository;
-        this.boardRepository = boardRepository;
-        this.fileService = fileService;
-        this.boardImageService = boardImageService;
-        this.commentRepository = commentRepository;
-    }
+    private final KafkaBoardCleanbotProducer kafkaBoardCleanbotProducer;
 
     @Override
     public ProductDTO getProductById(Long boardId) {
@@ -82,8 +77,16 @@ public class ProductServiceImpl implements ProductService {
         ProductDTO createdProductDTO = convertToDTO(createdProduct);
         createdProductDTO.getBoard().setNickname(userNickname);
 
+        BoardCleanbotCheckReqDto boardCleanbotCheckReqDto = BoardCleanbotCheckReqDto.builder()
+            .id(createdProduct.getBoard().getBoardId())
+            .content(createdProduct.getBoard().getContent())
+            .domain("board")
+            .build();
+        kafkaBoardCleanbotProducer.boardCleanbotCheck(boardCleanbotCheckReqDto);
+
         return createdProductDTO;
     }
+    
     @Transactional
     @Override
     public ProductDTO updateProduct(Long boardId, ProductDTO productDto) {
@@ -91,12 +94,20 @@ public class ProductServiceImpl implements ProductService {
         updateExistingProduct(existingProduct, productDto);
 
         Board board = existingProduct.getBoard();
-        board.setBoardImage(productDto.getBoard().getBoardImage());
+//        board.setBoardImage(productDto.getBoard().getBoardImage());
 
         Product updatedProduct = productRepository.save(existingProduct);
 
         File file = fileService.saveFile(productDto.getBoard().getBoardImage());
         boardImageService.saveBoardImage(board, file);
+
+
+        BoardCleanbotCheckReqDto boardCleanbotCheckReqDto = BoardCleanbotCheckReqDto.builder()
+            .id(boardId)
+            .content(productDto.getBoard().getContent())
+            .domain("board")
+            .build();
+        kafkaBoardCleanbotProducer.boardCleanbotCheck(boardCleanbotCheckReqDto);
 
         return convertToDTO(updatedProduct);
     }
@@ -217,7 +228,7 @@ public class ProductServiceImpl implements ProductService {
             .updateAt(product.getBoard().getUpdateAt())
             .deleteAt(product.getBoard().getDeleteAt())
             .userId(product.getBoard().getUserId())
-            .boardImage(product.getBoard().getBoardImage())
+//            .boardImage(product.getBoard().getBoardImage())
             .commentCount(commentRepository.countCommentsByBoardId(product.getBoard().getBoardId()))
             .build());
         return productDTO;
@@ -235,7 +246,7 @@ public class ProductServiceImpl implements ProductService {
             .updateAt(productDTO.getBoard().getUpdateAt())
             .deleteAt(productDTO.getBoard().getDeleteAt())
             .userId(productDTO.getBoard().getUserId())
-            .boardImage(productDTO.getBoard().getBoardImage())
+//            .boardImage(productDTO.getBoard().getBoardImage())
             .build());
         return product;
     }

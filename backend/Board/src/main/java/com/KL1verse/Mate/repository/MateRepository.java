@@ -32,7 +32,4 @@ public interface MateRepository extends JpaRepository<Mate, Long> {
     List<Object[]> findUserNickname(@Param("userId") Integer userId);
 
 
-
-
-
 }

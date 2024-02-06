@@ -10,20 +10,24 @@ import { RegistCardContainer } from "../../../styles/BoardStyles/BoardCreateStyl
 
 function WaggleRegistPage() {
   const navigate = useNavigate();
+  const [boardId, setBoardId] = useState(null);
   const [title, setTitle] = useState("");
   const [content, setContent] = useState("");
-  const [isUpdateMode] = useState(false);
-  const { userId } = useRecoilState(UserState)[0];
+  const [boardImage, setBoardImage] = useState(null);
+  const [isUpdateMode, setIsUpdateMode] = useState(false);
+  const { userId, nickname } = useRecoilState(UserState)[0];
 
   const location = useLocation();
+
   useEffect(() => {
     if (location.state && location.state.board) {
+      setBoardId(location.state.board.boardId);
       setTitle(location.state.board.title);
       setContent(location.state.board.content);
+      setBoardImage(location.state.board.boardImage);
+      setIsUpdateMode(true);
     }
   }, [location]);
-
-  const boardId = location.state ? location.state.boardId : null;
 
   const handleSubmit = () => {
     if (isUpdateMode) {
@@ -33,6 +37,7 @@ function WaggleRegistPage() {
           board: {
             title,
             content,
+            boardImage,
           },
         },
         () => {
@@ -48,6 +53,8 @@ function WaggleRegistPage() {
             title,
             content,
             userId,
+            // nickname,
+            boardImage,
           },
         },
         ({ data }) => {
@@ -61,12 +68,13 @@ function WaggleRegistPage() {
   return (
     <RegistCardContainer>
       <BoardTopNavBar />
-      <h1>{isUpdateMode ? "Waggle 수정중.." : "Waggle 작성중.."}</h1>
+      <h1>{isUpdateMode ? "Waggle 수정" : "Waggle 글쓰기"}</h1>
       <RegistCard
         title={title}
         content={content}
         onTitleChange={(e) => setTitle(e.target.value)}
         onContentChange={(e) => setContent(e.target.value)}
+        onImageChange={(e) => setBoardImage(e.target.files[0])}
         onSubmit={handleSubmit}
         buttonText={isUpdateMode ? "수정하기" : "작성하기"}
       />

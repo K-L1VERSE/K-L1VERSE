@@ -2,12 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { useRecoilState } from "recoil";
 import axios from "../../../api/axios";
-import {
-  deleteWaggle,
-  likeWaggle,
-  unlikeWaggle,
-  updateWaggle,
-} from "../../../api/waggle";
+import { deleteWaggle, likeWaggle, unlikeWaggle } from "../../../api/waggle";
 import BoardTopNavBar from "../../../components/board/BoardTopNavBar";
 import CommentList from "../../../components/board/CommentList";
 import {
@@ -18,7 +13,7 @@ import {
   Content,
   Button,
   LikeButton,
-  LikeCount,
+  // LikeCount,
 } from "../../../styles/BoardStyles/BoardDetailStyle";
 import { UserState } from "../../../global/UserState";
 
@@ -29,17 +24,17 @@ function WaggleDetailPage() {
   const [waggleDetail, setWaggleDetail] = useState({});
   const [waggleId, setWaggleId] = useState(0);
   const [isLiked, setIsLiked] = useState(false);
-  const [likeCount, setLikeCount] = useState(0);
+  // const [likeCount, setLikeCount] = useState(0);
   const { boardId } = useParams();
   const navigate = useNavigate();
-  const { userId, nickname } = useRecoilState(UserState)[0];
+  const { userId } = useRecoilState(UserState)[0];
 
   function getWaggleDetail() {
     axios.get(`/board/waggles/${boardId}`).then(({ data }) => {
       setWaggleDetail(data.board);
       setWaggleId(data.waggleId);
       setIsLiked(data.isLiked);
-      setLikeCount(data.likeCount);
+      // setLikeCount(data.likeCount);
     });
   }
 
@@ -48,13 +43,21 @@ function WaggleDetailPage() {
   }, [boardId]);
 
   const handleUpdateBtn = () => {
-    updateWaggle(boardId, waggleDetail, () => {
-      navigate(`/waggle/${boardId}`);
+    navigate(`/waggleRegist`, {
+      state: {
+        board: waggleDetail,
+      },
     });
   };
 
   const handleDeleteBtn = () => {
-    deleteWaggle(boardId);
+    deleteWaggle(
+      boardId,
+      () => {
+        navigate("/waggle");
+      },
+      () => {},
+    );
   };
 
   const handleLikeClick = () => {
@@ -64,7 +67,7 @@ function WaggleDetailPage() {
         waggleId,
         () => {
           setIsLiked(false);
-          setLikeCount((prevCount) => prevCount - 1);
+          // setLikeCount((prevCount) => prevCount - 1);
         },
         () => {},
       );
@@ -74,7 +77,7 @@ function WaggleDetailPage() {
         waggleId,
         () => {
           setIsLiked(true);
-          setLikeCount((prevCount) => prevCount + 1);
+          // setLikeCount((prevCount) => prevCount + 1);
         },
         () => {},
       );
@@ -85,19 +88,27 @@ function WaggleDetailPage() {
     <Container>
       <BoardTopNavBar />
       <WaggleDetailBox>
-        <User>{nickname}</User>
+        <User>{waggleDetail.nickname}</User>
         <Title>{waggleDetail.title}</Title>
         <Content>{waggleDetail.content}</Content>
-        {/* 좋아요 버튼 및 개수 표시 */}
+
+        {/* {waggleDetail.boardImage && (
+          <img
+            src={waggleDetail.boardImage}
+            alt="Waggle Image"
+            style={{ maxWidth: "100%", maxHeight: "400px", margin: "20px 0" }}
+          />
+        )} */}
+
         <div>
           <LikeButton onClick={handleLikeClick}>
             <img
-              src={isLiked ? UnlikeIcon : LikeIcon}
-              alt={isLiked ? "Unlike" : "Like"}
-              style={{ width: "24px", height: "24px" }}
+              src={isLiked ? LikeIcon : UnlikeIcon}
+              alt={isLiked ? "Like" : "Unlike"}
+              style={{ width: "20px", height: "20px" }}
             />
           </LikeButton>
-          <LikeCount>좋아요 {likeCount}개</LikeCount>
+          {/* <LikeCount>좋아요 {likeCount}개</LikeCount> */}
         </div>
       </WaggleDetailBox>
 

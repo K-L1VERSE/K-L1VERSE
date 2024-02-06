@@ -34,7 +34,7 @@ public class Board {
 
     @Id
     @Column(name = "board_id")
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long boardId;
 
     @Enumerated(EnumType.STRING)
@@ -57,8 +57,6 @@ public class Board {
 
     @Column(name = "user_id")
     private Integer userId;
-
-    private String boardImage;
 
 
 }

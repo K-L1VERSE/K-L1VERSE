@@ -12,6 +12,8 @@ import com.KL1verse.Waggle.repository.entity.Waggle;
 import com.KL1verse.s3.repository.entity.File;
 import com.KL1verse.s3.service.BoardImageService;
 import com.KL1verse.s3.service.FileService;
+import com.KL1verse.kafka.dto.req.BoardCleanbotCheckReqDto;
+import com.KL1verse.kafka.producer.KafkaBoardCleanbotProducer;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -20,6 +22,7 @@ import java.util.Set;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import java.util.stream.Collectors;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.BeanUtils;
 import org.springframework.data.domain.Page;
@@ -32,6 +35,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 @Slf4j
 @Service
+@RequiredArgsConstructor
 public class WaggleServiceImpl implements WaggleService {
 
     private final WaggleRepository waggleRepository;
@@ -42,17 +46,8 @@ public class WaggleServiceImpl implements WaggleService {
     private final BoardImageService boardImageService;
 
     private final CommentRepository commentRepository;
+    private final KafkaBoardCleanbotProducer kafkaBoardCleanbotProducer;
 
-    public WaggleServiceImpl(WaggleRepository waggleRepository, BoardRepository boardRepository,
-        FileService fileService,
-        BoardImageService boardImageService,
-        CommentRepository commentRepository) {
-        this.waggleRepository = waggleRepository;
-        this.boardRepository = boardRepository;
-        this.fileService = fileService;
-        this.boardImageService = boardImageService;
-        this.commentRepository = commentRepository;
-    }
 
     @Override
     public WaggleDTO getWaggleById(Long boardId) {
@@ -100,6 +95,13 @@ public class WaggleServiceImpl implements WaggleService {
 
         WaggleDTO createdWaggleDTO = convertToDTO(createdWaggle);
         createdWaggleDTO.getBoard().setNickname(userNickname);
+        
+        BoardCleanbotCheckReqDto boardCleanbotCheckReqDto = BoardCleanbotCheckReqDto.builder()
+            .id(createdWaggle.getBoard().getBoardId())
+            .content(createdWaggle.getBoard().getContent())
+            .domain("board")
+            .build();
+        kafkaBoardCleanbotProducer.boardCleanbotCheck(boardCleanbotCheckReqDto);
 
         return createdWaggleDTO;
     }
@@ -111,7 +113,7 @@ public class WaggleServiceImpl implements WaggleService {
         updateExistingWaggle(existingWaggle, waggleDto);
 
         Board board = existingWaggle.getBoard();
-        board.setBoardImage(waggleDto.getBoard().getBoardImage());
+//        board.setBoardImage(waggleDto.getBoard().getBoardImage());
 
         Set<String> hashtags = extractHashtags(waggleDto.getBoard().getContent());
         existingWaggle.setHashtags(hashtags);
@@ -119,6 +121,14 @@ public class WaggleServiceImpl implements WaggleService {
         Waggle updatedWaggle = waggleRepository.save(existingWaggle);
         File file = fileService.saveFile(waggleDto.getBoard().getBoardImage());
         boardImageService.saveBoardImage(board, file);
+
+
+        BoardCleanbotCheckReqDto boardCleanbotCheckReqDto = BoardCleanbotCheckReqDto.builder()
+            .id(boardId)
+            .content(waggleDto.getBoard().getContent())
+            .domain("board")
+            .build();
+        kafkaBoardCleanbotProducer.boardCleanbotCheck(boardCleanbotCheckReqDto);
 
         return convertToDTO(updatedWaggle);
     }
@@ -347,7 +357,7 @@ public class WaggleServiceImpl implements WaggleService {
             .deleteAt(waggle.getBoard().getDeleteAt())
             .commentCount(0)
             .userId(waggle.getBoard().getUserId())
-            .boardImage(waggle.getBoard().getBoardImage())
+//            .boardImage(waggle.getBoard().getBoardImage())
             .boardType(waggle.getBoard().getBoardType())
             .build());
         waggleDTO.setHashtags(new ArrayList<>(waggle.getHashtags()));
@@ -366,7 +376,7 @@ public class WaggleServiceImpl implements WaggleService {
             .updateAt(waggleDTO.getBoard().getUpdateAt())
             .deleteAt(waggleDTO.getBoard().getDeleteAt())
             .userId(waggleDTO.getBoard().getUserId())
-            .boardImage(waggleDTO.getBoard().getBoardImage())
+//            .boardImage(waggleDTO.getBoard().getBoardImage())
             .boardType(waggleDTO.getBoard().getBoardType())
             .build());
         return waggle;
@@ -381,5 +391,12 @@ public class WaggleServiceImpl implements WaggleService {
         return recentWaggles.stream()
             .map(this::convertToDTO)
             .collect(Collectors.toList());
+    }
+
+    @Override
+    public void blockedByCleanbotCheck(Long boardId) {
+        Waggle waggle = findWaggleByBoardId(boardId);
+        waggle.getBoard().setDeleteAt(LocalDateTime.now());
+        waggleRepository.save(waggle);
     }
 }

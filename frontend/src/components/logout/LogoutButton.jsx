@@ -1,24 +1,9 @@
-import { useEffect } from "react";
-import { useResetRecoilState } from "recoil";
-
-import axios from "../../api/authAxios";
-import { UserState } from "../../global/UserState";
+import { useNavigate } from "react-router-dom";
 
 function LogoutButton() {
-  const resetUserState = useResetRecoilState(UserState);
-
-  useEffect(() => {
-    axios
-      .get(`/user/auth/sign-out`)
-      .then(() => {
-        resetUserState();
-        window.location.href = "http://i10a409.p.ssafy.io/login";
-      })
-      .catch(() => {
-        resetUserState();
-        window.location.href = "http://i10a409.p.ssafy.io/login";
-      });
-  }, []);
+  const domainAndPort = process.env.REACT_APP_DOMAIN_AND_PORT;
+  const navigate = useNavigate();
+  navigate(`${domainAndPort}/login`);
 }
 
 export default LogoutButton;
