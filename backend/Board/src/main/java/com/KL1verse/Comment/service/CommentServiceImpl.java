@@ -61,19 +61,17 @@ public class CommentServiceImpl implements CommentService {
                 () -> new RuntimeException("Board not found with id: " + commentDTO.getBoardId()));
         comment.setBoardId(board);
 
-
-
         Comment createdComment = commentRepository.save(comment);
 
         List<Object[]> userNickname = commentRepository.findUserNickname(commentDTO.getUserId());
         commentDTO.setNickname((String) userNickname.get(0)[0]);
-        
-        String userNickname = boardRepository.findNicknameByUserId(board.getUserId());
+
         kafkaBoardNotificationProducer.boardNotification(
             BoardNotificationResDto.builder()
                 .type(BoardNotificationType.COMMENT)
                 .userId(board.getUserId())
-                .uri("http://localhost:3000/" + board.getBoardType().toString().toLowerCase() + String.valueOf(board.getBoardId()))
+                .uri("http://localhost:3000/" + board.getBoardType().toString().toLowerCase()
+                    + String.valueOf(board.getBoardId()))
                 .message(userNickname + "님이 새로운 댓글을 달았습니다.")
                 .build()
         );
@@ -155,7 +153,8 @@ public class CommentServiceImpl implements CommentService {
 
     @Override
     public List<CommentDTO> getAllCommentsByBoardId(Long boardId, Long requestingUserId) {
-        List<Object[]> commentsWithLikesCount = commentRepository.findCommentsWithLikesCountByBoardId(boardId);
+        List<Object[]> commentsWithLikesCount = commentRepository.findCommentsWithLikesCountByBoardId(
+            boardId);
 
         return commentsWithLikesCount.stream()
             .map(result -> {
@@ -163,10 +162,12 @@ public class CommentServiceImpl implements CommentService {
                 Long likesCount = (Long) result[1];
 
                 CommentDTO commentDTO = convertToDTO(comment);
-                Integer commentLikesCount = commentRepository.findLikesCountByCommentId(comment.getCommentId());
+                Integer commentLikesCount = commentRepository.findLikesCountByCommentId(
+                    comment.getCommentId());
                 commentDTO.setLikesCount(commentLikesCount != null ? commentLikesCount : 0);
 
-                List<Object[]> userNickname = commentRepository.findUserNickname(comment.getUserId());
+                List<Object[]> userNickname = commentRepository.findUserNickname(
+                    comment.getUserId());
                 commentDTO.setNickname((String) userNickname.get(0)[0]); // Set the nickname
 
                 if (comment.getParentId() == null) {
@@ -196,17 +197,24 @@ public class CommentServiceImpl implements CommentService {
                                     secretReply.setReplies(Collections.emptyList());
                                     secretReply.setBoardId(reply.getBoardId().getBoardId());
 
-                                    Integer secretReplyLikesCount = commentRepository.findLikesCountByCommentId(reply.getCommentId());
-                                    secretReply.setLikesCount(secretReplyLikesCount != null ? secretReplyLikesCount : 0);
+                                    Integer secretReplyLikesCount = commentRepository.findLikesCountByCommentId(
+                                        reply.getCommentId());
+                                    secretReply.setLikesCount(
+                                        secretReplyLikesCount != null ? secretReplyLikesCount : 0);
 
-                                    List<Object[]> secretReplyNickname = commentRepository.findUserNickname(reply.getUserId());
-                                    secretReply.setNickname((String) secretReplyNickname.get(0)[0]); // Set the nickname
+                                    List<Object[]> secretReplyNickname = commentRepository.findUserNickname(
+                                        reply.getUserId());
+                                    secretReply.setNickname(
+                                        (String) secretReplyNickname.get(0)[0]); // Set the nickname
 
                                     return secretReply;
                                 } else {
-                                    CommentDTO normalReply = convertToDTOWithReplies(reply, requestingUserId);
-                                    List<Object[]> replyNickname = commentRepository.findUserNickname(reply.getUserId());
-                                    normalReply.setNickname((String) replyNickname.get(0)[0]); // 닉네임 설정
+                                    CommentDTO normalReply = convertToDTOWithReplies(reply,
+                                        requestingUserId);
+                                    List<Object[]> replyNickname = commentRepository.findUserNickname(
+                                        reply.getUserId());
+                                    normalReply.setNickname(
+                                        (String) replyNickname.get(0)[0]); // 닉네임 설정
                                     return normalReply;
                                 }
                             })
@@ -233,18 +241,25 @@ public class CommentServiceImpl implements CommentService {
                                     secretReply.setReplies(Collections.emptyList());
                                     secretReply.setBoardId(reply.getBoardId().getBoardId());
 
-                                    Integer secretReplyLikesCount = commentRepository.findLikesCountByCommentId(reply.getCommentId());
-                                    secretReply.setLikesCount(secretReplyLikesCount != null ? secretReplyLikesCount : 0);
+                                    Integer secretReplyLikesCount = commentRepository.findLikesCountByCommentId(
+                                        reply.getCommentId());
+                                    secretReply.setLikesCount(
+                                        secretReplyLikesCount != null ? secretReplyLikesCount : 0);
 
-                                    List<Object[]> secretReplyNickname = commentRepository.findUserNickname(reply.getUserId());
-                                    secretReply.setNickname((String) secretReplyNickname.get(0)[0]); // Set the nickname
+                                    List<Object[]> secretReplyNickname = commentRepository.findUserNickname(
+                                        reply.getUserId());
+                                    secretReply.setNickname(
+                                        (String) secretReplyNickname.get(0)[0]); // Set the nickname
 
                                     return secretReply;
                                 } else {
 
-                                    CommentDTO normalReply = convertToDTOWithReplies(reply, requestingUserId);
-                                    List<Object[]> replyNickname = commentRepository.findUserNickname(reply.getUserId());
-                                    normalReply.setNickname((String) replyNickname.get(0)[0]); // 닉네임 설정
+                                    CommentDTO normalReply = convertToDTOWithReplies(reply,
+                                        requestingUserId);
+                                    List<Object[]> replyNickname = commentRepository.findUserNickname(
+                                        reply.getUserId());
+                                    normalReply.setNickname(
+                                        (String) replyNickname.get(0)[0]); // 닉네임 설정
                                     return normalReply;
                                 }
                             })
@@ -263,7 +278,6 @@ public class CommentServiceImpl implements CommentService {
             .filter(commentDTO -> commentDTO.getDeleteAt() == null)
             .collect(Collectors.toList());
     }
-
 
 //    @Override
 //    public List<CommentDTO> getAllCommentsByBoardId(Long boardId, Long requestingUserId) {
@@ -436,9 +450,9 @@ public class CommentServiceImpl implements CommentService {
 
                 } else {
 
-//                    replyDTO = convertToDTO(comment);
-//                    List<Object[]> secretReplyNickname = commentRepository.findUserNickname(replyDTO.getUserId());
-//                    replyDTO.setNickname((String) secretReplyNickname.get(0)[0]);
+                    replyDTO = convertToDTO(comment);
+                    List<Object[]> secretReplyNickname = commentRepository.findUserNickname(replyDTO.getUserId());
+                    replyDTO.setNickname((String) secretReplyNickname.get(0)[0]);
                 }
                 return replyDTO;
             })
