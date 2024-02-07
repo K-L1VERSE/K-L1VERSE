@@ -8,6 +8,7 @@ export const WaggleHeader = styled.div`
   gap: 8px;
   width: 100%;
   justify-content: flex-start;
+  font-family: "Pretendard-Regular";
 `;
 
 export const WaggleHeaderH2 = styled.h2`
@@ -52,6 +53,7 @@ export const WaggleListContainer = styled.div`
   flex-direction: column;
   padding: 0;
   justify-content: flex-start;
+  font-family: "Pretendard-Regular";
 `;
 
 export const WaggleItemContainer = styled.div`
@@ -73,7 +75,7 @@ export const WaggleItemWriter = styled.div`
   font-weight: 400;
   font-size: 14px;
   line-height: 17px;
-  color: #a9a9a9;
+  color: black;
   text-decoration: none;
   margin-bottom: 8px;
 `;
@@ -92,7 +94,7 @@ export const WaggleItemTitle = styled.div`
 
 export const WaggleItemContent = styled.div`
   width: 100%;
-  min-height: 34px; /* Adjust the value as needed */
+  min-height: 34px;
   font-family: "Pretendard";
   font-style: normal;
   font-weight: 400;

@@ -13,6 +13,7 @@ export const UserState = atom({
     domain: "",
     isLoggedIn: false,
     userId: "",
+    mainBadge: "",
   },
   effects_UNSTABLE: [persistAtom],
 });

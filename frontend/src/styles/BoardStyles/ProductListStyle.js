@@ -1,4 +1,3 @@
-// ProductListStyles.js
 import styled from "styled-components";
 
 export const ProductHeader = styled.div`
@@ -53,6 +52,7 @@ export const ProductListContainer = styled.div`
   flex-direction: column;
   padding: 0;
   justify-content: flex-start;
+  font-family: "Pretendard-Regular";
 `;
 
 export const ProductItemContainer = styled.div`
@@ -77,11 +77,13 @@ export const DealStatus = styled.div`
 export const DealStatusGreen = styled(DealStatus)`
   background-color: #4caf50;
   color: white;
+  text-align: center;
 `;
 
 export const DealStatusOrange = styled(DealStatus)`
   background-color: #ff9800;
   color: white;
+  text-align: center;
 `;
 
 export const ProductItemWriter = styled.div`

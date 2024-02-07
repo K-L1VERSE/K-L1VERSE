@@ -1,5 +1,3 @@
-// BoardTopNavbarStyles.js
-
 import styled from "styled-components";
 
 export const BoardTopNavbarContainer = styled.div`
@@ -13,6 +11,7 @@ export const BoardTopNavbarContainer = styled.div`
   height: 89px;
   left: 0px;
   top: 68px;
+  font-family: "Pretendard-Regular";
 `;
 
 export const Title = styled.h1`
@@ -33,7 +32,7 @@ export const Nav = styled.nav`
   height: 19px;
 `;
 
-export const Button = styled.button`
+export const WaggleButton = styled.button`
   display: flex;
   flex-direction: row;
   align-items: center;
@@ -49,6 +48,45 @@ export const Button = styled.button`
   &.active {
     background: #f7e4dc;
     color: #f09168;
+    font-weight: bold;
+  }
+`;
+
+export const MateButton = styled.button`
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  padding: 5px 6px;
+  gap: 4px;
+  width: auto;
+  height: 26px;
+  background-color: #dddddd;
+  color: #a5a5a5;
+  border-radius: 3px;
+  border: none;
+
+  &.active {
+    background: #e3faef;
+    color: #16b368;
+    font-weight: bold;
+  }
+`;
+export const ProductButton = styled.button`
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  padding: 5px 6px;
+  gap: 4px;
+  width: auto;
+  height: 26px;
+  background-color: #dddddd;
+  color: #a5a5a5;
+  border-radius: 3px;
+  border: none;
+
+  &.active {
+    background: #e5edfb;
+    color: #578cea;
     font-weight: bold;
   }
 `;

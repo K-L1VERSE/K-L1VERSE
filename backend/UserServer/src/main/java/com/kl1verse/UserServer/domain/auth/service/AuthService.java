@@ -112,11 +112,11 @@ public class AuthService {
 
             // 100골 지급 (Todo... 골 지급 정책 정하기)
             log.info("user {}:{} today first login at {}", user.getEmail(), user.getDomain(), LocalDateTime.now());
-            user.setGoal(user.getGoal() + 100);
+            user.setGoal(user.getGoal() + 10);
             notificationService.sendNotification(MessageReqDto.builder()
                         .userId(user.getId())
                         .type(NotificationType.GOAL)
-                        .message("출석 보상으로 100골을 지급 받았습니다.")
+                        .message("출석 보상으로 10골을 지급 받았습니다.")
                         .uri(domain+"/mypage")
                         .date(LocalDateTime.now())
                         .build());
@@ -134,7 +134,7 @@ public class AuthService {
         // refreshToken 생성
         jwtUtil.createRefreshToken(authentication, user);
 
-        return SignInResDto.builder()
+        SignInResDto signInResDto = SignInResDto.builder()
             .email(user.getEmail())
             .accessToken(accessToken)
             .nickname(user.getNickname())
@@ -142,6 +142,11 @@ public class AuthService {
             .domain(user.getDomain())
             .userId(user.getId())
             .build();
+
+        if(user.getWearBadge() != null) {
+            signInResDto.setMainBadge(user.getWearBadge().getBadgeDetail().getCode());
+        }
+        return signInResDto;
     }
 
     // 로그아웃

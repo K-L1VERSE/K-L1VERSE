@@ -37,6 +37,8 @@ import MatchDetailPage from "./pages/match_page/MatchDetailPage";
 import MatchChattingPage from "./pages/match_page/MatchChattingPage";
 import SettingPage from "./pages/my_page/SettingPage";
 
+import TeamInfoPage from "./pages/teamPage/TeamInfoPage";
+
 function App() {
   return (
     <div className="App">
@@ -94,6 +96,8 @@ function App() {
                 path="/matchChatting/:matchId"
                 element={<MatchChattingPage />}
               />
+              {/* 팀 정보 페이지 */}
+              <Route path="/team" element={<TeamInfoPage />} />
 
               {/* 마이 페이지 */}
               <Route path="/mypage" element={<MyPage />} />
