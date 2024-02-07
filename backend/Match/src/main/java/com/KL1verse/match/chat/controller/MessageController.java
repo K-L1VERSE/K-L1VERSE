@@ -40,17 +40,7 @@ public class MessageController {
     public void enter(MessageReqDto messageReqDto) {
 
         try {
-
-            String jsonMessageReqDto = objectMapper.writeValueAsString(messageReqDto);
-
-            // 레디스에 메시지 저장
-            redisTemplate.opsForList()
-                .rightPush("chat/room/" + messageReqDto.getRoomId(), jsonMessageReqDto);
-
-            sendingOperations.convertAndSend("/topic/chat/room/" + messageReqDto.getRoomId(),
-                messageReqDto);
-
-            MessageResDto messageResDto = MessageResDto.builder()
+            MessageResDto message = MessageResDto.builder()
                 .messageId(generateMessageId())
                 .profile(messageReqDto.getProfile())
                 .roomId(messageReqDto.getRoomId())
@@ -60,9 +50,17 @@ public class MessageController {
                 .profile(messageReqDto.getProfile())
                 .build();
 
-            // Kafka Producing
-            kafkaCleanbotCheckProducer.cleanbotCheck(messageResDto);
+            String jsonMessageResDto = objectMapper.writeValueAsString(message);
 
+            // 레디스에 메시지 저장
+            redisTemplate.opsForList()
+                .rightPush("chat/room/" + message.getRoomId(), jsonMessageResDto);
+
+            sendingOperations.convertAndSend("/topic/chat/room/" + message.getRoomId(),
+                message);
+
+            // Kafka Producing
+            kafkaCleanbotCheckProducer.cleanbotCheck(message);
         } catch (JsonProcessingException e) {
             throw new RuntimeException(e);
         }
@@ -74,13 +72,13 @@ public class MessageController {
     public ResponseEntity<?> getPrevChatMessage(@PathVariable(name = "roomId") String roomId) {
 
         List<String> jsonMessages = redisTemplate.opsForList().range("chat/room/" + roomId, 0, -1);
-        List<MessageReqDto> messages = new ArrayList<>();
+        List<MessageResDto> messages = new ArrayList<>();
 
         if (!jsonMessages.isEmpty()) {
             for (String jsonMessage : jsonMessages) {
                 try {
-                    MessageReqDto message = objectMapper.readValue(jsonMessage,
-                        MessageReqDto.class);
+                    MessageResDto message = objectMapper.readValue(jsonMessage,
+                        MessageResDto.class);
                     messages.add(message);
                 } catch (JsonProcessingException e) {
                     throw new RuntimeException(e);
