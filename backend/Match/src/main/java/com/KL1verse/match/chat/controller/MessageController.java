@@ -4,6 +4,8 @@ import com.KL1verse.match.chat.dto.req.MessageReqDto;
 import com.KL1verse.match.chat.dto.res.MessageResDto;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+
+import com.KL1verse.match.kafka.producer.KafkaCleanbotCheckProducer;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.redis.core.StringRedisTemplate;
@@ -24,21 +26,31 @@ import java.util.List;
 public class MessageController {
 
     private final SimpMessageSendingOperations sendingOperations;
+    private final KafkaCleanbotCheckProducer kafkaCleanbotCheckProducer;
+    private final StringRedisTemplate redisTemplate;
+    private final ObjectMapper objectMapper;
+
+    private static final AtomicLong messageIdCounter = new AtomicLong(0);
 
     private static Long generateMessageId() {
         return messageIdCounter.incrementAndGet();
     }
 
     @MessageMapping("/chat/message")
-    public void enter(MessageReqDto message) {
+    public void enter(MessageReqDto messageReqDto) {
 
         try {
-            String jsonMessageReqDto = objectMapper.writeValueAsString(message);
+
+            String jsonMessageReqDto = objectMapper.writeValueAsString(messageReqDto);
 
             // 레디스에 메시지 저장
-            redisTemplate.opsForList().rightPush("chat/room/" + message.getRoomId(), jsonMessageReqDto);
-            sendingOperations.convertAndSend("/topic/chat/room/" + message.getRoomId(), message);
-        MessageResDto message = MessageResDto.builder()
+            redisTemplate.opsForList()
+                .rightPush("chat/room/" + messageReqDto.getRoomId(), jsonMessageReqDto);
+
+            sendingOperations.convertAndSend("/topic/chat/room/" + messageReqDto.getRoomId(),
+                messageReqDto);
+
+            MessageResDto messageResDto = MessageResDto.builder()
                 .messageId(generateMessageId())
                 .profile(messageReqDto.getProfile())
                 .roomId(messageReqDto.getRoomId())
@@ -48,7 +60,9 @@ public class MessageController {
                 .profile(messageReqDto.getProfile())
                 .build();
 
-        sendingOperations.convertAndSend("/topic/chat/room/" + messageReqDto.getRoomId(), message);
+            // Kafka Producing
+            kafkaCleanbotCheckProducer.cleanbotCheck(messageResDto);
+
         } catch (JsonProcessingException e) {
             throw new RuntimeException(e);
         }
@@ -62,10 +76,11 @@ public class MessageController {
         List<String> jsonMessages = redisTemplate.opsForList().range("chat/room/" + roomId, 0, -1);
         List<MessageReqDto> messages = new ArrayList<>();
 
-        if(!jsonMessages.isEmpty()) {
-            for(String jsonMessage : jsonMessages) {
+        if (!jsonMessages.isEmpty()) {
+            for (String jsonMessage : jsonMessages) {
                 try {
-                    MessageReqDto message = objectMapper.readValue(jsonMessage, MessageReqDto.class);
+                    MessageReqDto message = objectMapper.readValue(jsonMessage,
+                        MessageReqDto.class);
                     messages.add(message);
                 } catch (JsonProcessingException e) {
                     throw new RuntimeException(e);
