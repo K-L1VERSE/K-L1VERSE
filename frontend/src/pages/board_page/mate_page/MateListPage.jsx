@@ -21,7 +21,7 @@ function MateListPage() {
   function getMates() {
     getMateList(
       page,
-      30,
+      10,
       ({ data }) => {
         if (!data.content) {
           setHasMore(false);
