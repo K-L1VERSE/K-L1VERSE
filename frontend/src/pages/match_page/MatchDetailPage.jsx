@@ -21,7 +21,6 @@ export default function MatchDetailPage() {
 
   return (
     <div>
-      [ MatchDetailPage ]
       <MatchDetailScore match={data} />
       <button type="button" onClick={() => goChatting(matchId)}>
         경기 채팅 입장하기 ~~

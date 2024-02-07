@@ -1,7 +1,8 @@
 import styled from "styled-components";
 
 export const BadgeImg = styled.img`
-  width: 100px;
+  width: 28px;
+  height: 28px;
 `;
 
 export const PredictBox = styled.div`
