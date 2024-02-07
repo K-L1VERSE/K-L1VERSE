@@ -110,7 +110,7 @@ public class NewsCrawl {
                 .orElse(null);
     }
 
-    private List<String> parseNewsList(String newsListJsonString) {
+    private List<NewsInfo> parseNewsList(String newsListJsonString) {
         ObjectMapper objectMapper = new ObjectMapper();
         JsonNode newsListJsonNode = null;
         try {
@@ -168,7 +168,7 @@ public class NewsCrawl {
             contentDiv = document.getElementById("newsEndContents");
         }
         String newsContent = contentDiv.ownText();
-//        log.info("newsContent: {}", newsContent);
+        log.info("newsContent: {}", newsContent);
 
         return newsContent;
     }
@@ -210,27 +210,27 @@ public class NewsCrawl {
             List<String> titleList = new ArrayList<>();
             List<String> uriList = new ArrayList<>();
 
-            for(NewsInfo newsInfo : newsInfoList) {
-                if(newsInfo.content == null) {
-                    continue;
-                }
-
-                log.info("newsContent = {}", newsInfo.content);
-                String prompt = "(예 or 아니오)로 대답해줘. 다음의 뉴스 내용은 긍정적인 내용이야? ("+newsInfo.getContent()+")";
-                String responseFromOpenAIJSon = openAiService.sendRequest(prompt);
-                ObjectMapper objectMapper = new ObjectMapper();
-                try {
-                    JsonNode responseNode = objectMapper.readTree(responseFromOpenAIJSon);
-                    String responseFromOpenAI = responseNode.get("choices").get(0).get("message").get("content").asText();
-                    if(responseFromOpenAI == null || responseFromOpenAI.equals("아니오") || responseFromOpenAI.equals("아니요")) {
-                        continue;
-                    }
-                } catch (JsonProcessingException e) {
-                    e.printStackTrace();
-                }
-                titleList.add(newsInfo.getTitle());
-                uriList.add(newsInfo.getUri());
-            }
+//            for(NewsInfo newsInfo : newsInfoList) {
+//                if(newsInfo.content == null) {
+//                    continue;
+//                }
+//
+//                log.info("newsContent = {}", newsInfo.content);
+//                String prompt = "(예 or 아니오)로 대답해줘. 다음의 뉴스 내용은 긍정적인 내용이야? ("+newsInfo.getContent()+")";
+//                String responseFromOpenAIJSon = openAiService.sendRequest(prompt);
+//                ObjectMapper objectMapper = new ObjectMapper();
+//                try {
+//                    JsonNode responseNode = objectMapper.readTree(responseFromOpenAIJSon);
+//                    String responseFromOpenAI = responseNode.get("choices").get(0).get("message").get("content").asText();
+//                    if(responseFromOpenAI == null || responseFromOpenAI.equals("아니오") || responseFromOpenAI.equals("아니요")) {
+//                        continue;
+//                    }
+//                } catch (JsonProcessingException e) {
+//                    e.printStackTrace();
+//                }
+//                titleList.add(newsInfo.getTitle());
+//                uriList.add(newsInfo.getUri());
+//            }
             newsResDto.setTitle(titleList);
             newsResDto.setUri(uriList);
 
