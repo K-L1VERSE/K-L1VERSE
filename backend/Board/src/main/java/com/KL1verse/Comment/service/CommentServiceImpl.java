@@ -72,7 +72,7 @@ public class CommentServiceImpl implements CommentService {
         List<Object[]> userNickname = commentRepository.findUserNickname(commentDTO.getUserId());
         commentDTO.setNickname((String) userNickname.get(0)[0]);
 
-        String userNickname = boardRepository.findNicknameByUserId(board.getUserId());
+//        String userNickname = boardRepository.findNicknameByUserId(board.getUserId());
 //        kafkaBoardNotificationProducer.boardNotification(
 //            BoardNotificationResDto.builder()
 //                .type(BoardNotificationType.COMMENT)

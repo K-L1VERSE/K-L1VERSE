@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { useRecoilState } from "recoil";
 import axios from "../../../api/axios";
@@ -36,17 +36,23 @@ function WaggleDetailPage() {
   const { userId } = useRecoilState(UserState)[0];
 
   function getWaggleDetail() {
-    axios.get(`/board/waggles/${boardId}`).then(({ data }) => {
-      setWaggleDetail(data.board);
-      setWaggleId(data.waggleId);
-      setIsLiked(data.isLiked);
-      setLikeCount(likeCount);
-    });
+    getWaggleDetail(
+      boardId,
+      { board: { userId } },
+      ({ data }) => {
+        console.log(data);
+        setWaggleDetail(data);
+      },
+      (err) => {
+        console.log(err);
+        console.log("!!!!!!!!!!!!!!!!!!");
+      },
+    );
   }
 
   useEffect(() => {
     getWaggleDetail();
-  }, [boardId]);
+  }, []);
 
   const handleUpdateBtn = () => {
     navigate(`/waggleRegist`, {

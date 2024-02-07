@@ -12,8 +12,8 @@ export function getWaggleList(page, size, success, fail) {
     .catch(fail);
 }
 
-export function getWaggleDetail(boardId) {
-  axios.get(`/${gateway}/${url}/${boardId}`).then((response) => response.data);
+export function getWaggleDetail(boardId, data, success, fail) {
+  axios.post(`/${gateway}/${url}/${boardId}`, data).then(success).catch(fail);
 }
 
 export function createWaggle(board, success, fail) {
