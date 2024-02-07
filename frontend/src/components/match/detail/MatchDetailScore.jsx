@@ -3,9 +3,9 @@ import { useNavigate } from "react-router-dom";
 
 import styled from "styled-components";
 
-import MatchTimeComponent from "./MatchTimeComponent";
-import { BadgeImg } from "../../styles/MatchStyles/MatchDetailStyle";
-import ToLeftPng from "../../assets/ToLeft.png";
+import MatchTimeComponent from "../MatchTimeComponent";
+import { BadgeImg } from "../../../styles/MatchStyles/MatchDetailStyle";
+import ToLeftPng from "../../../assets/ToLeft.png";
 
 export default function MatchDetailScore({ match }) {
   match = {
@@ -15,10 +15,11 @@ export default function MatchDetailScore({ match }) {
     homeTeamName: "울산 HD FC",
     awayTeamName: "포항스틸러스",
     matchAt: "2024-02-10T16:00:00",
-    homeScore: 3,
-    awayScore: 2,
+    homeScore: 2,
+    awayScore: 1,
     status: "during",
   };
+
   const homeTeamsrc = `${process.env.PUBLIC_URL}/badge/badge${match.homeTeamId}.png`;
   const awayTeamsrc = `${process.env.PUBLIC_URL}/badge/badge${match.awayTeamId}.png`;
 
@@ -118,7 +119,7 @@ export default function MatchDetailScore({ match }) {
         </MatchDetailComponent>
       </MatchDetailContainer>
 
-      {match.status === "upcoming" ? (
+      {/* {match.status === "upcoming" ? (
         <div>경기 준비 중</div>
       ) : match.status === "during" ? (
         <div>경기 중</div>
@@ -126,19 +127,16 @@ export default function MatchDetailScore({ match }) {
         <div>경기 종료</div>
       ) : (
         <div>시스템 점검 중</div>
-      )}
-
-      <div>홈 ? {match.home}</div>
-      <div>
-        {match.homeScore} : {match.awayScore}
-      </div>
+      )} */}
     </div>
   );
 }
 
 const MatchDetailTop = styled.div`
   font-weight: bold;
-  padding: 0.3rem 0;
+
+  margin-top: 1rem;
+  padding: 1.7rem 0 0.3rem 0;
   display: flex;
   justify-content: left;
 `;
@@ -159,6 +157,7 @@ const MatchDetailContainer = styled.div`
   flex-direction: column;
   align-items: center;
   padding: 0.3rem;
+  margin: 0.3rem;
 `;
 
 const MatchDetailComponent = styled.div`

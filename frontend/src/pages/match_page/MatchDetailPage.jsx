@@ -1,8 +1,10 @@
 import React, { useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
-import MatchDetailScore from "../../components/match/MatchDetailScore";
+import MatchDetailScore from "../../components/match/detail/MatchDetailScore";
 import { getMatchDetail } from "../../api/match";
-import BettingContainer from "../../components/match/BettingContainer";
+import PredictionContainer from "../../components/match/prediction/PredictionContainer";
+import CurrentBettingContainer from "../../components/match/currentBetting/CurrentBettingContainer";
+import DoBettingContainer from "../../components/match/doBetting/DoBettingContainer";
 
 export default function MatchDetailPage() {
   const { matchId } = useParams();
@@ -22,10 +24,9 @@ export default function MatchDetailPage() {
   return (
     <div>
       <MatchDetailScore match={data} />
-      <button type="button" onClick={() => goChatting(matchId)}>
-        경기 채팅 입장하기 ~~
-      </button>
-      <BettingContainer match={data} />
+      <PredictionContainer match={data} />
+      <CurrentBettingContainer match={data} />
+      <DoBettingContainer match={data} />
     </div>
   );
 }

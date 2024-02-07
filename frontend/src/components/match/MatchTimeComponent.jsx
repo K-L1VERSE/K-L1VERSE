@@ -15,10 +15,6 @@ function MatchTimeComponent({ time, status }) {
   const Dhour = Math.floor((timeDifferenceInMinues / 60) % 24);
   const Dminute = Math.floor(timeDifferenceInMinues % 60);
 
-  console.log(Dday);
-  console.log(Dhour);
-  console.log(Dminute);
-
   const enterMatch = () => {
     console.log("경기 입장하기");
   };
