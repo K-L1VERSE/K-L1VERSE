@@ -1,10 +1,8 @@
 package com.kl1verse.UserServer.domain.notification.dto.req;
 
 import java.time.LocalDateTime;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+
+import lombok.*;
 
 @AllArgsConstructor
 @NoArgsConstructor
@@ -12,8 +10,25 @@ import lombok.NoArgsConstructor;
 @Getter
 public class MessageReqDto {
 
-    public static enum NotificationType {
-        COMMENT, LIKE, GOAL, MATCH, NEWS
+    @Getter
+    @RequiredArgsConstructor
+    public enum NotificationType {
+        COMMENT("COMMENT"),
+        LIKE("LIKE"),
+        GOAL("GOAL"),
+        MATCH("MATCH"),
+        NEWS("NEWS");
+
+        private final String value;
+
+        public static NotificationType ofValue(String value) {
+            for (NotificationType type : values()) {
+                if (type.name().equals(value)) {
+                    return type;
+                }
+            }
+            return null;
+        }
     }
 
     private NotificationType type;
