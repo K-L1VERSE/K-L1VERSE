@@ -1,6 +1,9 @@
+server:
+    poert: 8050
+
 spring:
     profiles:
-        active: deploy
+        active: dev
 
 openai:
     api-key: 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

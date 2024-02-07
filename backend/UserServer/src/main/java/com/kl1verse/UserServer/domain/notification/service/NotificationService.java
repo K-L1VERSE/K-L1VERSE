@@ -84,6 +84,7 @@ public class NotificationService {
                 .createdAt(messageReqDto.getDate())
                 .build();
 
+            log.info("type = {}", messageReqDto.getType().toString());
             notificationRepository.save(notification);
             NotificationResDto notificationResDto = NotificationResDto.builder()
                 .uri(messageReqDto.getUri())
