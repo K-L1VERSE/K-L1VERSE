@@ -20,27 +20,29 @@ export default function ListContainer({ data }) {
   return (
     <ListStyle>
       <table>
-        {Object.entries(groupedData).map(([date, matches]) => (
-          <tr key={date}>
-            <td className="date">
-              {date
-                .split(" ")
-                .map((part, index) => {
-                  if (index === 2) return part.replace(".", "");
-                  return part;
-                })
-                .join(" ")}
-            </td>
-            <td className="detail">
-              {matches.flatMap((match, index, array) => (
-                <React.Fragment key={index}>
-                  <Time match={match} />
-                  {index < array.length - 1 && <hr />}
-                </React.Fragment>
-              ))}
-            </td>
-          </tr>
-        ))}
+        <tbody>
+          {Object.entries(groupedData).map(([date, matches]) => (
+            <tr key={date}>
+              <td className="date">
+                {date
+                  .split(" ")
+                  .map((part, index) => {
+                    if (index === 2) return part.replace(".", "");
+                    return part;
+                  })
+                  .join(" ")}
+              </td>
+              <td className="detail">
+                {matches.flatMap((match, index, array) => (
+                  <React.Fragment key={index}>
+                    <Time match={match} />
+                    {index < array.length - 1 && <hr />}
+                  </React.Fragment>
+                ))}
+              </td>
+            </tr>
+          ))}
+        </tbody>
       </table>
     </ListStyle>
   );
