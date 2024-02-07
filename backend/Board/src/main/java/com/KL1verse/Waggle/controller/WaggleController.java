@@ -1,6 +1,7 @@
 package com.KL1verse.Waggle.controller;
 
 import com.KL1verse.Board.dto.req.SearchBoardConditionDto;
+import com.KL1verse.Comment.dto.req.CommentDTO;
 import com.KL1verse.Waggle.dto.req.WaggleDTO;
 import com.KL1verse.Waggle.service.WaggleService;
 import java.util.List;
@@ -10,6 +11,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.Mapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -32,9 +34,11 @@ public class WaggleController {
     }
 
 
-    @GetMapping("/{boardId}")
-    public ResponseEntity<WaggleDTO> getWaggleById(@PathVariable Long boardId) {
-        WaggleDTO waggle = waggleService.getWaggleById(boardId);
+    @PostMapping("/{boardId}")
+    public ResponseEntity<WaggleDTO> getWaggleById(@PathVariable Long boardId,
+        @RequestBody WaggleDTO waggleDto) {
+        Integer loginUserId = waggleDto.getBoard().getUserId();
+        WaggleDTO waggle = waggleService.getWaggleById(boardId, loginUserId);
         return ResponseEntity.ok(waggle);
     }
 
