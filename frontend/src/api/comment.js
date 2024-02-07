@@ -39,9 +39,9 @@ export function unlikeComment(commentId, success, fail) {
     .catch(fail);
 }
 
-// export function createReply(parentId, comment, success, fail) {
-//   axios
-//     .post(`/${gateway}/${url}/${parentId}/replies`, comment)
-//     .then(success)
-//     .catch(fail);
-// }
+export function createReply(parentId, comment, success, fail) {
+  axios
+    .post(`/${gateway}/${url}/${parentId}/replies`, comment)
+    .then(success)
+    .catch(fail);
+}

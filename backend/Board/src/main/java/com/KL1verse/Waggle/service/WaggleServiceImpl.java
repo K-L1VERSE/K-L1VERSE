@@ -96,12 +96,12 @@ public class WaggleServiceImpl implements WaggleService {
         WaggleDTO createdWaggleDTO = convertToDTO(createdWaggle);
         createdWaggleDTO.getBoard().setNickname(userNickname);
         
-        BoardCleanbotCheckReqDto boardCleanbotCheckReqDto = BoardCleanbotCheckReqDto.builder()
-            .id(createdWaggle.getBoard().getBoardId())
-            .content(createdWaggle.getBoard().getContent())
-            .domain("board")
-            .build();
-        kafkaBoardCleanbotProducer.boardCleanbotCheck(boardCleanbotCheckReqDto);
+//        BoardCleanbotCheckReqDto boardCleanbotCheckReqDto = BoardCleanbotCheckReqDto.builder()
+//            .id(createdWaggle.getBoard().getBoardId())
+//            .content(createdWaggle.getBoard().getContent())
+//            .domain("board")
+//            .build();
+//        kafkaBoardCleanbotProducer.boardCleanbotCheck(boardCleanbotCheckReqDto);
 
         return createdWaggleDTO;
     }
@@ -123,12 +123,12 @@ public class WaggleServiceImpl implements WaggleService {
         boardImageService.saveBoardImage(board, file);
 
 
-        BoardCleanbotCheckReqDto boardCleanbotCheckReqDto = BoardCleanbotCheckReqDto.builder()
-            .id(boardId)
-            .content(waggleDto.getBoard().getContent())
-            .domain("board")
-            .build();
-        kafkaBoardCleanbotProducer.boardCleanbotCheck(boardCleanbotCheckReqDto);
+//        BoardCleanbotCheckReqDto boardCleanbotCheckReqDto = BoardCleanbotCheckReqDto.builder()
+//            .id(boardId)
+//            .content(waggleDto.getBoard().getContent())
+//            .domain("board")
+//            .build();
+//        kafkaBoardCleanbotProducer.boardCleanbotCheck(boardCleanbotCheckReqDto);
 
         return convertToDTO(updatedWaggle);
     }

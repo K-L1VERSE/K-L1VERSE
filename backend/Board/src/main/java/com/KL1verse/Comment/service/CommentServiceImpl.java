@@ -68,14 +68,14 @@ public class CommentServiceImpl implements CommentService {
         Comment createdComment = commentRepository.save(comment);
 
         String userNickname = boardRepository.findNicknameByUserId(board.getUserId());
-        kafkaBoardNotificationProducer.boardNotification(
-            BoardNotificationResDto.builder()
-                .type(BoardNotificationType.COMMENT)
-                .userId(board.getUserId())
-                .uri(domain + "/" + board.getBoardType().toString().toLowerCase() + String.valueOf(board.getBoardId()))
-                .message(userNickname + "님이 새로운 댓글을 달았습니다.")
-                .build()
-        );
+//        kafkaBoardNotificationProducer.boardNotification(
+//            BoardNotificationResDto.builder()
+//                .type(BoardNotificationType.COMMENT)
+//                .userId(board.getUserId())
+//                .uri(domain + "/" + board.getBoardType().toString().toLowerCase() + String.valueOf(board.getBoardId()))
+//                .message(userNickname + "님이 새로운 댓글을 달았습니다.")
+//                .build()
+//        );
 
 
         return CommentDTO.builder()

@@ -15,7 +15,7 @@ function WaggleRegistPage() {
   const [content, setContent] = useState("");
   const [boardImage, setBoardImage] = useState(null);
   const [isUpdateMode, setIsUpdateMode] = useState(false);
-  const { userId, nickname } = useRecoilState(UserState)[0];
+  const { userId } = useRecoilState(UserState)[0];
 
   const location = useLocation();
 
