@@ -29,7 +29,7 @@ public class KafkaNewsNotificationConsumer {
     @Autowired
     private ObjectMapper objectMapper;
 
-    @KafkaListener(topics = "news-notification", groupId = "user-group") // match-group아님, 현재 groupID !
+//    @KafkaListener(topics = "news-notification", groupId = "user-group") // match-group아님, 현재 groupID !
     public void sendNewsNotification(String newsNotificationDataJson) {
 
         // userIdList를 받아서 알림 주기
