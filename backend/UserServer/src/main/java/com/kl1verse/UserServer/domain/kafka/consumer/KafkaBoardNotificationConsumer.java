@@ -27,7 +27,7 @@ public class KafkaBoardNotificationConsumer {
     @Autowired
     private ObjectMapper objectMapper;
 
-//    @KafkaListener(topics = "board-notification", groupId = "user-group") // match-group아님, 현재 groupID !
+    @KafkaListener(topics = "board-notification", groupId = "user-group") // match-group아님, 현재 groupID !
     public void sendBoardNotification(String boardNotificationDataJson) {
 
         // userIdList를 받아서 알림 주기
