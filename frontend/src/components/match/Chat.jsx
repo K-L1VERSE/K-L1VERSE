@@ -157,17 +157,17 @@ function Chat() {
             key={index}
             className={message.isUser ? "user-message" : "other-message"}
           >
-            <MessageContainer isMine={nickname === message.sender}>
+            <MessageContainer $isMine={nickname === message.sender}>
               <MessageBox>
-                <InfoBox isMine={nickname === message.sender}>
+                <InfoBox $isMine={nickname === message.sender}>
                   <SenderImg src={message.profile} />
                   <OnlyNick>{message.sender}</OnlyNick>
                   <BadgeImg
                     src={`${process.env.PUBLIC_URL}/badge/badge${message.mainBadge === null ? 0 : message.mainBadge}.png`}
                   />
                 </InfoBox>
-                <MessageInfoBox isMine={nickname === message.sender}>
-                  <OnlyMsg isMine={nickname === message.sender}>
+                <MessageInfoBox $isMine={nickname === message.sender}>
+                  <OnlyMsg $isMine={nickname === message.sender}>
                     {message.message}
                   </OnlyMsg>
                   <MsgTimeContainer>

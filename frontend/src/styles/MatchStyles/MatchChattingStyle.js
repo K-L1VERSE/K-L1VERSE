@@ -33,7 +33,7 @@ export const ChattingBox = styled.div`
 /* Message 박스 */
 export const MessageContainer = styled.div`
   display: flex;
-  flex-direction: ${(props) => (props.isMine ? "row-reverse" : "row")};
+  flex-direction: ${(props) => (props.$isMine ? "row-reverse" : "row")};
 `;
 
 export const MessageBox = styled.div`
@@ -46,13 +46,13 @@ export const InfoBox = styled.div`
   display: flex;
   flex-direction: row;
   align-items: center;
-  justify-content: ${(props) => (props.isMine ? "flex-end" : "flex-start")};
+  justify-content: ${(props) => (props.$isMine ? "flex-end" : "flex-start")};
   height: 1.375rem;
 `;
 
 export const MessageInfoBox = styled.div`
   display: flex;
-  flex-direction: ${(props) => (props.isMine ? "row-reverse" : "row")};
+  flex-direction: ${(props) => (props.$isMine ? "row-reverse" : "row")};
   align-items: end;
 `;
 
@@ -79,10 +79,10 @@ export const BadgeImg = styled.img`
 
 export const OnlyMsg = styled.div`
   display: inline-block;
-  background-color: ${(props) => (props.isMine ? "#E5EDFB" : "#f1f1f1")};
+  background-color: ${(props) => (props.$isMine ? "#E5EDFB" : "#f1f1f1")};
   padding: 0.5rem;
   border-radius: ${(props) =>
-    props.isMine ? "1rem 0.1rem 1rem 1rem" : "0.1rem 1rem 1rem 1rem"};
+    props.$isMine ? "1rem 0.1rem 1rem 1rem" : "0.1rem 1rem 1rem 1rem"};
   max-width: 16.5rem;
   margin-top: 0.3rem;
   font-size: 0.9rem;
