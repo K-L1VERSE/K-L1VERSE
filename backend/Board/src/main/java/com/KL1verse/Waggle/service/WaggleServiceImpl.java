@@ -12,17 +12,15 @@ import com.KL1verse.Waggle.repository.WaggleRepository;
 import com.KL1verse.Waggle.repository.WaggleUserHashTagRepository;
 import com.KL1verse.Waggle.repository.entity.Waggle;
 import com.KL1verse.Waggle.repository.entity.WaggleUserHashTag;
+import com.KL1verse.kafka.producer.KafkaBoardCleanbotProducer;
 import com.KL1verse.s3.repository.entity.File;
 import com.KL1verse.s3.service.BoardImageService;
 import com.KL1verse.s3.service.FileService;
-import com.KL1verse.kafka.dto.req.BoardCleanbotCheckReqDto;
-import com.KL1verse.kafka.producer.KafkaBoardCleanbotProducer;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.HashMap;
 import java.util.HashSet;
-import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -60,43 +58,76 @@ public class WaggleServiceImpl implements WaggleService {
 
 //    @Override
 //    public Page<WaggleDTO> getWagglesByHashtags(List<String> hashtags, Pageable pageable) {
-//        Set<WaggleDTO> uniqueWaggles = new HashSet<>();
+//        Set<Long> visitedBoardIds = new HashSet<>(); // 이미 방문한 게시글의 ID를 추적하기 위한 Set
+//        List<WaggleDTO> uniqueWaggles = new ArrayList<>(); // 중복된 게시글을 필터링한 결과를 저장할 리스트
+//
 //        for (String hashtag : hashtags) {
 //            log.info("hashtag: {}", hashtag);
 //            Page<WaggleUserHashTag> waggleUserHashTags = waggleUserHashTagRepository.findByHashtagsContaining(hashtag, pageable);
 //            List<Waggle> waggles = waggleUserHashTags.stream().map(WaggleUserHashTag::getWaggle).collect(Collectors.toList());
 //            List<WaggleDTO> waggleDTOList = convertToDTOList(waggles);
-//            uniqueWaggles.addAll(waggleDTOList);
+//
+//            // 중복된 게시글을 필터링하여 uniqueWaggles에 추가
+//            for (WaggleDTO waggleDTO : waggleDTOList) {
+//                if (!visitedBoardIds.contains(waggleDTO.getBoard().getBoardId())) { // 이미 포함되어 있는 게시글인지 확인
+//                    uniqueWaggles.add(waggleDTO); // 포함되어 있지 않다면 uniqueWaggles에 추가
+//                    visitedBoardIds.add(waggleDTO.getBoard().getBoardId()); // 방문한 게시글로 표시
+//                }
+//            }
+//
 //            log.info("hashtag: {}", uniqueWaggles);
 //        }
-//        List<WaggleDTO> waggles = new ArrayList<>(uniqueWaggles);
-//        return new PageImpl<>(waggles, pageable, waggles.size());
+//
+//        return new PageImpl<>(uniqueWaggles, pageable, uniqueWaggles.size());
 //    }
 
-    @Override
-    public Page<WaggleDTO> getWagglesByHashtags(List<String> hashtags, Pageable pageable) {
-        Set<Long> visitedBoardIds = new HashSet<>(); // 이미 방문한 게시글의 ID를 추적하기 위한 Set
-        List<WaggleDTO> uniqueWaggles = new ArrayList<>(); // 중복된 게시글을 필터링한 결과를 저장할 리스트
+//    @Override
+//    public Page<WaggleDTO> getWagglesByHashtags(List<String> hashtags, Pageable pageable) {
+//        Set<Long> visitedBoardIds = new HashSet<>(); // 이미 방문한 게시글의 ID를 추적하기 위한 Set
+//        List<WaggleDTO> uniqueWaggles = new ArrayList<>(); // 중복된 게시글을 필터링한 결과를 저장할 리스트
+//
+//        // 각 해시태그별로 해당하는 게시글들을 검색하고 중복을 제거하여 uniqueWaggles에 추가
+//        for (String hashtag : hashtags) {
+//            log.info("hashtag: {}", hashtag);
+//            Page<Waggle> waggles = waggleRepository.findByHashtagsContaining(hashtag, pageable);
+//            log.info("waggles: {}", waggles);
+//            List<WaggleDTO> waggleDTOList = convertToDTOList(waggles.getContent());
+//
+//            for (WaggleDTO waggleDTO : waggleDTOList) {
+//                if (!visitedBoardIds.contains(waggleDTO.getBoard().getBoardId())) { // 이미 포함되어 있는 게시글인지 확인
+//                    uniqueWaggles.add(waggleDTO); // 포함되어 있지 않다면 uniqueWaggles에 추가
+//                    visitedBoardIds.add(waggleDTO.getBoard().getBoardId()); // 방문한 게시글로 표시
+//                }
+//            }
+//        }
+//
+//        return new PageImpl<>(uniqueWaggles, pageable, uniqueWaggles.size());
+//    }
+@Override
+public Page<WaggleDTO> getWagglesByHashtags(List<String> hashtags, Pageable pageable) {
+    Set<Long> visitedBoardIds = new HashSet<>(); // 이미 방문한 게시글의 ID를 추적하기 위한 Set
+    List<WaggleDTO> uniqueWaggles = new ArrayList<>(); // 중복된 게시글을 필터링한 결과를 저장할 리스트
 
-        for (String hashtag : hashtags) {
-            log.info("hashtag: {}", hashtag);
-            Page<WaggleUserHashTag> waggleUserHashTags = waggleUserHashTagRepository.findByHashtagsContaining(hashtag, pageable);
-            List<Waggle> waggles = waggleUserHashTags.stream().map(WaggleUserHashTag::getWaggle).collect(Collectors.toList());
-            List<WaggleDTO> waggleDTOList = convertToDTOList(waggles);
+    // 각 해시태그별로 해당하는 게시글들을 검색하고 중복을 제거하여 uniqueWaggles에 추가
+    for (String hashtag : hashtags) {
+        // 대괄호 제거
+        hashtag = hashtag.replaceAll("[\\[\\]]", "");
+        log.info("hashtag: {}", hashtag);
+        Page<Waggle> waggles = waggleRepository.findByHashtagsContaining(hashtag, pageable);
 
-            // 중복된 게시글을 필터링하여 uniqueWaggles에 추가
-            for (WaggleDTO waggleDTO : waggleDTOList) {
-                if (!visitedBoardIds.contains(waggleDTO.getBoard().getBoardId())) { // 이미 포함되어 있는 게시글인지 확인
-                    uniqueWaggles.add(waggleDTO); // 포함되어 있지 않다면 uniqueWaggles에 추가
-                    visitedBoardIds.add(waggleDTO.getBoard().getBoardId()); // 방문한 게시글로 표시
-                }
+        List<WaggleDTO> waggleDTOList = convertToDTOList(waggles.getContent());
+        log.info("waggleDTOList: {}", waggleDTOList);
+        for (WaggleDTO waggleDTO : waggleDTOList) {
+            if (!visitedBoardIds.contains(waggleDTO.getBoard().getBoardId())) { // 이미 포함되어 있는 게시글인지 확인
+                uniqueWaggles.add(waggleDTO); // 포함되어 있지 않다면 uniqueWaggles에 추가
+                visitedBoardIds.add(waggleDTO.getBoard().getBoardId()); // 방문한 게시글로 표시
             }
-
-            log.info("hashtag: {}", uniqueWaggles);
         }
-
-        return new PageImpl<>(uniqueWaggles, pageable, uniqueWaggles.size());
     }
+
+    return new PageImpl<>(uniqueWaggles, pageable, uniqueWaggles.size());
+}
+
 
 
 
