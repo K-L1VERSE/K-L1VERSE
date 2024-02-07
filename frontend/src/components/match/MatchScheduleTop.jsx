@@ -3,11 +3,10 @@ import {
   LeftTop,
   RightSelect,
   TopContainer,
-  TypeImg,
   TypeText,
 } from "../../styles/MatchStyles/MatchScheduleStyle";
-import ListIcon from "../../assets/icon/list-icon.png";
-import CalendarIcon from "../../assets/icon/calendar-icon.png";
+import { ReactComponent as ListIcon } from "../../assets/icon/list-icon.svg";
+import { ReactComponent as CalendarIcon } from "../../assets/icon/calendar-icon.svg";
 
 export default function MatchScheduleTop({ setView, view }) {
   return (
@@ -27,7 +26,7 @@ export default function MatchScheduleTop({ setView, view }) {
           className={view === "list" ? "selected" : ""}
           onClick={() => setView("list")}
         >
-          <TypeImg src={ListIcon} />
+          <ListIcon />
           <TypeText>리스트</TypeText>
         </button>
         <button
@@ -35,7 +34,7 @@ export default function MatchScheduleTop({ setView, view }) {
           className={view === "calendar" ? "selected" : ""}
           onClick={() => setView("calendar")}
         >
-          <TypeImg src={CalendarIcon} />
+          <CalendarIcon />
           <TypeText>캘린더</TypeText>
         </button>
       </RightSelect>

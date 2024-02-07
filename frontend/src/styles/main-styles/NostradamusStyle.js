@@ -7,13 +7,11 @@ export const NostraContainer = styled.div`
   height: 8.8rem;
 
   table {
-    border-bottom: 1px solid #f4f4f4;
     margin: 0 auto;
     width: 95%;
     font-size: 0.8rem;
     text-align: center;
     color: #595959;
-
     tr {
       height: 1.8rem;
     }
