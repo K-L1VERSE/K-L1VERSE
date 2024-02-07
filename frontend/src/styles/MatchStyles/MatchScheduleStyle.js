@@ -1,5 +1,64 @@
 import styled from "styled-components";
 
+export const TopContainer = styled.div`
+  display: flex;
+  justify-content: space-between;
+  padding: 20px 15px 20px 15px;
+`;
+
+export const ArrowImg = styled.img`
+  width: 1rem;
+  height: 0.9rem;
+  &:hover {
+    cursor: pointer;
+  }
+`;
+
+export const LeftTop = styled.div`
+  display: flex;
+  justify-content: space-between;
+  width: 5rem;
+  align-items: center;
+  font-family: "Pretendard-Bold";
+  font-size: 0.9rem;
+  color: #002266;
+`;
+
+export const RightSelect = styled.div`
+  display: flex;
+  button {
+    display: flex;
+    padding-top: 0.1rem;
+    padding-left: 0.6rem;
+    padding-right: 0.6rem;
+    font-size: 0.8rem;
+    border: none;
+    background-color: white;
+    height: 1.7rem;
+    color: #a9a9a9;
+    font-family: "Pretendard-Regular";
+    &:hover {
+      cursor: pointer;
+    }
+  }
+  button.selected {
+    background-color: #f2f6fd;
+    color: #002266;
+    font-family: "Pretendard-Bold";
+  }
+`;
+
+export const TypeImg = styled.img`
+  width: 0.8rem;
+  margin-right: 0.3rem;
+  margin-top: 0.35rem;
+`;
+
+export const TypeText = styled.div`
+  font-size: 0.8rem;
+  padding-top: 0.3rem;
+`;
+
 export const TableContainer = styled.div`
   border: 2px solid pink;
   text-align: center;
@@ -19,9 +78,19 @@ export const TableContainer = styled.div`
 `;
 
 export const ScheduleSelect = styled.div`
+  padding: 0 20px 0px 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  height: 2rem;
   select {
     width: 100px;
     height: 30px;
+    text-align: center;
+    font-size: 1rem;
+    font-family: "Pretendard-Bold";
+    border: none;
+    outline: none;
   }
 `;
 
