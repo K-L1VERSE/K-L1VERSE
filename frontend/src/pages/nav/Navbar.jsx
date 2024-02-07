@@ -21,7 +21,7 @@ export default function Header() {
   const navigate = useNavigate();
 
   const goMatchSchedule = () => {
-    navigate("/matchSchedule");
+    navigate("/schedule");
   };
 
   const goTeam = () => {
@@ -44,7 +44,7 @@ export default function Header() {
   const [state, setState] = useState([false, false, false, false]);
 
   useEffect(() => {
-    if (currentPath === "/matchSchedule") {
+    if (currentPath === "/schedule") {
       setState([true, false, false, false]);
     } else if (currentPath === "/team") {
       setState([false, true, false, false]);

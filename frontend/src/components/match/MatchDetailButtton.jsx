@@ -9,7 +9,7 @@ export default function MatchDetailButton({ match }) {
   const navigate = useNavigate();
 
   const goMatchDetail = (matchId) => {
-    navigate(`/matchDetail/${matchId}`);
+    navigate(`/match/${matchId}`);
   };
 
   const homeTeamsrc = `${process.env.PUBLIC_URL}/badge/badge${match.homeTeamId}.png`;

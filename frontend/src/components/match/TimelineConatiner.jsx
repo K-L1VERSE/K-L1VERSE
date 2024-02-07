@@ -90,10 +90,9 @@ export default function TimelineConatiner() {
   return (
     <div>
       <ScoreItem />
-      {/* {timeline.map((t) => {
-        return <TimelineItem eventName={t} />;
-      })} */}
-      <TimelineItem timelines={timeline} />
+      {timeline.map((t) => {
+        return <TimelineItem timeline={t} />;
+      })}
     </div>
   );
 }

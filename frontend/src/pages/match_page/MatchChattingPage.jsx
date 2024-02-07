@@ -1,4 +1,4 @@
-import Chat from "../../components/match/Chat";
+// import Chat from "../../components/match/Chat";
 import TimelineContainer from "../../components/match/TimelineContainer";
 
 function MatchChattingPage() {
@@ -6,7 +6,7 @@ function MatchChattingPage() {
     <div>
       <div>안녕하세요 채팅 페이지입니다 ^^</div>
       <TimelineContainer />
-      <Chat />
+      {/* <Chat /> */}
     </div>
   );
 }

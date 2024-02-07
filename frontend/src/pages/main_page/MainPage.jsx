@@ -56,7 +56,7 @@ function MainPage() {
   }
 
   const goMatchSchedule = () => {
-    navigate("/matchSchedule");
+    navigate("/schedule");
   };
 
   return (
