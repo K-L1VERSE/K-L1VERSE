@@ -87,8 +87,8 @@ export default function ScheduleTable({ year, month, data }) {
           {groupedData
             .find((dayData) => dayData.day === selectedDay)
             .matches.map((match, index) => (
-              <div>
-                <Time key={index} match={match} />
+              <div key={index}>
+                <Time match={match} />
                 <hr />
               </div>
             ))}
