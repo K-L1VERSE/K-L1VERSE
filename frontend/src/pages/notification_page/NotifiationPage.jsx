@@ -2,6 +2,14 @@ import { useRecoilState } from "recoil";
 import { useEffect } from "react";
 import { useNavigate } from "react-router";
 import { NotificationState } from "../../global/NotificationState";
+import {
+  HeaderContainer,
+  HeaderBox,
+  HeaderImg,
+  HeaderText,
+} from "../../styles/notification-styles/NotificationStyle";
+import NotificationList from "../../components/notification/NotificationList";
+
 import axios from "../../api/axios";
 
 function Notification() {
@@ -24,32 +32,28 @@ function Notification() {
   const navigate = useNavigate();
 
   const handleNotificationClick = (uri) => {
-    navigate(`/${uri}`);
+    if (uri.includes("http") || uri.includes("https")) {
+      window.open(uri);
+    } else {
+      navigate(uri);
+    }
   };
 
   return (
     <div>
-      <h1>알림 목록</h1>
-      <ul>
-        {/* 역순으로 보여주기 위해 reverse & [...]을 이용하여 깊은 복사 후 사용 */}
-        {[...notificationState.notifications]
-          .reverse()
-          .map((notification, index) => (
-            <li key={index}>
-              <button
-                type="button"
-                onClick={() => handleNotificationClick(notification.uri)}
-              >
-                {/* 여기에서 type에 따라 다른 이미지를 보여줄 수 있습니다. */}
-                {notification.type === "GOAL" && (
-                  <img src="goal_image_url" alt="Goal Icon" />
-                )}
-                {/* 내용을 보여줍니다. */}
-                <p>{notification.content}</p>
-              </button>
-            </li>
-          ))}
-      </ul>
+      <HeaderContainer>
+        <HeaderBox>
+          <HeaderImg
+            src="https://raw.githubusercontent.com/Tarikul-Islam-Anik/Animated-Fluent-Emojis/master/Emojis/Objects/Bell.png"
+            alt="Bell"
+          />
+          <HeaderText>알림</HeaderText>
+        </HeaderBox>
+      </HeaderContainer>
+      <NotificationList
+        notifications={notificationState.notifications}
+        handleNotificationClick={handleNotificationClick}
+      />
     </div>
   );
 }

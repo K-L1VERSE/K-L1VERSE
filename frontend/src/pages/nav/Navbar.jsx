@@ -48,12 +48,16 @@ export default function Header() {
       setState([true, false, false, false]);
     } else if (currentPath === "/team") {
       setState([false, true, false, false]);
-    } else if (currentPath === "/") {
-      setState([false, false, false, false]);
     } else if (currentPath === "/notification") {
       setState([false, false, true, false]);
-    } else if (currentPath === "/mypage") {
+    } else if (
+      currentPath === "/mypage" ||
+      currentPath === "/setting" ||
+      currentPath === "/badge"
+    ) {
       setState([false, false, false, true]);
+    } else {
+      setState([false, false, false, false]);
     }
   }, [currentPath]);
 
