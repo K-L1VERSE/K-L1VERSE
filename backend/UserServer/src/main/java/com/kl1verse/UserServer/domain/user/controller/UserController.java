@@ -106,15 +106,63 @@ public class UserController {
         return ResponseEntity.ok().build();
     }
 
-    @GetMapping("/notifications/test")
-    public ResponseEntity<String> notificationTest() {
+    @GetMapping("/notifications/test/goal")
+    public ResponseEntity<String> notificationTestGoal() {
         notificationService.sendNotification(MessageReqDto.builder()
-            .userId(1)
-            .type(NotificationType.GOAL)
-            .message("테스트 알림 입니다.")
-            .uri("http://localhost:3000/mypage")
-            .date(LocalDateTime.now())
-            .build());
+                .userId(1)
+                .type(NotificationType.GOAL)
+                .message("골) 테스트 알림 입니다.")
+                .uri("/mypage")
+                .date(LocalDateTime.now())
+                .build());
+        return ResponseEntity.ok("OK");
+    }
+
+    @GetMapping("/notifications/test/comment")
+    public ResponseEntity<String> notificationTestComment() {
+        notificationService.sendNotification(MessageReqDto.builder()
+                .userId(1)
+                .type(NotificationType.COMMENT)
+                .message("댓글) 테스트 알림 입니다.")
+                .uri("/waggle/1")
+                .date(LocalDateTime.now())
+                .build());
+        return ResponseEntity.ok("OK");
+    }
+
+    @GetMapping("/notifications/test/like")
+    public ResponseEntity<String> notificationTestLike() {
+        notificationService.sendNotification(MessageReqDto.builder()
+                .userId(1)
+                .type(NotificationType.LIKE)
+                .message("좋아요) 테스트 알림 입니다.")
+                .uri("/waggle/1")
+                .date(LocalDateTime.now())
+                .build());
+        return ResponseEntity.ok("OK");
+    }
+
+    @GetMapping("/notifications/test/match")
+    public ResponseEntity<String> notificationTestMatch() {
+        notificationService.sendNotification(MessageReqDto.builder()
+                .userId(1)
+                .type(NotificationType.MATCH)
+                .message("경기) 테스트 알림 입니다.")
+                .uri("/matchDetail/201")
+                .date(LocalDateTime.now())
+                .build());
+        return ResponseEntity.ok("OK");
+    }
+
+    @GetMapping("/notifications/test/news")
+    public ResponseEntity<String> notificationTestNews() {
+        notificationService.sendNotification(MessageReqDto.builder()
+                .userId(1)
+                .type(NotificationType.NEWS)
+                .message("뉴스) 테스트 알림 입니다.")
+                .uri("https://sports.news.naver.com/news?oid=109&aid=0005014723")
+                .date(LocalDateTime.now())
+                .build());
         return ResponseEntity.ok("OK");
     }
 
