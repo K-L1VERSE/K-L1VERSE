@@ -20,8 +20,12 @@ export function createProduct(board, success, fail) {
   axios.post(`/${gateway}/${url}`, board).then(success).catch(fail);
 }
 
-export function updateProduct(board, boardId, success, fail) {
+export function updateProduct(boardId, board, success, fail) {
   axios.put(`/${gateway}/${url}/${boardId}`, board).then(success).catch(fail);
+}
+
+export function deleteProduct(boardId, success, fail) {
+  axios.delete(`/${gateway}/${url}/${boardId}`).then(success).catch(fail);
 }
 
 export function getLatestProduct(success, fail) {

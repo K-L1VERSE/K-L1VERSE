@@ -23,14 +23,35 @@ public class TeamServiceImpl implements TeamService {
     public TeamInfoResponse getTeamInfo(int id) {
         Team team = teamRepository.findByTeamId(id);
         List<Member> member = memberRepository.findByTeamTeamId(id);
+        Integer uri = team.getSongId();
+        if (uri == null) {
+            return TeamInfoResponse.builder()
+                .teamId(team.getTeamId())
+                .teamName(team.getTeamName())
+                .description(team.getTeamDescription())
+                .homepage(team.getHomepage())
+                .facebook(team.getFacebook())
+                .instagram(team.getInstagram())
+                .youtube(team.getYoutube())
+                .members(member)
+                .song(null)
+                .build();
+        }
+        else {
+            return TeamInfoResponse.builder()
+                .teamId(team.getTeamId())
+                .teamName(team.getTeamName())
+                .description(team.getTeamDescription())
+                .homepage(team.getHomepage())
+                .facebook(team.getFacebook())
+                .instagram(team.getInstagram())
+                .youtube(team.getYoutube())
+                .members(member)
+                .song(teamRepository.findBySongId(team.getSongId()))
+                .build();
+        }
 
-        return TeamInfoResponse.builder()
-            .teamId(team.getTeamId())
-            .teamName(team.getTeamName())
-            .description(team.getTeamDescription())
-            .members(member)
-            .song(teamRepository.findBySongId(team.getSongId()))
-            .build();
+
 
     }
 }

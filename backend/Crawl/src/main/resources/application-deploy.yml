@@ -4,7 +4,7 @@ spring:
     bootstrap-servers: i10a409.p.ssafy.io:9092
     consumer:
       bootstrap-servers: i10a409.p.ssafy.io:9092
-      group-id: user-group # 여기만 다름
+      group-id: crawl-group # 여기만 다름
       key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
       value-deserializer: org.apache.kafka.common.serialization.StringDeserializer
     producer:

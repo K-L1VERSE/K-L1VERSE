@@ -1,7 +1,11 @@
 package com.KL1verse.match.chat.dto.req;
 
-import lombok.Getter;
+import lombok.*;
 
+@NoArgsConstructor
+@AllArgsConstructor
+@Builder
+@Setter
 @Getter
 public class MessageReqDto {
 
@@ -14,5 +18,7 @@ public class MessageReqDto {
     private String sender;
     private String message;
     private String date;
+    private String profile;
+    private String mainBadge;
 
 }

@@ -12,7 +12,7 @@ import java.util.List;
 @Setter
 public class NewsResDto {
 
-    private String teamCode;
+    private String badgeDetailId;
     private List<String> title;
     private List<String> uri;
 }

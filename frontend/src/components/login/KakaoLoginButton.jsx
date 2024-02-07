@@ -22,6 +22,12 @@ function KakaoLoginButton() {
 const ButtonContainer = styled.div`
   height: 45px;
   border: none;
+  border-radius: 8px;
+  transition: box-shadow 0.5s ease;
+  &:hover {
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
+    cursor: pointer;
+  }
 `;
 
 const LoginButton = styled.button`
@@ -30,7 +36,6 @@ const LoginButton = styled.button`
   border: none;
   background-color: transparent;
   cursor: pointer;
-
   background-image: url(${KakaoLoginImg});
   back &:hover {
     filter: brightness(0.7);

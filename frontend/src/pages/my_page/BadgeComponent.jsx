@@ -7,19 +7,15 @@ import {
 function BadgeComponent({
   code,
   badgeList,
-  wearBadge,
-  handleBuyBadge,
   badgeNameList,
   badgeCodeList,
+  setSelectedBadge,
 }) {
   const index = badgeCodeList.indexOf(code);
 
   const handleClick = () => {
-    if (badgeList[index]) {
-      wearBadge(index);
-    } else {
-      handleBuyBadge(index);
-    }
+    console.log(index);
+    setSelectedBadge(index);
   };
 
   return (

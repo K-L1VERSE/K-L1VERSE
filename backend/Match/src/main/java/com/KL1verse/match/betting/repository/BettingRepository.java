@@ -15,6 +15,9 @@ public interface BettingRepository extends JpaRepository<Betting, Integer> {
     @Query(value = "SELECT * FROM betting WHERE match_id = :matchId AND betting_team_id = :winningTeamId", nativeQuery = true)
     List<Betting> findByMatchIdAndBettingTeamId(@Param("matchId")int matchId,@Param("winningTeamId") int winningTeamId);
 
+    @Query(value = "SELECT COUNT(*) FROM betting WHERE match_id = :matchId AND user_id = :userId", nativeQuery = true)
+    int findNumByMatchIdAndUserId(int matchId, int userId);
+
     Optional<Betting> findByUserIdAndMatchId(int bettingId, int matchId);
 
     List<Betting> findByMatchId(int matchId);

@@ -12,6 +12,6 @@ public interface BoardRepository extends JpaRepository<Board, Long> {
 
     List<Board> findByBoardIdAndBoardType(Long boardId, Board.BoardType boardType);
 
-    @Query(value = "SELECT nickname FROM user WHERE user_id = :userId, nativeQuery = true")
-    String findNicknameByUserId(@Param("userId") Long userId);
+    @Query(value = "SELECT nickname FROM user WHERE user_id = :userId", nativeQuery = true)
+    String findNicknameByUserId(@Param("userId") Integer userId);
 }

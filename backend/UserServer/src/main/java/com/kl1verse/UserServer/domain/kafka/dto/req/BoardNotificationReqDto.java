@@ -9,7 +9,7 @@ public class BoardNotificationReqDto {
         COMMENT, LIKE
     }
 
-    String userId;
+    Integer userId;
     String message;
     String uri;
     BoardNotificationType type;

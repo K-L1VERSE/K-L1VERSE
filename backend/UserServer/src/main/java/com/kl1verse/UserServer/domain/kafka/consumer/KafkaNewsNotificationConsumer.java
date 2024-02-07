@@ -37,10 +37,10 @@ public class KafkaNewsNotificationConsumer {
         try {
             newsNotificationListReqDto = objectMapper.readValue(newsNotificationDataJson, NewsNotificationListReqDto.class);
 
-            String teamCode = newsNotificationListReqDto.getTeamCode();
-            log.info(teamCode);
+            String badgeDetailId = newsNotificationListReqDto.getBadgeDetailId();
+            log.info(badgeDetailId);
 
-            List<User> userList = userRepository.findByTeamCode(teamCode);
+            List<User> userList = userRepository.findByBadgeDetailId(badgeDetailId);
 
             List<MessageReqDto> messageReqDtoList = new ArrayList<>();
             for(User user : userList) {

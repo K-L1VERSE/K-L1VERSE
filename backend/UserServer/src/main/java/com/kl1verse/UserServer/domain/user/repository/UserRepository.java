@@ -17,6 +17,6 @@ public interface UserRepository extends JpaRepository<User, Integer> {
 
     Optional<User> findByNickname(String nickname);
 
-    @Query(value = "SELECT u.* FROM user u JOIN badge b ON u.badge_id = b.badge_id JOIN badge_detail bd ON b.badge_detail_id = bd.badge_detail_id WHERE bd.code = :teamCode", nativeQuery = true)
-    List<User> findByTeamCode(@Param("teamCode") String teamCode);
+    @Query(value = "SELECT u.* FROM user u JOIN badge b ON u.badge_id = b.badge_id JOIN badge_detail bd ON b.badge_detail_id = bd.badge_detail_id WHERE bd.badge_detail_id = :badgeDetailId", nativeQuery = true)
+    List<User> findByBadgeDetailId(@Param("badgeDetailId") String badgeDetailId);
 }

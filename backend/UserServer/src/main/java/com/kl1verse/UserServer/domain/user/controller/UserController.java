@@ -135,9 +135,9 @@ public class UserController {
         return ResponseEntity.ok().build();
     }
 
-    @GetMapping("/badgeTest/{teamCode}")
-    public ResponseEntity<?> badgeTest(@PathVariable(name = "teamCode") String teamCode) {
-            List<User> userList = userRepository.findByTeamCode(teamCode);
+    @GetMapping("/badgeTest/{badgeDetailId}")
+    public ResponseEntity<?> badgeTest(@PathVariable(name = "badgeDetailId") String badgeDetailId) {
+            List<User> userList = userRepository.findByBadgeDetailId(badgeDetailId);
         return ResponseEntity.ok().body(userList);
     }
 }

@@ -14,10 +14,6 @@ import {
 } from "../../styles/BoardStyles/ProductListStyle";
 
 function ProductItemCard({ product, formatRelativeTime }) {
-  // const dealStatusClass = product.dealFlag
-  //   ? "deal-status-orange"
-  //   : "deal-status-green";
-
   return (
     <ProductItemContainer>
       {product.dealFlag ? (

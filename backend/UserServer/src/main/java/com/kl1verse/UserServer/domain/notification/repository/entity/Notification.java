@@ -5,6 +5,8 @@ import com.kl1verse.UserServer.domain.notification.dto.req.MessageReqDto.Notific
 import com.kl1verse.UserServer.domain.user.repository.entity.User;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -30,6 +32,7 @@ public class Notification {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
+    @Enumerated(value = EnumType.STRING)
     private NotificationType type;
     private String content;
     private Boolean readFlag;

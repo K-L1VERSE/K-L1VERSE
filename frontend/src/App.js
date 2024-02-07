@@ -5,6 +5,7 @@ import React from "react";
 import StartPage from "./pages/SurveyPage/StartPage";
 import QuestionPage from "./pages/SurveyPage/QuestionPage";
 import ResultPage from "./pages/SurveyPage/ResultPage";
+import KakaoPage from "./pages/SurveyPage/KakaoPage";
 
 import KaKaoRedirection from "./pages/login_page/KaKaoRedirection";
 import NaverRedirection from "./pages/login_page/NaverRedirection";
@@ -34,6 +35,9 @@ import ProductRegistPage from "./pages/board_page/product_page/ProductRegistPage
 import MatchSchedulePage from "./pages/match_page/MatchSchedulePage";
 import MatchDetailPage from "./pages/match_page/MatchDetailPage";
 import MatchChattingPage from "./pages/match_page/MatchChattingPage";
+import SettingPage from "./pages/my_page/SettingPage";
+
+import TeamInfoPage from "./pages/teamPage/TeamInfoPage";
 
 function App() {
   return (
@@ -63,6 +67,7 @@ function App() {
               <Route path="/survey" element={<StartPage />} />
               <Route path="/question/:questionNum" element={<QuestionPage />} />
               <Route path="/result" element={<ResultPage />} />
+              <Route path="/kakao" element={<KakaoPage />} />
 
               {/* 와글 페이지 */}
               <Route path="/waggle" element={<WaggleListPage />} />
@@ -91,10 +96,13 @@ function App() {
                 path="/matchChatting/:matchId"
                 element={<MatchChattingPage />}
               />
+              {/* 팀 정보 페이지 */}
+              <Route path="/team" element={<TeamInfoPage />} />
 
               {/* 마이 페이지 */}
               <Route path="/mypage" element={<MyPage />} />
               <Route path="/badge" element={<Badge />} />
+              <Route path="/setting" element={<SettingPage />} />
             </Route>
           </Routes>
         </BrowserRouter>
