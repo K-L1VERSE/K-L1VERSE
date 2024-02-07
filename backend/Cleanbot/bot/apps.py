@@ -18,3 +18,11 @@ class BotConfig(AppConfig):
         return_all_scores=True,
         function_to_apply='sigmoid'
     )
+
+    already_run = None
+
+    def ready(self):
+        if not self.already_run:
+            from .views import consume_input_message
+            # consume_input_message()
+            self.already_run = True

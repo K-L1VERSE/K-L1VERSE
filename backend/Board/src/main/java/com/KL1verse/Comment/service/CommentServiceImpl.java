@@ -18,6 +18,7 @@ import java.util.stream.Collectors;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.BeanUtils;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 @Slf4j
@@ -29,6 +30,9 @@ public class CommentServiceImpl implements CommentService {
     private final BoardRepository boardRepository;
     private final KafkaBoardNotificationProducer kafkaBoardNotificationProducer;
     private final CommentLikeRepository commentLikeRepository;
+
+    @Value("${domain}")
+    private String domain;
 
     @Override
     public CommentDTO getCommentById(Long commentId, Long requestingUserId) {
@@ -72,11 +76,11 @@ public class CommentServiceImpl implements CommentService {
             BoardNotificationResDto.builder()
                 .type(BoardNotificationType.COMMENT)
                 .userId(board.getUserId())
-                .uri("http://localhost:3000/" + board.getBoardType().toString().toLowerCase()
-                    + String.valueOf(board.getBoardId()))
+                .uri(domain + "/" + board.getBoardType().toString().toLowerCase() + String.valueOf(board.getBoardId()))
                 .message(userNickname + "님이 새로운 댓글을 달았습니다.")
                 .build()
         );
+
 
         return CommentDTO.builder()
             .commentId(createdComment.getCommentId())

@@ -1,6 +1,7 @@
 import { useState, useEffect, useRef } from "react";
 import SockJS from "sockjs-client";
 import { useRecoilState } from "recoil";
+import { useParams } from "react-router-dom";
 import Stomp from "webstomp-client";
 import moment from "moment";
 import {
@@ -10,33 +11,39 @@ import {
   ChattingSendBtn,
   ChattingBar,
   MessageBox,
+  OnlyNick,
   OnlyMsg,
   SenderImg,
 } from "../../styles/MatchStyles/MatchChattingStyle";
 import { UserState } from "../../global/UserState";
 
 function Chat() {
-  const roomId = 1;
-  const sender = "test";
+  const { matchId } = useParams();
+  const roomId = matchId;
   const [message, setMessage] = useState("");
   const [messages, setMessages] = useState([]);
   const [stompClient, setStompClient] = useState(null);
-
-  const { nickname } = useRecoilState(UserState)[0];
+  const [userState] = useRecoilState(UserState);
+  const { nickname } = userState;
+  const { profile } = userState;
+  const sender = nickname;
 
   useEffect(() => {
-    const socket = new SockJS("http://localhost:8040/ws/chat");
+    const domain = process.env.REACT_APP_DOMAIN;
+    const socket = new SockJS(`${domain}:8040/ws/chat`);
     const stomp = Stomp.over(socket);
 
     // This effect runs only once when the component mounts
     stomp.connect({}, (frame) => {
       stomp.subscribe(`/topic/chat/room/${roomId}`, (message) => {
+        console.log(message);
         recvMessage(JSON.parse(message.body));
       });
     });
 
     // Set stompClient state to ensure it persists across re-renders
     setStompClient(stomp);
+    console.log("stomp", stomp);
 
     // Cleanup function to disconnect the socket when the component unmounts
     return () => {
@@ -47,26 +54,30 @@ function Chat() {
   const sendMessage = () => {
     const data = {
       type: "TALK",
-      roomId: roomId,
-      sender: sender,
-      message: message,
-      date: moment().format(),
-      isUser: sender === "test", // 현재 사용자가 보낸 메시지인지 구분
+      roomId: Number(roomId),
+      sender: nickname,
+      message,
+      date: moment().format("YYYY-MM-DD HH:mm:ss"),
+      profile,
+      isUser: true, // 현재 사용자가 보낸 메시지
     };
-
-    // 서버에 메시지를 보내기 전에 메시지 목록에 메시지를 추가합니다.
-    setMessages((messages) => [
-      ...messages,
-      {
-        type: data.type,
-        sender: data.sender,
-        message: data.message,
-        isUser: data.isUser,
-      },
-    ]);
 
     stompClient.send("/app/chat/message", JSON.stringify(data), []);
     setMessage("");
+  };
+
+  const recvMessage = (recv) => {
+    setMessages((messages) => [
+      ...messages,
+      {
+        type: recv.type,
+        sender: recv.type === "ENTER" ? "[알림]" : recv.sender,
+        message: recv.message,
+        date: recv.date,
+        profile: recv.profile,
+        isUser: false, // 다른 사용자가 보낸 메시지
+      },
+    ]);
   };
 
   const chatBox = useRef();
@@ -87,11 +98,10 @@ function Chat() {
               className={message.isUser ? "user-message" : "other-message"}
             >
               <MessageBox>
-                <div>{/* <SenderImg /> */}</div>
-                <SenderImg>Img임</SenderImg>
+                <SenderImg src={message.profile} />
                 <div>
                   <div>
-                    {message.sender} ({nickname})
+                    <OnlyNick>{message.sender}</OnlyNick>
                   </div>
                   <OnlyMsg>{message.message}</OnlyMsg>
                 </div>

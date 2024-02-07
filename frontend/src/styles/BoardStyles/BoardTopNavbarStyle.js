@@ -44,6 +44,7 @@ export const WaggleButton = styled.button`
   color: #a5a5a5;
   border-radius: 3px;
   border: none;
+  font-size: 0.85rem;
 
   &.active {
     background: #f7e4dc;
@@ -64,6 +65,7 @@ export const MateButton = styled.button`
   color: #a5a5a5;
   border-radius: 3px;
   border: none;
+  font-size: 0.85rem;
 
   &.active {
     background: #e3faef;
@@ -83,6 +85,7 @@ export const ProductButton = styled.button`
   color: #a5a5a5;
   border-radius: 3px;
   border: none;
+  font-size: 0.85rem;
 
   &.active {
     background: #e5edfb;

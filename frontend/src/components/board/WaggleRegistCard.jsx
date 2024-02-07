@@ -1,11 +1,12 @@
 import React from "react";
 import {
-  Input,
+  TitleInput,
   TextArea,
   SubmitButton,
   FileInputContainer,
   FileInput,
   FileInputLabel,
+  RegistCardContainer,
 } from "../../styles/BoardStyles/BoardCreateStyle";
 import CameraIcon from "../../assets/icon/camera-icon.svg";
 
@@ -19,8 +20,8 @@ export default function WaggleRegistCard({
   buttonText,
 }) {
   return (
-    <>
-      <Input
+    <RegistCardContainer>
+      <TitleInput
         type="text"
         value={title}
         onChange={onTitleChange}
@@ -37,6 +38,6 @@ export default function WaggleRegistCard({
       </FileInputContainer>
       <br />
       <SubmitButton onClick={onSubmit}>{buttonText}</SubmitButton>
-    </>
+    </RegistCardContainer>
   );
 }

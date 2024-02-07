@@ -15,7 +15,7 @@ import { updateComment, createComment } from "../../api/comment";
 function CommentForm({ boardId, parentId }) {
   const [content, setContent] = useState("");
   const [isUpdateMode, setIsUpdateMode] = useState(false);
-  const [isSecret, setIsSecret] = useState(false); // Added state for isSecret
+  const [isSecret, setIsSecret] = useState(false);
   const { userId } = useRecoilState(UserState)[0];
 
   const location = useLocation();
@@ -26,7 +26,8 @@ function CommentForm({ boardId, parentId }) {
     }
   }, [location]);
 
-  const handleSubmit = () => {
+  const handleSubmit = (e) => {
+    e.preventDefault();
     if (isUpdateMode) {
       updateComment(
         boardId,
@@ -85,7 +86,7 @@ function CommentForm({ boardId, parentId }) {
         />
         <span>🔒비밀</span>
       </CheckboxLabel>
-      <SubmitButton type="submit">
+      <SubmitButton>
         {isUpdateMode ? "댓글 수정 완료" : "댓글 작성"}
       </SubmitButton>
       {isUpdateMode && (

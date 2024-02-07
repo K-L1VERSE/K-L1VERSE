@@ -1,52 +1,5 @@
 import styled from "styled-components";
 
-export const ProductHeader = styled.div`
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  padding: 8px;
-  gap: 8px;
-  width: 100%;
-  justify-content: flex-start;
-`;
-
-export const ProductHeaderH2 = styled.h2`
-  margin: 0 auto;
-  width: auto;
-  height: 20px;
-  font-style: normal;
-  font-weight: 700;
-  font-size: 20px;
-  line-height: 20px;
-  color: #222222;
-`;
-
-export const ProductHeaderNav = styled.nav`
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  width: 100%;
-`;
-
-export const ProductHeaderButton = styled.button`
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  padding: 0;
-  gap: 4px;
-  border: none;
-  background-color: transparent;
-  margin: 0 auto;
-  max-width: 40px;
-  height: 14px;
-  font-style: normal;
-  font-weight: 400;
-  font-size: 12px;
-  line-height: 14px;
-  color: #002266;
-  white-space: nowrap;
-`;
-
 export const ProductListContainer = styled.div`
   display: flex;
   flex-direction: column;
@@ -68,16 +21,16 @@ export const ProductItemContainer = styled.div`
 
 export const DealStatus = styled.div`
   display: inline-block;
-  width: 58px;
+  font-size: 0.8rem;
   padding: 5px 10px;
   border-radius: 5px;
   margin-bottom: 10px;
+  text-align: center;
 `;
 
 export const DealStatusGreen = styled(DealStatus)`
   background-color: #4caf50;
   color: white;
-  text-align: center;
 `;
 
 export const DealStatusOrange = styled(DealStatus)`

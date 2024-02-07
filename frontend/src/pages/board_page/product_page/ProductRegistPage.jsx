@@ -8,6 +8,8 @@ import { UserState } from "../../../global/UserState";
 
 import { RegistCardContainer } from "../../../styles/BoardStyles/BoardCreateStyle";
 
+import { DetailTop } from "../../../styles/BoardStyles/BoardCreateStyle";
+
 function ProductRegistPage() {
   const navigate = useNavigate();
   const [boardId, setBoardId] = useState(null);
@@ -73,9 +75,11 @@ function ProductRegistPage() {
   };
 
   return (
-    <RegistCardContainer>
+    <>
       <BoardTopNavBar />
-      <h1>{isUpdateMode ? "Product 게시물 수정" : "Product 게시물 작성"}</h1>
+      <DetailTop>
+        {isUpdateMode ? "Product 게시물 수정" : "< Product 게시물 작성"}
+      </DetailTop>
       <ProductRegistCard
         title={title}
         content={content}
@@ -88,7 +92,7 @@ function ProductRegistPage() {
         onSubmit={handleSubmit}
         buttonText={isUpdateMode ? "수정하기" : "작성하기"}
       />
-    </RegistCardContainer>
+    </>
   );
 }
 

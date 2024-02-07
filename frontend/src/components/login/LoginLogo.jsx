@@ -15,20 +15,13 @@ const LogoContainer = styled.div`
   display: flex;
   flex-direction: column;
   gap: 0.7rem;
-
-  height: 20rem;
-
+  height: 10rem;
   justify-content: center;
   align-items: center;
-
-  margin-top: 3rem;
 `;
 
 const Logo = styled.img`
-  height: 20rem;
-  width: 20rem;
-
-  margin-left: 0.7rem;
+  height: 8rem;
 `;
 
 export default LoginLogo;

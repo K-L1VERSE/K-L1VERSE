@@ -1,31 +1,33 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import {
-  MateItemContainer,
   MateItemTitle,
   MateItemContent,
   MateItemInfoSection,
   MateItemCreated,
-  MateItemSeparator,
 } from "../../styles/BoardStyles/MateListStyle";
 import {
   DealStatusGreen,
   DealStatusOrange,
 } from "../../styles/BoardStyles/ProductListStyle";
+import { ItemContainer } from "../../styles/BoardStyles/BoardStyle";
+import { getMatchDetail } from "../../api/match";
 
 function MateItemCard({ mate }) {
-  // const [matchDetail, setMatchDetail] = useState({});
-  // function getMatchDetail() {
-  //   getMatchDetail(mate.matchId).then(({ data }) => {
-  //     setMatchDetail(data);
-  //   });
-  // }
-  // useEffect(() => {
-  //   getMatchDetail();
-  // }, []);
+  const [matchDetail, setMatchDetail] = useState({});
+
+  function getMatch() {
+    getMatchDetail(mate.matchId).then(({ data }) => {
+      console.log(data);
+      setMatchDetail(data);
+    });
+  }
+  useEffect(() => {
+    getMatch();
+  }, []);
 
   return (
-    <MateItemContainer>
+    <ItemContainer>
       {mate.fullFlag ? (
         <DealStatusOrange>모집완료</DealStatusOrange>
       ) : (
@@ -34,9 +36,10 @@ function MateItemCard({ mate }) {
       <MateItemTitle>
         <Link
           to={`/mate/${mate.board.boardId}`}
-          style={{ textDecoration: "none" }}
+          // style={{ textDecoration: "none", color: "black" }}
         >
-          {mate.board.title}
+          {matchDetail.HomeTeamName} vs {matchDetail.AwayTeamName}{" "}
+          {matchDetail.MatchDate}
         </Link>
       </MateItemTitle>
       <MateItemContent>
@@ -50,8 +53,7 @@ function MateItemCard({ mate }) {
       <MateItemInfoSection>
         <MateItemCreated>{mate.createAt}</MateItemCreated>
       </MateItemInfoSection>
-      <MateItemSeparator />
-    </MateItemContainer>
+    </ItemContainer>
   );
 }
 

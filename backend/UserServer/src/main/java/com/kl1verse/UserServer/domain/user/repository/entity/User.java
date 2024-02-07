@@ -43,8 +43,6 @@ public class User {
     @OneToOne
     @JsonIgnore
     private Badge wearBadge;
-
-    private String mainBadge;
     private Integer totalBet;
     private Integer winBet;
 }

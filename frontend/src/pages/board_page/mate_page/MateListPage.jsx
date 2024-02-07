@@ -3,12 +3,12 @@ import { useNavigate } from "react-router-dom";
 // import Calendar from "react-calendar";
 import { getMateList } from "../../../api/mate";
 import BoardTopNavBar from "../../../components/board/BoardTopNavBar";
-import {
-  MateHeader,
-  MateHeaderH2,
-  MateHeaderButton,
-} from "../../../styles/BoardStyles/MateListStyle";
 import MateContainer from "../../../components/board/MateContainer";
+import {
+  Header,
+  HeaderButton,
+  HeaderH2,
+} from "../../../styles/BoardStyles/BoardStyle";
 
 function MateListPage() {
   const [mateList, setMateList] = useState([]);
@@ -80,12 +80,10 @@ function MateListPage() {
   return (
     <div>
       <BoardTopNavBar />
-      <MateHeader>
-        <MateHeaderH2>저랑 같이 응원 갈래욤?</MateHeaderH2>
-        <MateHeaderButton onClick={handleWriteMateClick}>
-          🖋글쓰기
-        </MateHeaderButton>
-      </MateHeader>
+      <Header>
+        <HeaderH2>저랑 같이 응원 갈래욤?</HeaderH2>
+        <HeaderButton onClick={handleWriteMateClick}>🖋 글쓰기</HeaderButton>
+      </Header>
       {/* <button onClick={handleCalendarToggle}>📆</button> */}
       {/* {isOpen && <Calendar onChange={onChange} value={value} />} */}
 

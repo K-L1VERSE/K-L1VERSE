@@ -11,7 +11,6 @@ export function getCommentList(boardId, data, success, fail) {
 }
 
 export function createComment(boardId, comment, success, fail) {
-  console.log(comment);
   axios
     .post(`/${gateway}/${url}/${boardId}`, comment)
     .then(success)

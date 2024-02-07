@@ -65,6 +65,7 @@ function MateRegistPage() {
           matchId,
         },
         ({ data }) => {
+          console.log("Waggle created");
           navigate(`/mate/${data.board.boardId}`);
         },
         () => {},

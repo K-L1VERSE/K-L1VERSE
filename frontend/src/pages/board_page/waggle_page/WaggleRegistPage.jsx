@@ -6,7 +6,7 @@ import RegistCard from "../../../components/board/WaggleRegistCard";
 import { createWaggle, updateWaggle } from "../../../api/waggle";
 import { UserState } from "../../../global/UserState";
 
-import { RegistCardContainer } from "../../../styles/BoardStyles/BoardCreateStyle";
+import { DetailTop } from "../../../styles/BoardStyles/BoardCreateStyle";
 
 function WaggleRegistPage() {
   const navigate = useNavigate();
@@ -53,7 +53,6 @@ function WaggleRegistPage() {
             title,
             content,
             userId,
-            // nickname,
             boardImage,
           },
         },
@@ -66,9 +65,10 @@ function WaggleRegistPage() {
   };
 
   return (
-    <RegistCardContainer>
+    <>
       <BoardTopNavBar />
-      <h1>{isUpdateMode ? "Waggle 수정" : "Waggle 글쓰기"}</h1>
+      <DetailTop>{isUpdateMode ? "Waggle 수정" : "Waggle 글쓰기"}</DetailTop>
+
       <RegistCard
         title={title}
         content={content}
@@ -78,7 +78,7 @@ function WaggleRegistPage() {
         onSubmit={handleSubmit}
         buttonText={isUpdateMode ? "수정하기" : "작성하기"}
       />
-    </RegistCardContainer>
+    </>
   );
 }
 
