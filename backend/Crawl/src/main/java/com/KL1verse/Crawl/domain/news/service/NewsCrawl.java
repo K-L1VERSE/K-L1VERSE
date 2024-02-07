@@ -63,8 +63,8 @@ public class NewsCrawl {
         private String uri;
     }
 
-//        @Scheduled(cron = "0/5 * * * * *")
-    @Scheduled(fixedDelay = Long.MAX_VALUE)
+    @Scheduled(cron = "* 0/15 * * * *")
+//    @Scheduled(fixedDelay = Long.MAX_VALUE)
     public void crawlNews() {
         log.info("Crawling...");
 
@@ -127,7 +127,7 @@ public class NewsCrawl {
                 LocalDateTime newsLocalDateTime = LocalDateTime.parse(newsDateTime, formatter);
 
                 long minutesDifference = Duration.between(newsLocalDateTime, LocalDateTime.now()).toMinutes();
-                if (minutesDifference > 600) {
+                if (minutesDifference > 15) {
                     // 4000분 이상 차이나면 뉴스 내용을 가져오지 않음
 
                     break;
