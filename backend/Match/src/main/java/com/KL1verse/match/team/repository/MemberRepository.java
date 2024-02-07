@@ -8,5 +8,5 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface MemberRepository extends JpaRepository<Member, Integer> {
 
-    List<Member> findByTeamId (Integer teamId);
+    List<Member> findByTeamTeamId (Integer teamId);
 }

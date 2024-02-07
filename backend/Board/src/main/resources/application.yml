@@ -1,0 +1,21 @@
+server:
+  port: 8030
+
+spring:
+  profiles:
+    active: dev
+  jpa:
+    hibernate:
+      ddl-auto: update
+  datasource:
+    driver-class-name: org.mariadb.jdbc.Driver
+
+cloud:
+  aws:
+    s3:
+      bucket: k-l1verse
+    credentials:
+      access-key: AKIA4X5JVVJBRX7QSL5G
+      secret-key: 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
+    region:
+      static: ap-northeast-2
