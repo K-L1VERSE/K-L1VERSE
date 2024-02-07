@@ -9,7 +9,9 @@ import com.KL1verse.Comment.repository.CommentRepository;
 import com.KL1verse.Waggle.dto.req.WaggleDTO;
 import com.KL1verse.Waggle.repository.WaggleLikeRepository;
 import com.KL1verse.Waggle.repository.WaggleRepository;
+import com.KL1verse.Waggle.repository.WaggleUserHashTagRepository;
 import com.KL1verse.Waggle.repository.entity.Waggle;
+import com.KL1verse.Waggle.repository.entity.WaggleUserHashTag;
 import com.KL1verse.s3.repository.entity.File;
 import com.KL1verse.s3.service.BoardImageService;
 import com.KL1verse.s3.service.FileService;
@@ -17,8 +19,12 @@ import com.KL1verse.kafka.dto.req.BoardCleanbotCheckReqDto;
 import com.KL1verse.kafka.producer.KafkaBoardCleanbotProducer;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.Comparator;
+import java.util.HashMap;
 import java.util.HashSet;
+import java.util.LinkedHashSet;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -49,6 +55,50 @@ public class WaggleServiceImpl implements WaggleService {
 
     private final CommentRepository commentRepository;
     private final KafkaBoardCleanbotProducer kafkaBoardCleanbotProducer;
+    private  final WaggleUserHashTagRepository waggleUserHashTagRepository;
+
+
+//    @Override
+//    public Page<WaggleDTO> getWagglesByHashtags(List<String> hashtags, Pageable pageable) {
+//        Set<WaggleDTO> uniqueWaggles = new HashSet<>();
+//        for (String hashtag : hashtags) {
+//            log.info("hashtag: {}", hashtag);
+//            Page<WaggleUserHashTag> waggleUserHashTags = waggleUserHashTagRepository.findByHashtagsContaining(hashtag, pageable);
+//            List<Waggle> waggles = waggleUserHashTags.stream().map(WaggleUserHashTag::getWaggle).collect(Collectors.toList());
+//            List<WaggleDTO> waggleDTOList = convertToDTOList(waggles);
+//            uniqueWaggles.addAll(waggleDTOList);
+//            log.info("hashtag: {}", uniqueWaggles);
+//        }
+//        List<WaggleDTO> waggles = new ArrayList<>(uniqueWaggles);
+//        return new PageImpl<>(waggles, pageable, waggles.size());
+//    }
+
+    @Override
+    public Page<WaggleDTO> getWagglesByHashtags(List<String> hashtags, Pageable pageable) {
+        Set<Long> visitedBoardIds = new HashSet<>(); // 이미 방문한 게시글의 ID를 추적하기 위한 Set
+        List<WaggleDTO> uniqueWaggles = new ArrayList<>(); // 중복된 게시글을 필터링한 결과를 저장할 리스트
+
+        for (String hashtag : hashtags) {
+            log.info("hashtag: {}", hashtag);
+            Page<WaggleUserHashTag> waggleUserHashTags = waggleUserHashTagRepository.findByHashtagsContaining(hashtag, pageable);
+            List<Waggle> waggles = waggleUserHashTags.stream().map(WaggleUserHashTag::getWaggle).collect(Collectors.toList());
+            List<WaggleDTO> waggleDTOList = convertToDTOList(waggles);
+
+            // 중복된 게시글을 필터링하여 uniqueWaggles에 추가
+            for (WaggleDTO waggleDTO : waggleDTOList) {
+                if (!visitedBoardIds.contains(waggleDTO.getBoard().getBoardId())) { // 이미 포함되어 있는 게시글인지 확인
+                    uniqueWaggles.add(waggleDTO); // 포함되어 있지 않다면 uniqueWaggles에 추가
+                    visitedBoardIds.add(waggleDTO.getBoard().getBoardId()); // 방문한 게시글로 표시
+                }
+            }
+
+            log.info("hashtag: {}", uniqueWaggles);
+        }
+
+        return new PageImpl<>(uniqueWaggles, pageable, uniqueWaggles.size());
+    }
+
+
 
 
     @Override
@@ -80,9 +130,77 @@ public class WaggleServiceImpl implements WaggleService {
         String userNickname = (String) nicknameResult.get(0)[0];
         waggleDTO.getBoard().setNickname(userNickname);
 
+        WaggleUserHashTag waggleUserHashTag = WaggleUserHashTag.builder()
+            .userId(loginUserId)
+            .hashtags(waggle.getHashtags().toString())
+            .waggle(waggle)
+            .build();
+        waggleUserHashTagRepository.save(waggleUserHashTag);
+
+
 
         return waggleDTO;
     }
+
+
+    public Map<String, Integer> calculateHashtagWeights(Integer loginUserId) {
+        // 로그인한 유저의 해시태그 정보를 가져옴 (시간 순으로 정렬된 상태여야 함)
+        List<WaggleUserHashTag> userHashTags = waggleUserHashTagRepository.findByUserIdOrderByCreatedAtDesc(loginUserId);
+
+        // 가중치를 저장할 맵
+        Map<String, Integer> hashtagWeights = new HashMap<>();
+
+        // 최근 조회한 해시태그에 가장 높은 가중치를 부여하기 위한 변수
+        int maxWeight = userHashTags.size();
+
+        // 최근 해시태그부터 순회하며 가중치 부여
+        for (WaggleUserHashTag userHashTag : userHashTags) {
+            String[] tags = userHashTag.getHashtags().split(",");
+            for (String tag : tags) {
+                tag = tag.trim();
+                // 기존에 이미 해당 해시태그에 부여된 가중치가 있다면, 기존 가중치에 maxWeight를 더해줍니다.
+                if (hashtagWeights.containsKey(tag)) {
+                    int existingWeight = hashtagWeights.get(tag);
+                    hashtagWeights.put(tag, existingWeight + maxWeight);
+                } else {
+                    // 기존에 해당 해시태그에 가중치가 없다면 새로운 가중치를 부여합니다.
+                    hashtagWeights.put(tag, maxWeight);
+                }
+
+            }
+            maxWeight--; // 가중치를 낮춰감
+        }
+
+        return hashtagWeights;
+    }
+
+
+    public List<String> getTopHashtags(Integer loginUserId, int topCount) {
+        // 로그인한 유저의 해시태그 정보를 가져와 가중치를 계산
+        Map<String, Integer> hashtagWeights = calculateHashtagWeights(loginUserId);
+
+        // 가중치를 기준으로 내림차순으로 정렬된 해시태그 맵 엔트리 리스트 생성
+        List<Map.Entry<String, Integer>> sortedHashtags = new ArrayList<>(hashtagWeights.entrySet());
+        sortedHashtags.sort(Map.Entry.comparingByValue(Comparator.reverseOrder()));
+
+        // 상위 해시태그 추출
+        List<String> topHashtags = new ArrayList<>();
+        for (int i = 0; i < Math.min(topCount, sortedHashtags.size()); i++) {
+            topHashtags.add(sortedHashtags.get(i).getKey());
+        }
+        return topHashtags;
+    }
+
+
+    private List<WaggleDTO> convertToDTOList(List<Waggle> waggles) {
+        List<WaggleDTO> waggleDTOList = new ArrayList<>();
+        for (Waggle waggle : waggles) {
+            waggleDTOList.add(convertToDTO(waggle));
+        }
+        return waggleDTOList;
+    }
+
+
     @Override
     public WaggleDTO createWaggle(WaggleDTO waggleDto) {
         Waggle waggle = convertToEntity(waggleDto);
@@ -103,12 +221,12 @@ public class WaggleServiceImpl implements WaggleService {
         WaggleDTO createdWaggleDTO = convertToDTO(createdWaggle);
         createdWaggleDTO.getBoard().setNickname(userNickname);
         
-        BoardCleanbotCheckReqDto boardCleanbotCheckReqDto = BoardCleanbotCheckReqDto.builder()
-            .id(createdWaggle.getBoard().getBoardId())
-            .content(createdWaggle.getBoard().getContent())
-            .domain("board")
-            .build();
-        kafkaBoardCleanbotProducer.boardCleanbotCheck(boardCleanbotCheckReqDto);
+//        BoardCleanbotCheckReqDto boardCleanbotCheckReqDto = BoardCleanbotCheckReqDto.builder()
+//            .id(createdWaggle.getBoard().getBoardId())
+//            .content(createdWaggle.getBoard().getContent())
+//            .domain("board")
+//            .build();
+//        kafkaBoardCleanbotProducer.boardCleanbotCheck(boardCleanbotCheckReqDto);
 
         return createdWaggleDTO;
     }
@@ -130,12 +248,12 @@ public class WaggleServiceImpl implements WaggleService {
         boardImageService.saveBoardImage(board, file);
 
 
-        BoardCleanbotCheckReqDto boardCleanbotCheckReqDto = BoardCleanbotCheckReqDto.builder()
-            .id(boardId)
-            .content(waggleDto.getBoard().getContent())
-            .domain("board")
-            .build();
-        kafkaBoardCleanbotProducer.boardCleanbotCheck(boardCleanbotCheckReqDto);
+//        BoardCleanbotCheckReqDto boardCleanbotCheckReqDto = BoardCleanbotCheckReqDto.builder()
+//            .id(boardId)
+//            .content(waggleDto.getBoard().getContent())
+//            .domain("board")
+//            .build();
+//        kafkaBoardCleanbotProducer.boardCleanbotCheck(boardCleanbotCheckReqDto);
 
         return convertToDTO(updatedWaggle);
     }
@@ -152,36 +270,6 @@ public class WaggleServiceImpl implements WaggleService {
 
         return hashtags;
     }
-
-//    @Override
-//    public WaggleDTO createWaggle(WaggleDTO waggleDto) {
-//        Waggle waggle = convertToEntity(waggleDto);
-//        Board board = saveBoard(waggle.getBoard());
-//
-//        File file = fileService.saveFile(waggleDto.getBoard().getBoardImage());
-//        boardImageService.saveBoardImage(board, file);
-//
-//        Waggle createdWaggle = waggleRepository.save(waggle);
-//
-//        return convertToDTO(createdWaggle);
-//    }
-//
-//
-//    @Transactional
-//    @Override
-//    public WaggleDTO updateWaggle(Long boardId, WaggleDTO waggleDto) {
-//        Waggle existingWaggle = findWaggleByBoardId(boardId);
-//        updateExistingWaggle(existingWaggle, waggleDto);
-//
-//        Board board = existingWaggle.getBoard();
-//        board.setBoardImage(waggleDto.getBoard().getBoardImage());
-//
-//        Waggle updatedWaggle = waggleRepository.save(existingWaggle);
-//        File file = fileService.saveFile(waggleDto.getBoard().getBoardImage());
-//        boardImageService.saveBoardImage(board, file);
-//
-//        return convertToDTO(updatedWaggle);
-//    }
 
     @Override
     public void deleteWaggle(Long boardId) {

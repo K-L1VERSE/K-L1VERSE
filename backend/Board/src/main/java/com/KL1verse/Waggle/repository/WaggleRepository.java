@@ -3,7 +3,6 @@ package com.KL1verse.Waggle.repository;
 import com.KL1verse.Board.repository.entity.Board;
 import com.KL1verse.Waggle.repository.entity.Waggle;
 import java.util.List;
-import java.util.Optional;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -32,6 +31,9 @@ public interface WaggleRepository extends JpaRepository<Waggle, Long> {
 
     @Query(value = "SELECT u.nickname FROM user u JOIN board b ON b.user_id = u.user_id WHERE b.user_id = :userId", nativeQuery = true)
     List<Object[]> findUserNickname(@Param("userId") Integer userId);
+
+
+    Page<Waggle> findByHashtagsContaining(String hashtag, Pageable pageable);
 
 
 }
