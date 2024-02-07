@@ -27,14 +27,14 @@ public class MessageController {
     @MessageMapping("/chat/message")
     public void enter(MessageReqDto messageReqDto) {
         MessageResDto message = MessageResDto.builder()
-                .messageId(generateMessageId())
-                .roomId(messageReqDto.getRoomId())
-                .profile(messageReqDto.getProfile())
-                .sender(messageReqDto.getSender())
-                .message(messageReqDto.getMessage())
-                .date(messageReqDto.getDate())
-                .profile(messageReqDto.getProfile())
-                .build();
+            .messageId(generateMessageId())
+            .roomId(messageReqDto.getRoomId())
+            .profile(messageReqDto.getProfile())
+            .sender(messageReqDto.getSender())
+            .message(messageReqDto.getMessage())
+            .date(messageReqDto.getDate())
+            .profile(messageReqDto.getProfile())
+            .build();
 
         sendingOperations.convertAndSend("/topic/chat/room/" + messageReqDto.getRoomId(), message);
 

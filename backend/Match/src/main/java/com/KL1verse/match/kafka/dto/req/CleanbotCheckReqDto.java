@@ -6,6 +6,7 @@ import lombok.Data;
 @Data
 @Builder
 public class CleanbotCheckReqDto {
+
     private Long roomId;
     private Long messageId;
     private String content;

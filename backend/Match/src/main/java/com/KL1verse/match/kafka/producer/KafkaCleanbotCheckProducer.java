@@ -18,17 +18,19 @@ public class KafkaCleanbotCheckProducer {
 
     @Autowired
     private ObjectMapper objectMapper;
+
     public void cleanbotCheck(MessageResDto messageResDto) {
         CleanbotCheckReqDto cleanbotCheckReqDto = CleanbotCheckReqDto.builder()
-                .domain("chat")
-                .roomId(messageResDto.getRoomId())
-                .messageId(messageResDto.getMessageId())
-                .content(messageResDto.getMessage())
-                .build();
+            .domain("chat")
+            .roomId(messageResDto.getRoomId())
+            .messageId(messageResDto.getMessageId())
+            .content(messageResDto.getMessage())
+            .build();
 
         // kafka로 보내기
         try {
-            kafkaProducer.sendMessage("cleanbot-input", objectMapper.writeValueAsString(cleanbotCheckReqDto));
+            kafkaProducer.sendMessage("cleanbot-input",
+                objectMapper.writeValueAsString(cleanbotCheckReqDto));
         } catch (Exception e) {
             e.printStackTrace();
         }
