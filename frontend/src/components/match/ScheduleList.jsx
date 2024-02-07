@@ -1,5 +1,5 @@
 import React from "react";
-import MatchDetailButton from "./MatchDetailButtton";
+// import MatchDetailButton from "./MatchDetailButtton";
 
 export default function ListContainer({ data }) {
   // 데이터를 날짜별로 그룹화
@@ -20,22 +20,34 @@ export default function ListContainer({ data }) {
   return (
     <div>
       {Object.entries(groupedData).map(([date, matches]) => (
-        <div key={date}>
-          <h2>
+        <div key={date} style={{ border: "2px solid blue" }}>
+          <div>
             {date.replace(".", "년 ").replace(".", "월 ").replace(".", "일 ")}
-          </h2>
+          </div>
           {matches.map((match, index) => (
-            <div key={index}>
-              <h2>
+            <div key={index} style={{ border: "2px solid pink" }}>
+              <div>
                 {new Date(match.matchAt).toLocaleTimeString("ko-KR", {
                   hour: "2-digit",
                   minute: "2-digit",
                 })}
-              </h2>
-              <p>
-                {match.team1} vs {match.team2}
-              </p>
-              <MatchDetailButton match={match} />
+              </div>
+              <div>
+                <div>
+                  {match.homeTeamName} : {match.homeScore}
+                </div>
+                <div>
+                  {match.awayTeamName} : {match.awayScore}
+                </div>
+              </div>
+              <div>
+                {match.status === "upcoming"
+                  ? "경기 예정"
+                  : match.status === "during"
+                    ? "경기 중"
+                    : "경기 종료"}
+              </div>
+              {/* <MatchDetailButton match={match} /> */}
             </div>
           ))}
         </div>
