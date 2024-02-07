@@ -1,7 +1,8 @@
 import { useRecoilState } from "recoil";
+import { useEffect } from "react";
+import { useNavigate } from "react-router";
 import { NotificationState } from "../../global/NotificationState";
 import axios from "../../api/axios";
-import { useEffect } from "react";
 
 function Notification() {
   const [notificationState, setNotificationState] =
@@ -10,21 +11,20 @@ function Notification() {
   useEffect(() => {
     axios
       .get("/user/users/notifications/read")
-      .then((res) => {
-        console.log(res);
+      .then(() => {
         setNotificationState((prev) => ({
           ...prev,
           notifications: [...prev.notifications, ...prev.newNotifications],
           newNotifications: [],
         }));
       })
-      .catch((err) => {
-        console.log(err);
-      });
+      .catch(() => {});
   }, []);
 
+  const navigate = useNavigate();
+
   const handleNotificationClick = (uri) => {
-    window.location.href = uri;
+    navigate(`/${uri}`);
   };
 
   return (
