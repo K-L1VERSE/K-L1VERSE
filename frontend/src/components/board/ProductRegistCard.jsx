@@ -3,7 +3,6 @@ import {
   TitleInput,
   TextArea,
   PriceInput,
-  FlagInput,
   SubmitButton,
   FileInputContainer,
   FileInput,
@@ -11,6 +10,12 @@ import {
   RegistCardContainer,
 } from "../../styles/BoardStyles/BoardCreateStyle";
 import CameraIcon from "../../assets/icon/camera-icon.svg";
+import {
+  FlagInputContainer,
+  FlagInputLabel,
+  FlagInputCheckbox,
+  FlagInputText,
+} from "../../styles/BoardStyles/BoardCreateStyle";
 
 export default function ProductRegistCard({
   title,
@@ -43,12 +48,16 @@ export default function ProductRegistCard({
         onChange={onPriceChange}
         placeholder="가격"
       />
-      <FlagInput
-        type="checkbox"
-        checked={dealFlag}
-        onChange={onDealFlagChange}
-      />
-      판매중
+      <FlagInputContainer>
+        <FlagInputLabel>
+          <FlagInputCheckbox
+            type="checkbox"
+            checked={dealFlag}
+            onChange={onDealFlagChange}
+          />
+          <FlagInputText>판매중</FlagInputText>
+        </FlagInputLabel>
+      </FlagInputContainer>
       <br />
       <FileInputContainer>
         <FileInput

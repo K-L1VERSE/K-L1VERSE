@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { useRecoilState } from "recoil";
-import axios from "../../../api/axios";
 import {
   deleteWaggle,
+  getWaggleDetail,
   likeCount,
   likeWaggle,
   unlikeWaggle,
@@ -12,13 +12,13 @@ import BoardTopNavBar from "../../../components/board/BoardTopNavBar";
 import CommentList from "../../../components/board/CommentList";
 import {
   Container,
-  WaggleDetailBox,
   User,
   Title,
   Content,
   Button,
   LikeButton,
   LikeCount,
+  DetailBox,
   // LikeCount,
 } from "../../../styles/BoardStyles/BoardDetailStyle";
 import { UserState } from "../../../global/UserState";
@@ -29,30 +29,49 @@ import LikeIcon from "../../../assets/icon/like-icon.png";
 function WaggleDetailPage() {
   const [waggleDetail, setWaggleDetail] = useState({});
   const [waggleId, setWaggleId] = useState(0);
+  const [title, setTitle] = useState("");
+  const [content, setContent] = useState("");
+  const [nickname, setNickname] = useState("");
   const [isLiked, setIsLiked] = useState(false);
   const [likeCount, setLikeCount] = useState(0);
   const { boardId } = useParams();
   const navigate = useNavigate();
   const { userId } = useRecoilState(UserState)[0];
 
-  function getWaggleDetail() {
+  const getWaggle = () => {
     getWaggleDetail(
       boardId,
       { board: { userId } },
-      ({ data }) => {
-        console.log(data);
-        setWaggleDetail(data);
+      // ({ data }) => {
+      //   setWaggleDetail(data);
+      //   console.log("data 입니다", data);
+      // },
+      (res) => {
+        setWaggleDetail(res.data.board);
+        // console.log(waggleDetail);
+        // console.log("data 입니다", res.data.board);
       },
-      (err) => {
-        console.log(err);
-        console.log("!!!!!!!!!!!!!!!!!!");
-      },
+      () => {},
     );
-  }
+  };
 
   useEffect(() => {
-    getWaggleDetail();
-  }, []);
+    console.log("이건 되고있나?", boardId);
+    getWaggle();
+    console.log("이건 가나? 응 안가", waggleDetail);
+  }, [boardId]);
+
+  // useEffect(() => {
+  //   getWaggle();
+  // }, [boardId]);
+
+  useEffect(() => {
+    console.log("이건 가나???????????????", waggleDetail);
+    setTitle(waggleDetail.title);
+    setContent(waggleDetail.content);
+    setNickname(waggleDetail.nickname);
+    console.log("***********", title);
+  }, [waggleDetail]);
 
   const handleUpdateBtn = () => {
     navigate(`/waggleRegist`, {
@@ -96,14 +115,29 @@ function WaggleDetailPage() {
     }
   };
 
+  const renderEditDeleteButtons = () => {
+    if (userId === waggleDetail.userId) {
+      return (
+        <>
+          <Button type="button" onClick={handleUpdateBtn}>
+            수정
+          </Button>
+          <Button type="button" onClick={handleDeleteBtn}>
+            삭제
+          </Button>
+        </>
+      );
+    }
+    return null;
+  };
+
   return (
     <Container>
       <BoardTopNavBar />
-      <WaggleDetailBox>
-        <User>{waggleDetail.nickname}</User>
-        <Title>{waggleDetail.title}</Title>
-        <Content>{waggleDetail.content}</Content>
-
+      <DetailBox>
+        {/* <User>{waggleDetail.board.nickname}</User>
+        <Title>{waggleDetail.board.title}</Title>
+        <Content>{waggleDetail.board.content}</Content> */}
         {/* {waggleDetail.boardImage && (
           <img
             src={waggleDetail.boardImage}
@@ -111,7 +145,6 @@ function WaggleDetailPage() {
             style={{ maxWidth: "100%", maxHeight: "400px", margin: "20px 0" }}
           />
         )} */}
-
         <div>
           <LikeButton onClick={handleLikeClick}>
             <img
@@ -122,14 +155,8 @@ function WaggleDetailPage() {
           </LikeButton>
           <LikeCount>좋아요 {likeCount}개</LikeCount>
         </div>
-      </WaggleDetailBox>
-
-      <Button type="button" onClick={handleUpdateBtn}>
-        수정
-      </Button>
-      <Button type="button" onClick={handleDeleteBtn}>
-        삭제
-      </Button>
+        {renderEditDeleteButtons()}
+      </DetailBox>
 
       <CommentList boardId={boardId} />
     </Container>

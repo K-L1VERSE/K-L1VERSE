@@ -81,7 +81,7 @@ function MateListPage() {
     <div>
       <BoardTopNavBar />
       <Header>
-        <HeaderH2>저랑 같이 응원 갈래욤?</HeaderH2>
+        <HeaderH2>🔥 같이 응원 가요</HeaderH2>
         <HeaderButton onClick={handleWriteMateClick}>🖋 글쓰기</HeaderButton>
       </Header>
       {/* <button onClick={handleCalendarToggle}>📆</button> */}

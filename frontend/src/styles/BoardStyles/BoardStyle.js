@@ -65,3 +65,20 @@ export const ItemContent = styled.div`
     text-decoration: none;
   }
 `;
+
+export const ItemInfoSection = styled.div`
+  display: flex;
+  /* justify-content: space-between; */
+  align-items: center;
+  margin-top: 8px;
+`;
+
+export const ItemInfoItem = styled.div`
+  font-size: 0.7rem;
+  margin-right: 0.7rem;
+  margin-bottom: 0.5rem;
+  color: #595959;
+  align-items: center;
+`;
+
+export const DealFlagContainer = styled.div``;

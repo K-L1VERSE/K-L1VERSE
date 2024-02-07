@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { useRecoilState } from "recoil";
 import {
   CommentItem,
   CommentWriter,
@@ -10,6 +11,7 @@ import {
   CommentTime,
 } from "../../styles/BoardStyles/CommentStyle";
 import { updateComment } from "../../api/comment";
+import { UserState } from "../../global/UserState";
 
 function CommentItemCard({
   comment,
@@ -19,6 +21,7 @@ function CommentItemCard({
 }) {
   const [isEditMode, setIsEditMode] = useState(false);
   const [updatedContent, setUpdatedContent] = useState(comment.content);
+  const { userId } = useRecoilState(UserState)[0];
 
   const handleUpdateBtn = () => {
     if (isEditMode) {
@@ -37,6 +40,29 @@ function CommentItemCard({
     } else {
       setIsEditMode(true);
     }
+  };
+  const renderEditDeleteButtons = () => {
+    if (userId === comment.userId) {
+      return (
+        <ButtonContainer>
+          <EditButton
+            type="button"
+            onClick={() => {
+              handleUpdateBtn(comment.commentId, comment.content);
+            }}
+          >
+            {isEditMode ? "완료" : "수정"}
+          </EditButton>
+          <DeleteButton
+            type="button"
+            onClick={() => onCommentDelete(comment.commentId)}
+          >
+            삭제
+          </DeleteButton>
+        </ButtonContainer>
+      );
+    }
+    return null;
   };
 
   return (
@@ -64,22 +90,7 @@ function CommentItemCard({
             </EditButton>
           </ButtonContainer>
         )}
-        <ButtonContainer>
-          <EditButton
-            type="button"
-            onClick={() => {
-              handleUpdateBtn(comment.commentId, comment.content);
-            }}
-          >
-            {isEditMode ? "완료" : "수정"}
-          </EditButton>
-          <DeleteButton
-            type="button"
-            onClick={() => onCommentDelete(comment.commentId)}
-          >
-            삭제
-          </DeleteButton>
-        </ButtonContainer>
+        {renderEditDeleteButtons()}
       </CommentItem>
     </>
   );

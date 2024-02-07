@@ -1,10 +1,5 @@
 import styled from "styled-components";
 
-export const WaggleItemInfoSection = styled.div`
-  display: flex;
-  align-items: center;
-`;
-
 export const WaggleItemInfoItem = styled.div`
   font-size: 0.7rem;
   margin-right: 0.7rem;

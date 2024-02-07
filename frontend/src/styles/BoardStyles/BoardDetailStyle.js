@@ -7,11 +7,11 @@ export const Container = styled.div`
   font-family: "Pretendard-Regular";
 `;
 
-export const WaggleDetailBox = styled.div`
+export const DetailBox = styled.div`
   background-color: #fff;
   border: 1px solid #ccc;
-  padding: 20px;
-  margin-bottom: 20px;
+  padding: 1rem;
+  margin-bottom: 1rem;
   border-radius: 8px;
 `;
 
@@ -101,6 +101,7 @@ export const Button = styled.button`
   cursor: pointer;
   margin-right: 10px;
   border-radius: 10px;
+  margin-top: 0.8rem;
 
   &:hover {
     background-color: #0056b3;

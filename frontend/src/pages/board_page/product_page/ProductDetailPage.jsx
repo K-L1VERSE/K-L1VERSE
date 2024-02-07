@@ -1,22 +1,24 @@
 import React, { useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
+import { useRecoilState } from "recoil";
 import axios from "../../../api/axios";
 import BoardTopNavBar from "../../../components/board/BoardTopNavBar";
 import CommentList from "../../../components/board/CommentList";
 import {
   Container,
-  WaggleDetailBox,
   User,
   Title,
   Content,
   UpdateButton,
   DeleteButton,
+  DetailBox,
 } from "../../../styles/BoardStyles/BoardDetailStyle";
 import {
   DealStatusGreen,
   DealStatusOrange,
 } from "../../../styles/BoardStyles/ProductListStyle";
 import { deleteProduct } from "../../../api/product";
+import { UserState } from "../../../global/UserState";
 
 function ProductDetailPage() {
   const [productDetail, setProductDetail] = useState({});
@@ -24,6 +26,7 @@ function ProductDetailPage() {
   const [dealFlag, setDealFlag] = useState(false);
   const { boardId } = useParams();
   const navigate = useNavigate();
+  const { userId } = useRecoilState(UserState)[0];
 
   /* product 상세 정보 가져오기 */
   function getProductDetail() {
@@ -52,10 +55,26 @@ function ProductDetailPage() {
     );
   };
 
+  const renderEditDeleteButtons = () => {
+    if (userId === productDetail.userId) {
+      return (
+        <>
+          <Button type="button" onClick={handleUpdateBtn}>
+            수정
+          </Button>
+          <Button type="button" onClick={handleDeleteBtn}>
+            삭제
+          </Button>
+        </>
+      );
+    }
+    return null;
+  };
+
   return (
     <Container>
       <BoardTopNavBar />
-      <WaggleDetailBox>
+      <DetailBox>
         <User>
           <p>{productDetail.nickname}</p>
         </User>
@@ -75,9 +94,8 @@ function ProductDetailPage() {
         </div>
         <Content>{productDetail.content}</Content>
         <p>Price: {price}</p>
-      </WaggleDetailBox>
-      <UpdateButton onClick={handleUpdateBtn}>수정하기</UpdateButton>
-      <DeleteButton onClick={handleDeleteBtn}>삭제하기</DeleteButton>
+        {renderEditDeleteButtons()}
+      </DetailBox>
       <CommentList boardId={boardId} />
     </Container>
   );

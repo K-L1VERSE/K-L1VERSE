@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import {
-  MateItemInfoSection,
   MateItemCreated,
+  MatchTitle,
+  MatchTime,
 } from "../../styles/BoardStyles/MateListStyle";
 import {
   DealStatusGreen,
@@ -11,9 +12,10 @@ import {
 import {
   ItemContainer,
   ItemContent,
+  ItemInfoSection,
   ItemTitle,
 } from "../../styles/BoardStyles/BoardStyle";
-import { formatRelativeTime } from "./dateFormat";
+import { formatDateTime, formatRelativeTime } from "./dateFormat";
 import { getMatchDetail } from "../../api/match";
 
 function MateItemCard({ mate }) {
@@ -37,8 +39,10 @@ function MateItemCard({ mate }) {
       )}
       <ItemTitle>
         <Link to={`/mate/${mate.board.boardId}`}>
-          {matchDetail.homeTeamName} vs {matchDetail.awayTeamName}{" "}
-          {matchDetail.matchAt}
+          <MatchTitle>
+            {matchDetail.homeTeamName} vs {matchDetail.awayTeamName}
+          </MatchTitle>
+          <MatchTime>{formatDateTime(matchDetail.matchAt)}</MatchTime>
         </Link>
       </ItemTitle>
       <ItemContent>
@@ -46,9 +50,9 @@ function MateItemCard({ mate }) {
           <p>{mate.board.content}</p>
         </Link>
       </ItemContent>
-      <MateItemInfoSection>
+      <ItemInfoSection>
         <MateItemCreated>{formatRelativeTime(mate.createAt)}</MateItemCreated>
-      </MateItemInfoSection>
+      </ItemInfoSection>
     </ItemContainer>
   );
 }

@@ -4,22 +4,29 @@ import {
   DealStatusGreen,
   DealStatusOrange,
   ProductItemTitle,
-  ProductItemContent,
-  ProductItemInfoSection,
   ProductItemPrice,
-  ProductItemComment,
-  ProductItemCreatedAt,
+  ProductItemCreated,
+  ProductItemContainer,
 } from "../../styles/BoardStyles/ProductListStyle";
-import { ItemContainer } from "../../styles/BoardStyles/BoardStyle";
+import {
+  DealFlagContainer,
+  ItemContent,
+  ItemInfoItem,
+  ItemInfoSection,
+} from "../../styles/BoardStyles/BoardStyle";
+import { ReactComponent as Comment } from "../../assets/icon/comment-icon.svg";
 
 function ProductItemCard({ product, formatRelativeTime }) {
   return (
-    <ItemContainer>
-      {product.dealFlag ? (
-        <DealStatusOrange>거래완료</DealStatusOrange>
-      ) : (
-        <DealStatusGreen>거래가능</DealStatusGreen>
-      )}
+    <ProductItemContainer>
+      <DealFlagContainer>
+        {product.dealFlag ? (
+          <DealStatusOrange>거래완료</DealStatusOrange>
+        ) : (
+          <DealStatusGreen>거래가능</DealStatusGreen>
+        )}
+      </DealFlagContainer>
+
       <ProductItemTitle>
         <Link
           to={`/product/${product.board.boardId}`}
@@ -28,24 +35,25 @@ function ProductItemCard({ product, formatRelativeTime }) {
           {product.board.title}
         </Link>
       </ProductItemTitle>
-      <ProductItemContent>
+      <ItemContent>
         <Link
           to={`/product/${product.board.boardId}`}
           style={{ textDecoration: "none" }}
         >
           <p>{product.board.content}</p>
         </Link>
-      </ProductItemContent>
-      <ProductItemInfoSection>
-        <ProductItemPrice>가격: {product.price}원</ProductItemPrice>
-        <ProductItemComment>
+      </ItemContent>
+      <ProductItemPrice>가격: {product.price}원</ProductItemPrice>
+      <ItemInfoSection>
+        <ItemInfoItem>
+          <Comment />
           댓글 {product.board.commentCount} |
-        </ProductItemComment>
-        <ProductItemCreatedAt>
+        </ItemInfoItem>
+        <ProductItemCreated>
           {formatRelativeTime(product.board.createAt)}
-        </ProductItemCreatedAt>
-      </ProductItemInfoSection>
-    </ItemContainer>
+        </ProductItemCreated>
+      </ItemInfoSection>
+    </ProductItemContainer>
   );
 }
 

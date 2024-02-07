@@ -20,7 +20,7 @@ function ProductListPage() {
   function getProducts() {
     getProductList(
       page,
-      30,
+      10,
       ({ data }) => {
         if (!data.content) {
           setHasMore(false);
@@ -76,7 +76,7 @@ function ProductListPage() {
     <div>
       <BoardTopNavBar />
       <Header>
-        <HeaderH2>와📦너에겐 필요없지만 나에게 꼭 필요한 굿즈</HeaderH2>
+        <HeaderH2>📦 나에게 꼭 필요한 굿-즈</HeaderH2>
         <HeaderButton onClick={handleWriteProductClick}>🖋 글쓰기</HeaderButton>
       </Header>
 

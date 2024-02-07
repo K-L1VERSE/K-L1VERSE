@@ -296,7 +296,7 @@ public class WaggleServiceImpl implements WaggleService {
 
         List<Object[]> likesCounts = waggleRepository.getLikesCountForEachWaggle();
 
-        log.error("likesCounts: {}", likesCounts);
+//        log.error("likesCounts: {}", likesCounts);
 
         Page<Waggle> waggles = waggleRepository.findAll(pageable);
 
@@ -320,11 +320,9 @@ public class WaggleServiceImpl implements WaggleService {
                 }
                 Integer userId = waggleDTO.getBoard().getUserId();
                 List<Object[]> nicknameResult = waggleRepository.findUserNickname(userId);
-                log.error("nicknameResult???????????????? {}", nicknameResult);
 
 
                     String userNickname = (String) nicknameResult.get(0)[0];
-                    log.error("userNickname:!!!!!!!!!!!!! {}", userNickname);
                     waggleDTO.getBoard().setNickname(userNickname);
 
                     return waggleDTO;
