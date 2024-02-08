@@ -21,7 +21,7 @@ function MatchTimeComponent({ time, status }) {
   return (
     <TimeContainer>
       {status === "done" ? (
-        <DoneComponent>경기 입장하기</DoneComponent>
+        <DoneComponent>경기 종료</DoneComponent>
       ) : status === "during" ? (
         <DuringComponent onClick={enterMatch}>
           <DuringText>경기 입장하기</DuringText>
@@ -57,7 +57,7 @@ const TimeComponent = styled.div`
   margin-bottom: 1rem;
 
   border-radius: 22px;
-  background-color: #a9a9a9;
+  background-color: #002fa5;
   color: white;
 
   padding: 9px 14px;
