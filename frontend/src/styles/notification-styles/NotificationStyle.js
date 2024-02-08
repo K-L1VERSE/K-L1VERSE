@@ -1,45 +1,44 @@
 import styled from "styled-components";
 
 export const HeaderContainer = styled.div`
-  display: flex;
-  width: 22.375rem;
-  align-items: center;
-  padding: 0.75rem 1rem 0.75rem 1rem;
   border-bottom: 1px solid #ebebeb;
 `;
 
 export const HeaderBox = styled.div`
   display: flex;
+  padding: 1rem 1rem;
 `;
 
 export const HeaderImg = styled.img`
-  width: 1.5rem;
-  height: 1.5rem;
+  width: 1.3rem;
+  height: 1.3rem;
 `;
 
 export const HeaderText = styled.div`
-  font-size: 1.25rem;
-  font-style: Pretendard;
-  font-weight: 700;
+  font-size: 1rem;
+  font-family: "Pretendard-Bold";
   color: #002266;
-  margin-left: 0.5rem;
+  margin-left: 0.2rem;
 `;
 
 export const NotificationBox = styled.div`
   display: flex;
-  flex-direction: row;
   justify-content: center;
+  align-items: center;
+  height: 4.1rem;
+  border-bottom: 1px solid #ebebeb;
+  &:hover {
+    cursor: pointer;
+    background-color: #f3f8ff;
+  }
 `;
 
 export const NotificationContainer = styled.div`
   display: flex;
   flex-direction: row;
-  width: 20.375rem;
+  width: 90%;
   height: 3rem;
   padding: 0.75rem 1rem 0.75rem 1rem;
-  border: 1px solid #ebebeb;
-  border-radius: 1rem 1rem 1rem 1rem;
-  box-shadow: 0 0.1rem 0.1rem rgba(0, 0, 0, 0.3);
   margin-top: 0.25rem;
   margin-bottom: 0.25rem;
   align-items: center;
@@ -56,8 +55,8 @@ export const NotificationItems = styled.div`
 
 export const NotificationDeleteText = styled.div`
   font-size: 0.9rem;
-  font-weight: 400;
-  color: #002266;
+  font-family: "Pretendard-Regular";
+  color: #595959;
   cursor: pointer;
   width: 5%;
   text-align: center;
@@ -71,7 +70,7 @@ export const NotificationIcon = styled.img`
 
 export const NotificationMessage = styled.div`
   font-size: 0.9rem;
-  font-weight: 400;
+  font-family: "Pretendard-Regular";
   color: #595959;
 `;
 

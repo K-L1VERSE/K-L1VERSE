@@ -4,12 +4,16 @@ import {
   HotClipContainer,
   VideoWrapper,
   VideoContainer,
+  ThumbnailImg,
+  PlayImg,
 } from "../../styles/main-styles/HotclipStyle";
 import { Title } from "../../styles/main-styles/MainStyle";
 import { getSavedAt, getYoutubeList, postYoutube } from "../../api/youtube";
+import playIcon from "../../assets/play.png";
 
 export default function Hotclip() {
   const [videos, setVideos] = useState([]);
+  const [activeVideo, setActiveVideo] = useState(null);
 
   useEffect(() => {
     getSavedAt(
@@ -30,13 +34,14 @@ export default function Hotclip() {
         } else {
           axios
             .get(
-              `https://www.googleapis.com/youtube/v3/search?part=snippet&maxResults=10&q=K리그1&type=video&key=AIzaSyAiIjoGsj76V6QBcMomRQcuB9TC6pkznyE`,
+              `https://www.googleapis.com/youtube/v3/search?part=snippet&maxResults=10&q=K리그1&type=video&key=${process.env.REACT_APP_YOUTUBE_API_KEY}`,
             )
             .then(({ data }) => {
               const newVideos = data.items.map((item, index) => {
                 return {
                   rank: index + 1,
                   youtubeId: item.id.videoId,
+                  thumbnail: item.snippet.thumbnails.medium.url,
                 };
               });
               postYoutube(
@@ -54,6 +59,10 @@ export default function Hotclip() {
     );
   }, []);
 
+  const handleClickThumbnail = (videoId) => {
+    setActiveVideo(videoId);
+  };
+
   return (
     <div>
       <HotClipContainer>
@@ -61,14 +70,21 @@ export default function Hotclip() {
         <VideoWrapper>
           {videos.map((video) => (
             <VideoContainer key={video.youtubeId}>
-              <iframe
-                title={video.youtubeId}
-                id="ytplayer"
-                type="text/html"
-                width="265"
-                src={`https://www.youtube.com/embed/${video.youtubeId}?controls=1&fs=0&modestbranding=1&color=white`}
-                frameBorder="0"
-              />
+              {activeVideo === video.youtubeId ? (
+                <iframe
+                  title={video.youtubeId}
+                  id="ytplayer"
+                  type="text/html"
+                  width="267"
+                  src={`https://www.youtube.com/embed/${video.youtubeId}?autoplay=1&controls=1&fs=0&modestbranding=1&color=white`}
+                  frameBorder="0"
+                />
+              ) : (
+                <div onClick={() => handleClickThumbnail(video.youtubeId)}>
+                  <ThumbnailImg src={video.thumbnail} alt="thumbnail" />
+                  <PlayImg src={playIcon} />
+                </div>
+              )}
             </VideoContainer>
           ))}
         </VideoWrapper>
