@@ -37,7 +37,7 @@ export default function SettingPage() {
     <div>
       <SurveyTop>
         <ToLeftImg src={ToLeftPng} onClick={goMypage} />
-        마이 페이지
+        설정
       </SurveyTop>
       <SettingText>계정 설정</SettingText>
       <Line />
