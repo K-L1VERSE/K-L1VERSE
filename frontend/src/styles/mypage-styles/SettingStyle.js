@@ -38,12 +38,13 @@ export const OuterCircle = styled.div`
   background-color: #ccc;
   display: flex;
   align-items: center;
-  justify-content: ${(props) => (props.isOn ? "flex-start" : "flex-end")};
+  justify-content: ${(props) =>
+    props.$notificationFlag ? "flex-end" : "flex-start"};
   padding: 0.3rem;
   cursor: pointer;
   transition: background-color 0.3s ease;
   ${(props) =>
-    props.isOn &&
+    props.$notificationFlag &&
     css`
       background-color: #002fa5;
     `}

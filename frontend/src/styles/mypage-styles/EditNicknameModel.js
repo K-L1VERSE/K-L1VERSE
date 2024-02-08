@@ -74,10 +74,7 @@ export const CancleButton = styled.button`
 `;
 
 export const SaveButton = styled(CancleButton)`
-  background-color: #3261c1;
+  background-color: ${(props) =>
+    props.$abled ? "#3261c1" : "rgba(233, 236, 242, 0.8)"};
   color: #fff;
-
-  &:hover {
-    background-color: rgb(36, 55, 99);
-  }
 `;

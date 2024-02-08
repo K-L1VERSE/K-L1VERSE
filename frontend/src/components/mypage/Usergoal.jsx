@@ -88,10 +88,16 @@ function Usergoal({ user }) {
         <ItemContent>
           <ItemTitle>
             <ItemTitleText>적중률</ItemTitleText>
-            {user.accurate > 50 ? (
+            {user.accurate >= 80 ? (
+              <AccurateImg src="https://raw.githubusercontent.com/Tarikul-Islam-Anik/Animated-Fluent-Emojis/master/Emojis/Smilies/Beaming%20Face%20with%20Smiling%20Eyes.png" />
+            ) : user.accurate >= 60 ? (
               <AccurateImg src="https://raw.githubusercontent.com/Tarikul-Islam-Anik/Animated-Fluent-Emojis/master/Emojis/Smilies/Face%20with%20Hand%20Over%20Mouth.png" />
+            ) : user.accurate >= 40 ? (
+              <AccurateImg src="https://raw.githubusercontent.com/Tarikul-Islam-Anik/Animated-Fluent-Emojis/master/Emojis/Smilies/Smiling%20Face%20with%20Smiling%20Eyes.png" />
+            ) : user.accurate >= 20 ? (
+              <AccurateImg src="https://raw.githubusercontent.com/Tarikul-Islam-Anik/Animated-Fluent-Emojis/master/Emojis/Smilies/Pleading%20Face.png" />
             ) : (
-              <AccurateImg src="https://raw.githubusercontent.com/Tarikul-Islam-Anik/Animated-Fluent-Emojis/master/Emojis/Smilies/Disappointed%20Face.png" />
+              <AccurateImg src="https://raw.githubusercontent.com/Tarikul-Islam-Anik/Animated-Fluent-Emojis/master/Emojis/Smilies/Grinning%20Face%20with%20Sweat.png" />
             )}
           </ItemTitle>
           <ItemText>{user.accurate}%</ItemText>
