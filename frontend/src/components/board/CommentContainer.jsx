@@ -5,7 +5,6 @@ import CommentItemCard from "./CommentItemCard";
 function CommentContainer({
   boardId,
   commentList,
-  likecount,
   formatRelativeTime,
   onCommentDelete,
 }) {
@@ -16,7 +15,6 @@ function CommentContainer({
           key={comment.commentId}
           boardId={boardId}
           comment={comment}
-          likecount={likecount}
           formatRelativeTime={formatRelativeTime}
           onCommentDelete={onCommentDelete}
         />
