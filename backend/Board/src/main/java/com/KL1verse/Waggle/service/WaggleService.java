@@ -8,7 +8,7 @@ import org.springframework.data.domain.Pageable;
 
 public interface WaggleService {
 
-    WaggleDTO getWaggleById(Long BoardId);
+    WaggleDTO getWaggleById(Long BoardId, Integer loginUserId);
 
     WaggleDTO createWaggle(WaggleDTO waggleDto);
 

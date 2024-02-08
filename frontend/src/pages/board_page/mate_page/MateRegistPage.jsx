@@ -18,7 +18,6 @@ function MateRegistPage() {
   const [matchId, setMatchId] = useState(0);
   const [isUpdateMode, setIsUpdateMode] = useState(false);
   const { userId } = useRecoilState(UserState)[0];
-
   const location = useLocation();
   useEffect(() => {
     if (location.state && location.state.board) {
@@ -65,12 +64,17 @@ function MateRegistPage() {
           matchId,
         },
         ({ data }) => {
+          console.log("Waggle created");
           navigate(`/mate/${data.board.boardId}`);
         },
         () => {},
       );
     }
   };
+
+  function handleFullFlagChange(e) {
+    setFullFlag(e.target.checked);
+  }
 
   return (
     <RegistCardContainer>
@@ -85,7 +89,8 @@ function MateRegistPage() {
         onTitleChange={(e) => setTitle(e.target.value)}
         onContentChange={(e) => setContent(e.target.value)}
         onTotalChange={(e) => setTotal(e.target.value)}
-        onFullFlagChange={(e) => setFullFlag(e.target.value)}
+        onfullFlag={fullFlag}
+        onFullFlagChange={handleFullFlagChange}
         onMatchIdChange={(value) => setMatchId(value)}
         onSubmit={handleSubmit}
         buttonText={isUpdateMode ? "수정하기" : "작성하기"}

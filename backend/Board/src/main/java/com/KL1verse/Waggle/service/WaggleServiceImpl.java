@@ -7,6 +7,7 @@ import com.KL1verse.Board.repository.BoardRepository;
 import com.KL1verse.Board.repository.entity.Board;
 import com.KL1verse.Comment.repository.CommentRepository;
 import com.KL1verse.Waggle.dto.req.WaggleDTO;
+import com.KL1verse.Waggle.repository.WaggleLikeRepository;
 import com.KL1verse.Waggle.repository.WaggleRepository;
 import com.KL1verse.Waggle.repository.entity.Waggle;
 import com.KL1verse.s3.repository.entity.File;
@@ -44,16 +45,22 @@ public class WaggleServiceImpl implements WaggleService {
     private final FileService fileService;
 
     private final BoardImageService boardImageService;
+    private final WaggleLikeRepository waggleLikeRepository;
 
     private final CommentRepository commentRepository;
     private final KafkaBoardCleanbotProducer kafkaBoardCleanbotProducer;
 
 
     @Override
-    public WaggleDTO getWaggleById(Long boardId) {
+    public WaggleDTO getWaggleById(Long boardId, Integer loginUserId) {
         Waggle waggle = findWaggleByBoardId(boardId);
 
         WaggleDTO waggleDTO = convertToDTO(waggle);
+
+        boolean isLiked = waggleLikeRepository
+            .findByUserIdAndWaggleId_WaggleId(Long.valueOf(loginUserId), waggle.getWaggleId())
+            .isPresent();
+        waggleDTO.setLiked(isLiked);
 
         int likesCount = waggleRepository.getLikesCountForEachWaggle().stream()
             .filter(result -> ((Waggle) result[0]).getWaggleId().equals(waggle.getWaggleId()))
@@ -96,12 +103,12 @@ public class WaggleServiceImpl implements WaggleService {
         WaggleDTO createdWaggleDTO = convertToDTO(createdWaggle);
         createdWaggleDTO.getBoard().setNickname(userNickname);
         
-        BoardCleanbotCheckReqDto boardCleanbotCheckReqDto = BoardCleanbotCheckReqDto.builder()
-            .id(createdWaggle.getBoard().getBoardId())
-            .content(createdWaggle.getBoard().getContent())
-            .domain("board")
-            .build();
-        kafkaBoardCleanbotProducer.boardCleanbotCheck(boardCleanbotCheckReqDto);
+//        BoardCleanbotCheckReqDto boardCleanbotCheckReqDto = BoardCleanbotCheckReqDto.builder()
+//            .id(createdWaggle.getBoard().getBoardId())
+//            .content(createdWaggle.getBoard().getContent())
+//            .domain("board")
+//            .build();
+//        kafkaBoardCleanbotProducer.boardCleanbotCheck(boardCleanbotCheckReqDto);
 
         return createdWaggleDTO;
     }
@@ -123,12 +130,12 @@ public class WaggleServiceImpl implements WaggleService {
         boardImageService.saveBoardImage(board, file);
 
 
-        BoardCleanbotCheckReqDto boardCleanbotCheckReqDto = BoardCleanbotCheckReqDto.builder()
-            .id(boardId)
-            .content(waggleDto.getBoard().getContent())
-            .domain("board")
-            .build();
-        kafkaBoardCleanbotProducer.boardCleanbotCheck(boardCleanbotCheckReqDto);
+//        BoardCleanbotCheckReqDto boardCleanbotCheckReqDto = BoardCleanbotCheckReqDto.builder()
+//            .id(boardId)
+//            .content(waggleDto.getBoard().getContent())
+//            .domain("board")
+//            .build();
+//        kafkaBoardCleanbotProducer.boardCleanbotCheck(boardCleanbotCheckReqDto);
 
         return convertToDTO(updatedWaggle);
     }
@@ -288,6 +295,8 @@ public class WaggleServiceImpl implements WaggleService {
     public Page<WaggleDTO> getAllWagglesWithLikes(Pageable pageable) {
 
         List<Object[]> likesCounts = waggleRepository.getLikesCountForEachWaggle();
+
+//        log.error("likesCounts: {}", likesCounts);
 
         Page<Waggle> waggles = waggleRepository.findAll(pageable);
 
