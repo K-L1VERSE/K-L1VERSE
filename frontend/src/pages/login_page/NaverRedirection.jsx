@@ -29,6 +29,7 @@ function NaverRedirection() {
         userId: res.data.userId,
         mainBadge: res.data.mainBadge,
         isLoggedIn: true,
+        notificationFlag: res.data.notificationFlag,
       });
 
       /* 성공시 홈화면으로 */

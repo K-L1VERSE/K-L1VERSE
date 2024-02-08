@@ -14,7 +14,7 @@ const SocketProvider = ({ children }) => {
 
   const setNotificationState = useSetRecoilState(NotificationState);
   const [notification, setNotification] = useRecoilState(NotificationState);
-  const [userState, setUserState] = useRecoilState(UserState);
+  const [userState] = useRecoilState(UserState);
 
   const recvNotification = (notification) => {
     setNotificationState((prevNotificationState) => {
@@ -28,33 +28,36 @@ const SocketProvider = ({ children }) => {
     });
   };
 
+  const connectSocket = () => {
+    const domain = process.env.REACT_APP_DOMAIN;
+    const socket = new SockJS(`${domain}:8010/ws/notification`);
+    const stomp = Stomp.over(socket);
+
+    stomp.connect({}, (frame) => {
+      stomp.subscribe(
+        `/topic/notification/${userState.email}:${userState.domain}`,
+        (message) => {
+          recvNotification(JSON.parse(message.body));
+        },
+      );
+    });
+
+    setStompClient(stomp);
+  };
+
+  const { isLoggedIn, notificationFlag } = userState;
+
   useEffect(() => {
-    const connectSocket = () => {
-      const domain = process.env.REACT_APP_DOMAIN;
-      const socket = new SockJS(`${domain}:8010/ws/notification`);
-      const stomp = Stomp.over(socket);
-
-      stomp.connect({}, (frame) => {
-        stomp.subscribe(
-          `/topic/notification/${userState.email}:${userState.domain}`,
-          (message) => {
-            recvNotification(JSON.parse(message.body));
-          },
-        );
-      });
-
-      setStompClient(stomp);
-    };
-
     if (
-      userState.isLoggedIn &&
+      isLoggedIn &&
       ![
         "/login",
         "/logout",
         "/KakaoAuth",
         "/GoogleAuth",
         "/NaverAuth",
-      ].includes(window.location.pathname)
+      ].includes(window.location.pathname) &&
+      notificationFlag
     ) {
       connectSocket();
       axios
@@ -70,17 +73,21 @@ const SocketProvider = ({ children }) => {
           });
         })
         .catch(() => {});
-    } else if (!userState.isLoggedIn && stompClient) {
+    } else if (isLoggedIn && stompClient && !notificationFlag) {
+      console.log("소켓 연결 해제");
+      stompClient.disconnect();
+      setStompClient(null);
+    } else if (!isLoggedIn && stompClient) {
       stompClient.disconnect();
       setStompClient(null);
     }
     return () => {
-      if (!userState.isLoggedIn && stompClient) {
+      if (!isLoggedIn && stompClient) {
         stompClient.disconnect();
         setStompClient(null);
       }
     };
-  }, [userState.isLoggedIn]);
+  }, [isLoggedIn, notificationFlag]);
 
   return (
     <SocketContext.Provider value={stompClient}>

@@ -112,6 +112,12 @@ public class UserController {
         return ResponseEntity.ok().build();
     }
 
+    @PutMapping("/notifications/flag")
+    public ResponseEntity<?> updateNotificationFlag(HttpServletRequest request) {
+        notificationService.updateNotificationFlag(request);
+        return ResponseEntity.ok().build();
+    }
+
     @GetMapping("/notifications/test/goal")
     public ResponseEntity<String> notificationTestGoal() {
         notificationService.sendNotification(MessageReqDto.builder()

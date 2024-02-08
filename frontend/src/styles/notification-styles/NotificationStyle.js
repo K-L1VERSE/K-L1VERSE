@@ -116,3 +116,20 @@ export const NotificationMatchVersus = styled.div`
   font-weight: 400;
   margin: 0 0.2rem 0 0.2rem;
 `;
+
+export const NotRecvNotificationTextContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  position: fixed;
+  top: 45%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+`;
+
+export const NotRecvNotificationText = styled.div`
+  font-size: 1rem;
+  font-weight: 700;
+  color: #002266;
+`;

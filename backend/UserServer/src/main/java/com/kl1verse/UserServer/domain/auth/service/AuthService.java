@@ -84,6 +84,7 @@ public class AuthService {
             .goal(1000)
             .totalBet(0)
             .winBet(0)
+            .notificationFlag(true)
             .build();
         userRepository.save(user);
 
@@ -141,6 +142,7 @@ public class AuthService {
             .profile(user.getProfile())
             .domain(user.getDomain())
             .userId(user.getId())
+            .notificationFlag(user.getNotificationFlag())
             .build();
 
         if(user.getWearBadge() != null) {
