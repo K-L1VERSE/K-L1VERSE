@@ -27,11 +27,10 @@ const ProfileTitleIcon = styled.img`
 
 const ProfileTitleText = styled.div`
   color: var(--blue1, #026);
-  font-family: Pretendard;
-  font-size: 16px;
-  font-style: normal;
-  font-weight: 700;
-  line-height: normal;
+  font-size: 1rem;
+  font-family: "Pretendard-Bold";
+  margin-top: 2px;
+  margin-left: 3px;
 `;
 
 const ProfileTitleHeader = styled.div`
@@ -45,6 +44,8 @@ const ProfileTitleContent = styled.div`
   display: flex;
   align-items: center;
   gap: 4px;
+  font-size: 1rem;
+  margin-top: 4px;
 `;
 
 const ProfileSettingContainer = styled.div`
@@ -56,6 +57,9 @@ const ProfileSettingContainer = styled.div`
 const ProfileSettingImg = styled.img`
   width: 24px;
   height: 24px;
+  &:hover {
+    cursor: pointer;
+  }
 `;
 
 const ProfileEditContent = styled.div`
@@ -101,6 +105,9 @@ const UserProfile = styled.img`
   width: 32px;
   height: 32px;
   border-radius: 32px;
+  &:hover {
+    cursor: pointer;
+  }
   background:
     url(),
     lightgray 50% / cover no-repeat;
