@@ -58,4 +58,10 @@ public class BettingServiceImpl implements BettingService {
 
     }
 
+    @Override
+    public int checkBettingTeam(int matchId, int userId) {
+        int teamId = bettingRepository.findTeamByMatchIdAndUserId(matchId, userId);
+        return teamId;
+    }
+
 }
