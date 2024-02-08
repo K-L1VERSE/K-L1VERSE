@@ -5,7 +5,6 @@ const UsergoalContainer = styled.div`
   display: inline-flex;
   width: 358px;
   padding: 0px 16px;
-  align-items: flex-start;
   gap: 12px;
 `;
 
@@ -38,8 +37,8 @@ const ItemTitle = styled.div`
 
 const ItemTitleText = styled.div`
   color: var(--gray2, #595959);
-  font-family: Pretendard;
-  font-size: 12px;
+  font-family: "Pretendard-Regular";
+  font-size: 0.8rem;
   font-style: normal;
   font-weight: 400;
   line-height: normal;
@@ -47,11 +46,8 @@ const ItemTitleText = styled.div`
 
 const ItemText = styled.div`
   color: var(--gray1, #222);
-  font-family: Pretendard;
-  font-size: 14px;
-  font-style: normal;
-  font-weight: 700;
-  line-height: normal;
+  font-family: "Pretendard-Bold";
+  font-size: 0.9rem;
 `;
 
 const AccurateImg = styled.img`
@@ -89,7 +85,7 @@ function Usergoal({ user }) {
           <ItemTitle>
             <ItemTitleText>적중률</ItemTitleText>
             {user.accurate >= 80 ? (
-              <AccurateImg src="https://raw.githubusercontent.com/Tarikul-Islam-Anik/Animated-Fluent-Emojis/master/Emojis/Smilies/Beaming%20Face%20with%20Smiling%20Eyes.png" />
+              <AccurateImg src="https://raw.githubusercontent.com/Tarikul-Islam-Anik/Animated-Fluent-Emojis/master/Emojis/Smilies/Smiling%20Face%20with%20Hearts.png" />
             ) : user.accurate >= 60 ? (
               <AccurateImg src="https://raw.githubusercontent.com/Tarikul-Islam-Anik/Animated-Fluent-Emojis/master/Emojis/Smilies/Face%20with%20Hand%20Over%20Mouth.png" />
             ) : user.accurate >= 40 ? (

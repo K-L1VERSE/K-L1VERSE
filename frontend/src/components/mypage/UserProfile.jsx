@@ -78,7 +78,7 @@ const ProfileEditIcon = styled.img`
 
 const ProfileEditText = styled.div`
   color: var(--blue1, #026);
-  font-family: Pretendard;
+  font-family: "Pretendard-Regular";
   font-size: 12px;
   font-style: normal;
   font-weight: 400;
@@ -119,7 +119,7 @@ const UserProfileInput = styled.input`
 
 const UserNickName = styled.div`
   color: var(--gray1, #222);
-  font-family: Pretendard;
+  font-family: "Pretendard-Regular";
   font-size: 14px;
   font-style: normal;
   font-weight: 500;

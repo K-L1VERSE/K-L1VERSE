@@ -72,24 +72,35 @@ const CommentForm = ({ boardId, parentId, getComments }) => {
 
   return (
     <CommentFormContainer>
-      <TextArea
-        value={content}
-        onChange={(e) => setContent(e.target.value)}
-        onKeyDown={handleKeyDown}
-        required
-        placeholder="댓글을 작성하세요."
-      />
       <CheckboxLabel>
         <CheckboxInput
           type="checkbox"
           checked={isSecret}
           onChange={() => setIsSecret(!isSecret)}
         />
-        <span>🔒비밀</span>
+        <div>
+          <img
+            src="https://raw.githubusercontent.com/Tarikul-Islam-Anik/Animated-Fluent-Emojis/master/Emojis/Objects/Locked.png"
+            alt="Locked"
+            width="18"
+            height="18"
+          />
+          <div>비밀댓글</div>
+        </div>
       </CheckboxLabel>
-      <SubmitButton type="button" onClick={handleSubmit}>
-        {isUpdateMode ? "댓글 수정 완료" : "댓글 작성"}
-      </SubmitButton>
+      <div className="reply">
+        <TextArea
+          value={content}
+          onChange={(e) => setContent(e.target.value)}
+          onKeyDown={handleKeyDown}
+          required
+          placeholder="댓글을 작성하세요."
+        />
+        <SubmitButton type="button" onClick={handleSubmit}>
+          {isUpdateMode ? "댓글 수정 완료" : "댓글 작성"}
+        </SubmitButton>
+      </div>
+
       {isUpdateMode && (
         <CancelButton type="button" onClick={() => setIsUpdateMode(false)}>
           수정 취소
