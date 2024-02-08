@@ -23,7 +23,7 @@ public class CleanbotBoardOutputConsumer {
     private ObjectMapper objectMapper;
 
     @Transactional
-//    @KafkaListener(topics = "cleanbot-board-output", groupId = "waggle-group")
+//    @KafkaListener(topics = "cleanbot-board-output", groupId = "board-group")
     public void cleanbotCheck(String WaggleCleanbotCheckResDtoJson) {
 
         try {
