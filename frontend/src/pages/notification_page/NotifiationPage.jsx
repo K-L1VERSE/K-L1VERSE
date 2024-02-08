@@ -2,11 +2,14 @@ import { useRecoilState } from "recoil";
 import { useEffect } from "react";
 import { useNavigate } from "react-router";
 import { NotificationState } from "../../global/NotificationState";
+import { UserState } from "../../global/UserState";
 import {
   HeaderContainer,
   HeaderBox,
   HeaderImg,
   HeaderText,
+  NotRecvNotificationTextContainer,
+  NotRecvNotificationText,
 } from "../../styles/notification-styles/NotificationStyle";
 import NotificationList from "../../components/notification/NotificationList";
 
@@ -16,18 +19,23 @@ function Notification() {
   const [notificationState, setNotificationState] =
     useRecoilState(NotificationState);
 
+  const [userState] = useRecoilState(UserState);
+  const { notificationFlag } = userState;
+
   useEffect(() => {
-    axios
-      .get("/user/users/notifications/read")
-      .then(() => {
-        setNotificationState((prev) => ({
-          ...prev,
-          notifications: [...prev.notifications, ...prev.newNotifications],
-          newNotifications: [],
-        }));
-      })
-      .catch(() => {});
-  }, []);
+    if (notificationFlag && notificationState.newNotifications.length > 0) {
+      axios
+        .get("/user/users/notifications/read")
+        .then(() => {
+          setNotificationState((prev) => ({
+            ...prev,
+            notifications: [...prev.notifications, ...prev.newNotifications],
+            newNotifications: [],
+          }));
+        })
+        .catch(() => {});
+    }
+  }, [notificationState.newNotifications.length]);
 
   const navigate = useNavigate();
 
@@ -59,7 +67,7 @@ function Notification() {
   };
 
   return (
-    <div>
+    <>
       <HeaderContainer>
         <HeaderBox>
           <HeaderImg
@@ -69,12 +77,20 @@ function Notification() {
           <HeaderText>알림</HeaderText>
         </HeaderBox>
       </HeaderContainer>
-      <NotificationList
-        notifications={notificationState.notifications}
-        handleNotificationClick={handleNotificationClick}
-        deleteNotification={deleteNotification}
-      />
-    </div>
+      {notificationFlag ? (
+        <NotificationList
+          notifications={notificationState.notifications}
+          handleNotificationClick={handleNotificationClick}
+          deleteNotification={deleteNotification}
+        />
+      ) : (
+        <NotRecvNotificationTextContainer>
+          <NotRecvNotificationText>
+            알림 설정이 꺼져있습니다.
+          </NotRecvNotificationText>
+        </NotRecvNotificationTextContainer>
+      )}
+    </>
   );
 }
 
