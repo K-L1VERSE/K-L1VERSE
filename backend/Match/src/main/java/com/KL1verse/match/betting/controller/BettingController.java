@@ -39,14 +39,14 @@ public class BettingController {
     @GetMapping
     public ResponseEntity<?> checkBetting(@RequestParam("matchId") int matchId,
         @RequestParam("userId") int userId) {
-        int n = bettingService.checkBetting(matchId, userId);
-        int team = -1;
-        if(n > 0) {
-            team = bettingService.checkBettingTeam(matchId, userId);
+        int betGoal = bettingService.checkBetting(matchId, userId);
+        int betTeamId = -1;
+        if(betGoal > 0) {
+            betTeamId = bettingService.checkBettingTeam(matchId, userId);
         }
         Map<String, Integer> response = new HashMap<>();
-        response.put("bettingAmount", n);
-        response.put("teamId", team);
+        response.put("betGoal", betGoal);
+        response.put("betTeamId", betTeamId);
 
         return new ResponseEntity<>(response, HttpStatus.OK);
     }

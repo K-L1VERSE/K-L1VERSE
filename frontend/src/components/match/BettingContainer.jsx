@@ -20,13 +20,13 @@ export default function BettingContainer({ match }) {
         matchId,
         userId: userState.userId,
       });
-      if (response.data.bettingAmount === 0) {
-        console.log(`베팅 아직 안했음 : ${response.data.bettingAmount}`); // 0
-        console.log(`베팅 안했을 때 팀 : ${response.data.teamId}`); // -1
+      if (response.data.betGoal === 0) {
+        console.log(`베팅 아직 안했음 : ${response.data.betGoal}`); // 0
+        console.log(`베팅 안했을 때 팀 : ${response.data.betTeamId}`); // -1
       } else {
         setBetComplete(true);
-        console.log(`이미 베팅했음 : ${response.data.bettingAmount}`); // 골
-        console.log(`베팅 팀 : ${response.data.teamId}`); // 팀 아이디
+        console.log(`이미 베팅했음 : ${response.data.betGoal}`); // 골
+        console.log(`베팅 팀 : ${response.data.betTeamId}`); // 팀 아이디
       }
     };
     checkBetting();
