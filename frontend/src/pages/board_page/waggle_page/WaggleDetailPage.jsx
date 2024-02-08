@@ -153,9 +153,14 @@ function WaggleDetailPage() {
         <Title>{title}</Title>
         <Content>{content}</Content>
         <WaggleImageContainer>
-          {waggleDetail.boardImage && (
-            <WaggleImage src={waggleDetail.boardImage} alt="Waggle Image" />
-          )}
+          {waggleDetail.boardImage &&
+            waggleDetail.boardImage.map((imageUrl, index) => (
+              <WaggleImage
+                key={index}
+                src={imageUrl}
+                alt={`Waggle Image ${index}`}
+              />
+            ))}
         </WaggleImageContainer>
         <Like
           isLiked={isLiked}

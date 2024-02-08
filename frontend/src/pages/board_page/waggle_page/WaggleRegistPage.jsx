@@ -62,7 +62,7 @@ function WaggleRegistPage() {
           },
         },
         ({ data }) => {
-          console.log(data, "****************");
+          // console.log(data, "****************");
           navigate(`/waggle/${data.board.boardId}`);
         },
         () => {},

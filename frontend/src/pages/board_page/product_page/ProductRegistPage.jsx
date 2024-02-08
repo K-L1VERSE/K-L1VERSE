@@ -31,7 +31,7 @@ function ProductRegistPage() {
       setContent(location.state.board.content);
       setPrice(location.state.board.price);
       setDealFlag(location.state.board.dealFlag);
-      setBoardImage(location.state.board.boardImage);
+      // setBoardImage(location.state.board.boardImage);
       setIsUpdateMode(true);
     }
   }, [location]);
@@ -62,7 +62,6 @@ function ProductRegistPage() {
             title,
             content,
             userId,
-            // nickname,
             boardImage,
           },
           price,
@@ -79,6 +78,15 @@ function ProductRegistPage() {
   const handleBackClick = () => {
     navigate("/product");
   };
+
+  // 파일 상태를 업데이트하는 핸들러 함수
+  const handleFileChange = (file) => {
+    setBoardImage(file);
+  };
+
+  useEffect(() => {
+    handleFileChange(file);
+  }, [file]);
 
   return (
     <>
@@ -98,7 +106,7 @@ function ProductRegistPage() {
         onTitleChange={(e) => setTitle(e.target.value)}
         onContentChange={(e) => setContent(e.target.value)}
         onPriceChange={(e) => setPrice(e.target.value)}
-        onImageChange={(e) => setBoardImage(e.target.files[0])}
+        onFileChange={handleFileChange}
         onSubmit={handleSubmit}
         buttonText={isUpdateMode ? "수정하기" : "작성하기"}
       />

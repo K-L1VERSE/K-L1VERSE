@@ -1,5 +1,3 @@
-// components/BoardFile.js
-
 import React, { useRef } from "react";
 import {
   FileInput,

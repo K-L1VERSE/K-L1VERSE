@@ -9,7 +9,6 @@ import {
   RegistCardContainer,
   InputLabel,
 } from "../../styles/BoardStyles/BoardCreateStyle";
-import CameraIcon from "../../assets/icon/camera-icon.svg";
 import BoardFile from "./BoardFile";
 
 export default function WaggleRegistCard({

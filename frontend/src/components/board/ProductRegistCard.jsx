@@ -10,13 +10,13 @@ import {
   RegistCardContainer,
   InputLabel,
 } from "../../styles/BoardStyles/BoardCreateStyle";
-import CameraIcon from "../../assets/icon/camera-icon.svg";
 import {
   FlagInputContainer,
   FlagInputLabel,
   FlagInputCheckbox,
   FlagInputText,
 } from "../../styles/BoardStyles/BoardCreateStyle";
+import BoardFile from "./BoardFile";
 
 export default function ProductRegistCard({
   title,
@@ -28,10 +28,16 @@ export default function ProductRegistCard({
   onContentChange,
   onPriceChange,
   onDealFlagChange,
-  onImageChange,
+  onFileChange,
   onSubmit,
   buttonText,
 }) {
+  const [previewImage, setPreviewImage] = useState(null);
+
+  const handleFileChange = (file, result, imageUrl) => {
+    // console.log(imageUrl, "!@#!@#!@#!@#");
+    onFileChange(imageUrl);
+  };
   return (
     <RegistCardContainer>
       <InputLabel>판매 물건</InputLabel>
@@ -50,6 +56,18 @@ export default function ProductRegistCard({
         placeholder="가격"
       />
       <br />
+      <InputLabel>사진 첨부</InputLabel>
+      <BoardFile onFileChange={handleFileChange} />
+      {previewImage && (
+        <img src={previewImage} alt="미리보기" style={{ maxWidth: "100%" }} />
+      )}
+      <br />
+      <InputLabel>사진 첨부</InputLabel>
+      <BoardFile onFileChange={handleFileChange} />
+      {previewImage && (
+        <img src={previewImage} alt="미리보기" style={{ maxWidth: "100%" }} />
+      )}
+      <br />
       <InputLabel>내용</InputLabel>
       <TextArea value={content} onChange={onContentChange} placeholder="내용" />
       <br />
@@ -63,19 +81,7 @@ export default function ProductRegistCard({
           <FlagInputText>판매중</FlagInputText>
         </FlagInputLabel>
       </FlagInputContainer>
-      <br />
-      <InputLabel>사진 첨부</InputLabel>
-      <FileInputContainer>
-        <FileInput
-          type="file"
-          value={boardImage}
-          onChange={onImageChange}
-          accept="image/*"
-        />
-        <FileInputLabel>
-          <img src={CameraIcon} alt="Camera Icon" />
-        </FileInputLabel>
-      </FileInputContainer>
+
       <br />
       <SubmitButton onClick={onSubmit}>{buttonText}</SubmitButton>
     </RegistCardContainer>

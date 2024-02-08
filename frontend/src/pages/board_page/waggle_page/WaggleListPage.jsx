@@ -21,6 +21,7 @@ function WaggleListPage() {
       page,
       10,
       ({ data }) => {
+        console.log(data, "data");
         if (!data.content) {
           setHasMore(false);
         } else {

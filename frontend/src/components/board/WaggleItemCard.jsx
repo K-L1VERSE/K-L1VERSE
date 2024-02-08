@@ -14,23 +14,10 @@ import {
 function WaggleItemCard({ waggle, formatRelativeTime }) {
   return (
     <ItemContainer>
-      <ItemWriter>{waggle.board.nickname}</ItemWriter>
-      <ItemTitle>
-        <Link
-          to={`/waggle/${waggle.board.boardId}`}
-          style={{ textDecoration: "none", color: "black" }}
-        >
-          {waggle.board.title}
-        </Link>
-      </ItemTitle>
-      <ItemContent>
-        <Link
-          to={`/waggle/${waggle.board.boardId}`}
-          style={{ textDecoration: "none" }}
-        >
-          <p>{waggle.board.content}</p>
-        </Link>
-      </ItemContent>
+      {waggle.board.boardImage && waggle.board.boardImage.length > 0 && (
+        // 첫 번째 이미지만 출력
+        <WaggleImage src={waggle.board.boardImage[0]} alt="Waggle Image" />
+      )}
       <ItemInfoSection>
         <ItemInfoItem className="waggle-like">
           <LikeCount />
@@ -42,6 +29,22 @@ function WaggleItemCard({ waggle, formatRelativeTime }) {
         </ItemInfoItem>
         <ItemInfoItem>{formatRelativeTime(waggle.board.createAt)}</ItemInfoItem>
       </ItemInfoSection>
+      <ItemContent>
+        <ItemTitle>
+          <Link
+            to={`/waggle/${waggle.board.boardId}`}
+            style={{ textDecoration: "none", color: "black" }}
+          >
+            {waggle.board.title}
+          </Link>
+        </ItemTitle>
+        <Link
+          to={`/waggle/${waggle.board.boardId}`}
+          style={{ textDecoration: "none" }}
+        >
+          <p>{waggle.board.content}</p>
+        </Link>
+      </ItemContent>
     </ItemContainer>
   );
 }

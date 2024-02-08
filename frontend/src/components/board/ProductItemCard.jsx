@@ -27,7 +27,12 @@ function ProductItemCard({ product, formatRelativeTime }) {
           <DealStatusGreen>거래가능</DealStatusGreen>
         )}
       </DealFlagContainer>
-      <ImageBoxContainer>이미지 자리</ImageBoxContainer>
+      <ImageBoxContainer>
+        {product.board.boardImage && product.board.boardImage.length > 0 && (
+          // 첫 번째 이미지만 출력
+          <ProductImage src={product.board.boardImage[0]} alt="Product Image" />
+        )}
+      </ImageBoxContainer>
       <ItemTitle>
         <Link
           to={`/product/${product.board.boardId}`}
