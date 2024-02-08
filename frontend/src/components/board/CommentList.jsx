@@ -85,7 +85,6 @@ const CommentList = ({ boardId }) => {
 
   return (
     <ListContainer>
-      <h2>댓글 목록</h2>
       <CommentContainer
         boardId={boardId}
         commentList={commentList}

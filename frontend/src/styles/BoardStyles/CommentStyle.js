@@ -1,11 +1,80 @@
 import styled from "styled-components";
 
+/* ************* CommentList ************* */
+export const ListContainer = styled.div`
+  margin-top: 1rem;
+  margin-left: 0.5rem;
+  margin-right: 0.5rem;
+`;
+
+export const CommentListContainer = styled.div`
+  /* margin: 1rem; */
+`;
+
+export const CommentItem = styled.li`
+  margin-bottom: 1rem;
+  border-bottom: 1px solid #ccc;
+  list-style: none;
+`;
+
+export const CommentContent = styled.p`
+  /* display: flex; */
+  margin-bottom: 0.6rem;
+  margin-left: 1rem;
+  font-size: 0.8rem;
+  color: #5f5f5f;
+`;
+export const CommentTime = styled.div`
+  display: flex;
+  font-size: 0.5rem;
+  color: grey;
+  margin-left: 0.1rem;
+  justify-content: flex-end;
+`;
+
+export const CommentWriter = styled.div`
+  font-size: 0.9rem;
+  color: black;
+  margin-left: 0.8rem;
+`;
+
+export const ButtonContainer = styled.div`
+  display: flex;
+  justify-content: flex-start;
+  margin-left: 0.3rem;
+`;
+
+export const EditButton = styled.button`
+  background-color: #fff;
+
+  color: grey;
+  font-size: 0.5em;
+  border: none;
+  cursor: pointer;
+  border-radius: 10px;
+
+  &.hover {
+    text-decoration: underline;
+  }
+`;
+
+export const DeleteButton = styled.button`
+  background-color: #fff;
+  color: grey;
+  font-size: 0.5em;
+  padding-left: 0.3rem;
+  border: none;
+  cursor: pointer;
+  border-radius: 10px;
+`;
+
 /* ************* CommentForm ************* */
 export const CommentFormContainer = styled.form`
   margin-left: 0.8rem;
   margin-top: 1rem;
   display: flex;
   font-family: "Pretendard-Regular";
+  background-color: aquamarine;
 `;
 
 export const TextArea = styled.textarea`
@@ -75,69 +144,4 @@ export const ReplyButton = styled.button`
   &:hover {
     background-color: #45a049;
   }
-`;
-
-/* ************* CommentList ************* */
-export const ListContainer = styled.div`
-  margin-top: 1rem;
-`;
-
-export const CommentListContainer = styled.div`
-  margin: 1rem;
-`;
-
-export const CommentItem = styled.li`
-  margin-bottom: 1rem;
-  border-bottom: 1px solid #ccc;
-  list-style: none;
-  display: flex;
-  justify-content: space-between;
-`;
-
-export const CommentContent = styled.p`
-  /* display: flex; */
-  margin-bottom: 1rem;
-  margin-left: 1rem;
-  font-size: 0.8rem;
-  color: #5f5f5f;
-`;
-export const CommentTime = styled.div`
-  font-size: 0.5rem;
-  margin-top: 0.4rem;
-  color: grey;
-  margin-left: 0.1rem;
-`;
-
-export const CommentWriter = styled.div`
-  font-size: 0.9rem;
-  color: black;
-  margin-left: 0.8rem;
-`;
-
-export const ButtonContainer = styled.div`
-  display: flex;
-`;
-
-export const EditButton = styled.button`
-  background-color: #fff;
-
-  color: grey;
-  font-size: 0.8em;
-  border: none;
-  cursor: pointer;
-  border-radius: 10px;
-
-  &.hover {
-    text-decoration: underline;
-  }
-`;
-
-export const DeleteButton = styled.button`
-  background-color: #fff;
-  color: grey;
-  font-size: 0.8em;
-  padding-left: 0.3rem;
-  border: none;
-  cursor: pointer;
-  border-radius: 10px;
 `;

@@ -4,7 +4,7 @@ import styled from "styled-components";
 export const MatchTitle = styled.div`
   color: black;
   font-weight: 200;
-  font-size: 1.2rem;
+  font-size: 1.1rem;
 `;
 
 export const MatchTime = styled.div`

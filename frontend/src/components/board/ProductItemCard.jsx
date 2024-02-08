@@ -3,14 +3,12 @@ import { Link } from "react-router-dom";
 import {
   DealStatusGreen,
   DealStatusOrange,
-  ProductItemTitle,
   ProductItemPrice,
   ProductItemCreated,
   ProductItemContainer,
 } from "../../styles/BoardStyles/ProductListStyle";
 import {
   DealFlagContainer,
-  ItemContent,
   ItemInfoItem,
   ItemInfoSection,
   ItemTitle,

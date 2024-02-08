@@ -48,16 +48,16 @@ export function getSearchWaggleList(keyword, page, size, success, fail) {
     .catch(fail);
 }
 
-export function likeWaggle(board, waggleId, success, fail) {
+export function likeWaggle(waggleId, data, success, fail) {
   axios
-    .post(`/${gateway}/${url}/like/${waggleId}`, board)
+    .post(`/${gateway}/${url}/like/${waggleId}`, data)
     .then(success)
     .catch(fail);
 }
 
-export function unlikeWaggle(board, waggleId, success, fail) {
+export function unlikeWaggle(waggleId, data, success, fail) {
   axios
-    .delete(`/${gateway}/${url}/likes/${waggleId}`, board)
+    .delete(`/${gateway}/${url}/likes/${waggleId}`, data)
     .then(success)
     .catch(fail);
 }
