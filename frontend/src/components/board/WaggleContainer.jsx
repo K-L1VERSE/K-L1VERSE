@@ -1,11 +1,11 @@
 import React from "react";
-import { WaggleListContainer } from "../../styles/BoardStyles/WaggleListStyle";
+import { ListContainer } from "../../styles/BoardStyles/BoardStyle";
 
 import WaggleItemCard from "./WaggleItemCard";
 
 function WaggleContainer({ waggleList, formatRelativeTime }) {
   return (
-    <WaggleListContainer>
+    <ListContainer>
       {waggleList.map((waggle) => (
         <WaggleItemCard
           key={waggle.waggleId}
@@ -13,7 +13,7 @@ function WaggleContainer({ waggleList, formatRelativeTime }) {
           formatRelativeTime={formatRelativeTime}
         />
       ))}
-    </WaggleListContainer>
+    </ListContainer>
   );
 }
 

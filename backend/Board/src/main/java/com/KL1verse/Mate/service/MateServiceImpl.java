@@ -8,52 +8,106 @@ import com.KL1verse.Comment.repository.CommentRepository;
 import com.KL1verse.Mate.dto.req.MateDTO;
 import com.KL1verse.Mate.repository.MateRepository;
 import com.KL1verse.Mate.repository.entity.Mate;
+import com.KL1verse.kafka.dto.req.BoardCleanbotCheckReqDto;
+import com.KL1verse.kafka.producer.KafkaBoardCleanbotProducer;
+import com.KL1verse.s3.repository.entity.File;
+import com.KL1verse.s3.service.BoardImageService;
+import com.KL1verse.s3.service.FileService;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.stream.Collectors;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.BeanUtils;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
+@RequiredArgsConstructor
 public class MateServiceImpl implements MateService {
 
     private final MateRepository mateRepository;
     private final BoardRepository boardRepository;
+    private final FileService fileService;
+
+    private final BoardImageService boardImageService;
 
     private final CommentRepository commentRepository;
+    private final KafkaBoardCleanbotProducer kafkaBoardCleanbotProducer;
 
-    public MateServiceImpl(MateRepository mateRepository, BoardRepository boardRepository,
-        CommentRepository commentRepository) {
-        this.mateRepository = mateRepository;
-        this.boardRepository = boardRepository;
-        this.commentRepository = commentRepository;
-    }
 
     @Override
     public MateDTO getMateById(Long boardId) {
         Mate mate = findMateByBoardId(boardId);
-        return convertToDTO(mate);
+
+        MateDTO mateDTO = convertToDTO(mate);
+        int commentCount = commentRepository.countCommentsByBoardId(boardId);
+        mateDTO.getBoard().setCommentCount(commentCount);
+
+        Integer userId = mateDTO.getBoard().getUserId();
+        List<Object[]> nicknameResult = mateRepository.findUserNickname(userId);
+
+
+        String userNickname = (String) nicknameResult.get(0)[0];
+        mateDTO.getBoard().setNickname(userNickname);
+
+        return mateDTO;
     }
 
+    @Transactional
     @Override
     public MateDTO createMate(MateDTO mateDto) {
         Mate mate = convertToEntity(mateDto);
         Board board = saveBoard(mate.getBoard());
         mate.setBoard(board);
+
+        File file = fileService.saveFile(mateDto.getBoard().getBoardImage());
+        boardImageService.saveBoardImage(board, file);
+
+        Integer userId = mateDto.getBoard().getUserId();
+        List<Object[]> nicknameResult = mateRepository.findUserNickname(userId);
+        String userNickname = nicknameResult.isEmpty() ? null : (String) nicknameResult.get(0)[0];
+
         Mate createdMate = mateRepository.save(mate);
-        return convertToDTO(createdMate);
+
+        MateDTO createdMateDTO = convertToDTO(createdMate);
+        createdMateDTO.getBoard().setNickname(userNickname);
+
+//        BoardCleanbotCheckReqDto boardCleanbotCheckReqDto = BoardCleanbotCheckReqDto.builder()
+//            .id(createdMate.getBoard().getBoardId())
+//            .content(createdMate.getBoard().getContent())
+//            .domain("board")
+//            .build();
+//        kafkaBoardCleanbotProducer.boardCleanbotCheck(boardCleanbotCheckReqDto);
+
+        return createdMateDTO;
     }
 
 
+    @Transactional
     @Override
     public MateDTO updateMate(Long boardId, MateDTO mateDto) {
         Mate existingMate = findMateByBoardId(boardId);
         updateExistingMate(existingMate, mateDto);
+
+        Board board = existingMate.getBoard();
+//        board.setBoardImage(mateDto.getBoard().getBoardImage());
+
         Mate updatedMate = mateRepository.save(existingMate);
+        File file = fileService.saveFile(mateDto.getBoard().getBoardImage());
+        boardImageService.saveBoardImage(board, file);
+
+
+//        BoardCleanbotCheckReqDto boardCleanbotCheckReqDto = BoardCleanbotCheckReqDto.builder()
+//            .id(boardId)
+//            .content(mateDto.getBoard().getContent())
+//            .domain("board")
+//            .build();
+//        kafkaBoardCleanbotProducer.boardCleanbotCheck(boardCleanbotCheckReqDto);
+
         return convertToDTO(updatedMate);
     }
 
@@ -90,6 +144,13 @@ public class MateServiceImpl implements MateService {
                 mateDTO.getBoard().setCommentCount(commentCount != null ? commentCount : 0);
             }
 
+            Integer userId = mateDTO.getBoard().getUserId();
+            List<Object[]> nicknameResult = mateRepository.findUserNickname(userId);
+
+
+            String userNickname = (String) nicknameResult.get(0)[0];
+            mateDTO.getBoard().setNickname(userNickname);
+
             return mateDTO;
         });
     }
@@ -109,6 +170,12 @@ public class MateServiceImpl implements MateService {
 
                 mateDTO.getBoard().setCommentCount(commentCount != null ? commentCount : 0);
             }
+
+            Integer userId = mateDTO.getBoard().getUserId();
+            List<Object[]> nicknameResult = mateRepository.findUserNickname(userId);
+            String userNickname = nicknameResult.isEmpty() ? null : (String) nicknameResult.get(0)[0];
+            mateDTO.getBoard().setNickname(userNickname);
+
 
             return mateDTO;
         });
@@ -179,6 +246,11 @@ public class MateServiceImpl implements MateService {
                 mateDTO.getBoard().setCommentCount(commentCount != null ? commentCount : 0);
             }
 
+            Integer userId = mateDTO.getBoard().getUserId();
+            List<Object[]> nicknameResult = mateRepository.findUserNickname(userId);
+            String userNickname = nicknameResult.isEmpty() ? null : (String) nicknameResult.get(0)[0];
+            mateDTO.getBoard().setNickname(userNickname);
+
             return mateDTO;
         });
     }
@@ -187,11 +259,16 @@ public class MateServiceImpl implements MateService {
     private MateDTO convertToDTO(Mate mate) {
         MateDTO mateDTO = new MateDTO();
         BeanUtils.copyProperties(mate, mateDTO);
-        mateDTO.setBoard(BoardDTO.builder().boardId(mate.getBoard().getBoardId())
+        mateDTO.setBoard(BoardDTO.builder()
+            .boardId(mate.getBoard().getBoardId())
             .boardType(mate.getBoard().getBoardType()).title(mate.getBoard().getTitle())
             .content(mate.getBoard().getContent()).createAt(mate.getBoard().getCreateAt())
             .updateAt(mate.getBoard().getUpdateAt()).deleteAt(mate.getBoard().getDeleteAt())
-            .userId(mate.getBoard().getUserId()).build());
+//            .boardImage(mate.getBoard().getBoardImage())
+            .userId(mate.getBoard().getUserId())
+            .commentCount(commentRepository.countCommentsByBoardId(mate.getBoard().getBoardId()))
+            .build());
+
         return mateDTO;
     }
 
@@ -202,6 +279,7 @@ public class MateServiceImpl implements MateService {
             .boardType(mateDTO.getBoard().getBoardType()).title(mateDTO.getBoard().getTitle())
             .content(mateDTO.getBoard().getContent()).createAt(mateDTO.getBoard().getCreateAt())
             .updateAt(mateDTO.getBoard().getUpdateAt()).deleteAt(mateDTO.getBoard().getDeleteAt())
+//            .boardImage(mateDTO.getBoard().getBoardImage())
             .userId(mateDTO.getBoard().getUserId()).build());
         return mate;
     }

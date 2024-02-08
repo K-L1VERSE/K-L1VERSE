@@ -67,6 +67,7 @@ function Badge() {
   ]);
 
   const [selectedBadge, setSelectedBadge] = useState(-1);
+  const setUserState = useSetRecoilState(UserState);
 
   useEffect(() => {
     const temp = [...badgeList];

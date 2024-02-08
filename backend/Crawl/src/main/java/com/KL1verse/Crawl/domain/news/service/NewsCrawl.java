@@ -63,8 +63,8 @@ public class NewsCrawl {
         private String uri;
     }
 
-//        @Scheduled(cron = "0/5 * * * * *")
-    @Scheduled(fixedDelay = Long.MAX_VALUE)
+    @Scheduled(cron = "* 0/15 * * * *")
+//    @Scheduled(fixedDelay = Long.MAX_VALUE)
     public void crawlNews() {
         log.info("Crawling...");
 
@@ -127,7 +127,7 @@ public class NewsCrawl {
                 LocalDateTime newsLocalDateTime = LocalDateTime.parse(newsDateTime, formatter);
 
                 long minutesDifference = Duration.between(newsLocalDateTime, LocalDateTime.now()).toMinutes();
-                if (minutesDifference > 600) {
+                if (minutesDifference > 15) {
                     // 4000분 이상 차이나면 뉴스 내용을 가져오지 않음
 
                     break;
@@ -216,18 +216,18 @@ public class NewsCrawl {
                 }
 
                 log.info("newsContent = {}", newsInfo.content);
-                String prompt = "(예 or 아니오)로 대답해줘. 다음의 뉴스 내용은 긍정적인 내용이야? ("+newsInfo.getContent()+")";
-                String responseFromOpenAIJSon = openAiService.sendRequest(prompt);
-                ObjectMapper objectMapper = new ObjectMapper();
-                try {
-                    JsonNode responseNode = objectMapper.readTree(responseFromOpenAIJSon);
-                    String responseFromOpenAI = responseNode.get("choices").get(0).get("message").get("content").asText();
-                    if(responseFromOpenAI == null || responseFromOpenAI.equals("아니오") || responseFromOpenAI.equals("아니요")) {
-                        continue;
-                    }
-                } catch (JsonProcessingException e) {
-                    e.printStackTrace();
-                }
+//                String prompt = "(예 or 아니오)로 대답해줘. 다음의 뉴스 내용은 긍정적인 내용이야? ("+newsInfo.getContent()+")";
+//                String responseFromOpenAIJSon = openAiService.sendRequest(prompt);
+//                ObjectMapper objectMapper = new ObjectMapper();
+//                try {
+//                    JsonNode responseNode = objectMapper.readTree(responseFromOpenAIJSon);
+//                    String responseFromOpenAI = responseNode.get("choices").get(0).get("message").get("content").asText();
+//                    if(responseFromOpenAI == null || responseFromOpenAI.equals("아니오") || responseFromOpenAI.equals("아니요")) {
+//                        continue;
+//                    }
+//                } catch (JsonProcessingException e) {
+//                    e.printStackTrace();
+//                }
                 titleList.add(newsInfo.getTitle());
                 uriList.add(newsInfo.getUri());
             }
@@ -235,6 +235,7 @@ public class NewsCrawl {
             newsResDto.setUri(uriList);
 
             if(!newsResDto.getTitle().isEmpty()) {
+                log.info("badgeDetailId: {}", newsResDto.getBadgeDetailId());
                 kafkaNewsNotificationProducer.newsNotification(newsResDto);
             }
         }

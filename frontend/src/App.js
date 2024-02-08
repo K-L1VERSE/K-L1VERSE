@@ -18,7 +18,7 @@ import Badge from "./pages/my_page/Badge";
 import Navbar from "./pages/nav/Navbar";
 import SocketProvider from "./global/SocketProvider";
 import LogoutPage from "./pages/logout_page/LogoutPage";
-import Notification from "./components/notification/Notification";
+import NotificationPage from "./pages/notification_page/NotifiationPage";
 
 import WaggleListPage from "./pages/board_page/waggle_page/WaggleListPage";
 import WaggleDetailPage from "./pages/board_page/waggle_page/WaggleDetailPage";
@@ -35,10 +35,9 @@ import ProductRegistPage from "./pages/board_page/product_page/ProductRegistPage
 import MatchSchedulePage from "./pages/match_page/MatchSchedulePage";
 import MatchDetailPage from "./pages/match_page/MatchDetailPage";
 import MatchChattingPage from "./pages/match_page/MatchChattingPage";
+import SettingPage from "./pages/my_page/SettingPage";
 
 import TeamInfoPage from "./pages/teamPage/TeamInfoPage";
-
-import SettingPage from "./pages/my_page/SettingPage";
 
 function App() {
   return (
@@ -62,7 +61,7 @@ function App() {
               <Route index element={<MainPage />} />
 
               {/* 알림 페이지 */}
-              <Route path="/notification" element={<Notification />} />
+              <Route path="/notification" element={<NotificationPage />} />
 
               {/* 설문 페이지 */}
               <Route path="/survey" element={<StartPage />} />

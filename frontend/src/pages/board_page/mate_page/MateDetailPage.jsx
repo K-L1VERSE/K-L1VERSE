@@ -1,20 +1,57 @@
 import React, { useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import axios from "../../../api/axios";
+import { useRecoilState } from "recoil";
 import BoardTopNavBar from "../../../components/board/BoardTopNavBar";
 import CommentList from "../../../components/board/CommentList";
+import {
+  BackButton,
+  Button,
+  Container,
+  DetailBox,
+  DetailTop,
+  EditDeleteButton,
+  User,
+} from "../../../styles/BoardStyles/BoardDetailStyle";
+import { deleteMate } from "../../../api/mate";
+import {
+  DealStatusGreen,
+  DealStatusOrange,
+} from "../../../styles/BoardStyles/ProductListStyle";
+import {
+  MatchTime,
+  MatchTitle,
+  MateDetailContent,
+  MateDetailTotal,
+} from "../../../styles/BoardStyles/MateListStyle";
+import { getMatchDetail } from "../../../api/match";
+import { ItemTitle } from "../../../styles/BoardStyles/BoardStyle";
+import { formatDateTime } from "../../../components/board/dateFormat";
+import { UserState } from "../../../global/UserState";
+import {
+  DeleteButton,
+  EditButton,
+} from "../../../styles/BoardStyles/CommentStyle";
+import BackIcon from "../../../assets/icon/back-icon.png";
 
 function MateDetailPage() {
   const [mateDetail, setMateDetail] = useState({});
-  const [, setMateId] = useState(0);
+  const [matchId, setMatchId] = useState(0);
+  const [total, setTotal] = useState(0);
+  const [fullFlag, setFullFlag] = useState(false);
   const { boardId } = useParams();
   const navigate = useNavigate();
+  const [matchDetail, setMatchDetail] = useState({});
+  const { userId } = useRecoilState(UserState)[0];
 
   /* mate 상세 정보 가져오기 */
   function getMateDetail() {
     axios.get(`/board/mates/${boardId}`).then(({ data }) => {
+      console.log("!!!!!!!!!!!!", data);
+      setMatchId(data.matchId);
       setMateDetail(data.board);
-      setMateId(data.mateId);
+      setTotal(data.total);
+      setFullFlag(data.fullFlag);
     });
   }
 
@@ -22,52 +59,83 @@ function MateDetailPage() {
     getMateDetail();
   }, [boardId]);
 
-  function handleUpdateBtn() {
-    navigate("/mateRegist", { state: { boardId: mateDetail.boardId } });
+  function getMatch() {
+    getMatchDetail(matchId).then((res) => {
+      setMatchDetail(res);
+    });
   }
+  useEffect(() => {
+    getMatch();
+  }, []);
 
-  const handleDeleteBtn = async () => {
-    try {
-      await axios.delete(`/board/mates/${boardId}`);
-      navigate("/mate");
-    } catch (error) {
-      // console.error("글 삭제 중 에러 발생:", error);
-    }
+  const handleUpdateBtn = () => {
+    navigate("/mateRegist", { state: { board: mateDetail } });
   };
 
-  const handleKeyDown = (event, clickHandler) => {
-    if (event.key === "Enter") {
-      clickHandler();
+  const handleDeleteBtn = () => {
+    deleteMate(
+      boardId,
+      () => {
+        navigate("/mate");
+      },
+      () => {},
+    );
+  };
+
+  const renderEditDeleteButtons = () => {
+    if (userId === mateDetail.userId) {
+      return (
+        <>
+          <EditButton type="button" onClick={handleUpdateBtn}>
+            수정
+          </EditButton>
+          <DeleteButton type="button" onClick={handleDeleteBtn}>
+            삭제
+          </DeleteButton>
+        </>
+      );
     }
+    return null;
+  };
+
+  const handleBackClick = () => {
+    navigate("/waggle");
   };
 
   return (
-    <div className="container">
-      <BoardTopNavBar />
-      <h1>Mate 상세 정보</h1>
-      <div className="mate-detail-box">
-        <p>
-          <strong>{mateDetail.title}</strong>
-        </p>
-        <p>{mateDetail.content}</p>
-      </div>
-      <button
-        type="button"
-        onClick={handleUpdateBtn}
-        onKeyDown={(e) => handleKeyDown(e, handleUpdateBtn)}
-      >
-        수정하기
-      </button>
-      <button
-        type="button"
-        onClick={handleDeleteBtn}
-        onKeyDown={(e) => handleKeyDown(e, handleDeleteBtn)}
-      >
-        삭제하기
-      </button>
-
+    <Container>
+      <DetailTop>
+        <BackButton onClick={handleBackClick}>
+          <img src={BackIcon} alt="Back" />
+        </BackButton>
+      </DetailTop>
+      <DetailBox>
+        <User>{mateDetail.nickname}</User>
+        {fullFlag ? (
+          <DealStatusOrange>모집완료</DealStatusOrange>
+        ) : (
+          <DealStatusGreen>모집중</DealStatusGreen>
+        )}
+        <div
+          style={{
+            display: "flex",
+            justifyContent: "space-between",
+            marginBottom: "10px",
+          }}
+        >
+          <ItemTitle>
+            <MatchTitle>
+              {matchDetail.homeTeamName} vs {matchDetail.awayTeamName}
+            </MatchTitle>
+            <MatchTime>{formatDateTime(matchDetail.matchAt)}</MatchTime>
+          </ItemTitle>
+        </div>
+        <MateDetailContent>{mateDetail.content}</MateDetailContent>
+        <MateDetailTotal>총 인원 : {total}</MateDetailTotal>
+        <EditDeleteButton>{renderEditDeleteButtons()}</EditDeleteButton>
+      </DetailBox>
       <CommentList boardId={boardId} />
-    </div>
+    </Container>
   );
 }
 

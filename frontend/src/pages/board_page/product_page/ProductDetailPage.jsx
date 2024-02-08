@@ -1,20 +1,46 @@
 import React, { useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
+import { useRecoilState } from "recoil";
 import axios from "../../../api/axios";
-import BoardTopNavBar from "../../../components/board/BoardTopNavBar";
 import CommentList from "../../../components/board/CommentList";
+import {
+  Container,
+  User,
+  Title,
+  Content,
+  DetailBox,
+  EditDeleteButton,
+  DetailTop,
+  BackButton,
+  Price,
+} from "../../../styles/BoardStyles/BoardDetailStyle";
+import {
+  DealStatusGreen,
+  DealStatusOrange,
+} from "../../../styles/BoardStyles/ProductListStyle";
+import { deleteProduct } from "../../../api/product";
+import { UserState } from "../../../global/UserState";
+import BackIcon from "../../../assets/icon/back-icon.png";
+import {
+  DeleteButton,
+  EditButton,
+} from "../../../styles/BoardStyles/CommentStyle";
+import { ImageBoxContainer } from "../../../styles/BoardStyles/ImageStyle";
 
 function ProductDetailPage() {
   const [productDetail, setProductDetail] = useState({});
-  // const [productId, setProductId] = useState(0);
+  const [price, setPrice] = useState(0);
+  const [dealFlag, setDealFlag] = useState(false);
   const { boardId } = useParams();
   const navigate = useNavigate();
+  const { userId } = useRecoilState(UserState)[0];
 
   /* product 상세 정보 가져오기 */
   function getProductDetail() {
     axios.get(`/board/products/${boardId}`).then(({ data }) => {
       setProductDetail(data.board);
-      // setProductId(data.productId);
+      setPrice(data.price);
+      setDealFlag(data.dealFlag);
     });
   }
 
@@ -22,51 +48,65 @@ function ProductDetailPage() {
     getProductDetail();
   }, [boardId]);
 
-  function handleUpdateBtn() {
-    navigate("/productRegist", { state: { boardId: productDetail.boardId } });
-  }
-
-  const handleDeleteBtn = async () => {
-    try {
-      await axios.delete(`/board/products/${boardId}`);
-      navigate("/product");
-    } catch (error) {
-      // console.error("글 삭제 중 에러 발생:", error);
-    }
+  const handleUpdateBtn = () => {
+    navigate("/productRegist", { state: { board: productDetail } });
   };
 
-  const handleKeyDown = (event, clickHandler) => {
-    if (event.key === "Enter") {
-      clickHandler();
+  const handleDeleteBtn = async () => {
+    deleteProduct(
+      boardId,
+      () => {
+        navigate("/product");
+      },
+      () => {},
+    );
+  };
+
+  const renderEditDeleteButtons = () => {
+    if (userId === productDetail.userId) {
+      return (
+        <>
+          <EditButton type="button" onClick={handleUpdateBtn}>
+            수정
+          </EditButton>
+          <DeleteButton type="button" onClick={handleDeleteBtn}>
+            삭제
+          </DeleteButton>
+        </>
+      );
     }
+    return null;
+  };
+
+  const handleBackClick = () => {
+    navigate("/product");
   };
 
   return (
-    <div className="container">
-      <BoardTopNavBar />
-      <div className="product-detail-box">
-        <p>
-          <strong>{productDetail.title}</strong>
-        </p>
-        <p>{productDetail.content}</p>
-      </div>
-      <button
-        type="button"
-        onClick={handleUpdateBtn}
-        onKeyDown={(e) => handleKeyDown(e, handleUpdateBtn)}
-      >
-        수정하기
-      </button>
-      <button
-        type="button"
-        onClick={handleDeleteBtn}
-        onKeyDown={(e) => handleKeyDown(e, handleDeleteBtn)}
-      >
-        삭제하기
-      </button>
+    <Container>
+      <DetailTop>
+        <BackButton onClick={handleBackClick}>
+          <img src={BackIcon} alt="Back" />
+        </BackButton>
+      </DetailTop>
+      <ImageBoxContainer>이미지 자리</ImageBoxContainer>
+      <DetailBox>
+        <User>
+          <p>{productDetail.nickname}</p>
+        </User>
+        {dealFlag ? (
+          <DealStatusOrange>거래완료</DealStatusOrange>
+        ) : (
+          <DealStatusGreen>거래가능</DealStatusGreen>
+        )}
+        <Title>{productDetail.title}</Title>
+        <Price>Price: {price}</Price>
+        <Content>{productDetail.content}</Content>
 
+        <EditDeleteButton>{renderEditDeleteButtons()}</EditDeleteButton>
+      </DetailBox>
       <CommentList boardId={boardId} />
-    </div>
+    </Container>
   );
 }
 

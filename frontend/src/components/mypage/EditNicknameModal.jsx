@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import axios from "../../api/axios";
 import Hangul from "hangul-js";
+import Swal from "sweetalert2";
 import {
   ModalBackground,
   ModalContainer,
@@ -17,6 +18,29 @@ const EditNicknameModal = ({ setModalOpen, user, setUser }) => {
   const [isNicknameAvailable, setIsNicknameAvailable] = useState(false);
   const [isCheckingAvailability, setIsCheckingAvailability] = useState(true);
 
+  const isHangul = (input) => {
+    return Hangul.isComplete(input);
+  };
+
+  const isAlphaNumeric = (input) => {
+    return /^[0-9a-zA-Z]*$/.test(input);
+  };
+
+  const isValidNickname = (nickname) => {
+    if (nickname.trim() === "") {
+      return false;
+    }
+
+    for (let i = 0; i < nickname.length; i++) {
+      const char = nickname.charAt(i);
+      if (!isHangul(char) && !isAlphaNumeric(char)) {
+        return false;
+      }
+    }
+
+    return true;
+  };
+
   useEffect(() => {
     const checkNicknameAvailability = async () => {
       try {
@@ -24,26 +48,20 @@ const EditNicknameModal = ({ setModalOpen, user, setUser }) => {
           nickname: newNickname,
         });
         setIsNicknameAvailable(response.data);
-      } catch (error) {
-        console.error("Error checking nickname availability:", error);
+      } catch (err) {
         setIsNicknameAvailable(false);
       } finally {
         setIsCheckingAvailability(false);
       }
     };
 
-    if (isCompleteWord(newNickname) && newNickname.length >= 2) {
+    if (isValidNickname(newNickname) && newNickname.length >= 2) {
       checkNicknameAvailability();
     } else {
       setIsCheckingAvailability(true);
       setIsNicknameAvailable(false);
     }
   }, [newNickname]);
-
-  const isCompleteWord = (word) => {
-    const lastChar = word.charAt(word.length - 1);
-    return Hangul.isComplete(lastChar);
-  };
 
   const closeModal = () => {
     setModalOpen(false);
@@ -58,26 +76,35 @@ const EditNicknameModal = ({ setModalOpen, user, setUser }) => {
   };
 
   const saveEdit = () => {
-    console.log("저장");
     if (isNicknameAvailable) {
-      console.log("저장");
       axios
         .put("/user/users/nickname", {
           nickname: newNickname,
         })
         .then((res) => {
-          console.log(res);
+          if (res.data.code === 1002) {
+            Swal.fire({
+              icon: "error",
+              title: "포인트가 부족합니다.",
+            });
+            setModalOpen(false);
+            return;
+          }
           setUser(() => {
             const prev = { ...user };
             prev.nickname = newNickname;
-            prev.goal -= 10000;
+            prev.goal -= 1000;
             return prev;
+          });
+          Swal.fire({
+            text: "1000골이 차감되었습니다.",
+            width: "20rem",
+            imageUrl:
+              "https://raw.githubusercontent.com/Tarikul-Islam-Anik/Animated-Fluent-Emojis/master/Emojis/Smilies/Ghost.png",
           });
           setModalOpen(false);
         })
-        .catch((err) => {
-          console.log(err);
-        });
+        .catch(() => {});
     }
   };
 
@@ -133,10 +160,7 @@ const EditNicknameModal = ({ setModalOpen, user, setUser }) => {
           )}
         <ButtonContainer>
           <CancleButton onClick={cancelEdit}>취소</CancleButton>
-          <SaveButton
-            onClick={saveEdit}
-            disabled={newNickname.length < 2 || !isNicknameAvailable}
-          >
+          <SaveButton onClick={saveEdit} $abled={isNicknameAvailable}>
             저장
           </SaveButton>
         </ButtonContainer>

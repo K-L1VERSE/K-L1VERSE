@@ -11,6 +11,7 @@ import com.kl1verse.UserServer.domain.user.repository.UserRepository;
 import com.kl1verse.UserServer.domain.user.repository.entity.User;
 import com.kl1verse.UserServer.global.ResponseCode;
 import jakarta.servlet.http.HttpServletRequest;
+import java.text.Format;
 import java.util.Optional;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -46,7 +47,7 @@ public class MypageServiceImpl {
         if (user.getTotalBet() == 0) {
             accurate = 0.0f;
         } else {
-            accurate = (float) ((float) user.getWinBet() / user.getTotalBet() * 100.0);
+            accurate = Float.parseFloat(String.format("%.2f", (double)user.getWinBet() / user.getTotalBet() * 100.0));
         }
 
         MypageResponseDto mypageResponseDto = MypageResponseDto.builder()
@@ -113,11 +114,11 @@ public class MypageServiceImpl {
 
         log.info("newNickname = {}", nicknameUpdateReqDto.getNickname());
 
-        if(user.getGoal() < 10000) {
+        if(user.getGoal() < 1000) {
             throw new UserException(ResponseCode.NOT_ENOUGH_GOAL);
         }
 
-        user.setGoal(user.getGoal() - 10000);
+        user.setGoal(user.getGoal() - 1000);
         user.setNickname(nicknameUpdateReqDto.getNickname());
         userRepository.save(user);
     }
