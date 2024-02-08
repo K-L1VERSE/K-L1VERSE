@@ -19,4 +19,5 @@ public class SignInResDto {
     private String domain;
     private Integer userId;
     private String mainBadge;
+    private Boolean notificationFlag;
 }

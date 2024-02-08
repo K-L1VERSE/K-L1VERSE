@@ -45,4 +45,5 @@ public class User {
     private Badge wearBadge;
     private Integer totalBet;
     private Integer winBet;
+    private Boolean notificationFlag;
 }

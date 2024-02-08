@@ -206,4 +206,19 @@ public class NotificationService {
         notificationRepository.save(notification.get());
     }
 
+    @Transactional
+    public void updateNotificationFlag(HttpServletRequest request) {
+        /*
+         * accessToken으로 유저 정보를 가져온다.
+         */
+        String requestToken = jwtUtil.resolveToken(request);
+        String email = jwtUtil.extractUserNameFromExpiredToken(requestToken);
+        String domain = jwtUtil.extractUserDomainFromExpiredToken(requestToken);
+
+        User user = userRepository.findByEmailAndDomain(email, domain).orElseThrow(
+            () -> new UserException(ResponseCode.INVALID_USER_INFO));
+
+        user.setNotificationFlag(!user.getNotificationFlag());
+        userRepository.save(user);
+    }
 }

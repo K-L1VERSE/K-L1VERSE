@@ -14,7 +14,6 @@ const Item = styled.div`
   padding: 12px 10px;
   justify-content: center;
   align-items: center;
-  gap: 10px;
   flex: 1 0 0;
 
   border-radius: 4px;
@@ -26,13 +25,15 @@ const ItemContent = styled.div`
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  gap: 8px;
+  gap: 4px;
 `;
 
 const ItemTitle = styled.div`
   display: flex;
-  align-items: flex-start;
-  gap: 52px;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
 `;
 
 const ItemTitleText = styled.div`
@@ -51,6 +52,11 @@ const ItemText = styled.div`
   font-style: normal;
   font-weight: 700;
   line-height: normal;
+`;
+
+const AccurateImg = styled.img`
+  width: 20px;
+  height: 20px;
 `;
 
 function Usergoal({ user }) {
@@ -82,6 +88,17 @@ function Usergoal({ user }) {
         <ItemContent>
           <ItemTitle>
             <ItemTitleText>적중률</ItemTitleText>
+            {user.accurate >= 80 ? (
+              <AccurateImg src="https://raw.githubusercontent.com/Tarikul-Islam-Anik/Animated-Fluent-Emojis/master/Emojis/Smilies/Beaming%20Face%20with%20Smiling%20Eyes.png" />
+            ) : user.accurate >= 60 ? (
+              <AccurateImg src="https://raw.githubusercontent.com/Tarikul-Islam-Anik/Animated-Fluent-Emojis/master/Emojis/Smilies/Face%20with%20Hand%20Over%20Mouth.png" />
+            ) : user.accurate >= 40 ? (
+              <AccurateImg src="https://raw.githubusercontent.com/Tarikul-Islam-Anik/Animated-Fluent-Emojis/master/Emojis/Smilies/Smiling%20Face%20with%20Smiling%20Eyes.png" />
+            ) : user.accurate >= 20 ? (
+              <AccurateImg src="https://raw.githubusercontent.com/Tarikul-Islam-Anik/Animated-Fluent-Emojis/master/Emojis/Smilies/Pleading%20Face.png" />
+            ) : (
+              <AccurateImg src="https://raw.githubusercontent.com/Tarikul-Islam-Anik/Animated-Fluent-Emojis/master/Emojis/Smilies/Grinning%20Face%20with%20Sweat.png" />
+            )}
           </ItemTitle>
           <ItemText>{user.accurate}%</ItemText>
         </ItemContent>

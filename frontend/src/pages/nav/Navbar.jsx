@@ -80,21 +80,22 @@ export default function Header() {
         </NavItem>
         <NavItem onClick={goNotification}>
           {navbarNotificationIcon({ $isSelected: state[2] })}
-          {notificationState.newNotifications.length > 0 && (
-            <div
-              style={{
-                position: "absolute",
-                top: "14px",
-                right: "120px",
-                display: "flex",
-                background: "red",
-                borderRadius: "50%",
-                width: "3px",
-                height: "3px",
-                padding: "2px",
-              }}
-            />
-          )}
+          {notificationState.newNotifications.length > 0 &&
+            currentPath !== "/notification" && (
+              <div
+                style={{
+                  position: "absolute",
+                  top: "14px",
+                  right: "120px",
+                  display: "flex",
+                  background: "red",
+                  borderRadius: "50%",
+                  width: "3px",
+                  height: "3px",
+                  padding: "2px",
+                }}
+              />
+            )}
           <Text $isSelected={state[2]}>알림</Text>
         </NavItem>
         <NavItem onClick={goMypage}>
