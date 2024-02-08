@@ -12,6 +12,7 @@ import {
   EditDeleteButton,
   DetailTop,
   BackButton,
+  Price,
 } from "../../../styles/BoardStyles/BoardDetailStyle";
 import {
   DealStatusGreen,
@@ -24,6 +25,7 @@ import {
   DeleteButton,
   EditButton,
 } from "../../../styles/BoardStyles/CommentStyle";
+import { ImageBoxContainer } from "../../../styles/BoardStyles/ImageStyle";
 
 function ProductDetailPage() {
   const [productDetail, setProductDetail] = useState({});
@@ -77,7 +79,7 @@ function ProductDetailPage() {
   };
 
   const handleBackClick = () => {
-    navigate("/waggle");
+    navigate("/product");
   };
 
   return (
@@ -87,6 +89,7 @@ function ProductDetailPage() {
           <img src={BackIcon} alt="Back" />
         </BackButton>
       </DetailTop>
+      <ImageBoxContainer>이미지 자리</ImageBoxContainer>
       <DetailBox>
         <User>
           <p>{productDetail.nickname}</p>
@@ -96,17 +99,10 @@ function ProductDetailPage() {
         ) : (
           <DealStatusGreen>거래가능</DealStatusGreen>
         )}
-        <div
-          style={{
-            display: "flex",
-            justifyContent: "space-between",
-            marginBottom: "10px",
-          }}
-        >
-          <Title>{productDetail.title}</Title>
-        </div>
+        <Title>{productDetail.title}</Title>
+        <Price>Price: {price}</Price>
         <Content>{productDetail.content}</Content>
-        <p>Price: {price}</p>
+
         <EditDeleteButton>{renderEditDeleteButtons()}</EditDeleteButton>
       </DetailBox>
       <CommentList boardId={boardId} />

@@ -14,16 +14,15 @@ export const DetailTop = styled.div`
 
 export const DetailBox = styled.div`
   background-color: #fff;
-  border: 1px solid #ccc;
+  border-bottom: 1px solid #ccc;
   padding: 1rem;
   margin-bottom: 1rem;
-  border-radius: 8px;
 `;
 
 export const User = styled.div`
   display: flex;
   align-items: center;
-  margin-bottom: 10px;
+  margin-bottom: 1rem;
 `;
 
 export const Title = styled.p`
@@ -34,13 +33,15 @@ export const Title = styled.p`
 `;
 
 export const Content = styled.p`
-  margin: 0;
+  margin-top: 0.8rem;
+  font-size: 0.9rem;
 `;
 
 export const Price = styled.p`
   margin: 0;
-  font-size: 1em;
-  color: #333;
+  font-size: 1.1rem;
+  font-weight: bold;
+  color: darkblue;
 `;
 
 export const DealFlag = styled.p`

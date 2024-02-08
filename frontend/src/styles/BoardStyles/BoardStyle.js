@@ -45,8 +45,9 @@ export const ItemContainer = styled.div`
 
 export const ItemWriter = styled.div`
   font-size: 0.9rem;
-  color: black;
-  margin-bottom: 8px;
+  color: darkslategray;
+  margin-top: 0.3rem;
+  margin-bottom: 0.3rem;
 `;
 
 export const ItemTitle = styled.div`
@@ -68,7 +69,6 @@ export const ItemContent = styled.div`
 
 export const ItemInfoSection = styled.div`
   display: flex;
-  /* justify-content: space-between; */
   align-items: center;
   margin-top: 8px;
 `;

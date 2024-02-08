@@ -13,8 +13,11 @@ import {
   ItemContent,
   ItemInfoItem,
   ItemInfoSection,
+  ItemTitle,
+  ItemWriter,
 } from "../../styles/BoardStyles/BoardStyle";
 import { ReactComponent as Comment } from "../../assets/icon/comment-icon.svg";
+import { ImageBoxContainer } from "../../styles/BoardStyles/ImageStyle";
 
 function ProductItemCard({ product, formatRelativeTime }) {
   return (
@@ -26,24 +29,17 @@ function ProductItemCard({ product, formatRelativeTime }) {
           <DealStatusGreen>거래가능</DealStatusGreen>
         )}
       </DealFlagContainer>
-
-      <ProductItemTitle>
+      <ImageBoxContainer>이미지 자리</ImageBoxContainer>
+      <ItemTitle>
         <Link
           to={`/product/${product.board.boardId}`}
           style={{ textDecoration: "none" }}
         >
           {product.board.title}
         </Link>
-      </ProductItemTitle>
-      <ItemContent>
-        <Link
-          to={`/product/${product.board.boardId}`}
-          style={{ textDecoration: "none" }}
-        >
-          <p>{product.board.content}</p>
-        </Link>
-      </ItemContent>
+      </ItemTitle>
       <ProductItemPrice>가격: {product.price}원</ProductItemPrice>
+      <ItemWriter>{product.board.nickname}</ItemWriter>
       <ItemInfoSection>
         <ItemInfoItem>
           <Comment />
