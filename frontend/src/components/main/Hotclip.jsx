@@ -30,7 +30,7 @@ export default function Hotclip() {
         } else {
           axios
             .get(
-              `https://www.googleapis.com/youtube/v3/search?part=snippet&maxResults=10&q=K리그1&type=video&key=AIzaSyAiIjoGsj76V6QBcMomRQcuB9TC6pkznyE`,
+              `https://www.googleapis.com/youtube/v3/search?part=snippet&maxResults=10&q=K리그1&type=${process.env.REACT_APP_YOUTUBE_API_KEY}`,
             )
             .then(({ data }) => {
               const newVideos = data.items.map((item, index) => {
