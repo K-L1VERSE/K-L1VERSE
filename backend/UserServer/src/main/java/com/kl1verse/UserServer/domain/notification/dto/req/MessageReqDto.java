@@ -18,6 +18,10 @@ public class MessageReqDto {
 
     private NotificationType type;
     private Integer userId;
+    private String profile;
+    private String nickname;
+    private String homeTeamId;
+    private String awayTeamId;
     private String message;
     private String uri;
     private LocalDateTime date;
