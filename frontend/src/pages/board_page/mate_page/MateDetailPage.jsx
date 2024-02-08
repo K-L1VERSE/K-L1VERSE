@@ -5,12 +5,13 @@ import { useRecoilState } from "recoil";
 import BoardTopNavBar from "../../../components/board/BoardTopNavBar";
 import CommentList from "../../../components/board/CommentList";
 import {
+  BackButton,
   Button,
   Container,
-  Content,
   DetailBox,
+  DetailTop,
+  EditDeleteButton,
   User,
-  WaggleDetailBox,
 } from "../../../styles/BoardStyles/BoardDetailStyle";
 import { deleteMate } from "../../../api/mate";
 import {
@@ -21,13 +22,17 @@ import {
   MatchTime,
   MatchTitle,
   MateDetailContent,
-  MateDetailTitle,
   MateDetailTotal,
 } from "../../../styles/BoardStyles/MateListStyle";
 import { getMatchDetail } from "../../../api/match";
 import { ItemTitle } from "../../../styles/BoardStyles/BoardStyle";
 import { formatDateTime } from "../../../components/board/dateFormat";
 import { UserState } from "../../../global/UserState";
+import {
+  DeleteButton,
+  EditButton,
+} from "../../../styles/BoardStyles/CommentStyle";
+import BackIcon from "../../../assets/icon/back-icon.png";
 
 function MateDetailPage() {
   const [mateDetail, setMateDetail] = useState({});
@@ -81,21 +86,29 @@ function MateDetailPage() {
     if (userId === mateDetail.userId) {
       return (
         <>
-          <Button type="button" onClick={handleUpdateBtn}>
+          <EditButton type="button" onClick={handleUpdateBtn}>
             수정
-          </Button>
-          <Button type="button" onClick={handleDeleteBtn}>
+          </EditButton>
+          <DeleteButton type="button" onClick={handleDeleteBtn}>
             삭제
-          </Button>
+          </DeleteButton>
         </>
       );
     }
     return null;
   };
 
+  const handleBackClick = () => {
+    navigate("/waggle");
+  };
+
   return (
     <Container>
-      <BoardTopNavBar />
+      <DetailTop>
+        <BackButton onClick={handleBackClick}>
+          <img src={BackIcon} alt="Back" />
+        </BackButton>
+      </DetailTop>
       <DetailBox>
         <User>{mateDetail.nickname}</User>
         {fullFlag ? (
@@ -119,7 +132,7 @@ function MateDetailPage() {
         </div>
         <MateDetailContent>{mateDetail.content}</MateDetailContent>
         <MateDetailTotal>총 인원 : {total}</MateDetailTotal>
-        {renderEditDeleteButtons()}
+        <EditDeleteButton>{renderEditDeleteButtons()}</EditDeleteButton>
       </DetailBox>
       <CommentList boardId={boardId} />
     </Container>

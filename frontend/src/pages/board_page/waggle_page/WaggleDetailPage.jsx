@@ -8,23 +8,29 @@ import {
   likeWaggle,
   unlikeWaggle,
 } from "../../../api/waggle";
-import BoardTopNavBar from "../../../components/board/BoardTopNavBar";
 import CommentList from "../../../components/board/CommentList";
 import {
   Container,
   User,
   Title,
   Content,
-  Button,
   LikeButton,
   LikeCount,
   DetailBox,
+  DetailTop,
+  BackButton,
+  EditDeleteButton,
   // LikeCount,
 } from "../../../styles/BoardStyles/BoardDetailStyle";
 import { UserState } from "../../../global/UserState";
 
+import BackIcon from "../../../assets/icon/back-icon.png";
 import UnlikeIcon from "../../../assets/icon/unlike-icon.png";
 import LikeIcon from "../../../assets/icon/like-icon.png";
+import {
+  DeleteButton,
+  EditButton,
+} from "../../../styles/BoardStyles/CommentStyle";
 
 function WaggleDetailPage() {
   const [waggleDetail, setWaggleDetail] = useState({});
@@ -42,35 +48,21 @@ function WaggleDetailPage() {
     getWaggleDetail(
       boardId,
       { board: { userId } },
-      // ({ data }) => {
-      //   setWaggleDetail(data);
-      //   console.log("data 입니다", data);
-      // },
       (res) => {
         setWaggleDetail(res.data.board);
-        // console.log(waggleDetail);
-        // console.log("data 입니다", res.data.board);
       },
       () => {},
     );
   };
 
   useEffect(() => {
-    console.log("이건 되고있나?", boardId);
     getWaggle();
-    console.log("이건 가나? 응 안가", waggleDetail);
   }, [boardId]);
 
-  // useEffect(() => {
-  //   getWaggle();
-  // }, [boardId]);
-
   useEffect(() => {
-    console.log("이건 가나???????????????", waggleDetail);
     setTitle(waggleDetail.title);
     setContent(waggleDetail.content);
     setNickname(waggleDetail.nickname);
-    console.log("***********", title);
   }, [waggleDetail]);
 
   const handleUpdateBtn = () => {
@@ -119,25 +111,33 @@ function WaggleDetailPage() {
     if (userId === waggleDetail.userId) {
       return (
         <>
-          <Button type="button" onClick={handleUpdateBtn}>
+          <EditButton type="button" onClick={handleUpdateBtn}>
             수정
-          </Button>
-          <Button type="button" onClick={handleDeleteBtn}>
+          </EditButton>
+          <DeleteButton type="button" onClick={handleDeleteBtn}>
             삭제
-          </Button>
+          </DeleteButton>
         </>
       );
     }
     return null;
   };
 
+  const handleBackClick = () => {
+    navigate("/waggle");
+  };
+
   return (
     <Container>
-      <BoardTopNavBar />
+      <DetailTop>
+        <BackButton onClick={handleBackClick}>
+          <img src={BackIcon} alt="Back" />
+        </BackButton>
+      </DetailTop>
       <DetailBox>
-        {/* <User>{waggleDetail.board.nickname}</User>
-        <Title>{waggleDetail.board.title}</Title>
-        <Content>{waggleDetail.board.content}</Content> */}
+        <User>{nickname}</User>
+        <Title>{title}</Title>
+        <Content>{content}</Content>
         {/* {waggleDetail.boardImage && (
           <img
             src={waggleDetail.boardImage}
@@ -155,9 +155,8 @@ function WaggleDetailPage() {
           </LikeButton>
           <LikeCount>좋아요 {likeCount}개</LikeCount>
         </div>
-        {renderEditDeleteButtons()}
+        <EditDeleteButton>{renderEditDeleteButtons()}</EditDeleteButton>
       </DetailBox>
-
       <CommentList boardId={boardId} />
     </Container>
   );

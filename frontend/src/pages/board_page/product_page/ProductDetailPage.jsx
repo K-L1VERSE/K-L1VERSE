@@ -2,16 +2,16 @@ import React, { useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { useRecoilState } from "recoil";
 import axios from "../../../api/axios";
-import BoardTopNavBar from "../../../components/board/BoardTopNavBar";
 import CommentList from "../../../components/board/CommentList";
 import {
   Container,
   User,
   Title,
   Content,
-  UpdateButton,
-  DeleteButton,
   DetailBox,
+  EditDeleteButton,
+  DetailTop,
+  BackButton,
 } from "../../../styles/BoardStyles/BoardDetailStyle";
 import {
   DealStatusGreen,
@@ -19,6 +19,11 @@ import {
 } from "../../../styles/BoardStyles/ProductListStyle";
 import { deleteProduct } from "../../../api/product";
 import { UserState } from "../../../global/UserState";
+import BackIcon from "../../../assets/icon/back-icon.png";
+import {
+  DeleteButton,
+  EditButton,
+} from "../../../styles/BoardStyles/CommentStyle";
 
 function ProductDetailPage() {
   const [productDetail, setProductDetail] = useState({});
@@ -59,21 +64,29 @@ function ProductDetailPage() {
     if (userId === productDetail.userId) {
       return (
         <>
-          <Button type="button" onClick={handleUpdateBtn}>
+          <EditButton type="button" onClick={handleUpdateBtn}>
             수정
-          </Button>
-          <Button type="button" onClick={handleDeleteBtn}>
+          </EditButton>
+          <DeleteButton type="button" onClick={handleDeleteBtn}>
             삭제
-          </Button>
+          </DeleteButton>
         </>
       );
     }
     return null;
   };
 
+  const handleBackClick = () => {
+    navigate("/waggle");
+  };
+
   return (
     <Container>
-      <BoardTopNavBar />
+      <DetailTop>
+        <BackButton onClick={handleBackClick}>
+          <img src={BackIcon} alt="Back" />
+        </BackButton>
+      </DetailTop>
       <DetailBox>
         <User>
           <p>{productDetail.nickname}</p>
@@ -94,7 +107,7 @@ function ProductDetailPage() {
         </div>
         <Content>{productDetail.content}</Content>
         <p>Price: {price}</p>
-        {renderEditDeleteButtons()}
+        <EditDeleteButton>{renderEditDeleteButtons()}</EditDeleteButton>
       </DetailBox>
       <CommentList boardId={boardId} />
     </Container>

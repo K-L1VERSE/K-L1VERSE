@@ -7,6 +7,11 @@ export const Container = styled.div`
   font-family: "Pretendard-Regular";
 `;
 
+export const DetailTop = styled.div`
+  display: flex;
+  margin-bottom: 1rem;
+`;
+
 export const DetailBox = styled.div`
   background-color: #fff;
   border: 1px solid #ccc;
@@ -108,6 +113,14 @@ export const Button = styled.button`
   }
 `;
 
+export const BackButton = styled.button`
+  border: none;
+  cursor: pointer;
+  width: 1rem;
+  height: 1rem;
+  background-color: white;
+`;
+
 export const LikeButton = styled.button`
   background-color: transparent;
   border: none;
@@ -122,6 +135,11 @@ export const LikeButton = styled.button`
 
 export const LikeCount = styled.span`
   font-size: 0.9em;
+`;
+
+export const EditDeleteButton = styled.div`
+  display: flex;
+  justify-content: flex-end;
 `;
 
 export const UpdateButton = styled(Button)`
