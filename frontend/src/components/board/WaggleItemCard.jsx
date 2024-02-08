@@ -18,17 +18,6 @@ function WaggleItemCard({ waggle, formatRelativeTime }) {
         // 첫 번째 이미지만 출력
         <WaggleImage src={waggle.board.boardImage[0]} alt="Waggle Image" />
       )}
-      <ItemInfoSection>
-        <ItemInfoItem className="waggle-like">
-          <LikeCount />
-          좋아요 {waggle.likesCount}
-        </ItemInfoItem>
-        <ItemInfoItem className="waggle-comment">
-          <Comment />
-          댓글 {waggle.board.commentCount}
-        </ItemInfoItem>
-        <ItemInfoItem>{formatRelativeTime(waggle.board.createAt)}</ItemInfoItem>
-      </ItemInfoSection>
       <ItemContent>
         <ItemTitle>
           <Link
@@ -45,6 +34,17 @@ function WaggleItemCard({ waggle, formatRelativeTime }) {
           <p>{waggle.board.content}</p>
         </Link>
       </ItemContent>
+      <ItemInfoSection>
+        <ItemInfoItem className="waggle-like">
+          <LikeCount />
+          좋아요 {waggle.likesCount}
+        </ItemInfoItem>
+        <ItemInfoItem className="waggle-comment">
+          <Comment />
+          댓글 {waggle.board.commentCount}
+        </ItemInfoItem>
+        <ItemInfoItem>{formatRelativeTime(waggle.board.createAt)}</ItemInfoItem>
+      </ItemInfoSection>
     </ItemContainer>
   );
 }

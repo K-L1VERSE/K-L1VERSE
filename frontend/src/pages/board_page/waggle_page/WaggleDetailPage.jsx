@@ -14,8 +14,6 @@ import {
   User,
   Title,
   Content,
-  LikeButton,
-  LikeCount,
   DetailBox,
   DetailTop,
   BackButton,
@@ -26,8 +24,6 @@ import {
 import { UserState } from "../../../global/UserState";
 
 import BackIcon from "../../../assets/icon/back-icon.png";
-import UnlikeIcon from "../../../assets/icon/unlike-icon.png";
-import LikeIcon from "../../../assets/icon/like-icon.png";
 import { ReactComponent as Comment } from "../../../assets/icon/comment-icon.svg";
 import {
   DeleteButton,
@@ -46,8 +42,8 @@ function WaggleDetailPage() {
   const [title, setTitle] = useState("");
   const [content, setContent] = useState("");
   const [nickname, setNickname] = useState("");
-  const [isLiked, setIsLiked] = useState(false);
-  const [likeCount, setLikeCount] = useState(0);
+  const [liked, setLiked] = useState(false);
+  const [likesCount, setLikesCount] = useState(0);
   const [commentCount, setCommentCount] = useState(0);
   const { boardId } = useParams();
   const navigate = useNavigate();
@@ -75,8 +71,8 @@ function WaggleDetailPage() {
     setWaggleId(boardDetail.waggleId);
     setNickname(waggleDetail.nickname);
     setCommentCount(waggleDetail.commentCount);
-    setIsLiked(boardDetail.isLiked);
-    setLikeCount(boardDetail.likeCount);
+    setLiked(boardDetail.liked);
+    setLikesCount(boardDetail.likesCount);
   }, [waggleDetail]);
 
   const handleUpdateBtn = () => {
@@ -98,13 +94,13 @@ function WaggleDetailPage() {
   };
 
   const handleLikeClick = () => {
-    if (isLiked) {
+    if (liked) {
       unlikeWaggle(
         waggleId,
         { userId },
         () => {
-          setIsLiked(false);
-          setLikeCount((prevCount) => prevCount - 1);
+          setLiked(false);
+          setLikesCount((prevCount) => prevCount - 1);
         },
         () => {},
       );
@@ -113,8 +109,8 @@ function WaggleDetailPage() {
         waggleId,
         { userId },
         () => {
-          setIsLiked(true);
-          setLikeCount((prevCount) => prevCount + 1);
+          setLiked(true);
+          setLikesCount((prevCount) => prevCount + 1);
         },
         () => {},
       );
@@ -163,8 +159,8 @@ function WaggleDetailPage() {
             ))}
         </WaggleImageContainer>
         <Like
-          isLiked={isLiked}
-          likeCount={likeCount}
+          liked={liked}
+          likesCount={likesCount}
           handleLikeClick={handleLikeClick}
         />
         <EditDeleteButton>{renderEditDeleteButtons()}</EditDeleteButton>

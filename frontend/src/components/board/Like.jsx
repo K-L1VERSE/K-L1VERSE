@@ -6,11 +6,11 @@ import {
   LikeCount,
 } from "../../styles/BoardStyles/BoardDetailStyle";
 
-const Like = ({ isLiked, likeCount, handleLikeClick }) => {
-  const [localLikeCount, setLocalLikeCount] = useState(likeCount);
+const Like = ({ liked, likesCount, handleLikeClick }) => {
+  const [localLikeCount, setLocalLikeCount] = useState(likesCount);
 
   const handleLikeButtonClick = async () => {
-    setLocalLikeCount((prevCount) => (isLiked ? prevCount - 1 : prevCount + 1));
+    setLocalLikeCount((prevCount) => (liked ? prevCount - 1 : prevCount + 1));
     await handleLikeClick();
   };
 
@@ -18,12 +18,12 @@ const Like = ({ isLiked, likeCount, handleLikeClick }) => {
     <div>
       <LikeButton onClick={handleLikeButtonClick}>
         <img
-          src={isLiked ? LikeIcon : UnlikeIcon}
-          alt={isLiked ? "Like" : "Unlike"}
+          src={liked ? LikeIcon : UnlikeIcon}
+          alt={liked ? "Like" : "Unlike"}
           style={{ width: "17px", height: "15px" }}
         />
       </LikeButton>
-      <LikeCount> {likeCount}</LikeCount>
+      <LikeCount> {likesCount}</LikeCount>
     </div>
   );
 };

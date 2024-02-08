@@ -10,18 +10,18 @@ import {
   DeleteButton,
   CommentTime,
 } from "../../styles/BoardStyles/CommentStyle";
-import { updateComment } from "../../api/comment";
+import { likeComment, unlikeComment, updateComment } from "../../api/comment";
 import { UserState } from "../../global/UserState";
+import Like from "./Like";
+import { useParams } from "react-router-dom";
 
-function CommentItemCard({
-  comment,
-  handleLikeClick,
-  onCommentDelete,
-  formatRelativeTime,
-}) {
+function CommentItemCard({ comment, onCommentDelete, formatRelativeTime }) {
+  const [liked, setLiked] = useState(false);
+  const [likesCount, setLikesCount] = useState(0);
   const [isEditMode, setIsEditMode] = useState(false);
   const [updatedContent, setUpdatedContent] = useState(comment.content);
   const { userId } = useRecoilState(UserState)[0];
+  const { commentId } = useParams;
 
   const handleUpdateBtn = () => {
     if (isEditMode) {
@@ -41,6 +41,7 @@ function CommentItemCard({
       setIsEditMode(true);
     }
   };
+
   const renderEditDeleteButtons = () => {
     if (userId === comment.userId) {
       return (
@@ -65,6 +66,30 @@ function CommentItemCard({
     return null;
   };
 
+  const handleLikeClick = () => {
+    if (liked) {
+      unlikeComment(
+        comment.commentId,
+        { userId },
+        () => {
+          setLiked(false);
+          setLikesCount((prevCount) => prevCount - 1);
+        },
+        () => {},
+      );
+    } else {
+      likeComment(
+        comment.commentId,
+        { userId },
+        () => {
+          setLiked(true);
+          setLikesCount((prevCount) => prevCount + 1);
+        },
+        () => {},
+      );
+    }
+  };
+
   return (
     <>
       <CommentWriter>{comment.nickname}</CommentWriter>
@@ -83,13 +108,11 @@ function CommentItemCard({
             <CommentTime>{formatRelativeTime(comment.createAt)}</CommentTime>
           </CommentContent>
         )}
-        {handleLikeClick && (
-          <ButtonContainer>
-            <EditButton type="button" onClick={handleLikeClick}>
-              좋아요
-            </EditButton>
-          </ButtonContainer>
-        )}
+        <Like
+          liked={liked}
+          likesCount={likesCount}
+          handleLikeClick={handleLikeClick}
+        />
         {renderEditDeleteButtons()}
       </CommentItem>
     </>
