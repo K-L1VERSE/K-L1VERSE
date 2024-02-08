@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.RestController;
 @Slf4j
 @RestController
 @RequiredArgsConstructor
-public class MessageController {
+public class ChatMessageController {
 
     private final SimpMessageSendingOperations sendingOperations;
 

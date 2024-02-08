@@ -1,10 +1,13 @@
 import React from "react";
-import ScoreItem from "./ScoreItem";
-import TimelineItem from "./TimelineItem";
+import {
+  TimelineWrap,
+  TimeMin,
+} from "../../styles/MatchStyles/MatchTimelinStyle";
+import EventItem from "./EventItem";
+// import TimelineItem from "./TimelineItem";
 
 export default function TimelineConatiner() {
-  // 홀수 : 파랑, 짝수 흰
-  const timeline = [
+  const timelines = [
     {
       timelineId: 0,
       memberName: "",
@@ -88,12 +91,40 @@ export default function TimelineConatiner() {
   ];
 
   return (
-    <div>
-      <ScoreItem />
-      {/* {timeline.map((t) => {
-        return <TimelineItem eventName={t} />;
-      })} */}
-      <TimelineItem timelines={timeline} />
-    </div>
+    <TimelineWrap>
+      <table>
+        {timelines.map((timeline) => (
+          <tr>
+            <td width="45%">
+              {timeline.homeOrAway === "HOME" && (
+                <EventItem
+                  eventName={timeline.eventName}
+                  teamName={timeline.teamName}
+                  memberName={timeline.memberName}
+                  memberName2={timeline.memberName2}
+                  backNo={timeline.backNo}
+                  homeOrAway={timeline.homeOrAway}
+                />
+              )}
+            </td>
+            <td width="10%">
+              <TimeMin>{timeline.timeMin} &#8216;</TimeMin>
+            </td>
+            <td width="45%">
+              {timeline.homeOrAway === "AWAY" && (
+                <EventItem
+                  eventName={timeline.eventName}
+                  teamName={timeline.teamName}
+                  memberName={timeline.memberName}
+                  memberName2={timeline.memberName2}
+                  backNo={timeline.backNo}
+                  homeOrAway={timeline.homeOrAway}
+                />
+              )}
+            </td>
+          </tr>
+        ))}
+      </table>
+    </TimelineWrap>
   );
 }
