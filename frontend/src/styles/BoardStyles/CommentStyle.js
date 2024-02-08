@@ -3,7 +3,7 @@ import styled from "styled-components";
 /* ************* CommentList ************* */
 export const ListContainer = styled.div`
   margin-top: 1rem;
-  margin-right: 0.5rem;
+  margin-right: 0.4rem;
 `;
 
 export const CommentListContainer = styled.div``;
