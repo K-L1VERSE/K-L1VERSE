@@ -4,14 +4,14 @@ export const HotClipContainer = styled.div`
   background-color: #f4f4f4;
   padding: 0.6rem 0.6rem;
   margin: 2rem 0;
+  height: 13rem;
 `;
 
 export const VideoWrapper = styled.div`
   display: flex;
   white-space: nowrap;
   overflow-x: auto;
-  padding: 1rem 0.5rem;
-  /* background-color: red; */
+  padding: 0.5rem 0.5rem;
 
   &::-webkit-scrollbar {
     height: 7.5px;
@@ -33,5 +33,40 @@ export const VideoWrapper = styled.div`
 
 export const VideoContainer = styled.div`
   flex: 0 0 auto;
-  width: 17rem;
+  width: 16.9rem;
+  position: relative;
+  height: 10rem;
+  iframe {
+    margin-top: 0.3rem;
+    margin-left: 0.12rem;
+  }
+  img {
+    filter: brightness(70%);
+    transition: filter 0.3s ease;
+  }
+  &:hover {
+    img {
+      filter: brightness(100%);
+    }
+  }
+`;
+
+export const ThumbnailImg = styled.img`
+  width: 16.6rem;
+  height: 9.4rem;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+`;
+
+export const PlayImg = styled.img`
+  width: 4.4rem;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  &:hover {
+    cursor: pointer;
+  }
 `;
