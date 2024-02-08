@@ -30,6 +30,9 @@ public class WaggleUserHashTag {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @Column(name = "user_id")
+    private Integer userId;
+
     @ManyToOne
     @JoinColumn(name = "waggle_id")
     private Waggle waggle;
@@ -37,14 +40,18 @@ public class WaggleUserHashTag {
     @Column(insertable = false, updatable = false)
     private Long waggle_id;
 
-    @Column(name = "user_id")
-    private Integer userId;
-
     @Column(name = "hashtags")
     private String hashtags;
 
     @CreationTimestamp
     @Column(name = "created_at")
-    private LocalDateTime createdAt; // createdAt 필드 추가
+    private LocalDateTime createdAt;
+
+    @Column(name = "is_liked")
+    private boolean isLiked;
 
 }
+
+
+
+

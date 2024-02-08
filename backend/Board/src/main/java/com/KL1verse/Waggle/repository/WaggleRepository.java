@@ -13,28 +13,31 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface WaggleRepository extends JpaRepository<Waggle, Long> {
 
-    Page<Waggle> findByBoard_BoardType(Board.BoardType boardType, Pageable pageable);
+  Page<Waggle> findByBoard_BoardType(Board.BoardType boardType, Pageable pageable);
 
-    Page<Waggle> findByBoard_BoardId(Long boardId, Pageable pageable);
+  Page<Waggle> findByBoard_BoardId(Long boardId, Pageable pageable);
 
-    Page<Waggle> findByBoard_TitleContainingOrBoard_ContentContaining(String titleKeyword,
-        String contentKeyword, Pageable pageable);
-
-
-    @Query("SELECT w, COUNT(l.likesId) " +
-        "FROM waggle w " +
-        "LEFT JOIN WaggleLike l ON w.waggleId = l.waggleId.waggleId " +
-        "GROUP BY w.waggleId")
-    List<Object[]> getLikesCountForEachWaggle();
+  Page<Waggle> findByBoard_TitleContainingOrBoard_ContentContaining(String titleKeyword,
+      String contentKeyword, Pageable pageable);
 
 
+  @Query("SELECT w, COUNT(l.likesId) " +
+      "FROM waggle w " +
+      "LEFT JOIN WaggleLike l ON w.waggleId = l.waggleId.waggleId " +
+      "GROUP BY w.waggleId")
+  List<Object[]> getLikesCountForEachWaggle();
 
-    @Query(value = "SELECT u.nickname FROM user u JOIN board b ON b.user_id = u.user_id WHERE b.user_id = :userId", nativeQuery = true)
-    List<Object[]> findUserNickname(@Param("userId") Integer userId);
+
+  @Query(value = "SELECT u.nickname FROM user u JOIN board b ON b.user_id = u.user_id WHERE b.user_id = :userId", nativeQuery = true)
+  List<Object[]> findUserNickname(@Param("userId") Integer userId);
 
 
-    Page<Waggle> findByHashtagsContaining(String hashtag, Pageable pageable);
+  Page<Waggle> findByHashtagsContaining(String hashtag, Pageable pageable);
 
 
 }
+
+
+
+
 

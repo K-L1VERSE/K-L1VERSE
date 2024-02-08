@@ -77,12 +77,12 @@ public class ProductServiceImpl implements ProductService {
         ProductDTO createdProductDTO = convertToDTO(createdProduct);
         createdProductDTO.getBoard().setNickname(userNickname);
 
-        BoardCleanbotCheckReqDto boardCleanbotCheckReqDto = BoardCleanbotCheckReqDto.builder()
-            .id(createdProduct.getBoard().getBoardId())
-            .content(createdProduct.getBoard().getContent())
-            .domain("board")
-            .build();
-        kafkaBoardCleanbotProducer.boardCleanbotCheck(boardCleanbotCheckReqDto);
+//        BoardCleanbotCheckReqDto boardCleanbotCheckReqDto = BoardCleanbotCheckReqDto.builder()
+//            .id(createdProduct.getBoard().getBoardId())
+//            .content(createdProduct.getBoard().getContent())
+//            .domain("board")
+//            .build();
+//        kafkaBoardCleanbotProducer.boardCleanbotCheck(boardCleanbotCheckReqDto);
 
         return createdProductDTO;
     }

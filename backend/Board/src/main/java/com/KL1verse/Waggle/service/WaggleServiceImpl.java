@@ -12,17 +12,15 @@ import com.KL1verse.Waggle.repository.WaggleRepository;
 import com.KL1verse.Waggle.repository.WaggleUserHashTagRepository;
 import com.KL1verse.Waggle.repository.entity.Waggle;
 import com.KL1verse.Waggle.repository.entity.WaggleUserHashTag;
+import com.KL1verse.kafka.producer.KafkaBoardCleanbotProducer;
 import com.KL1verse.s3.repository.entity.File;
 import com.KL1verse.s3.service.BoardImageService;
 import com.KL1verse.s3.service.FileService;
-import com.KL1verse.kafka.dto.req.BoardCleanbotCheckReqDto;
-import com.KL1verse.kafka.producer.KafkaBoardCleanbotProducer;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.HashMap;
 import java.util.HashSet;
-import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -55,50 +53,72 @@ public class WaggleServiceImpl implements WaggleService {
 
     private final CommentRepository commentRepository;
     private final KafkaBoardCleanbotProducer kafkaBoardCleanbotProducer;
-    private  final WaggleUserHashTagRepository waggleUserHashTagRepository;
-
-
-//    @Override
-//    public Page<WaggleDTO> getWagglesByHashtags(List<String> hashtags, Pageable pageable) {
-//        Set<WaggleDTO> uniqueWaggles = new HashSet<>();
-//        for (String hashtag : hashtags) {
-//            log.info("hashtag: {}", hashtag);
-//            Page<WaggleUserHashTag> waggleUserHashTags = waggleUserHashTagRepository.findByHashtagsContaining(hashtag, pageable);
-//            List<Waggle> waggles = waggleUserHashTags.stream().map(WaggleUserHashTag::getWaggle).collect(Collectors.toList());
-//            List<WaggleDTO> waggleDTOList = convertToDTOList(waggles);
-//            uniqueWaggles.addAll(waggleDTOList);
-//            log.info("hashtag: {}", uniqueWaggles);
-//        }
-//        List<WaggleDTO> waggles = new ArrayList<>(uniqueWaggles);
-//        return new PageImpl<>(waggles, pageable, waggles.size());
-//    }
+    private final WaggleUserHashTagRepository waggleUserHashTagRepository;
 
     @Override
     public Page<WaggleDTO> getWagglesByHashtags(List<String> hashtags, Pageable pageable) {
         Set<Long> visitedBoardIds = new HashSet<>(); // 이미 방문한 게시글의 ID를 추적하기 위한 Set
         List<WaggleDTO> uniqueWaggles = new ArrayList<>(); // 중복된 게시글을 필터링한 결과를 저장할 리스트
 
+        // 각 해시태그별로 해당하는 게시글들을 검색하고 중복을 제거하여 uniqueWaggles에 추가
         for (String hashtag : hashtags) {
+            // 대괄호 제거
+            hashtag = hashtag.replaceAll("[\\[\\]]", "");
             log.info("hashtag: {}", hashtag);
-            Page<WaggleUserHashTag> waggleUserHashTags = waggleUserHashTagRepository.findByHashtagsContaining(hashtag, pageable);
-            List<Waggle> waggles = waggleUserHashTags.stream().map(WaggleUserHashTag::getWaggle).collect(Collectors.toList());
-            List<WaggleDTO> waggleDTOList = convertToDTOList(waggles);
+            Page<Waggle> waggles = waggleRepository.findByHashtagsContaining(hashtag, pageable);
 
-            // 중복된 게시글을 필터링하여 uniqueWaggles에 추가
+            List<WaggleDTO> waggleDTOList = convertToDTOList(waggles.getContent());
             for (WaggleDTO waggleDTO : waggleDTOList) {
-                if (!visitedBoardIds.contains(waggleDTO.getBoard().getBoardId())) { // 이미 포함되어 있는 게시글인지 확인
+                if (!visitedBoardIds.contains(
+                    waggleDTO.getBoard().getBoardId())) { // 이미 포함되어 있는 게시글인지 확인
+                    waggleDTO.getBoard().setCommentCount(
+                        commentRepository.countCommentsByBoardId(
+                            waggleDTO.getBoard().getBoardId()));
+                    waggleDTO.setLikesCount(
+                        waggleRepository.getLikesCountForEachWaggle().stream()
+                            .filter(result -> ((Waggle) result[0]).getWaggleId()
+                                .equals(waggleDTO.getWaggleId()))
+                            .map(result -> ((Long) result[1]).intValue())
+                            .findFirst()
+                            .orElse(0));
+                    waggleDTO.getBoard().setNickname(
+                        (String) waggleRepository.findUserNickname(waggleDTO.getBoard().getUserId())
+                            .get(0)[0]);
                     uniqueWaggles.add(waggleDTO); // 포함되어 있지 않다면 uniqueWaggles에 추가
                     visitedBoardIds.add(waggleDTO.getBoard().getBoardId()); // 방문한 게시글로 표시
                 }
             }
+        }
 
-            log.info("hashtag: {}", uniqueWaggles);
+        // 가장 많이 조회된 해시태그를 가진 게시글들을 조회합니다.
+        String mostViewedWaggleUserHashTags = waggleUserHashTagRepository.findMostViewedHashtags();
+        log.info("mostViewedWaggleUserHashTags: {}", mostViewedWaggleUserHashTags);
+        Page<Waggle> mostviewedwaggle = waggleRepository.findByHashtagsContaining(mostViewedWaggleUserHashTags, pageable);
+        // 조회된 각 게시글을 DTO로 변환하여 uniqueWaggles에 추가합니다.
+        List<WaggleDTO> mostViewedWaggleDTOList = convertToDTOList(mostviewedwaggle.getContent());
+        for (WaggleDTO waggleDTO : mostViewedWaggleDTOList) {
+            if (!visitedBoardIds.contains(
+                waggleDTO.getBoard().getBoardId())) { // 이미 포함되어 있는 게시글인지 확인
+                waggleDTO.getBoard().setCommentCount(
+                    commentRepository.countCommentsByBoardId(
+                        waggleDTO.getBoard().getBoardId()));
+                waggleDTO.setLikesCount(
+                    waggleRepository.getLikesCountForEachWaggle().stream()
+                        .filter(result -> ((Waggle) result[0]).getWaggleId()
+                            .equals(waggleDTO.getWaggleId()))
+                        .map(result -> ((Long) result[1]).intValue())
+                        .findFirst()
+                        .orElse(0));
+                waggleDTO.getBoard().setNickname(
+                    (String) waggleRepository.findUserNickname(waggleDTO.getBoard().getUserId())
+                        .get(0)[0]);
+                uniqueWaggles.add(waggleDTO); // 포함되어 있지 않다면 uniqueWaggles에 추가
+                visitedBoardIds.add(waggleDTO.getBoard().getBoardId()); // 방문한 게시글로 표시
+            }
         }
 
         return new PageImpl<>(uniqueWaggles, pageable, uniqueWaggles.size());
     }
-
-
 
 
     @Override
@@ -126,7 +146,6 @@ public class WaggleServiceImpl implements WaggleService {
         Integer userId = waggleDTO.getBoard().getUserId();
         List<Object[]> nicknameResult = waggleRepository.findUserNickname(userId);
 
-
         String userNickname = (String) nicknameResult.get(0)[0];
         waggleDTO.getBoard().setNickname(userNickname);
 
@@ -134,18 +153,50 @@ public class WaggleServiceImpl implements WaggleService {
             .userId(loginUserId)
             .hashtags(waggle.getHashtags().toString())
             .waggle(waggle)
+            .isLiked(isLiked)
             .build();
         waggleUserHashTagRepository.save(waggleUserHashTag);
-
-
 
         return waggleDTO;
     }
 
 
+//    public Map<String, Integer> calculateHashtagWeights(Integer loginUserId) {
+//        // 로그인한 유저의 해시태그 정보를 가져옴 (시간 순으로 정렬된 상태여야 함)
+//        List<WaggleUserHashTag> userHashTags = waggleUserHashTagRepository.findByUserIdOrderByCreatedAtDesc(
+//            loginUserId);
+//
+//        // 가중치를 저장할 맵
+//        Map<String, Integer> hashtagWeights = new HashMap<>();
+//
+//        // 최근 조회한 해시태그에 가장 높은 가중치를 부여하기 위한 변수
+//        int maxWeight = userHashTags.size();
+//
+//        // 최근 해시태그부터 순회하며 가중치 부여
+//        for (WaggleUserHashTag userHashTag : userHashTags) {
+//            String[] tags = userHashTag.getHashtags().split(",");
+//            for (String tag : tags) {
+//                tag = tag.trim();
+//                // 기존에 이미 해당 해시태그에 부여된 가중치가 있다면, 기존 가중치에 maxWeight를 더해줍니다.
+//                if (hashtagWeights.containsKey(tag)) {
+//                    int existingWeight = hashtagWeights.get(tag);
+//                    hashtagWeights.put(tag, existingWeight + maxWeight);
+//                } else {
+//                    // 기존에 해당 해시태그에 가중치가 없다면 새로운 가중치를 부여합니다.
+//                    hashtagWeights.put(tag, maxWeight);
+//                }
+//
+//            }
+//            maxWeight--; // 가중치를 낮춰감
+//        }
+//
+//        return hashtagWeights;
+//    }
+
     public Map<String, Integer> calculateHashtagWeights(Integer loginUserId) {
-        // 로그인한 유저의 해시태그 정보를 가져옴 (시간 순으로 정렬된 상태여야 함)
-        List<WaggleUserHashTag> userHashTags = waggleUserHashTagRepository.findByUserIdOrderByCreatedAtDesc(loginUserId);
+
+        List<WaggleUserHashTag> userHashTags = waggleUserHashTagRepository.findByUserIdOrderByCreatedAtDesc(
+            loginUserId);
 
         // 가중치를 저장할 맵
         Map<String, Integer> hashtagWeights = new HashMap<>();
@@ -153,20 +204,28 @@ public class WaggleServiceImpl implements WaggleService {
         // 최근 조회한 해시태그에 가장 높은 가중치를 부여하기 위한 변수
         int maxWeight = userHashTags.size();
 
-        // 최근 해시태그부터 순회하며 가중치 부여
+
         for (WaggleUserHashTag userHashTag : userHashTags) {
             String[] tags = userHashTag.getHashtags().split(",");
             for (String tag : tags) {
                 tag = tag.trim();
-                // 기존에 이미 해당 해시태그에 부여된 가중치가 있다면, 기존 가중치에 maxWeight를 더해줍니다.
+
+                int weightToAdd = maxWeight;
                 if (hashtagWeights.containsKey(tag)) {
                     int existingWeight = hashtagWeights.get(tag);
-                    hashtagWeights.put(tag, existingWeight + maxWeight);
+                    if (userHashTag.isLiked()) {
+                        weightToAdd *= 1.2;
+                    }
+                    hashtagWeights.put(tag, existingWeight + weightToAdd);
+                    log.info("weightToAdd: {}", weightToAdd);
                 } else {
-                    // 기존에 해당 해시태그에 가중치가 없다면 새로운 가중치를 부여합니다.
-                    hashtagWeights.put(tag, maxWeight);
-                }
 
+                    if (userHashTag.isLiked()) {
+                        weightToAdd *= 1.3;
+                    }
+                    log.info("weightToAdd: {}", weightToAdd);
+                    hashtagWeights.put(tag, weightToAdd);
+                }
             }
             maxWeight--; // 가중치를 낮춰감
         }
@@ -175,12 +234,14 @@ public class WaggleServiceImpl implements WaggleService {
     }
 
 
+
     public List<String> getTopHashtags(Integer loginUserId, int topCount) {
         // 로그인한 유저의 해시태그 정보를 가져와 가중치를 계산
         Map<String, Integer> hashtagWeights = calculateHashtagWeights(loginUserId);
 
         // 가중치를 기준으로 내림차순으로 정렬된 해시태그 맵 엔트리 리스트 생성
-        List<Map.Entry<String, Integer>> sortedHashtags = new ArrayList<>(hashtagWeights.entrySet());
+        List<Map.Entry<String, Integer>> sortedHashtags = new ArrayList<>(
+            hashtagWeights.entrySet());
         sortedHashtags.sort(Map.Entry.comparingByValue(Comparator.reverseOrder()));
 
         // 상위 해시태그 추출
@@ -220,7 +281,7 @@ public class WaggleServiceImpl implements WaggleService {
 
         WaggleDTO createdWaggleDTO = convertToDTO(createdWaggle);
         createdWaggleDTO.getBoard().setNickname(userNickname);
-        
+
 //        BoardCleanbotCheckReqDto boardCleanbotCheckReqDto = BoardCleanbotCheckReqDto.builder()
 //            .id(createdWaggle.getBoard().getBoardId())
 //            .content(createdWaggle.getBoard().getContent())
@@ -246,7 +307,6 @@ public class WaggleServiceImpl implements WaggleService {
         Waggle updatedWaggle = waggleRepository.save(existingWaggle);
         File file = fileService.saveFile(waggleDto.getBoard().getBoardImage());
         boardImageService.saveBoardImage(board, file);
-
 
 //        BoardCleanbotCheckReqDto boardCleanbotCheckReqDto = BoardCleanbotCheckReqDto.builder()
 //            .id(boardId)
@@ -321,7 +381,6 @@ public class WaggleServiceImpl implements WaggleService {
             Integer userId = waggleDTO.getBoard().getUserId();
             List<Object[]> nicknameResult = waggleRepository.findUserNickname(userId);
 
-
             String userNickname = (String) nicknameResult.get(0)[0];
             waggleDTO.getBoard().setNickname(userNickname);
 
@@ -340,7 +399,6 @@ public class WaggleServiceImpl implements WaggleService {
             Long boardId = waggle.getBoard().getBoardId();
             Integer commentCount = commentRepository.countCommentsByBoardId(boardId);
 
-
             Integer likesCount = waggleRepository.getLikesCountForEachWaggle().stream()
                 .filter(result -> ((Waggle) result[0]).getWaggleId().equals(waggle.getWaggleId()))
                 .map(result -> ((Long) result[1]).intValue())
@@ -352,13 +410,13 @@ public class WaggleServiceImpl implements WaggleService {
 
             Integer userId = waggleDTO.getBoard().getUserId();
             List<Object[]> nicknameResult = waggleRepository.findUserNickname(userId);
-            String userNickname = nicknameResult.isEmpty() ? null : (String) nicknameResult.get(0)[0];
+            String userNickname =
+                nicknameResult.isEmpty() ? null : (String) nicknameResult.get(0)[0];
             waggleDTO.getBoard().setNickname(userNickname);
 
             return waggleDTO;
         });
     }
-
 
 
     private Waggle findWaggleByBoardId(Long boardId) {
@@ -410,12 +468,11 @@ public class WaggleServiceImpl implements WaggleService {
                 List<Object[]> nicknameResult = waggleRepository.findUserNickname(userId);
                 log.error("nicknameResult???????????????? {}", nicknameResult);
 
+                String userNickname = (String) nicknameResult.get(0)[0];
+                log.error("userNickname:!!!!!!!!!!!!! {}", userNickname);
+                waggleDTO.getBoard().setNickname(userNickname);
 
-                    String userNickname = (String) nicknameResult.get(0)[0];
-                    log.error("userNickname:!!!!!!!!!!!!! {}", userNickname);
-                    waggleDTO.getBoard().setNickname(userNickname);
-
-                    return waggleDTO;
+                return waggleDTO;
             })
             .collect(Collectors.toList());
 
