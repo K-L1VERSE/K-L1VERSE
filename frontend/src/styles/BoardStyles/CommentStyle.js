@@ -2,17 +2,24 @@ import styled from "styled-components";
 
 /* ************* CommentForm ************* */
 export const CommentFormContainer = styled.form`
-  margin-left: 0.8rem;
   margin-top: 1rem;
-  display: flex;
   font-family: "Pretendard-Regular";
+  .reply {
+    display: flex;
+    align-items: center;
+  }
 `;
 
 export const TextArea = styled.textarea`
+  border: 1px solid lightgray;
   padding: 10px;
+  height: 2rem;
   resize: none;
   flex: 1;
-  border-radius: 7px;
+  font-family: "Pretendard-Light";
+  &:focus {
+    outline: none;
+  }
 `;
 
 // 댓글 수정창
@@ -29,6 +36,16 @@ export const CommentInput = styled.input`
 export const CheckboxLabel = styled.label`
   display: flex;
   align-items: center;
+  font-family: "Pretendard-Regular";
+  font-size: 0.86rem;
+  div {
+    display: flex;
+    align-items: center;
+  }
+  img {
+    margin-right: 0.2rem;
+  }
+  margin-bottom: 0.3rem;
 `;
 
 export const CheckboxInput = styled.input`
@@ -41,8 +58,7 @@ export const SubmitButton = styled.button`
   font-size: 0.9em;
   border: none;
   cursor: pointer;
-  border-radius: 20px;
-
+  height: 3.4rem;
   &:hover {
     background-color: #0056b3;
   }
@@ -56,7 +72,6 @@ export const CancelButton = styled.button`
   border: none;
   cursor: pointer;
   radius: 20px;
-
   &:hover {
     background-color: #999;
   }
@@ -79,24 +94,33 @@ export const ReplyButton = styled.button`
 
 /* ************* CommentList ************* */
 export const ListContainer = styled.div`
-  margin-top: 1rem;
+  .title {
+    font-size: 0.9rem;
+    font-family: "Pretendard-Bold";
+    display: flex;
+    img {
+      margin-right: 0.2rem;
+    }
+    margin-bottom: 0.7rem;
+  }
 `;
 
 export const CommentListContainer = styled.div`
-  margin: 1rem;
+  // border: 1px solid #f4f4f4;
+`;
+
+export const CommentBig = styled.div`
+  border-bottom: 1px solid #f4f4f4;
+  margin-bottom: 0.5rem;
 `;
 
 export const CommentItem = styled.li`
-  margin-bottom: 1rem;
-  border-bottom: 1px solid #ccc;
   list-style: none;
   display: flex;
   justify-content: space-between;
 `;
 
 export const CommentContent = styled.p`
-  /* display: flex; */
-  margin-bottom: 1rem;
   margin-left: 1rem;
   font-size: 0.8rem;
   color: #5f5f5f;
@@ -111,6 +135,7 @@ export const CommentTime = styled.div`
 export const CommentWriter = styled.div`
   font-size: 0.9rem;
   color: black;
+  margin-top: 0.4rem;
   margin-left: 0.8rem;
 `;
 
@@ -120,13 +145,11 @@ export const ButtonContainer = styled.div`
 
 export const EditButton = styled.button`
   background-color: #fff;
-
   color: grey;
   font-size: 0.8em;
   border: none;
   cursor: pointer;
   border-radius: 10px;
-
   &.hover {
     text-decoration: underline;
   }
@@ -136,7 +159,6 @@ export const DeleteButton = styled.button`
   background-color: #fff;
   color: grey;
   font-size: 0.8em;
-  padding-left: 0.3rem;
   border: none;
   cursor: pointer;
   border-radius: 10px;
