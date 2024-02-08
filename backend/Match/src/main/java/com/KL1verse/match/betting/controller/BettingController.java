@@ -35,13 +35,13 @@ public class BettingController {
     }
 
     @GetMapping
-    public ResponseEntity<?> checkBetting(@RequestParam("matchId") int matchId, @RequestParam("userId") int userId) {
+    public ResponseEntity<?> checkBetting(@RequestParam("matchId") int matchId,
+        @RequestParam("userId") int userId) {
         int n = bettingService.checkBetting(matchId, userId);
-        log.info("n: {}==========================", n);
-        if(n == 0) {
-            return new ResponseEntity<>("0", HttpStatus.OK);
+        if (n == 0) {
+            return new ResponseEntity<>(n, HttpStatus.OK);
         } else {
-            return new ResponseEntity<>("1", HttpStatus.OK);
+            return new ResponseEntity<>(n, HttpStatus.OK);
         }
     }
 

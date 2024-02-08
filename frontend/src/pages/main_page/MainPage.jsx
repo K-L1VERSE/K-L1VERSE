@@ -46,7 +46,7 @@ function MainPage() {
   })();
 
   ChannelIO("boot", {
-    pluginKey: "e6c79081-3a8d-4b7f-8f9d-c90be614e40a",
+    pluginKey: process.env.REACT_APP_CHANNELIO_PLUGIN_KEY,
   });
 
   const navigate = useNavigate();

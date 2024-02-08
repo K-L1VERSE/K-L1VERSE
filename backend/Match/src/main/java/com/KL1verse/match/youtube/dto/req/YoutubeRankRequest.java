@@ -15,4 +15,5 @@ import lombok.Setter;
 public class YoutubeRankRequest {
     private int rank;
     private String youtubeId;
+    private String thumbnail;
 }
