@@ -66,6 +66,7 @@ export const PlayImg = styled.img`
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
+  transition: box-shadow 0.3s ease;
   &:hover {
     cursor: pointer;
   }
