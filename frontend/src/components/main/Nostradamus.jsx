@@ -17,26 +17,30 @@ export default function Nostradamus() {
   return (
     <div>
       <NostraContainer>
-        <table>
-          <thead>
-            <tr className="tableTitle">
-              <td className="rank"></td>
-              <td className="nickname">닉네임</td>
-              <td className="winBet">횟수</td>
-              <td className="accurate">적중률</td>
-            </tr>
-          </thead>
-          <tbody>
-            {rank.map((item, index) => (
-              <tr key={index}>
-                <td className="rank">{index + 1}</td>
-                <td className="nickname">{item.nickname}</td>
-                <td className="winBet">{item.winBet}</td>
-                <td className="accurate">{item.accurate}%</td>
+        {rank.length > 0 ? (
+          <table>
+            <thead>
+              <tr className="tableTitle">
+                <td className="rank"></td>
+                <td className="nickname">닉네임</td>
+                <td className="winBet">횟수</td>
+                <td className="accurate">적중률</td>
               </tr>
-            ))}
-          </tbody>
-        </table>
+            </thead>
+            <tbody>
+              {rank.map((item, index) => (
+                <tr key={index}>
+                  <td className="rank">{index + 1}</td>
+                  <td className="nickname">{item.nickname}</td>
+                  <td className="winBet">{item.winBet}</td>
+                  <td className="accurate">{item.accurate}%</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        ) : (
+          <p>데이터가 없습니다.</p>
+        )}
       </NostraContainer>
     </div>
   );
