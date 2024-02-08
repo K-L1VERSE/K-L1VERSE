@@ -68,7 +68,7 @@ export default function MatchDetailScore({ match }) {
     <div>
       <MatchDetailTop>
         <ToLeftImg src={ToLeftPng} onClick={goPrevPage} />
-        {getFormattedDateString()}
+        <div>{getFormattedDateString()}</div>
       </MatchDetailTop>
       <MatchDetailContainer>
         <MatchDetailComponent>
@@ -133,12 +133,15 @@ export default function MatchDetailScore({ match }) {
 }
 
 const MatchDetailTop = styled.div`
-  font-weight: bold;
-
-  margin-top: 1rem;
-  padding: 1.7rem 0 0.3rem 0;
+  font-family: "Pretendard-Bold";
+  padding-top: 1.1rem;
+  margin-bottom: 1.5rem;
   display: flex;
   justify-content: left;
+  font-size: 1rem;
+  div {
+    margin-top: 0.05rem;
+  }
 `;
 
 const ToLeftImg = styled.img`
@@ -158,6 +161,7 @@ const MatchDetailContainer = styled.div`
   align-items: center;
   padding: 0.3rem;
   margin: 0.3rem;
+  margin-bottom: 1.2rem;
 `;
 
 const MatchDetailComponent = styled.div`
@@ -175,21 +179,21 @@ const MatchDetailComponent = styled.div`
 
 const MatchUpContainer = styled.div`
   display: flex;
+  margin: 0 auto;
+  width: 90%;
   justify-content: space-around;
-  margin: 0 0.1rem 0 0.1rem;
   padding: 0.5rem;
   height: 36px;
+  background-color: white;
+  border-radius: 5px;
 `;
 
 const TeamContainer = styled.div`
   display: flex;
   justify-content: space-between;
-
   width: 100%;
-
-  font-weight: bold;
+  font-family: "Pretendard-Bold";
   color: #1a1a1a;
-  margin: 0 0.1rem 0 0.1rem;
   padding: 1rem;
 `;
 
@@ -217,6 +221,9 @@ const TeamComponent = styled.div`
   font-weight: bold;
   color: #1a1a1a;
   margin: 0 0.1rem 0 0.1rem;
+  img {
+    margin-right: 0.2rem;
+  }
 `;
 
 const VersusComponent = styled.div`

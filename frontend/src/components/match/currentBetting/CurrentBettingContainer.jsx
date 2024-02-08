@@ -73,7 +73,15 @@ function CurrentBettingContainer({ match }) {
     <PercentBox>
       <div>
         <CurrentBetTitleComponent>
-          <CurrentBetTitle> 🎯 현재 배율 </CurrentBetTitle>
+          <CurrentBetTitle>
+            <img
+              src="https://raw.githubusercontent.com/Tarikul-Islam-Anik/Animated-Fluent-Emojis/master/Emojis/Activities/Bullseye.png"
+              alt="Bullseye"
+              width="20"
+              height="20"
+            />
+            <div>현재 배율</div>
+          </CurrentBetTitle>
         </CurrentBetTitleComponent>
       </div>
 
@@ -115,24 +123,32 @@ const CurrentBettingInnerContainer = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-
   height: 60px;
   border-bottom: 1px solid #f4f4f4;
   color: #595959;
-
   padding: 10px;
+  font-family: "Pretendard-Bold";
+  font-size: 0.95rem;
+  img {
+    margin-right: 0.3rem;
+  }
 `;
 
 const CurrentBetTitleComponent = styled.div`
   display: flex;
   justify-content: start;
-
   align-items: flex-end;
+  font-size: 0.95rem;
 `;
 
 const CurrentBetTitle = styled.div`
-  font-weight: bold;
+  font-family: "Pretendard-Bold";
   color: #002266;
+  display: flex;
+  div {
+    margin-left: 0.3rem;
+    margin-top: 0.1rem;
+  }
 `;
 
 export default CurrentBettingContainer;

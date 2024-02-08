@@ -123,7 +123,15 @@ function DoBettingContainer({ match }) {
     <Betting>
       <div>
         <DoBetTitleComponent>
-          <DoBetTitle> 💰 베팅 하기 </DoBetTitle>
+          <DoBetTitle>
+            <img
+              src="https://raw.githubusercontent.com/Tarikul-Islam-Anik/Animated-Fluent-Emojis/master/Emojis/Objects/Money%20Bag.png"
+              alt="Money Bag"
+              width="20"
+              height="20"
+            />
+            <div>베팅 하기</div>
+          </DoBetTitle>
         </DoBetTitleComponent>
       </div>
 
@@ -171,8 +179,11 @@ function DoBettingContainer({ match }) {
             <InputForm disabled={betComplete}>
               <DoBetInputBox
                 id="bettingGoal"
-                type="number"
-                onChange={(e) => setBettingAmount(e.target.value)}
+                type="text"
+                onChange={(e) => {
+                  const val = e.target.value;
+                  setBettingAmount(val.replace(/\D/g, "")); // 숫자가 아닌 문자를 모두 제거합니다.
+                }}
                 disabled={betComplete}
                 value={bettingAmount}
               />
@@ -203,8 +214,14 @@ const DoBetTitleComponent = styled.div`
 `;
 
 const DoBetTitle = styled.div`
-  font-weight: bold;
+  font-family: "Pretendard-Bold";
   color: #002266;
+  display: flex;
+  div {
+    margin-left: 0.3rem;
+    margin-top: 0.1rem;
+    font-size: 0.95rem;
+  }
 `;
 
 const DoBetContainer = styled.div`
@@ -237,7 +254,8 @@ const DoBetInputComponent = styled.div`
 const TeamSelectButton = styled.button`
   width: 110px;
   height: 56px;
-
+  font-family: "Pretendard-Bold";
+  font-size: 0.9rem;
   // 가운데 정렬
   display: flex;
   justify-content: center;
@@ -247,6 +265,10 @@ const TeamSelectButton = styled.button`
     selected ? "1px solid #CDD8EC" : "1px solid #F4F4F4"};
   border-radius: 4px;
   background-color: ${({ selected }) => (selected ? "#F2F6FD" : "white")};
+  img {
+    margin-right: 0.2rem;
+  }
+  cursor: ${({ disabled }) => (disabled ? "default" : "pointer")};
 `;
 
 const TeamNameContainer = styled.div`
@@ -254,7 +276,6 @@ const TeamNameContainer = styled.div`
   flex-direction: column;
   align-items: center;
   justify-content: center;
-
   width: 90px;
   height: 40px;
 `;
@@ -263,11 +284,13 @@ const TeamNameComponent = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
+  font-size: 0.95rem;
 `;
 
 const TeamName = styled.div`
   font-weight: bold;
   color: #222222;
+  font-size: 0.95rem;
 `;
 
 const InputForm = styled.div`
@@ -278,19 +301,15 @@ const InputForm = styled.div`
   border-radius: 4px;
   border: ${({ disabled }) =>
     disabled ? "1px solid #A9A9A9" : "1px solid #3261c1"};
-
   width: 100%;
   height: 44px;
-
   /* gap: 12px; */
 
   input {
     width: 90%;
     padding: 0 1px;
     height: 44px;
-
-    font-size: 1.2rem;
-
+    font-size: 1rem;
     border: none;
   }
 
@@ -309,24 +328,27 @@ const InputForm = styled.div`
 const DoBetButton = styled.button`
   width: 100%;
   height: 48px;
-
   border: none;
   border-radius: 4px;
   /* betComplete가 true이면 비활성화 UI */
   background-color: ${({ disabled }) => (disabled ? "#A9A9A9" : "#3261c1")};
   color: white;
-
-  font: inherit;
+  transition: box-shadow 0.3s ease;
+  ${({ disabled }) =>
+    !disabled &&
+    `&:hover {
+      box-shadow: 0 3px 9px rgba(0, 0, 0, 0.3);
+      cursor: pointer;
+    }`}
 `;
 
 const DoBetInputBox = styled.input`
   width: 100%;
   padding: 0 2px;
   height: 44px;
-
   font-size: 1.2rem;
-
   text-align: right;
+  margin-right: 1rem;
 `;
 
 const DoBetLabel = styled.label`
@@ -339,6 +361,11 @@ const DoBetLabel = styled.label`
   display: flex;
   justify-content: center;
   align-items: center;
+  div {
+    font-size: 1rem;
+    margin-right: 2rem;
+    font-family: "Pretendard-Regular";
+  }
 `;
 
 const DoBetText = styled.div`
@@ -346,6 +373,8 @@ const DoBetText = styled.div`
   justify-content: center;
   align-items: center;
   gap: 4px;
+  font-size: 0.95rem;
+  font-family: "Pretendard-Regular";
 `;
 
 export default DoBettingContainer;

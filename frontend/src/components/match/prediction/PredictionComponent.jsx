@@ -97,6 +97,7 @@ const TeamName = styled.div`
 const PredictionAmount = styled.div`
   font-size: 0.8rem;
   color: #595959;
+  font-family: "Pretendard-Light";
 `;
 
 const PredictionRatio = styled.div`

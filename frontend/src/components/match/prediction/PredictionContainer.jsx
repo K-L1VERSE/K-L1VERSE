@@ -78,7 +78,15 @@ export default function PredictionContainer({ match }) {
     <PredictBox>
       <div>
         <PredictBoxTitleComponent>
-          <PredictBoxTitle> 🏆 승부 예측 </PredictBoxTitle>
+          <PredictBoxTitle>
+            <img
+              src="https://raw.githubusercontent.com/Tarikul-Islam-Anik/Animated-Fluent-Emojis/master/Emojis/Activities/Trophy.png"
+              alt="Trophy"
+              width="20"
+              height="20"
+            />
+            <div>승부 예측 </div>
+          </PredictBoxTitle>
           <PredictBoxSubTitle>
             {homeBettingAmount + drawBettingAmount + awayBettingAmount}참여
           </PredictBoxSubTitle>
@@ -117,13 +125,18 @@ export default function PredictionContainer({ match }) {
 const PredictBoxTitleComponent = styled.div`
   display: flex;
   justify-content: start;
-
   align-items: flex-end;
 `;
 
 const PredictBoxTitle = styled.div`
-  font-weight: bold;
+  font-family: "Pretendard-Bold";
   color: #002266;
+  display: flex;
+  div {
+    margin-left: 0.3rem;
+    margin-top: 0.05rem;
+    font-size: 0.95rem;
+  }
 `;
 
 const PredictBoxSubTitle = styled.div`
@@ -141,10 +154,13 @@ const PredictionChartInnerContainer = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-
   height: 60px;
   border-bottom: 1px solid #f4f4f4;
   color: #595959;
-
+  font-family: "Pretendard-Bold";
   padding: 10px;
+  img {
+    margin-right: 0.2rem;
+  }
+  font-size: 0.95rem;
 `;
