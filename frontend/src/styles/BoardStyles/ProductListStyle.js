@@ -1,9 +1,18 @@
 import styled from "styled-components";
 
+/* *********** 중고거래 리스트 ************ */
+export const ProductItemWriter = styled.div`
+  font-size: 0.8rem;
+  color: darkslategray;
+  margin-top: 0.3rem;
+  margin-bottom: 0.3rem;
+`;
+
 export const ProductListContainer = styled.div`
   display: flex;
   flex-wrap: wrap;
   margin: 0 1rem;
+  margin-top: 1rem;
   padding: 0;
   justify-content: flex-start;
   font-family: "Pretendard-Regular";
@@ -67,6 +76,11 @@ export const ProductItemCreated = styled.div`
 `;
 
 /* *********** ProdcutDetail *********** */
+export const ProductWriter = styled.div`
+  display: flex;
+  align-items: center;
+`;
+
 export const ProductDetailTitle = styled.p`
   margin: 0;
   font-size: 1.5rem;

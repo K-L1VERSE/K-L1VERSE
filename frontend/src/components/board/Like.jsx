@@ -6,8 +6,8 @@ import {
   LikeCount,
 } from "../../styles/BoardStyles/BoardDetailStyle";
 
-const Like = ({ isLiked, initialLikeCount, handleLikeClick }) => {
-  const [localLikeCount, setLocalLikeCount] = useState(initialLikeCount);
+const Like = ({ isLiked, likeCount, handleLikeClick }) => {
+  const [localLikeCount, setLocalLikeCount] = useState(likeCount);
 
   const handleLikeButtonClick = async () => {
     setLocalLikeCount((prevCount) => (isLiked ? prevCount - 1 : prevCount + 1));
@@ -23,7 +23,7 @@ const Like = ({ isLiked, initialLikeCount, handleLikeClick }) => {
           style={{ width: "17px", height: "15px" }}
         />
       </LikeButton>
-      <LikeCount>좋아요 {localLikeCount}개</LikeCount>
+      <LikeCount> {likeCount}</LikeCount>
     </div>
   );
 };

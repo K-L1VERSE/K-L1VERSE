@@ -16,23 +16,31 @@ export const RegistCardContainer = styled.div`
 `;
 
 export const TitleInput = styled.input`
-  width: 20rem;
   padding: 8px;
   border: 1px solid lightgrey;
   border-radius: 4px;
   font-size: 1rem;
-  margin-top: 0.5rem;
+  margin-top: 0.3rem;
 `;
 
 export const TextArea = styled.textarea`
-  width: 20rem;
+  /* width: 20rem; */
   height: 10rem;
-  padding: 8px;
-  margin-top: 0.5rem;
+  padding: 0.6rem;
   border: 1px solid lightgrey;
   border-radius: 4px;
   font-size: 1rem;
   resize: none;
+  margin-top: 0.3rem;
+`;
+
+export const InputLabel = styled.label`
+  position: relative;
+  display: inline-block;
+  font-size: 0.9rem;
+  color: darkslategrey;
+  margin-top: 0.5rem;
+  margin-bottom: 0.1rem;
 `;
 
 export const SelectInput = styled.select`
@@ -44,10 +52,11 @@ export const SelectInput = styled.select`
 `;
 
 export const PriceInput = styled.input`
-  padding: 0.2rem;
+  padding: 8px;
   border: 1px solid lightgrey;
   border-radius: 4px;
-  width: 5rem;
+  font-size: 1rem;
+  margin-top: 0.3rem;
 `;
 
 export const NumberInput = styled.input`
@@ -64,6 +73,7 @@ export const NumberInput = styled.input`
 export const FlagInputContainer = styled.div`
   display: flex;
   align-items: center;
+  margin-bottom: 0.5rem;
 `;
 
 export const FlagInputLabel = styled.label`
@@ -118,7 +128,8 @@ export const FlagInputText = styled.span`
 
 export const FileInputContainer = styled.label`
   display: flex;
-  margin-bottom: 1rem;
+  margin-top: 0.1rem;
+  margin-bottom: 0.3rem;
   cursor: pointer;
 `;
 

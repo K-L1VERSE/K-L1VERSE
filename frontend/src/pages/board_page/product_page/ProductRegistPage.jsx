@@ -9,6 +9,8 @@ import { UserState } from "../../../global/UserState";
 import { RegistCardContainer } from "../../../styles/BoardStyles/BoardCreateStyle";
 
 import { DetailTop } from "../../../styles/BoardStyles/BoardCreateStyle";
+import { BackButton } from "../../../styles/BoardStyles/BoardDetailStyle";
+import BackIcon from "../../../assets/icon/back-icon.png";
 
 function ProductRegistPage() {
   const navigate = useNavigate();
@@ -74,11 +76,19 @@ function ProductRegistPage() {
     }
   };
 
+  const handleBackClick = () => {
+    navigate("/product");
+  };
+
   return (
     <>
-      <BoardTopNavBar />
       <DetailTop>
-        {isUpdateMode ? "Product 게시물 수정" : "< Product 게시물 작성"}
+        <BackButton onClick={handleBackClick}>
+          <img src={BackIcon} alt="Back" />
+        </BackButton>
+      </DetailTop>
+      <DetailTop>
+        {isUpdateMode ? "중고거래 게시물 수정" : "중고거래 게시물 작성"}
       </DetailTop>
       <ProductRegistCard
         title={title}

@@ -8,6 +8,7 @@ import {
   FileInput,
   FileInputLabel,
   RegistCardContainer,
+  InputLabel,
 } from "../../styles/BoardStyles/BoardCreateStyle";
 import CameraIcon from "../../assets/icon/camera-icon.svg";
 import {
@@ -33,6 +34,7 @@ export default function ProductRegistCard({
 }) {
   return (
     <RegistCardContainer>
+      <InputLabel>판매 물건</InputLabel>
       <TitleInput
         type="text"
         value={title}
@@ -40,14 +42,17 @@ export default function ProductRegistCard({
         placeholder="제목"
       />
       <br />
-      <TextArea value={content} onChange={onContentChange} placeholder="내용" />
-      <br />
+      <InputLabel>판매 가격</InputLabel>
       <PriceInput
-        type="number"
+        type="text"
         value={price}
         onChange={onPriceChange}
         placeholder="가격"
       />
+      <br />
+      <InputLabel>내용</InputLabel>
+      <TextArea value={content} onChange={onContentChange} placeholder="내용" />
+      <br />
       <FlagInputContainer>
         <FlagInputLabel>
           <FlagInputCheckbox
@@ -59,6 +64,7 @@ export default function ProductRegistCard({
         </FlagInputLabel>
       </FlagInputContainer>
       <br />
+      <InputLabel>사진 첨부</InputLabel>
       <FileInputContainer>
         <FileInput
           type="file"

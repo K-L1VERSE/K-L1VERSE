@@ -34,6 +34,10 @@ import {
   EditButton,
 } from "../../../styles/BoardStyles/CommentStyle";
 import Like from "../../../components/board/Like";
+import {
+  WaggleImage,
+  WaggleImageContainer,
+} from "../../../styles/BoardStyles/WaggleListStyle";
 
 function WaggleDetailPage() {
   const [boardDetail, setBoardDetail] = useState({});
@@ -148,13 +152,11 @@ function WaggleDetailPage() {
         <User>{nickname}</User>
         <Title>{title}</Title>
         <Content>{content}</Content>
-        {/* {waggleDetail.boardImage && (
-          <img
-            src={waggleDetail.boardImage}
-            alt="Waggle Image"
-            style={{ maxWidth: "100%", maxHeight: "400px", margin: "20px 0" }}
-          />
-        )} */}
+        <WaggleImageContainer>
+          {waggleDetail.boardImage && (
+            <WaggleImage src={waggleDetail.boardImage} alt="Waggle Image" />
+          )}
+        </WaggleImageContainer>
         <Like
           isLiked={isLiked}
           likeCount={likeCount}

@@ -7,6 +7,8 @@ import { createWaggle, updateWaggle } from "../../../api/waggle";
 import { UserState } from "../../../global/UserState";
 
 import { DetailTop } from "../../../styles/BoardStyles/BoardCreateStyle";
+import { BackButton } from "../../../styles/BoardStyles/BoardDetailStyle";
+import BackIcon from "../../../assets/icon/back-icon.png";
 
 function WaggleRegistPage() {
   const navigate = useNavigate();
@@ -16,6 +18,7 @@ function WaggleRegistPage() {
   const [boardImage, setBoardImage] = useState(null);
   const [isUpdateMode, setIsUpdateMode] = useState(false);
   const { userId } = useRecoilState(UserState)[0];
+  const [file, setFile] = useState(null);
 
   const location = useLocation();
 
@@ -24,12 +27,14 @@ function WaggleRegistPage() {
       setBoardId(location.state.board.boardId);
       setTitle(location.state.board.title);
       setContent(location.state.board.content);
-      setBoardImage(location.state.board.boardImage);
+      // setBoardImage(location.state.board.boardImage);
       setIsUpdateMode(true);
     }
   }, [location]);
 
   const handleSubmit = () => {
+    // 사진 파일이 있을 경우
+
     if (isUpdateMode) {
       updateWaggle(
         boardId,
@@ -57,6 +62,7 @@ function WaggleRegistPage() {
           },
         },
         ({ data }) => {
+          console.log(data, "****************");
           navigate(`/waggle/${data.board.boardId}`);
         },
         () => {},
@@ -64,9 +70,26 @@ function WaggleRegistPage() {
     }
   };
 
+  const handleBackClick = () => {
+    navigate("/waggle");
+  };
+
+  // 파일 상태를 업데이트하는 핸들러 함수
+  const handleFileChange = (file) => {
+    setBoardImage(file);
+  };
+
+  useEffect(() => {
+    handleFileChange(file);
+  }, [file]);
+
   return (
     <>
-      <BoardTopNavBar />
+      <DetailTop>
+        <BackButton onClick={handleBackClick}>
+          <img src={BackIcon} alt="Back" />
+        </BackButton>
+      </DetailTop>
       <DetailTop>{isUpdateMode ? "Waggle 수정" : "Waggle 글쓰기"}</DetailTop>
 
       <RegistCard
@@ -74,7 +97,7 @@ function WaggleRegistPage() {
         content={content}
         onTitleChange={(e) => setTitle(e.target.value)}
         onContentChange={(e) => setContent(e.target.value)}
-        onImageChange={(e) => setBoardImage(e.target.files[0])}
+        onFileChange={handleFileChange}
         onSubmit={handleSubmit}
         buttonText={isUpdateMode ? "수정하기" : "작성하기"}
       />

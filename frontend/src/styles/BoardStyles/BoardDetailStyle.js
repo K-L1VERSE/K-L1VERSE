@@ -15,10 +15,10 @@ export const DetailTop = styled.div`
 export const DetailBox = styled.div`
   background-color: #fff;
   border-bottom: 1px solid #ccc;
-  padding: 1rem;
+  padding: 1rem 1rem 0.4rem 1rem;
   margin-bottom: 1rem;
 
-  background-color: aliceblue;
+  /* background-color: aliceblue; */
 `;
 
 export const User = styled.div`

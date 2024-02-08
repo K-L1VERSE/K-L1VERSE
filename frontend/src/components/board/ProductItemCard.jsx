@@ -6,13 +6,13 @@ import {
   ProductItemPrice,
   ProductItemCreated,
   ProductItemContainer,
+  ProductItemWriter,
 } from "../../styles/BoardStyles/ProductListStyle";
 import {
   DealFlagContainer,
   ItemInfoItem,
   ItemInfoSection,
   ItemTitle,
-  ItemWriter,
 } from "../../styles/BoardStyles/BoardStyle";
 import { ReactComponent as Comment } from "../../assets/icon/comment-icon.svg";
 import { ImageBoxContainer } from "../../styles/BoardStyles/ImageStyle";
@@ -37,7 +37,7 @@ function ProductItemCard({ product, formatRelativeTime }) {
         </Link>
       </ItemTitle>
       <ProductItemPrice>가격: {product.price}원</ProductItemPrice>
-      <ItemWriter>{product.board.nickname}</ItemWriter>
+      <ProductItemWriter>{product.board.nickname}</ProductItemWriter>
       <ItemInfoSection>
         <ItemInfoItem>
           <Comment />

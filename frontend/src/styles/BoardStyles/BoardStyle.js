@@ -6,22 +6,20 @@ export const Header = styled.div`
   align-items: center;
   justify-content: space-between;
   margin: 0 1rem;
+  border-bottom: 1px solid #f4f4f4;
 `;
 
 export const HeaderH2 = styled.h2`
   width: auto;
-  height: 20px;
-  font-style: normal;
-  font-weight: 700;
-  font-size: 20px;
-  line-height: 20px;
+  font-size: 1.1rem;
+  line-height: 10px;
   color: #222222;
 `;
 
 export const HeaderButton = styled.button`
   border: none;
   background-color: transparent;
-  font-size: 12px;
+  font-size: 0.7rem;
   color: #002266;
 `;
 

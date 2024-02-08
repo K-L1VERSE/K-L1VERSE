@@ -38,3 +38,32 @@ export const MateDetailTotal = styled.p`
   font-size: 0.8rem;
   color: #333;
 `;
+
+/* *********** MateRegistCard *********** */
+export const MateInputLabel = styled.label`
+  position: relative;
+  display: inline-block;
+  font-size: 0.9rem;
+  color: darkslategrey;
+  margin-top: 0.5rem;
+  margin-bottom: 0.1rem;
+`;
+
+export const MateNumberContainer = styled.div`
+  display: flex;
+  align-items: center;
+`;
+
+export const MateNumberInput = styled.input`
+  width: 2rem;
+  padding: 0.3rem;
+  text-align: center;
+  margin-right: 4px;
+  border: 1px solid lightgrey;
+  border-radius: 4px;
+  font-size: 1rem;
+`;
+
+export const MateInputText = styled.span`
+  font-size: 1rem;
+`;

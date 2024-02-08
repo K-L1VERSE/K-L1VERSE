@@ -65,3 +65,7 @@ export function unlikeWaggle(waggleId, data, success, fail) {
 export function likeCount(waggleId, success, fail) {
   axios.get(`/${gateway}/${url}/like/${waggleId}`).then(success).catch(fail);
 }
+
+export function uploadFile(formData) {
+  return axios.post(`/${gateway}/file/upload`, formData);
+}

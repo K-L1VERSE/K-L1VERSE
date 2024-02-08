@@ -43,7 +43,7 @@ const KakaoPage = () => {
     Kakao.Share.sendDefault({
       objectType: "feed",
       content: {
-        title: "당신에게 맞는 구단은?",
+        title: "나랑 어울리는 K-리그 구단은?",
         description: "울산 현대",
         imageUrl: imageUrl,
         // imageUrl: `${domainAndPort}${teamImages[teamId]}`,
@@ -54,7 +54,7 @@ const KakaoPage = () => {
       },
       buttons: [
         {
-          title: "나도 궁금해요",
+          title: "나도 궁금해!",
           link: {
             mobileWebUrl: realUrl,
             webUrl: realUrl,
