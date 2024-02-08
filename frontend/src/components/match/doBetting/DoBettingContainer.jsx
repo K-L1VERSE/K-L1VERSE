@@ -8,6 +8,7 @@ import {
 } from "../../../styles/MatchStyles/MatchDetailStyle";
 import * as bettingApi from "../../../api/betting";
 import { UserState } from "../../../global/UserState";
+import { ReactComponent as DoBetIcon } from "../../../assets/icon/do-bet-icon.svg";
 
 function DoBettingContainer({ match }) {
   match = {
@@ -25,10 +26,16 @@ function DoBettingContainer({ match }) {
     home: "울산 문수",
   };
 
+  const bet = {
+    betTeamId: 2,
+    betGoal: 20,
+  };
+
   const [selectedTeam, setSelectedTeam] = useState(null); // 'home', 'draw', 'away'
   const [bettingAmount, setBettingAmount] = useState(0);
   const [userState] = useRecoilState(UserState);
   const { matchId } = useParams();
+
   const [betComplete, setBetComplete] = useState(false);
 
   useEffect(() => {
@@ -38,12 +45,20 @@ function DoBettingContainer({ match }) {
         userId: userState.userId,
       });
       // response.data === 0 : 아직 베팅 안함
-      // response.data === 1 : 이미 베팅함
-      if (response.data === 0) {
+      // response.data > 0 : 이미 베팅함
+      if (response.data.betGoal === 0) {
         setBetComplete(false);
         console.log(`베팅 아직 안했음 : ${response.data}`);
       } else {
         setBetComplete(true);
+        if (response.data.betTeamId === match.homeTeamId) {
+          setSelectedTeam("home");
+        } else if (response.data.betTeamId === match.awayTeamId) {
+          setSelectedTeam("away");
+        } else {
+          setSelectedTeam("draw");
+        }
+        setBettingAmount(response.data.betGoal);
         console.log(`이미 베팅했음 : ${response.data}`);
       }
     };
@@ -118,6 +133,8 @@ function DoBettingContainer({ match }) {
             type="button"
             selected={selectedTeam === "home"}
             onClick={() => handleTeamClick("home")}
+            // betComplete가 true면 disabled
+            disabled={betComplete}
           >
             <TeamNameContainer>
               <TeamNameComponent>
@@ -130,6 +147,7 @@ function DoBettingContainer({ match }) {
             type="button"
             selected={selectedTeam === "draw"}
             onClick={() => handleTeamClick("draw")}
+            disabled={betComplete}
           >
             <TeamName>무승부</TeamName>
           </TeamSelectButton>
@@ -137,6 +155,7 @@ function DoBettingContainer({ match }) {
             type="button"
             selected={selectedTeam === "away"}
             onClick={() => handleTeamClick("away")}
+            disabled={betComplete}
           >
             <TeamNameContainer>
               <TeamNameComponent>
@@ -149,20 +168,26 @@ function DoBettingContainer({ match }) {
 
         <DoBetInputContainer>
           <DoBetInputComponent>
-            <InputForm>
-              <input
+            <InputForm disabled={betComplete}>
+              <DoBetInputBox
                 id="bettingGoal"
                 type="number"
                 onChange={(e) => setBettingAmount(e.target.value)}
+                disabled={betComplete}
+                value={bettingAmount}
               />
-              <label htmlFor="bettingGoal">골</label>
+              <DoBetLabel htmlFor="bettingGoal">
+                <div>골</div>
+              </DoBetLabel>
             </InputForm>
             <DoBetButton
               type="button"
               onClick={handleBettingClick}
               disabled={betComplete}
             >
-              베팅 하기
+              <DoBetText>
+                <DoBetIcon /> <div>베팅 하기</div>
+              </DoBetText>
             </DoBetButton>
           </DoBetInputComponent>
         </DoBetInputContainer>
@@ -251,7 +276,8 @@ const InputForm = styled.div`
   align-items: start;
 
   border-radius: 4px;
-  border: 2px solid #3261c1;
+  border: ${({ disabled }) =>
+    disabled ? "1px solid #A9A9A9" : "1px solid #3261c1"};
 
   width: 100%;
   height: 44px;
@@ -268,6 +294,10 @@ const InputForm = styled.div`
     border: none;
   }
 
+  input:focus {
+    outline: none;
+  }
+
   label {
     width: 10%;
     height: 44px;
@@ -282,8 +312,40 @@ const DoBetButton = styled.button`
 
   border: none;
   border-radius: 4px;
-  background-color: #3261c1;
+  /* betComplete가 true이면 비활성화 UI */
+  background-color: ${({ disabled }) => (disabled ? "#A9A9A9" : "#3261c1")};
   color: white;
+
+  font: inherit;
+`;
+
+const DoBetInputBox = styled.input`
+  width: 100%;
+  padding: 0 2px;
+  height: 44px;
+
+  font-size: 1.2rem;
+
+  text-align: right;
+`;
+
+const DoBetLabel = styled.label`
+  width: 10%;
+  height: 44px;
+  font-size: 1.2rem;
+  color: #222222;
+
+  // 가운데 정렬
+  display: flex;
+  justify-content: center;
+  align-items: center;
+`;
+
+const DoBetText = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 4px;
 `;
 
 export default DoBettingContainer;

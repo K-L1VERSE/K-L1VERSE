@@ -16,6 +16,6 @@ export const PercentBox = styled.div`
 `;
 
 export const Betting = styled.div`
-  border: 2px solid green;
+  /* border: 2px solid green; */
   padding: 5px 10px;
 `;
