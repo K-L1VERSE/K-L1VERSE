@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
-import axios from "../../api/axios";
 import Hangul from "hangul-js";
 import Swal from "sweetalert2";
+import axios from "../../api/axios";
 import {
   ModalBackground,
   ModalContainer,
@@ -97,27 +97,34 @@ const EditNicknameModal = ({ setModalOpen, user, setUser }) => {
             return prev;
           });
           Swal.fire({
-            text: "1000골이 차감되었습니다.",
+            text: "닉네임이 변경되었습니다.",
             width: "20rem",
             imageUrl:
               "https://raw.githubusercontent.com/Tarikul-Islam-Anik/Animated-Fluent-Emojis/master/Emojis/Smilies/Ghost.png",
+            imageWidth: 100,
           });
           setModalOpen(false);
         })
         .catch(() => {});
     }
   };
-
   const isNicknameLengthValid = newNickname.length >= 2;
 
   return (
     <ModalBackground>
       <ModalContainer>
         <ModalTopItems>
-          <h3>닉네임 변경</h3>
+          <div className="title">
+            <img
+              src="https://raw.githubusercontent.com/Tarikul-Islam-Anik/Animated-Fluent-Emojis/master/Emojis/Smilies/Revolving%20Hearts.png"
+              alt="Revolving Hearts"
+              width="25"
+              height="25"
+            />
+            <div>닉네임 변경</div>
+          </div>
           <ModalClose onClick={closeModal}>X</ModalClose>
         </ModalTopItems>
-
         <MyInfoInput
           onChange={getInput}
           value={newNickname}
@@ -130,7 +137,7 @@ const EditNicknameModal = ({ setModalOpen, user, setUser }) => {
               color: "red",
               position: "absolute",
               fontSize: "12px",
-              top: "50%",
+              top: "48%",
               marginTop: "10px",
               left: "50%",
               transform: "translateX(-50%)",
@@ -140,6 +147,7 @@ const EditNicknameModal = ({ setModalOpen, user, setUser }) => {
             2글자 이상 입력해주세요.
           </p>
         )}
+        <div className="info">* 변경 시 1000골이 차감됩니다.</div>
         {newNickname.length >= 2 &&
           !isCheckingAvailability &&
           !isNicknameAvailable && (
