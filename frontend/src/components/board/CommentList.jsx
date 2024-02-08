@@ -68,6 +68,15 @@ const CommentList = ({ boardId }) => {
 
   return (
     <ListContainer>
+      <div className="title">
+        <img
+          src="https://raw.githubusercontent.com/Tarikul-Islam-Anik/Animated-Fluent-Emojis/master/Emojis/Objects/Memo.png"
+          alt="Memo"
+          width="18"
+          height="18"
+        />
+        <div>댓글</div>
+      </div>
       <CommentContainer
         boardId={boardId}
         commentList={commentList}

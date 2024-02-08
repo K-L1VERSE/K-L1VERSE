@@ -9,6 +9,7 @@ import {
   EditButton,
   DeleteButton,
   CommentTime,
+  CommentBig,
 } from "../../styles/BoardStyles/CommentStyle";
 import { likeComment, unlikeComment, updateComment } from "../../api/comment";
 import { UserState } from "../../global/UserState";
@@ -91,7 +92,7 @@ function CommentItemCard({ comment, onCommentDelete, formatRelativeTime }) {
   };
 
   return (
-    <>
+    <CommentBig>
       <CommentWriter>{comment.nickname}</CommentWriter>
       <CommentItem key={comment.commentId}>
         {isEditMode ? (
@@ -115,7 +116,7 @@ function CommentItemCard({ comment, onCommentDelete, formatRelativeTime }) {
         />
         {renderEditDeleteButtons()}
       </CommentItem>
-    </>
+    </CommentBig>
   );
 }
 

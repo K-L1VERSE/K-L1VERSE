@@ -79,7 +79,15 @@ const CommentForm = ({ boardId, parentId, getComments }) => {
           checked={isSecret}
           onChange={() => setIsSecret(!isSecret)}
         />
-        <span>🔒비밀</span>
+        <div>
+          <img
+            src="https://raw.githubusercontent.com/Tarikul-Islam-Anik/Animated-Fluent-Emojis/master/Emojis/Objects/Locked.png"
+            alt="Locked"
+            width="18"
+            height="18"
+          />
+          <div>비밀댓글</div>
+        </div>
       </CheckboxLabel>
       <TextContainer>
         <TextArea
