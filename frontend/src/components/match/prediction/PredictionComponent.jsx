@@ -55,6 +55,8 @@ const TeamContainer = styled.div`
   align-items: center;
 
   width: 100%;
+
+  padding: 10px 15px 10px 10px;
 `;
 
 const TeamNameContainer = styled.div`
