@@ -5,6 +5,8 @@ import com.KL1verse.match.betting.service.BettingService;
 import com.KL1verse.match.kafka.KafkaProducer;
 import com.KL1verse.match.kafka.producer.KafkaBettingProducer;
 import com.KL1verse.match.kafka.producer.KafkaBettingWinProducer;
+import java.util.HashMap;
+import java.util.Map;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
@@ -38,12 +40,17 @@ public class BettingController {
     public ResponseEntity<?> checkBetting(@RequestParam("matchId") int matchId,
         @RequestParam("userId") int userId) {
         int n = bettingService.checkBetting(matchId, userId);
-        if (n == 0) {
-            return new ResponseEntity<>(n, HttpStatus.OK);
-        } else {
-            return new ResponseEntity<>(n, HttpStatus.OK);
+        int team = -1;
+        if(n > 0) {
+            team = bettingService.checkBettingTeam(matchId, userId);
         }
+        Map<String, Integer> response = new HashMap<>();
+        response.put("bettingAmount", n);
+        response.put("teamId", team);
+
+        return new ResponseEntity<>(response, HttpStatus.OK);
     }
+
 
 
     @GetMapping("/betting")
