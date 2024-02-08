@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
+import styled from "styled-components";
 
 import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
@@ -29,7 +30,7 @@ export default function MatchDetailPage() {
   return (
     <div>
       <MatchDetailScore match={data} />
-      <Slider dots={true}>
+      <Slider dots>
         <PredictionContainer match={data} />
         <CurrentBettingContainer match={data} />
       </Slider>

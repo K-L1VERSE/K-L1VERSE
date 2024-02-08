@@ -1,6 +1,6 @@
 import React from "react";
 
-import styled from "styled-components";
+import styled, { keyframes } from "styled-components";
 
 import { BadgeImg } from "../../../styles/MatchStyles/MatchDetailStyle";
 
@@ -91,8 +91,18 @@ const TeamBettingText = styled.div`
   font-size: 0.8rem;
 `;
 
+const fillAnimation = (ratio) => keyframes`
+  from {
+    width: 100%;
+  }
+  to {
+    width: ${ratio}%;
+  }
+`;
+
 const CurrentBettingBar = styled.div`
-  width: ${({ ratio }) => `${ratio}%`};
+  width: 100%;
+  animation: ${({ ratio }) => fillAnimation(ratio)} 3.5s ease-out forwards;
   height: 30px;
   background-color: #3261c1;
 

@@ -1,6 +1,6 @@
 import React from "react";
 
-import styled from "styled-components";
+import styled, { keyframes } from "styled-components";
 
 function PredictionBar({ ratio }) {
   return (
@@ -10,6 +10,15 @@ function PredictionBar({ ratio }) {
   );
 }
 
+const fillAnimation = (ratio) => keyframes`
+  from {
+    width: 0;
+  }
+  to {
+    width:  ${ratio}%;
+  }
+`;
+
 const TotalBarContainer = styled.div`
   width: 100px;
   height: 20px;
@@ -18,10 +27,11 @@ const TotalBarContainer = styled.div`
 `;
 
 const BarContainer = styled.div`
-  width: ${({ ratio }) => ratio}%;
+  width: 0%;
   height: 20px;
   background-color: #3261c1;
   border-radius: 4px;
+  animation: ${({ ratio }) => fillAnimation(ratio)} 1.5s ease-out forwards;
 `;
 
 export default PredictionBar;
