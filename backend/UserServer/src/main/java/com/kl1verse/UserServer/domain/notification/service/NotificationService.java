@@ -49,13 +49,40 @@ public class NotificationService {
             .createdAt(messageReqDto.getDate())
             .build();
 
+        if(messageReqDto.getProfile() != null) {
+            notification.setProfile(messageReqDto.getProfile());
+        }
+        if(messageReqDto.getNickname() != null) {
+            notification.setNickname(messageReqDto.getNickname());
+        }
+        if(messageReqDto.getHomeTeamId() != null) {
+            notification.setHomeTeamId(messageReqDto.getHomeTeamId());
+        }
+        if(messageReqDto.getAwayTeamId() != null) {
+            notification.setAwayTeamId(messageReqDto.getAwayTeamId());
+        }
+
         notificationRepository.save(notification);
         NotificationResDto notificationResDto = NotificationResDto.builder()
+            .notificationId(notification.getId())
             .uri(messageReqDto.getUri())
             .content(messageReqDto.getMessage())
             .readFlag(false)
             .type(messageReqDto.getType())
             .build();
+
+        if(messageReqDto.getProfile() != null) {
+            notificationResDto.setProfile(messageReqDto.getProfile());
+        }
+        if(messageReqDto.getNickname() != null) {
+            notificationResDto.setNickname(messageReqDto.getNickname());
+        }
+        if(messageReqDto.getHomeTeamId() != null) {
+            notificationResDto.setHomeTeamId(messageReqDto.getHomeTeamId());
+        }
+        if(messageReqDto.getAwayTeamId() != null) {
+            notificationResDto.setAwayTeamId(messageReqDto.getAwayTeamId());
+        }
 
         sendingOperations.convertAndSend("/topic/notification/" + user.getEmail()+":"+user.getDomain(), notificationResDto);
     }
@@ -87,6 +114,7 @@ public class NotificationService {
             log.info("type = {}", messageReqDto.getType().toString());
             notificationRepository.save(notification);
             NotificationResDto notificationResDto = NotificationResDto.builder()
+                .notificationId(notification.getId())
                 .uri(messageReqDto.getUri())
                 .content(messageReqDto.getMessage())
                 .readFlag(false)
@@ -111,13 +139,32 @@ public class NotificationService {
         List<Notification> notifications = notificationRepository.findByUserId(user.getId());
         List<NotificationResDto> notificationResDtos = new ArrayList<>();
         for (Notification notification : notifications) {
-            notificationResDtos.add(NotificationResDto.builder()
+            if(notification.getDeletedAt() != null) {
+                continue;
+            }
+
+            NotificationResDto notificationResDto = NotificationResDto.builder()
+                .notificationId(notification.getId())
                 .content(notification.getContent())
-//                .createdAt(notification.getCreatedAt())
                 .readFlag(notification.getReadFlag())
                 .type(notification.getType())
                 .uri(notification.getUri())
-                .build());
+                .build();
+
+            if(notification.getProfile() != null) {
+                notificationResDto.setProfile(notification.getProfile());
+            }
+            if(notification.getNickname() != null) {
+                notificationResDto.setNickname(notification.getNickname());
+            }
+            if(notification.getHomeTeamId() != null) {
+                notificationResDto.setHomeTeamId(notification.getHomeTeamId());
+            }
+            if(notification.getAwayTeamId() != null) {
+                notificationResDto.setAwayTeamId(notification.getAwayTeamId());
+            }
+
+            notificationResDtos.add(notificationResDto);
         }
 
         return notificationResDtos;
@@ -144,6 +191,19 @@ public class NotificationService {
         }
 
         log.info("user {}:{} read notifications", user.getEmail(), user.getDomain());
+    }
+
+    @Transactional
+    public void deleteNotification(Integer notificationId) {
+        Optional<Notification> notification = notificationRepository.findById(notificationId);
+        if(notification.isEmpty()) {
+            return;
+        }
+        if(notification.get().getDeletedAt() != null) {
+            return;
+        }
+        notification.get().setDeletedAt(LocalDateTime.now());
+        notificationRepository.save(notification.get());
     }
 
 }

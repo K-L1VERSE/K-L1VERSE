@@ -1,6 +1,10 @@
 import NotificationCard from "./NotificationCard";
 
-function NotificationList({ notifications, handleNotificationClick }) {
+function NotificationList({
+  notifications,
+  handleNotificationClick,
+  deleteNotification,
+}) {
   const notificationList = [...notifications].reverse();
 
   return (
@@ -9,6 +13,7 @@ function NotificationList({ notifications, handleNotificationClick }) {
         <NotificationCard
           notification={notification}
           handleNotificationClick={handleNotificationClick}
+          deleteNotification={deleteNotification}
           key={i}
         />
       ))}
