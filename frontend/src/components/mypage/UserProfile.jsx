@@ -6,6 +6,7 @@ import { UserState } from "../../global/UserState";
 import styled from "styled-components";
 import BadgeButton from "./BadgeButton";
 import LogoutButton from "./LogoutButton";
+import ProfileIcon from "../../assets/icon/profile-icon.png";
 
 import axios from "../../api/axios";
 
@@ -13,19 +14,15 @@ import EditNicknameModal from "./EditNicknameModal";
 
 const ProfileTitleContainer = styled.div`
   display: inline-flex;
-  padding: 12px 0px;
+  padding: 12px 16px 12px 16px;
   flex-direction: column;
   align-items: center;
   gap: 20px;
 `;
 
-const ProfileTitleIcon = styled.div`
-  color: #000;
-  font-family: Pretendard;
-  font-size: 13px;
-  font-style: normal;
-  font-weight: 500;
-  line-height: normal;
+const ProfileTitleIcon = styled.img`
+  width: 16px;
+  height: 16px;
 `;
 
 const ProfileTitleText = styled.div`
@@ -50,21 +47,29 @@ const ProfileTitleContent = styled.div`
   gap: 4px;
 `;
 
+const ProfileSettingContainer = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+`;
+
+const ProfileSettingImg = styled.img`
+  width: 24px;
+  height: 24px;
+`;
+
 const ProfileEditContent = styled.div`
   display: flex;
-  width: 45px;
   justify-content: space-between;
   align-items: center;
   flex-shrink: 0;
+  margin-left: 4px;
 `;
 
-const ProfileEditIcon = styled.div`
-  color: var(--blue1, #026);
-  font-family: Pretendard;
-  font-size: 11px;
-  font-style: normal;
-  font-weight: 400;
-  line-height: normal;
+const ProfileEditIcon = styled.img`
+  width: 20px;
+  height: 20px;
+  cursor: pointer;
 `;
 
 const ProfileEditText = styled.div`
@@ -81,16 +86,15 @@ const UserInfoContainer = styled.div`
   align-items: center;
   gap: 12px;
   align-self: stretch;
-
-  width: 358px;
   justify-content: space-between;
+  width: 358px;
   align-items: center;
 `;
 
 const UserInfoContent = styled.div`
   display: flex;
+  flex-direction: row;
   align-items: center;
-  gap: 8px;
 `;
 
 const UserProfile = styled.img`
@@ -181,25 +185,22 @@ function UserInfo({ user, setUser }) {
     setIsModalOpen(false);
   };
 
+  const navigate = useNavigate();
+  const goSetting = () => {
+    navigate("/setting");
+  };
+
   return (
-    <div
-      style={{
-        display: "flex",
-        flexDirection: "column",
-        alignItems: "center",
-        gap: "20px",
-      }}
-    >
+    <div>
       <ProfileTitleContainer>
         <ProfileTitleHeader>
           <ProfileTitleContent>
-            <ProfileTitleIcon>👤</ProfileTitleIcon>
+            <ProfileTitleIcon src={ProfileIcon} />
             <ProfileTitleText>프로필</ProfileTitleText>
           </ProfileTitleContent>
-          <ProfileEditContent onClick={handleModalOpen}>
-            <ProfileEditIcon>🛠️</ProfileEditIcon>
-            <ProfileEditText>수정</ProfileEditText>
-          </ProfileEditContent>
+          <ProfileSettingContainer onClick={goSetting}>
+            <ProfileSettingImg src="https://raw.githubusercontent.com/Tarikul-Islam-Anik/Animated-Fluent-Emojis/master/Emojis/Objects/Gear.png" />
+          </ProfileSettingContainer>
         </ProfileTitleHeader>
         <UserInfoContainer>
           <UserInfoContent>
@@ -214,6 +215,9 @@ function UserInfo({ user, setUser }) {
             />
             <BadgeButton mainBadge={user.mainBadge} />
             <UserNickName>{user.nickname}</UserNickName>
+            <ProfileEditContent onClick={handleModalOpen}>
+              <ProfileEditIcon src="https://raw.githubusercontent.com/Tarikul-Islam-Anik/Animated-Fluent-Emojis/master/Emojis/Objects/Wrench.png" />
+            </ProfileEditContent>
           </UserInfoContent>
         </UserInfoContainer>
       </ProfileTitleContainer>
