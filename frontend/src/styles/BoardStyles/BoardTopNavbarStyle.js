@@ -1,30 +1,20 @@
 import styled from "styled-components";
 
 export const BoardTopNavbarContainer = styled.div`
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  padding: 12px 16px;
-  gap: 20px;
-  width: 390px;
-  top: 68px;
+  padding: 1rem 1rem;
   font-family: "Pretendard-Regular";
-  margin-bottom: 1rem;
 `;
 
-export const Title = styled.h1`
-  font-style: normal;
-  font-weight: 700;
-  font-size: 16px;
-  line-height: 19px;
+export const Title = styled.div`
+  font-family: "Pretendard-Bold";
+  font-size: 1rem;
   color: #002266;
+  margin-bottom: 1.5rem;
 `;
 
 export const Nav = styled.nav`
   display: flex;
-  align-items: center;
-  padding: 0px;
-  gap: 13px;
+  gap: 0.5rem;
 `;
 
 export const WaggleButton = styled.button`
