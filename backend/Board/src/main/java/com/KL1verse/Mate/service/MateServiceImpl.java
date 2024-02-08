@@ -76,12 +76,12 @@ public class MateServiceImpl implements MateService {
         MateDTO createdMateDTO = convertToDTO(createdMate);
         createdMateDTO.getBoard().setNickname(userNickname);
 
-        BoardCleanbotCheckReqDto boardCleanbotCheckReqDto = BoardCleanbotCheckReqDto.builder()
-            .id(createdMate.getBoard().getBoardId())
-            .content(createdMate.getBoard().getContent())
-            .domain("board")
-            .build();
-        kafkaBoardCleanbotProducer.boardCleanbotCheck(boardCleanbotCheckReqDto);
+//        BoardCleanbotCheckReqDto boardCleanbotCheckReqDto = BoardCleanbotCheckReqDto.builder()
+//            .id(createdMate.getBoard().getBoardId())
+//            .content(createdMate.getBoard().getContent())
+//            .domain("board")
+//            .build();
+//        kafkaBoardCleanbotProducer.boardCleanbotCheck(boardCleanbotCheckReqDto);
 
         return createdMateDTO;
     }
@@ -101,12 +101,12 @@ public class MateServiceImpl implements MateService {
         boardImageService.saveBoardImage(board, file);
 
 
-        BoardCleanbotCheckReqDto boardCleanbotCheckReqDto = BoardCleanbotCheckReqDto.builder()
-            .id(boardId)
-            .content(mateDto.getBoard().getContent())
-            .domain("board")
-            .build();
-        kafkaBoardCleanbotProducer.boardCleanbotCheck(boardCleanbotCheckReqDto);
+//        BoardCleanbotCheckReqDto boardCleanbotCheckReqDto = BoardCleanbotCheckReqDto.builder()
+//            .id(boardId)
+//            .content(mateDto.getBoard().getContent())
+//            .domain("board")
+//            .build();
+//        kafkaBoardCleanbotProducer.boardCleanbotCheck(boardCleanbotCheckReqDto);
 
         return convertToDTO(updatedMate);
     }

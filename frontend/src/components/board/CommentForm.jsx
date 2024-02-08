@@ -3,7 +3,7 @@ import { useRecoilState } from "recoil";
 import { useLocation } from "react-router-dom";
 import { UserState } from "../../global/UserState";
 import {
-  Form,
+  CommentFormContainer,
   TextArea,
   SubmitButton,
   CancelButton,
@@ -12,10 +12,10 @@ import {
 } from "../../styles/BoardStyles/CommentStyle";
 import { updateComment, createComment } from "../../api/comment";
 
-function CommentForm({ boardId, parentId }) {
+const CommentForm = ({ boardId, parentId, getComments }) => {
   const [content, setContent] = useState("");
   const [isUpdateMode, setIsUpdateMode] = useState(false);
-  const [isSecret, setIsSecret] = useState(false); // Added state for isSecret
+  const [isSecret, setIsSecret] = useState(false);
   const { userId } = useRecoilState(UserState)[0];
 
   const location = useLocation();
@@ -54,6 +54,7 @@ function CommentForm({ boardId, parentId }) {
           isSecret,
         },
         () => {
+          getComments();
           setContent("");
           setIsSecret(false);
         },
@@ -64,12 +65,13 @@ function CommentForm({ boardId, parentId }) {
 
   const handleKeyDown = (e) => {
     if (e.keyCode === 13 && !e.shiftKey) {
-      handleSubmit(e);
+      e.preventDefault();
+      handleSubmit();
     }
   };
 
   return (
-    <Form onSubmit={handleSubmit}>
+    <CommentFormContainer>
       <TextArea
         value={content}
         onChange={(e) => setContent(e.target.value)}
@@ -85,7 +87,7 @@ function CommentForm({ boardId, parentId }) {
         />
         <span>🔒비밀</span>
       </CheckboxLabel>
-      <SubmitButton type="submit">
+      <SubmitButton type="button" onClick={handleSubmit}>
         {isUpdateMode ? "댓글 수정 완료" : "댓글 작성"}
       </SubmitButton>
       {isUpdateMode && (
@@ -93,8 +95,8 @@ function CommentForm({ boardId, parentId }) {
           수정 취소
         </CancelButton>
       )}
-    </Form>
+    </CommentFormContainer>
   );
-}
+};
 
 export default CommentForm;

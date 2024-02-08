@@ -1,19 +1,14 @@
 import React from "react";
-import { MateListContainer } from "../../styles/BoardStyles/MateListStyle";
 import MateItemCard from "./MateItemCard";
-import { formatRelativeTime } from "./dateFormat";
+import { ListContainer } from "../../styles/BoardStyles/BoardStyle";
 
 function MateContainer({ mateList }) {
   return (
-    <MateListContainer>
+    <ListContainer>
       {mateList.map((mate) => (
-        <MateItemCard
-          key={mate.mateId}
-          mate={mate}
-          formatRelativeTime={formatRelativeTime}
-        />
+        <MateItemCard key={mate.mateId} mate={mate} />
       ))}
-    </MateListContainer>
+    </ListContainer>
   );
 }
 

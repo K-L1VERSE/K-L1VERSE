@@ -1,13 +1,21 @@
 import React from "react";
 import {
-  Input,
+  TitleInput,
   TextArea,
+  PriceInput,
   SubmitButton,
   FileInputContainer,
   FileInput,
   FileInputLabel,
+  RegistCardContainer,
 } from "../../styles/BoardStyles/BoardCreateStyle";
 import CameraIcon from "../../assets/icon/camera-icon.svg";
+import {
+  FlagInputContainer,
+  FlagInputLabel,
+  FlagInputCheckbox,
+  FlagInputText,
+} from "../../styles/BoardStyles/BoardCreateStyle";
 
 export default function ProductRegistCard({
   title,
@@ -24,8 +32,8 @@ export default function ProductRegistCard({
   buttonText,
 }) {
   return (
-    <>
-      <Input
+    <RegistCardContainer>
+      <TitleInput
         type="text"
         value={title}
         onChange={onTitleChange}
@@ -33,14 +41,23 @@ export default function ProductRegistCard({
       />
       <br />
       <TextArea value={content} onChange={onContentChange} placeholder="내용" />
-      <Input
+      <br />
+      <PriceInput
         type="number"
         value={price}
         onChange={onPriceChange}
         placeholder="가격"
       />
-      <input type="checkbox" checked={dealFlag} onChange={onDealFlagChange} />
-      판매중
+      <FlagInputContainer>
+        <FlagInputLabel>
+          <FlagInputCheckbox
+            type="checkbox"
+            checked={dealFlag}
+            onChange={onDealFlagChange}
+          />
+          <FlagInputText>판매중</FlagInputText>
+        </FlagInputLabel>
+      </FlagInputContainer>
       <br />
       <FileInputContainer>
         <FileInput
@@ -55,6 +72,6 @@ export default function ProductRegistCard({
       </FileInputContainer>
       <br />
       <SubmitButton onClick={onSubmit}>{buttonText}</SubmitButton>
-    </>
+    </RegistCardContainer>
   );
 }

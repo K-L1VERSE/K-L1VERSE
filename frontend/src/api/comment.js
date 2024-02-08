@@ -11,7 +11,6 @@ export function getCommentList(boardId, data, success, fail) {
 }
 
 export function createComment(boardId, comment, success, fail) {
-  console.log(comment);
   axios
     .post(`/${gateway}/${url}/${boardId}`, comment)
     .then(success)
@@ -40,9 +39,9 @@ export function unlikeComment(commentId, success, fail) {
     .catch(fail);
 }
 
-// export function createReply(parentId, comment, success, fail) {
-//   axios
-//     .post(`/${gateway}/${url}/${parentId}/replies`, comment)
-//     .then(success)
-//     .catch(fail);
-// }
+export function createReply(parentId, comment, success, fail) {
+  axios
+    .post(`/${gateway}/${url}/${parentId}/replies`, comment)
+    .then(success)
+    .catch(fail);
+}

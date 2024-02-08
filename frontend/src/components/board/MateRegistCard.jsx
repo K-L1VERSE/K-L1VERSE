@@ -1,8 +1,16 @@
 import React, { useState, useEffect } from "react";
 import {
-  Input,
   TextArea,
+  NumberInput,
+  FlagInput,
   SubmitButton,
+  TitleInput,
+  SelectInput,
+  FlagInputText,
+  FlagInputContainer,
+  FlagInputLabel,
+  FlagInputCheckbox,
+  FlagInputSlider,
 } from "../../styles/BoardStyles/BoardCreateStyle";
 import { getMatchList } from "../../api/match";
 
@@ -10,17 +18,19 @@ export default function MateRegistCard({
   title,
   content,
   total,
-  fullFlag,
   matchId,
+  fullFlag: initialFullFlag,
   onTitleChange,
   onContentChange,
   onTotalChange,
+  onfullFlag,
   onFullFlagChange,
   onMatchIdChange,
   onSubmit,
   buttonText,
 }) {
   const [matchList, setMatchList] = useState([]);
+  const [fullFlag, setFullFlag] = useState(initialFullFlag); // 추가된 상태
 
   useEffect(() => {
     const today = new Date();
@@ -33,16 +43,35 @@ export default function MateRegistCard({
     fetchData();
   }, []);
 
+  function handleFullFlagChange(e) {
+    setFullFlag(e.target.checked);
+  }
+
   return (
     <>
-      <Input
+      <FlagInputContainer>
+        <FlagInputLabel>
+          <FlagInputCheckbox
+            type="checkbox"
+            checked={fullFlag}
+            onChange={onFullFlagChange}
+          />
+          <FlagInputSlider />
+        </FlagInputLabel>
+        <FlagInputText>모집중</FlagInputText>
+      </FlagInputContainer>
+
+      <TitleInput
         type="text"
         value={title}
         onChange={onTitleChange}
         placeholder="제목"
       />
       <br />
-      <select value={matchId} onChange={(e) => onMatchIdChange(e.target.value)}>
+      <SelectInput
+        value={matchId}
+        onChange={(e) => onMatchIdChange(e.target.value)}
+      >
         <option value="" disabled>
           경기를 선택하세요
         </option>
@@ -51,21 +80,16 @@ export default function MateRegistCard({
             {match.homeTeamName} vs {match.awayTeamName} - {match.matchAt}{" "}
           </option>
         ))}
-      </select>
+      </SelectInput>
       <TextArea value={content} onChange={onContentChange} placeholder="내용" />
-      <Input
-        type="number"
-        value={total}
-        onChange={onTotalChange}
-        placeholder="총 인원"
-      />
-      다 찼어요
-      <Input
-        type="checkbox"
-        value={fullFlag}
-        onChange={onFullFlagChange}
-        placeholder="만석 여부"
-      />
+      <FlagInputContainer>
+        <NumberInput
+          type="number"
+          value={total}
+          onChange={onTotalChange}
+          placeholder="총 인원"
+        />
+      </FlagInputContainer>
       <br />
       <SubmitButton onClick={onSubmit}>{buttonText}</SubmitButton>
     </>
