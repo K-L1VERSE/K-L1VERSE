@@ -10,21 +10,6 @@ import {
 import CurrentBettingComponent from "./CurrentBettingComponent";
 
 function CurrentBettingContainer({ match }) {
-  match = {
-    homeTeamId: 1,
-    awayTeamId: 2,
-    homeTeamName: "울산 HD FC",
-    awayTeamName: "포항스틸러스",
-    homeBettingAmount: 40,
-    awayBettingAmount: 110,
-    drawBettingAmount: 72,
-    matchAt: "2024-02-03T13:00:00",
-    status: "done",
-    homeScore: 1,
-    awayScore: 2,
-    home: "울산 문수",
-  };
-
   const { homeBettingAmount } = match;
   const { drawBettingAmount } = match;
   const { awayBettingAmount } = match;

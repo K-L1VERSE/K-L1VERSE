@@ -2,6 +2,8 @@ import React, { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import { useRecoilState } from "recoil";
 
+import Swal from "sweetalert2";
+
 import {
   DoBetContainer,
   DoBetButtonContainer,
@@ -28,26 +30,10 @@ import { UserState } from "../../../global/UserState";
 import { ReactComponent as DoBetIcon } from "../../../assets/icon/do-bet-icon.svg";
 
 function DoBettingContainer({ match }) {
-  match = {
-    homeTeamId: 1,
-    awayTeamId: 2,
-    homeTeamName: "울산 HD FC",
-    awayTeamName: "포항스틸러스",
-    homeBettingAmount: 40,
-    awayBettingAmount: 110,
-    drawBettingAmount: 72,
-    matchAt: "2024-02-03T13:00:00",
-    status: "done",
-    homeScore: 1,
-    awayScore: 2,
-    home: "울산 문수",
-  };
-
   const [selectedTeam, setSelectedTeam] = useState(null); // 'home', 'draw', 'away'
   const [bettingAmount, setBettingAmount] = useState(0);
   const [userState] = useRecoilState(UserState);
   const { matchId } = useParams();
-
   const [betComplete, setBetComplete] = useState(false);
 
   useEffect(() => {
@@ -60,7 +46,6 @@ function DoBettingContainer({ match }) {
       // response.data > 0 : 이미 베팅함
       if (response.data.betGoal === 0) {
         setBetComplete(false);
-        console.log(`베팅 아직 안했음 : ${response.data}`);
       } else {
         setBetComplete(true);
         if (response.data.betTeamId === match.homeTeamId) {
@@ -71,7 +56,6 @@ function DoBettingContainer({ match }) {
           setSelectedTeam("draw");
         }
         setBettingAmount(response.data.betGoal);
-        console.log(`이미 베팅했음 : ${response.data}`);
       }
     };
 
@@ -112,19 +96,46 @@ function DoBettingContainer({ match }) {
 
     if (selectedTeam && bettingAmount > 0) {
       try {
-        await bettingApi.betting({
-          userId: 1, // 나중에 userId 가져올 수 있도록 수정
-          matchId: match.matchId,
-          bettingTeamId: teamId,
-          amount: bettingAmount,
+        await bettingApi
+          .betting({
+            userId: userState.userId,
+            matchId: match.matchId,
+            bettingTeamId: teamId,
+            amount: bettingAmount,
+          })
+          .catch(() => {
+            Swal.fire({
+              title: "베팅에 실패했습니다.",
+              icon: "error",
+              cancelButtonText: "확인",
+            }).then(() => {
+              setBetComplete(true);
+            });
+          })
+          .then(() => {
+            Swal.fire({
+              title: `${teamName}에 ${bettingAmount}골 베팅했습니다.`,
+              icon: "success",
+              confirmButtonText: "확인",
+            }).then(() => {
+              setBetComplete(true);
+            });
+          });
+      } catch {
+        Swal.fire({
+          title: "베팅에 실패했습니다.",
+          icon: "error",
+          cancelButtonText: "확인",
+        }).then(() => {
+          setBetComplete(true);
         });
-        alert(`${teamName}에 ${bettingAmount}골 베팅했습니다.`);
-        window.location.reload();
-      } catch (error) {
-        alert("베팅에 실패했습니다.");
       }
     } else {
-      alert("팀과 베팅골을 선택해주세요.");
+      Swal.fire({
+        title: "팀과 베팅골을 선택해주세요.",
+        icon: "info",
+        confirmButtonText: "확인",
+      });
     }
   };
   const handleTeamClick = (team) => {
@@ -197,7 +208,8 @@ function DoBettingContainer({ match }) {
                   setBettingAmount(val.replace(/\D/g, "")); // 숫자가 아닌 문자를 모두 제거합니다.
                 }}
                 disabled={betComplete}
-                value={bettingAmount}
+                placeholder={0}
+                value={bettingAmount === 0 ? "" : bettingAmount}
               />
               <DoBetLabel htmlFor="bettingGoal">
                 <div>골</div>

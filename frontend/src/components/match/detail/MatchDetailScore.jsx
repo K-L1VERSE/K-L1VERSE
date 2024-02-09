@@ -19,18 +19,6 @@ import { BadgeImg } from "../../../styles/match-styles/MatchDetailStyle";
 import ToLeftPng from "../../../assets/ToLeft.png";
 
 export default function MatchDetailScore({ match }) {
-  match = {
-    matchId: 201,
-    homeTeamId: 1,
-    awayTeamId: 2,
-    homeTeamName: "울산 HD FC",
-    awayTeamName: "포항스틸러스",
-    matchAt: "2024-02-10T16:00:00",
-    homeScore: 2,
-    awayScore: 1,
-    status: "during",
-  };
-
   const homeTeamsrc = `${process.env.PUBLIC_URL}/badge/badge${match.homeTeamId}.png`;
   const awayTeamsrc = `${process.env.PUBLIC_URL}/badge/badge${match.awayTeamId}.png`;
 
