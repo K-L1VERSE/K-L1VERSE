@@ -25,12 +25,16 @@ export default function MatchDetailPage() {
 
   return (
     <div>
-      <MatchDetailScore match={data} />
-      <Slider dots>
-        <PredictionContainer />
-        <CurrentBettingContainer />
-      </Slider>
-      <DoBettingContainer />
+      {data && data.length > 0 && (
+        <>
+          <MatchDetailScore match={data} />
+          <Slider dots>
+            <PredictionContainer />
+            <CurrentBettingContainer />
+          </Slider>
+          <DoBettingContainer />
+        </>
+      )}
     </div>
   );
 }
