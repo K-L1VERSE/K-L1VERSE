@@ -21,7 +21,7 @@ function MateListPage() {
   function getMates() {
     getMateList(
       page,
-      30,
+      10,
       ({ data }) => {
         if (!data.content) {
           setHasMore(false);
@@ -81,7 +81,7 @@ function MateListPage() {
     <div>
       <BoardTopNavBar />
       <Header>
-        <HeaderH2>저랑 같이 응원 갈래욤?</HeaderH2>
+        <HeaderH2>🔥 경기 직관 함께 할 메이트 구합니다</HeaderH2>
         <HeaderButton onClick={handleWriteMateClick}>🖋 글쓰기</HeaderButton>
       </Header>
       {/* <button onClick={handleCalendarToggle}>📆</button> */}

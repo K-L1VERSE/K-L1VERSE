@@ -1,23 +1,21 @@
-import React from "react";
+import React, { useState } from "react";
 import { TableContainer } from "../../styles/MatchStyles/MatchScheduleStyle";
-import MatchDetailButton from "./MatchDetailButtton";
+import Time from "./Time";
 
 export default function ScheduleTable({ year, month, data }) {
-  // 해당 월의 모든 날짜를 배열로 생성
+  const [selectedDay, setSelectedDay] = useState(null);
+
   const daysInMonth = new Date(year, month, 0).getDate();
   const days = Array.from({ length: daysInMonth }, (_, i) => i + 1);
 
-  // 날짜별로 경기 일정 그룹화
   const groupedData = days.map((day) => ({
     day,
     matches: data.filter((item) => new Date(item.matchAt).getDate() === day),
   }));
 
-  // 월의 첫 날의 요일과 마지막 날의 요일을 계산
   const firstDayOfWeek = new Date(year, month - 1, 1).getDay();
   const lastDayOfWeek = new Date(year, month - 1, daysInMonth).getDay();
 
-  // 각 주간의 경기 일정을 그룹화
   const weeks = [];
   const emptyDaysBefore = Array.from({ length: firstDayOfWeek }, () => null);
   const emptyDaysAfter = Array.from({ length: 6 - lastDayOfWeek }, () => null);
@@ -31,7 +29,7 @@ export default function ScheduleTable({ year, month, data }) {
     <TableContainer>
       <table>
         <tbody>
-          <tr style={{ backgroundColor: "lightblue" }}>
+          <tr>
             <th>일</th>
             <th>월</th>
             <th>화</th>
@@ -41,43 +39,61 @@ export default function ScheduleTable({ year, month, data }) {
             <th>토</th>
           </tr>
           {weeks.map((week, weekIndex) => (
-            <>
-              <tr key={`${weekIndex}-days`}>
-                {/* 날짜 행 */}
-                {week.map((dayData, dayIndex) =>
-                  dayData ? (
-                    <td key={dayIndex} style={{ backgroundColor: "green" }}>
-                      {dayData.day}
-                    </td>
-                  ) : (
-                    <td key={dayIndex}></td>
-                  ),
-                )}
-              </tr>
-              <tr key={`${weekIndex}-matches`}>
-                {/* 경기 일정 행 */}
-                {week.map((dayData, dayIndex) =>
-                  dayData ? (
-                    <td key={dayIndex}>
+            <tr key={`${weekIndex}-days`}>
+              {week.map((dayData, dayIndex) =>
+                dayData ? (
+                  <td key={dayIndex}>
+                    <div>
                       {dayData.matches.length > 0 ? (
-                        dayData.matches.map((match, matchIndex) => (
-                          <div>
-                            <MatchDetailButton match={match} />
-                          </div>
-                        ))
+                        <div
+                          onClick={() => setSelectedDay(dayData.day)}
+                          className={`circle ${selectedDay === dayData.day ? "selected" : ""}`}
+                        >
+                          {dayData.day}
+                        </div>
                       ) : (
-                        <div>X</div>
+                        <div onClick={() => setSelectedDay(null)}>
+                          {dayData.day}
+                        </div>
                       )}
-                    </td>
-                  ) : (
-                    <td key={dayIndex}></td>
-                  ),
-                )}
-              </tr>
-            </>
+                    </div>
+                  </td>
+                ) : (
+                  <td key={dayIndex}></td>
+                ),
+              )}
+            </tr>
           ))}
         </tbody>
       </table>
+      <div className="info">
+        <span>●</span> K-league 경기 일정
+      </div>
+      {selectedDay && (
+        <div>
+          <div className="nothing" />
+          <div className="dateInfo">
+            {new Date(year, month - 1, selectedDay).toLocaleDateString(
+              "ko-KR",
+              {
+                year: "numeric",
+                month: "2-digit",
+                day: "2-digit",
+                weekday: "long",
+              },
+            )}
+          </div>
+          <hr />
+          {groupedData
+            .find((dayData) => dayData.day === selectedDay)
+            .matches.map((match, index) => (
+              <div key={index}>
+                <Time match={match} />
+                <hr />
+              </div>
+            ))}
+        </div>
+      )}
     </TableContainer>
   );
 }

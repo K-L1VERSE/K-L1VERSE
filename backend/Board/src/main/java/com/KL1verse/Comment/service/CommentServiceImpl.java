@@ -370,6 +370,7 @@ public class CommentServiceImpl implements CommentService {
 
         Integer likesCount = commentRepository.findLikesCountByCommentId(comment.getCommentId());
         commentDTO.setLikesCount(likesCount);
+
         commentDTO.setParentId(
             comment.getParentId() != null ? comment.getParentId().getCommentId() : null);
         commentDTO.setReplies(

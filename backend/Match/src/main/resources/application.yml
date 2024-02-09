@@ -3,19 +3,14 @@ server:
 
 spring:
   profiles:
-    active: dev
+    active: deploy
   jpa:
     hibernate:
       ddl-auto: update
 
-  # kafka 설정
-  kafka:
-    consumer:
-      bootstrap-servers: localhost:9092
-      group-id: match-group # 여기만 다름
-      key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
-      value-deserializer: org.apache.kafka.common.serialization.StringDeserializer
-    producer:
-      bootstrap-servers: localhost:9092
-      key-serializer: org.apache.kafka.common.serialization.StringSerializer
-      value-serializer: org.apache.kafka.common.serialization.StringSerializer
+  # redis 설정
+  data:
+    redis:
+      host: i10a409.p.ssafy.io
+      port: 6379
+      password: redis

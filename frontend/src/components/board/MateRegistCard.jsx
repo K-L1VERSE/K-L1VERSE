@@ -5,24 +5,41 @@ import {
   FlagInput,
   SubmitButton,
   TitleInput,
+  SelectInput,
+  FlagInputText,
+  FlagInputContainer,
+  FlagInputLabel,
+  FlagInputCheckbox,
+  FlagInputSlider,
+  InputLabel,
 } from "../../styles/BoardStyles/BoardCreateStyle";
 import { getMatchList } from "../../api/match";
+import { formatDateTime } from "../../components/board/dateFormat";
+import {
+  MateInputLabel,
+  MateInputText,
+  MateNumberContainer,
+  MateNumberInput,
+} from "../../styles/BoardStyles/MateListStyle";
 
-export default function MateRegistCard({
+function MateRegistCard({
   title,
   content,
   total,
-  fullFlag,
   matchId,
+  fullFlag: initialFullFlag,
   onTitleChange,
   onContentChange,
   onTotalChange,
+  onfullFlag,
   onFullFlagChange,
   onMatchIdChange,
   onSubmit,
   buttonText,
 }) {
   const [matchList, setMatchList] = useState([]);
+  const [fullFlag, setFullFlag] = useState(initialFullFlag);
+  const [selectedMatchTime, setSelectedMatchTime] = useState(""); // 선택한 경기의 시간
 
   useEffect(() => {
     const today = new Date();
@@ -35,41 +52,58 @@ export default function MateRegistCard({
     fetchData();
   }, []);
 
+  function handleFullFlagChange(e) {
+    setFullFlag(e.target.checked);
+  }
+
   return (
     <>
-      <TitleInput
-        type="text"
-        value={title}
-        onChange={onTitleChange}
-        placeholder="제목"
-      />
-      <br />
-      <select value={matchId} onChange={(e) => onMatchIdChange(e.target.value)}>
+      <FlagInputContainer>
+        <FlagInputLabel>
+          <FlagInputCheckbox
+            type="checkbox"
+            checked={fullFlag}
+            onChange={handleFullFlagChange}
+          />
+          <FlagInputSlider />
+        </FlagInputLabel>
+        <FlagInputText>모집중</FlagInputText>
+      </FlagInputContainer>
+      <InputLabel>경기 일정</InputLabel>
+      <SelectInput
+        value={matchId}
+        onChange={(e) => onMatchIdChange(e.target.value)}
+      >
         <option value="" disabled>
           경기를 선택하세요
         </option>
         {matchList.map((match) => (
           <option key={match.matchId} value={match.matchId}>
-            {match.homeTeamName} vs {match.awayTeamName} - {match.matchAt}{" "}
+            {match.homeTeamName} vs {match.awayTeamName} -{" "}
+            {formatDateTime(match.matchAt)}{" "}
           </option>
         ))}
-      </select>
-      <TextArea value={content} onChange={onContentChange} placeholder="내용" />
-      <NumberInput
-        type="number"
-        value={total}
-        onChange={onTotalChange}
-        placeholder="총 인원"
+      </SelectInput>
+      <InputLabel>모집 내용</InputLabel>
+      <TextArea
+        value={content}
+        onChange={onContentChange}
+        placeholder="내용을 입력하세요"
       />
-      다 찼어요
-      <FlagInput
-        type="checkbox"
-        value={fullFlag}
-        onChange={onFullFlagChange}
-        placeholder="만석 여부"
-      />
+      <InputLabel>모집 인원</InputLabel>
+      <MateNumberContainer>
+        <MateNumberInput
+          type="number"
+          value={total}
+          onChange={onTotalChange}
+          placeholder="총 인원"
+        />
+        <MateInputText>명</MateInputText>
+      </MateNumberContainer>
       <br />
       <SubmitButton onClick={onSubmit}>{buttonText}</SubmitButton>
     </>
   );
 }
+
+export default MateRegistCard;

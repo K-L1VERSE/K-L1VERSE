@@ -1,14 +1,16 @@
 import styled from "styled-components";
 
-export const WaggleItemInfoSection = styled.div`
-  display: flex;
-  align-items: center;
+export const WaggleImageContainer = styled.div`
+  margin-top: 20px;
+  max-width: 100%;
+  max-height: 400px;
+  overflow: hidden;
 `;
 
-export const WaggleItemInfoItem = styled.div`
-  font-size: 0.7rem;
-  margin-right: 0.7rem;
-  margin-bottom: 0.5rem;
-  color: #595959;
-  align-items: center;
+export const WaggleImage = styled.img`
+  width: 100%;
+  height: auto;
+  object-fit: cover;
+  border-radius: 8px;
+  margin-bottom: 20px;
 `;

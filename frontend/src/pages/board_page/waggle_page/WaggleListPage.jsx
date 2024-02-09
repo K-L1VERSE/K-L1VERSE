@@ -75,7 +75,7 @@ function WaggleListPage() {
     <div>
       <BoardTopNavBar />
       <Header>
-        <HeaderH2>와글와글 떠들어주세요</HeaderH2>
+        <HeaderH2>👥 와글Waggle 떠들어주세요</HeaderH2>
         <HeaderButton onClick={handleWriteWaggleClick}>🖋 글쓰기</HeaderButton>
       </Header>
 

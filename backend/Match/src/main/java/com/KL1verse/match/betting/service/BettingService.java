@@ -9,4 +9,5 @@ public interface BettingService {
 
     int checkBetting(int matchId, int userId);
 
+    int checkBettingTeam(int matchId, int userId);
 }

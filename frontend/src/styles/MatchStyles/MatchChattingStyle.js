@@ -6,23 +6,56 @@ export const ChattingTop = styled.div`
   border: 2px solid black;
 `;
 
+export const CleanBot = styled.div`
+  display: flex;
+  align-items: center;
+  height: 3rem;
+  padding-left: 0.5rem;
+  padding-bottom: 0.15rem;
+  margin: 0 auto;
+  margin-left: 0.5rem;
+  margin-right: 0.5rem;
+  background-color: #fafafa;
+  border: 2px solid #efecec;
+  border-radius: 0.3rem;
+  margin-top: 1rem;
+  margin-bottom: 1rem;
+  font-size: 0.95rem;
+
+  div {
+    display: flex;
+    margin-left: 0.2rem;
+    margin-top: 0.1rem;
+  }
+  div:nth-child(1) {
+    font-family: "Pretendard-Bold";
+    color: purple;
+  }
+  div:nth-child(2) {
+    color: #607274;
+  }
+`;
+
 export const ChattingBox = styled.div`
-  border: 2px solid blue;
-  height: 20rem;
+  margin: 0 auto;
+  height: 23.375rem;
+  margin-left: 0.5rem;
+  margin-right: 0.5rem;
   overflow-y: scroll;
-  padding: 0.5rem;
+  padding: 1rem;
 
   &::-webkit-scrollbar {
-    width: 8px;
+    width: 0.5rem;
   }
 
   &::-webkit-scrollbar-track {
     background: #f1f1f1;
+    border-radius: 20px;
   }
 
   &::-webkit-scrollbar-thumb {
-    background: #888;
-    border-radius: 10px;
+    background: #c7c8cc;
+    border-radius: 20px;
   }
 
   &::-webkit-scrollbar-thumb:hover {
@@ -31,51 +64,126 @@ export const ChattingBox = styled.div`
 `;
 
 /* Message 박스 */
+export const MessageContainer = styled.div`
+  display: flex;
+  flex-direction: ${(props) => (props.$isMine ? "row-reverse" : "row")};
+`;
+
 export const MessageBox = styled.div`
   display: flex;
-  margin-bottom: 0.5rem;
+  flex-direction: column;
+  margin-bottom: 1rem;
+`;
+
+export const InfoBox = styled.div`
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: ${(props) => (props.$isMine ? "flex-end" : "flex-start")};
+  height: 1.375rem;
+`;
+
+export const MessageInfoBox = styled.div`
+  display: flex;
+  flex-direction: ${(props) => (props.$isMine ? "row-reverse" : "row")};
+  align-items: end;
+`;
+
+export const SenderImg = styled.img`
+  display: inline-block;
+  width: 1.375rem;
+  height: 1.375rem;
+  border-radius: 50%;
 `;
 
 export const OnlyNick = styled.div`
   display: inline-block;
+  font-size: 0.8rem;
+  font-family: "Pretendard-Regular";
+  padding-left: 0.3rem;
+  padding-top: 0.1rem;
+  margin-right: 0.2rem;
 `;
 
-export const SenderImg = styled.img`
-  width: 2.5rem;
-  height: 2.5rem;
-  border: 2px solid lightgray;
-  border-radius: 50%;
-  margin-right: 0.7rem;
+export const BadgeImg = styled.img`
+  display: inline-block;
+  width: 1rem;
+  height: 1rem;
+  margin-top: 0.1rem;
 `;
 
 export const OnlyMsg = styled.div`
   display: inline-block;
-  background-color: #f1f1f1;
+  background-color: ${(props) => (props.$isMine ? "#E5EDFB" : "#f1f1f1")};
   padding: 0.5rem;
-  max-width: 14rem;
-  border-radius: 0.1rem 1rem 1rem 1rem;
+  border-radius: ${(props) =>
+    props.$isMine ? "1rem 0.1rem 1rem 1rem" : "0.1rem 1rem 1rem 1rem"};
+  max-width: 16.5rem;
   margin-top: 0.3rem;
+  font-size: 0.9rem;
+`;
+
+export const MsgTimeContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: left end;
+  padding-left: 0.5rem;
+  padding-right: 0.5rem;
+`;
+
+export const MsgDay = styled.div`
+  display: inline-block;
+  font-size: 0.6rem;
+  color: gray;
+`;
+
+export const MsgHM = styled.div`
+  display: inline-block;
+  font-size: 0.6rem;
+  color: gray;
+  margin-top: 0.1rem;
 `;
 
 /* 밑에 채팅바 */
 export const ChattingBar = styled.div`
   display: flex;
   align-items: center;
-  justify-content: space-between;
-  margin-top: 0.5rem;
-  border: 2px solid red;
+  margin: 0 auto;
+  margin-left: 0.5rem;
+  margin-right: 0.8rem;
+  margin-top: 0.3rem;
 `;
 
-export const ChattingInput = styled.input`
-  width: 80%;
-  height: 2rem;
+export const ChattingPlusImg = styled.img`
+  width: 2.25rem;
+  height: 2.25rem;
+`;
+
+export const ChattingInput = styled.div`
+  width: 19rem;
+  height: 2.3rem;
+  border-radius: 1rem 1rem 1rem 1rem;
+  margin-left: 0.5rem;
+  background-color: #f1f1f1;
   border: none;
+  font-size: 0.8rem;
+  padding-left: 1rem;
+`;
+
+export const ChattingSendImg = styled.img`
+  width: 1.8rem;
+  height: 1.8rem;
+  margin-left: 0.4rem;
+  &:hover {
+    cursor: pointer;
+  }
 `;
 
 export const ChattingSendBtn = styled.button`
-  width: 15%;
+  width: 3.5rem;
   height: 2rem;
-  border: 2px solid green;
+  margin-left: 1rem;
+  border: none;
   transition: box-shadow 0.3s ease;
   &:hover {
     box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);

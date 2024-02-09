@@ -1,14 +1,12 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import {
-  WaggleItemInfoSection,
-  WaggleItemInfoItem,
-} from "../../styles/BoardStyles/WaggleListStyle";
 import { ReactComponent as LikeCount } from "../../assets/icon/likecount-icon.svg";
 import { ReactComponent as Comment } from "../../assets/icon/comment-icon.svg";
 import {
   ItemContainer,
   ItemContent,
+  ItemInfoItem,
+  ItemInfoSection,
   ItemTitle,
   ItemWriter,
 } from "../../styles/BoardStyles/BoardStyle";
@@ -16,16 +14,19 @@ import {
 function WaggleItemCard({ waggle, formatRelativeTime }) {
   return (
     <ItemContainer>
-      <ItemWriter>{waggle.board.nickname}</ItemWriter>
-      <ItemTitle>
-        <Link
-          to={`/waggle/${waggle.board.boardId}`}
-          style={{ textDecoration: "none", color: "black" }}
-        >
-          {waggle.board.title}
-        </Link>
-      </ItemTitle>
+      {waggle.board.boardImage && waggle.board.boardImage.length > 0 && (
+        // 첫 번째 이미지만 출력
+        <WaggleImage src={waggle.board.boardImage[0]} alt="Waggle Image" />
+      )}
       <ItemContent>
+        <ItemTitle>
+          <Link
+            to={`/waggle/${waggle.board.boardId}`}
+            style={{ textDecoration: "none", color: "black" }}
+          >
+            {waggle.board.title}
+          </Link>
+        </ItemTitle>
         <Link
           to={`/waggle/${waggle.board.boardId}`}
           style={{ textDecoration: "none" }}
@@ -33,19 +34,17 @@ function WaggleItemCard({ waggle, formatRelativeTime }) {
           <p>{waggle.board.content}</p>
         </Link>
       </ItemContent>
-      <WaggleItemInfoSection>
-        <WaggleItemInfoItem className="waggle-like">
+      <ItemInfoSection>
+        <ItemInfoItem className="waggle-like">
           <LikeCount />
           좋아요 {waggle.likesCount}
-        </WaggleItemInfoItem>
-        <WaggleItemInfoItem className="waggle-comment">
+        </ItemInfoItem>
+        <ItemInfoItem className="waggle-comment">
           <Comment />
           댓글 {waggle.board.commentCount}
-        </WaggleItemInfoItem>
-        <WaggleItemInfoItem>
-          {formatRelativeTime(waggle.board.createAt)}
-        </WaggleItemInfoItem>
-      </WaggleItemInfoSection>
+        </ItemInfoItem>
+        <ItemInfoItem>{formatRelativeTime(waggle.board.createAt)}</ItemInfoItem>
+      </ItemInfoSection>
     </ItemContainer>
   );
 }

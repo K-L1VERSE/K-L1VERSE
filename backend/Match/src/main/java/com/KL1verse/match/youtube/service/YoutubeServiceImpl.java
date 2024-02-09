@@ -33,6 +33,7 @@ public class YoutubeServiceImpl implements YoutubeService {
             youtube.setRank(request.getRank());
             youtube.setYoutubeId(request.getYoutubeId());
             youtube.setSavedAt(LocalDateTime.now());
+            youtube.setThumbnail(request.getThumbnail());
             youtubeRepository.save(youtube);
         }
     }

@@ -3,16 +3,17 @@ import { useRecoilState } from "recoil";
 import { useLocation } from "react-router-dom";
 import { UserState } from "../../global/UserState";
 import {
-  Form,
+  CommentFormContainer,
   TextArea,
   SubmitButton,
   CancelButton,
   CheckboxLabel,
   CheckboxInput,
+  TextContainer,
 } from "../../styles/BoardStyles/CommentStyle";
 import { updateComment, createComment } from "../../api/comment";
 
-function CommentForm({ boardId, parentId }) {
+const CommentForm = ({ boardId, parentId, getComments }) => {
   const [content, setContent] = useState("");
   const [isUpdateMode, setIsUpdateMode] = useState(false);
   const [isSecret, setIsSecret] = useState(false);
@@ -26,8 +27,7 @@ function CommentForm({ boardId, parentId }) {
     }
   }, [location]);
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
+  const handleSubmit = () => {
     if (isUpdateMode) {
       updateComment(
         boardId,
@@ -55,6 +55,7 @@ function CommentForm({ boardId, parentId }) {
           isSecret,
         },
         () => {
+          getComments();
           setContent("");
           setIsSecret(false);
         },
@@ -65,37 +66,48 @@ function CommentForm({ boardId, parentId }) {
 
   const handleKeyDown = (e) => {
     if (e.keyCode === 13 && !e.shiftKey) {
-      handleSubmit(e);
+      e.preventDefault();
+      handleSubmit();
     }
   };
 
   return (
-    <Form onSubmit={handleSubmit}>
-      <TextArea
-        value={content}
-        onChange={(e) => setContent(e.target.value)}
-        onKeyDown={handleKeyDown}
-        required
-        placeholder="댓글을 작성하세요."
-      />
+    <CommentFormContainer>
       <CheckboxLabel>
         <CheckboxInput
           type="checkbox"
           checked={isSecret}
           onChange={() => setIsSecret(!isSecret)}
         />
-        <span>🔒비밀</span>
+        <div>
+          <img
+            src="https://raw.githubusercontent.com/Tarikul-Islam-Anik/Animated-Fluent-Emojis/master/Emojis/Objects/Locked.png"
+            alt="Locked"
+            width="18"
+            height="18"
+          />
+          <div>비밀댓글</div>
+        </div>
       </CheckboxLabel>
-      <SubmitButton>
-        {isUpdateMode ? "댓글 수정 완료" : "댓글 작성"}
-      </SubmitButton>
-      {isUpdateMode && (
-        <CancelButton type="button" onClick={() => setIsUpdateMode(false)}>
-          수정 취소
-        </CancelButton>
-      )}
-    </Form>
+      <TextContainer>
+        <TextArea
+          value={content}
+          onChange={(e) => setContent(e.target.value)}
+          onKeyDown={handleKeyDown}
+          required
+          placeholder="댓글을 작성하세요."
+        />
+        <SubmitButton type="button" onClick={handleSubmit}>
+          {isUpdateMode ? "댓글 수정 완료" : "댓글 작성"}
+        </SubmitButton>
+        {isUpdateMode && (
+          <CancelButton type="button" onClick={() => setIsUpdateMode(false)}>
+            수정 취소
+          </CancelButton>
+        )}
+      </TextContainer>
+    </CommentFormContainer>
   );
-}
+};
 
 export default CommentForm;

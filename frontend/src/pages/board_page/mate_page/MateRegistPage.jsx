@@ -8,6 +8,8 @@ import { UserState } from "../../../global/UserState";
 
 import { RegistCardContainer } from "../../../styles/BoardStyles/BoardCreateStyle";
 
+import BackIcon from "../../../assets/icon/back-icon.png";
+
 function MateRegistPage() {
   const navigate = useNavigate();
   const [boardId, setBoardId] = useState(null);
@@ -18,7 +20,6 @@ function MateRegistPage() {
   const [matchId, setMatchId] = useState(0);
   const [isUpdateMode, setIsUpdateMode] = useState(false);
   const { userId } = useRecoilState(UserState)[0];
-
   const location = useLocation();
   useEffect(() => {
     if (location.state && location.state.board) {
@@ -73,10 +74,25 @@ function MateRegistPage() {
     }
   };
 
+  function handleFullFlagChange(e) {
+    setFullFlag(e.target.checked);
+  }
+
+  const handleBackClick = () => {
+    navigate("/mate");
+  };
+
   return (
     <RegistCardContainer>
-      <BoardTopNavBar />
-      <h1>{isUpdateMode ? "Mate 게시물 수정" : "Mate 게시물 작성"}</h1>
+      <DetailTop>
+        <BackButton onClick={handleBackClick}>
+          <img src={BackIcon} alt="Back" />
+        </BackButton>
+      </DetailTop>
+      <DetailTop>
+        {isUpdateMode ? "Mate 게시물 수정" : "Mate 게시물 작성"}
+      </DetailTop>
+
       <MateRegistCard
         title={title}
         content={content}
@@ -86,7 +102,8 @@ function MateRegistPage() {
         onTitleChange={(e) => setTitle(e.target.value)}
         onContentChange={(e) => setContent(e.target.value)}
         onTotalChange={(e) => setTotal(e.target.value)}
-        onFullFlagChange={(e) => setFullFlag(e.target.value)}
+        onfullFlag={fullFlag}
+        onFullFlagChange={handleFullFlagChange}
         onMatchIdChange={(value) => setMatchId(value)}
         onSubmit={handleSubmit}
         buttonText={isUpdateMode ? "수정하기" : "작성하기"}

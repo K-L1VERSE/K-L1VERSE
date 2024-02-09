@@ -28,20 +28,23 @@ export function deleteComment(commentId, success, fail) {
   axios.delete(`/${gateway}/${url}/${commentId}`).then(success).catch(fail);
 }
 
-export function likeComment(commentId, success, fail) {
-  axios.post(`/${gateway}/${url}/like/${commentId}`).then(success).catch(fail);
-}
-
-export function unlikeComment(commentId, success, fail) {
+export function likeComment(commentId, data, success, fail) {
   axios
-    .delete(`/${gateway}/${url}/likes/${commentId}`)
+    .post(`/${gateway}/${url}/like/${commentId}`, data)
     .then(success)
     .catch(fail);
 }
 
-// export function createReply(parentId, comment, success, fail) {
-//   axios
-//     .post(`/${gateway}/${url}/${parentId}/replies`, comment)
-//     .then(success)
-//     .catch(fail);
-// }
+export function unlikeComment(commentId, data, success, fail) {
+  axios
+    .delete(`/${gateway}/${url}/likes/${commentId}`, data)
+    .then(success)
+    .catch(fail);
+}
+
+export function createReply(parentId, comment, success, fail) {
+  axios
+    .post(`/${gateway}/${url}/${parentId}/replies`, comment)
+    .then(success)
+    .catch(fail);
+}

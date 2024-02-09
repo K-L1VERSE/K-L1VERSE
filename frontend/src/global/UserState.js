@@ -14,6 +14,7 @@ export const UserState = atom({
     isLoggedIn: false,
     userId: "",
     mainBadge: "",
+    notificationFlag: true,
   },
   effects_UNSTABLE: [persistAtom],
 });
