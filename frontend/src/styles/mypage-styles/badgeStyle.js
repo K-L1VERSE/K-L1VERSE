@@ -2,7 +2,6 @@ import styled from "styled-components";
 
 export const TitleContainer = styled.div`
   display: flex;
-  width: 24.375rem;
   padding: 1rem 0 1rem 0;
 `;
 
@@ -18,24 +17,21 @@ export const TitleText = styled.div`
 
 export const BadgeContainer = styled.div`
   display: flex;
-  width: 22.375rem;
-  padding: 0 1rem;
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  gap: 1.25rem;
 `;
 
 export const BadgeLineContainer = styled.div`
   display: flex;
-  width: 21rem;
+  width: 75%;
   justify-content: space-between;
   align-items: flex-start;
 `;
 
 export const BadgeBackground = styled.div`
   display: flex;
-  width: 3.125rem;
+  width: 15%;
   padding: 0.25rem 0;
   flex-direction: column;
   justify-content: center;
@@ -59,14 +55,13 @@ export const BadgeText = styled.div`
 export const ConfirmContainer = styled.div`
   display: flex;
   justify-content: center;
-  width: 24.375rem;
   margin-top: 2.5rem;
 `;
 
 export const ConfirmTextContainer = styled.div`
   display: flex;
-  width: 18.125rem;
   padding: 0.75rem 1.5rem;
+  width: 70%;
   flex-direction: column;
   gap: 0.625rem;
   border-radius: 0.5rem;
@@ -85,7 +80,7 @@ export const ConfirmText = styled.div`
 
 export const PurchaseTextContainer = styled.div`
   display: flex;
-  width: 18.125rem;
+  width: 70%;
   padding: 0.75rem 1.5rem;
   flex-direction: column;
   gap: 0.625rem;
@@ -107,13 +102,12 @@ export const PurchaseText = styled.div`
 export const DisabledConfirmContainer = styled.div`
   display: flex;
   justify-content: center;
-  width: 24.375rem;
   margin-top: 2.5rem;
 `;
 
 export const DisabledTextContainer = styled.div`
   display: flex;
-  width: 18.125rem;
+  width: 70%;
   padding: 0.75rem 1.5rem;
   flex-direction: column;
   gap: 0.625rem;
