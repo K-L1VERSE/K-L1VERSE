@@ -36,6 +36,36 @@ WaggleController {
         this.waggleService = waggleService;
     }
 
+//    @GetMapping("/hashtags/{loginUserId}")
+//    public ResponseEntity<List<WaggleDTO>> getWagglesByTopHashtags(@PathVariable Integer loginUserId) {
+//        // 상위 3개 해시태그 가져오기
+//        List<String> topHashtags = waggleService.getTopHashtags(loginUserId, 3);
+//
+//        log.info("topHashtags: {}", topHashtags);
+//        // 각 해시태그를 가진 게시글들을 가져와서 리스트에 추가
+//        List<WaggleDTO> waggles = new ArrayList<>();
+//        for (String hashtag : topHashtags) {
+//            List<WaggleDTO> wagglesForHashtag = waggleService.getWagglesByHashtag(hashtag);
+//            waggles.addAll(wagglesForHashtag);
+//        }
+//        log.info("waggles: {}", waggles);
+//        // 결과 반환
+//        return new ResponseEntity<>(waggles, HttpStatus.OK);
+//    }
+
+
+    @GetMapping("/hashtags/{loginUserId}")
+    public ResponseEntity<Page<WaggleDTO>> getWagglesByTopHashtags(@PathVariable Integer loginUserId, Pageable pageable) {
+        // 상위 3개 해시태그 가져오기
+        List<String> topHashtags = waggleService.getTopHashtags(loginUserId, 3);
+        log.info("topHashtags: {}", topHashtags);
+
+        // 각 해시태그를 가진 게시글들을 가져와서 리스트에 추가
+        Page<WaggleDTO> waggles = waggleService.getWagglesByHashtags(topHashtags, pageable);
+
+        // 결과 반환
+        return new ResponseEntity<>(waggles, HttpStatus.OK);
+    }
 
 
 //        @GetMapping("/hashtags/{loginUserId}")

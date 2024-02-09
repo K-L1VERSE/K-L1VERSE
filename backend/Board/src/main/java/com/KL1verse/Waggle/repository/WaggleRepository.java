@@ -35,6 +35,9 @@ public interface WaggleRepository extends JpaRepository<Waggle, Long> {
   Page<Waggle> findByHashtagsContaining(String hashtag, Pageable pageable);
 
 
+    Page<Waggle> findByHashtagsContaining(String hashtag, Pageable pageable);
+
+
 }
 
 
