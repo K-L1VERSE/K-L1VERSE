@@ -1,4 +1,6 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
+import { useParams } from "react-router-dom";
+import { getMatchDetail } from "../../../api/match";
 import {
   Container,
   CurrentBetTitleComponent,
@@ -9,17 +11,42 @@ import {
 
 import CurrentBettingComponent from "./CurrentBettingComponent";
 
-function CurrentBettingContainer({ match }) {
-  const { homeBettingAmount } = match;
-  const { drawBettingAmount } = match;
-  const { awayBettingAmount } = match;
+function CurrentBettingContainer() {
+  const { matchId } = useParams();
+
+  const [match, setMatch] = useState(null);
+  const [isLoading, setIsLoading] = useState(true); // 로딩 상태를 관리하는 상태 값 추가
+
+  useEffect(() => {
+    const fetchData = async () => {
+      const result = await getMatchDetail(matchId);
+      setMatch(result);
+      setIsLoading(false); // 데이터를 불러온 후 로딩 상태를 false로 설정
+    };
+    fetchData();
+  }, [matchId]);
+
+  if (isLoading) {
+    return <div>Loading...</div>; // 로딩 중일 때는 'Loading...'을 표시
+  }
+
+  const { homeBettingAmount, drawBettingAmount, awayBettingAmount } = match;
 
   const totalBettingAmount =
     homeBettingAmount + drawBettingAmount + awayBettingAmount;
 
-  const homeOdds = totalBettingAmount / homeBettingAmount;
-  const drawOdds = totalBettingAmount / drawBettingAmount;
-  const awayOdds = totalBettingAmount / awayBettingAmount;
+  let homeOdds = 0;
+  let drawOdds = 0;
+  let awayOdds = 0;
+  if (homeBettingAmount > 0) {
+    homeOdds = totalBettingAmount / homeBettingAmount;
+  }
+  if (drawBettingAmount > 0) {
+    drawOdds = totalBettingAmount / drawBettingAmount;
+  }
+  if (awayBettingAmount > 0) {
+    awayOdds = totalBettingAmount / awayBettingAmount;
+  }
   const totalOdds = homeOdds + drawOdds + awayOdds;
 
   const homeOddsRatio = (homeOdds / totalOdds) * 100;

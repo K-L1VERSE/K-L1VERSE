@@ -93,37 +93,39 @@ export default function TimelineConatiner() {
   return (
     <TimelineWrap>
       <table>
-        {timelines.map((timeline, i) => (
-          <tr key={i}>
-            <td width="45%">
-              {timeline.homeOrAway === "HOME" && (
-                <EventItem
-                  eventName={timeline.eventName}
-                  teamName={timeline.teamName}
-                  memberName={timeline.memberName}
-                  memberName2={timeline.memberName2}
-                  backNo={timeline.backNo}
-                  homeOrAway={timeline.homeOrAway}
-                />
-              )}
-            </td>
-            <td width="10%">
-              <TimeMin>{timeline.timeMin} &#8216;</TimeMin>
-            </td>
-            <td width="45%">
-              {timeline.homeOrAway === "AWAY" && (
-                <EventItem
-                  eventName={timeline.eventName}
-                  teamName={timeline.teamName}
-                  memberName={timeline.memberName}
-                  memberName2={timeline.memberName2}
-                  backNo={timeline.backNo}
-                  homeOrAway={timeline.homeOrAway}
-                />
-              )}
-            </td>
-          </tr>
-        ))}
+        <tbody>
+          {timelines.map((timeline, i) => (
+            <tr key={i}>
+              <td width="45%">
+                {timeline.homeOrAway === "HOME" && (
+                  <EventItem
+                    eventName={timeline.eventName}
+                    teamName={timeline.teamName}
+                    memberName={timeline.memberName}
+                    memberName2={timeline.memberName2}
+                    backNo={timeline.backNo}
+                    homeOrAway={timeline.homeOrAway}
+                  />
+                )}
+              </td>
+              <td width="10%">
+                <TimeMin>{timeline.timeMin} &#8216;</TimeMin>
+              </td>
+              <td width="45%">
+                {timeline.homeOrAway === "AWAY" && (
+                  <EventItem
+                    eventName={timeline.eventName}
+                    teamName={timeline.teamName}
+                    memberName={timeline.memberName}
+                    memberName2={timeline.memberName2}
+                    backNo={timeline.backNo}
+                    homeOrAway={timeline.homeOrAway}
+                  />
+                )}
+              </td>
+            </tr>
+          ))}
+        </tbody>
       </table>
     </TimelineWrap>
   );

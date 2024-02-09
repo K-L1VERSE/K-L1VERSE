@@ -27,10 +27,10 @@ export default function MatchDetailPage() {
     <div>
       <MatchDetailScore match={data} />
       <Slider dots>
-        <PredictionContainer match={data} />
-        <CurrentBettingContainer match={data} />
+        <PredictionContainer />
+        <CurrentBettingContainer />
       </Slider>
-      <DoBettingContainer match={data} />
+      <DoBettingContainer />
     </div>
   );
 }

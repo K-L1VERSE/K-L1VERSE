@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import { useRecoilState } from "recoil";
-
 import Swal from "sweetalert2";
+import { getMatchDetail } from "../../../api/match";
 
 import {
   DoBetContainer,
@@ -29,38 +29,52 @@ import * as bettingApi from "../../../api/betting";
 import { UserState } from "../../../global/UserState";
 import { ReactComponent as DoBetIcon } from "../../../assets/icon/do-bet-icon.svg";
 
-function DoBettingContainer({ match }) {
+function DoBettingContainer() {
   const [selectedTeam, setSelectedTeam] = useState(null); // 'home', 'draw', 'away'
   const [bettingAmount, setBettingAmount] = useState(0);
   const [userState] = useRecoilState(UserState);
   const { matchId } = useParams();
+  const [match, setMatch] = useState(null);
+  const [isLoading, setIsLoading] = useState(true); // 로딩 상태를 관리하는 상태 값 추가
+
   const [betComplete, setBetComplete] = useState(false);
 
   useEffect(() => {
+    const fetchData = async () => {
+      const result = await getMatchDetail(matchId);
+      setMatch(result);
+      setIsLoading(false); // 데이터를 불러온 후 로딩 상태를 false로 설정
+    };
+    fetchData();
+  }, [matchId]);
+
+  useEffect(() => {
     const checkBetting = async () => {
-      const response = await bettingApi.checkBetting({
-        matchId,
-        userId: userState.userId,
-      });
-      // response.data === 0 : 아직 베팅 안함
-      // response.data > 0 : 이미 베팅함
-      if (response.data.betGoal === 0) {
-        setBetComplete(false);
-      } else {
-        setBetComplete(true);
-        if (response.data.betTeamId === match.homeTeamId) {
-          setSelectedTeam("home");
-        } else if (response.data.betTeamId === match.awayTeamId) {
-          setSelectedTeam("away");
+      if (match && userState.userId) {
+        const response = await bettingApi.checkBetting({
+          matchId,
+          userId: userState.userId,
+        });
+
+        if (response.data.betGoal === 0) {
+          setBetComplete(false);
         } else {
-          setSelectedTeam("draw");
+          setBetComplete(true);
+          if (response.data.betTeamId === match.homeTeamId) {
+            setSelectedTeam("home");
+          } else if (response.data.betTeamId === match.awayTeamId) {
+            setSelectedTeam("away");
+          } else {
+            setSelectedTeam("draw");
+          }
+          setBettingAmount(response.data.betGoal);
         }
-        setBettingAmount(response.data.betGoal);
       }
     };
-
-    checkBetting();
-  }, [matchId, userState.userId]);
+    if (!isLoading) {
+      checkBetting();
+    }
+  }, [match, userState.userId, matchId]);
 
   const getparsedTeamName = (teamName) => {
     let parsedTeamName = teamName.substring(0, 2);
@@ -81,25 +95,28 @@ function DoBettingContainer({ match }) {
   };
 
   const handleBettingClick = async () => {
-    const teamId =
-      selectedTeam === "home"
+    const teamId = match
+      ? selectedTeam === "home"
         ? match.homeTeamId
         : selectedTeam === "draw"
           ? 0
-          : match.awayTeamId;
-    const teamName =
-      selectedTeam === "home"
+          : match.awayTeamId
+      : null;
+
+    const teamName = match
+      ? selectedTeam === "home"
         ? match.homeTeamName
         : selectedTeam === "draw"
           ? "무승부"
-          : match.awayTeamName;
+          : match.awayTeamName
+      : null;
 
     if (selectedTeam && bettingAmount > 0) {
       try {
         await bettingApi
           .betting({
             userId: userState.userId,
-            matchId: match.matchId,
+            matchId,
             bettingTeamId: teamId,
             amount: bettingAmount,
           })
@@ -141,7 +158,9 @@ function DoBettingContainer({ match }) {
   const handleTeamClick = (team) => {
     setSelectedTeam(selectedTeam === team ? null : team); // 기존에 선택된 팀이면 선택 해제, 아니면 선택
   };
-
+  if (!match) {
+    return <div>Loading...</div>;
+  }
   return (
     <Betting>
       <div>
