@@ -9,6 +9,7 @@ import {
   CancelButton,
   CheckboxLabel,
   CheckboxInput,
+  TextContainer,
 } from "../../styles/BoardStyles/CommentStyle";
 import { updateComment, createComment } from "../../api/comment";
 
@@ -88,7 +89,7 @@ const CommentForm = ({ boardId, parentId, getComments }) => {
           <div>비밀댓글</div>
         </div>
       </CheckboxLabel>
-      <div className="reply">
+      <TextContainer>
         <TextArea
           value={content}
           onChange={(e) => setContent(e.target.value)}
@@ -99,13 +100,12 @@ const CommentForm = ({ boardId, parentId, getComments }) => {
         <SubmitButton type="button" onClick={handleSubmit}>
           {isUpdateMode ? "댓글 수정 완료" : "댓글 작성"}
         </SubmitButton>
-      </div>
-
-      {isUpdateMode && (
-        <CancelButton type="button" onClick={() => setIsUpdateMode(false)}>
-          수정 취소
-        </CancelButton>
-      )}
+        {isUpdateMode && (
+          <CancelButton type="button" onClick={() => setIsUpdateMode(false)}>
+            수정 취소
+          </CancelButton>
+        )}
+      </TextContainer>
     </CommentFormContainer>
   );
 };

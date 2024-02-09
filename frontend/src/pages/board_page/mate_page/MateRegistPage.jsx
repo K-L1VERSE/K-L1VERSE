@@ -8,6 +8,8 @@ import { UserState } from "../../../global/UserState";
 
 import { RegistCardContainer } from "../../../styles/BoardStyles/BoardCreateStyle";
 
+import BackIcon from "../../../assets/icon/back-icon.png";
+
 function MateRegistPage() {
   const navigate = useNavigate();
   const [boardId, setBoardId] = useState(null);
@@ -76,10 +78,21 @@ function MateRegistPage() {
     setFullFlag(e.target.checked);
   }
 
+  const handleBackClick = () => {
+    navigate("/mate");
+  };
+
   return (
     <RegistCardContainer>
-      <BoardTopNavBar />
-      <h1>{isUpdateMode ? "Mate 게시물 수정" : "Mate 게시물 작성"}</h1>
+      <DetailTop>
+        <BackButton onClick={handleBackClick}>
+          <img src={BackIcon} alt="Back" />
+        </BackButton>
+      </DetailTop>
+      <DetailTop>
+        {isUpdateMode ? "Mate 게시물 수정" : "Mate 게시물 작성"}
+      </DetailTop>
+
       <MateRegistCard
         title={title}
         content={content}

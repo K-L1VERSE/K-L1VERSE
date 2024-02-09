@@ -17,6 +17,7 @@ import {
 import {
   DealStatusGreen,
   DealStatusOrange,
+  ProductWriter,
 } from "../../../styles/BoardStyles/ProductListStyle";
 import { deleteProduct } from "../../../api/product";
 import { UserState } from "../../../global/UserState";
@@ -91,9 +92,9 @@ function ProductDetailPage() {
       </DetailTop>
       <ImageBoxContainer>이미지 자리</ImageBoxContainer>
       <DetailBox>
-        <User>
+        <ProductWriter>
           <p>{productDetail.nickname}</p>
-        </User>
+        </ProductWriter>
         {dealFlag ? (
           <DealStatusOrange>거래완료</DealStatusOrange>
         ) : (

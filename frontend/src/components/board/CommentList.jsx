@@ -5,16 +5,15 @@ import {
   createComment,
   deleteComment,
   getCommentList,
-  likeComment,
-  unlikeComment,
 } from "../../api/comment";
 import { formatRelativeTime } from "./dateFormat";
 import CommentForm from "./CommentForm";
 
 const CommentList = ({ boardId }) => {
   const [commentList, setCommentList] = useState([]);
-  const [likeCount, setLikeCount] = useState(0);
-  const [isLiked, setIsLiked] = useState(false);
+  const [commentId, setCommentId] = useState(0);
+  const [likesCount, setLikesCount] = useState(0);
+  const [liked, setLiked] = useState(false);
   const [userId] = useState(1);
 
   const getComments = () => {
@@ -23,6 +22,8 @@ const CommentList = ({ boardId }) => {
       { userId },
       ({ data }) => {
         setCommentList(data);
+        setCommentId(data.commentId);
+        setLiked(data.liked);
       },
       () => {},
     );
@@ -32,27 +33,9 @@ const CommentList = ({ boardId }) => {
     getComments();
   }, []);
 
-  const handleLikeClick = () => {
-    if (isLiked) {
-      unlikeComment(
-        boardId,
-        () => {
-          setIsLiked(false);
-          setLikeCount((prevCount) => prevCount - 1);
-        },
-        () => {},
-      );
-    } else {
-      likeComment(
-        boardId,
-        () => {
-          setIsLiked(true);
-          setLikeCount((prevCount) => prevCount + 1);
-        },
-        () => {},
-      );
-    }
-  };
+  // console.log(commentList);
+  // console.log("commentId$$$$$$$$$", commentId);
+  // console.log("liked?!?!??", liked);
 
   const handleCommentSubmit = (newComment) => {
     createComment(
@@ -97,9 +80,7 @@ const CommentList = ({ boardId }) => {
       <CommentContainer
         boardId={boardId}
         commentList={commentList}
-        likeCount={likeCount}
         formatRelativeTime={formatRelativeTime}
-        handleLikeClick={handleLikeClick}
         onCommentDelete={handleCommentDelete}
       />
       <CommentForm
