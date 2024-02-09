@@ -78,11 +78,11 @@ export default function MatchDetailScore({ match }) {
                 <HomeName>{homeTeamName}</HomeName>
               </TeamComponent>
               {match.status === "done" ? (
-                <Score win={match.homeScore > match.awayScore}>
+                <Score $win={match.homeScore > match.awayScore}>
                   {match.homeScore}
                 </Score>
               ) : match.status === "during" ? (
-                <Score win={match.homeScore > match.awayScore}>
+                <Score $win={match.homeScore > match.awayScore}>
                   {match.homeScore}
                 </Score>
               ) : (
@@ -98,11 +98,11 @@ export default function MatchDetailScore({ match }) {
             )}
             <TeamContainer>
               {match.status === "done" ? (
-                <Score win={match.awayScore > match.homeScore}>
+                <Score $win={match.awayScore > match.homeScore}>
                   {match.awayScore}
                 </Score>
               ) : match.status === "during" ? (
-                <Score win={match.awayScore > match.homeScore}>
+                <Score $win={match.awayScore > match.homeScore}>
                   {match.awayScore}
                 </Score>
               ) : (
@@ -114,11 +114,7 @@ export default function MatchDetailScore({ match }) {
               </TeamComponent>
             </TeamContainer>
           </MatchUpContainer>
-          <MatchTimeComponent
-            matchId={match.matchId}
-            time={match.matchAt}
-            status={match.status}
-          />
+          <MatchTimeComponent time={match.matchAt} status={match.status} />
         </MatchDetailComponent>
       </MatchDetailContainer>
     </div>
