@@ -15,10 +15,6 @@ export default function MatchDetailPage() {
   const { matchId } = useParams();
 
   const [data, setData] = useState([]);
-  const navigate = useNavigate();
-  const goChatting = (id) => {
-    navigate(`/chat/${id}`);
-  };
   useEffect(() => {
     const fetchData = async () => {
       const result = await getMatchDetail(matchId);
