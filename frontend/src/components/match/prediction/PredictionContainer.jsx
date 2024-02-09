@@ -1,14 +1,8 @@
-import React, { useState, useEffect } from "react";
-import { useParams } from "react-router-dom";
-import { useRecoilState } from "recoil";
+import React from "react";
+
 import styled from "styled-components";
-import {
-  PredictBox,
-  Betting,
-} from "../../../styles/MatchStyles/MatchDetailStyle";
+import { PredictBox } from "../../../styles/MatchStyles/MatchDetailStyle";
 import PredictionComponent from "./PredictionComponent";
-import * as bettingApi from "../../../api/betting";
-import { UserState } from "../../../global/UserState";
 
 export default function PredictionContainer({ match }) {
   match = {
@@ -26,53 +20,12 @@ export default function PredictionContainer({ match }) {
     home: "울산 문수",
   };
 
-  const [userState] = useRecoilState(UserState);
-  const { matchId } = useParams();
   const { homeBettingAmount } = match;
   const { drawBettingAmount } = match;
   const { awayBettingAmount } = match;
 
   const totalBettingAmount =
     homeBettingAmount + drawBettingAmount + awayBettingAmount;
-
-  const [selectedTeam, setSelectedTeam] = useState(null); // 'home', 'draw', 'away'
-  const [bettingAmount, setBettingAmount] = useState(0);
-
-  const handleTeamClick = (team) => {
-    setSelectedTeam(selectedTeam === team ? null : team); // 기존에 선택된 팀이면 선택 해제, 아니면 선택
-  };
-
-  const handleBettingClick = async () => {
-    const teamId =
-      selectedTeam === "home"
-        ? match.homeTeamId
-        : selectedTeam === "draw"
-          ? 0
-          : match.awayTeamId;
-    const teamName =
-      selectedTeam === "home"
-        ? match.homeTeamName
-        : selectedTeam === "draw"
-          ? "무승부"
-          : match.awayTeamName;
-
-    if (selectedTeam && bettingAmount > 0) {
-      try {
-        await bettingApi.betting({
-          userId: 1, // 나중에 userId 가져올 수 있도록 수정
-          matchId,
-          bettingTeamId: teamId,
-          amount: bettingAmount,
-        });
-        alert(`${teamName}에 ${bettingAmount}골 베팅했습니다.`);
-        window.location.reload();
-      } catch (error) {
-        alert("베팅에 실패했습니다.");
-      }
-    } else {
-      alert("팀과 베팅골을 선택해주세요.");
-    }
-  };
 
   return (
     <PredictBox>

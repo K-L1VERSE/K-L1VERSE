@@ -1,10 +1,5 @@
-import React, { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
-import { useRecoilState } from "recoil";
+import React, { useState } from "react";
 import styled from "styled-components";
-import { UserState } from "../../../global/UserState";
-import * as bettingApi from "../../../api/betting";
-
 import { PercentBox } from "../../../styles/MatchStyles/MatchDetailStyle";
 import CurrentBettingComponent from "./CurrentBettingComponent";
 
@@ -24,29 +19,6 @@ function CurrentBettingContainer({ match }) {
     home: "울산 문수",
   };
 
-  const [userState] = useRecoilState(UserState);
-  const { matchId } = useParams();
-  const [betComplete, setBetComplete] = useState(false);
-
-  useEffect(() => {
-    const checkBetting = async () => {
-      const response = await bettingApi.checkBetting({
-        matchId,
-        userId: userState.userId,
-      });
-      // response.data === 0 : 아직 베팅 안함
-      // response.data === 1 : 이미 베팅함
-      if (response.data === 0) {
-        console.log(`베팅 아직 안했음 : ${response.data}`);
-      } else {
-        setBetComplete(true);
-        console.log(`이미 베팅했음 : ${response.data}`);
-      }
-    };
-
-    checkBetting();
-  }, [matchId, userState.userId]);
-
   const { homeBettingAmount } = match;
   const { drawBettingAmount } = match;
   const { awayBettingAmount } = match;
@@ -63,7 +35,6 @@ function CurrentBettingContainer({ match }) {
   const drawOddsRatio = (drawOdds / totalOdds) * 100;
   const awayOddsRatio = (awayOdds / totalOdds) * 100;
   const [selectedTeam, setSelectedTeam] = useState(null); // 'home', 'draw', 'away'
-  const [bettingAmount, setBettingAmount] = useState(0);
 
   const handleTeamClick = (team) => {
     setSelectedTeam(selectedTeam === team ? null : team); // 기존에 선택된 팀이면 선택 해제, 아니면 선택

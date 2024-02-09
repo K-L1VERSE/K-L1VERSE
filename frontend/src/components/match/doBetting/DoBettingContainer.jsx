@@ -26,11 +26,6 @@ function DoBettingContainer({ match }) {
     home: "울산 문수",
   };
 
-  const bet = {
-    betTeamId: 2,
-    betGoal: 20,
-  };
-
   const [selectedTeam, setSelectedTeam] = useState(null); // 'home', 'draw', 'away'
   const [bettingAmount, setBettingAmount] = useState(0);
   const [userState] = useRecoilState(UserState);
