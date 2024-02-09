@@ -18,7 +18,7 @@ export const TeamItem = styled.div`
   text-align: center;
   color: #222222;
   margin: 1rem 1.2rem;
-  background-color: ${(props) => (props.focus ? "#E5EDFB" : "")};
+  background-color: ${(props) => (props.$focus ? "#E5EDFB" : "")};
   padding: 0.3rem;
   border-radius: 0.5rem;
   cursor: pointer;
