@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import styled from "styled-components";
 import { PercentBox } from "../../../styles/MatchStyles/MatchDetailStyle";
 import CurrentBettingComponent from "./CurrentBettingComponent";
@@ -34,11 +34,6 @@ function CurrentBettingContainer({ match }) {
   const homeOddsRatio = (homeOdds / totalOdds) * 100;
   const drawOddsRatio = (drawOdds / totalOdds) * 100;
   const awayOddsRatio = (awayOdds / totalOdds) * 100;
-  const [selectedTeam, setSelectedTeam] = useState(null); // 'home', 'draw', 'away'
-
-  const handleTeamClick = (team) => {
-    setSelectedTeam(selectedTeam === team ? null : team); // 기존에 선택된 팀이면 선택 해제, 아니면 선택
-  };
 
   return (
     <PercentBox>
