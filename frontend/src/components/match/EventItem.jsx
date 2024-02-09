@@ -3,7 +3,7 @@ import {
   Event,
   EventName,
   MemberInfo,
-} from "../../styles/MatchStyles/MatchTimelinStyle";
+} from "../../styles/match-styles/MatchTimelinStyle";
 
 export default function EventItem({
   eventName,

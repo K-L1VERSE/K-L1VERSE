@@ -6,7 +6,7 @@ import {
   TeamItem,
   Text,
   PercentItems,
-} from "../../styles/MatchStyles/MatchTimelinStyle";
+} from "../../styles/match-styles/MatchTimelinStyle";
 
 export default function BettingPercentItem({ match }) {
   const homeTeamsrc = `${process.env.PUBLIC_URL}/badge/badge${match.homeTeamId}.png`;

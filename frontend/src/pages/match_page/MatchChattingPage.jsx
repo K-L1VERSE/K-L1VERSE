@@ -9,7 +9,7 @@ import {
   Line,
   Buttons,
   Button,
-} from "../../styles/MatchStyles/MatchTimelinStyle";
+} from "../../styles/match-styles/MatchTimelinStyle";
 import { SurveyTop, ToLeftImg } from "../../styles/SurveyStyles/SurveyTop";
 import ToLeftPng from "../../assets/ToLeft.png";
 

@@ -2,7 +2,7 @@ import React from "react";
 import {
   TimelineWrap,
   TimeMin,
-} from "../../styles/MatchStyles/MatchTimelinStyle";
+} from "../../styles/match-styles/MatchTimelinStyle";
 import EventItem from "./EventItem";
 // import TimelineItem from "./TimelineItem";
 

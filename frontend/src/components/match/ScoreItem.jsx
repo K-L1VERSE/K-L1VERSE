@@ -5,7 +5,7 @@ import {
   Team,
   TeamName,
   Score,
-} from "../../styles/MatchStyles/MatchTimelinStyle";
+} from "../../styles/match-styles/MatchTimelinStyle";
 
 export default function ScoreContainer({ match }) {
   const homeTeamsrc = `${process.env.PUBLIC_URL}/badge/badge${match.homeTeamId}.png`;
