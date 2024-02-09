@@ -93,8 +93,8 @@ export default function TimelineConatiner() {
   return (
     <TimelineWrap>
       <table>
-        {timelines.map((timeline) => (
-          <tr>
+        {timelines.map((timeline, i) => (
+          <tr key={i}>
             <td width="45%">
               {timeline.homeOrAway === "HOME" && (
                 <EventItem
