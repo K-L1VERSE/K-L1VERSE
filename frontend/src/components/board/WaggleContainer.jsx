@@ -1,6 +1,5 @@
 import React from "react";
 import { ListContainer } from "../../styles/BoardStyles/BoardStyle";
-
 import WaggleItemCard from "./WaggleItemCard";
 
 function WaggleContainer({ waggleList, formatRelativeTime }) {

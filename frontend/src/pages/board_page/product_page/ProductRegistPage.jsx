@@ -22,6 +22,7 @@ function ProductRegistPage() {
   const [boardImage, setBoardImage] = useState(null);
   const [isUpdateMode, setIsUpdateMode] = useState(false);
   const { userId, nickname } = useRecoilState(UserState)[0];
+  const [file, setFile] = useState(null);
 
   const location = useLocation();
   useEffect(() => {

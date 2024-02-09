@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import {
   TitleInput,
   TextArea,
@@ -55,12 +55,6 @@ export default function ProductRegistCard({
         onChange={onPriceChange}
         placeholder="가격"
       />
-      <br />
-      <InputLabel>사진 첨부</InputLabel>
-      <BoardFile onFileChange={handleFileChange} />
-      {previewImage && (
-        <img src={previewImage} alt="미리보기" style={{ maxWidth: "100%" }} />
-      )}
       <br />
       <InputLabel>사진 첨부</InputLabel>
       <BoardFile onFileChange={handleFileChange} />
