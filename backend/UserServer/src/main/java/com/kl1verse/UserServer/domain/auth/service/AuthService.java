@@ -117,7 +117,7 @@ public class AuthService {
                         .userId(user.getId())
                         .type(NotificationType.GOAL)
                         .message("출석 보상으로 10골을 지급 받았습니다.")
-                        .uri(domain+"/mypage")
+                        .uri("/mypage")
                         .date(LocalDateTime.now())
                         .build());
         } else {
