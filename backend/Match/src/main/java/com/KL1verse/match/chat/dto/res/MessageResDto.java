@@ -19,5 +19,6 @@ public class MessageResDto {
     private String message;
     private String date;
     private String profile;
+    private String mainBadge;
 
 }

@@ -64,18 +64,18 @@ export default function Header() {
       </Contents>
       <Nav>
         <NavItem onClick={goMatchSchedule}>
-          {navbarScheduleIcon({ isSelected: state[0] })}
-          <Text isSelected={state[0]}>경기일정</Text>
+          {navbarScheduleIcon({ $isSelected: state[0] })}
+          <Text $isSelected={state[0]}>경기일정</Text>
         </NavItem>
         <NavItem onClick={goTeam}>
-          {navbarTeamInfoIcon({ isSelected: state[1] })}
-          <Text isSelected={state[1]}>팀정보</Text>
+          {navbarTeamInfoIcon({ $isSelected: state[1] })}
+          <Text $isSelected={state[1]}>팀정보</Text>
         </NavItem>
         <NavItem onClick={goMain}>
           <img src={Logo} alt="logo" width={50} />
         </NavItem>
         <NavItem onClick={goNotification}>
-          {navbarNotificationIcon({ isSelected: state[2] })}
+          {navbarNotificationIcon({ $isSelected: state[2] })}
           {notificationState.newNotifications.length > 0 && (
             <div
               style={{
@@ -91,12 +91,12 @@ export default function Header() {
               }}
             />
           )}
-          <Text isSelected={state[2]}>알림</Text>
+          <Text $isSelected={state[2]}>알림</Text>
         </NavItem>
         <NavItem onClick={goMypage}>
           {/* <MyPageIcon /> */}
-          {navbarMyPageIcon({ isSelected: state[3] })}
-          <Text isSelected={state[3]}>마이페이지</Text>
+          {navbarMyPageIcon({ $isSelected: state[3] })}
+          <Text $isSelected={state[3]}>마이페이지</Text>
         </NavItem>
       </Nav>
     </>

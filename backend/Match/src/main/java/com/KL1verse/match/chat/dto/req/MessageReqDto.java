@@ -19,5 +19,6 @@ public class MessageReqDto {
     private String message;
     private String date;
     private String profile;
+    private String mainBadge;
 
 }
