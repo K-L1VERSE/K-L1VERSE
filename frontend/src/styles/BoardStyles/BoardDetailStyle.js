@@ -15,8 +15,10 @@ export const DetailTop = styled.div`
 export const DetailBox = styled.div`
   background-color: #fff;
   border-bottom: 1px solid #ccc;
-  padding: 1rem;
+  padding: 1rem 1rem 0.4rem 1rem;
   margin-bottom: 1rem;
+
+  /* background-color: aliceblue; */
 `;
 
 export const User = styled.div`
@@ -126,8 +128,6 @@ export const LikeButton = styled.button`
   background-color: transparent;
   border: none;
   cursor: pointer;
-  margin-top: 10px;
-  margin-right: 10px;
 
   &:hover {
     color: #007bff;
@@ -155,4 +155,12 @@ export const DeleteButton = styled(Button)`
   &:hover {
     background-color: #cdd8ec;
   }
+`;
+
+export const DetailCommentCount = styled.div`
+  font-size: 0.7rem;
+  margin-left: 1rem;
+  margin-bottom: 0.5rem;
+  color: #595959;
+  align-items: center;
 `;

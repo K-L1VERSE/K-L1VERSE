@@ -6,19 +6,22 @@ export const Header = styled.div`
   align-items: center;
   justify-content: space-between;
   margin: 0 1rem;
-  height: 2rem;
-  margin-bottom: 0.5rem;
+  border-bottom: 1px solid #f4f4f4;
 `;
 
 export const HeaderH2 = styled.h2`
+  width: auto;
+  font-size: 1.1rem;
+  line-height: 10px;
+  color: #222222;
   font-family: "Pretendard-Bold";
-  font-size: 1rem;
 `;
 
 export const HeaderButton = styled.button`
   font-family: "Pretendard-Regular";
   border: none;
   background-color: transparent;
+  font-size: 0.7rem;
   font-size: 0.8rem;
   color: #002266;
   &:hover {

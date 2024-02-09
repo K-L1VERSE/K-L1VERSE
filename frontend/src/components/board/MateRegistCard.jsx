@@ -11,10 +11,18 @@ import {
   FlagInputLabel,
   FlagInputCheckbox,
   FlagInputSlider,
+  InputLabel,
 } from "../../styles/BoardStyles/BoardCreateStyle";
 import { getMatchList } from "../../api/match";
+import { formatDateTime } from "../../components/board/dateFormat";
+import {
+  MateInputLabel,
+  MateInputText,
+  MateNumberContainer,
+  MateNumberInput,
+} from "../../styles/BoardStyles/MateListStyle";
 
-export default function MateRegistCard({
+function MateRegistCard({
   title,
   content,
   total,
@@ -30,7 +38,8 @@ export default function MateRegistCard({
   buttonText,
 }) {
   const [matchList, setMatchList] = useState([]);
-  const [fullFlag, setFullFlag] = useState(initialFullFlag); // 추가된 상태
+  const [fullFlag, setFullFlag] = useState(initialFullFlag);
+  const [selectedMatchTime, setSelectedMatchTime] = useState(""); // 선택한 경기의 시간
 
   useEffect(() => {
     const today = new Date();
@@ -54,20 +63,13 @@ export default function MateRegistCard({
           <FlagInputCheckbox
             type="checkbox"
             checked={fullFlag}
-            onChange={onFullFlagChange}
+            onChange={handleFullFlagChange}
           />
           <FlagInputSlider />
         </FlagInputLabel>
         <FlagInputText>모집중</FlagInputText>
       </FlagInputContainer>
-
-      <TitleInput
-        type="text"
-        value={title}
-        onChange={onTitleChange}
-        placeholder="제목"
-      />
-      <br />
+      <InputLabel>경기 일정</InputLabel>
       <SelectInput
         value={matchId}
         onChange={(e) => onMatchIdChange(e.target.value)}
@@ -77,21 +79,31 @@ export default function MateRegistCard({
         </option>
         {matchList.map((match) => (
           <option key={match.matchId} value={match.matchId}>
-            {match.homeTeamName} vs {match.awayTeamName} - {match.matchAt}{" "}
+            {match.homeTeamName} vs {match.awayTeamName} -{" "}
+            {formatDateTime(match.matchAt)}{" "}
           </option>
         ))}
       </SelectInput>
-      <TextArea value={content} onChange={onContentChange} placeholder="내용" />
-      <FlagInputContainer>
-        <NumberInput
+      <InputLabel>모집 내용</InputLabel>
+      <TextArea
+        value={content}
+        onChange={onContentChange}
+        placeholder="내용을 입력하세요"
+      />
+      <InputLabel>모집 인원</InputLabel>
+      <MateNumberContainer>
+        <MateNumberInput
           type="number"
           value={total}
           onChange={onTotalChange}
           placeholder="총 인원"
         />
-      </FlagInputContainer>
+        <MateInputText>명</MateInputText>
+      </MateNumberContainer>
       <br />
       <SubmitButton onClick={onSubmit}>{buttonText}</SubmitButton>
     </>
   );
 }
+
+export default MateRegistCard;

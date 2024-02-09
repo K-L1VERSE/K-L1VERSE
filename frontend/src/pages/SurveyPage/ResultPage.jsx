@@ -14,6 +14,7 @@ import TeamName from "../../components/Survey/TeamName";
 import { SurveyTop, ToLeftImg } from "../../styles/SurveyStyles/SurveyTop";
 import ToLeftPng from "../../assets/ToLeft.png";
 import LoadingBar from "../../components/Survey/LoadingBar";
+import KakaoPage from "./KakaoPage";
 
 function ResultPage() {
   const {
@@ -23,6 +24,7 @@ function ResultPage() {
   const navigate = useNavigate();
   const [isCopyModalOpen, setIsCopyModalOpen] = React.useState(false);
   const [showResult, setShowResult] = useState(false);
+  const [showKakaoPage, setShowKakaoPage] = useState(false);
 
   useEffect(() => {
     const tick = setTimeout(() => {
@@ -67,10 +69,6 @@ function ResultPage() {
 
   const goStart = () => {
     navigate("/survey");
-  };
-
-  const goKakao = () => {
-    navigate("/kakao");
   };
 
   return (
@@ -118,9 +116,7 @@ function ResultPage() {
             <button type="button" onClick={handleRestart}>
               다시하기
             </button>
-            <button type="button" onClick={goKakao}>
-              카카오톡 공유
-            </button>
+            <KakaoPage />
           </ShareBox>
         </div>
       )}

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import {
   TitleInput,
   TextArea,
@@ -7,31 +7,29 @@ import {
   FileInput,
   FileInputLabel,
   RegistCardContainer,
+  InputLabel,
 } from "../../styles/BoardStyles/BoardCreateStyle";
-import CameraIcon from "../../assets/icon/camera-icon.svg";
+import BoardFile from "./BoardFile";
 
 export default function WaggleRegistCard({
   title,
   content,
   onTitleChange,
   onContentChange,
-  onImageChange,
+  onFileChange, // onFileChange 추가
   onSubmit,
   buttonText,
 }) {
-  const handleImageChange = (e) => {
-    const selectedFiles = e.target.files;
+  const [previewImage, setPreviewImage] = useState(null);
 
-    // 최대 10개까지 이미지 선택
-    const slicedFiles = Array.from(selectedFiles).slice(0, 10);
-
-    // 선택된 파일들을 상태에 저장
-    setBoardImages(slicedFiles);
+  const handleFileChange = (file, result, imageUrl) => {
+    // console.log(imageUrl, "!@#!@#!@#!@#");
+    onFileChange(imageUrl);
   };
 
-  <FileInput type="file" onChange={handleImageChange} accept="image/*" />;
   return (
     <RegistCardContainer>
+      <InputLabel>제목</InputLabel>
       <TitleInput
         type="text"
         value={title}
@@ -39,19 +37,14 @@ export default function WaggleRegistCard({
         placeholder="제목"
       />
       <br />
+      <InputLabel>내용</InputLabel>
       <TextArea value={content} onChange={onContentChange} placeholder="내용" />
       <br />
-      <FileInputContainer>
-        <FileInput
-          type="file"
-          onChange={onImageChange}
-          accept="image/*"
-          multiple // 다중 파일 선택 허용
-        />
-        <FileInputLabel>
-          <img src={CameraIcon} alt="Camera Icon" />
-        </FileInputLabel>
-      </FileInputContainer>
+      <InputLabel>사진 첨부</InputLabel>
+      <BoardFile onFileChange={handleFileChange} />
+      {previewImage && (
+        <img src={previewImage} alt="미리보기" style={{ maxWidth: "100%" }} />
+      )}
       <br />
       <SubmitButton onClick={onSubmit}>{buttonText}</SubmitButton>
     </RegistCardContainer>

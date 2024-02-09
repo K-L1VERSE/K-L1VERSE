@@ -14,16 +14,19 @@ import {
 function WaggleItemCard({ waggle, formatRelativeTime }) {
   return (
     <ItemContainer>
-      <ItemWriter>{waggle.board.nickname}</ItemWriter>
-      <ItemTitle>
-        <Link
-          to={`/waggle/${waggle.board.boardId}`}
-          style={{ textDecoration: "none", color: "black" }}
-        >
-          {waggle.board.title}
-        </Link>
-      </ItemTitle>
+      {waggle.board.boardImage && waggle.board.boardImage.length > 0 && (
+        // 첫 번째 이미지만 출력
+        <WaggleImage src={waggle.board.boardImage[0]} alt="Waggle Image" />
+      )}
       <ItemContent>
+        <ItemTitle>
+          <Link
+            to={`/waggle/${waggle.board.boardId}`}
+            style={{ textDecoration: "none", color: "black" }}
+          >
+            {waggle.board.title}
+          </Link>
+        </ItemTitle>
         <Link
           to={`/waggle/${waggle.board.boardId}`}
           style={{ textDecoration: "none" }}

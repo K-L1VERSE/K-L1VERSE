@@ -10,6 +10,11 @@ export const CommentFormContainer = styled.form`
   }
 `;
 
+export const TextContainer = styled.form`
+  display: flex;
+  margin-top: 0.1rem;
+`;
+
 export const TextArea = styled.textarea`
   border: 1px solid lightgray;
   padding: 10px;
@@ -22,9 +27,16 @@ export const TextArea = styled.textarea`
   }
 `;
 
+export const CheckboxLabel = styled.label`
+  display: flex;
+  align-items: center;
+  font-size: 0.7rem;
+`;
+
+export const CheckboxInput = styled.input``;
+
 // 댓글 수정창
 export const CommentInput = styled.input`
-  width: inherit;
   margin-left: 0.8rem;
   padding: 8px;
   margin-top: 0.4rem;
@@ -58,6 +70,8 @@ export const SubmitButton = styled.button`
   font-size: 0.9em;
   border: none;
   cursor: pointer;
+  /* border-radius: 20px; */
+
   height: 3.4rem;
   &:hover {
     background-color: #0056b3;
@@ -86,10 +100,6 @@ export const ReplyButton = styled.button`
   cursor: pointer;
   margin-right: 10px;
   background-image: url("../../assets/icon/reply.png");
-
-  &:hover {
-    background-color: #45a049;
-  }
 `;
 
 /* ************* CommentList ************* */

@@ -14,32 +14,37 @@ import {
   User,
   Title,
   Content,
-  LikeButton,
-  LikeCount,
   DetailBox,
   DetailTop,
   BackButton,
   EditDeleteButton,
+  DetailCommentCount,
   // LikeCount,
 } from "../../../styles/BoardStyles/BoardDetailStyle";
 import { UserState } from "../../../global/UserState";
 
 import BackIcon from "../../../assets/icon/back-icon.png";
-import UnlikeIcon from "../../../assets/icon/unlike-icon.png";
-import LikeIcon from "../../../assets/icon/like-icon.png";
+import { ReactComponent as Comment } from "../../../assets/icon/comment-icon.svg";
 import {
   DeleteButton,
   EditButton,
 } from "../../../styles/BoardStyles/CommentStyle";
+import Like from "../../../components/board/Like";
+import {
+  WaggleImage,
+  WaggleImageContainer,
+} from "../../../styles/BoardStyles/WaggleListStyle";
 
 function WaggleDetailPage() {
+  const [boardDetail, setBoardDetail] = useState({});
   const [waggleDetail, setWaggleDetail] = useState({});
-  const [waggleId, setWaggleId] = useState(0);
+  const [waggleId, setWaggleId] = useState("");
   const [title, setTitle] = useState("");
   const [content, setContent] = useState("");
   const [nickname, setNickname] = useState("");
-  const [isLiked, setIsLiked] = useState(false);
-  const [likeCount, setLikeCount] = useState(0);
+  const [liked, setLiked] = useState(false);
+  const [likesCount, setLikesCount] = useState(0);
+  const [commentCount, setCommentCount] = useState(0);
   const { boardId } = useParams();
   const navigate = useNavigate();
   const { userId } = useRecoilState(UserState)[0];
@@ -49,6 +54,7 @@ function WaggleDetailPage() {
       boardId,
       { board: { userId } },
       (res) => {
+        setBoardDetail(res.data);
         setWaggleDetail(res.data.board);
       },
       () => {},
@@ -62,7 +68,11 @@ function WaggleDetailPage() {
   useEffect(() => {
     setTitle(waggleDetail.title);
     setContent(waggleDetail.content);
+    setWaggleId(boardDetail.waggleId);
     setNickname(waggleDetail.nickname);
+    setCommentCount(waggleDetail.commentCount);
+    setLiked(boardDetail.liked);
+    setLikesCount(boardDetail.likesCount);
   }, [waggleDetail]);
 
   const handleUpdateBtn = () => {
@@ -84,23 +94,23 @@ function WaggleDetailPage() {
   };
 
   const handleLikeClick = () => {
-    if (isLiked) {
+    if (liked) {
       unlikeWaggle(
-        { userId },
         waggleId,
+        { userId },
         () => {
-          setIsLiked(false);
-          // setLikeCount((prevCount) => prevCount - 1);
+          setLiked(false);
+          setLikesCount((prevCount) => prevCount - 1);
         },
         () => {},
       );
     } else {
       likeWaggle(
-        { userId },
         waggleId,
+        { userId },
         () => {
-          setIsLiked(true);
-          // setLikeCount((prevCount) => prevCount + 1);
+          setLiked(true);
+          setLikesCount((prevCount) => prevCount + 1);
         },
         () => {},
       );
@@ -138,25 +148,27 @@ function WaggleDetailPage() {
         <User>{nickname}</User>
         <Title>{title}</Title>
         <Content>{content}</Content>
-        {/* {waggleDetail.boardImage && (
-          <img
-            src={waggleDetail.boardImage}
-            alt="Waggle Image"
-            style={{ maxWidth: "100%", maxHeight: "400px", margin: "20px 0" }}
-          />
-        )} */}
-        <div>
-          <LikeButton onClick={handleLikeClick}>
-            <img
-              src={isLiked ? LikeIcon : UnlikeIcon}
-              alt={isLiked ? "Like" : "Unlike"}
-              style={{ width: "20px", height: "20px" }}
-            />
-          </LikeButton>
-          <LikeCount>좋아요 {likeCount}개</LikeCount>
-        </div>
+        <WaggleImageContainer>
+          {waggleDetail.boardImage &&
+            waggleDetail.boardImage.map((imageUrl, index) => (
+              <WaggleImage
+                key={index}
+                src={imageUrl}
+                alt={`Waggle Image ${index}`}
+              />
+            ))}
+        </WaggleImageContainer>
+        <Like
+          liked={liked}
+          likesCount={likesCount}
+          handleLikeClick={handleLikeClick}
+        />
         <EditDeleteButton>{renderEditDeleteButtons()}</EditDeleteButton>
       </DetailBox>
+      <DetailCommentCount>
+        <Comment />
+        댓글 수 {commentCount}
+      </DetailCommentCount>
       <CommentList boardId={boardId} />
     </Container>
   );
