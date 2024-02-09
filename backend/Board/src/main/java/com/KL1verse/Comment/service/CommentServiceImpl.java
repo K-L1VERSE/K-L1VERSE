@@ -39,7 +39,7 @@ public class CommentServiceImpl implements CommentService {
         Comment comment = commentRepository.findById(commentId)
             .orElseThrow(() -> new RuntimeException("Comment not found with id: " + commentId));
 
-        if (comment.isSecret() && !isAuthorized(comment, requestingUserId)) {
+        if (comment.getIsSecret() && !isAuthorized(comment, requestingUserId)) {
 
             return null;
         }
@@ -60,7 +60,9 @@ public class CommentServiceImpl implements CommentService {
     @Override
     public CommentDTO createComment(CommentDTO commentDTO) {
 
+        log.info("commentDto isSecret = {}", commentDTO.getIsSecret());
         Comment comment = convertToEntity(commentDTO);
+        log.info("isSecret = {}", comment.getIsSecret());
 
         Board board = boardRepository.findById(commentDTO.getBoardId())
             .orElseThrow(
@@ -90,7 +92,7 @@ public class CommentServiceImpl implements CommentService {
             .deleteAt(createdComment.getDeleteAt())
             .boardId(createdComment.getBoardId().getBoardId())
             .userId(createdComment.getUserId())
-            .isSecret(createdComment.isSecret())
+            .isSecret(createdComment.getIsSecret())
             .nickname(commentDTO.getNickname())
             .likesCount(0)
             .parentId(
@@ -151,7 +153,7 @@ public class CommentServiceImpl implements CommentService {
             .createAt(createdReply.getCreateAt())
             .userId(createdReply.getUserId())
             .nickname(replyDTO.getNickname())
-            .isSecret(createdReply.isSecret())
+            .isSecret(createdReply.getIsSecret())
             .boardId(createdReply.getBoardId().getBoardId())
             .likesCount(0)
             .build();
@@ -182,20 +184,21 @@ public class CommentServiceImpl implements CommentService {
 
                 if (comment.getParentId() == null) {
 
-                    if (comment.isSecret() && !isAuthorized(comment, requestingUserId)) {
+                    if (comment.getIsSecret() && !isAuthorized(comment, requestingUserId)) {
 
+                        log.info("~!@~!@~!~!!~@~! 비밀댓글");
                         CommentDTO secretComment = new CommentDTO();
                         secretComment.setContent("비밀 댓글입니다.");
                         secretComment.setUpdateAt(comment.getUpdateAt());
                         secretComment.setDeleteAt(comment.getDeleteAt());
                         secretComment.setCommentId(comment.getCommentId());
                         secretComment.setCreateAt(comment.getCreateAt());
-                        secretComment.setSecret(comment.isSecret());
+                        secretComment.setIsSecret(comment.getIsSecret());
                         secretComment.setLiked(isLiked);
 
                         List<CommentDTO> secretReplies = comment.getReplies().stream()
                             .map(reply -> {
-                                if (reply.isSecret() && !isAuthorized(reply, requestingUserId)) {
+                                if (reply.getIsSecret() && !isAuthorized(reply, requestingUserId)) {
 
                                     CommentDTO secretReply = new CommentDTO();
                                     secretReply.setContent("비밀 대댓글입니다.");
@@ -204,7 +207,7 @@ public class CommentServiceImpl implements CommentService {
                                     secretReply.setCommentId(reply.getCommentId());
                                     secretReply.setCreateAt(reply.getCreateAt());
                                     secretReply.setParentId(reply.getParentId().getCommentId());
-                                    secretReply.setSecret(reply.isSecret());
+                                    secretReply.setIsSecret(reply.getIsSecret());
                                     secretReply.setReplies(Collections.emptyList());
                                     secretReply.setBoardId(reply.getBoardId().getBoardId());
                                     secretReply.setLiked(isLiked);
@@ -242,7 +245,7 @@ public class CommentServiceImpl implements CommentService {
 
                         List<CommentDTO> replies = comment.getReplies().stream()
                             .map(reply -> {
-                                if (reply.isSecret() && !isAuthorized(reply, requestingUserId)) {
+                                if (reply.getIsSecret() && !isAuthorized(reply, requestingUserId)) {
 
                                     CommentDTO secretReply = new CommentDTO();
                                     secretReply.setContent("비밀 대댓글입니다.");
@@ -251,7 +254,7 @@ public class CommentServiceImpl implements CommentService {
                                     secretReply.setCommentId(reply.getCommentId());
                                     secretReply.setCreateAt(reply.getCreateAt());
                                     secretReply.setParentId(reply.getParentId().getCommentId());
-                                    secretReply.setSecret(reply.isSecret());
+                                    secretReply.setIsSecret(reply.getIsSecret());
                                     secretReply.setReplies(Collections.emptyList());
                                     secretReply.setBoardId(reply.getBoardId().getBoardId());
                                     secretReply.setLiked(isLiked);
@@ -300,7 +303,7 @@ public class CommentServiceImpl implements CommentService {
         CommentDTO commentDTO = convertToDTO(comment);
         List<CommentDTO> replyDTOs = comment.getReplies().stream()
             .map(reply -> {
-                if (reply.isSecret() && !isAuthorized(reply, requestingUserId)) {
+                if (reply.getIsSecret() && !isAuthorized(reply, requestingUserId)) {
 
                     CommentDTO secretReply = new CommentDTO();
                     secretReply.setContent("비밀 대댓글입니다.");
@@ -309,7 +312,7 @@ public class CommentServiceImpl implements CommentService {
                     secretReply.setCommentId(reply.getCommentId());
                     secretReply.setCreateAt(reply.getCreateAt());
                     secretReply.setParentId(reply.getParentId().getCommentId());
-                    secretReply.setSecret(reply.isSecret());
+                    secretReply.setIsSecret(reply.getIsSecret());
                     secretReply.setReplies(Collections.emptyList());
                     secretReply.setBoardId(reply.getBoardId().getBoardId());
 
@@ -337,14 +340,14 @@ public class CommentServiceImpl implements CommentService {
         return replies.stream()
             .map(comment -> {
                 CommentDTO replyDTO = new CommentDTO();
-                if (comment.isSecret()) {
+                if (comment.getIsSecret()) {
 
                     replyDTO.setContent("비밀 댓글입니다.");
                     replyDTO.setUpdateAt(comment.getUpdateAt());
                     replyDTO.setDeleteAt(comment.getDeleteAt());
                     replyDTO.setCommentId(comment.getCommentId());
                     replyDTO.setCreateAt(comment.getCreateAt());
-                    replyDTO.setSecret(comment.isSecret());
+                    replyDTO.setIsSecret(comment.getIsSecret());
                     replyDTO.setReplies(comment.getReplies().stream().map(this::convertToDTO)
                         .collect(Collectors.toList()));
                     replyDTO.setBoardId(comment.getBoardId().getBoardId());
