@@ -14,7 +14,7 @@ export default function EventItem({
   homeOrAway,
 }) {
   return (
-    <Event home={homeOrAway === "HOME"}>
+    <Event $home={homeOrAway === "HOME"}>
       <EventName>
         {eventName === "득점" && "🎉 "}
         {eventName === "교체" && <span>&#8693; </span>}

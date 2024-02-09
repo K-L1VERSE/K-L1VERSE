@@ -14,9 +14,9 @@ export const Button = styled.div`
   margin-right: 0.5rem;
   padding: 0.5rem;
   border-radius: 0.3rem;
-  background-color: ${(props) => (props.focus ? "#E5EDFB" : "#F4F4F4")};
-  color: ${(props) => (props.focus ? "#002266" : "#595959")};
-  font-family: ${(props) => (props.focus ? "Pretendard-Bold" : "")};
+  background-color: ${(props) => (props.$focus ? "#E5EDFB" : "#F4F4F4")};
+  color: ${(props) => (props.$focus ? "#002266" : "#595959")};
+  font-family: ${(props) => (props.$focus ? "Pretendard-Bold" : "")};
   cursor: pointer;
 `;
 
@@ -82,7 +82,7 @@ export const TimeMin = styled.div`
 
 export const Event = styled.div`
   padding: 0.5rem 0.7rem;
-  text-align: ${(props) => (props.home ? "right" : "")};
+  text-align: ${(props) => (props.$home ? "right" : "")};
   line-height: 1.1rem;
 `;
 
@@ -106,7 +106,7 @@ export const PercentItems = styled.div`
 `;
 
 export const PercentItem = styled.div`
-  width: ${(props) => (props.width ? `${props.width}%` : "35%")};
+  width: ${(props) => (props.$width ? `${props.$width}%` : "35%")};
 `;
 
 export const Percent = styled.div`

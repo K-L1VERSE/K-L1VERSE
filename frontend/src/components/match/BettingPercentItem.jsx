@@ -34,23 +34,23 @@ export default function BettingPercentItem({ match }) {
     <PercentBox>
       <Text>오늘의 우승 팀은 누가 될까요?</Text>
       <PercentItems>
-        <PercentItem width={homeOddsRatio}>
+        <PercentItem $width={homeOddsRatio}>
           <TeamItem>
             <img src={homeTeamsrc} alt="" />
             {match.homeTeamName}
           </TeamItem>
-          <Percent type="home">X {Math.round(homeOdds * 100) / 100}</Percent>
+          <Percent $type="home">X {Math.round(homeOdds * 100) / 100}</Percent>
         </PercentItem>
-        <PercentItem width={drawOddsRatio}>
+        <PercentItem $width={drawOddsRatio}>
           <TeamItem>무승부</TeamItem>
-          <Percent type="draw">X {Math.round(drawOdds * 100) / 100}</Percent>
+          <Percent $type="draw">X {Math.round(drawOdds * 100) / 100}</Percent>
         </PercentItem>
-        <PercentItem width={awayOddsRatio}>
+        <PercentItem $width={awayOddsRatio}>
           <TeamItem>
             <img src={awayTeamsrc} alt="" />
             {match.awayTeamName}
           </TeamItem>
-          <Percent type="away">X {Math.round(awayOdds * 100) / 100}</Percent>
+          <Percent $type="away">X {Math.round(awayOdds * 100) / 100}</Percent>
         </PercentItem>
       </PercentItems>
     </PercentBox>
