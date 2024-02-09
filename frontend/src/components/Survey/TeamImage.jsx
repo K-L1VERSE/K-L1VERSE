@@ -3,7 +3,7 @@ import PropTypes from "prop-types"; // PropTypes 추가
 
 function TeamImage({ teamId }) {
   const teamImages = {
-    1: "/images/surveyResult/ulsan_mita.jpg",
+    1: "/images/surveyResult/ulsan_mita.png",
     2: "/images/surveyResult/pohang_soidori.png",
     3: "/images/surveyResult/jeju_gamguri.png",
     4: "/images/surveyResult/jeonbuk_nighty.png",
@@ -13,7 +13,7 @@ function TeamImage({ teamId }) {
     8: "/images/surveyResult/incheon_ut2.png",
     9: "/images/surveyResult/gangwon_gangwoong.png",
     10: "/images/surveyResult/gwangju_mascot.png",
-    11: "/images/surveyResult/suwon_swoony.jpg",
+    11: "/images/surveyResult/suwon_swoony.png",
     12: "/images/surveyResult/kimcheon_shuwoong2.png",
   };
 
@@ -36,7 +36,7 @@ function TeamImage({ teamId }) {
     <img
       src={teamImage}
       alt="teamImage"
-      style={{ maxWidth: "100%", height: "auto" }}
+      style={{ width: "12rem", height: "auto" }}
     />
   );
 }

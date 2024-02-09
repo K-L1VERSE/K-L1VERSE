@@ -1,19 +1,62 @@
 import React, { useEffect, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faTwitter, faFacebook } from "@fortawesome/free-brands-svg-icons";
-import { faLink } from "@fortawesome/free-solid-svg-icons";
 import $ from "jquery";
 import {
-  ShareBox,
-  Share,
   Modal,
+  TopWrap,
+  Text,
+  BottomWrap,
+  UrlBox,
+  ShareText,
+  Shares,
+  ResultTeam,
+  Team,
 } from "../../styles/SurveyStyles/ResultCardStyle";
 import TeamImage from "../../components/Survey/TeamImage";
 import TeamName from "../../components/Survey/TeamName";
 import { SurveyTop, ToLeftImg } from "../../styles/SurveyStyles/SurveyTop";
 import ToLeftPng from "../../assets/ToLeft.png";
+import Wallpaper from "../../assets/wallpaperbetter.png";
+import Facebook from "../../assets/icon/facebook-icon(ver2).png";
+import Twitter from "../../assets/icon/twitter-icon.png";
+import Kakao from "../../assets/icon/kakaotalk-icon.png";
+import Goback from "../../assets/icon/go-back-arrow-icon.png";
 import LoadingBar from "../../components/Survey/LoadingBar";
+import { ReactComponent as Congrats } from "../../assets/congrats.svg";
+
+function firework() {
+  var duration = 15 * 100;
+  var animationEnd = Date.now() + duration;
+  var defaults = { startVelocity: 25, spread: 360, ticks: 50, zIndex: 0 };
+  //  startVelocity: 범위, spread: 방향, ticks: 갯수
+
+  function randomInRange(min, max) {
+    return Math.random() * (max - min) + min;
+  }
+
+  var interval = setInterval(function () {
+    var timeLeft = animationEnd - Date.now();
+
+    if (timeLeft <= 0) {
+      return clearInterval(interval);
+    }
+
+    var particleCount = 50 * (timeLeft / duration);
+    // since particles fall down, start a bit higher than random
+    confetti(
+      Object.assign({}, defaults, {
+        particleCount,
+        origin: { x: randomInRange(0.1, 0.3), y: Math.random() - 0.2 },
+      }),
+    );
+    confetti(
+      Object.assign({}, defaults, {
+        particleCount,
+        origin: { x: randomInRange(0.7, 0.9), y: Math.random() - 0.2 },
+      }),
+    );
+  }, 250);
+}
 
 function ResultPage() {
   const {
@@ -27,6 +70,7 @@ function ResultPage() {
   useEffect(() => {
     const tick = setTimeout(() => {
       setShowResult(true);
+      firework();
     }, 3000);
     return () => clearTimeout(tick);
   }, []);
@@ -81,53 +125,43 @@ function ResultPage() {
             <ToLeftImg src={ToLeftPng} onClick={goStart} />
             나와 맞는 구단 알아보기
           </SurveyTop>
-          <br />
-          <h1>나랑 어울리는 팀은~?</h1>
-          <TeamImage teamId={teamId} />
-          <TeamName teamId={teamId} />
-          <br />
-          <ShareBox>
-            <div>친구의 결과도 궁금하다면 ?</div>
-          </ShareBox>
-          <ShareBox>
-            <button type="button" onClick={shareTwitter}>
-              <FontAwesomeIcon icon={faTwitter} size="2x" color="white" />
-              <Share>트위터에 공유하기</Share>
-            </button>
-          </ShareBox>
-          <ShareBox>
-            <button type="button" onClick={shareFacebook}>
-              <FontAwesomeIcon icon={faFacebook} size="2x" color="white" />
-              <Share>페이스북에 공유하기</Share>
-            </button>
-          </ShareBox>
-          <ShareBox>
-            <button type="button" onClick={copyUrl}>
-              <FontAwesomeIcon icon={faLink} size="2x" color="white" />
-              <Share>링크 복사</Share>
-              <form>
-                <textarea
-                  ref={copyUrlRef}
-                  defaultValue={window.location.href}
-                  readOnly
-                />
-              </form>
-            </button>
-          </ShareBox>
-          <ShareBox>
-            <button type="button" onClick={handleRestart}>
-              다시하기
-            </button>
-            <button type="button" onClick={goKakao}>
-              카카오톡 공유
-            </button>
-          </ShareBox>
+          <TopWrap>
+            <Congrats />
+            <Text>{`나와 어울리는\n축구 팀은?`}</Text>
+          </TopWrap>
+          <BottomWrap>
+            <ResultTeam>
+              <img src={Wallpaper} alt="" />
+              <Team>
+                <TeamName teamId={teamId} />
+                <TeamImage teamId={teamId} />
+              </Team>
+            </ResultTeam>
+            <ShareText>콘텐츠 공유하기</ShareText>
+            <UrlBox>
+              <input
+                type="text"
+                ref={copyUrlRef}
+                defaultValue={window.location.href}
+                readOnly
+              />
+              <div onClick={copyUrl}>URL 복사</div>
+            </UrlBox>
+            <Shares>
+              <img src={Facebook} onClick={shareFacebook} alt="facebook" />
+              <img src={Twitter} onClick={shareTwitter} alt="twitter" />
+              <img src={Kakao} onClick={goKakao} alt="kakao" />
+              <span>
+                <img src={Goback} onClick={handleRestart} alt="" />
+              </span>
+            </Shares>
+          </BottomWrap>
         </div>
       )}
       {!showResult && <LoadingBar done={100} />}
       {isCopyModalOpen && (
         <Modal>
-          <p>링크가 복사되었습니다 😉</p>
+          <div>링크가 복사되었습니다 😉</div>
         </Modal>
       )}
     </div>
