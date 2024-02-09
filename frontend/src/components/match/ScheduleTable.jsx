@@ -1,5 +1,6 @@
 import React, { useState } from "react";
-import { TableContainer } from "../../styles/MatchStyles/MatchScheduleStyle";
+import { TableContainer } from "../../styles/match-styles/MatchScheduleStyle";
+import MatchDetailButton from "./MatchDetailButtton";
 import Time from "./Time";
 
 export default function ScheduleTable({ year, month, data }) {

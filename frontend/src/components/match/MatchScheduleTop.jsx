@@ -4,7 +4,7 @@ import {
   RightSelect,
   TopContainer,
   TypeText,
-} from "../../styles/MatchStyles/MatchScheduleStyle";
+} from "../../styles/match-styles/MatchScheduleStyle";
 import { ReactComponent as ListIcon } from "../../assets/icon/list-icon.svg";
 import { ReactComponent as CalendarIcon } from "../../assets/icon/calendar-icon.svg";
 

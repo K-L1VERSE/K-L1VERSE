@@ -1,5 +1,5 @@
 import React from "react";
-import { ListStyle } from "../../styles/MatchStyles/MatchScheduleStyle";
+import { ListStyle } from "../../styles/match-styles/MatchScheduleStyle";
 import Time from "./Time";
 
 export default function ListContainer({ data }) {
