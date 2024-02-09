@@ -52,7 +52,7 @@ function Badge() {
   ];
 
   const [badgeList, setBadgeList] = useState([
-    true,
+    false,
     false,
     false,
     false,
@@ -91,15 +91,16 @@ function Badge() {
   };
 
   const wearBadge = (index) => {
-    // const confirmWear = window.confirm("뱃지를 착용하시겠습니까?");
     Swal.fire({
       title: "뱃지를 착용하시겠습니까?",
       icon: "question",
       showCancelButton: true,
       confirmButtonColor: "#3085d6",
       cancelButtonColor: "#d33",
-      confirmButtonText: "착용",
-      cancelButtonText: "취소",
+      confirmButtonText:
+        "<div style='font-size:20px; font-family:revert; font-weight:550;'>착용</div>",
+      cancelButtonText:
+        "<div style='font-size:20px; font-family:revert; font-weight:550;'>취소</div>",
     }).then((result) => {
       if (result.isConfirmed) {
         axios
@@ -107,37 +108,42 @@ function Badge() {
             code: badgeCodeList[index],
           })
           .then(() => {
-            Swal.fire("뱃지 착용이 완료되었습니다.");
+            Swal.fire({
+              icon: "error",
+              title: "뱃지 착용이 완료되었습니다.",
+              confirmButtonText:
+                "<div style='font-size:20px; font-family:revert; font-weight:550;'>확인</div>",
+            });
 
             setUserState((prev) => ({
               ...prev,
               mainBadge: badgeCodeList[index],
             }));
-            // alert("뱃지 착용이 완료되었습니다.");
             goMypage();
           })
           .catch(() => {
             Swal.fire({
               icon: "error",
               title: "잠시 후 다시 시도해주세요.",
+              confirmButtonText:
+                "<div style='font-size:20px; font-family:revert; font-weight:550;'>뒤로 가기</div>",
             });
-            // alert("잠시 후 다시 시도해주세요.");
           });
       }
     });
   };
 
   const handleBuyBadge = (index) => {
-    // const confirmPurchase = window.confirm("뱃지를 구매하시겠습니까?");
-
     Swal.fire({
       title: "뱃지를 구매하시겠습니까?",
       icon: "question",
       showCancelButton: true,
       confirmButtonColor: "#3085d6",
       cancelButtonColor: "#d33",
-      confirmButtonText: "구매",
-      cancelButtonText: "취소",
+      confirmButtonText:
+        "<div style='font-size:20px; font-family:revert; font-weight:550;'>구매</div>",
+      cancelButtonText:
+        "<div style='font-size:20px; font-family:revert; font-weight:550;'>취소</div>",
     }).then((result) => {
       if (result.isConfirmed) {
         /* axios로 뱃지 구매 코드 보내기 */
@@ -150,17 +156,23 @@ function Badge() {
               Swal.fire({
                 icon: "error",
                 title: "포인트가 부족합니다.",
+                confirmButtonText:
+                  "<div style='font-size:20px; font-family:revert; font-weight:550;'>뒤로가기</div>",
               });
-              // alert("포인트가 부족합니다.");
             } else if (res.data.code === 1200) {
               Swal.fire({
                 icon: "error",
                 title: "잘못된 요청입니다.",
+                confirmButtonText:
+                  "<div style='font-size:20px; font-family:revert; font-weight:550;'>뒤로가기</div>",
               });
-              // alert("잘못된 요청입니다.");
             } else {
-              Swal.fire("뱃지 구매가 완료되었습니다.");
-              // alert("뱃지 구매가 완료되었습니다.");
+              Swal.fire({
+                icon: "success",
+                title: "뱃지 구매가 완료되었습니다.",
+                confirmButtonText:
+                  "<div style='font-size:20px; font-family:revert; font-weight:550;'>확인</div>",
+              });
               setBadgeList(() => {
                 const newBadgeList = [...badgeList];
                 newBadgeList[index] = true;
@@ -174,6 +186,8 @@ function Badge() {
             Swal.fire({
               icon: "error",
               title: "잠시 후 다시 시도해주세요.",
+              confirmButtonText:
+                "<div style='font-size:20px; font-family:revert; font-weight:550;'>뒤로가기</div>",
             });
           });
       }
