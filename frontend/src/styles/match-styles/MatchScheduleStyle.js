@@ -3,7 +3,7 @@ import styled from "styled-components";
 export const TopContainer = styled.div`
   display: flex;
   justify-content: space-between;
-  padding: 20px 15px 20px 15px;
+  padding: 1rem 1rem 2rem 1rem;
 `;
 
 export const ArrowImg = styled.img`
@@ -17,10 +17,10 @@ export const ArrowImg = styled.img`
 export const LeftTop = styled.div`
   display: flex;
   justify-content: space-between;
-  width: 5rem;
+  width: 5.2rem;
   align-items: center;
   font-family: "Pretendard-Bold";
-  font-size: 0.9rem;
+  font-size: 1rem;
   color: #002266;
 `;
 

@@ -18,7 +18,7 @@ import Badge from "./pages/my_page/Badge";
 import Navbar from "./pages/nav/Navbar";
 import SocketProvider from "./global/SocketProvider";
 import LogoutPage from "./pages/logout_page/LogoutPage";
-import Notification from "./components/notification/Notification";
+import NotificationPage from "./pages/notification_page/NotifiationPage";
 
 import WaggleListPage from "./pages/board_page/waggle_page/WaggleListPage";
 import WaggleDetailPage from "./pages/board_page/waggle_page/WaggleDetailPage";
@@ -61,7 +61,7 @@ function App() {
               <Route index element={<MainPage />} />
 
               {/* 알림 페이지 */}
-              <Route path="/notification" element={<Notification />} />
+              <Route path="/notification" element={<NotificationPage />} />
 
               {/* 설문 페이지 */}
               <Route path="/survey" element={<StartPage />} />
@@ -85,17 +85,11 @@ function App() {
               <Route path="/productRegist" element={<ProductRegistPage />} />
 
               {/* 경기 일정 페이지 */}
-              <Route path="/matchSchedule" element={<MatchSchedulePage />} />
+              <Route path="/schedule" element={<MatchSchedulePage />} />
               {/* 경기 상세 페이지 */}
-              <Route
-                path="/matchDetail/:matchId"
-                element={<MatchDetailPage />}
-              />
+              <Route path="/match/:matchId" element={<MatchDetailPage />} />
               {/* 경기 채팅 페이지 */}
-              <Route
-                path="/matchChatting/:matchId"
-                element={<MatchChattingPage />}
-              />
+              <Route path="/chat/:matchId" element={<MatchChattingPage />} />
               {/* 팀 정보 페이지 */}
               <Route path="/team" element={<TeamInfoPage />} />
 

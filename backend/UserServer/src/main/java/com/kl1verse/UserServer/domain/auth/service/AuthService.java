@@ -78,12 +78,12 @@ public class AuthService {
         User user = User.builder()
             .email(signUpReqDto.getEmail())
             .password(passwordEncoder.encode("1234"))
-            .nickname(signUpReqDto.getName())
             .profile(signUpReqDto.getProfile())
             .domain(signUpReqDto.getDomain())
             .goal(1000)
             .totalBet(0)
             .winBet(0)
+            .notificationFlag(true)
             .build();
         userRepository.save(user);
 
@@ -117,7 +117,7 @@ public class AuthService {
                         .userId(user.getId())
                         .type(NotificationType.GOAL)
                         .message("출석 보상으로 10골을 지급 받았습니다.")
-                        .uri(domain+"/mypage")
+                        .uri("/mypage")
                         .date(LocalDateTime.now())
                         .build());
         } else {
@@ -141,6 +141,7 @@ public class AuthService {
             .profile(user.getProfile())
             .domain(user.getDomain())
             .userId(user.getId())
+            .notificationFlag(user.getNotificationFlag())
             .build();
 
         if(user.getWearBadge() != null) {

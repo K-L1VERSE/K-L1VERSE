@@ -11,15 +11,18 @@ import org.springframework.stereotype.Service;
 public class WaggleLikeServiceImpl implements WaggleLikeService {
 
     private final WaggleLikeRepository waggleLikeRepository;
+    private  final WaggleService waggleService;
 
-    public WaggleLikeServiceImpl(WaggleLikeRepository waggleLikeRepository) {
+    public WaggleLikeServiceImpl(WaggleLikeRepository waggleLikeRepository,
+        WaggleService waggleService) {
         this.waggleLikeRepository = waggleLikeRepository;
+      this.waggleService = waggleService;
     }
 
     @Override
-    public WaggleLikeDTO likeWaggle(Long waggleId, Long userId) {
+    public WaggleLikeDTO likeWaggle(Long waggleId, Integer userId) {
         Optional<WaggleLike> existingLike = waggleLikeRepository.findByUserIdAndWaggleId_WaggleId(
-            userId, waggleId);
+            Long.valueOf(userId), waggleId);
         if (existingLike.isPresent()) {
 
             WaggleLike like = existingLike.get();
@@ -33,15 +36,18 @@ public class WaggleLikeServiceImpl implements WaggleLikeService {
             .build();
 
         waggleLikeRepository.save(waggleLike);
+        waggleService.saveHashtags(waggleService.getWaggleById(waggleId, userId));
+
         return null;
     }
 
 
     @Override
-    public void unlikeWaggle(Long waggleId, Long userId) {
+    public void unlikeWaggle(Long waggleId, Integer userId) {
         Optional<WaggleLike> existingLike = waggleLikeRepository.findByUserIdAndWaggleId_WaggleId(
-            userId, waggleId);
+            Long.valueOf(userId), waggleId);
         existingLike.ifPresent(like -> waggleLikeRepository.delete(like));
+        waggleService.removeHashtagsFromUnlikedWaggle(waggleId);
     }
 
 }

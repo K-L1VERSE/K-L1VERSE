@@ -106,15 +106,81 @@ public class UserController {
         return ResponseEntity.ok().build();
     }
 
-    @GetMapping("/notifications/test")
-    public ResponseEntity<String> notificationTest() {
+    @DeleteMapping("/notifications")
+    public ResponseEntity<?> deleteNotification(@RequestBody Map<String, Integer> map) {
+        notificationService.deleteNotification(map.get("notificationId"));
+        return ResponseEntity.ok().build();
+    }
+
+    @PutMapping("/notifications/flag")
+    public ResponseEntity<?> updateNotificationFlag(HttpServletRequest request) {
+        notificationService.updateNotificationFlag(request);
+        return ResponseEntity.ok().build();
+    }
+
+    @GetMapping("/notifications/test/goal")
+    public ResponseEntity<String> notificationTestGoal() {
         notificationService.sendNotification(MessageReqDto.builder()
-            .userId(1)
-            .type(NotificationType.GOAL)
-            .message("테스트 알림 입니다.")
-            .uri("http://localhost:3000/mypage")
-            .date(LocalDateTime.now())
-            .build());
+                .userId(1)
+                .type(NotificationType.GOAL)
+                .message("골) 테스트 알림 입니다.")
+                .uri("/mypage")
+                .date(LocalDateTime.now())
+                .build());
+        return ResponseEntity.ok("OK");
+    }
+
+    @GetMapping("/notifications/test/comment")
+    public ResponseEntity<String> notificationTestComment() {
+        notificationService.sendNotification(MessageReqDto.builder()
+                .userId(1)
+                .type(NotificationType.COMMENT)
+                .profile("https://ssl.pstatic.net/static/pwe/address/img_profile.png")
+                .nickname("홍윤기")
+                .message("님이 댓글을 달았습니다.")
+                .uri("/waggle/1")
+                .date(LocalDateTime.now())
+                .build());
+        return ResponseEntity.ok("OK");
+    }
+
+    @GetMapping("/notifications/test/like")
+    public ResponseEntity<String> notificationTestLike() {
+        notificationService.sendNotification(MessageReqDto.builder()
+                .userId(1)
+                .type(NotificationType.LIKE)
+                .profile("https://ssl.pstatic.net/static/pwe/address/img_profile.png")
+                .nickname("홍윤기")
+                .message("님이 좋아요를 누르셨습니다.")
+                .uri("/waggle/1")
+                .date(LocalDateTime.now())
+                .build());
+        return ResponseEntity.ok("OK");
+    }
+
+    @GetMapping("/notifications/test/match")
+    public ResponseEntity<String> notificationTestMatch() {
+        notificationService.sendNotification(MessageReqDto.builder()
+                .userId(1)
+                .type(NotificationType.MATCH)
+                .homeTeamId("1")
+                .awayTeamId("2")
+                .message("경기 시작 30분전 입니다.")
+                .uri("/matchDetail/201")
+                .date(LocalDateTime.now())
+                .build());
+        return ResponseEntity.ok("OK");
+    }
+
+    @GetMapping("/notifications/test/news")
+    public ResponseEntity<String> notificationTestNews() {
+        notificationService.sendNotification(MessageReqDto.builder()
+                .userId(1)
+                .type(NotificationType.NEWS)
+                .message("뉴스) 테스트 알림 입니다.")
+                .uri("https://sports.news.naver.com/news?oid=109&aid=0005014723")
+                .date(LocalDateTime.now())
+                .build());
         return ResponseEntity.ok("OK");
     }
 
@@ -127,6 +193,12 @@ public class UserController {
     @PostMapping("/check-nickname")
     public ResponseEntity<?> checkNicknameAvailable(HttpServletRequest request, @RequestBody Map<String, String> map) {
         return ResponseEntity.ok().body(mypageService.checkNicknameAvailable(request, map.get("nickname")));
+    }
+
+    @PostMapping("/nickname")
+    public ResponseEntity<?> insertNickname(HttpServletRequest request, @RequestBody NicknameUpdateReqDto nicknameUpdateReqDto) {
+        mypageService.setNickname(request, nicknameUpdateReqDto);
+        return ResponseEntity.ok().build();
     }
 
     @PutMapping("/nickname")

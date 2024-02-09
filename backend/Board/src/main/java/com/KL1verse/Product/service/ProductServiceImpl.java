@@ -68,21 +68,25 @@ public class ProductServiceImpl implements ProductService {
         File file = fileService.saveFile(productDto.getBoard().getBoardImage());
         boardImageService.saveBoardImage(board, file);
 
+        board.setBoardImage(file.getUri());
+
         Integer userId = productDto.getBoard().getUserId();
         List<Object[]> nicknameResult = productRepository.findUserNickname(userId);
         String userNickname = nicknameResult.isEmpty() ? null : (String) nicknameResult.get(0)[0];
 
         Product createdProduct = productRepository.save(product);
 
+
         ProductDTO createdProductDTO = convertToDTO(createdProduct);
         createdProductDTO.getBoard().setNickname(userNickname);
+        createdProductDTO.getBoard().setBoardImage(file.getUri());
 
-        BoardCleanbotCheckReqDto boardCleanbotCheckReqDto = BoardCleanbotCheckReqDto.builder()
-            .id(createdProduct.getBoard().getBoardId())
-            .content(createdProduct.getBoard().getContent())
-            .domain("board")
-            .build();
-        kafkaBoardCleanbotProducer.boardCleanbotCheck(boardCleanbotCheckReqDto);
+//        BoardCleanbotCheckReqDto boardCleanbotCheckReqDto = BoardCleanbotCheckReqDto.builder()
+//            .id(createdProduct.getBoard().getBoardId())
+//            .content(createdProduct.getBoard().getContent())
+//            .domain("board")
+//            .build();
+//        kafkaBoardCleanbotProducer.boardCleanbotCheck(boardCleanbotCheckReqDto);
 
         return createdProductDTO;
     }
@@ -101,13 +105,15 @@ public class ProductServiceImpl implements ProductService {
         File file = fileService.saveFile(productDto.getBoard().getBoardImage());
         boardImageService.saveBoardImage(board, file);
 
+        board.setBoardImage(file.getUri());
 
-        BoardCleanbotCheckReqDto boardCleanbotCheckReqDto = BoardCleanbotCheckReqDto.builder()
-            .id(boardId)
-            .content(productDto.getBoard().getContent())
-            .domain("board")
-            .build();
-        kafkaBoardCleanbotProducer.boardCleanbotCheck(boardCleanbotCheckReqDto);
+
+//        BoardCleanbotCheckReqDto boardCleanbotCheckReqDto = BoardCleanbotCheckReqDto.builder()
+//            .id(boardId)
+//            .content(productDto.getBoard().getContent())
+//            .domain("board")
+//            .build();
+//        kafkaBoardCleanbotProducer.boardCleanbotCheck(boardCleanbotCheckReqDto);
 
         return convertToDTO(updatedProduct);
     }
@@ -156,6 +162,7 @@ public class ProductServiceImpl implements ProductService {
 
             String userNickname = (String) nicknameResult.get(0)[0];
             productDTO.getBoard().setNickname(userNickname);
+            productDTO.getBoard().setBoardImage(product.getBoard().getBoardImage());
 
             return productDTO;
         });
@@ -180,6 +187,7 @@ public class ProductServiceImpl implements ProductService {
             List<Object[]> nicknameResult = productRepository.findUserNickname(userId);
             String userNickname = (String) nicknameResult.get(0)[0];
             productDTO.getBoard().setNickname(userNickname);
+            productDTO.getBoard().setBoardImage(product.getBoard().getBoardImage());
 
             return productDTO;
         });
@@ -228,7 +236,7 @@ public class ProductServiceImpl implements ProductService {
             .updateAt(product.getBoard().getUpdateAt())
             .deleteAt(product.getBoard().getDeleteAt())
             .userId(product.getBoard().getUserId())
-//            .boardImage(product.getBoard().getBoardImage())
+            .boardImage(product.getBoard().getBoardImage())
             .commentCount(commentRepository.countCommentsByBoardId(product.getBoard().getBoardId()))
             .build());
         return productDTO;

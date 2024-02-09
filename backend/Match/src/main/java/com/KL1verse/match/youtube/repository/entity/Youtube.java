@@ -36,4 +36,7 @@ public class Youtube {
     @Column(name = "saved_at")
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private LocalDateTime savedAt;
+
+    @Column(name="thumbnail")
+    private String thumbnail;
 }

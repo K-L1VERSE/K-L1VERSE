@@ -6,22 +6,52 @@ export const ChattingTop = styled.div`
   border: 2px solid black;
 `;
 
+export const CleanBot = styled.div`
+  display: flex;
+  align-items: center;
+  height: 3rem;
+  padding-left: 0.5rem;
+  padding-bottom: 0.15rem;
+  margin: 0 1rem;
+  background-color: #fafafa;
+  border: 2px solid #efecec;
+  border-radius: 0.3rem;
+  margin-top: 1rem;
+  margin-bottom: 1rem;
+  font-size: 0.95rem;
+
+  div {
+    display: flex;
+    margin-left: 0.2rem;
+    margin-top: 0.1rem;
+  }
+  div:nth-child(1) {
+    font-family: "Pretendard-Bold";
+    color: purple;
+  }
+  div:nth-child(2) {
+    color: #607274;
+  }
+`;
+
 export const ChattingBox = styled.div`
+  margin: 0 1rem;
   height: 23.375rem;
-  overflow-y: scroll;
+  overflow-y: auto;
   padding: 1rem;
-  width: 21.575rem;
+  border: 1px solid whitesmoke;
 
   &::-webkit-scrollbar {
-    width: 0.8rem;
+    width: 0.5rem;
   }
 
   &::-webkit-scrollbar-track {
     background: #f1f1f1;
+    border-radius: 20px;
   }
 
   &::-webkit-scrollbar-thumb {
-    background: #888;
+    background: #c7c8cc;
     border-radius: 20px;
   }
 
@@ -66,15 +96,17 @@ export const SenderImg = styled.img`
 export const OnlyNick = styled.div`
   display: inline-block;
   font-size: 0.8rem;
-  font-weight: bold;
+  font-family: "Pretendard-Regular";
   padding-left: 0.3rem;
   padding-top: 0.1rem;
+  margin-right: 0.2rem;
 `;
 
 export const BadgeImg = styled.img`
   display: inline-block;
   width: 1rem;
   height: 1rem;
+  margin-top: 0.1rem;
 `;
 
 export const OnlyMsg = styled.div`
@@ -113,9 +145,10 @@ export const MsgHM = styled.div`
 export const ChattingBar = styled.div`
   display: flex;
   align-items: center;
-  width: 23.375rem;
-  padding-top: 1.5rem;
-  padding-left: 1rem;
+  margin: 0 auto;
+  margin-left: 0.5rem;
+  margin-right: 0.8rem;
+  margin-top: 0.3rem;
 `;
 
 export const ChattingPlusImg = styled.img`
@@ -132,15 +165,15 @@ export const ChattingInput = styled.div`
   border: none;
   font-size: 0.8rem;
   padding-left: 1rem;
-
-  &:hover {
-  }
 `;
 
 export const ChattingSendImg = styled.img`
   width: 1.8rem;
   height: 1.8rem;
   margin-left: 0.4rem;
+  &:hover {
+    cursor: pointer;
+  }
 `;
 
 export const ChattingSendBtn = styled.button`

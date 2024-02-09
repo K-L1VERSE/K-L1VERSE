@@ -11,6 +11,7 @@ import com.kl1verse.UserServer.domain.user.repository.UserRepository;
 import com.kl1verse.UserServer.domain.user.repository.entity.User;
 import com.kl1verse.UserServer.global.ResponseCode;
 import jakarta.servlet.http.HttpServletRequest;
+import java.text.Format;
 import java.util.Optional;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -46,7 +47,7 @@ public class MypageServiceImpl {
         if (user.getTotalBet() == 0) {
             accurate = 0.0f;
         } else {
-            accurate = (float) ((float) user.getWinBet() / user.getTotalBet() * 100.0);
+            accurate = Float.parseFloat(String.format("%.2f", (double)user.getWinBet() / user.getTotalBet() * 100.0));
         }
 
         MypageResponseDto mypageResponseDto = MypageResponseDto.builder()
@@ -96,6 +97,19 @@ public class MypageServiceImpl {
         } else{
             return true;
         }
+    }
+
+    @Transactional
+    public void setNickname(HttpServletRequest request, NicknameUpdateReqDto nicknameUpdateReqDto) {
+        String requestToken = jwtUtil.resolveToken(request);
+        String email = jwtUtil.extractUserNameFromExpiredToken(requestToken);
+        String domain = jwtUtil.extractUserDomainFromExpiredToken(requestToken);
+
+        User user = userRepository.findByEmailAndDomain(email, domain).orElseThrow(
+            () -> new UserException(ResponseCode.INVALID_USER_INFO));
+
+        user.setNickname(nicknameUpdateReqDto.getNickname());
+        userRepository.save(user);
     }
 
     @Transactional

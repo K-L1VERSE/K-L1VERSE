@@ -21,6 +21,7 @@ import {
   MsgDay,
   MsgHM,
   SenderImg,
+  CleanBot,
 } from "../../styles/match-styles/MatchChattingStyle";
 import SendIcon from "../../assets/icon/send-icon.png";
 
@@ -152,6 +153,18 @@ function Chat() {
 
   return (
     <div>
+      <CleanBot>
+        <img
+          src="https://raw.githubusercontent.com/Tarikul-Islam-Anik/Animated-Fluent-Emojis/master/Emojis/Smilies/Robot.png"
+          alt="Robot"
+          width="22"
+          height="22"
+        />
+        <div>
+          <div>클린봇</div>
+          <div>이 악성표현을 감지합니다.</div>
+        </div>
+      </CleanBot>
       <ChattingBox ref={chatBox}>
         {messages.map((message, index) => (
           <div
