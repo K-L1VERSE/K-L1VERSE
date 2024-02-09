@@ -2,15 +2,15 @@ import styled from "styled-components";
 
 export const TitleContainer = styled.div`
   display: flex;
-  width: 390px;
-  height: 61px;
+  width: 24.375rem;
+  padding: 1rem 0 1rem 0;
 `;
 
 export const TitleText = styled.div`
-  padding: 12px 16px 0px 16px;
+  padding: 0 0 1rem 1rem;
   color: var(--blue1, #026);
   font-family: Pretendard;
-  font-size: 16px;
+  font-size: 1rem;
   font-style: normal;
   font-weight: 700;
   line-height: normal;
@@ -18,58 +18,58 @@ export const TitleText = styled.div`
 
 export const BadgeContainer = styled.div`
   display: flex;
-  width: 358px;
-  padding: 0px 16px;
+  width: 22.375rem;
+  padding: 0 1rem;
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  gap: 20px;
+  gap: 1.25rem;
 `;
 
 export const BadgeLineContainer = styled.div`
   display: flex;
-  width: 340px;
+  width: 21rem;
   justify-content: space-between;
   align-items: flex-start;
 `;
 
 export const BadgeBackground = styled.div`
   display: flex;
-  width: 50px;
-  padding: 4px 0px;
+  width: 3.125rem;
+  padding: 0.25rem 0;
   flex-direction: column;
   justify-content: center;
   align-items: center;
   flex-shrink: 0;
   &:hover {
     background-color: #e5edfb;
-    border-radius: 4px;
+    border-radius: 0.25rem;
   }
 `;
 
 export const BadgeText = styled.div`
   color: var(--gray1, #222);
   font-family: Pretendard;
-  font-size: 12px;
+  font-size: 0.75rem;
   font-style: normal;
-  font-weight: 500;
+  font-weight: 550;
   line-height: normal;
 `;
 
 export const ConfirmContainer = styled.div`
   display: flex;
   justify-content: center;
-  width: 390px;
-  margin-top: 40px;
+  width: 24.375rem;
+  margin-top: 2.5rem;
 `;
 
 export const ConfirmTextContainer = styled.div`
   display: flex;
-  width: 290px;
-  padding: 12px 24px;
+  width: 18.125rem;
+  padding: 0.75rem 1.5rem;
   flex-direction: column;
-  gap: 10px;
-  border-radius: 8px;
+  gap: 0.625rem;
+  border-radius: 0.5rem;
   background-color: #3261c1;
 `;
 
@@ -77,19 +77,19 @@ export const ConfirmText = styled.div`
   color: #fff;
   text-align: center;
   font-family: Pretendard;
-  font-size: 16px;
+  font-size: 1rem;
   font-style: normal;
   font-weight: 700;
-  line-height: 24px;
+  line-height: 1.5rem;
 `;
 
 export const PurchaseTextContainer = styled.div`
   display: flex;
-  width: 290px;
-  padding: 12px 24px;
+  width: 18.125rem;
+  padding: 0.75rem 1.5rem;
   flex-direction: column;
-  gap: 10px;
-  border-radius: 8px;
+  gap: 0.625rem;
+  border-radius: 0.5rem;
   border: 1px solid #3261c1;
   background-color: #fff;
 `;
@@ -98,26 +98,26 @@ export const PurchaseText = styled.div`
   color: #3261c1;
   text-align: center;
   font-family: Pretendard;
-  font-size: 16px;
+  font-size: 1rem;
   font-style: normal;
   font-weight: 700;
-  line-height: 24px;
+  line-height: 1.5rem;
 `;
 
 export const DisabledConfirmContainer = styled.div`
   display: flex;
   justify-content: center;
-  width: 390px;
-  margin-top: 40px;
+  width: 24.375rem;
+  margin-top: 2.5rem;
 `;
 
 export const DisabledTextContainer = styled.div`
   display: flex;
-  width: 290px;
-  padding: 12px 24px;
+  width: 18.125rem;
+  padding: 0.75rem 1.5rem;
   flex-direction: column;
-  gap: 10px;
-  border-radius: 8px;
+  gap: 0.625rem;
+  border-radius: 0.5rem;
   background-color: #f4f4f4;
 `;
 
@@ -125,18 +125,18 @@ export const DisabledText = styled.div`
   color: #000;
   text-align: center;
   font-family: Pretendard;
-  font-size: 16px;
+  font-size: 1rem;
   font-style: normal;
   font-weight: 700;
-  line-height: 24px;
+  line-height: 1.5rem;
 `;
 
 export const BadgeImageStyle = ({ code, isBadgeEarned }) => {
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"
-      width="44"
-      height="55"
+      width="2.5rem"
+      height="3.4375rem"
       viewBox="0 0 44 55"
       fill="none"
     >
@@ -154,10 +154,10 @@ export const BadgeImageStyle = ({ code, isBadgeEarned }) => {
 
       <image
         href={`/badge/badge${code}.png`}
-        width="28"
-        height="28"
-        x="8"
-        y="10"
+        width="1.75rem"
+        height="1.75rem"
+        x="0.5rem"
+        y="0.75rem"
         filter={isBadgeEarned ? null : "url(#grayscaleFilter)"}
       />
 

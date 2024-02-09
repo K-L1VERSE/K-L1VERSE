@@ -10,16 +10,16 @@ export const ModalBackground = styled.div`
 `;
 
 export const ModalContainer = styled.div`
-  width: 350px;
-  height: 220px;
+  width: 21.875rem;
+  height: 13.75rem;
   z-index: 999;
   position: absolute;
   top: 43%;
   left: 50%;
   transform: translate(-50%, -50%);
   background-color: #fff;
-  border-radius: 7px;
-  padding: 15px 35px 10px 35px;
+  border-radius: 0.5rem;
+  padding: 0.9375rem 2.1875rem 0.625rem 2.1875rem;
   box-sizing: border-box;
   .info {
     font-size: 0.7rem;
@@ -44,13 +44,13 @@ export const ModalTopItems = styled.div`
 `;
 
 export const ModalClose = styled.button`
-  height: 20px;
+  height: 1.25rem;
   border: none;
   background-color: transparent;
   font-weight: 600;
   cursor: pointer;
   color: #d7d7d7;
-  font-size: 16px;
+  font-size: 1rem;
   :hover {
     color: #000;
   }
@@ -58,19 +58,19 @@ export const ModalClose = styled.button`
 
 export const MyInfoInput = styled.input`
   border: none;
-  border-bottom: 0.6px solid #c6c6c6;
-  min-width: 200px;
+  border-bottom: 0.06rem solid #c6c6c6;
+  min-width: 12.5rem;
   width: 100%;
-  margin: 20px 10px 20px 0;
+  margin: 1.25rem 0.625rem 1.25rem 0;
   outline: none;
   flex: 80%;
-  padding-bottom: 5px;
+  padding-bottom: 0.3125rem;
 `;
 
 export const ButtonContainer = styled.div`
-  padding-top: 20px;
+  padding-top: 1.25rem;
   display: flex;
-  gap: 10px;
+  gap: 0.625rem;
   justify-content: right;
 `;
 
@@ -78,8 +78,8 @@ export const CancleButton = styled.button`
   background-color: rgba(233, 236, 242, 0.8);
   border: none;
   box-sizing: border-box;
-  padding: 8px 15px;
-  border-radius: 7px;
+  padding: 0.5rem 1rem;
+  border-radius: 0.5rem;
   font-weight: 600;
   cursor: pointer;
 
