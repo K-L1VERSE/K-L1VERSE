@@ -33,7 +33,7 @@ const TeamName = ({ teamId }) => {
     return null; // 팀 이름이 없을 경우 아무것도 렌더링하지 않음
   }
 
-  return <h1>⚽ {teamName} ⚽</h1>;
+  return <div>{teamName}</div>;
 };
 
 // PropTypes 수정
