@@ -46,13 +46,14 @@ export const CommentWriter = styled.div`
 
 export const ButtonContainer = styled.div`
   display: flex;
-  justify-content: flex-start;
+  justify-content: flex-end;
   margin-left: 0.7rem;
   margin-bottom: 0.2rem;
 `;
 
 export const EditButton = styled.button`
-  background-color: #fff;
+  /* background-color: #fff; */
+  background-color: yellowgreen;
   color: grey;
   font-size: 0.5em;
   border: none;
