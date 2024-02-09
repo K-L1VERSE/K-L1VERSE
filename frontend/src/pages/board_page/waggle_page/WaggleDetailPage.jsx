@@ -19,6 +19,7 @@ import {
   BackButton,
   EditDeleteButton,
   DetailCommentCount,
+  CreateAt,
   // LikeCount,
 } from "../../../styles/BoardStyles/BoardDetailStyle";
 import { UserState } from "../../../global/UserState";
@@ -34,6 +35,7 @@ import {
   WaggleImage,
   WaggleImageContainer,
 } from "../../../styles/BoardStyles/WaggleListStyle";
+import { formatDateTime2 } from "../../../components/board/dateFormat";
 
 function WaggleDetailPage() {
   const [boardDetail, setBoardDetail] = useState({});
@@ -42,6 +44,7 @@ function WaggleDetailPage() {
   const [title, setTitle] = useState("");
   const [content, setContent] = useState("");
   const [nickname, setNickname] = useState("");
+  const [createAt, setCreateAt] = useState("");
   const [liked, setLiked] = useState(false);
   const [likesCount, setLikesCount] = useState(0);
   const [commentCount, setCommentCount] = useState(0);
@@ -70,6 +73,7 @@ function WaggleDetailPage() {
     setContent(waggleDetail.content);
     setWaggleId(boardDetail.waggleId);
     setNickname(waggleDetail.nickname);
+    setCreateAt(waggleDetail.createAt);
     setCommentCount(waggleDetail.commentCount);
     setLiked(boardDetail.liked);
     setLikesCount(boardDetail.likesCount);
@@ -146,17 +150,20 @@ function WaggleDetailPage() {
       </DetailTop>
       <DetailBox>
         <User>{nickname}</User>
+        <CreateAt>{formatDateTime2(createAt)}</CreateAt>
         <Title>{title}</Title>
         <Content>{content}</Content>
         <WaggleImageContainer>
           {waggleDetail.boardImage &&
-            waggleDetail.boardImage.map((imageUrl, index) => (
-              <WaggleImage
-                key={index}
-                src={imageUrl}
-                alt={`Waggle Image ${index}`}
-              />
-            ))}
+            waggleDetail.boardImage
+              .split(",")
+              .map((imageUrl, index) => (
+                <WaggleImage
+                  key={index}
+                  src={imageUrl.trim()}
+                  alt={`Waggle Image ${index}`}
+                />
+              ))}
         </WaggleImageContainer>
         <Like
           liked={liked}

@@ -77,7 +77,7 @@ export const CancelButton = styled.button`
   font-size: 0.9em;
   border: none;
   cursor: pointer;
-  radius: 20px;
+  border-radius: 20px;
   &:hover {
     background-color: #999;
   }

@@ -24,6 +24,12 @@ export const DetailBox = styled.div`
 export const User = styled.div`
   display: flex;
   align-items: center;
+`;
+
+export const CreateAt = styled.p`
+  font-size: 0.7rem;
+  text-align: right;
+  color: #595959;
   margin-bottom: 1rem;
 `;
 

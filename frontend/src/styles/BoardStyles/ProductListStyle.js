@@ -97,3 +97,11 @@ export const ProductDetailPrice = styled.p`
   font-size: 0.8rem;
   color: #333;
 `;
+
+export const ProductImage = styled.img`
+  width: 100%;
+  height: auto;
+  object-fit: cover;
+  border-radius: 8px;
+  margin-bottom: 20px;
+`;

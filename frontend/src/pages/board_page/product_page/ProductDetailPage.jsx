@@ -17,6 +17,7 @@ import {
 import {
   DealStatusGreen,
   DealStatusOrange,
+  ProductImage,
   ProductWriter,
 } from "../../../styles/BoardStyles/ProductListStyle";
 import { deleteProduct } from "../../../api/product";
@@ -90,7 +91,18 @@ function ProductDetailPage() {
           <img src={BackIcon} alt="Back" />
         </BackButton>
       </DetailTop>
-      <ImageBoxContainer>이미지 자리</ImageBoxContainer>
+      <ImageBoxContainer>
+        {productDetail.boardImage &&
+          productDetail.boardImage
+            .split(",")
+            .map((imageUrl, index) => (
+              <ProductImage
+                key={index}
+                src={imageUrl.trim()}
+                alt={`Product Image ${index}`}
+              />
+            ))}
+      </ImageBoxContainer>
       <DetailBox>
         <ProductWriter>
           <p>{productDetail.nickname}</p>
