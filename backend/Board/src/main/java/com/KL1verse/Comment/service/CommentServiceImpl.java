@@ -72,7 +72,6 @@ public class CommentServiceImpl implements CommentService {
         List<Object[]> userNickname = commentRepository.findUserNickname(commentDTO.getUserId());
         commentDTO.setNickname((String) userNickname.get(0)[0]);
 
-//        String userNickname = boardRepository.findNicknameByUserId(board.getUserId());
 //        kafkaBoardNotificationProducer.boardNotification(
 //            BoardNotificationResDto.builder()
 //                .type(BoardNotificationType.COMMENT)
@@ -175,7 +174,7 @@ public class CommentServiceImpl implements CommentService {
 
                 List<Object[]> userNickname = commentRepository.findUserNickname(
                     comment.getUserId());
-                commentDTO.setNickname((String) userNickname.get(0)[0]); // Set the nickname
+                commentDTO.setNickname((String) userNickname.get(0)[0]);
 
 
                 boolean isLiked = commentLikeRepository.findByUserIdAndCommentId_CommentId(requestingUserId, comment.getCommentId()).isPresent();
@@ -296,122 +295,6 @@ public class CommentServiceImpl implements CommentService {
             .filter(commentDTO -> commentDTO.getDeleteAt() == null)
             .collect(Collectors.toList());
     }
-
-//    @Override
-//    public List<CommentDTO> getAllCommentsByBoardId(Long boardId, Long requestingUserId) {
-//
-//        List<Object[]> commentsWithLikesCount = commentRepository.findCommentsWithLikesCountByBoardId(
-//            boardId);
-//
-//        return commentsWithLikesCount.stream()
-//            .map(result -> {
-//                Comment comment = (Comment) result[0];
-//                Long likesCount = (Long) result[1];
-//
-//                CommentDTO commentDTO = convertToDTO(comment);
-//                Integer commentLikesCount = commentRepository.findLikesCountByCommentId(
-//                    comment.getCommentId());
-//                commentDTO.setLikesCount(commentLikesCount != null ? commentLikesCount : 0);
-//
-//                List<Object[]> userNickname = commentRepository.findUserNickname(
-//                    comment.getUserId());
-//                commentDTO.setNickname((String) userNickname.get(0)[0]);
-//
-//                if (comment.getParentId() == null) {
-//
-//                    if (comment.isSecret() && !isAuthorized(comment, requestingUserId)) {
-//
-//                        CommentDTO secretComment = new CommentDTO();
-//                        secretComment.setContent("비밀 댓글입니다.");
-//                        secretComment.setUpdateAt(comment.getUpdateAt());
-//                        secretComment.setDeleteAt(comment.getDeleteAt());
-//                        secretComment.setCommentId(comment.getCommentId());
-//                        secretComment.setCreateAt(comment.getCreateAt());
-//                        secretComment.setSecret(comment.isSecret());
-//
-//                        List<CommentDTO> secretReplies = comment.getReplies().stream()
-//                            .map(reply -> {
-//                                if (reply.isSecret() && !isAuthorized(reply, requestingUserId)) {
-//
-//                                    CommentDTO secretReply = new CommentDTO();
-//                                    secretReply.setContent("비밀 대댓글입니다.");
-//                                    secretReply.setUpdateAt(reply.getUpdateAt());
-//                                    secretReply.setDeleteAt(reply.getDeleteAt());
-//                                    secretReply.setCommentId(reply.getCommentId());
-//                                    secretReply.setCreateAt(reply.getCreateAt());
-//                                    secretReply.setParentId(reply.getParentId().getCommentId());
-//                                    secretReply.setSecret(reply.isSecret());
-//                                    secretReply.setReplies(Collections.emptyList());
-//                                    secretReply.setBoardId(reply.getBoardId().getBoardId());
-//
-//                                    Integer secretReplyLikesCount = commentRepository.findLikesCountByCommentId(
-//                                        reply.getCommentId());
-//                                    secretReply.setLikesCount(
-//                                        secretReplyLikesCount != null ? secretReplyLikesCount : 0);
-//
-//                                    List<Object[]> secretReplyNickname = commentRepository.findUserNickname(reply.getUserId());
-//                                    secretReply.setNickname((String) secretReplyNickname.get(0)[0]);
-//
-//                                    return secretReply;
-//                                } else {
-//
-//                                    return convertToDTOWithReplies(reply, requestingUserId);
-//                                }
-//                            })
-//                            .collect(Collectors.toList());
-//                        secretComment.setReplies(secretReplies);
-//
-//                        secretComment.setBoardId(comment.getBoardId().getBoardId());
-//                        secretComment.setLikesCount(likesCount.intValue());
-//                        return secretComment;
-//                    } else {
-//
-//                        List<CommentDTO> replies = comment.getReplies().stream()
-//                            .map(reply -> {
-//                                if (reply.isSecret() && !isAuthorized(reply, requestingUserId)) {
-//
-//                                    CommentDTO secretReply = new CommentDTO();
-//                                    secretReply.setContent("비밀 대댓글입니다.");
-//                                    secretReply.setUpdateAt(reply.getUpdateAt());
-//                                    secretReply.setDeleteAt(reply.getDeleteAt());
-//                                    secretReply.setCommentId(reply.getCommentId());
-//                                    secretReply.setCreateAt(reply.getCreateAt());
-//                                    secretReply.setParentId(reply.getParentId().getCommentId());
-//                                    secretReply.setSecret(reply.isSecret());
-//                                    secretReply.setReplies(Collections.emptyList());
-//                                    secretReply.setBoardId(reply.getBoardId().getBoardId());
-//
-//                                    Integer secretReplyLikesCount = commentRepository.findLikesCountByCommentId(
-//                                        reply.getCommentId());
-//                                    secretReply.setLikesCount(
-//                                        secretReplyLikesCount != null ? secretReplyLikesCount : 0);
-//
-//                                    List<Object[]> secretReplyNickname = commentRepository.findUserNickname(reply.getUserId());
-//                                    secretReply.setNickname((String) secretReplyNickname.get(0)[0]);
-//
-//                                    return secretReply;
-//                                } else {
-//
-//                                    CommentDTO normalReply = convertToDTOWithReplies(reply, requestingUserId);
-//                                    List<Object[]> replyNickname = commentRepository.findUserNickname(reply.getUserId());
-//                                    normalReply.setNickname((String) replyNickname.get(0)[0]);
-//                                    return normalReply;
-//                                }
-//                            })
-//                            .collect(Collectors.toList());
-//
-//                        commentDTO.setReplies(replies);
-//                        return commentDTO;
-//                    }
-//                } else {
-//
-//                    return null;
-//                }
-//            })
-//            .filter(Objects::nonNull)
-//            .filter(commentDTO -> commentDTO.getDeleteAt() == null)
-//            .collect(Collectors.toList());
-//    }
 
     private CommentDTO convertToDTOWithReplies(Comment comment, Long requestingUserId) {
         CommentDTO commentDTO = convertToDTO(comment);

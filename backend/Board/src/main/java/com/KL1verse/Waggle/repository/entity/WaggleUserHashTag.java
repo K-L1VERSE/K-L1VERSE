@@ -7,33 +7,51 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
-import jakarta.persistence.Table;
+import java.time.LocalDateTime;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import lombok.ToString;
+import org.hibernate.annotations.CreationTimestamp;
 
-@Entity
-@Table(name = "wagglelike")
+@Entity(name = "waggle_user_hashtag")
 @Getter
 @Setter
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class WaggleLike {
+@ToString
+public class WaggleUserHashTag {
 
     @Id
+    @Column(name = "id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "likes_id")
-    private Long likesId;
+    private Long id;
 
     @Column(name = "user_id")
     private Integer userId;
 
     @ManyToOne
     @JoinColumn(name = "waggle_id")
-    private Waggle waggleId;
+    private Waggle waggle;
 
+    @Column(insertable = false, updatable = false)
+    private Long waggle_id;
+
+    @Column(name = "hashtags")
+    private String hashtags;
+
+    @CreationTimestamp
+    @Column(name = "created_at")
+    private LocalDateTime createdAt;
+
+    @Column(name = "is_liked")
+    private boolean isLiked;
 
 }
+
+
+
+

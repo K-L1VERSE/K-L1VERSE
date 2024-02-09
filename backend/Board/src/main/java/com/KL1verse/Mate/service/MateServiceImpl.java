@@ -76,6 +76,9 @@ public class MateServiceImpl implements MateService {
         MateDTO createdMateDTO = convertToDTO(createdMate);
         createdMateDTO.getBoard().setNickname(userNickname);
 
+        board.setBoardImage(file.getUri());
+        createdMateDTO.getBoard().setBoardImage(file.getUri());
+
 //        BoardCleanbotCheckReqDto boardCleanbotCheckReqDto = BoardCleanbotCheckReqDto.builder()
 //            .id(createdMate.getBoard().getBoardId())
 //            .content(createdMate.getBoard().getContent())
@@ -100,7 +103,7 @@ public class MateServiceImpl implements MateService {
         File file = fileService.saveFile(mateDto.getBoard().getBoardImage());
         boardImageService.saveBoardImage(board, file);
 
-
+        board.setBoardImage(file.getUri());
 //        BoardCleanbotCheckReqDto boardCleanbotCheckReqDto = BoardCleanbotCheckReqDto.builder()
 //            .id(boardId)
 //            .content(mateDto.getBoard().getContent())
@@ -150,6 +153,7 @@ public class MateServiceImpl implements MateService {
 
             String userNickname = (String) nicknameResult.get(0)[0];
             mateDTO.getBoard().setNickname(userNickname);
+            mateDTO.getBoard().setBoardImage(mate.getBoard().getBoardImage());
 
             return mateDTO;
         });
@@ -175,6 +179,7 @@ public class MateServiceImpl implements MateService {
             List<Object[]> nicknameResult = mateRepository.findUserNickname(userId);
             String userNickname = nicknameResult.isEmpty() ? null : (String) nicknameResult.get(0)[0];
             mateDTO.getBoard().setNickname(userNickname);
+            mateDTO.getBoard().setBoardImage(mate.getBoard().getBoardImage());
 
 
             return mateDTO;
@@ -264,7 +269,7 @@ public class MateServiceImpl implements MateService {
             .boardType(mate.getBoard().getBoardType()).title(mate.getBoard().getTitle())
             .content(mate.getBoard().getContent()).createAt(mate.getBoard().getCreateAt())
             .updateAt(mate.getBoard().getUpdateAt()).deleteAt(mate.getBoard().getDeleteAt())
-//            .boardImage(mate.getBoard().getBoardImage())
+            .boardImage(mate.getBoard().getBoardImage())
             .userId(mate.getBoard().getUserId())
             .commentCount(commentRepository.countCommentsByBoardId(mate.getBoard().getBoardId()))
             .build());

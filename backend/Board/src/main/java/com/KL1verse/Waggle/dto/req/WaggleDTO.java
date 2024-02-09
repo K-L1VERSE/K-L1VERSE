@@ -24,6 +24,8 @@ public class WaggleDTO {
     private List<String> hashtags;
 
     private boolean isLiked;
+
+    private Long WaggleUserHashTagId;
 }
 
 

@@ -1,13 +1,16 @@
 package com.KL1verse.Waggle.controller;
 
+import com.KL1verse.Board.dto.req.BoardDTO;
 import com.KL1verse.Board.dto.req.SearchBoardConditionDto;
 import com.KL1verse.Comment.dto.req.CommentDTO;
 import com.KL1verse.Waggle.dto.req.WaggleDTO;
 import com.KL1verse.Waggle.service.WaggleService;
+import java.util.ArrayList;
 import java.util.List;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -23,14 +26,43 @@ import org.springframework.web.bind.annotation.RestController;
 @Slf4j
 @RestController
 @RequestMapping("/waggles")
-public class WaggleController {
+public class
+WaggleController {
 
     private final WaggleService waggleService;
 
 
-
     public WaggleController(WaggleService waggleService) {
         this.waggleService = waggleService;
+    }
+
+
+
+//        @GetMapping("/hashtags/{loginUserId}")
+//    public ResponseEntity<Page<WaggleDTO>> getWagglesByTopHashtags(@PathVariable Integer loginUserId, Pageable pageable) {
+//        // 상위 3개 해시태그 가져오기
+//        List<String> topHashtags = waggleService.getTopHashtags(loginUserId, 3);
+//        log.info("topHashtags: {}", topHashtags);
+//
+//        // 각 해시태그를 가진 게시글들을 가져와서 리스트에 추가
+//        Page<WaggleDTO> waggles = waggleService.getWagglesByHashtags(topHashtags, pageable);
+//
+//        // 결과 반환
+//        return new ResponseEntity<>(waggles, HttpStatus.OK);
+//    }
+
+
+    @PostMapping("/hashtags")
+    public ResponseEntity<Page<WaggleDTO>> getWagglesByTopHashtags(@RequestBody BoardDTO boardDTO, Pageable pageable) {
+        // 상위 3개 해시태그 가져오기
+        Integer loginUserId = boardDTO.getUserId();
+        List<String> topHashtags = waggleService.getTopHashtags(loginUserId, 3);
+
+        // 각 해시태그를 가진 게시글들을 가져와서 리스트에 추가
+        Page<WaggleDTO> waggles = waggleService.getWagglesByHashtags(topHashtags, pageable);
+
+        // 결과 반환
+        return new ResponseEntity<>(waggles, HttpStatus.OK);
     }
 
 
