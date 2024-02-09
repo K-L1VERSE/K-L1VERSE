@@ -16,7 +16,7 @@ import {
   OnlyMsg,
   MsgTime,
   SenderImg,
-} from "../../styles/MatchStyles/MatchChattingStyle";
+} from "../../styles/match-styles/MatchChattingStyle";
 import { UserState } from "../../global/UserState";
 
 function Chat() {

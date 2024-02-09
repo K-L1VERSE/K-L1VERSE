@@ -1,5 +1,5 @@
 import React from "react";
-import { ScheduleSelect } from "../../styles/MatchStyles/MatchScheduleStyle";
+import { ScheduleSelect } from "../../styles/match-styles/MatchScheduleStyle";
 
 export default function SelectContainer({ year, setYear, month, setMonth }) {
   const years = [2024, 2025];

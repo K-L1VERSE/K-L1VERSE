@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import {
   BadgeImg,
   MatchInfo,
-} from "../../styles/MatchStyles/MatchScheduleStyle";
+} from "../../styles/match-styles/MatchScheduleStyle";
 
 export default function MatchDetailButton({ match }) {
   const navigate = useNavigate();

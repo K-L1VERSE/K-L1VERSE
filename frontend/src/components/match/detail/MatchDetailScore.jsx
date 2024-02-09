@@ -1,10 +1,21 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
 
-import styled from "styled-components";
+import {
+  MatchDetailTop,
+  ToLeftImg,
+  MatchDetailContainer,
+  MatchDetailComponent,
+  MatchUpContainer,
+  TeamContainer,
+  TeamComponent,
+  HomeName,
+  Score,
+  VersusComponent,
+} from "../../../styles/match-styles/detail/MatchDetailScoreStyles";
 
-import MatchTimeComponent from "../MatchTimeComponent";
-import { BadgeImg } from "../../../styles/MatchStyles/MatchDetailStyle";
+import MatchTimeComponent from "./MatchTimeComponent";
+import { BadgeImg } from "../../../styles/match-styles/MatchDetailStyle";
 import ToLeftPng from "../../../assets/ToLeft.png";
 
 export default function MatchDetailScore({ match }) {
@@ -118,119 +129,6 @@ export default function MatchDetailScore({ match }) {
           <MatchTimeComponent time={match.matchAt} status={match.status} />
         </MatchDetailComponent>
       </MatchDetailContainer>
-
-      {/* {match.status === "upcoming" ? (
-        <div>경기 준비 중</div>
-      ) : match.status === "during" ? (
-        <div>경기 중</div>
-      ) : match.status === "done" ? (
-        <div>경기 종료</div>
-      ) : (
-        <div>시스템 점검 중</div>
-      )} */}
     </div>
   );
 }
-
-const MatchDetailTop = styled.div`
-  font-family: "Pretendard-Bold";
-  padding-top: 1.1rem;
-  margin-bottom: 1.5rem;
-  display: flex;
-  justify-content: left;
-  font-size: 1rem;
-  div {
-    margin-top: 0.05rem;
-  }
-`;
-
-const ToLeftImg = styled.img`
-  width: 1rem;
-  height: 1rem;
-  margin-top: 0.1rem;
-  margin-left: 1rem;
-  margin-right: 0.7rem;
-  &:hover {
-    cursor: pointer;
-  }
-`;
-
-const MatchDetailContainer = styled.div`
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  padding: 0.3rem;
-  margin: 0.3rem;
-  margin-bottom: 1.2rem;
-`;
-
-const MatchDetailComponent = styled.div`
-  background-color: #f2f6fd;
-  width: 358px;
-  padding: 20px 0;
-  border-radius: 8px;
-
-  flex-direction: column;
-  align-items: center;
-  align-content: space-evenly;
-  display: grid;
-  gap: 20px;
-`;
-
-const MatchUpContainer = styled.div`
-  display: flex;
-  margin: 0 auto;
-  width: 90%;
-  justify-content: space-around;
-  padding: 0.5rem;
-  height: 36px;
-  background-color: white;
-  border-radius: 5px;
-`;
-
-const TeamContainer = styled.div`
-  display: flex;
-  justify-content: space-between;
-  width: 100%;
-  font-family: "Pretendard-Bold";
-  color: #1a1a1a;
-  padding: 1rem;
-`;
-
-const HomeName = styled.div`
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  font-weight: bold;
-  color: #1a1a1a;
-`;
-
-const Score = styled.div`
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  font-weight: ${({ win }) => (win ? "bold" : "normal")};
-
-  color: #002266;
-`;
-
-const TeamComponent = styled.div`
-  display: flex;
-  justify-content: flex-start;
-  align-items: center;
-  font-weight: bold;
-  color: #1a1a1a;
-  margin: 0 0.1rem 0 0.1rem;
-  img {
-    margin-right: 0.2rem;
-  }
-`;
-
-const VersusComponent = styled.div`
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  font-weight: bold;
-  color: #1a1a1a;
-  margin: 0 0.1rem 0 0.1rem;
-`;

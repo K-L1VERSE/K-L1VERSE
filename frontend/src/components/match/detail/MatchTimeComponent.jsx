@@ -1,10 +1,14 @@
 import React from "react";
 
-import styled from "styled-components";
+import {
+  TimeContainer,
+  TimeComponent,
+  DoneComponent,
+  DuringComponent,
+  DuringText,
+} from "../../../styles/match-styles/detail/MatchTimeComponentStyles";
 
 function MatchTimeComponent({ time, status }) {
-  //   upcoming, during, done
-
   const targetTIme = new Date(time);
   const currentTime = new Date();
   const timeDifferenceInMinues = Math.floor(
@@ -42,53 +46,5 @@ function MatchTimeComponent({ time, status }) {
     </TimeContainer>
   );
 }
-
-const TimeContainer = styled.div`
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-
-  text-align: center;
-`;
-
-const TimeComponent = styled.div`
-  text-align: center;
-  margin-top: 1rem;
-  margin-bottom: 1rem;
-
-  border-radius: 22px;
-  background-color: #002fa5;
-  color: white;
-
-  padding: 9px 14px;
-`;
-
-const DuringComponent = styled.div`
-  text-align: center;
-  border-radius: 22px;
-  background: radial-gradient(circle at center, #002fa5 10%, #002277 100%);
-  color: white;
-  padding: 9px 16px;
-  transition: box-shadow 0.3s ease;
-  &:hover {
-    box-shadow: 0 3px 9px rgba(0, 0, 0, 0.3);
-    cursor: pointer;
-  }
-`;
-
-const DuringText = styled.div`
-  font-family: "Pretendard-Bold";
-  font-size: 0.9rem;
-`;
-
-const DoneComponent = styled.div`
-  text-align: center;
-
-  border-radius: 22px;
-  background-color: #a9a9a9;
-  color: white;
-
-  padding: 9px 14px;
-`;
 
 export default MatchTimeComponent;

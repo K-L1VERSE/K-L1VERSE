@@ -1,6 +1,12 @@
 import React from "react";
-import styled from "styled-components";
-import { PercentBox } from "../../../styles/MatchStyles/MatchDetailStyle";
+import {
+  Container,
+  CurrentBetTitleComponent,
+  CurrentBetTitle,
+  CurrentBettingOuterContainer,
+  CurrentBettingInnerContainer,
+} from "../../../styles/match-styles/currentBetting/CurrentBettingContainerStyles";
+
 import CurrentBettingComponent from "./CurrentBettingComponent";
 
 function CurrentBettingContainer({ match }) {
@@ -36,7 +42,7 @@ function CurrentBettingContainer({ match }) {
   const awayOddsRatio = (awayOdds / totalOdds) * 100;
 
   return (
-    <PercentBox>
+    <Container>
       <div>
         <CurrentBetTitleComponent>
           <CurrentBetTitle>
@@ -76,45 +82,8 @@ function CurrentBettingContainer({ match }) {
           />
         </CurrentBettingInnerContainer>
       </CurrentBettingOuterContainer>
-    </PercentBox>
+    </Container>
   );
 }
-
-const CurrentBettingOuterContainer = styled.div`
-  justify-content: space-between;
-  align-items: center;
-`;
-
-const CurrentBettingInnerContainer = styled.div`
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 60px;
-  border-bottom: 1px solid #f4f4f4;
-  color: #595959;
-  padding: 10px;
-  font-family: "Pretendard-Bold";
-  font-size: 0.95rem;
-  img {
-    margin-right: 0.3rem;
-  }
-`;
-
-const CurrentBetTitleComponent = styled.div`
-  display: flex;
-  justify-content: start;
-  align-items: flex-end;
-  font-size: 0.95rem;
-`;
-
-const CurrentBetTitle = styled.div`
-  font-family: "Pretendard-Bold";
-  color: #002266;
-  display: flex;
-  div {
-    margin-left: 0.3rem;
-    margin-top: 0.1rem;
-  }
-`;
 
 export default CurrentBettingContainer;
