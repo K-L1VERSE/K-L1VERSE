@@ -9,7 +9,7 @@ export default function Time({ match }) {
   const navigate = useNavigate();
 
   const handleOnClick = () => {
-    navigate(`/matchDetail/${match.matchId}`);
+    navigate(`/match/${match.matchId}`);
   };
   const srcFirst = `${process.env.PUBLIC_URL}/badge/badge`;
 
