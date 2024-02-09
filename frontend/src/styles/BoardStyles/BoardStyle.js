@@ -40,6 +40,8 @@ export const ListContainer = styled.div`
 `;
 
 export const ItemContainer = styled.div`
+  flex-direction: column;
+  margin-left: 0.5rem;
   margin-bottom: 1rem;
   text-align: left;
   text-decoration: none;
@@ -53,6 +55,11 @@ export const ItemWriter = styled.div`
   color: darkslategray;
   margin-top: 0.3rem;
   margin-bottom: 0.3rem;
+`;
+
+export const ImageContentBox = styled.div`
+  display: flex;
+  margin-top: 0.5rem;
 `;
 
 export const ItemTitle = styled.div`
@@ -69,6 +76,7 @@ export const ItemContent = styled.div`
   a {
     color: #a9a9a9;
     text-decoration: none;
+    color: inherit;
   }
 `;
 

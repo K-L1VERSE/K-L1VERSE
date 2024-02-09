@@ -2,7 +2,7 @@ import React from "react";
 import {
   ScheduleSelect,
   ArrowImg,
-} from "../../styles/MatchStyles/MatchScheduleStyle";
+} from "../../styles/match-styles/MatchScheduleStyle";
 import ToLeft from "../../assets/ToLeft.png";
 import ToRight from "../../assets/ToRight.png";
 

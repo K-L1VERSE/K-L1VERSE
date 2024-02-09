@@ -22,6 +22,7 @@ import {
   MatchTime,
   MatchTitle,
   MateDetailContent,
+  MateDetailTitle,
   MateDetailTotal,
 } from "../../../styles/BoardStyles/MateListStyle";
 import { getMatchDetail } from "../../../api/match";
@@ -41,13 +42,19 @@ function MateDetailPage() {
   const [fullFlag, setFullFlag] = useState(false);
   const { boardId } = useParams();
   const navigate = useNavigate();
+
   const [matchDetail, setMatchDetail] = useState({});
+  const [homeTeamName, setHomeTeamName] = useState("");
+  const [awayTeamName, setAwayTeamName] = useState("");
+  const [matchAt, setMatchAt] = useState("");
+
   const { userId } = useRecoilState(UserState)[0];
 
   /* mate 상세 정보 가져오기 */
   function getMateDetail() {
     axios.get(`/board/mates/${boardId}`).then(({ data }) => {
       console.log("!!!!!!!!!!!!", data);
+      setMatchDetail(data);
       setMatchId(data.matchId);
       setMateDetail(data.board);
       setTotal(data.total);
@@ -62,11 +69,14 @@ function MateDetailPage() {
   function getMatch() {
     getMatchDetail(matchId).then((res) => {
       setMatchDetail(res);
+      setHomeTeamName(res.homeTeamName);
+      setAwayTeamName(res.awayTeamName);
+      setMatchAt(res.matchAt);
     });
   }
   useEffect(() => {
     getMatch();
-  }, []);
+  }, [matchId]);
 
   const handleUpdateBtn = () => {
     navigate("/mateRegist", { state: { board: mateDetail } });
@@ -99,7 +109,7 @@ function MateDetailPage() {
   };
 
   const handleBackClick = () => {
-    navigate("/waggle");
+    navigate("/mate");
   };
 
   return (
@@ -125,11 +135,12 @@ function MateDetailPage() {
         >
           <ItemTitle>
             <MatchTitle>
-              {matchDetail.homeTeamName} vs {matchDetail.awayTeamName}
+              {homeTeamName} vs {awayTeamName}
             </MatchTitle>
-            <MatchTime>{formatDateTime(matchDetail.matchAt)}</MatchTime>
+            <MatchTime>{formatDateTime(matchAt)}</MatchTime>
           </ItemTitle>
         </div>
+        <MateDetailTitle>{mateDetail.title}</MateDetailTitle>
         <MateDetailContent>{mateDetail.content}</MateDetailContent>
         <MateDetailTotal>총 인원 : {total}</MateDetailTotal>
         <EditDeleteButton>{renderEditDeleteButtons()}</EditDeleteButton>

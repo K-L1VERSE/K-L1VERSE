@@ -1,6 +1,8 @@
 /* eslint-disable react/jsx-no-comment-textnodes */
 import React from "react";
 import { useNavigate } from "react-router-dom";
+import { useRecoilState } from "recoil";
+import { UserState } from "../../global/UserState";
 import Board from "../../components/main/Board";
 import { Category, Title, AllBtn } from "../../styles/main-styles/MainStyle";
 import TodayMatch from "../../components/main/TodayMatch";
@@ -8,6 +10,7 @@ import Notice from "../../components/main/Notice";
 import Hotclip from "../../components/main/Hotclip";
 import Nostradamus from "../../components/main/Nostradamus";
 import Survey from "../../components/main/Survey";
+import EditNicknameModal from "../../components/mypage/EditNicknameModal";
 
 function MainPage() {
   (function () {
@@ -56,8 +59,11 @@ function MainPage() {
   }
 
   const goMatchSchedule = () => {
-    navigate("/matchSchedule");
+    navigate("/schedule");
   };
+
+  const [userState] = useRecoilState(UserState);
+  const { nickname } = userState;
 
   return (
     <div>
@@ -78,6 +84,8 @@ function MainPage() {
       </Category>
       <Nostradamus />
       <Survey />
+
+      {nickname === null && <EditNicknameModal type="signUp" />}
     </div>
   );
 }

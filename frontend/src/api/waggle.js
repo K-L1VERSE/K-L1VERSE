@@ -15,10 +15,6 @@ export function getWaggleList(page, size, success, fail) {
 export async function getWaggleDetail(boardId, data, success, fail) {
   await axios
     .post(`/${gateway}/${url}/${boardId}`, data)
-    // .then((res) => {
-    //   console.log(res, " ?!?@>#?!@#!?@#!@#!");
-    //   console.log(res.data, " ???????????????");
-    // })
     .then(success)
     .catch(fail);
 }

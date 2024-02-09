@@ -85,17 +85,11 @@ function App() {
               <Route path="/productRegist" element={<ProductRegistPage />} />
 
               {/* 경기 일정 페이지 */}
-              <Route path="/matchSchedule" element={<MatchSchedulePage />} />
+              <Route path="/schedule" element={<MatchSchedulePage />} />
               {/* 경기 상세 페이지 */}
-              <Route
-                path="/matchDetail/:matchId"
-                element={<MatchDetailPage />}
-              />
+              <Route path="/match/:matchId" element={<MatchDetailPage />} />
               {/* 경기 채팅 페이지 */}
-              <Route
-                path="/matchChatting/:matchId"
-                element={<MatchChattingPage />}
-              />
+              <Route path="/chat/:matchId" element={<MatchChattingPage />} />
               {/* 팀 정보 페이지 */}
               <Route path="/team" element={<TeamInfoPage />} />
 

@@ -22,6 +22,7 @@ function ProductRegistPage() {
   const [boardImage, setBoardImage] = useState(null);
   const [isUpdateMode, setIsUpdateMode] = useState(false);
   const { userId, nickname } = useRecoilState(UserState)[0];
+  const [file, setFile] = useState(null);
 
   const location = useLocation();
   useEffect(() => {
@@ -29,9 +30,9 @@ function ProductRegistPage() {
       setBoardId(location.state.board.boardId);
       setTitle(location.state.board.title);
       setContent(location.state.board.content);
-      setPrice(location.state.board.price);
-      setDealFlag(location.state.board.dealFlag);
-      // setBoardImage(location.state.board.boardImage);
+      setPrice(location.state.price);
+      setDealFlag(location.state.dealFlag);
+      setBoardImage(location.state.board.boardImage);
       setIsUpdateMode(true);
     }
   }, [location]);

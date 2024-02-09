@@ -3,15 +3,8 @@ package com.kl1verse.UserServer.domain.notification.repository.entity;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.kl1verse.UserServer.domain.notification.dto.req.MessageReqDto.NotificationType;
 import com.kl1verse.UserServer.domain.user.repository.entity.User;
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.EnumType;
-import jakarta.persistence.Enumerated;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
+import jakarta.persistence.*;
+
 import java.time.LocalDateTime;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -32,7 +25,7 @@ public class Notification {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    @Enumerated(value = EnumType.STRING)
+    @Convert(converter = NotificationTypeConverter.class)
     private NotificationType type;
     private String profile;
     private String nickname;

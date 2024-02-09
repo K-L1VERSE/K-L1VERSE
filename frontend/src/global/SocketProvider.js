@@ -53,9 +53,9 @@ const SocketProvider = ({ children }) => {
       ![
         "/login",
         "/logout",
-        "/KakaoAuth",
+        "/KakaoAuth/",
         "/GoogleAuth",
-        "/NaverAuth",
+        "/NaverAuth/",
       ].includes(window.location.pathname) &&
       notificationFlag
     ) {

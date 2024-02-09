@@ -3,13 +3,13 @@ import { useNavigate } from "react-router-dom";
 import {
   BadgeImg,
   OnlyTime,
-} from "../../styles/MatchStyles/MatchScheduleStyle";
+} from "../../styles/match-styles/MatchScheduleStyle";
 
 export default function Time({ match }) {
   const navigate = useNavigate();
 
   const handleOnClick = () => {
-    navigate(`/matchDetail/${match.matchId}`);
+    navigate(`/match/${match.matchId}`);
   };
   const srcFirst = `${process.env.PUBLIC_URL}/badge/badge`;
 

@@ -84,6 +84,12 @@ function MateRegistCard({
           </option>
         ))}
       </SelectInput>
+      <InputLabel>제목</InputLabel>
+      <TitleInput
+        value={title}
+        onChange={onTitleChange}
+        placeholder="제목을 입력하세요"
+      />
       <InputLabel>모집 내용</InputLabel>
       <TextArea
         value={content}

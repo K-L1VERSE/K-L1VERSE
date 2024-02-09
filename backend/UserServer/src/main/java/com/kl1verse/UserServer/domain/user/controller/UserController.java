@@ -195,6 +195,12 @@ public class UserController {
         return ResponseEntity.ok().body(mypageService.checkNicknameAvailable(request, map.get("nickname")));
     }
 
+    @PostMapping("/nickname")
+    public ResponseEntity<?> insertNickname(HttpServletRequest request, @RequestBody NicknameUpdateReqDto nicknameUpdateReqDto) {
+        mypageService.setNickname(request, nicknameUpdateReqDto);
+        return ResponseEntity.ok().build();
+    }
+
     @PutMapping("/nickname")
     public ResponseEntity<?> updateNickname(HttpServletRequest request, @RequestBody NicknameUpdateReqDto nicknameUpdateReqDto) {
         mypageService.updateNickname(request, nicknameUpdateReqDto);

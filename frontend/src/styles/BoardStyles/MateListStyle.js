@@ -25,8 +25,10 @@ export const MateDetailTitle = styled.p`
   margin: 0;
   font-size: 1.5rem;
   font-weight: bold;
-  margin-bottom: 10px;
-  background-color: yellow;
+  margin-bottom: 1rem;
+  border-top: 1px solid #ccc;
+  margin-top: 1rem;
+  padding-top: 1rem;
 `;
 
 export const MateDetailContent = styled.p`

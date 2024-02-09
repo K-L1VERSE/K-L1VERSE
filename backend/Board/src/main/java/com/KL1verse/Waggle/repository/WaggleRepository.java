@@ -31,7 +31,6 @@ public interface WaggleRepository extends JpaRepository<Waggle, Long> {
   @Query(value = "SELECT u.nickname FROM user u JOIN board b ON b.user_id = u.user_id WHERE b.user_id = :userId", nativeQuery = true)
   List<Object[]> findUserNickname(@Param("userId") Integer userId);
 
-
   Page<Waggle> findByHashtagsContaining(String hashtag, Pageable pageable);
 
   Page<Waggle> findByBoard_UserId(Integer userId, Pageable pageable);

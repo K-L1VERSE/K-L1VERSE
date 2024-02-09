@@ -9,7 +9,9 @@ import {
   EditButton,
   DeleteButton,
   CommentTime,
-  CommentBig,
+  CommentListContainer,
+  LikeBox,
+  CommentContentContainer,
 } from "../../styles/BoardStyles/CommentStyle";
 import { likeComment, unlikeComment, updateComment } from "../../api/comment";
 import { UserState } from "../../global/UserState";
@@ -92,7 +94,7 @@ function CommentItemCard({ comment, onCommentDelete, formatRelativeTime }) {
   };
 
   return (
-    <CommentBig>
+    <CommentListContainer>
       <CommentWriter>{comment.nickname}</CommentWriter>
       <CommentItem key={comment.commentId}>
         {isEditMode ? (
@@ -104,19 +106,25 @@ function CommentItemCard({ comment, onCommentDelete, formatRelativeTime }) {
           />
         ) : (
           // 수정 모드가 아닐 때는 댓글 내용을 보여줌
-          <CommentContent>
-            {comment.content}
-            <CommentTime>{formatRelativeTime(comment.createAt)}</CommentTime>
-          </CommentContent>
+          <>
+            <CommentContentContainer>
+              <CommentContent>{comment.content}</CommentContent>
+              <LikeBox>
+                <Like
+                  liked={liked}
+                  likesCount={likesCount}
+                  handleLikeClick={handleLikeClick}
+                />
+              </LikeBox>
+            </CommentContentContainer>
+            <CommentContentContainer>
+              <CommentTime>{formatRelativeTime(comment.createAt)}</CommentTime>
+              {renderEditDeleteButtons()}
+            </CommentContentContainer>
+          </>
         )}
-        <Like
-          liked={liked}
-          likesCount={likesCount}
-          handleLikeClick={handleLikeClick}
-        />
-        {renderEditDeleteButtons()}
       </CommentItem>
-    </CommentBig>
+    </CommentListContainer>
   );
 }
 

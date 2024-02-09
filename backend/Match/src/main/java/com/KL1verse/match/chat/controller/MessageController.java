@@ -48,6 +48,7 @@ public class MessageController {
                 .message(messageReqDto.getMessage())
                 .date(messageReqDto.getDate())
                 .profile(messageReqDto.getProfile())
+                .mainBadge(messageReqDto.getMainBadge())
                 .build();
 
             String jsonMessageResDto = objectMapper.writeValueAsString(message);

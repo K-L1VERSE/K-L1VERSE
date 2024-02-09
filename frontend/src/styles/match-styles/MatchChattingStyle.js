@@ -12,9 +12,7 @@ export const CleanBot = styled.div`
   height: 3rem;
   padding-left: 0.5rem;
   padding-bottom: 0.15rem;
-  margin: 0 auto;
-  margin-left: 0.5rem;
-  margin-right: 0.5rem;
+  margin: 0 1rem;
   background-color: #fafafa;
   border: 2px solid #efecec;
   border-radius: 0.3rem;
@@ -37,12 +35,11 @@ export const CleanBot = styled.div`
 `;
 
 export const ChattingBox = styled.div`
-  margin: 0 auto;
+  margin: 0 1rem;
   height: 23.375rem;
-  margin-left: 0.5rem;
-  margin-right: 0.5rem;
-  overflow-y: scroll;
+  overflow-y: auto;
   padding: 1rem;
+  border: 1px solid whitesmoke;
 
   &::-webkit-scrollbar {
     width: 0.5rem;

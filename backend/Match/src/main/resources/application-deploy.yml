@@ -1,8 +1,8 @@
 spring:
   datasource:
-    url: jdbc:mariadb://stg-yswa-kr-practice-db-master.mariadb.database.azure.com:3306/s10p12a409
-    username: S10P12A409
-    password: kp7Ad1kzRN
+    url: jdbc:mariadb://3.39.6.237:5040/match
+    username: root
+    password: KL1VERSE
 
     # kafka 설정
   kafka:
@@ -17,11 +17,11 @@ spring:
       key-serializer: org.apache.kafka.common.serialization.StringSerializer
       value-serializer: org.apache.kafka.common.serialization.StringSerializer
 
-#server:
-#  ssl:
-#    enabled: true
-#    key-store: classpath:/keystore.p12
-#    key-store-type: PKCS12
-#    key-store-password: 1234
+server:
+ ssl:
+   enabled: true
+   key-store: classpath:/keystore.p12
+   key-store-type: PKCS12
+   key-store-password: 1234
 
 domain: https://i10a409.p.ssafy.io

@@ -63,7 +63,7 @@ public class NewsCrawl {
         private String uri;
     }
 
-    @Scheduled(cron = "* 0/15 * * * *")
+    @Scheduled(cron = "0 0/15 * * * *")
 //    @Scheduled(fixedDelay = Long.MAX_VALUE)
     public void crawlNews() {
         log.info("Crawling...");
