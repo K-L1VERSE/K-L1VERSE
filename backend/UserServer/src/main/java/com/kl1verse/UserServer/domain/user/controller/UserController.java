@@ -106,6 +106,12 @@ public class UserController {
         return ResponseEntity.ok().build();
     }
 
+    @DeleteMapping("/notifications")
+    public ResponseEntity<?> deleteNotification(@RequestBody Map<String, Integer> map) {
+        notificationService.deleteNotification(map.get("notificationId"));
+        return ResponseEntity.ok().build();
+    }
+
     @GetMapping("/notifications/test/goal")
     public ResponseEntity<String> notificationTestGoal() {
         notificationService.sendNotification(MessageReqDto.builder()
@@ -123,7 +129,9 @@ public class UserController {
         notificationService.sendNotification(MessageReqDto.builder()
                 .userId(1)
                 .type(NotificationType.COMMENT)
-                .message("댓글) 테스트 알림 입니다.")
+                .profile("https://ssl.pstatic.net/static/pwe/address/img_profile.png")
+                .nickname("홍윤기")
+                .message("님이 댓글을 달았습니다.")
                 .uri("/waggle/1")
                 .date(LocalDateTime.now())
                 .build());
@@ -135,7 +143,9 @@ public class UserController {
         notificationService.sendNotification(MessageReqDto.builder()
                 .userId(1)
                 .type(NotificationType.LIKE)
-                .message("좋아요) 테스트 알림 입니다.")
+                .profile("https://ssl.pstatic.net/static/pwe/address/img_profile.png")
+                .nickname("홍윤기")
+                .message("님이 좋아요를 누르셨습니다.")
                 .uri("/waggle/1")
                 .date(LocalDateTime.now())
                 .build());
@@ -147,7 +157,9 @@ public class UserController {
         notificationService.sendNotification(MessageReqDto.builder()
                 .userId(1)
                 .type(NotificationType.MATCH)
-                .message("경기) 테스트 알림 입니다.")
+                .homeTeamId("1")
+                .awayTeamId("2")
+                .message("경기 시작 30분전 입니다.")
                 .uri("/matchDetail/201")
                 .date(LocalDateTime.now())
                 .build());

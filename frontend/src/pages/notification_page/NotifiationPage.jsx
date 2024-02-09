@@ -39,6 +39,25 @@ function Notification() {
     }
   };
 
+  const deleteNotification = (notification) => {
+    const newNotifications = notificationState.notifications.filter(
+      (n) => n.notificationId !== notification.notificationId,
+    );
+    setNotificationState((prev) => ({
+      ...prev,
+      notifications: newNotifications,
+    }));
+
+    axios
+      .delete("/user/users/notifications", {
+        data: {
+          notificationId: notification.notificationId,
+        },
+      })
+      .then(() => {})
+      .catch(() => {});
+  };
+
   return (
     <div>
       <HeaderContainer>
@@ -53,6 +72,7 @@ function Notification() {
       <NotificationList
         notifications={notificationState.notifications}
         handleNotificationClick={handleNotificationClick}
+        deleteNotification={deleteNotification}
       />
     </div>
   );
