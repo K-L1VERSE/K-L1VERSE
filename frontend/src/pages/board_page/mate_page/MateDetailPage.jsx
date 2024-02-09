@@ -22,6 +22,7 @@ import {
   MatchTime,
   MatchTitle,
   MateDetailContent,
+  MateDetailTitle,
   MateDetailTotal,
 } from "../../../styles/BoardStyles/MateListStyle";
 import { getMatchDetail } from "../../../api/match";
@@ -130,6 +131,7 @@ function MateDetailPage() {
             <MatchTime>{formatDateTime(matchDetail.matchAt)}</MatchTime>
           </ItemTitle>
         </div>
+        <MateDetailTitle>{mateDetail.title}</MateDetailTitle>
         <MateDetailContent>{mateDetail.content}</MateDetailContent>
         <MateDetailTotal>총 인원 : {total}</MateDetailTotal>
         <EditDeleteButton>{renderEditDeleteButtons()}</EditDeleteButton>
