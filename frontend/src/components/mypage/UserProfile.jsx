@@ -14,28 +14,27 @@ import EditNicknameModal from "./EditNicknameModal";
 
 const ProfileTitleContainer = styled.div`
   display: inline-flex;
-  padding: 12px 16px 12px 16px;
+  padding: 1rem 1rem 0.75rem 1rem;
   flex-direction: column;
   align-items: center;
-  gap: 20px;
+  gap: 1.25rem;
 `;
 
 const ProfileTitleIcon = styled.img`
-  width: 16px;
-  height: 16px;
+  width: 1rem;
+  height: 1rem;
 `;
 
 const ProfileTitleText = styled.div`
   color: var(--blue1, #026);
   font-size: 1rem;
   font-family: "Pretendard-Bold";
-  margin-top: 2px;
-  margin-left: 3px;
+  padding-top: 0.2rem;
 `;
 
 const ProfileTitleHeader = styled.div`
   display: flex;
-  width: 358px;
+  width: 22.375rem;
   justify-content: space-between;
   align-items: center;
 `;
@@ -43,9 +42,8 @@ const ProfileTitleHeader = styled.div`
 const ProfileTitleContent = styled.div`
   display: flex;
   align-items: center;
-  gap: 4px;
+  gap: 0.5rem;
   font-size: 1rem;
-  margin-top: 4px;
 `;
 
 const ProfileSettingContainer = styled.div`
@@ -55,8 +53,8 @@ const ProfileSettingContainer = styled.div`
 `;
 
 const ProfileSettingImg = styled.img`
-  width: 24px;
-  height: 24px;
+  width: 1.5rem;
+  height: 1.5rem;
   &:hover {
     cursor: pointer;
   }
@@ -67,19 +65,19 @@ const ProfileEditContent = styled.div`
   justify-content: space-between;
   align-items: center;
   flex-shrink: 0;
-  margin-left: 4px;
+  margin-left: 0.25rem;
 `;
 
 const ProfileEditIcon = styled.img`
-  width: 20px;
-  height: 20px;
+  width: 1.25rem;
+  height: 1.25rem;
   cursor: pointer;
 `;
 
 const ProfileEditText = styled.div`
   color: var(--blue1, #026);
   font-family: "Pretendard-Regular";
-  font-size: 12px;
+  font-size: 0.75rem;
   font-style: normal;
   font-weight: 400;
   line-height: normal;
@@ -88,10 +86,10 @@ const ProfileEditText = styled.div`
 const UserInfoContainer = styled.div`
   display: flex;
   align-items: center;
-  gap: 12px;
+  gap: 0.75rem;
   align-self: stretch;
   justify-content: space-between;
-  width: 358px;
+  width: 22.375rem;
   align-items: center;
 `;
 
@@ -102,9 +100,9 @@ const UserInfoContent = styled.div`
 `;
 
 const UserProfile = styled.img`
-  width: 32px;
-  height: 32px;
-  border-radius: 32px;
+  width: 2rem;
+  height: 2rem;
+  border-radius: 2rem;
   &:hover {
     cursor: pointer;
   }
@@ -120,7 +118,7 @@ const UserProfileInput = styled.input`
 const UserNickName = styled.div`
   color: var(--gray1, #222);
   font-family: "Pretendard-Regular";
-  font-size: 14px;
+  font-size: 0.875rem;
   font-style: normal;
   font-weight: 500;
   line-height: normal;

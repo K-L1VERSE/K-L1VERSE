@@ -111,9 +111,9 @@ export const PercentItem = styled.div`
 
 export const Percent = styled.div`
   background-color: ${(props) =>
-    props.type === "home"
+    props.$type === "home"
       ? "#3261C1"
-      : props.type === "draw"
+      : props.$type === "draw"
         ? "#16B368"
         : "#F07E3D"};
   text-align: center;
