@@ -16,6 +16,7 @@ export const Nav = styled.nav`
   justify-content: space-between;
   border-top: 2px solid rgba(169, 169, 169, 0.2);
   background-color: white;
+  ${(props) => props.$disabled && "pointer-events: none;"};
 `;
 
 export const NavItem = styled.div`
@@ -31,7 +32,7 @@ export const NavItem = styled.div`
   }
 
   transition: opacity 0.3s ease;
-
+  ${(props) => props.$disabled && "pointer-events: none;"};
   &:hover {
     cursor: pointer;
     opacity: 85%;
