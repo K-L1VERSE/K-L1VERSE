@@ -23,7 +23,7 @@ public interface ProductService {
 
     List<ProductDTO> getMostRecentProducts(int count);
 
-
+    Page<ProductDTO> getProductsByUser(Integer userId, Pageable pageable);
 }
 
 

@@ -57,6 +57,31 @@ public class MateServiceImpl implements MateService {
         return mateDTO;
     }
 
+    @Override
+    public Page<MateDTO> getMatesByUser(Integer userId, Pageable pageable) {
+        Page<Mate> mates = mateRepository.findByBoard_UserId(userId, pageable);
+
+        return mates.map(mate -> {
+            MateDTO mateDTO = convertToDTO(mate);
+
+            // 닉네임 가져오기
+            List<Object[]> nicknameResult = mateRepository.findUserNickname(userId);
+            String userNickname = nicknameResult.isEmpty() ? null : (String) nicknameResult.get(0)[0];
+            mateDTO.getBoard().setNickname(userNickname);
+
+            // 게시물 이미지 가져오기
+            mateDTO.getBoard().setBoardImage(mate.getBoard().getBoardImage());
+
+            // 댓글 수 가져오기
+            Long boardId = mate.getBoard().getBoardId();
+            Integer commentCount = commentRepository.countCommentsByBoardId(boardId);
+            mateDTO.getBoard().setCommentCount(commentCount != null ? commentCount : 0);
+
+            return mateDTO;
+        });
+    }
+
+
     @Transactional
     @Override
     public MateDTO createMate(MateDTO mateDto) {
@@ -220,12 +245,19 @@ public class MateServiceImpl implements MateService {
         return mates.map(mate -> {
             MateDTO mateDTO = convertToDTO(mate);
 
-            if (mate.getBoard() != null) {
-                Long boardId = mate.getBoard().getBoardId();
-                Integer commentCount = commentRepository.countCommentsByBoardId(boardId);
+            // 닉네임 가져오기
+            Integer userId = mateDTO.getBoard().getUserId();
+            List<Object[]> nicknameResult = mateRepository.findUserNickname(userId);
+            String userNickname = nicknameResult.isEmpty() ? null : (String) nicknameResult.get(0)[0];
+            mateDTO.getBoard().setNickname(userNickname);
 
-                mateDTO.getBoard().setCommentCount(commentCount != null ? commentCount : 0);
-            }
+            // 게시물 이미지 가져오기
+            mateDTO.getBoard().setBoardImage(mate.getBoard().getBoardImage());
+
+            // 댓글 수 가져오기
+            Long boardId = mate.getBoard().getBoardId();
+            Integer commentCount = commentRepository.countCommentsByBoardId(boardId);
+            mateDTO.getBoard().setCommentCount(commentCount != null ? commentCount : 0);
 
             return mateDTO;
         });
@@ -270,6 +302,7 @@ public class MateServiceImpl implements MateService {
             .content(mate.getBoard().getContent()).createAt(mate.getBoard().getCreateAt())
             .updateAt(mate.getBoard().getUpdateAt()).deleteAt(mate.getBoard().getDeleteAt())
             .boardImage(mate.getBoard().getBoardImage())
+
             .userId(mate.getBoard().getUserId())
             .commentCount(commentRepository.countCommentsByBoardId(mate.getBoard().getBoardId()))
             .build());

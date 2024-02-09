@@ -1,5 +1,6 @@
 package com.KL1verse.Mate.controller;
 
+import com.KL1verse.Board.dto.req.BoardDTO;
 import com.KL1verse.Board.dto.req.SearchBoardConditionDto;
 import com.KL1verse.Mate.dto.req.MateDTO;
 import com.KL1verse.Mate.service.MateService;
@@ -12,6 +13,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.Mapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -28,6 +30,13 @@ public class MateController {
 
     public MateController(MateService mateService) {
         this.mateService = mateService;
+    }
+
+    @PostMapping("/myPage")
+    public ResponseEntity<Page<MateDTO>> getMatesByUser(@RequestBody BoardDTO boardDTO, Pageable pageable) {
+        Integer userId = boardDTO.getUserId();
+        Page<MateDTO> mates = mateService.getMatesByUser(userId, pageable);
+        return ResponseEntity.ok(mates);
     }
 
     @GetMapping("/{boardId}")

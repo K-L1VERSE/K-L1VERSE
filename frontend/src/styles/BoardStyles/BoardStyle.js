@@ -34,6 +34,8 @@ export const ListContainer = styled.div`
   display: flex;
   flex-direction: column;
   margin: 0 1rem;
+  padding: 1rem;
+  justify-content: flex-start;
   font-family: "Pretendard-Regular";
 `;
 
@@ -90,6 +92,7 @@ export const ItemInfoSection = styled.div`
 export const ItemInfoItem = styled.div`
   font-size: 0.7rem;
   margin-right: 0.7rem;
+  margin-bottom: 0.5rem;
   color: #595959;
   align-items: center;
 `;

@@ -1,5 +1,6 @@
 package com.KL1verse.Product.controller;
 
+import com.KL1verse.Board.dto.req.BoardDTO;
 import com.KL1verse.Board.dto.req.SearchBoardConditionDto;
 import com.KL1verse.Product.dto.req.ProductDTO;
 import com.KL1verse.Product.service.ProductService;
@@ -27,6 +28,13 @@ public class ProductController {
 
     public ProductController(ProductService productService) {
         this.productService = productService;
+    }
+
+    @PostMapping("/myPage")
+    public ResponseEntity<Page<ProductDTO>> getProductsByUser(@RequestBody BoardDTO boardDTO, Pageable pageable) {
+        Integer userId = boardDTO.getUserId();
+        Page<ProductDTO> products = productService.getProductsByUser(userId, pageable);
+        return ResponseEntity.ok(products);
     }
 
     @GetMapping("/{boardId}")
