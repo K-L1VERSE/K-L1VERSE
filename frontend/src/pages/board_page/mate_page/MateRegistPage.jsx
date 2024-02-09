@@ -6,7 +6,10 @@ import MateRegistCard from "../../../components/board/MateRegistCard"; // Import
 import { createMate, updateMate } from "../../../api/mate";
 import { UserState } from "../../../global/UserState";
 
-import { RegistCardContainer } from "../../../styles/BoardStyles/BoardCreateStyle";
+import {
+  DetailTop,
+  RegistCardContainer,
+} from "../../../styles/BoardStyles/BoardCreateStyle";
 
 import BackIcon from "../../../assets/icon/back-icon.png";
 
