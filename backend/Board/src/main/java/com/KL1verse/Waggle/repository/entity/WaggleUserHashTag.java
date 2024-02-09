@@ -51,7 +51,3 @@ public class WaggleUserHashTag {
     private boolean isLiked;
 
 }
-
-
-
-
