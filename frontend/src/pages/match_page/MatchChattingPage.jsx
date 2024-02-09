@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { getMatchDetail } from "../../api/match";
-// import Chat from "../../components/match/Chat";
+import Chat from "../../components/match/Chat";
 import ScoreItem from "../../components/match/ScoreItem";
 import TimelineContainer from "../../components/match/TimelineContainer";
 import BettingPercentItem from "../../components/match/BettingPercentItem";
@@ -50,14 +50,9 @@ function MatchChattingPage() {
           👀 실시간 채팅
         </Button>
       </Buttons>
-      {focus === 1 && (
-        <>
-          <ScoreItem match={match} />
-          <TimelineContainer />
-        </>
-      )}
-      {focus === 2 && <div>채팅 페이지</div>}
-      {/* <Chat /> */}
+      <ScoreItem match={match} />
+      {focus === 1 && <TimelineContainer />}
+      {focus === 2 && <Chat />}
     </>
   );
 }

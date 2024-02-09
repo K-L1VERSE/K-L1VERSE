@@ -18,7 +18,7 @@ export const Shares = styled.div`
 export const Modal = styled.div`
   position: fixed;
   font-size: 0.9rem;
-  top: 55%;
+  top: 20rem;
   left: 50%;
   transform: translate(-50%, -50%);
   background-color: white;
@@ -90,7 +90,7 @@ export const ResultTeam = styled.div`
 
 export const Team = styled.div`
   position: absolute;
-  top: 67%;
+  top: 25rem;
   left: 50%;
   transform: translate(-50%, -50%);
 
@@ -99,6 +99,10 @@ export const Team = styled.div`
     margin-bottom: 3rem;
     font-family: "Pretendard-Bold";
     font-size: 1.8rem;
-    /* display: flex; */
+  }
+
+  img {
+    width: 12rem;
+    height: auto;
   }
 `;

@@ -12,18 +12,15 @@ import {
   ResultTeam,
   Team,
 } from "../../styles/SurveyStyles/ResultCardStyle";
-import TeamImage from "../../components/Survey/TeamImage";
-import TeamName from "../../components/Survey/TeamName";
 import { SurveyTop, ToLeftImg } from "../../styles/SurveyStyles/SurveyTop";
 import ToLeftPng from "../../assets/ToLeft.png";
 import Wallpaper from "../../assets/wallpaperbetter.png";
-import Facebook from "../../assets/icon/facebook-icon(ver2).png";
-import Twitter from "../../assets/icon/twitter-icon.png";
-import Kakao from "../../assets/icon/kakaotalk-icon.png";
+import FacebookIcon from "../../assets/icon/facebook-icon(ver2).png";
+import TwitterIcon from "../../assets/icon/twitter-icon.png";
+import KakaoIcon from "../../assets/icon/kakaotalk-icon.png";
 import Goback from "../../assets/icon/go-back-arrow-icon.png";
 import LoadingBar from "../../components/Survey/LoadingBar";
 import { ReactComponent as Congrats } from "../../assets/congrats.svg";
-import KakaoPage from "./KakaoPage";
 
 function firework() {
   var duration = 15 * 100;
@@ -60,6 +57,36 @@ function firework() {
 }
 
 function ResultPage() {
+  const teamImages = {
+    1: "/images/surveyResult/ulsan_mita.jpg",
+    2: "/images/surveyResult/pohang_soidori.png",
+    3: "/images/surveyResult/jeju_gamguri.png",
+    4: "/images/surveyResult/jeonbuk_nighty.png",
+    5: "/images/surveyResult/seoul_cid.png",
+    6: "/images/surveyResult/daejeon_citizen.webp",
+    7: "/images/surveyResult/daegu_victorica.png",
+    8: "/images/surveyResult/incheon_ut2.png",
+    9: "/images/surveyResult/gangwon_gangwoong.png",
+    10: "/images/surveyResult/gwangju_mascot.png",
+    11: "/images/surveyResult/suwon_swoony.jpg",
+    12: "/images/surveyResult/kimcheon_shuwoong2.png",
+  };
+
+  const teamNames = {
+    1: "울산 HD FC",
+    2: "포항 스틸러스",
+    3: "제주 유나이티드",
+    4: "전북 현대 모터스",
+    5: "FC 서울",
+    6: "대전 하나 시티즌",
+    7: "대구 FC",
+    8: "인천 유나이티드 FC",
+    9: "강원 FC",
+    10: "광주 FC",
+    11: "수원 FC",
+    12: "김천 상무 FC",
+  };
+
   const {
     state: { teamId },
   } = useLocation();
@@ -67,7 +94,6 @@ function ResultPage() {
   const navigate = useNavigate();
   const [isCopyModalOpen, setIsCopyModalOpen] = React.useState(false);
   const [showResult, setShowResult] = useState(false);
-  const [showKakaoPage, setShowKakaoPage] = useState(false);
 
   useEffect(() => {
     const tick = setTimeout(() => {
@@ -107,12 +133,54 @@ function ResultPage() {
     );
   };
 
-  const handleRestart = () => {
+  const goStart = () => {
     navigate("/survey");
   };
 
-  const goStart = () => {
-    navigate("/survey");
+  // **************** kakao 공유 ****************
+  const { Kakao } = window;
+
+  // 배포한 자신의 사이트
+  const realUrl = "http://i10a409.p.ssafy.io/survey";
+  // 로컬 주소 (localhost 3000 같은거)
+  const resultUrl = window.location.href;
+
+  const domainAndPort = process.env.REACT_APP_DOMAIN_AND_PORT;
+
+  const imageUrl = "https://i10a409.p.ssafy.io" + teamImages[teamId];
+
+  // 재랜더링시에 실행되게 해준다.
+  useEffect(() => {
+    // init 해주기 전에 clean up 을 해준다.
+    Kakao.cleanup();
+    // 자신의 js 키를 넣어준다.
+    Kakao.init("6929be9a78433534e7fc811e86f9795a");
+    // 잘 적용되면 true 를 뱉는다.
+    console.log(Kakao.isInitialized());
+  }, []);
+
+  const shareKakaoLink = () => {
+    Kakao.Share.sendDefault({
+      objectType: "feed",
+      content: {
+        title: "나랑 어울리는 K-리그 구단은?",
+        description: teamNames[teamId],
+        imageUrl: imageUrl,
+        link: {
+          mobileWebUrl: realUrl,
+          webUrl: realUrl,
+        },
+      },
+      buttons: [
+        {
+          title: "나도 궁금해!",
+          link: {
+            mobileWebUrl: realUrl,
+            webUrl: realUrl,
+          },
+        },
+      ],
+    });
   };
 
   return (
@@ -131,8 +199,8 @@ function ResultPage() {
             <ResultTeam>
               <img src={Wallpaper} alt="" />
               <Team>
-                <TeamName teamId={teamId} />
-                <TeamImage teamId={teamId} />
+                <div>{teamNames[teamId]}</div>
+                <img src={teamImages[teamId]} alt="teamImage" />
               </Team>
             </ResultTeam>
             <ShareText>콘텐츠 공유하기</ShareText>
@@ -146,14 +214,13 @@ function ResultPage() {
               <div onClick={copyUrl}>URL 복사</div>
             </UrlBox>
             <Shares>
-              <img src={Facebook} onClick={shareFacebook} alt="facebook" />
-              <img src={Twitter} onClick={shareTwitter} alt="twitter" />
-              <img src={Kakao} onClick={goKakao} alt="kakao" />
+              <img src={FacebookIcon} onClick={shareFacebook} alt="facebook" />
+              <img src={TwitterIcon} onClick={shareTwitter} alt="twitter" />
+              <img src={KakaoIcon} onClick={shareKakaoLink} alt="kakao" />
               <span>
-                <img src={Goback} onClick={handleRestart} alt="" />
+                <img src={Goback} onClick={goStart} alt="restart" />
               </span>
             </Shares>
-            <KakaoPage />
           </BottomWrap>
         </div>
       )}

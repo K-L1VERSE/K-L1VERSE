@@ -24,7 +24,7 @@ export const Button = styled.div`
 
 export const ScoreWrap = styled.div`
   background: linear-gradient(to right bottom, #002fa5, #002277);
-  border-radius: 5px 5px 0 0;
+  border-radius: 5px;
   padding: 1rem 1.2rem;
   margin: 0 1rem 0 1rem;
 `;
@@ -61,7 +61,7 @@ export const Score = styled.div`
 
 export const TimelineWrap = styled.div`
   /* background-color: red; */
-  margin: 0 1rem;
+  margin: 1rem;
   font-size: 0.85rem;
 
   table {
