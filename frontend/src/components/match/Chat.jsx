@@ -20,9 +20,9 @@ import {
   MsgDay,
   MsgHM,
   SenderImg,
-  ChattingSendImg,
-} from "../../styles/MatchStyles/MatchChattingStyle";
+} from "../../styles/match-styles/MatchChattingStyle";
 import SendIcon from "../../assets/icon/send-icon.png";
+  ChattingSendImg,
 import { UserState } from "../../global/UserState";
 
 function Chat() {
