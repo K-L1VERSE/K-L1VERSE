@@ -38,7 +38,6 @@ export const ListContainer = styled.div`
 `;
 
 export const ItemContainer = styled.div`
-  display: flex;
   flex-direction: column;
   margin-left: 0.5rem;
   margin-bottom: 1rem;
@@ -75,6 +74,7 @@ export const ItemContent = styled.div`
   a {
     color: #a9a9a9;
     text-decoration: none;
+    color: inherit;
   }
 `;
 

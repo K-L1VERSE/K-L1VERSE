@@ -6,7 +6,7 @@ import {
   PredictBox,
   PercentBox,
   Betting,
-} from "../../styles/MatchStyles/MatchDetailStyle";
+} from "../../styles/match-styles/MatchDetailStyle";
 import * as bettingApi from "../../api/betting";
 import { UserState } from "../../global/UserState";
 

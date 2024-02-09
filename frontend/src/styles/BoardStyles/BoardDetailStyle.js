@@ -9,35 +9,33 @@ export const Container = styled.div`
 
 export const DetailTop = styled.div`
   display: flex;
-  margin-bottom: 1rem;
+  /* margin-bottom: 1rem; */
 `;
 
 export const DetailBox = styled.div`
-  background-color: #fff;
   border-bottom: 1px solid #ccc;
   padding: 1rem 1rem 0.4rem 1rem;
   margin-bottom: 1rem;
-
-  /* background-color: aliceblue; */
 `;
 
 export const User = styled.div`
   display: flex;
   align-items: center;
+  margin-bottom: 0.5rem;
 `;
 
 export const CreateAt = styled.p`
   font-size: 0.7rem;
-  text-align: right;
   color: #595959;
-  margin-bottom: 1rem;
+  padding-bottom: 0.5rem;
+  border-bottom: 0.3px solid #ccc;
 `;
 
 export const Title = styled.p`
   margin: 0;
   font-size: 1.5em;
   font-weight: bold;
-  margin-bottom: 10px;
+  padding-bottom: 10px;
 `;
 
 export const Content = styled.p`
@@ -56,9 +54,10 @@ export const DealFlag = styled.p`
   margin: 0;
   font-size: 1em;
   color: #333;
+  display: block;
 
   ${(props) =>
-    props.dealFlag &&
+    props.$dealFlag &&
     css`
       background-color: #4caf50; /* Green color for 거래가능 */
       color: #fff;
@@ -67,7 +66,7 @@ export const DealFlag = styled.p`
     `}
 
   ${(props) =>
-    !props.dealFlag &&
+    !props.$dealFlag &&
     css`
       background-color: #ff9800; /* Orange color for 거래완료 */
       color: #fff;

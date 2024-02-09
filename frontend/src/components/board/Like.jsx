@@ -20,10 +20,10 @@ const Like = ({ liked, likesCount, handleLikeClick }) => {
         <img
           src={liked ? LikeIcon : UnlikeIcon}
           alt={liked ? "Like" : "Unlike"}
-          style={{ width: "17px", height: "15px" }}
+          style={{ width: "13px", height: "11px" }}
         />
       </LikeButton>
-      <LikeCount> {likesCount}</LikeCount>
+      <LikeCount>{likesCount}</LikeCount>
     </div>
   );
 };

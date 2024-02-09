@@ -11,10 +11,7 @@ import {
   ItemTitle,
   ItemWriter,
 } from "../../styles/BoardStyles/BoardStyle";
-import {
-  WaggleImage,
-  WaggleListImage,
-} from "../../styles/BoardStyles/WaggleListStyle";
+import { WaggleListImage } from "../../styles/BoardStyles/WaggleListStyle";
 
 function WaggleItemCard({ waggle, formatRelativeTime }) {
   const boardImage = waggle.board.boardImage
@@ -22,7 +19,10 @@ function WaggleItemCard({ waggle, formatRelativeTime }) {
     : [];
 
   return (
-    <>
+    <Link
+      to={`/waggle/${waggle.board.boardId}`}
+      style={{ textDecoration: "none", color: "black" }}
+    >
       <ItemContainer>
         <ItemWriter>{waggle.board.nickname}</ItemWriter>
         <ImageContentBox>
@@ -31,20 +31,8 @@ function WaggleItemCard({ waggle, formatRelativeTime }) {
             <WaggleListImage src={boardImage[0].trim()} alt="Waggle Image" />
           )}
           <ItemContent>
-            <ItemTitle>
-              <Link
-                to={`/waggle/${waggle.board.boardId}`}
-                style={{ textDecoration: "none", color: "black" }}
-              >
-                {waggle.board.title}
-              </Link>
-            </ItemTitle>
-            <Link
-              to={`/waggle/${waggle.board.boardId}`}
-              style={{ textDecoration: "none" }}
-            >
-              <p>{waggle.board.content}</p>
-            </Link>
+            <ItemTitle>{waggle.board.title}</ItemTitle>
+            <p>{waggle.board.content}</p>
           </ItemContent>
         </ImageContentBox>
         <ItemInfoSection>
@@ -61,7 +49,7 @@ function WaggleItemCard({ waggle, formatRelativeTime }) {
           </ItemInfoItem>
         </ItemInfoSection>
       </ItemContainer>
-    </>
+    </Link>
   );
 }
 

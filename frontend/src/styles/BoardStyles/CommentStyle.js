@@ -1,13 +1,90 @@
 import styled from "styled-components";
 
+/* ************* CommentList ************* */
+export const ListContainer = styled.div`
+  margin-top: 1rem;
+  margin-right: 0.4rem;
+`;
+
+export const CommentListContainer = styled.div``;
+
+export const CommentItem = styled.li`
+  margin-bottom: 1rem;
+  border-bottom: 1px solid #ccc;
+  list-style: none;
+`;
+
+export const CommentContentContainer = styled.div`
+  display: flex;
+  align-items: center;
+  margin-bottom: 0.2rem;
+  justify-content: space-between;
+`;
+
+export const CommentContent = styled.p`
+  /* display: flex; */
+  margin-bottom: 0.1rem;
+  margin-left: 1rem;
+  font-size: 0.8rem;
+  color: #5f5f5f;
+  display: block;
+`;
+
+export const CommentTime = styled.div`
+  margin-left: 1rem;
+  font-size: 0.5rem;
+  color: grey;
+  align-items: center;
+  justify-content: flex-end;
+`;
+
+export const CommentWriter = styled.div`
+  font-size: 0.9rem;
+  color: black;
+  margin-left: 0.8rem;
+`;
+
+export const ButtonContainer = styled.div`
+  display: flex;
+  justify-content: flex-start;
+  margin-left: 0.7rem;
+  margin-bottom: 0.2rem;
+`;
+
+export const EditButton = styled.button`
+  background-color: #fff;
+  color: grey;
+  font-size: 0.5em;
+  border: none;
+  cursor: pointer;
+  border-radius: 10px;
+
+  &.hover {
+    text-decoration: underline;
+  }
+`;
+
+export const DeleteButton = styled.button`
+  background-color: #fff;
+  color: grey;
+  font-size: 0.5em;
+  padding-left: 0.3rem;
+  border: none;
+  cursor: pointer;
+  border-radius: 10px;
+`;
+
+export const LikeBox = styled.div`
+  display: flex;
+  align-items: center;
+  margin-right: 0.7rem;
+  justify-content: end;
+  size: 0.7rem;
+`;
+
 /* ************* CommentForm ************* */
 export const CommentFormContainer = styled.form`
-  margin-top: 1rem;
   font-family: "Pretendard-Regular";
-  .reply {
-    display: flex;
-    align-items: center;
-  }
 `;
 
 export const TextContainer = styled.form`
@@ -16,16 +93,18 @@ export const TextContainer = styled.form`
 `;
 
 export const TextArea = styled.textarea`
-  border: 1px solid lightgray;
   padding: 10px;
-  height: 2rem;
   resize: none;
   flex: 1;
-  font-family: "Pretendard-Light";
-  &:focus {
-    outline: none;
-  }
 `;
+
+export const CheckboxLabel = styled.label`
+  display: flex;
+  align-items: center;
+  font-size: 0.7rem;
+`;
+
+export const CheckboxInput = styled.input``;
 
 // 댓글 수정창
 export const CommentInput = styled.input`
@@ -35,25 +114,7 @@ export const CommentInput = styled.input`
   margin-bottom: 0.4rem;
   border: 1px solid #ccc;
   border-radius: 4px;
-`;
-
-export const CheckboxLabel = styled.label`
-  display: flex;
-  align-items: center;
-  font-family: "Pretendard-Regular";
-  font-size: 0.86rem;
-  div {
-    display: flex;
-    align-items: center;
-  }
-  img {
-    margin-right: 0.2rem;
-  }
-  margin-bottom: 0.3rem;
-`;
-
-export const CheckboxInput = styled.input`
-  margin-right: 6px;
+  background-color: bisque;
 `;
 
 export const SubmitButton = styled.button`
@@ -64,7 +125,6 @@ export const SubmitButton = styled.button`
   cursor: pointer;
   /* border-radius: 20px; */
 
-  height: 3.4rem;
   &:hover {
     background-color: #0056b3;
   }
@@ -77,10 +137,6 @@ export const CancelButton = styled.button`
   font-size: 0.9em;
   border: none;
   cursor: pointer;
-  border-radius: 20px;
-  &:hover {
-    background-color: #999;
-  }
 `;
 
 export const ReplyButton = styled.button`
@@ -92,76 +148,4 @@ export const ReplyButton = styled.button`
   cursor: pointer;
   margin-right: 10px;
   background-image: url("../../assets/icon/reply.png");
-`;
-
-/* ************* CommentList ************* */
-export const ListContainer = styled.div`
-  .title {
-    font-size: 0.9rem;
-    font-family: "Pretendard-Bold";
-    display: flex;
-    img {
-      margin-right: 0.2rem;
-    }
-    margin-bottom: 0.7rem;
-  }
-`;
-
-export const CommentListContainer = styled.div`
-  // border: 1px solid #f4f4f4;
-`;
-
-export const CommentBig = styled.div`
-  border-bottom: 1px solid #f4f4f4;
-  margin-bottom: 0.5rem;
-`;
-
-export const CommentItem = styled.li`
-  list-style: none;
-  display: flex;
-  justify-content: space-between;
-`;
-
-export const CommentContent = styled.p`
-  margin-left: 1rem;
-  font-size: 0.8rem;
-  color: #5f5f5f;
-`;
-export const CommentTime = styled.div`
-  font-size: 0.5rem;
-  margin-top: 0.4rem;
-  color: grey;
-  margin-left: 0.1rem;
-`;
-
-export const CommentWriter = styled.div`
-  font-size: 0.9rem;
-  color: black;
-  margin-top: 0.4rem;
-  margin-left: 0.8rem;
-`;
-
-export const ButtonContainer = styled.div`
-  display: flex;
-`;
-
-export const EditButton = styled.button`
-  background-color: #fff;
-  color: grey;
-  font-size: 0.8em;
-  border: none;
-  cursor: pointer;
-  border-radius: 10px;
-  &.hover {
-    text-decoration: underline;
-  }
-`;
-
-export const DeleteButton = styled.button`
-  background-color: #fff;
-  color: grey;
-  font-size: 0.8em;
-  border: none;
-  cursor: pointer;
-  border-radius: 10px;
 `;
