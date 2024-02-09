@@ -8,7 +8,6 @@ export const CommentFormContainer = styled.form`
     display: flex;
     align-items: center;
   }
-  font-family: "Pretendard-Regular";
 `;
 
 export const TextContainer = styled.form`
