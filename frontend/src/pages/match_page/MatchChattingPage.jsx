@@ -43,10 +43,10 @@ function MatchChattingPage() {
       <BettingPercentItem match={match} />
       <Line />
       <Buttons>
-        <Button focus={focus === 1} onClick={() => clickBut(1)}>
+        <Button $focus={focus === 1} onClick={() => clickBut(1)}>
           ⚽ 타임라인
         </Button>
-        <Button focus={focus === 2} onClick={() => clickBut(2)}>
+        <Button $focus={focus === 2} onClick={() => clickBut(2)}>
           👀 실시간 채팅
         </Button>
       </Buttons>

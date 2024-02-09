@@ -114,7 +114,7 @@ function TeamInfoPage() {
       <TeamWrap>
         {teams.map((team) => (
           <TeamItem
-            focus={team.id === selectedId}
+            $focus={team.id === selectedId}
             key={team.id}
             onClick={() => clickId(team.id)}
           >

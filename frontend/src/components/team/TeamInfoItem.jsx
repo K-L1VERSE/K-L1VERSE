@@ -75,8 +75,8 @@ function TeamInfoItem({ teamInfo, coach, gk, df, mf, fw }) {
       <MembersWrap>
         <Position>감독/코치</Position>
         <Members>
-          {coach.map((member) => (
-            <Member>
+          {coach.map((member, i) => (
+            <Member key={i}>
               <img src={member.profile} alt={member.name} />
               <Backno>{member.backNumber}</Backno>
               <MemberName>{member.name}</MemberName>
@@ -87,8 +87,8 @@ function TeamInfoItem({ teamInfo, coach, gk, df, mf, fw }) {
       <MembersWrap>
         <Position>GK</Position>
         <Members>
-          {gk.map((member) => (
-            <Member>
+          {gk.map((member, i) => (
+            <Member key={i}>
               <img src={member.profile} alt={member.name} />
               <Backno>{member.backNumber}</Backno>
               <MemberName>{member.name}</MemberName>
@@ -99,8 +99,8 @@ function TeamInfoItem({ teamInfo, coach, gk, df, mf, fw }) {
       <MembersWrap>
         <Position>DK</Position>
         <Members>
-          {df.map((member) => (
-            <Member>
+          {df.map((member, i) => (
+            <Member key={i}>
               <img src={member.profile} alt={member.name} />
               <Backno>{member.backNumber}</Backno>
               <MemberName>{member.name}</MemberName>
@@ -111,8 +111,8 @@ function TeamInfoItem({ teamInfo, coach, gk, df, mf, fw }) {
       <MembersWrap>
         <Position>MF</Position>
         <Members>
-          {mf.map((member) => (
-            <Member>
+          {mf.map((member, i) => (
+            <Member key={i}>
               <img src={member.profile} alt={member.name} />
               <Backno>{member.backNumber}</Backno>
               <MemberName>{member.name}</MemberName>
@@ -123,8 +123,8 @@ function TeamInfoItem({ teamInfo, coach, gk, df, mf, fw }) {
       <MembersWrap>
         <Position>FW</Position>
         <Members>
-          {fw.map((member) => (
-            <Member>
+          {fw.map((member, i) => (
+            <Member key={i}>
               <img src={member.profile} alt={member.name} />
               <Backno>{member.backNumber}</Backno>
               <MemberName>{member.name}</MemberName>
