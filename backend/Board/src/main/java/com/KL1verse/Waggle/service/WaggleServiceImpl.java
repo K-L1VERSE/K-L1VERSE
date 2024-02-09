@@ -23,6 +23,7 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 import java.util.Set;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -121,6 +122,8 @@ public class WaggleServiceImpl implements WaggleService {
     }
 
 
+
+
     @Override
     public WaggleDTO getWaggleById(Long boardId, Integer loginUserId) {
         Waggle waggle = findWaggleByBoardId(boardId);
@@ -138,6 +141,7 @@ public class WaggleServiceImpl implements WaggleService {
             .findFirst()
             .orElse(0);
 
+
         waggleDTO.setLikesCount(likesCount);
 
         int commentCount = commentRepository.countCommentsByBoardId(boardId);
@@ -148,6 +152,8 @@ public class WaggleServiceImpl implements WaggleService {
 
         String userNickname = (String) nicknameResult.get(0)[0];
         waggleDTO.getBoard().setNickname(userNickname);
+
+
 
         WaggleUserHashTag waggleUserHashTag = WaggleUserHashTag.builder()
             .userId(loginUserId)
@@ -192,6 +198,74 @@ public class WaggleServiceImpl implements WaggleService {
 //
 //        return hashtagWeights;
 //    }
+
+//    @Override
+//    public void saveHashtagsFromLikedWaggle(Long waggleId) {
+//        Waggle waggle = findWaggleByBoardId(waggleId);
+//        saveHashtags(waggle);
+//    }
+//    @Override
+//    public void saveHashtagsFromLikedWaggle(Long waggleId) {
+//    Waggle waggle = findWaggleByBoardId(waggleId);
+//    saveHashtags(waggle);
+//}
+
+    @Override
+    public void removeHashtagsFromUnlikedWaggle(Long waggleId) {
+        Waggle waggle = findWaggleByBoardId(waggleId);
+        removeHashtags(waggle);
+    }
+
+//    public void saveHashtags(WaggleDTO waggleDTO) {
+//        WaggleUserHashTag hashTag = waggleUserHashTagRepository.findById(waggleDTO.getWaggleUserHashTagId()).orElse(null);
+//        if (hashTag != null) {
+//            hashTag.setLiked(true);
+//            waggleUserHashTagRepository.save(hashTag);
+//        }
+//}
+
+//    public void saveHashtags(WaggleDTO waggleDTO) {
+//        Long waggleUserHashTagId = waggleDTO.getWaggleUserHashTagId();
+//        if (waggleUserHashTagId != null) {
+//            Optional<WaggleUserHashTag> optionalHashTag = waggleUserHashTagRepository.findById(waggleUserHashTagId);
+//            if (optionalHashTag.isPresent()) {
+//                WaggleUserHashTag hashTag = optionalHashTag.get();
+//                hashTag.setLiked(true);
+//                waggleUserHashTagRepository.save(hashTag);
+//            } else {
+//                log.error("해시태그 정보를 찾을 수 없습니다. id: {}", waggleUserHashTagId);
+//            }
+//        }
+//    }
+
+    public void saveHashtags(WaggleDTO waggleDTO) {
+        Long waggleUserHashTagId = waggleDTO.getWaggleUserHashTagId();
+        if (waggleUserHashTagId != null) {
+            Optional<WaggleUserHashTag> optionalHashTag = waggleUserHashTagRepository.findById(waggleUserHashTagId);
+            log.info("optionalHashTag: {}", optionalHashTag);
+            if (optionalHashTag.isPresent()) {
+                updateExistingHashTag(optionalHashTag.get());
+            } else {
+                log.error("해시태그 정보를 찾을 수 없습니다. id: {}", waggleUserHashTagId);
+            }
+        }
+    }
+
+    private void updateExistingHashTag(WaggleUserHashTag hashTag) {
+        hashTag.setLiked(true);
+        waggleUserHashTagRepository.save(hashTag);
+    }
+
+
+
+
+    private void removeHashtags(Waggle waggle) {
+        Integer userId = waggle.getBoard().getUserId();
+        List<WaggleUserHashTag> userHashTags = waggleUserHashTagRepository
+            .findByUserIdAndWaggle_Board_BoardIdAndIsLiked(userId, waggle.getBoard().getBoardId(), true);
+
+        waggleUserHashTagRepository.deleteAll(userHashTags);
+    }
 
     public Map<String, Integer> calculateHashtagWeights(Integer loginUserId) {
 
@@ -268,19 +342,27 @@ public class WaggleServiceImpl implements WaggleService {
         Set<String> hashtags = extractHashtags(waggleDto.getBoard().getContent());
         waggle.setHashtags(hashtags);
 
+
+
         Board board = saveBoard(waggle.getBoard());
 
         File file = fileService.saveFile(waggleDto.getBoard().getBoardImage());
         boardImageService.saveBoardImage(board, file);
 
+        board.setBoardImage(file.getUri());
+
         Integer userId = waggleDto.getBoard().getUserId();
         List<Object[]> nicknameResult = waggleRepository.findUserNickname(userId);
         String userNickname = nicknameResult.isEmpty() ? null : (String) nicknameResult.get(0)[0];
+
+
 
         Waggle createdWaggle = waggleRepository.save(waggle);
 
         WaggleDTO createdWaggleDTO = convertToDTO(createdWaggle);
         createdWaggleDTO.getBoard().setNickname(userNickname);
+        createdWaggleDTO.getBoard().setBoardImage(file.getUri());
+
 
 //        BoardCleanbotCheckReqDto boardCleanbotCheckReqDto = BoardCleanbotCheckReqDto.builder()
 //            .id(createdWaggle.getBoard().getBoardId())
@@ -299,14 +381,18 @@ public class WaggleServiceImpl implements WaggleService {
         updateExistingWaggle(existingWaggle, waggleDto);
 
         Board board = existingWaggle.getBoard();
-//        board.setBoardImage(waggleDto.getBoard().getBoardImage());
+
 
         Set<String> hashtags = extractHashtags(waggleDto.getBoard().getContent());
         existingWaggle.setHashtags(hashtags);
 
+
+
         Waggle updatedWaggle = waggleRepository.save(existingWaggle);
         File file = fileService.saveFile(waggleDto.getBoard().getBoardImage());
         boardImageService.saveBoardImage(board, file);
+
+        board.setBoardImage(file.getUri());
 
 //        BoardCleanbotCheckReqDto boardCleanbotCheckReqDto = BoardCleanbotCheckReqDto.builder()
 //            .id(boardId)
@@ -314,6 +400,7 @@ public class WaggleServiceImpl implements WaggleService {
 //            .domain("board")
 //            .build();
 //        kafkaBoardCleanbotProducer.boardCleanbotCheck(boardCleanbotCheckReqDto);
+
 
         return convertToDTO(updatedWaggle);
     }
@@ -383,6 +470,7 @@ public class WaggleServiceImpl implements WaggleService {
 
             String userNickname = (String) nicknameResult.get(0)[0];
             waggleDTO.getBoard().setNickname(userNickname);
+            waggleDTO.getBoard().setBoardImage(waggle.getBoard().getBoardImage());
 
             return waggleDTO;
         });
@@ -413,6 +501,7 @@ public class WaggleServiceImpl implements WaggleService {
             String userNickname =
                 nicknameResult.isEmpty() ? null : (String) nicknameResult.get(0)[0];
             waggleDTO.getBoard().setNickname(userNickname);
+            waggleDTO.getBoard().setBoardImage(waggle.getBoard().getBoardImage());
 
             return waggleDTO;
         });
@@ -454,6 +543,7 @@ public class WaggleServiceImpl implements WaggleService {
                 Integer commentCount = commentRepository.countCommentsByBoardId(boardId);
 
                 waggleDTO.getBoard().setCommentCount(commentCount != null ? commentCount : 0);
+                waggleDTO.getBoard().setBoardImage(waggle.getBoard().getBoardImage());
 
                 for (Object[] result : likesCounts) {
                     Waggle waggleResult = (Waggle) result[0];
@@ -511,9 +601,9 @@ public class WaggleServiceImpl implements WaggleService {
             .createAt(waggle.getBoard().getCreateAt())
             .updateAt(waggle.getBoard().getUpdateAt())
             .deleteAt(waggle.getBoard().getDeleteAt())
+            .boardImage(waggle.getBoard().getBoardImage())
             .commentCount(0)
             .userId(waggle.getBoard().getUserId())
-//            .boardImage(waggle.getBoard().getBoardImage())
             .boardType(waggle.getBoard().getBoardType())
             .build());
         waggleDTO.setHashtags(new ArrayList<>(waggle.getHashtags()));
@@ -536,6 +626,7 @@ public class WaggleServiceImpl implements WaggleService {
             .boardType(waggleDTO.getBoard().getBoardType())
             .build());
         return waggle;
+
     }
 
     @Override

@@ -1,5 +1,6 @@
 package com.KL1verse.Waggle.controller;
 
+import com.KL1verse.Board.dto.req.BoardDTO;
 import com.KL1verse.Board.dto.req.SearchBoardConditionDto;
 import com.KL1verse.Comment.dto.req.CommentDTO;
 import com.KL1verse.Waggle.dto.req.WaggleDTO;
@@ -35,25 +36,9 @@ WaggleController {
         this.waggleService = waggleService;
     }
 
-//    @GetMapping("/hashtags/{loginUserId}")
-//    public ResponseEntity<List<WaggleDTO>> getWagglesByTopHashtags(@PathVariable Integer loginUserId) {
-//        // 상위 3개 해시태그 가져오기
-//        List<String> topHashtags = waggleService.getTopHashtags(loginUserId, 3);
-//
-//        log.info("topHashtags: {}", topHashtags);
-//        // 각 해시태그를 가진 게시글들을 가져와서 리스트에 추가
-//        List<WaggleDTO> waggles = new ArrayList<>();
-//        for (String hashtag : topHashtags) {
-//            List<WaggleDTO> wagglesForHashtag = waggleService.getWagglesByHashtag(hashtag);
-//            waggles.addAll(wagglesForHashtag);
-//        }
-//        log.info("waggles: {}", waggles);
-//        // 결과 반환
-//        return new ResponseEntity<>(waggles, HttpStatus.OK);
-//    }
 
 
-    //    @GetMapping("/hashtags/{loginUserId}")
+//        @GetMapping("/hashtags/{loginUserId}")
 //    public ResponseEntity<Page<WaggleDTO>> getWagglesByTopHashtags(@PathVariable Integer loginUserId, Pageable pageable) {
 //        // 상위 3개 해시태그 가져오기
 //        List<String> topHashtags = waggleService.getTopHashtags(loginUserId, 3);
@@ -65,12 +50,13 @@ WaggleController {
 //        // 결과 반환
 //        return new ResponseEntity<>(waggles, HttpStatus.OK);
 //    }
-    @GetMapping("/hashtags")
-    public ResponseEntity<Page<WaggleDTO>> getWagglesByTopHashtags(
-        @PathVariable Integer loginUserId, Pageable pageable) {
+
+
+    @PostMapping("/hashtags")
+    public ResponseEntity<Page<WaggleDTO>> getWagglesByTopHashtags(@RequestBody BoardDTO boardDTO, Pageable pageable) {
         // 상위 3개 해시태그 가져오기
+        Integer loginUserId = boardDTO.getUserId();
         List<String> topHashtags = waggleService.getTopHashtags(loginUserId, 3);
-        log.info("topHashtags: {}", topHashtags);
 
         // 각 해시태그를 가진 게시글들을 가져와서 리스트에 추가
         Page<WaggleDTO> waggles = waggleService.getWagglesByHashtags(topHashtags, pageable);
@@ -78,6 +64,7 @@ WaggleController {
         // 결과 반환
         return new ResponseEntity<>(waggles, HttpStatus.OK);
     }
+
 
     @PostMapping("/{boardId}")
     public ResponseEntity<WaggleDTO> getWaggleById(@PathVariable Long boardId,

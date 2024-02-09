@@ -15,5 +15,8 @@ public interface WaggleUserHashTagRepository extends JpaRepository<WaggleUserHas
     @Query(value = "SELECT hashtags FROM waggle_user_hashtag GROUP BY hashtags ORDER BY COUNT(*) DESC LIMIT 1", nativeQuery = true)
     String findMostViewedHashtags();
 
+    List<WaggleUserHashTag> findByUserIdAndWaggle_Board_BoardIdAndIsLiked(Integer userId, Long boardId, Boolean isLiked);
+
+    WaggleUserHashTag findByUserIdAndWaggle_Board_BoardIdAndHashtagsAndIsLiked(Integer userId, Long waggleId, String hashtag, boolean isLiked);
 }
 

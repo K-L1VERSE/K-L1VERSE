@@ -35,8 +35,8 @@ public interface WaggleService {
 
 
 
-
-
+    void removeHashtagsFromUnlikedWaggle(Long waggleId);
+    void saveHashtags(WaggleDTO waggleDTO);
 
 }
 
