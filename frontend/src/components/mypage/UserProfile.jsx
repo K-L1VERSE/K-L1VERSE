@@ -13,9 +13,10 @@ import axios from "../../api/axios";
 import EditNicknameModal from "./EditNicknameModal";
 
 const ProfileTitleContainer = styled.div`
-  display: inline-flex;
+  display: flex;
   padding: 1rem 1rem 0.75rem 1rem;
-  flex-direction: column;
+  flex-direction: row;
+  justify-content: space-between;
   align-items: center;
   gap: 1.25rem;
 `;
@@ -30,13 +31,6 @@ const ProfileTitleText = styled.div`
   font-size: 1rem;
   font-family: "Pretendard-Bold";
   padding-top: 0.2rem;
-`;
-
-const ProfileTitleHeader = styled.div`
-  display: flex;
-  width: 22.375rem;
-  justify-content: space-between;
-  align-items: center;
 `;
 
 const ProfileTitleContent = styled.div`
@@ -74,23 +68,14 @@ const ProfileEditIcon = styled.img`
   cursor: pointer;
 `;
 
-const ProfileEditText = styled.div`
-  color: var(--blue1, #026);
-  font-family: "Pretendard-Regular";
-  font-size: 0.75rem;
-  font-style: normal;
-  font-weight: 400;
-  line-height: normal;
-`;
-
 const UserInfoContainer = styled.div`
   display: flex;
   align-items: center;
   gap: 0.75rem;
   align-self: stretch;
   justify-content: space-between;
-  width: 22.375rem;
   align-items: center;
+  padding: 0.5rem 1rem 0.75rem 1rem;
 `;
 
 const UserInfoContent = styled.div`
@@ -198,36 +183,34 @@ function UserInfo({ user, setUser }) {
   };
 
   return (
-    <div>
+    <>
       <ProfileTitleContainer>
-        <ProfileTitleHeader>
-          <ProfileTitleContent>
-            <ProfileTitleIcon src={ProfileIcon} />
-            <ProfileTitleText>프로필</ProfileTitleText>
-          </ProfileTitleContent>
-          <ProfileSettingContainer onClick={goSetting}>
-            <ProfileSettingImg src="https://raw.githubusercontent.com/Tarikul-Islam-Anik/Animated-Fluent-Emojis/master/Emojis/Objects/Gear.png" />
-          </ProfileSettingContainer>
-        </ProfileTitleHeader>
-        <UserInfoContainer>
-          <UserInfoContent>
-            <label htmlFor="profileImageInput">
-              <UserProfile src={selectedImage || user.profile} />
-            </label>
-            <UserProfileInput
-              type="file"
-              id="profileImageInput"
-              accept="image/*"
-              onChange={handleImageChange}
-            />
-            <BadgeButton mainBadge={user.mainBadge} />
-            <UserNickName>{user.nickname}</UserNickName>
-            <ProfileEditContent onClick={handleModalOpen}>
-              <ProfileEditIcon src="https://raw.githubusercontent.com/Tarikul-Islam-Anik/Animated-Fluent-Emojis/master/Emojis/Objects/Wrench.png" />
-            </ProfileEditContent>
-          </UserInfoContent>
-        </UserInfoContainer>
+        <ProfileTitleContent>
+          <ProfileTitleIcon src={ProfileIcon} />
+          <ProfileTitleText>프로필</ProfileTitleText>
+        </ProfileTitleContent>
+        <ProfileSettingContainer onClick={goSetting}>
+          <ProfileSettingImg src="https://raw.githubusercontent.com/Tarikul-Islam-Anik/Animated-Fluent-Emojis/master/Emojis/Objects/Gear.png" />
+        </ProfileSettingContainer>
       </ProfileTitleContainer>
+      <UserInfoContainer>
+        <UserInfoContent>
+          <label htmlFor="profileImageInput">
+            <UserProfile src={selectedImage || user.profile} />
+          </label>
+          <UserProfileInput
+            type="file"
+            id="profileImageInput"
+            accept="image/*"
+            onChange={handleImageChange}
+          />
+          <BadgeButton mainBadge={user.mainBadge} />
+          <UserNickName>{user.nickname}</UserNickName>
+          <ProfileEditContent onClick={handleModalOpen}>
+            <ProfileEditIcon src="https://raw.githubusercontent.com/Tarikul-Islam-Anik/Animated-Fluent-Emojis/master/Emojis/Objects/Wrench.png" />
+          </ProfileEditContent>
+        </UserInfoContent>
+      </UserInfoContainer>
 
       {/* EditNickname Modal */}
       {isModalOpen && (
@@ -238,7 +221,7 @@ function UserInfo({ user, setUser }) {
           setUser={setUser}
         />
       )}
-    </div>
+    </>
   );
 }
 

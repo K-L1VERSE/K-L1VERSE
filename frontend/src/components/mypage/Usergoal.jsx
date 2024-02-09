@@ -2,8 +2,7 @@ import React, { useEffect } from "react";
 import styled from "styled-components";
 
 const UsergoalContainer = styled.div`
-  display: inline-flex;
-  width: 22.375rem;
+  display: flex;
   padding: 0rem 1rem;
   gap: 0.75rem;
 `;
