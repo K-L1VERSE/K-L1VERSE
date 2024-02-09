@@ -30,9 +30,9 @@ function ProductRegistPage() {
       setBoardId(location.state.board.boardId);
       setTitle(location.state.board.title);
       setContent(location.state.board.content);
-      setPrice(location.state.board.price);
-      setDealFlag(location.state.board.dealFlag);
-      // setBoardImage(location.state.board.boardImage);
+      setPrice(location.state.price);
+      setDealFlag(location.state.dealFlag);
+      setBoardImage(location.state.board.boardImage);
       setIsUpdateMode(true);
     }
   }, [location]);

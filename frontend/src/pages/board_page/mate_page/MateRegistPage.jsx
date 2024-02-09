@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useRecoilState } from "recoil";
 import { useNavigate, useLocation } from "react-router-dom";
-import BoardTopNavBar from "../../../components/board/BoardTopNavBar";
 import MateRegistCard from "../../../components/board/MateRegistCard"; // Import MateRegistCard
 import { createMate, updateMate } from "../../../api/mate";
 import { UserState } from "../../../global/UserState";
@@ -12,6 +11,7 @@ import {
 } from "../../../styles/BoardStyles/BoardCreateStyle";
 
 import BackIcon from "../../../assets/icon/back-icon.png";
+import { BackButton } from "../../../styles/BoardStyles/BoardDetailStyle";
 
 function MateRegistPage() {
   const navigate = useNavigate();

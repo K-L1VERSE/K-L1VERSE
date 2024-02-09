@@ -31,29 +31,27 @@ function MateItemCard({ mate }) {
   }, []);
 
   return (
-    <ItemContainer>
-      {mate.fullFlag ? (
-        <DealStatusOrange>모집완료</DealStatusOrange>
-      ) : (
-        <DealStatusGreen>모집중</DealStatusGreen>
-      )}
-      <ItemTitle>
-        <Link to={`/mate/${mate.board.boardId}`}>
+    <Link to={`/mate/${mate.board.boardId}`} style={{ textDecoration: "none" }}>
+      <ItemContainer>
+        {mate.fullFlag ? (
+          <DealStatusOrange>모집완료</DealStatusOrange>
+        ) : (
+          <DealStatusGreen>모집중</DealStatusGreen>
+        )}
+        <ItemTitle>
           <MatchTitle>
             {matchDetail.homeTeamName} vs {matchDetail.awayTeamName}
           </MatchTitle>
           <MatchTime>{formatDateTime(matchDetail.matchAt)}</MatchTime>
-        </Link>
-      </ItemTitle>
-      <ItemContent>
-        <Link to={`/mate/${mate.board.boardId}`}>
+        </ItemTitle>
+        <ItemContent>
           <p>{mate.board.content}</p>
-        </Link>
-      </ItemContent>
-      <ItemInfoSection>
-        <MateItemCreated>{formatRelativeTime(mate.createAt)}</MateItemCreated>
-      </ItemInfoSection>
-    </ItemContainer>
+        </ItemContent>
+        <ItemInfoSection>
+          <MateItemCreated>{formatRelativeTime(mate.createAt)}</MateItemCreated>
+        </ItemInfoSection>
+      </ItemContainer>
+    </Link>
   );
 }
 
