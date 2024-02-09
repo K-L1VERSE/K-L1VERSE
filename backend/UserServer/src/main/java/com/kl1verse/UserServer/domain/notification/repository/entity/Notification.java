@@ -27,10 +27,15 @@ public class Notification {
 
     @Convert(converter = NotificationTypeConverter.class)
     private NotificationType type;
+    private String profile;
+    private String nickname;
+    private String homeTeamId;
+    private String awayTeamId;
     private String content;
     private Boolean readFlag;
     private String uri;
     private LocalDateTime createdAt;
+    private LocalDateTime deletedAt;
 
     @JsonIgnore
     @ManyToOne

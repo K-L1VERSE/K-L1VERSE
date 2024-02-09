@@ -10,6 +10,8 @@ public class BoardNotificationReqDto {
     }
 
     Integer userId;
+    String profile;
+    String nickname;
     String message;
     String uri;
     BoardNotificationType type;

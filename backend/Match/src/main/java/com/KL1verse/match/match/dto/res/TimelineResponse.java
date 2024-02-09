@@ -14,6 +14,7 @@ import lombok.Setter;
 public class TimelineResponse {
     private int timelineId;
     private String memberName;
+    private String memberName2;
     private int backNo;
     private String teamName;
     private String eventName;

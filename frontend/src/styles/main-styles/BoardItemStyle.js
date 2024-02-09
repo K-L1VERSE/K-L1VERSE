@@ -32,7 +32,6 @@ export const Text = styled.div`
 `;
 
 export const Post = styled.div`
-  /* background-color: red; */
   display: flex;
   flex-direction: row;
   justify-content: space-between;

@@ -9,7 +9,7 @@ spring:
     bootstrap-servers: i10a409.p.ssafy.io:9092
     consumer:
       bootstrap-servers: i10a409.p.ssafy.io:9092
-      group-id: user-group # 여기만 다름
+      group-id: board-group # 여기만 다름
       key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
       value-deserializer: org.apache.kafka.common.serialization.StringDeserializer
     producer:
@@ -17,11 +17,11 @@ spring:
       key-serializer: org.apache.kafka.common.serialization.StringSerializer
       value-serializer: org.apache.kafka.common.serialization.StringSerializer
 
-server:
-  ssl:
-    enabled: true
-    key-store: classpath:/keystore.p12
-    key-store-type: PKCS12
-    key-store-password: 1234
+#server:
+#  ssl:
+#    enabled: true
+#    key-store: classpath:/keystore.p12
+#    key-store-type: PKCS12
+#    key-store-password: 1234
 
 domain: https://i10a409.p.ssafy.io

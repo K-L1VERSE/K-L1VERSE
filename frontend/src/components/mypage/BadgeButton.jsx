@@ -14,8 +14,10 @@ const BadgeContainer = styled.div`
   justify-content: center;
   align-items: center;
   gap: 10px;
-
   border-radius: 30px;
+  &:hover {
+    cursor: pointer;
+  }
 `;
 
 const BadgeImage = styled.div`

@@ -7,23 +7,28 @@ import {
   AlignItem,
 } from "../../styles/mypage-styles/SettingStyle";
 
-export default function SettingItem({ type, src, text }) {
-  const [isToggled, setToggle] = useState(false);
-
+export default function SettingItem({
+  type,
+  src,
+  text,
+  goLogin,
+  notificationFlag,
+  updateNotificationFlag,
+}) {
   const handleClick = () => {
-    setToggle(!isToggled);
+    updateNotificationFlag();
   };
 
   return (
-    <SettingItemWrap>
+    <SettingItemWrap onClick={goLogin}>
       <AlignItem>
         <img src={src} alt="icon" />
         <Text color={type}>{text}</Text>
       </AlignItem>
 
       {type === "notification" && (
-        <OuterCircle isOn={isToggled} onClick={handleClick}>
-          <InnerCircle isOn={isToggled} />
+        <OuterCircle $notificationFlag={notificationFlag} onClick={handleClick}>
+          <InnerCircle $notificationFlag={notificationFlag} />
         </OuterCircle>
       )}
     </SettingItemWrap>

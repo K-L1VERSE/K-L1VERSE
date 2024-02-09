@@ -205,6 +205,7 @@ public class MatchServiceImpl implements MatchService {
                 Timeline timeline = Timeline.builder()
                     .matchId(matchId)
                     .memberName(timelineItem.getAsJsonObject("playerName").getAsString())
+                    .memberName2(timelineItem.getAsJsonObject("playerName2").getAsString())
                     .teamName(timelineItem.getAsJsonObject("teamName").getAsString())
                     .backNo(timelineItem.getAsJsonObject("backNo").getAsInt())
                     .timeMin(timelineItem.getAsJsonObject("timeMin").getAsInt())

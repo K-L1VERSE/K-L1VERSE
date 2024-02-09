@@ -22,6 +22,10 @@ public class WaggleDTO {
     private Integer likesCount;
 
     private List<String> hashtags;
+
+    private boolean isLiked;
+
+    private Long WaggleUserHashTagId;
 }
 
 
