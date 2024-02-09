@@ -8,6 +8,10 @@ import { UserState } from "../../../global/UserState";
 
 import { RegistCardContainer } from "../../../styles/BoardStyles/BoardCreateStyle";
 
+import { DetailTop } from "../../../styles/BoardStyles/BoardCreateStyle";
+import { BackButton } from "../../../styles/BoardStyles/BoardDetailStyle";
+import BackIcon from "../../../assets/icon/back-icon.png";
+
 function ProductRegistPage() {
   const navigate = useNavigate();
   const [boardId, setBoardId] = useState(null);
@@ -27,7 +31,7 @@ function ProductRegistPage() {
       setContent(location.state.board.content);
       setPrice(location.state.board.price);
       setDealFlag(location.state.board.dealFlag);
-      setBoardImage(location.state.board.boardImage);
+      // setBoardImage(location.state.board.boardImage);
       setIsUpdateMode(true);
     }
   }, [location]);
@@ -58,7 +62,6 @@ function ProductRegistPage() {
             title,
             content,
             userId,
-            // nickname,
             boardImage,
           },
           price,
@@ -72,10 +75,29 @@ function ProductRegistPage() {
     }
   };
 
+  const handleBackClick = () => {
+    navigate("/product");
+  };
+
+  // 파일 상태를 업데이트하는 핸들러 함수
+  const handleFileChange = (file) => {
+    setBoardImage(file);
+  };
+
+  useEffect(() => {
+    handleFileChange(file);
+  }, [file]);
+
   return (
-    <RegistCardContainer>
-      <BoardTopNavBar />
-      <h1>{isUpdateMode ? "Product 게시물 수정" : "Product 게시물 작성"}</h1>
+    <>
+      <DetailTop>
+        <BackButton onClick={handleBackClick}>
+          <img src={BackIcon} alt="Back" />
+        </BackButton>
+      </DetailTop>
+      <DetailTop>
+        {isUpdateMode ? "중고거래 게시물 수정" : "중고거래 게시물 작성"}
+      </DetailTop>
       <ProductRegistCard
         title={title}
         content={content}
@@ -84,11 +106,11 @@ function ProductRegistPage() {
         onTitleChange={(e) => setTitle(e.target.value)}
         onContentChange={(e) => setContent(e.target.value)}
         onPriceChange={(e) => setPrice(e.target.value)}
-        onImageChange={(e) => setBoardImage(e.target.files[0])}
+        onFileChange={handleFileChange}
         onSubmit={handleSubmit}
         buttonText={isUpdateMode ? "수정하기" : "작성하기"}
       />
-    </RegistCardContainer>
+    </>
   );
 }
 

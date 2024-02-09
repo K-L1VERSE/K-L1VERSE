@@ -1,8 +1,8 @@
 import React from "react";
-// import MatchDetailButton from "./MatchDetailButtton";
+import { ListStyle } from "../../styles/MatchStyles/MatchScheduleStyle";
+import Time from "./Time";
 
 export default function ListContainer({ data }) {
-  // 데이터를 날짜별로 그룹화
   const groupedData = data.reduce((acc, match) => {
     const date = new Date(match.matchAt).toLocaleDateString("ko-KR", {
       year: "numeric",
@@ -18,40 +18,32 @@ export default function ListContainer({ data }) {
   }, {});
 
   return (
-    <div>
-      {Object.entries(groupedData).map(([date, matches]) => (
-        <div key={date} style={{ border: "2px solid blue" }}>
-          <div>
-            {date.replace(".", "년 ").replace(".", "월 ").replace(".", "일 ")}
-          </div>
-          {matches.map((match, index) => (
-            <div key={index} style={{ border: "2px solid pink" }}>
-              <div>
-                {new Date(match.matchAt).toLocaleTimeString("ko-KR", {
-                  hour: "2-digit",
-                  minute: "2-digit",
-                })}
-              </div>
-              <div>
-                <div>
-                  {match.homeTeamName} : {match.homeScore}
-                </div>
-                <div>
-                  {match.awayTeamName} : {match.awayScore}
-                </div>
-              </div>
-              <div>
-                {match.status === "upcoming"
-                  ? "경기 예정"
-                  : match.status === "during"
-                    ? "경기 중"
-                    : "경기 종료"}
-              </div>
-              {/* <MatchDetailButton match={match} /> */}
-            </div>
+    <ListStyle>
+      <table>
+        <tbody>
+          {Object.entries(groupedData).map(([date, matches]) => (
+            <tr key={date}>
+              <td className="date">
+                {date
+                  .split(" ")
+                  .map((part, index) => {
+                    if (index === 2) return part.replace(".", "");
+                    return part;
+                  })
+                  .join(" ")}
+              </td>
+              <td className="detail">
+                {matches.flatMap((match, index, array) => (
+                  <React.Fragment key={index}>
+                    <Time match={match} />
+                    {index < array.length - 1 && <hr />}
+                  </React.Fragment>
+                ))}
+              </td>
+            </tr>
           ))}
-        </div>
-      ))}
-    </div>
+        </tbody>
+      </table>
+    </ListStyle>
   );
 }

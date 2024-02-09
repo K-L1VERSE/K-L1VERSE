@@ -23,6 +23,7 @@ import Kakao from "../../assets/icon/kakaotalk-icon.png";
 import Goback from "../../assets/icon/go-back-arrow-icon.png";
 import LoadingBar from "../../components/Survey/LoadingBar";
 import { ReactComponent as Congrats } from "../../assets/congrats.svg";
+import KakaoPage from "./KakaoPage";
 
 function firework() {
   var duration = 15 * 100;
@@ -66,6 +67,7 @@ function ResultPage() {
   const navigate = useNavigate();
   const [isCopyModalOpen, setIsCopyModalOpen] = React.useState(false);
   const [showResult, setShowResult] = useState(false);
+  const [showKakaoPage, setShowKakaoPage] = useState(false);
 
   useEffect(() => {
     const tick = setTimeout(() => {
@@ -113,10 +115,6 @@ function ResultPage() {
     navigate("/survey");
   };
 
-  const goKakao = () => {
-    navigate("/kakao");
-  };
-
   return (
     <div>
       {showResult && (
@@ -155,6 +153,7 @@ function ResultPage() {
                 <img src={Goback} onClick={handleRestart} alt="" />
               </span>
             </Shares>
+            <KakaoPage />
           </BottomWrap>
         </div>
       )}

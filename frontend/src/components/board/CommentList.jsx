@@ -1,67 +1,96 @@
 import React, { useState, useEffect } from "react";
 import CommentContainer from "./CommentContainer";
 import { ListContainer } from "../../styles/BoardStyles/CommentStyle";
-import { getCommentList, likeComment, unlikeComment } from "../../api/comment";
+import {
+  createComment,
+  deleteComment,
+  getCommentList,
+} from "../../api/comment";
 import { formatRelativeTime } from "./dateFormat";
 import CommentForm from "./CommentForm";
 
-function CommentList({ boardId }) {
+const CommentList = ({ boardId }) => {
   const [commentList, setCommentList] = useState([]);
-  const [isLiked, setIsLiked] = useState(false);
-  const [likeCount, setLikeCount] = useState(0);
+  const [commentId, setCommentId] = useState(0);
+  const [likesCount, setLikesCount] = useState(0);
+  const [liked, setLiked] = useState(false);
   const [userId] = useState(1);
 
-  function getComments() {
+  const getComments = () => {
     getCommentList(
       boardId,
-      {
-        userId,
-      },
+      { userId },
       ({ data }) => {
         setCommentList(data);
+        setCommentId(data.commentId);
+        setLiked(data.liked);
       },
       () => {},
     );
-  }
+  };
 
   useEffect(() => {
     getComments();
   }, []);
 
-  const handleLikeClick = () => {
-    if (isLiked) {
-      unlikeComment(
+  // console.log(commentList);
+  // console.log("commentId$$$$$$$$$", commentId);
+  // console.log("liked?!?!??", liked);
+
+  const handleCommentSubmit = (newComment) => {
+    createComment(
+      boardId,
+      {
+        content: newComment,
         boardId,
-        () => {
-          setIsLiked(false);
-          setLikeCount((prevCount) => prevCount - 1);
-        },
-        () => {},
-      );
-    } else {
-      likeComment(
-        boardId,
-        () => {
-          setIsLiked(true);
-          setLikeCount((prevCount) => prevCount + 1);
-        },
-        () => {},
-      );
-    }
+        userId,
+      },
+      (response) => {
+        setCommentList((prevComments) => [...prevComments, response.data]);
+      },
+      () => {},
+    );
+  };
+
+  const handleCommentDelete = (commentId) => {
+    deleteComment(
+      commentId,
+      () => {
+        setCommentList((prevComments) =>
+          prevComments.filter(
+            (prevComment) => prevComment.commentId !== commentId,
+          ),
+        );
+      },
+      () => {},
+    );
   };
 
   return (
     <ListContainer>
-      <h2>댓글 목록</h2>
+      <div className="title">
+        <img
+          src="https://raw.githubusercontent.com/Tarikul-Islam-Anik/Animated-Fluent-Emojis/master/Emojis/Objects/Memo.png"
+          alt="Memo"
+          width="18"
+          height="18"
+        />
+        <div>댓글</div>
+      </div>
       <CommentContainer
         boardId={boardId}
         commentList={commentList}
         formatRelativeTime={formatRelativeTime}
-        handleLikeClick={handleLikeClick}
+        onCommentDelete={handleCommentDelete}
       />
-      <CommentForm boardId={boardId} />
+      <CommentForm
+        boardId={boardId}
+        parentId={commentList.parentId}
+        onCommentSubmit={handleCommentSubmit}
+        getComments={getComments}
+      />
     </ListContainer>
   );
-}
+};
 
 export default CommentList;

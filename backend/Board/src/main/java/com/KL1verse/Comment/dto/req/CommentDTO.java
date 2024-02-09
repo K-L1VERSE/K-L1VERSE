@@ -29,4 +29,5 @@ public class CommentDTO {
     private boolean isSecret;
     private int likesCount;
     private String nickname;
+    private boolean isLiked;
 }

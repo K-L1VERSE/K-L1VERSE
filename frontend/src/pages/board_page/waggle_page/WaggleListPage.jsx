@@ -5,10 +5,10 @@ import BoardTopNavBar from "../../../components/board/BoardTopNavBar";
 import WaggleContainer from "../../../components/board/WaggleContainer";
 import { formatRelativeTime } from "../../../components/board/dateFormat";
 import {
-  WaggleHeader,
-  WaggleHeaderH2,
-  WaggleHeaderButton,
-} from "../../../styles/BoardStyles/WaggleListStyle";
+  Header,
+  HeaderButton,
+  HeaderH2,
+} from "../../../styles/BoardStyles/BoardStyle";
 
 function WaggleListPage() {
   const [waggleList, setWaggleList] = useState([]);
@@ -19,7 +19,7 @@ function WaggleListPage() {
   function getWaggles() {
     getWaggleList(
       page,
-      30,
+      10,
       ({ data }) => {
         if (!data.content) {
           setHasMore(false);
@@ -74,12 +74,10 @@ function WaggleListPage() {
   return (
     <div>
       <BoardTopNavBar />
-      <WaggleHeader>
-        <WaggleHeaderH2>와글와글 떠들어주세요</WaggleHeaderH2>
-        <WaggleHeaderButton onClick={handleWriteWaggleClick}>
-          🖋글쓰기
-        </WaggleHeaderButton>
-      </WaggleHeader>
+      <Header>
+        <HeaderH2>👥 와글Waggle 떠들어주세요</HeaderH2>
+        <HeaderButton onClick={handleWriteWaggleClick}>🖋 글쓰기</HeaderButton>
+      </Header>
 
       <WaggleContainer
         waggleList={waggleList}

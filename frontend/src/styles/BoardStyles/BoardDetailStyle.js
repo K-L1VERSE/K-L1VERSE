@@ -7,18 +7,24 @@ export const Container = styled.div`
   font-family: "Pretendard-Regular";
 `;
 
-export const WaggleDetailBox = styled.div`
+export const DetailTop = styled.div`
+  display: flex;
+  margin-bottom: 1rem;
+`;
+
+export const DetailBox = styled.div`
   background-color: #fff;
-  border: 1px solid #ccc;
-  padding: 20px;
-  margin-bottom: 20px;
-  border-radius: 8px;
+  border-bottom: 1px solid #ccc;
+  padding: 1rem 1rem 0.4rem 1rem;
+  margin-bottom: 1rem;
+
+  /* background-color: aliceblue; */
 `;
 
 export const User = styled.div`
   display: flex;
   align-items: center;
-  margin-bottom: 10px;
+  margin-bottom: 1rem;
 `;
 
 export const Title = styled.p`
@@ -29,13 +35,15 @@ export const Title = styled.p`
 `;
 
 export const Content = styled.p`
-  margin: 0;
+  margin-top: 0.8rem;
+  font-size: 0.9rem;
 `;
 
 export const Price = styled.p`
   margin: 0;
-  font-size: 1em;
-  color: #333;
+  font-size: 1.1rem;
+  font-weight: bold;
+  color: darkblue;
 `;
 
 export const DealFlag = styled.p`
@@ -101,18 +109,25 @@ export const Button = styled.button`
   cursor: pointer;
   margin-right: 10px;
   border-radius: 10px;
+  margin-top: 0.8rem;
 
   &:hover {
     background-color: #0056b3;
   }
 `;
 
+export const BackButton = styled.button`
+  border: none;
+  cursor: pointer;
+  width: 1rem;
+  height: 1rem;
+  background-color: white;
+`;
+
 export const LikeButton = styled.button`
   background-color: transparent;
   border: none;
   cursor: pointer;
-  margin-top: 10px;
-  margin-right: 10px;
 
   &:hover {
     color: #007bff;
@@ -121,6 +136,11 @@ export const LikeButton = styled.button`
 
 export const LikeCount = styled.span`
   font-size: 0.9em;
+`;
+
+export const EditDeleteButton = styled.div`
+  display: flex;
+  justify-content: flex-end;
 `;
 
 export const UpdateButton = styled(Button)`
@@ -135,4 +155,12 @@ export const DeleteButton = styled(Button)`
   &:hover {
     background-color: #cdd8ec;
   }
+`;
+
+export const DetailCommentCount = styled.div`
+  font-size: 0.7rem;
+  margin-left: 1rem;
+  margin-bottom: 0.5rem;
+  color: #595959;
+  align-items: center;
 `;

@@ -48,12 +48,16 @@ export default function Header() {
       setState([true, false, false, false]);
     } else if (currentPath === "/team") {
       setState([false, true, false, false]);
-    } else if (currentPath === "/") {
-      setState([false, false, false, false]);
     } else if (currentPath === "/notification") {
       setState([false, false, true, false]);
-    } else if (currentPath === "/mypage") {
+    } else if (
+      currentPath === "/mypage" ||
+      currentPath === "/setting" ||
+      currentPath === "/badge"
+    ) {
       setState([false, false, false, true]);
+    } else {
+      setState([false, false, false, false]);
     }
   }, [currentPath]);
 
@@ -64,39 +68,40 @@ export default function Header() {
       </Contents>
       <Nav>
         <NavItem onClick={goMatchSchedule}>
-          {navbarScheduleIcon({ isSelected: state[0] })}
-          <Text isSelected={state[0]}>경기일정</Text>
+          {navbarScheduleIcon({ $isSelected: state[0] })}
+          <Text $isSelected={state[0]}>경기일정</Text>
         </NavItem>
         <NavItem onClick={goTeam}>
-          {navbarTeamInfoIcon({ isSelected: state[1] })}
-          <Text isSelected={state[1]}>팀정보</Text>
+          {navbarTeamInfoIcon({ $isSelected: state[1] })}
+          <Text $isSelected={state[1]}>팀정보</Text>
         </NavItem>
         <NavItem onClick={goMain}>
           <img src={Logo} alt="logo" width={50} />
         </NavItem>
         <NavItem onClick={goNotification}>
-          {navbarNotificationIcon({ isSelected: state[2] })}
-          {notificationState.newNotifications.length > 0 && (
-            <div
-              style={{
-                position: "absolute",
-                top: "14px",
-                right: "120px",
-                display: "flex",
-                background: "red",
-                borderRadius: "50%",
-                width: "3px",
-                height: "3px",
-                padding: "2px",
-              }}
-            />
-          )}
-          <Text isSelected={state[2]}>알림</Text>
+          {navbarNotificationIcon({ $isSelected: state[2] })}
+          {notificationState.newNotifications.length > 0 &&
+            currentPath !== "/notification" && (
+              <div
+                style={{
+                  position: "absolute",
+                  top: "14px",
+                  right: "120px",
+                  display: "flex",
+                  background: "red",
+                  borderRadius: "50%",
+                  width: "3px",
+                  height: "3px",
+                  padding: "2px",
+                }}
+              />
+            )}
+          <Text $isSelected={state[2]}>알림</Text>
         </NavItem>
         <NavItem onClick={goMypage}>
           {/* <MyPageIcon /> */}
-          {navbarMyPageIcon({ isSelected: state[3] })}
-          <Text isSelected={state[3]}>마이페이지</Text>
+          {navbarMyPageIcon({ $isSelected: state[3] })}
+          <Text $isSelected={state[3]}>마이페이지</Text>
         </NavItem>
       </Nav>
     </>

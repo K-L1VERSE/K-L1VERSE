@@ -28,7 +28,7 @@ export default function MatchSchedulePage() {
         month={month}
         setMonth={setMonth}
       />
-      <hr style={{ width: "95%" }} />
+      <hr style={{ width: "95%", border: "1px solid #f4f4f4" }} />
       {view === "list" && <ListContainer data={data} />}
       {view === "calendar" && (
         <TableContainer year={year} month={month} data={data} />
