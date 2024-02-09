@@ -1,6 +1,9 @@
 import React, { useEffect, useState } from "react";
+import { useSetRecoilState } from "recoil";
 import Hangul from "hangul-js";
 import Swal from "sweetalert2";
+import { UserState } from "../../global/UserState";
+import { ModifyingState } from "../../global/UserState";
 import axios from "../../api/axios";
 import {
   ModalBackground,
@@ -13,10 +16,12 @@ import {
   SaveButton,
 } from "../../styles/mypage-styles/EditNicknameModel";
 
-const EditNicknameModal = ({ setModalOpen, user, setUser }) => {
+const EditNicknameModal = ({ type, setModalOpen, user, setUser }) => {
   const [newNickname, setNewNickname] = useState("");
   const [isNicknameAvailable, setIsNicknameAvailable] = useState(false);
   const [isCheckingAvailability, setIsCheckingAvailability] = useState(true);
+  const setUserState = useSetRecoilState(UserState);
+  const setModifyingState = useSetRecoilState(ModifyingState);
 
   const isHangul = (input) => {
     return Hangul.isComplete(input);
@@ -64,6 +69,10 @@ const EditNicknameModal = ({ setModalOpen, user, setUser }) => {
   }, [newNickname]);
 
   const closeModal = () => {
+    setModifyingState((prev) => ({
+      ...prev,
+      modifyingNickname: false,
+    }));
     setModalOpen(false);
   };
 
@@ -72,40 +81,65 @@ const EditNicknameModal = ({ setModalOpen, user, setUser }) => {
   };
 
   const cancelEdit = () => {
-    setModalOpen(false);
+    closeModal();
   };
 
   const saveEdit = () => {
     if (isNicknameAvailable) {
-      axios
-        .put("/user/users/nickname", {
-          nickname: newNickname,
-        })
-        .then((res) => {
-          if (res.data.code === 1002) {
-            Swal.fire({
-              icon: "error",
-              title: "포인트가 부족합니다.",
+      if (type === "modify") {
+        axios
+          .put("/user/users/nickname", {
+            nickname: newNickname,
+          })
+          .then((res) => {
+            if (res.data.code === 1002) {
+              Swal.fire({
+                icon: "error",
+                title: "포인트가 부족합니다.",
+              });
+              setModalOpen(false);
+              return;
+            }
+            setUser(() => {
+              const prev = { ...user };
+              prev.nickname = newNickname;
+              prev.goal -= 1000;
+              return prev;
             });
-            setModalOpen(false);
-            return;
-          }
-          setUser(() => {
-            const prev = { ...user };
-            prev.nickname = newNickname;
-            prev.goal -= 1000;
-            return prev;
+            setUserState((prev) => ({
+              ...prev,
+              nickname: newNickname,
+            }));
+            Swal.fire({
+              text: "닉네임이 변경되었습니다.",
+              width: "20rem",
+              imageUrl:
+                "https://raw.githubusercontent.com/Tarikul-Islam-Anik/Animated-Fluent-Emojis/master/Emojis/Smilies/Ghost.png",
+              imageWidth: 100,
+            });
+            closeModal();
+          })
+          .catch(() => {});
+      } else if (type === "signUp") {
+        axios
+          .post("/user/users/nickname", {
+            nickname: newNickname,
+          })
+          .then(() => {
+            setUserState((prev) => ({
+              ...prev,
+              nickname: newNickname,
+            }));
           });
-          Swal.fire({
-            text: "닉네임이 변경되었습니다.",
-            width: "20rem",
-            imageUrl:
-              "https://raw.githubusercontent.com/Tarikul-Islam-Anik/Animated-Fluent-Emojis/master/Emojis/Smilies/Ghost.png",
-            imageWidth: 100,
-          });
-          setModalOpen(false);
-        })
-        .catch(() => {});
+        Swal.fire({
+          text: "닉네임이 설정되었습니다.",
+          width: "20rem",
+          imageUrl:
+            "https://raw.githubusercontent.com/Tarikul-Islam-Anik/Animated-Fluent-Emojis/master/Emojis/Smilies/Ghost.png",
+          imageWidth: 100,
+        });
+        setModalOpen(false);
+      }
     }
   };
   const isNicknameLengthValid = newNickname.length >= 2;
@@ -121,9 +155,10 @@ const EditNicknameModal = ({ setModalOpen, user, setUser }) => {
               width="25"
               height="25"
             />
-            <div>닉네임 변경</div>
+            {type === "signUp" && <div>닉네임 설정</div>}
+            {type === "modify" && <div>닉네임 변경</div>}
           </div>
-          <ModalClose onClick={closeModal}>X</ModalClose>
+          {type === "modify" && <ModalClose onClick={closeModal}>X</ModalClose>}
         </ModalTopItems>
         <MyInfoInput
           onChange={getInput}
@@ -139,7 +174,7 @@ const EditNicknameModal = ({ setModalOpen, user, setUser }) => {
               fontSize: "12px",
               top: "48%",
               marginTop: "10px",
-              left: "50%",
+              left: "28%",
               transform: "translateX(-50%)",
               textAlign: "center",
             }}
@@ -147,7 +182,18 @@ const EditNicknameModal = ({ setModalOpen, user, setUser }) => {
             2글자 이상 입력해주세요.
           </p>
         )}
-        <div className="info">* 변경 시 1000골이 차감됩니다.</div>
+        {type === "modify" && (
+          <div
+            className="info"
+            style={{
+              fontSize: "0.6.5rem",
+              fontStyle: "italic",
+              transform: "translateX(-4.3rem)",
+            }}
+          >
+            * 변경 시 1000골이 차감됩니다.
+          </div>
+        )}
         {newNickname.length >= 2 &&
           !isCheckingAvailability &&
           !isNicknameAvailable && (
@@ -167,7 +213,9 @@ const EditNicknameModal = ({ setModalOpen, user, setUser }) => {
             </p>
           )}
         <ButtonContainer>
-          <CancleButton onClick={cancelEdit}>취소</CancleButton>
+          {type === "modify" && (
+            <CancleButton onClick={cancelEdit}>취소</CancleButton>
+          )}
           <SaveButton onClick={saveEdit} $abled={isNicknameAvailable}>
             저장
           </SaveButton>

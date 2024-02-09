@@ -78,7 +78,6 @@ public class AuthService {
         User user = User.builder()
             .email(signUpReqDto.getEmail())
             .password(passwordEncoder.encode("1234"))
-            .nickname(signUpReqDto.getName())
             .profile(signUpReqDto.getProfile())
             .domain(signUpReqDto.getDomain())
             .goal(1000)

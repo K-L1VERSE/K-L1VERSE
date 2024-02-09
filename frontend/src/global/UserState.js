@@ -18,3 +18,10 @@ export const UserState = atom({
   },
   effects_UNSTABLE: [persistAtom],
 });
+
+export const ModifyingState = atom({
+  key: "userNicknameModifyingState",
+  default: {
+    modifyingNickname: false,
+  },
+});

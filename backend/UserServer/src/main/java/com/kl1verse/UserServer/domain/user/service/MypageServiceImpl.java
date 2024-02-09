@@ -100,6 +100,19 @@ public class MypageServiceImpl {
     }
 
     @Transactional
+    public void setNickname(HttpServletRequest request, NicknameUpdateReqDto nicknameUpdateReqDto) {
+        String requestToken = jwtUtil.resolveToken(request);
+        String email = jwtUtil.extractUserNameFromExpiredToken(requestToken);
+        String domain = jwtUtil.extractUserDomainFromExpiredToken(requestToken);
+
+        User user = userRepository.findByEmailAndDomain(email, domain).orElseThrow(
+            () -> new UserException(ResponseCode.INVALID_USER_INFO));
+
+        user.setNickname(nicknameUpdateReqDto.getNickname());
+        userRepository.save(user);
+    }
+
+    @Transactional
     public void updateNickname(HttpServletRequest request, NicknameUpdateReqDto nicknameUpdateReqDto) {
         String requestToken = jwtUtil.resolveToken(request);
         String email = jwtUtil.extractUserNameFromExpiredToken(requestToken);
