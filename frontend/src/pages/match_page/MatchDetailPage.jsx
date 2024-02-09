@@ -14,7 +14,7 @@ import DoBettingContainer from "../../components/match/doBetting/DoBettingContai
 export default function MatchDetailPage() {
   const { matchId } = useParams();
 
-  const [data, setData] = useState([]);
+  const [data, setData] = useState();
   useEffect(() => {
     const fetchData = async () => {
       const result = await getMatchDetail(matchId);
@@ -25,7 +25,7 @@ export default function MatchDetailPage() {
 
   return (
     <div>
-      {data && data.length > 0 && (
+      {data && (
         <>
           <MatchDetailScore match={data} />
           <Slider dots>
