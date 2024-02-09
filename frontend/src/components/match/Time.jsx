@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import {
   BadgeImg,
   OnlyTime,
-} from "../../styles/MatchStyles/MatchScheduleStyle";
+} from "../../styles/match-styles/MatchScheduleStyle";
 
 export default function Time({ match }) {
   const navigate = useNavigate();

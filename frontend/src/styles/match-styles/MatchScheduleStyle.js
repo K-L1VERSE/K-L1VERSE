@@ -192,6 +192,11 @@ export const BadgeImg = styled.img`
   width: 1.45rem;
 `;
 
+export const MatchInfo = styled.div`
+  border-bottom: 2px solid blue;
+  margin-bottom: 2px;
+`;
+
 /* calendar */
 export const TableContainer = styled.div`
   text-align: center;

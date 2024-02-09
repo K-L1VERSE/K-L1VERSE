@@ -17,12 +17,13 @@ import {
   BadgeImg,
   OnlyMsg,
   MsgTimeContainer,
+  ChattingSendImg,
   MsgDay,
   MsgHM,
   SenderImg,
 } from "../../styles/match-styles/MatchChattingStyle";
 import SendIcon from "../../assets/icon/send-icon.png";
-  ChattingSendImg,
+
 import { UserState } from "../../global/UserState";
 
 function Chat() {
