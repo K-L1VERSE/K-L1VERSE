@@ -23,4 +23,6 @@ public interface ProductRepository extends JpaRepository<Product, Long> {
     @Query(value = "SELECT u.nickname FROM user u JOIN board b ON b.user_id = u.user_id WHERE b.user_id = :userId", nativeQuery = true)
     List<Object[]> findUserNickname(@Param("userId") Integer userId);
 
+    Page<Product> findByBoard_UserId(Integer userId, Pageable pageable);
+
 }

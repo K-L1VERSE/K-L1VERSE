@@ -32,4 +32,5 @@ public interface MateRepository extends JpaRepository<Mate, Long> {
     List<Object[]> findUserNickname(@Param("userId") Integer userId);
 
 
+    Page<Mate> findByBoard_UserId(Integer userId, Pageable pageable);
 }

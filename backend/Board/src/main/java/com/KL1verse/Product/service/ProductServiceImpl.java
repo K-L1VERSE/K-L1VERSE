@@ -58,6 +58,39 @@ public class ProductServiceImpl implements ProductService {
 
         return productDTO;
     }
+
+//    @Override
+//    public Page<ProductDTO> getProductsByUser(Integer userId, Pageable pageable) {
+//        Page<Product> products = productRepository.findByBoard_UserId(userId, pageable);
+//        return products.map(this::convertToDTO);
+//    }
+
+    @Override
+    public Page<ProductDTO> getProductsByUser(Integer userId, Pageable pageable) {
+        Page<Product> products = productRepository.findByBoard_UserId(userId, pageable);
+
+        return products.map(product -> {
+            ProductDTO productDTO = convertToDTO(product);
+
+            // 닉네임 가져오기
+            List<Object[]> nicknameResult = productRepository.findUserNickname(userId);
+            String userNickname = nicknameResult.isEmpty() ? null : (String) nicknameResult.get(0)[0];
+            productDTO.getBoard().setNickname(userNickname);
+
+            // 게시물 이미지 가져오기
+            productDTO.getBoard().setBoardImage(product.getBoard().getBoardImage());
+
+            // 댓글 수 가져오기
+            Long boardId = product.getBoard().getBoardId();
+            Integer commentCount = commentRepository.countCommentsByBoardId(boardId);
+            productDTO.getBoard().setCommentCount(commentCount != null ? commentCount : 0);
+
+            return productDTO;
+        });
+    }
+
+
+
     @Transactional
     @Override
     public ProductDTO createProduct(ProductDTO productDto) {
