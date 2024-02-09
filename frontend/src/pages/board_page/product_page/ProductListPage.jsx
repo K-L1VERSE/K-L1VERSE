@@ -4,12 +4,12 @@ import { useNavigate } from "react-router-dom";
 import { getProductList } from "../../../api/product";
 import BoardTopNavBar from "../../../components/board/BoardTopNavBar";
 import { formatRelativeTime } from "../../../components/board/dateFormat";
-import {
-  ProductHeader,
-  ProductHeaderH2,
-  ProductHeaderButton,
-} from "../../../styles/BoardStyles/ProductListStyle";
 import ProductContainer from "../../../components/board/ProductContainer";
+import {
+  Header,
+  HeaderButton,
+  HeaderH2,
+} from "../../../styles/BoardStyles/BoardStyle";
 
 function ProductListPage() {
   const navigate = useNavigate();
@@ -20,7 +20,7 @@ function ProductListPage() {
   function getProducts() {
     getProductList(
       page,
-      30,
+      10,
       ({ data }) => {
         if (!data.content) {
           setHasMore(false);
@@ -68,21 +68,17 @@ function ProductListPage() {
     }
   }, [isBottom]);
 
-  const handleWriteProductclick = () => {
+  const handleWriteProductClick = () => {
     navigate("/productRegist");
   };
 
   return (
     <div>
       <BoardTopNavBar />
-      <ProductHeader>
-        <ProductHeaderH2>
-          📦너에겐 필요없지만 나에게 꼭 필요한 굿즈
-        </ProductHeaderH2>
-        <ProductHeaderButton onClick={handleWriteProductclick}>
-          🖋글쓰기
-        </ProductHeaderButton>
-      </ProductHeader>
+      <Header>
+        <HeaderH2>📦 나에게 꼭 필요한 굿-즈</HeaderH2>
+        <HeaderButton onClick={handleWriteProductClick}>🖋 글쓰기</HeaderButton>
+      </Header>
 
       <ProductContainer
         productList={productList}

@@ -14,19 +14,33 @@ export const ModalContainer = styled.div`
   height: 220px;
   z-index: 999;
   position: absolute;
-  top: 40%;
+  top: 43%;
   left: 50%;
   transform: translate(-50%, -50%);
   background-color: #fff;
   border-radius: 7px;
   padding: 15px 35px 10px 35px;
   box-sizing: border-box;
+  .info {
+    font-size: 0.7rem;
+    color: lightgray;
+    margin-top: 0.4rem;
+    text-align: center;
+  }
 `;
 
 export const ModalTopItems = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: center;
+  font-family: "Pretendard-Bold";
+  font-size: 1rem;
+  margin-top: 1.5rem;
+  .title {
+    display: flex;
+    align-items: center;
+    gap: 0.7rem;
+  }
 `;
 
 export const ModalClose = styled.button`
@@ -50,6 +64,7 @@ export const MyInfoInput = styled.input`
   margin: 20px 10px 20px 0;
   outline: none;
   flex: 80%;
+  padding-bottom: 5px;
 `;
 
 export const ButtonContainer = styled.div`
@@ -68,16 +83,17 @@ export const CancleButton = styled.button`
   font-weight: 600;
   cursor: pointer;
 
-  &:hover {
-    background-color: rgba(188, 188, 188, 0.4);
-  }
+  ${({ $abled }) =>
+    $abled &&
+    `
+    &:hover {
+      background-color: rgba(188, 188, 188, 0.4);
+    }
+  `}
 `;
 
 export const SaveButton = styled(CancleButton)`
-  background-color: #3261c1;
+  background-color: ${(props) =>
+    props.$abled ? "#3261c1" : "rgba(233, 236, 242, 0.8)"};
   color: #fff;
-
-  &:hover {
-    background-color: rgb(36, 55, 99);
-  }
 `;

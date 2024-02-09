@@ -1,13 +1,18 @@
 import styled from "styled-components";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faHourglassHalf } from "@fortawesome/free-solid-svg-icons";
-
+import Lottie from "react-lottie";
 import { useSetRecoilState } from "recoil";
-
 import axios from "../../api/axios";
 import { UserState } from "../../global/UserState";
+import footballJson from "../../assets/football.json";
 
-import LoginLogo from "../../components/login/LoginLogo";
+const defaultOptions = {
+  loop: true,
+  autoplay: true,
+  animationData: footballJson,
+  rendererSettings: {
+    preserveAspectRatio: "xMidYMid slice",
+  },
+};
 
 function GoogleRedirection() {
   const PARAMS = new URL(document.location).searchParams;
@@ -27,6 +32,7 @@ function GoogleRedirection() {
         userId: res.data.userId,
         mainBadge: res.data.mainBadge,
         isLoggedIn: true,
+        notificationFlag: res.data.notificationFlag,
       });
 
       /* 성공시 홈화면으로 */
@@ -38,12 +44,9 @@ function GoogleRedirection() {
 
   return (
     <div>
-      <LoginLogo />
       <WaitForLogin>
-        <div>
-          <FontAwesomeIcon icon={faHourglassHalf} />
-          &nbsp;&nbsp;&nbsp;로그인 중입니다.
-        </div>
+        <Lottie options={defaultOptions} height={100} width={400} />
+        <div>loading...</div>
       </WaitForLogin>
     </div>
   );
@@ -52,13 +55,17 @@ function GoogleRedirection() {
 const WaitForLogin = styled.div`
   font-size: 1.5rem;
   font-weight: bold;
-
-  height: 15rem;
-
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  position: fixed;
+  top: 35%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  div {
+    font-family: "iA Writer Quattro";
+  }
 `;
 
 export default GoogleRedirection;

@@ -15,7 +15,7 @@ public class WaggleLikeDTO {
 
     private Long likesId;
 
-    private Long userId;
+    private Integer userId;
 
     private Long waggleId;
 

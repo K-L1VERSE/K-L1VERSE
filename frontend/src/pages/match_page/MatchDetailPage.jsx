@@ -1,15 +1,23 @@
 import React, { useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
-import MatchDetailScore from "../../components/match/MatchDetailScore";
+
+import Slider from "react-slick";
+import "slick-carousel/slick/slick.css";
+import "slick-carousel/slick/slick-theme.css";
+
+import MatchDetailScore from "../../components/match/detail/MatchDetailScore";
 import { getMatchDetail } from "../../api/match";
-import BettingContainer from "../../components/match/BettingContainer";
+import PredictionContainer from "../../components/match/prediction/PredictionContainer";
+import CurrentBettingContainer from "../../components/match/currentBetting/CurrentBettingContainer";
+import DoBettingContainer from "../../components/match/doBetting/DoBettingContainer";
 
 export default function MatchDetailPage() {
   const { matchId } = useParams();
+
   const [data, setData] = useState([]);
   const navigate = useNavigate();
-  const goChatting = (to) => {
-    navigate(`/matchChatting/${to}`);
+  const goChatting = (id) => {
+    navigate(`/chat/${id}`);
   };
   useEffect(() => {
     const fetchData = async () => {
@@ -21,12 +29,12 @@ export default function MatchDetailPage() {
 
   return (
     <div>
-      [ MatchDetailPage ]
       <MatchDetailScore match={data} />
-      <button type="button" onClick={() => goChatting(matchId)}>
-        경기 채팅 입장하기 ~~
-      </button>
-      <BettingContainer match={data} />
+      <Slider dots>
+        <PredictionContainer match={data} />
+        <CurrentBettingContainer match={data} />
+      </Slider>
+      <DoBettingContainer match={data} />
     </div>
   );
 }

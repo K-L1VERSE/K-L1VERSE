@@ -34,6 +34,9 @@ public class Timeline {
     @Column(name = "member_name")
     private String memberName;
 
+    @Column(name = "member_name2")
+    private String memberName2;
+
     @Column(name = "team_name")
     private String teamName;
 

@@ -5,6 +5,8 @@ import com.KL1verse.match.betting.service.BettingService;
 import com.KL1verse.match.kafka.KafkaProducer;
 import com.KL1verse.match.kafka.producer.KafkaBettingProducer;
 import com.KL1verse.match.kafka.producer.KafkaBettingWinProducer;
+import java.util.HashMap;
+import java.util.Map;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
@@ -35,15 +37,20 @@ public class BettingController {
     }
 
     @GetMapping
-    public ResponseEntity<?> checkBetting(@RequestParam("matchId") int matchId, @RequestParam("userId") int userId) {
-        int n = bettingService.checkBetting(matchId, userId);
-        log.info("n: {}==========================", n);
-        if(n == 0) {
-            return new ResponseEntity<>("0", HttpStatus.OK);
-        } else {
-            return new ResponseEntity<>("1", HttpStatus.OK);
+    public ResponseEntity<?> checkBetting(@RequestParam("matchId") int matchId,
+        @RequestParam("userId") int userId) {
+        int betGoal = bettingService.checkBetting(matchId, userId);
+        int betTeamId = -1;
+        if(betGoal > 0) {
+            betTeamId = bettingService.checkBettingTeam(matchId, userId);
         }
+        Map<String, Integer> response = new HashMap<>();
+        response.put("betGoal", betGoal);
+        response.put("betTeamId", betTeamId);
+
+        return new ResponseEntity<>(response, HttpStatus.OK);
     }
+
 
 
     @GetMapping("/betting")

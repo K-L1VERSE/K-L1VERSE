@@ -29,7 +29,7 @@ public class WaggleLike {
     private Long likesId;
 
     @Column(name = "user_id")
-    private Long userId;
+    private Integer userId;
 
     @ManyToOne
     @JoinColumn(name = "waggle_id")

@@ -1,6 +1,9 @@
 import React, { useEffect, useState } from "react";
 import { Outlet, useNavigate } from "react-router-dom";
 import { useRecoilState } from "recoil";
+import { NotificationState } from "../../global/NotificationState";
+import { UserState } from "../../global/UserState";
+import { ModifyingState } from "../../global/UserState";
 import {
   Text,
   Nav,
@@ -12,16 +15,18 @@ import {
   navbarMyPageIcon,
 } from "../../styles/navbar-styles/NavbarStyle";
 import Logo from "../../assets/K-L1VERSE(white).png";
-import { NotificationState } from "../../global/NotificationState";
 
 export default function Header() {
-  const [notificationState, setNotificationState] =
-    useRecoilState(NotificationState);
+  const [notificationState] = useRecoilState(NotificationState);
+  const [userState] = useRecoilState(UserState);
+  const { nickname } = userState;
+  const [modifyingState] = useRecoilState(ModifyingState);
+  const { modifyingNickname } = modifyingState;
 
   const navigate = useNavigate();
 
   const goMatchSchedule = () => {
-    navigate("/matchSchedule");
+    navigate("/schedule");
   };
 
   const goTeam = () => {
@@ -44,59 +49,66 @@ export default function Header() {
   const [state, setState] = useState([false, false, false, false]);
 
   useEffect(() => {
-    if (currentPath === "/matchSchedule") {
+    if (currentPath === "/schedule") {
       setState([true, false, false, false]);
     } else if (currentPath === "/team") {
       setState([false, true, false, false]);
-    } else if (currentPath === "/") {
-      setState([false, false, false, false]);
     } else if (currentPath === "/notification") {
       setState([false, false, true, false]);
-    } else if (currentPath === "/mypage") {
+    } else if (
+      currentPath === "/mypage" ||
+      currentPath === "/setting" ||
+      currentPath === "/badge"
+    ) {
       setState([false, false, false, true]);
+    } else {
+      setState([false, false, false, false]);
     }
   }, [currentPath]);
+
+  const disabled = nickname === null || modifyingNickname;
 
   return (
     <>
       <Contents>
         <Outlet />
       </Contents>
-      <Nav>
-        <NavItem onClick={goMatchSchedule}>
-          {navbarScheduleIcon({ isSelected: state[0] })}
-          <Text isSelected={state[0]}>경기일정</Text>
+      <Nav $disabled={nickname === null}>
+        <NavItem onClick={goMatchSchedule} $disabled={disabled}>
+          {navbarScheduleIcon({ $isSelected: state[0] })}
+          <Text $isSelected={state[0]}>경기일정</Text>
         </NavItem>
-        <NavItem onClick={goTeam}>
-          {navbarTeamInfoIcon({ isSelected: state[1] })}
-          <Text isSelected={state[1]}>팀정보</Text>
+        <NavItem onClick={goTeam} $disabled={disabled}>
+          {navbarTeamInfoIcon({ $isSelected: state[1] })}
+          <Text $isSelected={state[1]}>팀정보</Text>
         </NavItem>
-        <NavItem onClick={goMain}>
+        <NavItem onClick={goMain} $disabled={disabled}>
           <img src={Logo} alt="logo" width={50} />
         </NavItem>
-        <NavItem onClick={goNotification}>
-          {navbarNotificationIcon({ isSelected: state[2] })}
-          {notificationState.newNotifications.length > 0 && (
-            <div
-              style={{
-                position: "absolute",
-                top: "14px",
-                right: "120px",
-                display: "flex",
-                background: "red",
-                borderRadius: "50%",
-                width: "3px",
-                height: "3px",
-                padding: "2px",
-              }}
-            />
-          )}
-          <Text isSelected={state[2]}>알림</Text>
+        <NavItem onClick={goNotification} $disabled={disabled}>
+          {navbarNotificationIcon({ $isSelected: state[2] })}
+          {notificationState.newNotifications.length > 0 &&
+            currentPath !== "/notification" && (
+              <div
+                style={{
+                  position: "absolute",
+                  top: "14px",
+                  right: "120px",
+                  display: "flex",
+                  background: "red",
+                  borderRadius: "50%",
+                  width: "3px",
+                  height: "3px",
+                  padding: "2px",
+                }}
+              />
+            )}
+          <Text $isSelected={state[2]}>알림</Text>
         </NavItem>
-        <NavItem onClick={goMypage}>
+        <NavItem onClick={goMypage} $disabled={disabled}>
           {/* <MyPageIcon /> */}
-          {navbarMyPageIcon({ isSelected: state[3] })}
-          <Text isSelected={state[3]}>마이페이지</Text>
+          {navbarMyPageIcon({ $isSelected: state[3] })}
+          <Text $isSelected={state[3]}>마이페이지</Text>
         </NavItem>
       </Nav>
     </>

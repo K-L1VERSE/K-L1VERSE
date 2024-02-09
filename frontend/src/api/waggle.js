@@ -12,8 +12,15 @@ export function getWaggleList(page, size, success, fail) {
     .catch(fail);
 }
 
-export function getWaggleDetail(boardId) {
-  axios.get(`/${gateway}/${url}/${boardId}`).then((response) => response.data);
+export async function getWaggleDetail(boardId, data, success, fail) {
+  await axios
+    .post(`/${gateway}/${url}/${boardId}`, data)
+    // .then((res) => {
+    //   console.log(res, " ?!?@>#?!@#!?@#!@#!");
+    //   console.log(res.data, " ???????????????");
+    // })
+    .then(success)
+    .catch(fail);
 }
 
 export function createWaggle(board, success, fail) {
@@ -32,20 +39,33 @@ export function getLatestWaggle(success, fail) {
   axios.get(`/${gateway}/${url}/recent/2`).then(success).catch(fail);
 }
 
-export function likeWaggle(board, waggleId, success, fail) {
+export function getSearchWaggleList(keyword, page, size, success, fail) {
   axios
-    .post(`/${gateway}/${url}/like/${waggleId}`, board)
+    .get(
+      `/${gateway}/${url}/search?keyword=${keyword}&page=${page}&size=${size}&sort=board.createAt,desc`,
+    )
     .then(success)
     .catch(fail);
 }
 
-export function unlikeWaggle(board, waggleId, success, fail) {
+export function likeWaggle(waggleId, data, success, fail) {
   axios
-    .delete(`/${gateway}/${url}/likes/${waggleId}`, board)
+    .post(`/${gateway}/${url}/like/${waggleId}`, data)
+    .then(success)
+    .catch(fail);
+}
+
+export function unlikeWaggle(waggleId, data, success, fail) {
+  axios
+    .delete(`/${gateway}/${url}/likes/${waggleId}`, data)
     .then(success)
     .catch(fail);
 }
 
 export function likeCount(waggleId, success, fail) {
   axios.get(`/${gateway}/${url}/like/${waggleId}`).then(success).catch(fail);
+}
+
+export function uploadFile(formData) {
+  return axios.post(`/${gateway}/file/upload`, formData);
 }

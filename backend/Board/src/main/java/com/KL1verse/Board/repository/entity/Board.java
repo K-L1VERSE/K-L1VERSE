@@ -58,5 +58,8 @@ public class Board {
     @Column(name = "user_id")
     private Integer userId;
 
+    @Column(name = "board_image")
+    private String boardImage;
+
 
 }
