@@ -8,25 +8,24 @@ import { ReactComponent as BadgeBackground } from "../../assets/BadgeBackground.
 
 const BadgeContainer = styled.div`
   display: flex;
-  width: 32px;
-  height: 32px;
-  padding: 4px;
+  width: 2rem;
+  height: 2rem;
+  padding: 0.25rem;
   justify-content: center;
   align-items: center;
-  gap: 10px;
-  border-radius: 30px;
+  gap: 0.625rem;
+  border-radius: 2rem;
   &:hover {
     cursor: pointer;
   }
 `;
 
-const BadgeImage = styled.div`
-  width: ${18}px;
-  height: ${18}px;
-
+const BadgeImage = styled.img`
+  width: 1.125rem;
+  height: 1.125rem;
   position: absolute;
-  // left: 7px;
-  // top: 5px;
+  top: 4.4rem;
+  left: 3.715rem;
 `;
 
 function BadgeButton({ mainBadge }) {
@@ -151,14 +150,10 @@ function BadgeButton({ mainBadge }) {
     <div>
       <BadgeContainer>
         <BadgeBackground />
-        <BadgeImage onClick={goBadge}>
-          <img
-            alt="뱃지"
-            src={`/badge/badge${mainBadge || 0}.png`}
-            width={18}
-            height={18}
-          />
-        </BadgeImage>
+        <BadgeImage
+          onClick={goBadge}
+          src={`/badge/badge${mainBadge || 0}.png`}
+        />
       </BadgeContainer>
     </div>
   );

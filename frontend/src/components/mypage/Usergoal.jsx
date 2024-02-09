@@ -3,19 +3,19 @@ import styled from "styled-components";
 
 const UsergoalContainer = styled.div`
   display: inline-flex;
-  width: 358px;
-  padding: 0px 16px;
-  gap: 12px;
+  width: 22.375rem;
+  padding: 0rem 1rem;
+  gap: 0.75rem;
 `;
 
 const Item = styled.div`
   display: flex;
-  padding: 12px 10px;
+  padding: 0.75rem 0.625rem;
   justify-content: center;
   align-items: center;
   flex: 1 0 0;
 
-  border-radius: 4px;
+  border-radius: 0.25rem;
   background: #f2f6fd;
 `;
 
@@ -24,7 +24,7 @@ const ItemContent = styled.div`
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  gap: 4px;
+  gap: 0.25rem;
 `;
 
 const ItemTitle = styled.div`
@@ -32,7 +32,7 @@ const ItemTitle = styled.div`
   flex-direction: row;
   align-items: center;
   justify-content: center;
-  gap: 4px;
+  gap: 0.25rem;
 `;
 
 const ItemTitleText = styled.div`
@@ -51,8 +51,8 @@ const ItemText = styled.div`
 `;
 
 const AccurateImg = styled.img`
-  width: 20px;
-  height: 20px;
+  width: 1.25rem;
+  height: 1.25rem;
 `;
 
 function Usergoal({ user }) {

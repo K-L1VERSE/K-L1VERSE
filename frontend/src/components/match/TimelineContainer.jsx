@@ -93,6 +93,7 @@ export default function TimelineConatiner() {
   return (
     <TimelineWrap>
       <table>
+        <thead />
         <tbody>
           {timelines.map((timeline, i) => (
             <tr key={i}>

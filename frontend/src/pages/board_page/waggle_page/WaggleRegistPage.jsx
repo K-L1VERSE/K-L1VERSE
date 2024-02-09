@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useRecoilState } from "recoil";
 import { useNavigate, useLocation } from "react-router-dom";
-import BoardTopNavBar from "../../../components/board/BoardTopNavBar";
 import RegistCard from "../../../components/board/WaggleRegistCard";
 import { createWaggle, updateWaggle } from "../../../api/waggle";
 import { UserState } from "../../../global/UserState";
