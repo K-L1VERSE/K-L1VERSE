@@ -27,14 +27,6 @@ export const TextArea = styled.textarea`
   }
 `;
 
-// export const CheckboxLabel = styled.label`
-//   display: flex;
-//   align-items: center;
-//   font-size: 0.7rem;
-// `;
-
-// export const CheckboxInput = styled.input``;
-
 // 댓글 수정창
 export const CommentInput = styled.input`
   margin-left: 0.8rem;

@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Navigate, useNavigate } from "react-router-dom";
 import { useSetRecoilState } from "recoil";
-import { UserState } from "../../global/UserState";
+import { ModifyingState, UserState } from "../../global/UserState";
 
 import styled from "styled-components";
 import BadgeButton from "./BadgeButton";
@@ -138,6 +138,7 @@ function UserInfo({ user, setUser }) {
   }, [user]);
 
   const setUserState = useSetRecoilState(UserState);
+  const setModifyingState = useSetRecoilState(ModifyingState);
 
   const [selectedImage, setSelectedImage] = useState(null);
 
@@ -185,6 +186,7 @@ function UserInfo({ user, setUser }) {
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   const handleModalOpen = () => {
+    setModifyingState((prev) => ({ ...prev, modifyingNickname: true }));
     setIsModalOpen(true);
   };
 
@@ -232,6 +234,7 @@ function UserInfo({ user, setUser }) {
       {/* EditNickname Modal */}
       {isModalOpen && (
         <EditNicknameModal
+          type="modify"
           setModalOpen={setIsModalOpen}
           user={user}
           setUser={setUser}
