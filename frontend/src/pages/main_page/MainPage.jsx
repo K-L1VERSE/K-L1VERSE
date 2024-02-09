@@ -1,5 +1,5 @@
 /* eslint-disable react/jsx-no-comment-textnodes */
-import React from "react";
+import React, { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { useRecoilState } from "recoil";
 import { UserState } from "../../global/UserState";
@@ -51,6 +51,11 @@ function MainPage() {
   ChannelIO("boot", {
     pluginKey: process.env.REACT_APP_CHANNELIO_PLUGIN_KEY,
   });
+
+  useEffect(() => {
+    ChannelIO("showChannelButton");
+    return () => ChannelIO("hideChannelButton");
+  }, []);
 
   const navigate = useNavigate();
 
