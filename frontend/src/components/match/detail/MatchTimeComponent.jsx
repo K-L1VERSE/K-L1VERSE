@@ -1,5 +1,5 @@
 import React from "react";
-
+import { useNavigate } from "react-router-dom";
 import {
   TimeContainer,
   TimeComponent,
@@ -8,7 +8,7 @@ import {
   DuringText,
 } from "../../../styles/match-styles/detail/MatchTimeComponentStyles";
 
-function MatchTimeComponent({ time, status }) {
+function MatchTimeComponent({ time, status, matchId }) {
   const targetTIme = new Date(time);
   const currentTime = new Date();
   const timeDifferenceInMinues = Math.floor(
@@ -19,15 +19,16 @@ function MatchTimeComponent({ time, status }) {
   const Dhour = Math.floor((timeDifferenceInMinues / 60) % 24);
   const Dminute = Math.floor(timeDifferenceInMinues % 60);
 
-  const enterMatch = () => {
-    console.log("경기 입장하기");
+  const navigate = useNavigate();
+  const enterMatch = (to) => {
+    navigate(`/matchChatting/${to}`);
   };
   return (
-    <TimeContainer>
+    <TimeContainer onClick={() => enterMatch(matchId)}>
       {status === "done" ? (
         <DoneComponent>경기 종료</DoneComponent>
       ) : status === "during" ? (
-        <DuringComponent onClick={enterMatch}>
+        <DuringComponent>
           <DuringText>경기 입장하기</DuringText>
         </DuringComponent>
       ) : Dday > 0 ? (

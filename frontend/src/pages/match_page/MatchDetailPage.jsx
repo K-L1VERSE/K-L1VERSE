@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
-import styled from "styled-components";
 
 import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
@@ -14,11 +13,8 @@ import DoBettingContainer from "../../components/match/doBetting/DoBettingContai
 
 export default function MatchDetailPage() {
   const { matchId } = useParams();
+
   const [data, setData] = useState([]);
-  const navigate = useNavigate();
-  const goChatting = (to) => {
-    navigate(`/matchChatting/${to}`);
-  };
   useEffect(() => {
     const fetchData = async () => {
       const result = await getMatchDetail(matchId);

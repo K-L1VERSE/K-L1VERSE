@@ -126,7 +126,11 @@ export default function MatchDetailScore({ match }) {
               </TeamComponent>
             </TeamContainer>
           </MatchUpContainer>
-          <MatchTimeComponent time={match.matchAt} status={match.status} />
+          <MatchTimeComponent
+            matchId={match.matchId}
+            time={match.matchAt}
+            status={match.status}
+          />
         </MatchDetailComponent>
       </MatchDetailContainer>
     </div>
