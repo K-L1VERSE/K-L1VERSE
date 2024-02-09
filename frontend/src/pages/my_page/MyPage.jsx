@@ -79,7 +79,7 @@ function MyPage() {
   }, [category]);
 
   return (
-    <div>
+    <>
       <UserProfile user={user} setUser={setUser} />
       <Usergoal user={user} />
       <BoardContainer>
@@ -108,7 +108,7 @@ function MyPage() {
         </Nav>
       </BoardList>
       <div>{WaggleContainer({ waggleList: myWagle })}</div>
-    </div>
+    </>
   );
 }
 
