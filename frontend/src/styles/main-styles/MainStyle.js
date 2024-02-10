@@ -21,3 +21,19 @@ export const AllBtn = styled.div`
     opacity: 80%;
   }
 `;
+
+/* Footer */
+export const FooterContainer = styled.div`
+  margin-top: 3rem;
+  height: 13rem;
+  background-color: #f5f7f8;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  div {
+    margin-bottom: 0.4rem;
+    font-size: 0.8rem;
+    color: gray;
+  }
+`;
