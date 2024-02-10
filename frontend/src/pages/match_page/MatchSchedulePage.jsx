@@ -17,12 +17,27 @@ export default function MatchSchedulePage() {
   const m = location.state?.m;
   const day = location.state?.day;
   const v = location.state?.v;
+  const [selectedDay, setSelectedDayProps] = useState(null);
+  const [resetDayFlag, setResetDayFlag] = useState(false);
+
+  const resetDay = () => {
+    if (!resetDayFlag) {
+      if (selectedDay) {
+        setSelectedDayProps(null);
+        setResetDayFlag(true);
+        console.log("resetDayFlag: ", resetDayFlag);
+      }
+    }
+  };
 
   useEffect(() => {
     if (d) {
       setYear(y);
       setMonth(m);
       setView(v);
+      if (day) {
+        setSelectedDayProps(day);
+      }
     }
   }, []);
 
@@ -42,6 +57,7 @@ export default function MatchSchedulePage() {
         setYear={setYear}
         month={month}
         setMonth={setMonth}
+        resetDay={resetDay}
       />
       <hr style={{ width: "95%", border: "1px solid #f4f4f4" }} />
       {view === "list" && (
@@ -51,7 +67,9 @@ export default function MatchSchedulePage() {
         <TableContainer
           year={year}
           month={month}
-          day={day}
+          day={selectedDay}
+          setResetDayFlag={setResetDayFlag}
+          setSelectedDayProps={setSelectedDayProps}
           data={data}
           view={view}
         />

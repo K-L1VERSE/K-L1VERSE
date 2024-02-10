@@ -55,8 +55,8 @@ export default function BoardItem({ type, posts }) {
     <BoardItemWrap onClick={() => handlePostClick()}>
       <Type type={type}>{category[type].type}</Type>
       <Text>{category[type].text}</Text>
-      {posts.map((post) => (
-        <Post>
+      {posts.map((post, i) => (
+        <Post key={i}>
           <Title>{truncateText(post.board.content, 18)}</Title>
           <Date>{formatDate(post.board.createAt)}</Date>
         </Post>

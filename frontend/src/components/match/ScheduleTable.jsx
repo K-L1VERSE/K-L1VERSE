@@ -2,14 +2,25 @@ import React, { useState, useEffect } from "react";
 import { TableContainer } from "../../styles/match-styles/MatchScheduleStyle";
 import Time from "./Time";
 
-export default function ScheduleTable({ year, month, day, data, view }) {
-  const [selectedDay, setSelectedDay] = useState(null);
+export default function ScheduleTable({
+  year,
+  month,
+  day,
+  setResetDayFlag,
+  setSelectedDayProps,
+  data,
+  view,
+}) {
+  const [selectedDay, setSelectedDay] = useState(day);
+
   useEffect(() => {
-    if (day) {
-      console.log("exist day", day);
-      setSelectedDay(day);
-    }
-  });
+    setSelectedDay(day);
+    setResetDayFlag(false);
+  }, [day]);
+
+  // useEffect(() => {
+  //   setSelectedDay(day);
+  // }, []);
 
   const daysInMonth = new Date(year, month, 0).getDate();
   const days = Array.from({ length: daysInMonth }, (_, i) => i + 1);
@@ -52,13 +63,21 @@ export default function ScheduleTable({ year, month, day, data, view }) {
                     <div>
                       {dayData.matches.length > 0 ? (
                         <div
-                          onClick={() => setSelectedDay(dayData.day)}
+                          onClick={() => {
+                            setSelectedDay(dayData.day);
+                            setSelectedDayProps(dayData.day);
+                          }}
                           className={`circle ${selectedDay === dayData.day ? "selected" : ""}`}
                         >
                           {dayData.day}
                         </div>
                       ) : (
-                        <div onClick={() => setSelectedDay(null)}>
+                        <div
+                          onClick={() => {
+                            setSelectedDay(null);
+                            setSelectedDayProps(null);
+                          }}
+                        >
                           {dayData.day}
                         </div>
                       )}

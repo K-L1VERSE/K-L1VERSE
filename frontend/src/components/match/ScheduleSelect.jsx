@@ -6,7 +6,13 @@ import {
 import ToLeft from "../../assets/ToLeft.png";
 import ToRight from "../../assets/ToRight.png";
 
-export default function SelectContainer({ year, setYear, month, setMonth }) {
+export default function SelectContainer({
+  year,
+  setYear,
+  month,
+  setMonth,
+  resetDay,
+}) {
   const years = [2024, 2025];
   const months = Array.from({ length: 12 }, (_, i) => i + 1);
 
@@ -17,6 +23,7 @@ export default function SelectContainer({ year, setYear, month, setMonth }) {
     } else {
       setMonth(month - 1);
     }
+    resetDay();
   };
 
   const handleNextMonth = () => {
@@ -26,6 +33,7 @@ export default function SelectContainer({ year, setYear, month, setMonth }) {
     } else {
       setMonth(month + 1);
     }
+    resetDay();
   };
 
   return (
