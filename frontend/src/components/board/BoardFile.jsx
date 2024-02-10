@@ -46,9 +46,12 @@ function BoardFile({ onFileChange }) {
         style={{ display: "none" }}
         ref={fileInput}
       />
-      <button onClick={() => fileInput.current.click()}>이미지 선택</button>
       <FileInputLabel>
-        <img src={CameraIcon} alt="카메라 아이콘" />
+        <img
+          src={CameraIcon}
+          alt="카메라 아이콘"
+          onClick={() => fileInput.current.click()}
+        />
       </FileInputLabel>
     </FileInputContainer>
   );

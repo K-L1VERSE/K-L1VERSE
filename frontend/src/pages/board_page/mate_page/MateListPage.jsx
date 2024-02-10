@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-// import Calendar from "react-calendar";
-import { getMateList } from "../../../api/mate";
+import { getMateList, getMatesByMatchList } from "../../../api/mate";
 import BoardTopNavBar from "../../../components/board/BoardTopNavBar";
 import MateContainer from "../../../components/board/MateContainer";
 import {
@@ -9,29 +8,53 @@ import {
   HeaderButton,
   HeaderH2,
 } from "../../../styles/BoardStyles/BoardStyle";
+import MatchSchedulePage from "../../match_page/MatchSchedulePage";
 
 function MateListPage() {
+  const [selectedMatchId, setSelectedMatchId] = useState(null); // Initialize to null
   const [mateList, setMateList] = useState([]);
   const [page, setPage] = useState(0);
   const [hasMore, setHasMore] = useState(true);
+  const [isMatchIdExists, setIsMatchIdExists] = useState(true);
   const navigate = useNavigate();
-  // const [value, onChange] = useState(new Date());
-  // const [isOpen, setIsOpen] = useState(false);
+
+  const handleMatchClick = (selectedMatchId) => {
+    setSelectedMatchId(selectedMatchId);
+    console.log("selectedMatchId:???????????????? ", selectedMatchId);
+  };
 
   function getMates() {
-    getMateList(
-      page,
-      10,
-      ({ data }) => {
-        if (!data.content) {
-          setHasMore(false);
-        } else {
-          setMateList([...mateList, ...data.content]);
-          setPage(page + 1);
-        }
-      },
-      () => {},
-    );
+    if (selectedMatchId) {
+      getMatesByMatchList(
+        selectedMatchId,
+        ({ data }) => {
+          if (!data.content) {
+            setHasMore(false);
+            setIsMatchIdExists(false);
+          } else {
+            setIsMatchIdExists(true);
+            setMateList([...mateList, ...data.content]);
+            setPage(page + 1);
+          }
+        },
+        () => {},
+      );
+    } else {
+      getMateList(
+        page,
+        10,
+        ({ data }) => {
+          if (!data.content) {
+            setHasMore(false);
+            setIsMatchIdExists(false);
+          } else {
+            setMateList([...mateList, ...data.content]);
+            setPage(page + 1);
+          }
+        },
+        () => {},
+      );
+    }
   }
 
   useEffect(() => {
@@ -64,18 +87,14 @@ function MateListPage() {
   }
 
   useEffect(() => {
-    if (isBottom) {
+    if (isBottom && !selectedMatchId) {
       getMates();
     }
-  }, [isBottom]);
+  }, [isBottom, selectedMatchId]);
 
   const handleWriteMateClick = () => {
     navigate("/mateRegist");
   };
-
-  // const handleCalendarToggle = () => {
-  //   setIsOpen(!isOpen);
-  // };
 
   return (
     <div>
@@ -84,10 +103,15 @@ function MateListPage() {
         <HeaderH2>🔥 경기 직관 함께 할 메이트 구합니다</HeaderH2>
         <HeaderButton onClick={handleWriteMateClick}>🖋 글쓰기</HeaderButton>
       </Header>
-      {/* <button onClick={handleCalendarToggle}>📆</button> */}
-      {/* {isOpen && <Calendar onChange={onChange} value={value} />} */}
-
-      <MateContainer mateList={mateList} />
+      <MatchSchedulePage
+        isMateListPage={true}
+        onMatchClick={handleMatchClick}
+      />
+      {isMatchIdExists ? (
+        <MateContainer mateList={mateList} />
+      ) : (
+        <p>해당하는 경기의 게시글이 없습니다.</p>
+      )}
       {!hasMore && <p>No more data</p>}
     </div>
   );

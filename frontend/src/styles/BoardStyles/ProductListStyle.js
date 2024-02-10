@@ -15,11 +15,12 @@ export const ProductListContainer = styled.div`
   margin-top: 1rem;
   padding: 0;
   font-family: "Pretendard-Regular";
-  justify-content: space-between;
+  /* justify-content: space-between; */
 `;
 
 export const ProductItemContainer = styled.div`
   width: 10rem;
+  height: 18rem;
   margin-bottom: 1rem;
   margin-left: 0.5rem;
   text-align: left;
@@ -103,8 +104,7 @@ export const ProductDetailPrice = styled.p`
 
 export const ProductImage = styled.img`
   width: 100%;
-  /* height: auto; */
+  aspect-ratio: 1;
   object-fit: cover;
-  border-radius: 8px;
   margin-bottom: 1rem;
 `;

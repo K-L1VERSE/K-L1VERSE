@@ -5,11 +5,12 @@ import TableContainer from "../../components/match/ScheduleTable";
 import MatchScheduleTop from "../../components/match/MatchScheduleTop";
 import ListContainer from "../../components/match/ScheduleList";
 
-export default function MatchSchedulePage() {
+export default function MatchSchedulePage({ isMateListPage, onMatchClick }) {
   const [data, setData] = useState([]);
   const [year, setYear] = useState(new Date().getFullYear());
   const [month, setMonth] = useState(new Date().getMonth() + 1);
   const [view, setView] = useState("list");
+  const [selectedMatchId, setSelectedMatchId] = useState(null);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -19,6 +20,10 @@ export default function MatchSchedulePage() {
     fetchData();
   }, [year, month]);
 
+  const handleMatchClick = (matchId) => {
+    setSelectedMatchId(matchId);
+  };
+
   return (
     <div>
       <MatchScheduleTop setView={setView} view={view} />
@@ -27,11 +32,24 @@ export default function MatchSchedulePage() {
         setYear={setYear}
         month={month}
         setMonth={setMonth}
+        onMatchClick={handleMatchClick} // Prop으로 전달
       />
       <hr style={{ width: "95%", border: "1px solid #f4f4f4" }} />
-      {view === "list" && <ListContainer data={data} />}
+      {view === "list" && (
+        <ListContainer
+          data={data}
+          isMateListPage={isMateListPage}
+          onMatchClick={onMatchClick}
+        />
+      )}
       {view === "calendar" && (
-        <TableContainer year={year} month={month} data={data} />
+        <TableContainer
+          year={year}
+          month={month}
+          data={data}
+          isMateListPage={true}
+          onMatchClick={onMatchClick}
+        />
       )}
     </div>
   );
