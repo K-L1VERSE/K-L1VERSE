@@ -82,7 +82,7 @@ export const ShareText = styled.div`
 `;
 
 export const ResultTeam = styled.div`
-  img {
+  .backgroundImage {
     width: 100%;
     height: 20rem;
   }
@@ -96,13 +96,68 @@ export const Team = styled.div`
 
   div {
     color: white;
-    margin-bottom: 3rem;
+    margin-bottom: 2.5rem;
     font-family: "Pretendard-Bold";
     font-size: 1.8rem;
   }
 
-  img {
+  .teamImage1 {
+    width: 10rem;
+    height: auto;
+  }
+
+  .teamImage2 {
+    width: 13rem;
+    height: auto;
+  }
+
+  .teamImage3 {
+    width: 10rem;
+    height: auto;
+  }
+
+  .teamImage4 {
+    width: auto;
+    height: 12rem;
+  }
+
+  .teamImage5 {
+    width: auto;
+    height: 12rem;
+  }
+
+  .teamImage6 {
+    width: 18rem;
+    height: auto;
+  }
+
+  .teamImage7 {
     width: 12rem;
     height: auto;
+  }
+
+  .teamImage8 {
+    width: auto;
+    height: 10rem;
+  }
+
+  .teamImage9 {
+    width: 18rem;
+    height: auto;
+  }
+
+  .teamImage10 {
+    width: 12rem;
+    height: auto;
+  }
+
+  .teamImage11 {
+    width: 12rem;
+    height: auto;
+  }
+
+  .teamImage12 {
+    width: auto;
+    height: 12rem;
   }
 `;
