@@ -59,7 +59,7 @@ public class WaggleLikeServiceImpl implements WaggleLikeService {
             kafkaBoardNotificationProducer.boardNotification(
                     BoardNotificationResDto.builder()
                             .type(BoardNotificationResDto.BoardNotificationType.LIKE)
-                            .userId(userId)
+                            .userId(waggle.getBoard().getUserId())
                             .profile(userProfile)
                             .nickname(userNickname)
                             .uri("/" + waggle.getBoard().getBoardType().toString().toLowerCase() + "/" + String.valueOf(boardId))
