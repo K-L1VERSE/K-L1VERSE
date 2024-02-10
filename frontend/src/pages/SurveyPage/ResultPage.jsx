@@ -93,10 +93,9 @@ function ResultPage() {
     3: "/images/surveyResult/background3.png",
   };
 
-  // const {
-  //   state: { teamId },
-  // } = useLocation();
-  const teamId = 12;
+  const {
+    state: { teamId },
+  } = useLocation();
   const copyUrlRef = React.useRef();
   const navigate = useNavigate();
   const [isCopyModalOpen, setIsCopyModalOpen] = React.useState(false);
