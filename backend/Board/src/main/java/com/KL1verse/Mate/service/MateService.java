@@ -30,4 +30,6 @@ public interface MateService {
 
     Page<MateDTO> getMatesByMatchList(List<Integer> matchIds, Pageable pageable);
 
+    Page<MateDTO> getMatesByUser(Integer userId, Pageable pageable);
+
 }

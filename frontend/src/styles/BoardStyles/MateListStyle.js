@@ -4,7 +4,9 @@ import styled from "styled-components";
 export const MatchTitle = styled.div`
   color: black;
   font-weight: 200;
-  font-size: 1.1rem;
+  font-size: 1.5rem;
+  font-weight: bold;
+  margin-top: 0.5rem;
 `;
 
 export const MatchTime = styled.div`
@@ -23,8 +25,7 @@ export const MateItemCreated = styled.div`
 /* *********** MateDetail *********** */
 export const MateDetailTitle = styled.p`
   margin: 0;
-  font-size: 1.5rem;
-  font-weight: bold;
+  font-size: 1.3rem;
   margin-bottom: 1rem;
   border-top: 1px solid #ccc;
   margin-top: 1rem;

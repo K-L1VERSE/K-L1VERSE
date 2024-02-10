@@ -9,6 +9,7 @@ import {
   HeaderButton,
   HeaderH2,
 } from "../../../styles/BoardStyles/BoardStyle";
+import SearchComponent from "../../../components/board/SearchComponent";
 
 function WaggleListPage() {
   const [waggleList, setWaggleList] = useState([]);
@@ -71,6 +72,10 @@ function WaggleListPage() {
     navigate("/waggleRegist");
   };
 
+  const handleSearch = (searchResult) => {
+    setWaggleList(searchResult);
+  };
+
   return (
     <div>
       <BoardTopNavBar />
@@ -78,6 +83,7 @@ function WaggleListPage() {
         <HeaderH2>👥 와글Waggle 떠들어주세요</HeaderH2>
         <HeaderButton onClick={handleWriteWaggleClick}>🖋 글쓰기</HeaderButton>
       </Header>
+      {/* <SearchComponent onSearch={handleSearch} /> */}
 
       <WaggleContainer
         waggleList={waggleList}

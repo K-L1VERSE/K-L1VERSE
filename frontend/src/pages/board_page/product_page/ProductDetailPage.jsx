@@ -104,16 +104,14 @@ function ProductDetailPage() {
             ))}
       </ImageBoxContainer>
       <DetailBox>
-        <ProductWriter>
-          <p>{productDetail.nickname}</p>
-        </ProductWriter>
+        <ProductWriter>{productDetail.nickname}</ProductWriter>
         {dealFlag ? (
           <DealStatusOrange>거래완료</DealStatusOrange>
         ) : (
           <DealStatusGreen>거래가능</DealStatusGreen>
         )}
         <Title>{productDetail.title}</Title>
-        <Price>Price: {price}</Price>
+        <Price>판매 가격: {price} 원</Price>
         <Content>{productDetail.content}</Content>
 
         <EditDeleteButton>{renderEditDeleteButtons()}</EditDeleteButton>

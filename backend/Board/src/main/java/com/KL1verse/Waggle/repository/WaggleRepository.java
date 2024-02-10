@@ -32,4 +32,13 @@ public interface WaggleRepository extends JpaRepository<Waggle, Long> {
   List<Object[]> findUserNickname(@Param("userId") Integer userId);
 
   Page<Waggle> findByHashtagsContaining(String hashtag, Pageable pageable);
+
+  Page<Waggle> findByBoard_UserId(Integer userId, Pageable pageable);
+
+
 }
+
+
+
+
+

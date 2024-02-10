@@ -38,5 +38,7 @@ public interface WaggleService {
     void removeHashtagsFromUnlikedWaggle(Long waggleId);
     void saveHashtags(WaggleDTO waggleDTO);
 
+    Page<WaggleDTO> getWagglesByUser(Integer userId, Pageable pageable);
+
 }
 
