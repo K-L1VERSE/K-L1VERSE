@@ -12,6 +12,7 @@ export const NoticeBar = styled.div`
 export const NoticeBar1 = styled.div`
   padding-left: 0.5rem;
   padding-top: 0.5rem;
+  margin-top: 0.5rem;
 `;
 
 export const marquee = keyframes`
