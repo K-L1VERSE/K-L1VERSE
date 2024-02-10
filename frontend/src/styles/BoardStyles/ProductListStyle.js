@@ -10,23 +10,25 @@ export const ProductItemWriter = styled.div`
 
 export const ProductListContainer = styled.div`
   display: flex;
-  flex-wrap: wrap;
+  flex-wrap: nowrap;
   margin: 0 1rem;
   margin-top: 1rem;
   padding: 0;
-  justify-content: flex-start;
   font-family: "Pretendard-Regular";
   justify-content: space-between;
 `;
 
 export const ProductItemContainer = styled.div`
+  width: 10rem;
   margin-bottom: 1rem;
+  margin-left: 0.5rem;
   text-align: left;
   text-decoration: none;
   color: inherit;
   border: 0.8px solid lightblue;
   border-radius: 5px;
   padding: 1rem;
+  box-sizing: border-box;
 `;
 
 export const DealStatus = styled.div`
@@ -34,7 +36,7 @@ export const DealStatus = styled.div`
   font-size: 0.7rem;
   padding: 5px 5px;
   border-radius: 5px;
-  margin-bottom: 10px;
+  margin-bottom: 0.1rem;
   text-align: center;
 `;
 
@@ -77,6 +79,7 @@ export const ProductItemCreated = styled.div`
 
 /* *********** ProdcutDetail *********** */
 export const ProductWriter = styled.div`
+  margin-bottom: 0.5rem;
   display: flex;
   align-items: center;
 `;
@@ -100,8 +103,8 @@ export const ProductDetailPrice = styled.p`
 
 export const ProductImage = styled.img`
   width: 100%;
-  height: auto;
+  /* height: auto; */
   object-fit: cover;
   border-radius: 8px;
-  margin-bottom: 20px;
+  margin-bottom: 1rem;
 `;

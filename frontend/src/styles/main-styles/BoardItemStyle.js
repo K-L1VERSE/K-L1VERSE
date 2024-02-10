@@ -9,6 +9,9 @@ export const BoardItemWrap = styled.div`
   margin: 0.8rem;
   box-shadow: 0 2px 8px 2px #e9ecef;
   border-radius: 8px;
+  :hover {
+    cursor: pointer;
+  }
 `;
 
 export const Type = styled.div`

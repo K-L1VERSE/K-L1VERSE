@@ -14,7 +14,7 @@ export const DetailTop = styled.div`
 
 export const DetailBox = styled.div`
   border-bottom: 1px solid #ccc;
-  padding: 1rem 1rem 0.4rem 1rem;
+  padding: 0.1rem 1rem 0.4rem 1rem;
   margin-bottom: 1rem;
 `;
 
@@ -127,6 +127,7 @@ export const BackButton = styled.button`
   width: 1rem;
   height: 1rem;
   background-color: white;
+  margin-bottom: 1rem;
 `;
 
 export const LikeButton = styled.button`

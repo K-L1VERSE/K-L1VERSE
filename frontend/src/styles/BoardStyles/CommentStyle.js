@@ -53,7 +53,7 @@ export const ButtonContainer = styled.div`
 
 export const EditButton = styled.button`
   /* background-color: #fff; */
-  background-color: yellowgreen;
+  /* background-color: yellowgreen; */
   color: grey;
   font-size: 0.5em;
   border: none;
