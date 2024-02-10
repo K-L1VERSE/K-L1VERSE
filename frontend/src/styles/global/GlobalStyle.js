@@ -4,17 +4,20 @@ import "../../assets/fonts/font.css";
 const GlobalStyle = createGlobalStyle`
 body {
   font-family: 'Pretendard-Light';
-  // margin: 0 auto;
-  // background-color: white;
+  background-color: white;
+  min-height: 100vh;
+  overflow-y: scroll;
 }
-// @media screen and (min-width: 700px) {
-//   body {
-//       width: 700px;
-//   }
-// }
-// html {
-//   background-color: gray;
-// }
+
+@media screen and (min-width: 700px) {
+  body {
+    margin : 0 auto;
+    width: 600px;
+  }
+}
+html {
+  background-color: white;
+}
 `;
 
 export default GlobalStyle;

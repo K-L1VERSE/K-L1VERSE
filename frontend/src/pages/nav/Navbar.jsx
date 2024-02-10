@@ -2,8 +2,7 @@ import React, { useEffect, useState } from "react";
 import { Outlet, useNavigate } from "react-router-dom";
 import { useRecoilState } from "recoil";
 import { NotificationState } from "../../global/NotificationState";
-import { UserState } from "../../global/UserState";
-import { ModifyingState } from "../../global/UserState";
+import { UserState, ModifyingState } from "../../global/UserState";
 import {
   Text,
   Nav,
@@ -13,6 +12,7 @@ import {
   navbarTeamInfoIcon,
   navbarNotificationIcon,
   navbarMyPageIcon,
+  RedCircle,
 } from "../../styles/navbar-styles/NavbarStyle";
 import Logo from "../../assets/K-L1VERSE(white).png";
 
@@ -88,21 +88,7 @@ export default function Header() {
         <NavItem onClick={goNotification} $disabled={disabled}>
           {navbarNotificationIcon({ $isSelected: state[2] })}
           {notificationState.newNotifications.length > 0 &&
-            currentPath !== "/notification" && (
-              <div
-                style={{
-                  position: "absolute",
-                  top: "14px",
-                  right: "120px",
-                  display: "flex",
-                  background: "red",
-                  borderRadius: "50%",
-                  width: "3px",
-                  height: "3px",
-                  padding: "2px",
-                }}
-              />
-            )}
+            currentPath !== "/notification" && <RedCircle />}
           <Text $isSelected={state[2]}>알림</Text>
         </NavItem>
         <NavItem onClick={goMypage} $disabled={disabled}>

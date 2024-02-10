@@ -8,11 +8,12 @@ import { ReactComponent as BadgeBackground } from "../../assets/BadgeBackground.
 
 const BadgeContainer = styled.div`
   display: flex;
+  position: relative;
+  justify-content: center;
+  align-items: center;
   width: 2rem;
   height: 2rem;
   padding: 0.25rem;
-  justify-content: center;
-  align-items: center;
   gap: 0.625rem;
   border-radius: 2rem;
   &:hover {
@@ -24,8 +25,6 @@ const BadgeImage = styled.img`
   width: 1.125rem;
   height: 1.125rem;
   position: absolute;
-  top: 4.4rem;
-  left: 3.715rem;
 `;
 
 function BadgeButton({ mainBadge }) {

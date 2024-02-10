@@ -11,6 +11,7 @@ import Hotclip from "../../components/main/Hotclip";
 import Nostradamus from "../../components/main/Nostradamus";
 import Survey from "../../components/main/Survey";
 import EditNicknameModal from "../../components/mypage/EditNicknameModal";
+import Footer from "../../components/main/Footer";
 
 function MainPage() {
   (function () {
@@ -89,7 +90,7 @@ function MainPage() {
       </Category>
       <Nostradamus />
       <Survey />
-
+      <Footer />
       {nickname === null && <EditNicknameModal type="signUp" />}
     </div>
   );
