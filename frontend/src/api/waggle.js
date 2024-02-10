@@ -53,7 +53,7 @@ export function likeWaggle(waggleId, data, success, fail) {
 
 export function unlikeWaggle(waggleId, data, success, fail) {
   axios
-    .delete(`/${gateway}/${url}/likes/${waggleId}`, data)
+    .delete(`/${gateway}/${url}/like/${waggleId}`, { data: data })
     .then(success)
     .catch(fail);
 }

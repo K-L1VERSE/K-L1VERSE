@@ -58,7 +58,7 @@ function firework() {
 
 function ResultPage() {
   const teamImages = {
-    1: "/images/surveyResult/ulsan_mita.jpg",
+    1: "/images/surveyResult/ulsan_mita.png",
     2: "/images/surveyResult/pohang_soidori.png",
     3: "/images/surveyResult/jeju_gamguri.png",
     4: "/images/surveyResult/jeonbuk_nighty.png",
@@ -68,7 +68,7 @@ function ResultPage() {
     8: "/images/surveyResult/incheon_ut2.png",
     9: "/images/surveyResult/gangwon_gangwoong.png",
     10: "/images/surveyResult/gwangju_mascot.png",
-    11: "/images/surveyResult/suwon_swoony.jpg",
+    11: "/images/surveyResult/suwon_swoony.png",
     12: "/images/surveyResult/kimcheon_shuwoong2.png",
   };
 
@@ -87,6 +87,12 @@ function ResultPage() {
     12: "김천 상무 FC",
   };
 
+  const backgroundImages = {
+    1: "/images/surveyResult/background1.png",
+    2: "/images/surveyResult/background2.png",
+    3: "/images/surveyResult/background3.png",
+  };
+
   const {
     state: { teamId },
   } = useLocation();
@@ -94,6 +100,7 @@ function ResultPage() {
   const navigate = useNavigate();
   const [isCopyModalOpen, setIsCopyModalOpen] = React.useState(false);
   const [showResult, setShowResult] = useState(false);
+  const randomBackground = Math.floor(Math.random() * 3) + 1;
 
   useEffect(() => {
     const tick = setTimeout(() => {
@@ -141,13 +148,13 @@ function ResultPage() {
   const { Kakao } = window;
 
   // 배포한 자신의 사이트
-  const realUrl = "http://i10a409.p.ssafy.io/survey";
+  const realUrl = "https://k-l1verse.site/survey";
   // 로컬 주소 (localhost 3000 같은거)
   const resultUrl = window.location.href;
 
   const domainAndPort = process.env.REACT_APP_DOMAIN_AND_PORT;
 
-  const imageUrl = "https://i10a409.p.ssafy.io" + teamImages[teamId];
+  const imageUrl = "https://k-l1verse.site/" + teamImages[teamId];
 
   // 재랜더링시에 실행되게 해준다.
   useEffect(() => {
@@ -197,10 +204,18 @@ function ResultPage() {
           </TopWrap>
           <BottomWrap>
             <ResultTeam>
-              <img src={Wallpaper} alt="" />
+              <img
+                src={backgroundImages[randomBackground]}
+                className="backgroundImage"
+                alt="backgroundImage"
+              />
               <Team>
                 <div>{teamNames[teamId]}</div>
-                <img src={teamImages[teamId]} alt="teamImage" />
+                <img
+                  src={teamImages[teamId]}
+                  className={`teamImage${teamId}`}
+                  alt="teamImage"
+                />
               </Team>
             </ResultTeam>
             <ShareText>콘텐츠 공유하기</ShareText>

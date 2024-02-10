@@ -17,6 +17,8 @@ public class BoardNotificationResDto {
     }
 
     Integer userId;
+    String profile;
+    String nickname;
     String message;
     String uri;
     BoardNotificationType type;
