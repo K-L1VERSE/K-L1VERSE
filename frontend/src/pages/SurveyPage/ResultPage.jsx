@@ -148,7 +148,7 @@ function ResultPage() {
   const { Kakao } = window;
 
   // 배포한 자신의 사이트
-  const realUrl = "https://k-l1verse.site//survey";
+  const realUrl = "https://k-l1verse.site/survey";
   // 로컬 주소 (localhost 3000 같은거)
   const resultUrl = window.location.href;
 
