@@ -2,7 +2,7 @@ import React from "react";
 import { ListStyle } from "../../styles/match-styles/MatchScheduleStyle";
 import Time from "./Time";
 
-export default function ListContainer({ data }) {
+export default function ListContainer({ data, year, month, view }) {
   const groupedData = data.reduce((acc, match) => {
     const date = new Date(match.matchAt).toLocaleDateString("ko-KR", {
       year: "numeric",
@@ -35,7 +35,13 @@ export default function ListContainer({ data }) {
               <td className="detail">
                 {matches.flatMap((match, index, array) => (
                   <React.Fragment key={index}>
-                    <Time match={match} />
+                    <Time
+                      match={match}
+                      data={data}
+                      year={year}
+                      month={month}
+                      view={view}
+                    />
                     {index < array.length - 1 && <hr />}
                   </React.Fragment>
                 ))}

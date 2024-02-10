@@ -5,11 +5,30 @@ import {
   OnlyTime,
 } from "../../styles/match-styles/MatchScheduleStyle";
 
-export default function Time({ match }) {
+export default function Time({ match, data, year, month, day, view }) {
   const navigate = useNavigate();
 
   const handleOnClick = () => {
-    navigate(`/match/${match.matchId}`);
+    if (view === "list") {
+      navigate(`/match/${match.matchId}`, {
+        state: {
+          d: data,
+          y: year,
+          m: month,
+          v: view,
+        },
+      });
+    } else if (view === "calendar") {
+      navigate(`/match/${match.matchId}`, {
+        state: {
+          d: data,
+          y: year,
+          m: month,
+          day,
+          v: view,
+        },
+      });
+    }
   };
   const srcFirst = `${process.env.PUBLIC_URL}/badge/badge`;
 

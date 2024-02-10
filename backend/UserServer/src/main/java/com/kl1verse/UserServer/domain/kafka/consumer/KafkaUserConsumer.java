@@ -29,7 +29,7 @@ public class KafkaUserConsumer {
     private ObjectMapper objectMapper;
 
     @Transactional
-//    @KafkaListener(topics = "betting", groupId = "user-group") // match-group아님, 현재 groupID !
+    @KafkaListener(topics = "betting", groupId = "user-group") // match-group아님, 현재 groupID !
     public void betting(String data) {
 
         BettingEntity bet = null;
