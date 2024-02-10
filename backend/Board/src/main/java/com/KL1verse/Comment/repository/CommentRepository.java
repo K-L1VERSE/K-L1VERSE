@@ -30,4 +30,6 @@ public interface CommentRepository extends JpaRepository<Comment, Long> {
     @Query(value = "SELECT u.nickname FROM user u JOIN comment c ON c.user_id = u.user_id WHERE c.user_id = :userId", nativeQuery = true)
     List<Object[]> findUserNickname(@Param("userId") Integer userId);
 
+    @Query(value = "SELECT nickname, profile FROM user WHERE user_id = :userId", nativeQuery = true)
+    List<Object[]> findUserNicknameAndProfile(@Param("userId") Integer userId);
 }
