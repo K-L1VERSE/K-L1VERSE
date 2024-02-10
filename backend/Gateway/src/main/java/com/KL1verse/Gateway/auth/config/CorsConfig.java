@@ -19,6 +19,8 @@ public class CorsConfig {
         config.addAllowedOrigin("http://70.12.50.57:8080");
         config.addAllowedOrigin("https://i10a409.p.ssafy.io");
         config.addAllowedOrigin("http://i10a409.p.ssafy.io");
+        config.addAllowedOrigin("https://k-l1verse.site");
+        config.addAllowedOrigin("http://k-l1verse.site");
         config.addAllowedHeader("*");
         config.addAllowedMethod("*");
 

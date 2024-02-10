@@ -27,10 +27,10 @@ server:
 
 oauth:
   google:
-    redirect-uri: https://i10a409.p.ssafy.io/GoogleAuth
+    redirect-uri: https://k-l1verse.site/GoogleAuth
   naver:
-    redirect-uri: https://i10a409.p.ssafy.io/NaverAuth/
+    redirect-uri: https://k-l1verse.site/NaverAuth/
   kakao:
-    redirect-uri: https://i10a409.p.ssafy.io/KakaoAuth/
+    redirect-uri: https://k-l1verse.site/KakaoAuth/
 
-domain: https://i10a409.p.ssafy.io
+domain: https://k-l1verse.site
