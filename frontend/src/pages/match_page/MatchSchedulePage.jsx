@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { useLocation } from "react-router-dom";
 import { getMatchList } from "../../api/match";
 import SelectContainer from "../../components/match/ScheduleSelect";
 import TableContainer from "../../components/match/ScheduleTable";
@@ -10,6 +11,20 @@ export default function MatchSchedulePage() {
   const [year, setYear] = useState(new Date().getFullYear());
   const [month, setMonth] = useState(new Date().getMonth() + 1);
   const [view, setView] = useState("list");
+  const location = useLocation();
+  const d = location.state?.d;
+  const y = location.state?.y;
+  const m = location.state?.m;
+  const day = location.state?.day;
+  const v = location.state?.v;
+
+  useEffect(() => {
+    if (d) {
+      setYear(y);
+      setMonth(m);
+      setView(v);
+    }
+  }, []);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -29,9 +44,17 @@ export default function MatchSchedulePage() {
         setMonth={setMonth}
       />
       <hr style={{ width: "95%", border: "1px solid #f4f4f4" }} />
-      {view === "list" && <ListContainer data={data} />}
+      {view === "list" && (
+        <ListContainer data={data} year={year} month={month} view={view} />
+      )}
       {view === "calendar" && (
-        <TableContainer year={year} month={month} data={data} />
+        <TableContainer
+          year={year}
+          month={month}
+          day={day}
+          data={data}
+          view={view}
+        />
       )}
     </div>
   );

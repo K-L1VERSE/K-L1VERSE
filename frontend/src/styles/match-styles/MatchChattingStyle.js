@@ -39,7 +39,7 @@ export const ChattingBox = styled.div`
   height: 23.375rem;
   overflow-y: auto;
   padding: 1rem;
-  border: 1px solid whitesmoke;
+  border: 2px solid whitesmoke;
 
   &::-webkit-scrollbar {
     width: 0.5rem;
@@ -145,10 +145,12 @@ export const MsgHM = styled.div`
 export const ChattingBar = styled.div`
   display: flex;
   align-items: center;
+  justify-content: space-between;
   margin: 0 auto;
   margin-left: 0.5rem;
   margin-right: 0.8rem;
   margin-top: 0.3rem;
+  margin-bottom: 0.5rem;
 `;
 
 export const ChattingPlusImg = styled.img`
@@ -157,7 +159,7 @@ export const ChattingPlusImg = styled.img`
 `;
 
 export const ChattingInput = styled.div`
-  width: 19rem;
+  width: 100%;
   height: 2.3rem;
   border-radius: 1rem 1rem 1rem 1rem;
   margin-left: 0.5rem;
