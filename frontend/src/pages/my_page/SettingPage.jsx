@@ -1,5 +1,5 @@
 import React from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 import { useRecoilState } from "recoil";
 import { UserState } from "../../global/UserState";
 import SettingItem from "../../components/mypage/SettingItem";
@@ -14,10 +14,16 @@ import axios from "../../api/axios";
 export default function SettingPage() {
   const [userState, setUserState] = useRecoilState(UserState);
   const { email, notificationFlag } = userState;
+  const location = useLocation();
+  const { state } = location;
   const navigate = useNavigate();
 
   const goMypage = () => {
-    navigate("/mypage");
+    navigate("/mypage", {
+      state: {
+        user: state.user,
+      },
+    });
   };
 
   const goLogin = () => {

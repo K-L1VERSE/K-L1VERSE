@@ -16,7 +16,13 @@ import {
 } from "../../styles/BoardStyles/BoardStyle";
 import { WaggleListImage } from "../../styles/BoardStyles/WaggleListStyle";
 
-function WaggleItemCard({ waggle, formatRelativeTime }) {
+function WaggleItemCard({
+  waggle,
+  formatRelativeTime,
+  user,
+  fromMypage,
+  category,
+}) {
   const boardImage = waggle.board.boardImage
     ? waggle.board.boardImage.split(",").map((image) => image.trim())
     : [];
@@ -25,6 +31,7 @@ function WaggleItemCard({ waggle, formatRelativeTime }) {
     <Link
       to={`/waggle/${waggle.board.boardId}`}
       style={{ textDecoration: "none", color: "black" }}
+      state={{ user, fromMypage, category }}
     >
       <ItemContainer>
         <WriterContainer>

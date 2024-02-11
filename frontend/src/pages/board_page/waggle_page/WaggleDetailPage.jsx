@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { useParams, useNavigate } from "react-router-dom";
+import { useParams, useNavigate, useLocation } from "react-router-dom";
 import { useRecoilState } from "recoil";
 import {
   deleteWaggle,
@@ -54,6 +54,9 @@ function WaggleDetailPage() {
   const { boardId } = useParams();
   const navigate = useNavigate();
   const { userId } = useRecoilState(UserState)[0];
+
+  const location = useLocation();
+  const { state } = location;
 
   const getWaggle = () => {
     getWaggleDetail(
@@ -141,7 +144,16 @@ function WaggleDetailPage() {
   };
 
   const handleBackClick = () => {
-    navigate("/waggle");
+    if (state && state.fromMypage) {
+      navigate("/mypage", {
+        state: {
+          user: state.user,
+          category: state.category,
+        },
+      });
+    } else {
+      navigate("/waggle");
+    }
   };
 
   return (

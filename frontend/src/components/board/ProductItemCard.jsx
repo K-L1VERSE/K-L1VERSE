@@ -21,7 +21,13 @@ import {
 import { ReactComponent as Comment } from "../../assets/icon/comment-icon.svg";
 import { ImageBoxContainer } from "../../styles/BoardStyles/ImageStyle";
 
-function ProductItemCard({ product, formatRelativeTime }) {
+function ProductItemCard({
+  product,
+  formatRelativeTime,
+  user,
+  fromMypage,
+  category,
+}) {
   const boardImage = product.board.boardImage
     ? product.board.boardImage.split(",").map((image) => image.trim())
     : [];
@@ -35,6 +41,7 @@ function ProductItemCard({ product, formatRelativeTime }) {
     <Link
       to={`/product/${product.board.boardId}`}
       style={{ textDecoration: "none" }}
+      state={{ user, fromMypage, category }}
     >
       <ProductItemContainer>
         <DealFlagContainer>

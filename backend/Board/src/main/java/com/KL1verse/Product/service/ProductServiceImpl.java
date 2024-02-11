@@ -75,13 +75,19 @@ public class ProductServiceImpl implements ProductService {
     public Page<ProductDTO> getProductsByUser(Integer userId, Pageable pageable) {
         Page<Product> products = productRepository.findByBoard_UserId(userId, pageable);
 
+        List<Object[]> userInfo = productRepository.findUserNicknameAndProfileAndMainBadge(userId);
+        String userNickname = (String) userInfo.get(0)[0];
+        String userProfile = (String) userInfo.get(0)[1];
+        String userMainBadge = (String) userInfo.get(0)[2];
+
         return products.map(product -> {
             ProductDTO productDTO = convertToDTO(product);
 
-            // 닉네임 가져오기
-            List<Object[]> nicknameResult = productRepository.findUserNickname(userId);
-            String userNickname = nicknameResult.isEmpty() ? null : (String) nicknameResult.get(0)[0];
             productDTO.getBoard().setNickname(userNickname);
+            productDTO.getBoard().setProfile(userProfile);
+            if(userMainBadge != null) {
+                productDTO.getBoard().setMainBadge(userMainBadge);
+            }
 
             // 게시물 이미지 가져오기
             productDTO.getBoard().setBoardImage(product.getBoard().getBoardImage());

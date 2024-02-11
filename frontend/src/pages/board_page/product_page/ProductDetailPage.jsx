@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { useParams, useNavigate } from "react-router-dom";
+import { useParams, useNavigate, useLocation } from "react-router-dom";
 import { useRecoilState } from "recoil";
 import axios from "../../../api/axios";
 import CommentList from "../../../components/board/CommentList";
@@ -42,6 +42,9 @@ function ProductDetailPage() {
   const { boardId } = useParams();
   const navigate = useNavigate();
   const { userId } = useRecoilState(UserState)[0];
+
+  const location = useLocation();
+  const { state } = location;
 
   /* product 상세 정보 가져오기 */
   function getProductDetail() {
@@ -89,7 +92,13 @@ function ProductDetailPage() {
   };
 
   const handleBackClick = () => {
-    navigate("/product");
+    if (state && state.fromMypage) {
+      navigate("/mypage", {
+        state: { user: state.user, category: state.category },
+      });
+    } else {
+      navigate("/product");
+    }
   };
 
   return (

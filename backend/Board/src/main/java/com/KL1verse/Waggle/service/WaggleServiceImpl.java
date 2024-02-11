@@ -67,12 +67,20 @@ public class WaggleServiceImpl implements WaggleService {
   @Override
   public Page<WaggleDTO> getWagglesByUser(Integer userId, Pageable pageable) {
     Page<Waggle> waggles = waggleRepository.findByBoard_UserId(userId, pageable);
+
+    List<Object[]> userInfo = waggleRepository.findUserNicknameAndProfileAndMainBadge(userId);
+    String userNickname = (String) userInfo.get(0)[0];
+    String userProfile = (String) userInfo.get(0)[1];
+    String userMainBadge = (String) userInfo.get(0)[2];
+
     return waggles.map(waggle -> {
       WaggleDTO waggleDTO = convertToDTO(waggle);
 
-      // 사용자의 닉네임 가져오기
-      String userNickname = (String) waggleRepository.findUserNickname(userId).get(0)[0];
       waggleDTO.getBoard().setNickname(userNickname);
+      waggleDTO.getBoard().setProfile(userProfile);
+      if(userMainBadge != null) {
+          waggleDTO.getBoard().setMainBadge(userMainBadge);
+      }
 
       waggleDTO.getBoard().setBoardImage(waggle.getBoard().getBoardImage());
 
