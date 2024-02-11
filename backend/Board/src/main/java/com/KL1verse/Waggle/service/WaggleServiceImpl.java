@@ -318,7 +318,8 @@ public class WaggleServiceImpl implements WaggleService {
 
   @Override
   public void removeHashtagsFromUnlikedWaggle(Long waggleId) {
-    Waggle waggle = findWaggleByBoardId(waggleId);
+    Waggle waggle = waggleRepository.findById(waggleId).get();
+//    Waggle waggle = findWaggleByBoardId(waggleId);
     removeHashtags(waggle);
   }
 

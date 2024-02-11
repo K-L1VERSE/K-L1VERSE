@@ -79,6 +79,7 @@ public class WaggleLikeServiceImpl implements WaggleLikeService {
         Optional<WaggleLike> existingLike = waggleLikeRepository.findByUserIdAndWaggleId_WaggleId(
             userId, waggleId);
         existingLike.ifPresent(like -> waggleLikeRepository.delete(like));
+
         waggleService.removeHashtagsFromUnlikedWaggle(waggleId);
     }
 
