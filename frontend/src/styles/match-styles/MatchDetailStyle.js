@@ -6,6 +6,7 @@ export const BadgeImg = styled.img`
 `;
 
 export const PredictBox = styled.div`
+  width: 380px;
   padding: 5px 10px;
 `;
 
