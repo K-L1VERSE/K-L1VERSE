@@ -161,6 +161,7 @@ function DoBettingContainer() {
   if (!match) {
     return <div>Loading...</div>;
   }
+
   return (
     <Betting>
       <div>
@@ -176,7 +177,6 @@ function DoBettingContainer() {
           </DoBetTitle>
         </DoBetTitleComponent>
       </div>
-
       <DoBetContainer>
         <DoBetButtonContainer>
           <TeamSelectButton
@@ -184,7 +184,7 @@ function DoBettingContainer() {
             selected={selectedTeam === "home"}
             onClick={() => handleTeamClick("home")}
             // betComplete가 true면 disabled
-            disabled={betComplete}
+            disabled={betComplete || match.status === "done"}
           >
             <TeamNameContainer>
               <TeamNameComponent>
@@ -197,7 +197,7 @@ function DoBettingContainer() {
             type="button"
             selected={selectedTeam === "draw"}
             onClick={() => handleTeamClick("draw")}
-            disabled={betComplete}
+            disabled={betComplete || match.status === "done"}
           >
             <TeamName>무승부</TeamName>
           </TeamSelectButton>
@@ -205,7 +205,7 @@ function DoBettingContainer() {
             type="button"
             selected={selectedTeam === "away"}
             onClick={() => handleTeamClick("away")}
-            disabled={betComplete}
+            disabled={betComplete || match.status === "done"}
           >
             <TeamNameContainer>
               <TeamNameComponent>
@@ -218,7 +218,7 @@ function DoBettingContainer() {
 
         <DoBetInputContainer>
           <DoBetInputComponent>
-            <InputForm disabled={betComplete}>
+            <InputForm disabled={betComplete || match.status === "done"}>
               <DoBetInputBox
                 id="bettingGoal"
                 type="text"
@@ -226,7 +226,7 @@ function DoBettingContainer() {
                   const val = e.target.value;
                   setBettingAmount(val.replace(/\D/g, "")); // 숫자가 아닌 문자를 모두 제거합니다.
                 }}
-                disabled={betComplete}
+                disabled={betComplete || match.status === "done"}
                 placeholder={0}
                 value={bettingAmount === 0 ? "" : bettingAmount}
               />
@@ -237,7 +237,7 @@ function DoBettingContainer() {
             <DoBetButton
               type="button"
               onClick={handleBettingClick}
-              disabled={betComplete}
+              disabled={betComplete || match.status === "done"}
             >
               <DoBetText>
                 <DoBetIcon /> <div>베팅 하기</div>
