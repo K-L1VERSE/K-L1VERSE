@@ -40,15 +40,17 @@ export const BadgeBackground = styled.div`
   &:hover {
     background-color: #e5edfb;
     border-radius: 0.25rem;
-    cursor: pointer;
   }
   border-radius: 0.25rem;
 `;
 
 export const BadgeText = styled.div`
   color: var(--gray1, #222);
+  font-family: Pretendard;
   font-size: 0.75rem;
-  font-family: "Pretendard-Regular";
+  font-style: normal;
+  font-weight: 550;
+  line-height: normal;
 `;
 
 export const ConfirmContainer = styled.div`
@@ -145,9 +147,9 @@ export const BadgeImageStyle = ({ code, isBadgeEarned }) => {
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"
-      width={`${svgWidth}rem`}
-      height={`${svgHeight}rem`}
-      viewBox={`0 0 ${svgWidth} ${svgHeight}`}
+      width="2.5rem"
+      height="3.4375rem"
+      viewBox="0 0 44 55"
       fill="none"
     >
       <g filter="url(#filter0_d_314_260)">
@@ -164,10 +166,10 @@ export const BadgeImageStyle = ({ code, isBadgeEarned }) => {
 
       <image
         href={`/badge/badge${code}.png`}
-        width={`${imageWidth}rem`}
-        height={`${imageHeight}rem`}
-        x={`${imageX}rem`}
-        y={`${imageY}rem`}
+        width="1.75rem"
+        height="1.75rem"
+        x="0.5rem"
+        y="0.75rem"
         filter={isBadgeEarned ? null : "url(#grayscaleFilter)"}
       />
 
