@@ -23,6 +23,20 @@ export const MatchUpComponent = styled.div`
   border-radius: 5px;
 `;
 
+export const ExceptionComponent = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  margin-top: 20px;
+`;
+
+export const ExceptionText = styled.div`
+  font-size: 0.9rem;
+  color: #595959;
+  text-align: center;
+`;
+
 export const StadiumComponent = styled.div`
   margin: 0 auto;
   display: flex;

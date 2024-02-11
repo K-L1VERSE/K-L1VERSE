@@ -15,6 +15,8 @@ import {
   StadiumComponent,
   StadiumText,
   MatchUpComponent,
+  ExceptionComponent,
+  ExceptionText,
 } from "../../../styles/match-styles/detail/MatchDetailScoreStyles";
 
 import MatchTimeComponent from "./MatchTimeComponent";
@@ -75,68 +77,87 @@ export default function MatchDetailScore({ match, y, m, day, d, v }) {
     <div>
       <MatchDetailTop>
         <ToLeftImg src={ToLeftPng} onClick={goPrevPage} />
-        <div>{getFormattedDateString()}</div>
+        {match.status === "NONE" ? (
+          <div>돌아가기</div>
+        ) : (
+          <div>{getFormattedDateString()}</div>
+        )}
       </MatchDetailTop>
       <MatchDetailContainer>
         <MatchDetailComponent>
           <MatchUpContainer>
-            <MatchUpComponent>
-              <TeamContainer>
-                <TeamComponent>
-                  <BadgeImg src={homeTeamsrc} alt="home" />
-                  <HomeName>{homeTeamName}</HomeName>
-                </TeamComponent>
+            {match.status === "NONE" ? (
+              <ExceptionComponent>
+                <ExceptionText>준비 중입니다.</ExceptionText>
+              </ExceptionComponent>
+            ) : (
+              <MatchUpComponent>
+                <TeamContainer>
+                  <TeamComponent>
+                    <BadgeImg src={homeTeamsrc} alt="home" />
+                    <HomeName>{homeTeamName}</HomeName>
+                  </TeamComponent>
+                  {match.status === "done" ? (
+                    <Score $win={match.homeScore > match.awayScore}>
+                      {match.homeScore}
+                    </Score>
+                  ) : match.status === "during" ? (
+                    <Score $win={match.homeScore > match.awayScore}>
+                      {match.homeScore}
+                    </Score>
+                  ) : (
+                    <Score />
+                  )}
+                </TeamContainer>
                 {match.status === "done" ? (
-                  <Score $win={match.homeScore > match.awayScore}>
-                    {match.homeScore}
-                  </Score>
+                  <VersusComponent>-</VersusComponent>
                 ) : match.status === "during" ? (
-                  <Score $win={match.homeScore > match.awayScore}>
-                    {match.homeScore}
-                  </Score>
+                  <VersusComponent>-</VersusComponent>
                 ) : (
-                  <Score />
+                  <VersusComponent>vs</VersusComponent>
                 )}
-              </TeamContainer>
-              {match.status === "done" ? (
-                <VersusComponent>-</VersusComponent>
-              ) : match.status === "during" ? (
-                <VersusComponent>-</VersusComponent>
-              ) : (
-                <VersusComponent>vs</VersusComponent>
-              )}
-              <TeamContainer>
-                {match.status === "done" ? (
-                  <Score $win={match.awayScore > match.homeScore}>
-                    {match.awayScore}
-                  </Score>
-                ) : match.status === "during" ? (
-                  <Score $win={match.awayScore > match.homeScore}>
-                    {match.awayScore}
-                  </Score>
-                ) : (
-                  <Score />
-                )}
-                <TeamComponent>
-                  <BadgeImg src={awayTeamsrc} alt="away" />
-                  {awayTeamName}
-                </TeamComponent>
-              </TeamContainer>
-            </MatchUpComponent>
+                <TeamContainer>
+                  {match.status === "done" ? (
+                    <Score $win={match.awayScore > match.homeScore}>
+                      {match.awayScore}
+                    </Score>
+                  ) : match.status === "during" ? (
+                    <Score $win={match.awayScore > match.homeScore}>
+                      {match.awayScore}
+                    </Score>
+                  ) : (
+                    <Score />
+                  )}
+                  <TeamComponent>
+                    <BadgeImg src={awayTeamsrc} alt="away" />
+                    {awayTeamName}
+                  </TeamComponent>
+                </TeamContainer>
+              </MatchUpComponent>
+            )}
 
             <StadiumComponent>
               <StadiumText>{match.home}</StadiumText>
             </StadiumComponent>
           </MatchUpContainer>
-          <MatchTimeComponent
-            time={match.matchAt}
-            status={match.status}
-            y={y}
-            m={m}
-            day={day}
-            d={d}
-            v={v}
-          />
+
+          {match.status === "NONE" ? (
+            <ExceptionComponent>
+              <ExceptionText>
+                하단의 K-L1VERSE 챗봇을 통해 <br /> 관리자에게 문의해주세요.
+              </ExceptionText>
+            </ExceptionComponent>
+          ) : (
+            <MatchTimeComponent
+              time={match.matchAt}
+              status={match.status}
+              y={y}
+              m={m}
+              day={day}
+              d={d}
+              v={v}
+            />
+          )}
         </MatchDetailComponent>
       </MatchDetailContainer>
     </div>
