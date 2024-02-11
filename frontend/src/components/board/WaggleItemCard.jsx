@@ -10,6 +10,9 @@ import {
   ItemInfoSection,
   ItemTitle,
   ItemWriter,
+  WriterContainer,
+  WriterProfile,
+  WriteBadge,
 } from "../../styles/BoardStyles/BoardStyle";
 import { WaggleListImage } from "../../styles/BoardStyles/WaggleListStyle";
 
@@ -24,7 +27,13 @@ function WaggleItemCard({ waggle, formatRelativeTime }) {
       style={{ textDecoration: "none", color: "black" }}
     >
       <ItemContainer>
-        <ItemWriter>{waggle.board.nickname}</ItemWriter>
+        <WriterContainer>
+          <WriterProfile src={waggle.board.profile} alt="Profile Image" />
+          <ItemWriter>{waggle.board.nickname}</ItemWriter>
+          <WriteBadge
+            src={`${process.env.PUBLIC_URL}/badge/badge${waggle.board.mainBadge === null ? 0 : waggle.board.mainBadge}.png`}
+          />
+        </WriterContainer>
         <ImageContentBox>
           {boardImage.length > 0 && (
             // 첫 번째 이미지만 출력

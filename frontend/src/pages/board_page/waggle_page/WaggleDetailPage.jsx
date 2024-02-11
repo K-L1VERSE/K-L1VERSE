@@ -21,6 +21,9 @@ import {
   DetailCommentCount,
   CreateAt,
   // LikeCount,
+  UserContainer,
+  UserProfile,
+  UserBadge,
 } from "../../../styles/BoardStyles/BoardDetailStyle";
 import { UserState } from "../../../global/UserState";
 
@@ -149,7 +152,13 @@ function WaggleDetailPage() {
         </BackButton>
       </DetailTop>
       <DetailBox>
-        <User>{nickname}</User>
+        <UserContainer>
+          <UserProfile src={waggleDetail.profile} />
+          <User>{nickname}</User>
+          <UserBadge
+            src={`${process.env.PUBLIC_URL}/badge/badge${waggleDetail.mainBadge === null ? 0 : waggleDetail.mainBadge}.png`}
+          />
+        </UserContainer>
         <CreateAt>{formatDateTime2(createAt)}</CreateAt>
         <Title>{title}</Title>
         <Content>{content}</Content>

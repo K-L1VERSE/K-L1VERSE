@@ -50,11 +50,17 @@ public class ProductServiceImpl implements ProductService {
         productDTO.getBoard().setCommentCount(commentCount);
 
         Integer userId = productDTO.getBoard().getUserId();
-        List<Object[]> nicknameResult = productRepository.findUserNickname(userId);
+        List<Object[]> userInfo = productRepository.findUserNicknameAndProfileAndMainBadge(userId);
 
 
-        String userNickname = (String) nicknameResult.get(0)[0];
+        String userNickname = (String) userInfo.get(0)[0];
+        String userProfile = (String) userInfo.get(0)[1];
+        String userBadge = (String) userInfo.get(0)[2];
         productDTO.getBoard().setNickname(userNickname);
+        productDTO.getBoard().setProfile(userProfile);
+        if(userBadge != null) {
+            productDTO.getBoard().setMainBadge(userBadge);
+        }
 
         return productDTO;
     }
@@ -217,9 +223,15 @@ public class ProductServiceImpl implements ProductService {
             }
 
             Integer userId = productDTO.getBoard().getUserId();
-            List<Object[]> nicknameResult = productRepository.findUserNickname(userId);
-            String userNickname = (String) nicknameResult.get(0)[0];
+            List<Object[]> userInfo = productRepository.findUserNicknameAndProfileAndMainBadge(userId);
+            String userNickname = (String) userInfo.get(0)[0];
+            String userProfile = (String) userInfo.get(0)[1];
+            String userBadge = (String) userInfo.get(0)[2];
             productDTO.getBoard().setNickname(userNickname);
+            productDTO.getBoard().setProfile(userProfile);
+            if(userBadge != null) {
+                productDTO.getBoard().setMainBadge(userBadge);
+            }
             productDTO.getBoard().setBoardImage(product.getBoard().getBoardImage());
 
             return productDTO;

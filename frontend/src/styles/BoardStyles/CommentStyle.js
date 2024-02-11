@@ -38,10 +38,28 @@ export const CommentTime = styled.div`
   justify-content: flex-end;
 `;
 
+export const WriterContainer = styled.div`
+  display: flex;
+  align-items: center;
+  margin-left: 0.8rem;
+`;
+
+export const WriterProfile = styled.img`
+  width: 1.375rem;
+  height: 1.375rem;
+  border-radius: 50%;
+  margin-right: 0.3rem;
+`;
+
 export const CommentWriter = styled.div`
   font-size: 0.9rem;
   color: black;
-  margin-left: 0.8rem;
+  margin-right: 0.1rem;
+`;
+
+export const WriterBadge = styled.img`
+  width: 1rem;
+  height: 1rem;
 `;
 
 export const ButtonContainer = styled.div`

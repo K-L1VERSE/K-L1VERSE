@@ -1,11 +1,31 @@
 import styled from "styled-components";
 
 /* *********** 중고거래 리스트 ************ */
+
+export const WriterContainer = styled.div`
+  display: flex;
+  flex-direction: row;
+  margin-top: 0.3rem;
+  margin-bottom: 0.3rem;
+  align-items: center;
+`;
+
+export const WriterProfile = styled.img`
+  width: 1.375rem;
+  height: 1.375rem;
+  border-radius: 50%;
+  margin-right: 0.3rem;
+`;
+
 export const ProductItemWriter = styled.div`
   font-size: 0.8rem;
   color: darkslategray;
-  margin-top: 0.3rem;
-  margin-bottom: 0.3rem;
+  margin-right: 0.1rem;
+`;
+
+export const WriteBadge = styled.img`
+  width: 1rem;
+  height: 1rem;
 `;
 
 export const ForWidth = styled.div`
@@ -95,12 +115,30 @@ export const ProductItemCreated = styled.div`
 `;
 
 /* *********** ProdcutDetail *********** */
-export const ProductWriter = styled.div`
-  margin-top: 1rem;
-  margin-bottom: 0.5rem;
+export const ProductWriterContainer = styled.div`
   display: flex;
   align-items: center;
-  font-family: "Pretendard-Bold";
+  margin-bottom: 0.5rem;
+    margin-top: 1rem;
+`;
+
+export const ProductWriterProfile = styled.img`
+  width: 1.375rem;
+  height: 1.375rem;
+  border-radius: 50%;
+  margin-right: 0.3rem;
+`;
+
+export const ProductWriter = styled.div`
+  display: flex;
+  align-items: center;
+  margin-right: 0.1rem;
+    font-family: "Pretendard-Bold";
+`;
+
+export const ProductWriterBadge = styled.img`
+  width: 1rem;
+  height: 1rem;
 `;
 
 export const ProductDetailTitle = styled.p`
