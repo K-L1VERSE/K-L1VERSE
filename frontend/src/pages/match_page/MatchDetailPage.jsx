@@ -76,7 +76,7 @@ export default function MatchDetailPage() {
                   <CurrentBettingContainer />
                 </Slider>
               </SliderContainer>
-              <DoBettingContainer />
+              <DoBettingContainer data={data} />
             </>
           ) : (
             <div />
