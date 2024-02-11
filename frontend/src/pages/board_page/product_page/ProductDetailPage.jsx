@@ -13,6 +13,9 @@ import {
   DetailTop,
   BackButton,
   Price,
+  DetailImgDiv,
+  DetailOnlyImg,
+  FormattedDate,
 } from "../../../styles/BoardStyles/BoardDetailStyle";
 import {
   DealStatusGreen,
@@ -91,18 +94,18 @@ function ProductDetailPage() {
           <img src={BackIcon} alt="Back" />
         </BackButton>
       </DetailTop>
-      <ImageBoxContainer>
+      <DetailImgDiv>
         {productDetail.boardImage &&
           productDetail.boardImage
             .split(",")
             .map((imageUrl, index) => (
-              <ProductImage
+              <DetailOnlyImg
                 key={index}
                 src={imageUrl.trim()}
                 alt={`Product Image ${index}`}
               />
             ))}
-      </ImageBoxContainer>
+      </DetailImgDiv>
       <DetailBox>
         <ProductWriter>{productDetail.nickname}</ProductWriter>
         {dealFlag ? (
@@ -111,9 +114,25 @@ function ProductDetailPage() {
           <DealStatusGreen>거래가능</DealStatusGreen>
         )}
         <Title>{productDetail.title}</Title>
-        <Price>판매 가격: {price} 원</Price>
-        <Content>{productDetail.content}</Content>
+        <FormattedDate>
+          {`${new window.Date(productDetail.createAt).toLocaleDateString(
+            "ko-KR",
+            {
+              year: "numeric",
+              month: "2-digit",
+              day: "2-digit",
+            },
+          )} ${new window.Date(productDetail.createAt).toLocaleTimeString(
+            "ko-KR",
+            {
+              hour: "2-digit",
+              minute: "2-digit",
+            },
+          )}`}
+        </FormattedDate>
 
+        <Price>{Number(price).toLocaleString()} 원</Price>
+        <Content>{productDetail.content}</Content>
         <EditDeleteButton>{renderEditDeleteButtons()}</EditDeleteButton>
       </DetailBox>
       <CommentList boardId={boardId} />
