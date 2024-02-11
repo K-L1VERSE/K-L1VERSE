@@ -179,7 +179,9 @@ function UserInfo({ user, setUser }) {
 
   const navigate = useNavigate();
   const goSetting = () => {
-    navigate("/setting");
+    navigate("/setting", {
+      state: { user },
+    });
   };
 
   return (

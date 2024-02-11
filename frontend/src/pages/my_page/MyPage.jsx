@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import { useLocation } from "react-router-dom";
 import UserProfile from "../../components/mypage/UserProfile";
 import axios from "../../api/axios";
 
@@ -16,32 +17,48 @@ import {
   ProductButton,
 } from "../../styles/BoardStyles/BoardTopNavbarStyle";
 import WaggleContainer from "../../components/board/WaggleContainer";
+import MateContainer from "../../components/board/MateContainer";
+import ProductContainer from "../../components/board/ProductContainer";
+import { formatRelativeTime } from "../../components/board/dateFormat";
 
 function MyPage() {
-  const [user, setUser] = useState({
-    userId: "",
-    nickname: "",
-    profile: "",
-    mainBadge: "0",
-    goal: 0,
-    accurate: 0.0,
-    totalBet: 0,
-    winBet: 0,
-    badge: {
-      team1: false,
-      team2: false,
-      team3: false,
-      team4: false,
-      team5: false,
-      team6: false,
-      team7: false,
-      team8: false,
-      team9: false,
-      team10: false,
-      team11: false,
-      team12: false,
-    },
-  });
+  const fromMypage = true;
+  const location = useLocation();
+  const { state } = location;
+
+  const [user, setUser] = useState(
+    state && state.user
+      ? state.user
+      : {
+          userId: "",
+          nickname: "",
+          profile: "",
+          mainBadge: "0",
+          goal: 0,
+          accurate: 0.0,
+          totalBet: 0,
+          winBet: 0,
+          badge: {
+            team1: false,
+            team2: false,
+            team3: false,
+            team4: false,
+            team5: false,
+            team6: false,
+            team7: false,
+            team8: false,
+            team9: false,
+            team10: false,
+            team11: false,
+            team12: false,
+          },
+        },
+  );
+  const [page, setPage] = useState(1);
+  const [category, setCategory] = useState(
+    state && state.category ? state.category : "",
+  );
+  const [myBoard, setMyBoard] = useState([]);
 
   /* 유저 정보 가져오기 */
   const getUserInfo = () => {
@@ -54,28 +71,41 @@ function MyPage() {
   };
 
   useEffect(() => {
-    getUserInfo();
+    if (!user.userId) {
+      getUserInfo();
+    }
   }, []);
 
-  const [page, setPage] = useState(1);
-  const [category, setCategory] = useState();
-  const [myWagle, setMyWagle] = useState([]);
   /* 카테고리 변경 시 호출될 훅 */
   const getMyWagle = () => {
-    const url = `/wagles?user_id=${user.userId}&category=${category}&pageno=${page}`;
-    axios
-      .get(url)
-      .then(({ data }) => {
-        setMyWagle(data);
-      })
-      .catch(() => {});
+    let type = "";
+    if (category === "1") {
+      type = "waggles";
+    } else if (category === "2") {
+      type = "mates";
+    } else {
+      type = "products";
+    }
+
+    if (user.userId) {
+      setMyBoard([]);
+      axios
+        .post(`/board/${type}/myPage`, {
+          userId: user.userId,
+        })
+        .then(({ data }) => {
+          setMyBoard(data.content);
+        })
+        .catch(() => {});
+    }
   };
 
   const [selectedValue, setSelectedValue] = useState("");
 
   useEffect(() => {
-    getMyWagle();
-    console.log(selectedValue);
+    if (category) {
+      getMyWagle();
+    }
   }, [category]);
 
   return (
@@ -107,7 +137,27 @@ function MyPage() {
           </ProductButton>
         </Nav>
       </BoardList>
-      <div>{WaggleContainer({ waggleList: myWagle })}</div>
+      <div>
+        {category === "1" && (
+          <WaggleContainer
+            waggleList={myBoard.reverse()}
+            formatRelativeTime={formatRelativeTime}
+            user={user}
+            fromMypage={fromMypage}
+            category={category}
+          />
+        )}
+        {category === "2" && <MateContainer mateList={myBoard} fromMypage />}
+        {category === "3" && (
+          <ProductContainer
+            productList={myBoard.reverse()}
+            formatRelativeTime={formatRelativeTime}
+            user={user}
+            fromMypage={fromMypage}
+            category={category}
+          />
+        )}
+      </div>
     </>
   );
 }
