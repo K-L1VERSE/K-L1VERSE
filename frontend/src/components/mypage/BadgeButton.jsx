@@ -22,9 +22,9 @@ const BadgeContainer = styled.div`
 `;
 
 const BadgeImage = styled.img`
+  position: absolute;
   width: 1.125rem;
   height: 1.125rem;
-  position: absolute;
 `;
 
 function BadgeButton({ mainBadge }) {
@@ -148,7 +148,7 @@ function BadgeButton({ mainBadge }) {
   return (
     <div>
       <BadgeContainer>
-        <BadgeBackground />
+        <BadgeBackground style={{ position: "absolute" }} />
         <BadgeImage
           onClick={goBadge}
           src={`/badge/badge${mainBadge || 0}.png`}

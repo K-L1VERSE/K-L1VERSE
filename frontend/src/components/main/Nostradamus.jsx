@@ -1,5 +1,8 @@
 import React, { useState, useEffect } from "react";
-import { NostraContainer } from "../../styles/main-styles/NostradamusStyle";
+import {
+  NostraContainer,
+  NoData,
+} from "../../styles/main-styles/NostradamusStyle";
 import { getNostradamus } from "../../api/nostradamus";
 
 export default function Nostradamus() {
@@ -39,7 +42,7 @@ export default function Nostradamus() {
             </tbody>
           </table>
         ) : (
-          <p>데이터가 없습니다.</p>
+          <NoData>데이터가 없습니다.</NoData>
         )}
       </NostraContainer>
     </div>
