@@ -1,6 +1,5 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
-import styled from "styled-components";
 
 import {
   MatchDetailTop,
@@ -13,6 +12,9 @@ import {
   HomeName,
   Score,
   VersusComponent,
+  StadiumComponent,
+  StadiumText,
+  MatchUpComponent,
 } from "../../../styles/match-styles/detail/MatchDetailScoreStyles";
 
 import MatchTimeComponent from "./MatchTimeComponent";
@@ -140,27 +142,3 @@ export default function MatchDetailScore({ match, y, m, day, d, v }) {
     </div>
   );
 }
-
-const MatchUpComponent = styled.div`
-  display: flex;
-  margin: 0 auto;
-  width: 90%;
-  justify-content: space-around;
-  padding: 0.5rem;
-  height: 36px;
-  background-color: white;
-  border-radius: 5px;
-`;
-
-const StadiumComponent = styled.div`
-  margin: 0 auto;
-  display: flex;
-  width: 90%;
-  justify-content: space-around;
-  margin-bottom: 0.5rem;
-`;
-
-const StadiumText = styled.div`
-  font-size: 0.8rem;
-  color: #666666;
-`;
