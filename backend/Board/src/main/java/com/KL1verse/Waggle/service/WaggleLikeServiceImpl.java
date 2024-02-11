@@ -12,6 +12,7 @@ import java.util.Optional;
 import com.KL1verse.kafka.dto.res.BoardNotificationResDto;
 import com.KL1verse.kafka.producer.KafkaBoardNotificationProducer;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
 public class WaggleLikeServiceImpl implements WaggleLikeService {
@@ -29,10 +30,11 @@ public class WaggleLikeServiceImpl implements WaggleLikeService {
       this.waggleService = waggleService;
     }
 
+    @Transactional
     @Override
     public WaggleLikeDTO likeWaggle(Long waggleId, Integer userId) {
         Optional<WaggleLike> existingLike = waggleLikeRepository.findByUserIdAndWaggleId_WaggleId(
-            Long.valueOf(userId), waggleId);
+            userId, waggleId);
         if (existingLike.isPresent()) {
 
             WaggleLike like = existingLike.get();
@@ -40,15 +42,15 @@ public class WaggleLikeServiceImpl implements WaggleLikeService {
                 like.getWaggleId().getWaggleId());
         }
 
+        Waggle waggle = waggleRepository.findById(waggleId).get();
         WaggleLike waggleLike = WaggleLike.builder()
             .userId(userId)
-            .waggleId(Waggle.builder().waggleId(waggleId).build())
+            .waggleId(waggle)
             .build();
 
         waggleLikeRepository.save(waggleLike);
         waggleService.saveHashtags(waggleService.getWaggleById(waggleId, userId));
 
-        Waggle waggle = waggleRepository.findById(waggleId).get();
         Long boardId = waggle.getBoard().getBoardId();
 
         List<Object[]> nicknameAndProfile = waggleLikeRepository.findNicknameAndProfileByUserId(userId);
@@ -74,7 +76,7 @@ public class WaggleLikeServiceImpl implements WaggleLikeService {
     @Override
     public void unlikeWaggle(Long waggleId, Integer userId) {
         Optional<WaggleLike> existingLike = waggleLikeRepository.findByUserIdAndWaggleId_WaggleId(
-            Long.valueOf(userId), waggleId);
+            userId, waggleId);
         existingLike.ifPresent(like -> waggleLikeRepository.delete(like));
         waggleService.removeHashtagsFromUnlikedWaggle(waggleId);
     }

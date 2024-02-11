@@ -168,7 +168,7 @@ public class WaggleServiceImpl implements WaggleService {
     WaggleDTO waggleDTO = convertToDTO(waggle);
 
     boolean isLiked = waggleLikeRepository
-        .findByUserIdAndWaggleId_WaggleId(Long.valueOf(loginUserId), waggle.getWaggleId())
+        .findByUserIdAndWaggleId_WaggleId(loginUserId, waggle.getWaggleId())
         .isPresent();
     waggleDTO.setLiked(isLiked);
 

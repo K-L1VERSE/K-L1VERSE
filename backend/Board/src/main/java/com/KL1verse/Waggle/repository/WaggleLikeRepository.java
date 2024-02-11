@@ -11,7 +11,7 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface WaggleLikeRepository extends JpaRepository<WaggleLike, Long> {
 
-    Optional<WaggleLike> findByUserIdAndWaggleId_WaggleId(Long userId, Long waggleId);
+    Optional<WaggleLike> findByUserIdAndWaggleId_WaggleId(Integer userId, Long waggleId);
 
     @Query(value = "SELECT nickname, profile FROM user WHERE user_id = :userId", nativeQuery = true)
     List<Object[]> findNicknameAndProfileByUserId(Integer userId);
