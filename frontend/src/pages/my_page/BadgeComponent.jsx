@@ -1,3 +1,4 @@
+import { useState } from "react";
 import {
   BadgeBackground,
   BadgeImageStyle,
@@ -9,17 +10,20 @@ function BadgeComponent({
   badgeList,
   badgeNameList,
   badgeCodeList,
+  selectedBadge,
   setSelectedBadge,
 }) {
   const index = badgeCodeList.indexOf(code);
 
   const handleClick = () => {
-    console.log(index);
     setSelectedBadge(index);
   };
 
   return (
-    <BadgeBackground onClick={handleClick}>
+    <BadgeBackground
+      onClick={handleClick}
+      $isSelected={code === badgeCodeList[selectedBadge]}
+    >
       {BadgeImageStyle({ code, isBadgeEarned: badgeList[index] })}
       <BadgeText> {badgeNameList[index]}</BadgeText>
     </BadgeBackground>

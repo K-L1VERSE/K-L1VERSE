@@ -205,6 +205,7 @@ function Badge() {
         badgeList={badgeList}
         badgeNameList={badgeNameList}
         badgeCodeList={badgeCodeList}
+        selectedBadge={selectedBadge}
         setSelectedBadge={setSelectedBadge}
       />
       {badgeList[selectedBadge] === true ? (

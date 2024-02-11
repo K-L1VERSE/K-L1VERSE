@@ -37,10 +37,13 @@ export const BadgeBackground = styled.div`
   justify-content: center;
   align-items: center;
   flex-shrink: 0;
-  &:hover {
-    background-color: #e5edfb;
-    border-radius: 0.25rem;
-  }
+
+  ${(props) =>
+    props.$isSelected && "background-color: #e5edfb; border-radius: 0.25rem"};
+  // &:hover {
+  //   background-color: #e5edfb;
+  //   border-radius: 0.25rem;
+  // }
   border-radius: 0.25rem;
 `;
 
