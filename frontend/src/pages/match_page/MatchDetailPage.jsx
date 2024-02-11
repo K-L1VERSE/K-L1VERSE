@@ -13,7 +13,7 @@ import CurrentBettingContainer from "../../components/match/currentBetting/Curre
 import DoBettingContainer from "../../components/match/doBetting/DoBettingContainer";
 
 export default function MatchDetailPage() {
-  // const { matchId } = useParams();
+  const { matchId } = useParams();
   const location = useLocation();
   const d = location.state?.d;
   const y = location.state?.y;
@@ -21,36 +21,21 @@ export default function MatchDetailPage() {
   const day = location.state?.day;
   const v = location.state?.v;
 
-  // const [data, setData] = useState();
-  // useEffect(() => {
-  //   const fetchData = async () => {
-  //     await getMatchDetail(matchId)
-  //       .then((result) => {
-  //         setData(result);
-  //       })
-  //       .catch(() => {
-  //         setData({
-  //           status: "NONE",
-  //         });
-  //       });
-  //   };
-  //   fetchData();
-  // }, []);
-
-  const data = {
-    homeTeamId: 1,
-    awayTeamId: 2,
-    homeTeamName: "울산 HD FC",
-    awayTeamName: "포항스틸러스",
-    homeBettingAmount: 40,
-    awayBettingAmount: 100,
-    drawBettingAmount: 60,
-    matchAt: "2024-02-03T13:00:00",
-    status: "done",
-    homeScore: 1,
-    awayScore: 2,
-    home: "울산 문수",
-  };
+  const [data, setData] = useState();
+  useEffect(() => {
+    const fetchData = async () => {
+      await getMatchDetail(matchId)
+        .then((result) => {
+          setData(result);
+        })
+        .catch(() => {
+          setData({
+            status: "NONE",
+          });
+        });
+    };
+    fetchData();
+  }, []);
 
   const settings = {
     dots: true,
@@ -76,7 +61,7 @@ export default function MatchDetailPage() {
                   <CurrentBettingContainer />
                 </Slider>
               </SliderContainer>
-              <DoBettingContainer />
+              <DoBettingContainer data={data} />
             </>
           ) : (
             <div />

@@ -11,7 +11,7 @@ import {
 import MatchSchedulePage from "../../match_page/MatchSchedulePage";
 
 function MateListPage() {
-  const [selectedMatchId, setSelectedMatchId] = useState(null); // Initialize to null
+  const [selectedMatchId, setSelectedMatchId] = useState(null);
   const [mateList, setMateList] = useState([]);
   const [page, setPage] = useState(0);
   const [hasMore, setHasMore] = useState(true);
@@ -59,6 +59,7 @@ function MateListPage() {
 
   useEffect(() => {
     getMates();
+    // console.log("mateList.board.createAt:!!!!!!!!!!!! ", mateList);
   }, []);
 
   const [isBottom, setIsBottom] = useState(false);
