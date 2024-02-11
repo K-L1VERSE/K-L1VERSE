@@ -33,6 +33,9 @@ public interface CommentRepository extends JpaRepository<Comment, Long> {
     @Query(value = "SELECT nickname, profile FROM user WHERE user_id = :userId", nativeQuery = true)
     List<Object[]> findUserNicknameAndProfile(@Param("userId") Integer userId);
 
-    @Query(value = "SELECT u.nickname, u.profile, bd.code FROM user u JOIN badge b ON u.badge_id = b.badge_id JOIN badge_detail bd ON b.badge_detail_id = bd.badge_detail_id WHERE u.user_id = :userId", nativeQuery = true)
+    @Query(value = "SELECT u.nickname, u.profile, CASE WHEN u.badge_id IS NOT NULL THEN bd.code ELSE NULL END AS code FROM user u LEFT JOIN badge b ON u.badge_id = b.badge_id LEFT JOIN badge_detail bd ON b.badge_detail_id = bd.badge_detail_id WHERE u.user_id = :userId", nativeQuery = true)
     List<Object[]> findUserNicknameAndProfileAndMainBadge(@Param("userId") Integer userId);
+
+    @Query(value = "SELECT u.profile, CASE WHEN u.badge_id IS NOT NULL THEN bd.code ELSE NULL END AS code FROM user u LEFT JOIN badge b ON u.badge_id = b.badge_id LEFT JOIN badge_detail bd ON b.badge_detail_id = bd.badge_detail_id WHERE u.user_id = :userId", nativeQuery = true)
+    List<Object[]> findUserProfileAndMainBadge(@Param("userId") Integer userId);
 }

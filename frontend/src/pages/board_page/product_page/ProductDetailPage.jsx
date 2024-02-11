@@ -38,7 +38,7 @@ import { ImageBoxContainer } from "../../../styles/BoardStyles/ImageStyle";
 function ProductDetailPage() {
   const [productDetail, setProductDetail] = useState({});
   const [price, setPrice] = useState(0);
-  const [dealFlag, setDealFlag] = useState(false);
+  const [dealFlag, setDealFlag] = useState();
   const { boardId } = useParams();
   const navigate = useNavigate();
   const { userId } = useRecoilState(UserState)[0];
@@ -57,7 +57,9 @@ function ProductDetailPage() {
   }, [boardId]);
 
   const handleUpdateBtn = () => {
-    navigate("/productRegist", { state: { board: productDetail } });
+    navigate("/productRegist", {
+      state: { board: productDetail, price, dealFlag },
+    });
   };
 
   const handleDeleteBtn = async () => {

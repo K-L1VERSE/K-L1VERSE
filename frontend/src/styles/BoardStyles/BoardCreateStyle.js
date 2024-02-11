@@ -1,4 +1,4 @@
-import styled from "styled-components";
+import styled, { css } from "styled-components";
 
 export const DetailTop = styled.div`
   margin-left: 1rem;
@@ -163,4 +163,43 @@ export const SubmitButton = styled.button`
   border-radius: 4px;
   cursor: pointer;
   font-size: 1rem;
+`;
+
+export const ToggleContainer = styled.div`
+  display: flex;
+  align-items: center;
+  margin-top: 1rem;
+  margin-left: 1rem;
+  gap: 0.5rem;
+`;
+
+export const OuterCircle = styled.div`
+  width: 2rem;
+  height: 1rem;
+  border-radius: 25px;
+  background-color: #ccc;
+  display: flex;
+  align-items: center;
+  justify-content: ${(props) => (props.$dealFlag ? "flex-end" : "flex-start")};
+  padding: 0.3rem;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  ${(props) =>
+    props.$dealFlag &&
+    css`
+      background-color: #578cea;
+    `}
+`;
+
+export const InnerCircle = styled.div`
+  width: 1rem;
+  height: 1rem;
+  border-radius: 50%;
+  background-color: white;
+  transition: transform 0.3s ease;
+`;
+
+export const DealFlagText = styled.div`
+  font-size: 1rem;
+  margin-left: 10px;
 `;
