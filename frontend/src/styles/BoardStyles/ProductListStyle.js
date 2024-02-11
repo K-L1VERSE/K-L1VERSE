@@ -8,26 +8,32 @@ export const ProductItemWriter = styled.div`
   margin-bottom: 0.3rem;
 `;
 
+export const ForWidth = styled.div`
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  padding: 0 0.2rem;
+`;
+
 export const ProductListContainer = styled.div`
   display: flex;
-  flex-wrap: nowrap;
-  margin: 0 1rem;
+  margin: 0 auto;
+  flex-wrap: wrap;
+  width: 95%;
+  height: auto;
   margin-top: 1rem;
-  padding: 0;
   font-family: "Pretendard-Regular";
-  justify-content: space-between;
 `;
 
 export const ProductItemContainer = styled.div`
-  width: 10rem;
+  width: 10.4rem;
   margin-bottom: 1rem;
-  margin-left: 0.5rem;
   text-align: left;
   text-decoration: none;
   color: inherit;
-  border: 0.8px solid lightblue;
+  border: 1px solid lightblue;
   border-radius: 5px;
-  padding: 1rem;
+  padding: 0.8rem;
   box-sizing: border-box;
 `;
 

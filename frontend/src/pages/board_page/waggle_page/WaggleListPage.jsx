@@ -7,7 +7,7 @@ import { formatRelativeTime } from "../../../components/board/dateFormat";
 import {
   Header,
   HeaderButton,
-  HeaderH2,
+  HeaderDiv,
 } from "../../../styles/BoardStyles/BoardStyle";
 import SearchComponent from "../../../components/board/SearchComponent";
 
@@ -80,7 +80,15 @@ function WaggleListPage() {
     <div>
       <BoardTopNavBar />
       <Header>
-        <HeaderH2>👥 와글Waggle 떠들어주세요</HeaderH2>
+        <HeaderDiv>
+          <img
+            src="https://raw.githubusercontent.com/Tarikul-Islam-Anik/Animated-Fluent-Emojis/master/Emojis/Smilies/Grinning%20Face%20with%20Big%20Eyes.png"
+            alt="Grinning Face with Big Eyes"
+            width="25"
+            height="25"
+          />
+          <div>와글Waggle 떠들어주세요</div>
+        </HeaderDiv>
         <HeaderButton onClick={handleWriteWaggleClick}>🖋 글쓰기</HeaderButton>
       </Header>
       {/* <SearchComponent onSearch={handleSearch} /> */}
