@@ -22,6 +22,7 @@ import {
   MsgHM,
   SenderImg,
   CleanBot,
+  BigChattingContainer,
 } from "../../styles/match-styles/MatchChattingStyle";
 import SendIcon from "../../assets/icon/send-icon.png";
 
@@ -152,7 +153,7 @@ function Chat() {
   // }, []);
 
   return (
-    <div>
+    <BigChattingContainer>
       <CleanBot>
         <img
           src="https://raw.githubusercontent.com/Tarikul-Islam-Anik/Animated-Fluent-Emojis/master/Emojis/Smilies/Robot.png"
@@ -210,13 +211,6 @@ function Chat() {
             id="message"
             value={message}
             placeholder="메시지 작성"
-            style={{
-              border: "none",
-              outline: "none",
-              width: "90%",
-              height: "100%",
-              backgroundColor: "#f1f1f1",
-            }}
             onChange={(e) => setMessage(e.target.value)}
             onKeyUp={(e) => {
               if (e.key === "Enter") {
@@ -227,7 +221,7 @@ function Chat() {
         </ChattingInput>
         <ChattingSendImg src={SendIcon} onClick={sendMessage} />
       </ChattingBar>
-    </div>
+    </BigChattingContainer>
   );
 }
 

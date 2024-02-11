@@ -6,7 +6,7 @@ import MateContainer from "../../../components/board/MateContainer";
 import {
   Header,
   HeaderButton,
-  HeaderH2,
+  HeaderDiv,
 } from "../../../styles/BoardStyles/BoardStyle";
 import MatchSchedulePage from "../../match_page/MatchSchedulePage";
 
@@ -100,7 +100,15 @@ function MateListPage() {
     <div>
       <BoardTopNavBar />
       <Header>
-        <HeaderH2>🔥 경기 직관 함께 할 메이트 구합니다</HeaderH2>
+        <HeaderDiv>
+          <img
+            src="https://raw.githubusercontent.com/Tarikul-Islam-Anik/Animated-Fluent-Emojis/master/Emojis/Hand%20gestures/Clapping%20Hands%20Light%20Skin%20Tone.png"
+            alt="Clapping Hands Light Skin Tone"
+            width="25"
+            height="25"
+          />
+          <div>경기 직관 함께 할 메이트 구합니다</div>
+        </HeaderDiv>
         <HeaderButton onClick={handleWriteMateClick}>🖋 글쓰기</HeaderButton>
       </Header>
       <MatchSchedulePage
