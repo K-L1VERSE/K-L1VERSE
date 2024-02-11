@@ -10,7 +10,13 @@ import {
   CheckboxLabel,
   CheckboxInput,
   TextContainer,
+  TextBottom,
+  UserInfo,
 } from "../../styles/BoardStyles/CommentStyle";
+import {
+  SenderImg,
+  BadgeImg,
+} from "../../styles/match-styles/MatchChattingStyle";
 import { updateComment, createComment } from "../../api/comment";
 
 const CommentForm = ({ boardId, parentId, getComments }) => {
@@ -18,6 +24,10 @@ const CommentForm = ({ boardId, parentId, getComments }) => {
   const [isUpdateMode, setIsUpdateMode] = useState(false);
   const [isSecret, setIsSecret] = useState(false);
   const { userId } = useRecoilState(UserState)[0];
+  const [userState] = useRecoilState(UserState);
+  const { nickname } = userState;
+  const { profile } = userState;
+  const { mainBadge } = userState;
 
   const location = useLocation();
   useEffect(() => {
@@ -73,14 +83,13 @@ const CommentForm = ({ boardId, parentId, getComments }) => {
 
   return (
     <CommentFormContainer>
-      <CheckboxLabel>
-        <CheckboxInput
-          type="checkbox"
-          checked={isSecret}
-          onChange={() => setIsSecret(!isSecret)}
+      <UserInfo>
+        <SenderImg src={profile} />
+        <div>{nickname}</div>
+        <BadgeImg
+          src={`${process.env.PUBLIC_URL}/badge/badge${mainBadge}.png`}
         />
-        <span>🔒비밀</span>
-      </CheckboxLabel>
+      </UserInfo>
       <TextContainer>
         <TextArea
           value={content}
@@ -89,15 +98,35 @@ const CommentForm = ({ boardId, parentId, getComments }) => {
           required
           placeholder="댓글을 작성하세요."
         />
-        <SubmitButton type="button" onClick={handleSubmit}>
-          {isUpdateMode ? "댓글 수정 완료" : "댓글 작성"}
-        </SubmitButton>
-        {isUpdateMode && (
-          <CancelButton type="button" onClick={() => setIsUpdateMode(false)}>
-            수정 취소
-          </CancelButton>
-        )}
       </TextContainer>
+      <TextBottom>
+        <CheckboxLabel>
+          <CheckboxInput
+            type="checkbox"
+            checked={isSecret}
+            onChange={() => setIsSecret(!isSecret)}
+          />
+          <div>
+            <img
+              src="https://raw.githubusercontent.com/Tarikul-Islam-Anik/Animated-Fluent-Emojis/master/Emojis/Objects/Locked.png"
+              alt="Locked"
+              width="20"
+              height="20"
+            />
+            <div> 비밀</div>
+          </div>
+        </CheckboxLabel>
+        <div>
+          <SubmitButton type="button" onClick={handleSubmit}>
+            {isUpdateMode ? "댓글 수정 완료" : "등록"}
+          </SubmitButton>
+          {isUpdateMode && (
+            <CancelButton type="button" onClick={() => setIsUpdateMode(false)}>
+              수정 취소
+            </CancelButton>
+          )}
+        </div>
+      </TextBottom>
     </CommentFormContainer>
   );
 };

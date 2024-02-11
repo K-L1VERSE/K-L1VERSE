@@ -5,7 +5,6 @@ import {
   PredictionChartOuterContainer,
   PredictionChartInnerContainer,
   PredictBoxTitle,
-  PredictBoxSubTitle,
   PredictBoxTitleComponent,
 } from "../../../styles/match-styles/prediction/PredictionContainerStyles";
 

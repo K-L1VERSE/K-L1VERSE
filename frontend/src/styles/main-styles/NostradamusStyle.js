@@ -36,3 +36,11 @@ export const NostraContainer = styled.div`
     font-family: "Pretendard-Bold";
   }
 `;
+
+export const NoData = styled.div`
+  font-family: "Pretendard-Light";
+  font-size: 0.8rem;
+  text-align: center;
+  margin-top: 2rem;
+  color: gray;
+`;

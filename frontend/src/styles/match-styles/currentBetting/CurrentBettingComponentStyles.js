@@ -7,7 +7,7 @@ export const TeamContainer = styled.div`
 
   width: 100%;
 
-  gap: 30px;
+  gap: 20px;
 `;
 
 export const TeamNameContainer = styled.div`
@@ -32,7 +32,7 @@ export const TeamBettingContainer = styled.div`
   align-items: start;
   justify-content: center;
 
-  width: 100%;
+  width: 70%;
 `;
 
 export const TeamName = styled.div`

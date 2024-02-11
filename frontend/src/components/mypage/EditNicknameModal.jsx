@@ -111,7 +111,7 @@ const EditNicknameModal = ({ type, setModalOpen, user, setUser }) => {
               nickname: newNickname,
             }));
             Swal.fire({
-              text: "닉네임이 변경되었습니다.",
+              html: `<p style='font-size:1.2rem; font-family:Pretendard-Bold;'>닉네임이 변경되었습니다.</p>`,
               width: "20rem",
               imageUrl:
                 "https://raw.githubusercontent.com/Tarikul-Islam-Anik/Animated-Fluent-Emojis/master/Emojis/Smilies/Ghost.png",

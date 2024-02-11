@@ -46,7 +46,10 @@ function PredictionComponent({
           {bettingAmount}/{totalBettingAmount}
         </PredictionAmount>
         <PredictionRatio>
-          {((bettingAmount / totalBettingAmount) * 100).toFixed(0)}%
+          {totalBettingAmount === 0
+            ? 0
+            : ((bettingAmount / totalBettingAmount) * 100).toFixed(0)}
+          %
         </PredictionRatio>
         <PredictionBar
           ratio={((bettingAmount / totalBettingAmount) * 100).toFixed(0)}

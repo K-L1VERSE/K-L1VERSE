@@ -24,8 +24,15 @@ export default function MatchDetailPage() {
   const [data, setData] = useState();
   useEffect(() => {
     const fetchData = async () => {
-      const result = await getMatchDetail(matchId);
-      setData(result);
+      await getMatchDetail(matchId)
+        .then((result) => {
+          setData(result);
+        })
+        .catch(() => {
+          setData({
+            status: "NONE",
+          });
+        });
     };
     fetchData();
   }, []);
@@ -46,13 +53,19 @@ export default function MatchDetailPage() {
       {data && (
         <>
           <MatchDetailScore match={data} y={y} m={m} d={d} day={day} v={v} />
-          <SliderContainer>
-            <Slider {...settings}>
-              <PredictionContainer />
-              <CurrentBettingContainer />
-            </Slider>
-          </SliderContainer>
-          <DoBettingContainer />
+          {data.status !== "NONE" ? (
+            <>
+              <SliderContainer>
+                <Slider {...settings}>
+                  <PredictionContainer />
+                  <CurrentBettingContainer />
+                </Slider>
+              </SliderContainer>
+              <DoBettingContainer />
+            </>
+          ) : (
+            <div />
+          )}
         </>
       )}
     </div>
@@ -60,7 +73,7 @@ export default function MatchDetailPage() {
 }
 
 const SliderContainer = styled.div`
-  width: 94.5%;
+  width: 94%;
   margin-top: 20px;
   .slick-dots {
     bottom: -30px;
