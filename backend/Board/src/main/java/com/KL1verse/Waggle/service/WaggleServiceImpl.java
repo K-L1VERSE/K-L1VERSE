@@ -399,6 +399,9 @@ public class WaggleServiceImpl implements WaggleService {
     if (waggleToDelete != null) {
       waggleToDelete.getBoard().setDeleteAt(LocalDateTime.now());
     }
+    List<WaggleUserHashTag> waggleUserHashTag = waggleUserHashTagRepository.findByWaggleWaggleId(waggleToDelete.getWaggleId());
+    waggleUserHashTagRepository.deleteAll(waggleUserHashTag);
+
     waggleRepository.deleteById(waggleToDelete.getWaggleId());
 
   }
@@ -505,21 +508,21 @@ public class WaggleServiceImpl implements WaggleService {
 
     List<Object[]> likesCounts = waggleRepository.getLikesCountForEachWaggle();
 
-    log.error("likesCounts: {}", likesCounts);
-
     Page<Waggle> waggles = waggleRepository.findAll(pageable);
 
     List<WaggleDTO> wagglesWithLikes = waggles.getContent().stream()
         .map(waggle -> {
           WaggleDTO waggleDTO = convertToDTO(waggle);
 
-          List<Object[]> profileAndMainBadge = waggleRepository.findUserProfileAndMainBadge(waggle.getBoard().getUserId());
-            String userProfile = (String) profileAndMainBadge.get(0)[0];
-            String mainBadge = (String) profileAndMainBadge.get(0)[1];
-            waggleDTO.getBoard().setProfile(userProfile);
-            if(mainBadge != null) {
-              waggleDTO.getBoard().setMainBadge(mainBadge);
-            }
+          List<Object[]> profileAndMainBadge = waggleRepository.findUserNicknameAndProfileAndMainBadge(waggle.getBoard().getUserId());
+          String userNickname = (String) profileAndMainBadge.get(0)[0];
+          String userProfile = (String) profileAndMainBadge.get(0)[1];
+          String mainBadge = (String) profileAndMainBadge.get(0)[2];
+          waggleDTO.getBoard().setNickname(userNickname);
+          waggleDTO.getBoard().setProfile(userProfile);
+          if(mainBadge != null) {
+            waggleDTO.getBoard().setMainBadge(mainBadge);
+          }
 
           Long boardId = waggle.getBoard().getBoardId();
           Integer commentCount = commentRepository.countCommentsByBoardId(boardId);
@@ -537,12 +540,6 @@ public class WaggleServiceImpl implements WaggleService {
             }
           }
           Integer userId = waggleDTO.getBoard().getUserId();
-          List<Object[]> nicknameResult = waggleRepository.findUserNickname(userId);
-          log.error("nicknameResult???????????????? {}", nicknameResult);
-
-          String userNickname = (String) nicknameResult.get(0)[0];
-          log.error("userNickname:!!!!!!!!!!!!! {}", userNickname);
-          waggleDTO.getBoard().setNickname(userNickname);
 
           return waggleDTO;
         })

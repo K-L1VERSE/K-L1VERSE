@@ -89,29 +89,64 @@ function ProductRegistPage() {
     handleFileChange(file);
   }, [file]);
 
+  const handleDealFlag = () => {
+    setDealFlag(!dealFlag);
+  };
+
   return (
-    <>
-      <DetailTop>
-        <BackButton onClick={handleBackClick}>
-          <img src={BackIcon} alt="Back" />
-        </BackButton>
-      </DetailTop>
-      <DetailTop>
-        {isUpdateMode ? "중고거래 게시물 수정" : "중고거래 게시물 작성"}
-      </DetailTop>
-      <ProductRegistCard
-        title={title}
-        content={content}
-        price={price}
-        dealFlag="false"
-        onTitleChange={(e) => setTitle(e.target.value)}
-        onContentChange={(e) => setContent(e.target.value)}
-        onPriceChange={(e) => setPrice(e.target.value)}
-        onFileChange={handleFileChange}
-        onSubmit={handleSubmit}
-        buttonText={isUpdateMode ? "수정하기" : "작성하기"}
-      />
-    </>
+    <div>
+      {location.state ? (
+        isUpdateMode && (
+          <>
+            <DetailTop>
+              <BackButton onClick={handleBackClick}>
+                <img src={BackIcon} alt="Back" />
+              </BackButton>
+            </DetailTop>
+            <DetailTop>
+              {isUpdateMode ? "중고거래 게시물 수정" : "중고거래 게시물 작성"}
+            </DetailTop>
+            <ProductRegistCard
+              title={title}
+              content={content}
+              price={price}
+              dealFlag={dealFlag}
+              onTitleChange={(e) => setTitle(e.target.value)}
+              onContentChange={(e) => setContent(e.target.value)}
+              onPriceChange={(e) => setPrice(e.target.value)}
+              onFileChange={handleFileChange}
+              onSubmit={handleSubmit}
+              buttonText={isUpdateMode ? "수정하기" : "작성하기"}
+              handleDealFlag={handleDealFlag}
+            />
+          </>
+        )
+      ) : (
+        <>
+          <DetailTop>
+            <BackButton onClick={handleBackClick}>
+              <img src={BackIcon} alt="Back" />
+            </BackButton>
+          </DetailTop>
+          <DetailTop>
+            {isUpdateMode ? "중고거래 게시물 수정" : "중고거래 게시물 작성"}
+          </DetailTop>
+          <ProductRegistCard
+            title={title}
+            content={content}
+            price={price}
+            dealFlag={dealFlag}
+            onTitleChange={(e) => setTitle(e.target.value)}
+            onContentChange={(e) => setContent(e.target.value)}
+            onPriceChange={(e) => setPrice(e.target.value)}
+            onFileChange={handleFileChange}
+            onSubmit={handleSubmit}
+            buttonText={isUpdateMode ? "수정하기" : "작성하기"}
+            handleDealFlag={handleDealFlag}
+          />
+        </>
+      )}
+    </div>
   );
 }
 

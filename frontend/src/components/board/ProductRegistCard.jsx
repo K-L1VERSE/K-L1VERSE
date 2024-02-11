@@ -9,6 +9,10 @@ import {
   FileInputLabel,
   RegistCardContainer,
   InputLabel,
+  ToggleContainer,
+  OuterCircle,
+  InnerCircle,
+  DealFlagText,
 } from "../../styles/BoardStyles/BoardCreateStyle";
 import {
   FlagInputContainer,
@@ -31,6 +35,7 @@ export default function ProductRegistCard({
   onFileChange,
   onSubmit,
   buttonText,
+  handleDealFlag,
 }) {
   const [previewImage, setPreviewImage] = useState(null);
 
@@ -46,46 +51,60 @@ export default function ProductRegistCard({
     }
   };
 
-  return (
-    <RegistCardContainer>
-      <InputLabel>판매 물건</InputLabel>
-      <TitleInput
-        type="text"
-        value={title}
-        onChange={onTitleChange}
-        placeholder="제목"
-      />
-      <br />
-      <InputLabel>판매 가격</InputLabel>
-      <PriceInput
-        type="text"
-        value={price}
-        onChange={handlePriceChange}
-        placeholder="가격"
-      />
-      <br />
-      <InputLabel>사진 첨부</InputLabel>
-      <BoardFile onFileChange={handleFileChange} />
-      {previewImage && (
-        <img src={previewImage} alt="미리보기" style={{ maxWidth: "100%" }} />
-      )}
-      <br />
-      <InputLabel>내용</InputLabel>
-      <TextArea value={content} onChange={onContentChange} placeholder="내용" />
-      <br />
-      <FlagInputContainer>
-        <FlagInputLabel>
-          <FlagInputCheckbox
-            type="checkbox"
-            checked={dealFlag}
-            onChange={onDealFlagChange}
-          />
-          <FlagInputText>판매중</FlagInputText>
-        </FlagInputLabel>
-      </FlagInputContainer>
+  console.log("dealFlag", dealFlag);
 
-      <br />
-      <SubmitButton onClick={onSubmit}>{buttonText}</SubmitButton>
-    </RegistCardContainer>
+  return (
+    <div>
+      <ToggleContainer>
+        <OuterCircle $dealFlag={!dealFlag} onClick={handleDealFlag}>
+          <InnerCircle $dealFlag={!dealFlag} />
+        </OuterCircle>
+        <DealFlagText>{dealFlag ? "거래완료" : "판매중"}</DealFlagText>
+      </ToggleContainer>
+
+      <RegistCardContainer>
+        <InputLabel>판매 물건</InputLabel>
+        <TitleInput
+          type="text"
+          value={title}
+          onChange={onTitleChange}
+          placeholder="제목"
+        />
+        <br />
+        <InputLabel>판매 가격</InputLabel>
+        <PriceInput
+          type="text"
+          value={price}
+          onChange={handlePriceChange}
+          placeholder="가격"
+        />
+        <br />
+        <InputLabel>사진 첨부</InputLabel>
+        <BoardFile onFileChange={handleFileChange} />
+        {previewImage && (
+          <img src={previewImage} alt="미리보기" style={{ maxWidth: "100%" }} />
+        )}
+        <br />
+        <InputLabel>내용</InputLabel>
+        <TextArea
+          value={content}
+          onChange={onContentChange}
+          placeholder="내용"
+        />
+        <br />
+        {/* <FlagInputContainer>
+          <FlagInputLabel>
+            <FlagInputCheckbox
+              type="checkbox"
+              checked={dealFlag}
+              onChange={onDealFlagChange}
+            />
+          </FlagInputLabel>
+        </FlagInputContainer> */}
+
+        <br />
+        <SubmitButton onClick={onSubmit}>{buttonText}</SubmitButton>
+      </RegistCardContainer>
+    </div>
   );
 }
