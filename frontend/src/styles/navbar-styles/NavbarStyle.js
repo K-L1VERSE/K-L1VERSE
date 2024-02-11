@@ -17,9 +17,14 @@ export const Nav = styled.nav`
   border-top: 2px solid rgba(169, 169, 169, 0.2);
   background-color: white;
   ${(props) => props.$disabled && "pointer-events: none;"};
+  @media (hover: hover) and (min-width: 700px) {
+    margin: 0 auto;
+    width: 600px;
+  }
 `;
 
 export const NavItem = styled.div`
+  position: relative;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -111,3 +116,15 @@ export const navbarMyPageIcon = ({ $isSelected }) => {
     </svg>
   );
 };
+
+export const RedCircle = styled.div`
+  position: absolute;
+  top: 0.5rem;
+  left: 1.4rem;
+  display: flex;
+  background: red;
+  border-radius: 50%;
+  width: 0.2rem;
+  height: 0.2rem;
+  padding: 0.13rem;
+`;
