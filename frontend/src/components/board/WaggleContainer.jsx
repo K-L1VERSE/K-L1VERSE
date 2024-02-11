@@ -1,16 +1,18 @@
 import React from "react";
-import { ListContainer } from "../../styles/BoardStyles/BoardStyle";
+import { ListContainer, ForPadding } from "../../styles/BoardStyles/BoardStyle";
 import WaggleItemCard from "./WaggleItemCard";
 
 function WaggleContainer({ waggleList, formatRelativeTime }) {
   return (
     <ListContainer>
       {waggleList.map((waggle) => (
-        <WaggleItemCard
-          key={waggle.waggleId}
-          waggle={waggle}
-          formatRelativeTime={formatRelativeTime}
-        />
+        <ForPadding>
+          <WaggleItemCard
+            key={waggle.waggleId}
+            waggle={waggle}
+            formatRelativeTime={formatRelativeTime}
+          />
+        </ForPadding>
       ))}
     </ListContainer>
   );
