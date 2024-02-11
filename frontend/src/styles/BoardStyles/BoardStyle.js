@@ -6,15 +6,20 @@ export const Header = styled.div`
   align-items: center;
   justify-content: space-between;
   margin: 0 1rem;
+  padding-bottom: 0.5rem;
   border-bottom: 1px solid #f4f4f4;
 `;
 
-export const HeaderH2 = styled.h2`
-  width: auto;
+export const HeaderDiv = styled.div`
+  display: flex;
   font-size: 1.1rem;
   line-height: 10px;
   color: #222222;
   font-family: "Pretendard-Bold";
+  div {
+    margin-top: 0.5rem;
+    margin-left: 0.3rem;
+  }
 `;
 
 export const HeaderButton = styled.button`
@@ -34,19 +39,20 @@ export const ListContainer = styled.div`
   display: flex;
   flex-direction: column;
   margin: 0 1rem;
-  padding: 1rem;
   justify-content: flex-start;
   font-family: "Pretendard-Regular";
+  margin-bottom: 2rem;
+`;
+
+export const ForPadding = styled.div`
+  padding: 0.5rem;
+  border-bottom: 1px solid #f4f4f4;
 `;
 
 export const ItemContainer = styled.div`
-  flex-direction: column;
-  margin-left: 0.5rem;
-  margin-bottom: 1rem;
   text-align: left;
   text-decoration: none;
   color: inherit;
-  border-top: 1px solid #f4f4f4;
   padding-top: 0.4rem;
 `;
 
@@ -99,4 +105,5 @@ export const ItemInfoItem = styled.div`
 
 export const DealFlagContainer = styled.div`
   display: absolute;
+  margin-bottom: 0.3rem;
 `;

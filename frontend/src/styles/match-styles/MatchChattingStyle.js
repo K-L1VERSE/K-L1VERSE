@@ -1,6 +1,11 @@
 import styled from "styled-components";
 
 /* 채팅 컴포넌트 스타일 */
+export const BigChattingContainer = styled.div`
+  padding-bottom: 1rem;
+  margin-bottom: 1rem;
+`;
+
 export const ChattingTop = styled.div`
   height: 2rem;
   border: 2px solid black;
@@ -40,6 +45,7 @@ export const ChattingBox = styled.div`
   overflow-y: auto;
   padding: 1rem;
   border: 2px solid whitesmoke;
+  border-radius: 0.4rem;
 
   &::-webkit-scrollbar {
     width: 0.5rem;
@@ -117,7 +123,7 @@ export const OnlyMsg = styled.div`
     props.$isMine ? "1rem 0.1rem 1rem 1rem" : "0.1rem 1rem 1rem 1rem"};
   max-width: 16.5rem;
   margin-top: 0.3rem;
-  font-size: 0.9rem;
+  font-size: 0.85rem;
 `;
 
 export const MsgTimeContainer = styled.div`
@@ -150,7 +156,6 @@ export const ChattingBar = styled.div`
   margin-left: 0.5rem;
   margin-right: 0.8rem;
   margin-top: 0.3rem;
-  margin-bottom: 0.5rem;
 `;
 
 export const ChattingPlusImg = styled.img`
@@ -167,6 +172,16 @@ export const ChattingInput = styled.div`
   border: none;
   font-size: 0.8rem;
   padding-left: 1rem;
+  display: flex;
+  align-items: center;
+  input {
+    border: none;
+    outline: none;
+    width: 90%;
+    height: 80%;
+    background-color: #f1f1f1;
+    font-family: "Pretendard-Regular";
+  }
 `;
 
 export const ChattingSendImg = styled.img`

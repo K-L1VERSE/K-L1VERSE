@@ -8,7 +8,7 @@ import ProductContainer from "../../../components/board/ProductContainer";
 import {
   Header,
   HeaderButton,
-  HeaderH2,
+  HeaderDiv,
 } from "../../../styles/BoardStyles/BoardStyle";
 
 function ProductListPage() {
@@ -76,7 +76,15 @@ function ProductListPage() {
     <div>
       <BoardTopNavBar />
       <Header>
-        <HeaderH2>📦 나에게 꼭 필요한 굿-즈</HeaderH2>
+        <HeaderDiv>
+          <img
+            src="https://raw.githubusercontent.com/Tarikul-Islam-Anik/Animated-Fluent-Emojis/master/Emojis/Activities/Wrapped%20Gift.png"
+            alt="Wrapped Gift"
+            width="25"
+            height="25"
+          />
+          <div>나에게 꼭 필요한 굿-즈</div>
+        </HeaderDiv>
         <HeaderButton onClick={handleWriteProductClick}>🖋 글쓰기</HeaderButton>
       </Header>
 

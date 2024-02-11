@@ -38,6 +38,14 @@ export default function ProductRegistCard({
     // console.log(imageUrl, "!@#!@#!@#!@#");
     onFileChange(imageUrl);
   };
+
+  const handlePriceChange = (event) => {
+    const re = /^[0-9\b]+$/;
+    if (event.target.value === "" || re.test(event.target.value)) {
+      onPriceChange(event);
+    }
+  };
+
   return (
     <RegistCardContainer>
       <InputLabel>판매 물건</InputLabel>
@@ -52,7 +60,7 @@ export default function ProductRegistCard({
       <PriceInput
         type="text"
         value={price}
-        onChange={onPriceChange}
+        onChange={handlePriceChange}
         placeholder="가격"
       />
       <br />
