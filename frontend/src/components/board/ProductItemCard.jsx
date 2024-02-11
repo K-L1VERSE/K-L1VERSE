@@ -26,6 +26,11 @@ function ProductItemCard({ product, formatRelativeTime }) {
     ? product.board.boardImage.split(",").map((image) => image.trim())
     : [];
 
+  const truncatedTitle =
+    product.board.title.length > 10
+      ? `${product.board.title.substring(0, 10)}...`
+      : product.board.title;
+
   return (
     <Link
       to={`/product/${product.board.boardId}`}
@@ -45,17 +50,17 @@ function ProductItemCard({ product, formatRelativeTime }) {
             <ProductImage src={boardImage[0].trim()} alt="Product Image" />
           )}
         </ImageBoxContainer>
-        <ItemTitle>{product.board.title}</ItemTitle>
+        <ItemTitle>{truncatedTitle}</ItemTitle>
         <ProductItemPrice>
           {Number(product.price).toLocaleString()}원
         </ProductItemPrice>
-          <WriterContainer>
-              <WriterProfile src={product.board.profile} />
-              <ProductItemWriter>{product.board.nickname}</ProductItemWriter>
-              <WriteBadge
-                  src={`${process.env.PUBLIC_URL}/badge/badge${product.board.mainBadge === null ? 0 : product.board.mainBadge}.png`}
-              />
-          </WriterContainer>
+        <WriterContainer>
+          <WriterProfile src={product.board.profile} />
+          <ProductItemWriter>{product.board.nickname}</ProductItemWriter>
+          <WriteBadge
+            src={`${process.env.PUBLIC_URL}/badge/badge${product.board.mainBadge === null ? 0 : product.board.mainBadge}.png`}
+          />
+        </WriterContainer>
         <ItemInfoSection>
           <ItemInfoItem>
             <Comment />
