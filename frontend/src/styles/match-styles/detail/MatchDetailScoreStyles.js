@@ -12,6 +12,30 @@ export const MatchDetailTop = styled.div`
   }
 `;
 
+export const MatchUpComponent = styled.div`
+  display: flex;
+  margin: 0 auto;
+  width: 90%;
+  justify-content: space-around;
+  padding: 0.5rem;
+  height: 36px;
+  background-color: white;
+  border-radius: 5px;
+`;
+
+export const StadiumComponent = styled.div`
+  margin: 0 auto;
+  display: flex;
+  width: 90%;
+  justify-content: space-around;
+  margin-bottom: 0.5rem;
+`;
+
+export const StadiumText = styled.div`
+  font-size: 0.8rem;
+  color: #666666;
+`;
+
 export const ToLeftImg = styled.img`
   width: 1rem;
   height: 1rem;
@@ -46,12 +70,10 @@ export const MatchDetailComponent = styled.div`
 `;
 
 export const MatchUpContainer = styled.div`
-  display: flex;
   margin: 0 auto;
   width: 90%;
   justify-content: space-around;
   padding: 0.5rem;
-  height: 36px;
   background-color: white;
   border-radius: 5px;
 `;

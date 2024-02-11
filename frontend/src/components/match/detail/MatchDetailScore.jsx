@@ -12,6 +12,9 @@ import {
   HomeName,
   Score,
   VersusComponent,
+  StadiumComponent,
+  StadiumText,
+  MatchUpComponent,
 } from "../../../styles/match-styles/detail/MatchDetailScoreStyles";
 
 import MatchTimeComponent from "./MatchTimeComponent";
@@ -77,47 +80,53 @@ export default function MatchDetailScore({ match, y, m, day, d, v }) {
       <MatchDetailContainer>
         <MatchDetailComponent>
           <MatchUpContainer>
-            <TeamContainer>
-              <TeamComponent>
-                <BadgeImg src={homeTeamsrc} alt="home" />
-                <HomeName>{homeTeamName}</HomeName>
-              </TeamComponent>
+            <MatchUpComponent>
+              <TeamContainer>
+                <TeamComponent>
+                  <BadgeImg src={homeTeamsrc} alt="home" />
+                  <HomeName>{homeTeamName}</HomeName>
+                </TeamComponent>
+                {match.status === "done" ? (
+                  <Score $win={match.homeScore > match.awayScore}>
+                    {match.homeScore}
+                  </Score>
+                ) : match.status === "during" ? (
+                  <Score $win={match.homeScore > match.awayScore}>
+                    {match.homeScore}
+                  </Score>
+                ) : (
+                  <Score />
+                )}
+              </TeamContainer>
               {match.status === "done" ? (
-                <Score $win={match.homeScore > match.awayScore}>
-                  {match.homeScore}
-                </Score>
+                <VersusComponent>-</VersusComponent>
               ) : match.status === "during" ? (
-                <Score $win={match.homeScore > match.awayScore}>
-                  {match.homeScore}
-                </Score>
+                <VersusComponent>-</VersusComponent>
               ) : (
-                <Score />
+                <VersusComponent>vs</VersusComponent>
               )}
-            </TeamContainer>
-            {match.status === "done" ? (
-              <VersusComponent>-</VersusComponent>
-            ) : match.status === "during" ? (
-              <VersusComponent>-</VersusComponent>
-            ) : (
-              <VersusComponent>vs</VersusComponent>
-            )}
-            <TeamContainer>
-              {match.status === "done" ? (
-                <Score $win={match.awayScore > match.homeScore}>
-                  {match.awayScore}
-                </Score>
-              ) : match.status === "during" ? (
-                <Score $win={match.awayScore > match.homeScore}>
-                  {match.awayScore}
-                </Score>
-              ) : (
-                <Score />
-              )}
-              <TeamComponent>
-                <BadgeImg src={awayTeamsrc} alt="away" />
-                {awayTeamName}
-              </TeamComponent>
-            </TeamContainer>
+              <TeamContainer>
+                {match.status === "done" ? (
+                  <Score $win={match.awayScore > match.homeScore}>
+                    {match.awayScore}
+                  </Score>
+                ) : match.status === "during" ? (
+                  <Score $win={match.awayScore > match.homeScore}>
+                    {match.awayScore}
+                  </Score>
+                ) : (
+                  <Score />
+                )}
+                <TeamComponent>
+                  <BadgeImg src={awayTeamsrc} alt="away" />
+                  {awayTeamName}
+                </TeamComponent>
+              </TeamContainer>
+            </MatchUpComponent>
+
+            <StadiumComponent>
+              <StadiumText>{match.home}</StadiumText>
+            </StadiumComponent>
           </MatchUpContainer>
           <MatchTimeComponent
             time={match.matchAt}
