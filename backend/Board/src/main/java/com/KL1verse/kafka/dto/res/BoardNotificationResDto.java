@@ -13,7 +13,7 @@ import lombok.NoArgsConstructor;
 public class BoardNotificationResDto {
 
     public static enum BoardNotificationType {
-        COMMENT, LIKE
+        COMMENT, LIKE, GOAL
     }
 
     Integer userId;

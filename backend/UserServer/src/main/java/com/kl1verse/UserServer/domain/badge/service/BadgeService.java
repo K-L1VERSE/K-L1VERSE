@@ -7,6 +7,8 @@ import com.kl1verse.UserServer.domain.badge.repository.BadgeDetailRepository;
 import com.kl1verse.UserServer.domain.badge.repository.BadgeRepository;
 import com.kl1verse.UserServer.domain.badge.repository.entity.Badge;
 import com.kl1verse.UserServer.domain.badge.repository.entity.BadgeDetail;
+import com.kl1verse.UserServer.domain.notification.dto.req.MessageReqDto;
+import com.kl1verse.UserServer.domain.notification.service.NotificationService;
 import com.kl1verse.UserServer.domain.user.exception.UserException;
 import com.kl1verse.UserServer.domain.user.repository.UserRepository;
 import com.kl1verse.UserServer.domain.user.repository.entity.User;
@@ -31,6 +33,7 @@ public class BadgeService {
     private final BadgeRepository badgeRepository;
     private final BadgeDetailRepository badgeDetailRepository;
     private final UserRepository userRepository;
+    private final NotificationService notificationService;
 
     public List<String> getBadges(HttpServletRequest request) {
         /*
@@ -92,6 +95,13 @@ public class BadgeService {
             .buyAt(LocalDateTime.now())
             .build();
         badgeRepository.save(badge);
+
+        notificationService.sendNotification(MessageReqDto.builder()
+                .type(MessageReqDto.NotificationType.GOAL)
+                .userId(user.getId())
+                .message("뱃지 구매로 1000골을 사용하셨습니다.")
+                .uri("/mypage")
+                .build());
     }
 
     @Transactional

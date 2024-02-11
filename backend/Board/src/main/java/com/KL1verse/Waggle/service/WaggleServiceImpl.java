@@ -12,7 +12,9 @@ import com.KL1verse.Waggle.repository.WaggleRepository;
 import com.KL1verse.Waggle.repository.WaggleUserHashTagRepository;
 import com.KL1verse.Waggle.repository.entity.Waggle;
 import com.KL1verse.Waggle.repository.entity.WaggleUserHashTag;
+import com.KL1verse.kafka.dto.res.BoardNotificationResDto;
 import com.KL1verse.kafka.producer.KafkaBoardCleanbotProducer;
+import com.KL1verse.kafka.producer.KafkaBoardNotificationProducer;
 import com.KL1verse.s3.repository.entity.File;
 import com.KL1verse.s3.service.BoardImageService;
 import com.KL1verse.s3.service.FileService;
@@ -58,6 +60,7 @@ public class WaggleServiceImpl implements WaggleService {
 
   private final CommentRepository commentRepository;
   private final KafkaBoardCleanbotProducer kafkaBoardCleanbotProducer;
+  private final KafkaBoardNotificationProducer kafkaBoardNotificationProducer;
   private final WaggleUserHashTagRepository waggleUserHashTagRepository;
 
 
@@ -423,6 +426,15 @@ public class WaggleServiceImpl implements WaggleService {
     WaggleDTO createdWaggleDTO = convertToDTO(createdWaggle);
     createdWaggleDTO.getBoard().setNickname(userNickname);
     createdWaggleDTO.getBoard().setBoardImage(file.getUri());
+
+    kafkaBoardNotificationProducer.boardNotification(BoardNotificationResDto.builder()
+            .type(BoardNotificationResDto.BoardNotificationType.GOAL)
+            .userId(userId)
+            .message("글 작성 보상으로 10골을 지급 받았습니다.")
+            .uri("/waggles/" + String.valueOf(board.getBoardId()))
+            .profile(null)
+            .nickname(null)
+            .build());
 
 //        BoardCleanbotCheckReqDto boardCleanbotCheckReqDto = BoardCleanbotCheckReqDto.builder()
 //            .id(createdWaggle.getBoard().getBoardId())
