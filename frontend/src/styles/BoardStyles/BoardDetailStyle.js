@@ -14,7 +14,7 @@ export const DetailTop = styled.div`
 
 export const DetailBox = styled.div`
   border-bottom: 1px solid #ccc;
-  padding: 0.1rem 1rem 0.4rem 1rem;
+  padding: 0.1rem 1rem 1rem 1rem;
   margin-bottom: 1rem;
 `;
 
@@ -49,15 +49,21 @@ export const CreateAt = styled.p`
   border-bottom: 0.3px solid #ccc;
 `;
 
-export const Title = styled.p`
-  margin: 0;
-  font-size: 1.5em;
-  font-weight: bold;
+export const Title = styled.div`
+  margin-top: 0.5rem;
+  font-size: 1.1rem;
+  font-family: "Pretendard-Bold";
   padding-bottom: 10px;
 `;
 
+export const FormattedDate = styled.div`
+  font-size: 0.8rem;
+  margin-bottom: 0.5rem;
+  color: #595959;
+`;
+
 export const Content = styled.p`
-  margin-top: 0.8rem;
+  margin-top: 1rem;
   font-size: 0.9rem;
 `;
 
@@ -187,4 +193,18 @@ export const DetailCommentCount = styled.div`
   margin-bottom: 0.5rem;
   color: #595959;
   align-items: center;
+`;
+
+export const DetailImgDiv = styled.div`
+  width: 90%;
+  margin: 0 auto;
+  display: flex;
+  justify-content: center;
+  margin-bottom: 1rem;
+`;
+
+export const DetailOnlyImg = styled.img`
+  max-width: 100%;
+  max-height: 15rem;
+  border-radius: 5px;
 `;
