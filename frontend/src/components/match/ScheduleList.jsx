@@ -1,9 +1,8 @@
 import React from "react";
 import { ListStyle } from "../../styles/match-styles/MatchScheduleStyle";
 import Time from "./Time";
-import TimeForBoard from "../board/TimeForBoard";
 
-export default function ListContainer({ data, isMateListPage, onMatchClick }) {
+export default function ListContainer({ data, year, month, view }) {
   const groupedData = data.reduce((acc, match) => {
     const date = new Date(match.matchAt).toLocaleDateString("ko-KR", {
       year: "numeric",
@@ -36,11 +35,13 @@ export default function ListContainer({ data, isMateListPage, onMatchClick }) {
               <td className="detail">
                 {matches.flatMap((match, index, array) => (
                   <React.Fragment key={index}>
-                    {isMateListPage ? (
-                      <TimeForBoard match={match} onMatchClick={onMatchClick} />
-                    ) : (
-                      <Time match={match} />
-                    )}
+                    <Time
+                      match={match}
+                      data={data}
+                      year={year}
+                      month={month}
+                      view={view}
+                    />
                     {index < array.length - 1 && <hr />}
                   </React.Fragment>
                 ))}

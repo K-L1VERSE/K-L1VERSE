@@ -18,7 +18,7 @@ import MatchTimeComponent from "./MatchTimeComponent";
 import { BadgeImg } from "../../../styles/match-styles/MatchDetailStyle";
 import ToLeftPng from "../../../assets/ToLeft.png";
 
-export default function MatchDetailScore({ match }) {
+export default function MatchDetailScore({ match, y, m, day, d, v }) {
   const homeTeamsrc = `${process.env.PUBLIC_URL}/badge/badge${match.homeTeamId}.png`;
   const awayTeamsrc = `${process.env.PUBLIC_URL}/badge/badge${match.awayTeamId}.png`;
 
@@ -40,7 +40,12 @@ export default function MatchDetailScore({ match }) {
 
   const navigate = useNavigate();
   const goPrevPage = () => {
-    navigate(-1);
+    if (v === "list") {
+      navigate("/schedule", { state: { d, y, m, v } });
+    } else if (v === "calendar") {
+      navigate("/schedule", { state: { d, y, m, day, v } });
+    }
+    // navigate(-1);
   };
 
   const getFormattedDateString = () => {
@@ -114,7 +119,15 @@ export default function MatchDetailScore({ match }) {
               </TeamComponent>
             </TeamContainer>
           </MatchUpContainer>
-          <MatchTimeComponent time={match.matchAt} status={match.status} />
+          <MatchTimeComponent
+            time={match.matchAt}
+            status={match.status}
+            y={y}
+            m={m}
+            day={day}
+            d={d}
+            v={v}
+          />
         </MatchDetailComponent>
       </MatchDetailContainer>
     </div>

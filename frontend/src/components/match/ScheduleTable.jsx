@@ -1,16 +1,15 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { TableContainer } from "../../styles/match-styles/MatchScheduleStyle";
 import Time from "./Time";
-import TimeForBoard from "../board/TimeForBoard";
 
-export default function ScheduleTable({
-  year,
-  month,
-  data,
-  isMateListPage,
-  onMatchClick,
-}) {
+export default function ScheduleTable({ year, month, day, data, view }) {
   const [selectedDay, setSelectedDay] = useState(null);
+  useEffect(() => {
+    if (day) {
+      console.log("exist day", day);
+      setSelectedDay(day);
+    }
+  });
 
   const daysInMonth = new Date(year, month, 0).getDate();
   const days = Array.from({ length: daysInMonth }, (_, i) => i + 1);
@@ -95,11 +94,14 @@ export default function ScheduleTable({
             .find((dayData) => dayData.day === selectedDay)
             .matches.map((match, index) => (
               <div key={index}>
-                {isMateListPage ? (
-                  <TimeForBoard match={match} onMatchClick={onMatchClick} />
-                ) : (
-                  <Time match={match} />
-                )}
+                <Time
+                  match={match}
+                  data={data}
+                  year={year}
+                  month={month}
+                  day={selectedDay}
+                  view={view}
+                />
                 <hr />
               </div>
             ))}

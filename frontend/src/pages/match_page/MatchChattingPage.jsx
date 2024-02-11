@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { useNavigate, useParams } from "react-router-dom";
+import { useNavigate, useParams, useLocation } from "react-router-dom";
 import { getMatchDetail } from "../../api/match";
 import Chat from "../../components/match/Chat";
 import ScoreItem from "../../components/match/ScoreItem";
@@ -18,6 +18,12 @@ function MatchChattingPage() {
   const navigate = useNavigate();
   const [match, setMatch] = useState({});
   const [focus, setFocus] = useState(1);
+  const location = useLocation();
+  const d = location.state?.d;
+  const y = location.state?.y;
+  const m = location.state?.m;
+  const day = location.state?.day;
+  const v = location.state?.v;
 
   useEffect(() => {
     const fetchData = async () => {
@@ -28,7 +34,15 @@ function MatchChattingPage() {
   }, []);
 
   const goMatchDetail = () => {
-    navigate(`/match/${matchId}`);
+    navigate(`/match/${matchId}`, {
+      state: {
+        d,
+        y,
+        m,
+        day,
+        v,
+      },
+    });
   };
 
   const clickBut = (id) => {

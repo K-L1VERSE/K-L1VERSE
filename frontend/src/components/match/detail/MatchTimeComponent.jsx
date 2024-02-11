@@ -8,7 +8,7 @@ import {
   DuringText,
 } from "../../../styles/match-styles/detail/MatchTimeComponentStyles";
 
-function MatchTimeComponent({ time, status }) {
+function MatchTimeComponent({ time, status, y, m, day, d, v }) {
   const { matchId } = useParams();
 
   const targetTIme = new Date(time);
@@ -24,7 +24,15 @@ function MatchTimeComponent({ time, status }) {
   const navigate = useNavigate();
   const enterMatch = (to) => {
     if (status !== "done") {
-      navigate(`/chat/${to}`);
+      navigate(`/chat/${to}`, {
+        state: {
+          d,
+          y,
+          m,
+          day,
+          v,
+        },
+      });
     }
   };
   return (
