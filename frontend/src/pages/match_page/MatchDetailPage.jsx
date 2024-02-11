@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { useParams, useNavigate, useLocation } from "react-router-dom";
+import { useParams, useLocation } from "react-router-dom";
 
 import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
@@ -19,8 +19,6 @@ export default function MatchDetailPage() {
   const m = location.state?.m;
   const day = location.state?.day;
   const v = location.state?.v;
-
-  console.log("detail: ", y, m, d, day, v);
 
   const [data, setData] = useState();
   useEffect(() => {
