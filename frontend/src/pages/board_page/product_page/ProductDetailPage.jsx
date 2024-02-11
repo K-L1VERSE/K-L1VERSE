@@ -19,6 +19,9 @@ import {
   DealStatusOrange,
   ProductImage,
   ProductWriter,
+  ProductWriterContainer,
+  ProductWriterProfile,
+  ProductWriterBadge,
 } from "../../../styles/BoardStyles/ProductListStyle";
 import { deleteProduct } from "../../../api/product";
 import { UserState } from "../../../global/UserState";
@@ -104,7 +107,15 @@ function ProductDetailPage() {
             ))}
       </ImageBoxContainer>
       <DetailBox>
-        <ProductWriter>{productDetail.nickname}</ProductWriter>
+        <ProductWriterContainer>
+          <ProductWriterProfile src={productDetail.profile} />
+          <ProductWriter>{productDetail.nickname}</ProductWriter>
+          <ProductWriterBadge
+            src={`${process.env.PUBLIC_URL}/badge/badge${
+              productDetail.mainBadge === null ? 0 : productDetail.mainBadge
+            }.png`}
+          />
+        </ProductWriterContainer>
         {dealFlag ? (
           <DealStatusOrange>거래완료</DealStatusOrange>
         ) : (

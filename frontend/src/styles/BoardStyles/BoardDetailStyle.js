@@ -18,10 +18,28 @@ export const DetailBox = styled.div`
   margin-bottom: 1rem;
 `;
 
-export const User = styled.div`
+export const UserContainer = styled.div`
   display: flex;
   align-items: center;
   margin-bottom: 0.5rem;
+`;
+
+export const UserProfile = styled.img`
+  width: 1.5rem;
+  height: 1.5rem;
+  border-radius: 50%;
+  margin-right: 0.3rem;
+`;
+
+export const User = styled.div`
+  font-size: 1rem;
+  font-weight: bold;
+  margin-right: 0.1rem;
+`;
+
+export const UserBadge = styled.img`
+  width: 1rem;
+  height: 1rem;
 `;
 
 export const CreateAt = styled.p`

@@ -33,4 +33,7 @@ public interface MateRepository extends JpaRepository<Mate, Long> {
 
 
     Page<Mate> findByBoard_UserId(Integer userId, Pageable pageable);
+
+    @Query(value = "SELECT u.nickname, u.profile, bd.code FROM user u JOIN badge b ON u.badge_id = b.badge_id JOIN badge_detail bd ON b.badge_detail_id = bd.badge_detail_id WHERE u.user_id = :userId", nativeQuery = true)
+    List<Object[]> findUserNicknameAndProfileAndMainBadge(@Param("userId") Integer userId);
 }

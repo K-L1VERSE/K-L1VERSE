@@ -8,6 +8,9 @@ import {
   ProductItemContainer,
   ProductItemWriter,
   ProductImage,
+  WriterContainer,
+  WriterProfile,
+  WriteBadge,
 } from "../../styles/BoardStyles/ProductListStyle";
 import {
   DealFlagContainer,
@@ -44,7 +47,13 @@ function ProductItemCard({ product, formatRelativeTime }) {
         </ImageBoxContainer>
         <ItemTitle>{product.board.title}</ItemTitle>
         <ProductItemPrice>가격: {product.price}원</ProductItemPrice>
-        <ProductItemWriter>{product.board.nickname}</ProductItemWriter>
+        <WriterContainer>
+          <WriterProfile src={product.board.profile} />
+          <ProductItemWriter>{product.board.nickname}</ProductItemWriter>
+          <WriteBadge
+            src={`${process.env.PUBLIC_URL}/badge/badge${product.board.mainBadge === null ? 0 : product.board.mainBadge}.png`}
+          />
+        </WriterContainer>
         <ItemInfoSection>
           <ItemInfoItem>
             <Comment />

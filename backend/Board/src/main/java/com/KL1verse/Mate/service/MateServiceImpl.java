@@ -201,9 +201,15 @@ public class MateServiceImpl implements MateService {
             }
 
             Integer userId = mateDTO.getBoard().getUserId();
-            List<Object[]> nicknameResult = mateRepository.findUserNickname(userId);
-            String userNickname = nicknameResult.isEmpty() ? null : (String) nicknameResult.get(0)[0];
+            List<Object[]> userInfo = mateRepository.findUserNicknameAndProfileAndMainBadge(userId);
+            String userNickname = (String) userInfo.get(0)[0];
+            String userProfile = (String) userInfo.get(0)[1];
+            String userMainBadge = (String) userInfo.get(0)[2];
             mateDTO.getBoard().setNickname(userNickname);
+            mateDTO.getBoard().setProfile(userProfile);
+            if(userMainBadge != null) {
+                mateDTO.getBoard().setMainBadge(userMainBadge);
+            }
             mateDTO.getBoard().setBoardImage(mate.getBoard().getBoardImage());
 
 
