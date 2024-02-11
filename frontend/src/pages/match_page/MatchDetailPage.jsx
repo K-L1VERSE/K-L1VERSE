@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useParams, useLocation } from "react-router-dom";
+import styled from "styled-components";
 
 import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
@@ -29,18 +30,39 @@ export default function MatchDetailPage() {
     fetchData();
   }, []);
 
+  const settings = {
+    dots: true,
+    infinite: true,
+    speed: 500,
+    slidesToShow: 1,
+    slidesToScroll: 1,
+    style: {
+      width: "99%",
+    },
+  };
+
   return (
     <div>
       {data && (
         <>
           <MatchDetailScore match={data} y={y} m={m} d={d} day={day} v={v} />
-          <Slider dots>
-            <PredictionContainer />
-            <CurrentBettingContainer />
-          </Slider>
+          <SliderContainer>
+            <Slider {...settings}>
+              <PredictionContainer />
+              <CurrentBettingContainer />
+            </Slider>
+          </SliderContainer>
           <DoBettingContainer />
         </>
       )}
     </div>
   );
 }
+
+const SliderContainer = styled.div`
+  width: 94.5%;
+  margin-top: 20px;
+  .slick-dots {
+    bottom: -30px;
+  }
+`;
