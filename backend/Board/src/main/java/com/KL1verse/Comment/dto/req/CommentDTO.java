@@ -26,7 +26,7 @@ public class CommentDTO {
     private LocalDateTime createAt;
     private LocalDateTime updateAt;
     private LocalDateTime deleteAt;
-    private boolean isSecret;
+    private Boolean isSecret;
     private int likesCount;
     private String nickname;
     private boolean isLiked;

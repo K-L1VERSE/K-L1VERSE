@@ -34,8 +34,9 @@ public class CommentController {
     @PostMapping("/{boardId}")
     public ResponseEntity<CommentDTO> createComment(@PathVariable Long boardId,
         @RequestBody CommentDTO commentDTO) {
-        commentDTO.setBoardId(boardId);
 
+        log.info("controller = {}", commentDTO.getBoardId());
+        log.info("controller = {}", commentDTO.getIsSecret());
         CommentDTO createdComment = commentService.createComment(commentDTO);
         return ResponseEntity.ok(createdComment);
     }

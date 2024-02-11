@@ -1,4 +1,6 @@
 import React, { useState, useEffect } from "react";
+import { useRecoilState } from "recoil";
+import { UserState } from "../../global/UserState";
 import CommentContainer from "./CommentContainer";
 import { ListContainer } from "../../styles/BoardStyles/CommentStyle";
 import {
@@ -14,7 +16,8 @@ const CommentList = ({ boardId }) => {
   const [commentId, setCommentId] = useState(0);
   const [likesCount, setLikesCount] = useState(0);
   const [liked, setLiked] = useState(false);
-  const [userId] = useState(1);
+  const [userState] = useRecoilState(UserState);
+  const { userId } = userState;
 
   const getComments = () => {
     getCommentList(
