@@ -181,9 +181,17 @@ public class CommentServiceImpl implements CommentService {
                     comment.getCommentId());
                 commentDTO.setLikesCount(commentLikesCount != null ? commentLikesCount : 0);
 
-                List<Object[]> userNickname = commentRepository.findUserNickname(
+                List<Object[]> userInfo = commentRepository.findUserNicknameAndProfileAndMainBadge(
                     comment.getUserId());
-                commentDTO.setNickname((String) userNickname.get(0)[0]);
+                String userNickname = (String) userInfo.get(0)[0];
+                String userProfile = (String) userInfo.get(0)[1];
+                String mainBadge = (String) userInfo.get(0)[2];
+
+                commentDTO.setNickname(userNickname);
+                commentDTO.setProfile(userProfile);
+                if(mainBadge != null) {
+                    commentDTO.setMainBadge(mainBadge);
+                }
 
 
                 boolean isLiked = commentLikeRepository.findByUserIdAndCommentId_CommentId(requestingUserId, comment.getCommentId()).isPresent();
@@ -292,7 +300,7 @@ public class CommentServiceImpl implements CommentService {
                             .collect(Collectors.toList());
 
                         commentDTO.setReplies(replies);
-                        commentDTO.setNickname((String) userNickname.get(0)[0]);
+//                        commentDTO.setNickname((String) userNickname.get(0)[0]);
                         commentDTO.setLiked(isLiked);
                         return commentDTO;
                     }

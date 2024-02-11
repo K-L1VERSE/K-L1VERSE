@@ -30,4 +30,6 @@ public class CommentDTO {
     private int likesCount;
     private String nickname;
     private boolean isLiked;
+    private String profile;
+    private String mainBadge;
 }

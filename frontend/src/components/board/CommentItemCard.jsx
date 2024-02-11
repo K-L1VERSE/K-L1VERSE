@@ -12,6 +12,9 @@ import {
   CommentListContainer,
   LikeBox,
   CommentContentContainer,
+  WriterContainer,
+  WriterProfile,
+  WriterBadge,
 } from "../../styles/BoardStyles/CommentStyle";
 import { likeComment, unlikeComment, updateComment } from "../../api/comment";
 import { UserState } from "../../global/UserState";
@@ -95,7 +98,15 @@ function CommentItemCard({ comment, onCommentDelete, formatRelativeTime }) {
 
   return (
     <CommentListContainer>
-      <CommentWriter>{comment.nickname}</CommentWriter>
+      <WriterContainer>
+        {comment.profile && <WriterProfile src={comment.profile} />}
+        <CommentWriter>{comment.nickname}</CommentWriter>
+        {comment.mainBadge && (
+          <WriterBadge
+            src={`${process.env.PUBLIC_URL}/badge/badge${comment.mainBadge === null ? 0 : comment.mainBadge}.png`}
+          />
+        )}
+      </WriterContainer>
       <CommentItem key={comment.commentId}>
         {isEditMode ? (
           // 수정 모드일 때는 입력 필드를 보여줌

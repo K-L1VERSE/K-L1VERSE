@@ -56,13 +56,31 @@ export const ItemContainer = styled.div`
   padding-top: 0.4rem;
 `;
 
+export const WriterContainer = styled.div`
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  margin-top: 0.3rem;
+  margin-bottom: 0.5rem;
+`;
+
+export const WriterProfile = styled.img`
+  width: 1.375rem;
+  height: 1.375rem;
+  border-radius: 50%;
+  margin-right: 0.3rem;
+`;
+
 export const ItemWriter = styled.div`
   font-size: 0.9rem;
   color: darkslategray;
-  margin-top: 0.3rem;
-  margin-bottom: 0.3rem;
+  margin-right: 0.1rem;
 `;
 
+export const WriteBadge = styled.img`
+  width: 1rem;
+  height: 1rem;
+`;
 export const ImageContentBox = styled.div`
   display: flex;
   margin-top: 0.5rem;
