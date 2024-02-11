@@ -6,7 +6,7 @@ import lombok.Getter;
 public class BoardNotificationReqDto {
 
     public static enum BoardNotificationType {
-        COMMENT, LIKE
+        COMMENT, LIKE, GOAL
     }
 
     Integer userId;

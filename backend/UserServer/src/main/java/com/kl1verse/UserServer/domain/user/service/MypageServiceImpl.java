@@ -1,6 +1,8 @@
 package com.kl1verse.UserServer.domain.user.service;
 
 import com.kl1verse.UserServer.domain.auth.JwtUtil;
+import com.kl1verse.UserServer.domain.notification.dto.req.MessageReqDto;
+import com.kl1verse.UserServer.domain.notification.service.NotificationService;
 import com.kl1verse.UserServer.domain.s3.repository.entity.File;
 import com.kl1verse.UserServer.domain.s3.service.FileService;
 import com.kl1verse.UserServer.domain.s3.service.UserImageService;
@@ -27,6 +29,7 @@ public class MypageServiceImpl {
     private final JwtUtil jwtUtil;
     private final UserImageService userImageService;
     private final FileService fileService;
+    private final NotificationService notificationService;
 
     public MypageResponseDto getUserInfo(HttpServletRequest request) {
         /*
@@ -134,5 +137,12 @@ public class MypageServiceImpl {
         user.setGoal(user.getGoal() - 1000);
         user.setNickname(nicknameUpdateReqDto.getNickname());
         userRepository.save(user);
+
+        notificationService.sendNotification(MessageReqDto.builder()
+                .type(MessageReqDto.NotificationType.GOAL)
+                .userId(user.getId())
+                .message("닉네임 변경으로 1000골을 사용하셨습니다.")
+                .uri("/mypage")
+                .build());
     }
 }
