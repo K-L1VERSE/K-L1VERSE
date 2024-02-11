@@ -1,5 +1,5 @@
 import React from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import {
   TimeContainer,
   TimeComponent,
@@ -8,7 +8,9 @@ import {
   DuringText,
 } from "../../../styles/match-styles/detail/MatchTimeComponentStyles";
 
-function MatchTimeComponent({ time, status, matchId }) {
+function MatchTimeComponent({ time, status }) {
+  const { matchId } = useParams();
+
   const targetTIme = new Date(time);
   const currentTime = new Date();
   const timeDifferenceInMinues = Math.floor(
@@ -21,7 +23,9 @@ function MatchTimeComponent({ time, status, matchId }) {
 
   const navigate = useNavigate();
   const enterMatch = (to) => {
-    navigate(`/matchChatting/${to}`);
+    if (status !== "done") {
+      navigate(`/chat/${to}`);
+    }
   };
   return (
     <TimeContainer onClick={() => enterMatch(matchId)}>

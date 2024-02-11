@@ -1,5 +1,6 @@
-import React from "react";
-
+import React, { useState, useEffect } from "react";
+import { useParams } from "react-router-dom";
+import { getMatchDetail } from "../../../api/match";
 import {
   PredictionChartOuterContainer,
   PredictionChartInnerContainer,
@@ -11,10 +12,34 @@ import {
 import { PredictBox } from "../../../styles/match-styles/MatchDetailStyle";
 import PredictionComponent from "./PredictionComponent";
 
-export default function PredictionContainer({ match }) {
-  const { homeBettingAmount } = match;
-  const { drawBettingAmount } = match;
-  const { awayBettingAmount } = match;
+export default function PredictionContainer() {
+  const { matchId } = useParams();
+
+  const [match, setMatch] = useState(null);
+  const [isLoading, setIsLoading] = useState(true); // 로딩 상태를 관리하는 상태 값 추가
+
+  useEffect(() => {
+    const fetchData = async () => {
+      const result = await getMatchDetail(matchId);
+      setMatch(result);
+      setIsLoading(false); // 데이터를 불러온 후 로딩 상태를 false로 설정
+    };
+    fetchData();
+  }, [matchId]);
+
+  if (isLoading) {
+    return <div>Loading...</div>; // 로딩 중일 때는 'Loading...'을 표시
+  }
+
+  const {
+    homeBettingAmount,
+    drawBettingAmount,
+    awayBettingAmount,
+    homeTeamName,
+    awayTeamName,
+    homeTeamId,
+    awayTeamId,
+  } = match;
 
   const totalBettingAmount =
     homeBettingAmount + drawBettingAmount + awayBettingAmount;
@@ -32,25 +57,25 @@ export default function PredictionContainer({ match }) {
             />
             <div>승부 예측 </div>
           </PredictBoxTitle>
-          <PredictBoxSubTitle>
+          {/* <PredictBoxSubTitle>
             {homeBettingAmount + drawBettingAmount + awayBettingAmount}참여
-          </PredictBoxSubTitle>
+          </PredictBoxSubTitle> */}
         </PredictBoxTitleComponent>
       </div>
 
       <PredictionChartOuterContainer>
         <PredictionChartInnerContainer>
           <PredictionComponent
-            teamName={match.homeTeamName}
-            teamId={match.homeTeamId}
+            teamName={homeTeamName}
+            teamId={homeTeamId}
             bettingAmount={homeBettingAmount}
             totalBettingAmount={totalBettingAmount}
           />
         </PredictionChartInnerContainer>
         <PredictionChartInnerContainer>
           <PredictionComponent
-            teamName={match.awayTeamName}
-            teamId={match.awayTeamId}
+            teamName={awayTeamName}
+            teamId={awayTeamId}
             bettingAmount={awayBettingAmount}
             totalBettingAmount={totalBettingAmount}
           />

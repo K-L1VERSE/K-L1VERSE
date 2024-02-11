@@ -39,18 +39,18 @@ export default function BettingPercentItem({ match }) {
             <img src={homeTeamsrc} alt="" />
             {match.homeTeamName}
           </TeamItem>
-          <Percent $type="home">X {Math.round(homeOdds * 100) / 100}</Percent>
+          <Percent type="home">X {Math.round(homeOdds * 100) / 100}</Percent>
         </PercentItem>
         <PercentItem $width={drawOddsRatio}>
           <TeamItem>무승부</TeamItem>
-          <Percent $type="draw">X {Math.round(drawOdds * 100) / 100}</Percent>
+          <Percent type="draw">X {Math.round(drawOdds * 100) / 100}</Percent>
         </PercentItem>
         <PercentItem $width={awayOddsRatio}>
           <TeamItem>
             <img src={awayTeamsrc} alt="" />
             {match.awayTeamName}
           </TeamItem>
-          <Percent $type="away">X {Math.round(awayOdds * 100) / 100}</Percent>
+          <Percent type="away">X {Math.round(awayOdds * 100) / 100}</Percent>
         </PercentItem>
       </PercentItems>
     </PercentBox>
