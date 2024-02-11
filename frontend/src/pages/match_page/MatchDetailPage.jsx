@@ -24,8 +24,15 @@ export default function MatchDetailPage() {
   const [data, setData] = useState();
   useEffect(() => {
     const fetchData = async () => {
-      const result = await getMatchDetail(matchId);
-      setData(result);
+      await getMatchDetail(matchId)
+        .then((result) => {
+          setData(result);
+        })
+        .catch(() => {
+          setData({
+            status: "NONE",
+          });
+        });
     };
     fetchData();
   }, []);
@@ -46,7 +53,7 @@ export default function MatchDetailPage() {
       {data && (
         <>
           <MatchDetailScore match={data} y={y} m={m} d={d} day={day} v={v} />
-          {data ? (
+          {data.status !== "NONE" ? (
             <>
               <SliderContainer>
                 <Slider {...settings}>
@@ -57,7 +64,7 @@ export default function MatchDetailPage() {
               <DoBettingContainer />
             </>
           ) : (
-            <div>Loading...</div>
+            <div />
           )}
         </>
       )}
