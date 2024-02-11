@@ -164,12 +164,15 @@ export const CheckboxInput = styled.input`
 // 댓글 수정창
 export const CommentInput = styled.input`
   margin-left: 0.8rem;
+  margin-right: 0.8rem;
   padding: 8px;
   margin-top: 0.4rem;
   margin-bottom: 0.4rem;
-  border: 1px solid #ccc;
+  width: 100%;
+  border: 1px solid white;
   border-radius: 4px;
-  background-color: bisque;
+  outline: none;
+  background-color: #e6f4fa;
 `;
 
 export const SubmitButton = styled.button`
@@ -184,6 +187,19 @@ export const SubmitButton = styled.button`
   &:hover {
     background-color: #bbe2ec;
   }
+`;
+
+export const SubmitContainer = styled.div`
+  display: flex;
+  align-items: center;
+  border: 1px solid #ccc;
+  border: none;
+  cursor: pointer;
+`;
+
+export const SubmitImg = styled.img`
+  width: 1.8rem;
+  height: 1.8rem;
 `;
 
 export const CancelButton = styled.button`

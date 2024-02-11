@@ -12,12 +12,15 @@ import {
   TextContainer,
   TextBottom,
   UserInfo,
+  SubmitContainer,
+  SubmitImg,
 } from "../../styles/BoardStyles/CommentStyle";
 import {
   SenderImg,
   BadgeImg,
 } from "../../styles/match-styles/MatchChattingStyle";
 import { updateComment, createComment } from "../../api/comment";
+import SendIcon from "../../assets/icon/send-icon.png";
 
 const CommentForm = ({ boardId, parentId, getComments }) => {
   const [content, setContent] = useState("");
@@ -38,6 +41,9 @@ const CommentForm = ({ boardId, parentId, getComments }) => {
   }, [location]);
 
   const handleSubmit = () => {
+    if (content === "") {
+      return;
+    }
     if (isUpdateMode) {
       updateComment(
         boardId,
@@ -116,16 +122,17 @@ const CommentForm = ({ boardId, parentId, getComments }) => {
             <div> 비밀</div>
           </div>
         </CheckboxLabel>
-        <div>
-          <SubmitButton type="button" onClick={handleSubmit}>
+        <SubmitContainer onClick={handleSubmit}>
+          {/* <SubmitButton type="button" onClick={handleSubmit}>
             {isUpdateMode ? "댓글 수정 완료" : "등록"}
-          </SubmitButton>
-          {isUpdateMode && (
+          </SubmitButton> */}
+          <SubmitImg src={SendIcon} />
+          {/* {isUpdateMode && (
             <CancelButton type="button" onClick={() => setIsUpdateMode(false)}>
               수정 취소
             </CancelButton>
-          )}
-        </div>
+          )} */}
+        </SubmitContainer>
       </TextBottom>
     </CommentFormContainer>
   );

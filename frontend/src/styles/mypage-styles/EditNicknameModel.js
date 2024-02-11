@@ -6,7 +6,7 @@ export const ModalBackground = styled.div`
   left: 0;
   bottom: 0;
   right: 0;
-  background: rgba(67, 79, 101, 0.8);
+  background: #00000066;
 `;
 
 export const ModalContainer = styled.div`

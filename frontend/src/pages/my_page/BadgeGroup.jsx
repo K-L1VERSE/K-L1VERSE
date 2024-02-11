@@ -6,6 +6,7 @@ function BadgeGroup({
   badgeList,
   badgeNameList,
   badgeCodeList,
+  selectedBadge,
   setSelectedBadge,
 }) {
   return (
@@ -17,6 +18,7 @@ function BadgeGroup({
           badgeList={badgeList}
           badgeNameList={badgeNameList}
           badgeCodeList={badgeCodeList}
+          selectedBadge={selectedBadge}
           setSelectedBadge={setSelectedBadge}
         />
       ))}

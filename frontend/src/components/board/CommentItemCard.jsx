@@ -31,6 +31,10 @@ function CommentItemCard({ comment, onCommentDelete, formatRelativeTime }) {
 
   const handleUpdateBtn = () => {
     if (isEditMode) {
+      if (updatedContent === comment.content || updatedContent === "") {
+        return;
+      }
+
       updateComment(
         comment.commentId,
         {
@@ -110,11 +114,19 @@ function CommentItemCard({ comment, onCommentDelete, formatRelativeTime }) {
       <CommentItem key={comment.commentId}>
         {isEditMode ? (
           // 수정 모드일 때는 입력 필드를 보여줌
-          <CommentInput
-            type="text"
-            value={updatedContent}
-            onChange={(e) => setUpdatedContent(e.target.value)}
-          />
+          <>
+            <CommentContentContainer>
+              <CommentInput
+                type="text"
+                value={updatedContent}
+                onChange={(e) => setUpdatedContent(e.target.value)}
+              />
+            </CommentContentContainer>
+            <CommentContentContainer>
+              <CommentTime>{formatRelativeTime(comment.createAt)}</CommentTime>
+              {renderEditDeleteButtons()}
+            </CommentContentContainer>
+          </>
         ) : (
           // 수정 모드가 아닐 때는 댓글 내용을 보여줌
           <>

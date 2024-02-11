@@ -5,6 +5,7 @@ function BadgeList({
   badgeList,
   badgeNameList,
   badgeCodeList,
+  selectedBadge,
   setSelectedBadge,
 }) {
   const badgesInGroupsOfFour = badgeCodeList.reduce((result, code, index) => {
@@ -25,6 +26,7 @@ function BadgeList({
           badgeList={badgeList}
           badgeNameList={badgeNameList}
           badgeCodeList={badgeCodeList}
+          selectedBadge={selectedBadge}
           setSelectedBadge={setSelectedBadge}
         />
       ))}

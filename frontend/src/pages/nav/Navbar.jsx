@@ -73,7 +73,7 @@ export default function Header() {
       <Contents>
         <Outlet />
       </Contents>
-      <Nav $disabled={nickname === null}>
+      <Nav $modifyingNickname={modifyingNickname} $disabled={nickname === null}>
         <NavItem onClick={goMatchSchedule} $disabled={disabled}>
           {navbarScheduleIcon({ $isSelected: state[0] })}
           <Text $isSelected={state[0]}>경기일정</Text>
