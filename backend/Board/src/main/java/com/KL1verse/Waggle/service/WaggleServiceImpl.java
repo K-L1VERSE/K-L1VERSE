@@ -331,7 +331,7 @@ public class WaggleServiceImpl implements WaggleService {
             .type(BoardNotificationResDto.BoardNotificationType.GOAL)
             .userId(userId)
             .message("글 작성 보상으로 10골을 지급 받았습니다.")
-            .uri("/waggles/" + String.valueOf(board.getBoardId()))
+            .uri("/waggle/" + String.valueOf(board.getBoardId()))
             .profile(null)
             .nickname(null)
             .build());
