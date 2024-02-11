@@ -43,7 +43,9 @@ function ProductItemCard({ product, formatRelativeTime }) {
           )}
         </ImageBoxContainer>
         <ItemTitle>{product.board.title}</ItemTitle>
-        <ProductItemPrice>가격: {product.price}원</ProductItemPrice>
+        <ProductItemPrice>
+          {Number(product.price).toLocaleString()}원
+        </ProductItemPrice>
         <ProductItemWriter>{product.board.nickname}</ProductItemWriter>
         <ItemInfoSection>
           <ItemInfoItem>

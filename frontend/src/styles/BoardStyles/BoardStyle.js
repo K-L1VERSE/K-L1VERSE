@@ -67,13 +67,19 @@ export const ImageContentBox = styled.div`
   display: flex;
   margin-top: 0.5rem;
 `;
-
 export const ItemTitle = styled.div`
   font-size: 1rem;
   color: #222222;
+  height: 1.5rem;
+  display: block;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  text-decoration: none;
+  margin-top: 0.4rem;
+  font-family: "Pretendard-Regular";
   a {
     text-decoration: none;
-    color: inherit;
   }
 `;
 
