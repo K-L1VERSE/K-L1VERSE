@@ -36,8 +36,8 @@ function DoBettingContainer() {
   const { matchId } = useParams();
   const [match, setMatch] = useState(null);
   const [isLoading, setIsLoading] = useState(true); // 로딩 상태를 관리하는 상태 값 추가
-
   const [betComplete, setBetComplete] = useState(false);
+  const [leftMoreThanTenMinutes, setLeftMoreThanTenMinutes] = useState(true);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -93,6 +93,24 @@ function DoBettingContainer() {
 
     return teamsrc;
   };
+
+  useEffect(() => {
+    const targetTime = new Date(match.matchAt);
+    targetTime.setMinutes(targetTime.getMinutes() - 10);
+
+    const timer = setInterval(() => {
+      const now = new Date();
+
+      if (now > targetTime) {
+        setLeftMoreThanTenMinutes(false);
+        clearInterval(timer);
+      }
+    }, 1000);
+
+    return () => {
+      clearInterval(timer);
+    };
+  }, []);
 
   const handleBettingClick = async () => {
     const teamId = match
@@ -184,7 +202,9 @@ function DoBettingContainer() {
             selected={selectedTeam === "home"}
             onClick={() => handleTeamClick("home")}
             // betComplete가 true면 disabled
-            disabled={betComplete || match.status === "done"}
+            disabled={
+              betComplete || match.status === "done" || !leftMoreThanTenMinutes
+            }
           >
             <TeamNameContainer>
               <TeamNameComponent>
@@ -197,7 +217,9 @@ function DoBettingContainer() {
             type="button"
             selected={selectedTeam === "draw"}
             onClick={() => handleTeamClick("draw")}
-            disabled={betComplete || match.status === "done"}
+            disabled={
+              betComplete || match.status === "done" || !leftMoreThanTenMinutes
+            }
           >
             <TeamName>무승부</TeamName>
           </TeamSelectButton>
@@ -205,7 +227,9 @@ function DoBettingContainer() {
             type="button"
             selected={selectedTeam === "away"}
             onClick={() => handleTeamClick("away")}
-            disabled={betComplete || match.status === "done"}
+            disabled={
+              betComplete || match.status === "done" || !leftMoreThanTenMinutes
+            }
           >
             <TeamNameContainer>
               <TeamNameComponent>
@@ -218,7 +242,13 @@ function DoBettingContainer() {
 
         <DoBetInputContainer>
           <DoBetInputComponent>
-            <InputForm disabled={betComplete || match.status === "done"}>
+            <InputForm
+              disabled={
+                betComplete ||
+                match.status === "done" ||
+                !leftMoreThanTenMinutes
+              }
+            >
               <DoBetInputBox
                 id="bettingGoal"
                 type="text"
@@ -226,7 +256,11 @@ function DoBettingContainer() {
                   const val = e.target.value;
                   setBettingAmount(val.replace(/\D/g, "")); // 숫자가 아닌 문자를 모두 제거합니다.
                 }}
-                disabled={betComplete || match.status === "done"}
+                disabled={
+                  betComplete ||
+                  match.status === "done" ||
+                  !leftMoreThanTenMinutes
+                }
                 placeholder={0}
                 value={bettingAmount === 0 ? "" : bettingAmount}
               />
@@ -237,7 +271,11 @@ function DoBettingContainer() {
             <DoBetButton
               type="button"
               onClick={handleBettingClick}
-              disabled={betComplete || match.status === "done"}
+              disabled={
+                betComplete ||
+                match.status === "done" ||
+                !leftMoreThanTenMinutes
+              }
             >
               <DoBetText>
                 <DoBetIcon /> <div>베팅 하기</div>
