@@ -11,7 +11,7 @@ export const ProductItemWriter = styled.div`
 export const ForWidth = styled.div`
   display: flex;
   flex-wrap: wrap;
-  justify-content: space-between;
+  justify-content: flex-start;
   padding: 0 0.2rem;
 `;
 
@@ -19,15 +19,19 @@ export const ProductListContainer = styled.div`
   display: flex;
   margin: 0 auto;
   flex-wrap: wrap;
-  width: 95%;
+  width: 22rem;
   height: auto;
   margin-top: 1rem;
   font-family: "Pretendard-Regular";
+  @media (min-width: 768px) {
+    width: 600px;
+  }
 `;
 
 export const ProductItemContainer = styled.div`
   width: 10.4rem;
   margin-bottom: 1rem;
+  margin-right: 0.4rem;
   text-align: left;
   text-decoration: none;
   color: inherit;
@@ -35,6 +39,10 @@ export const ProductItemContainer = styled.div`
   border-radius: 5px;
   padding: 0.8rem;
   box-sizing: border-box;
+  @media (min-width: 768px) {
+    margin-right: 0.5rem;
+    width: 11.8rem;
+  }
 `;
 
 export const DealStatus = styled.div`
