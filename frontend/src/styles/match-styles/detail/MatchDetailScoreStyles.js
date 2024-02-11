@@ -46,12 +46,10 @@ export const MatchDetailComponent = styled.div`
 `;
 
 export const MatchUpContainer = styled.div`
-  display: flex;
   margin: 0 auto;
   width: 90%;
   justify-content: space-around;
   padding: 0.5rem;
-  height: 36px;
   background-color: white;
   border-radius: 5px;
 `;
