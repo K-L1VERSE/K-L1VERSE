@@ -34,25 +34,10 @@ function DoBettingContainer() {
   const [bettingAmount, setBettingAmount] = useState(0);
   const [userState] = useRecoilState(UserState);
   const { matchId } = useParams();
-  // const [match, setMatch] = useState(null);
+  const [match, setMatch] = useState(null);
   const [isLoading, setIsLoading] = useState(true); // 로딩 상태를 관리하는 상태 값 추가
 
   const [betComplete, setBetComplete] = useState(false);
-
-  const match = {
-    homeTeamId: 1,
-    awayTeamId: 2,
-    homeTeamName: "울산 HD FC",
-    awayTeamName: "포항스틸러스",
-    homeBettingAmount: 40,
-    awayBettingAmount: 100,
-    drawBettingAmount: 60,
-    matchAt: "2024-02-03T13:00:00",
-    status: "done",
-    homeScore: 1,
-    awayScore: 2,
-    home: "울산 문수",
-  };
 
   useEffect(() => {
     const fetchData = async () => {
