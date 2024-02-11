@@ -1,9 +1,9 @@
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { useSetRecoilState } from "recoil";
+import Swal from "sweetalert2";
 import { UserState } from "../../global/UserState";
 
-import Swal from "sweetalert2";
 import axios from "../../api/axios";
 
 import {
@@ -92,15 +92,17 @@ function Badge() {
 
   const wearBadge = (index) => {
     Swal.fire({
-      title: "뱃지를 착용하시겠습니까?",
-      icon: "question",
+      html: `
+        <img src="https://raw.githubusercontent.com/Tarikul-Islam-Anik/Animated-Fluent-Emojis/master/Emojis/Animals/Bear.png" alt="Bear" width="100" height="100"/>
+        <p style='font-size:1.2rem; font-family:Pretendard-Bold;'>뱃지를 착용하시겠습니까?</p>
+      `,
       showCancelButton: true,
       confirmButtonColor: "#3085d6",
       cancelButtonColor: "#d33",
       confirmButtonText:
-        "<div style='font-size:20px; font-family:revert; font-weight:550;'>착용</div>",
+        "<div style='font-size:1rem; font-family:Pretendard-Regular;'>착용</div>",
       cancelButtonText:
-        "<div style='font-size:20px; font-family:revert; font-weight:550;'>취소</div>",
+        "<div style='font-size:1rem; font-family:Pretendard-Regular;'>취소</div>",
     }).then((result) => {
       if (result.isConfirmed) {
         axios
@@ -110,9 +112,9 @@ function Badge() {
           .then(() => {
             Swal.fire({
               icon: "success",
-              title: "뱃지 착용이 완료되었습니다.",
+              html: `<p style='font-size:1.2rem; font-family:Pretendard-Bold;'>뱃지 착용이 완료되었습니다.</p>`,
               confirmButtonText:
-                "<div style='font-size:1.25rem; font-family:revert; font-weight:550;'>확인</div>",
+                "<div style='font-size:1rem; font-family:Pretendard-Regular;'>확인</div>",
             });
 
             setUserState((prev) => ({
