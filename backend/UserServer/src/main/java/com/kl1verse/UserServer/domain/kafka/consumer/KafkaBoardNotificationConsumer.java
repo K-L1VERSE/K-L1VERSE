@@ -4,18 +4,17 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.kl1verse.UserServer.domain.kafka.dto.req.BoardNotificationReqDto;
 import com.kl1verse.UserServer.domain.kafka.dto.req.BoardNotificationReqDto.BoardNotificationType;
-import com.kl1verse.UserServer.domain.kafka.dto.req.NotificationListReqDto;
 import com.kl1verse.UserServer.domain.notification.dto.req.MessageReqDto;
 import com.kl1verse.UserServer.domain.notification.dto.req.MessageReqDto.NotificationType;
 import com.kl1verse.UserServer.domain.notification.service.NotificationService;
-import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.List;
+import com.kl1verse.UserServer.domain.user.service.UserService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.kafka.annotation.KafkaListener;
 import org.springframework.stereotype.Service;
+
+import java.time.LocalDateTime;
 
 @Slf4j
 @RequiredArgsConstructor
@@ -23,6 +22,7 @@ import org.springframework.stereotype.Service;
 public class KafkaBoardNotificationConsumer {
 
     private final NotificationService notificationService;
+    private final UserService userService;
 
     @Autowired
     private ObjectMapper objectMapper;
@@ -49,6 +49,8 @@ public class KafkaBoardNotificationConsumer {
                 .date(LocalDateTime.now())
                 .build();
 
+
+            userService.addTenGoal(userId);
             notificationService.sendNotification(messageReqDto);
 
         } catch (JsonProcessingException e) {
