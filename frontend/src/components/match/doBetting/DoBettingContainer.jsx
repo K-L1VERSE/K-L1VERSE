@@ -34,7 +34,7 @@ function DoBettingContainer() {
   const [bettingAmount, setBettingAmount] = useState(0);
   const [userState] = useRecoilState(UserState);
   const { matchId } = useParams();
-  const [match, setMatch] = useState(null);
+  const [match, setMatch] = useState({});
   const [isLoading, setIsLoading] = useState(true); // 로딩 상태를 관리하는 상태 값 추가
   const [betComplete, setBetComplete] = useState(false);
   const [leftMoreThanTenMinutes, setLeftMoreThanTenMinutes] = useState(true);
@@ -46,6 +46,22 @@ function DoBettingContainer() {
       setIsLoading(false); // 데이터를 불러온 후 로딩 상태를 false로 설정
     };
     fetchData();
+
+    const targetTime = new Date("2024-02-03T13:00:00");
+    targetTime.setMinutes(targetTime.getMinutes() - 10);
+
+    const timer = setInterval(() => {
+      const now = new Date();
+
+      if (now > targetTime) {
+        setLeftMoreThanTenMinutes(false);
+        clearInterval(timer);
+      }
+    }, 1000);
+
+    return () => {
+      clearInterval(timer);
+    };
   }, [matchId]);
 
   useEffect(() => {
@@ -93,24 +109,6 @@ function DoBettingContainer() {
 
     return teamsrc;
   };
-
-  useEffect(() => {
-    const targetTime = new Date(match.matchAt);
-    targetTime.setMinutes(targetTime.getMinutes() - 10);
-
-    const timer = setInterval(() => {
-      const now = new Date();
-
-      if (now > targetTime) {
-        setLeftMoreThanTenMinutes(false);
-        clearInterval(timer);
-      }
-    }, 1000);
-
-    return () => {
-      clearInterval(timer);
-    };
-  }, []);
 
   const handleBettingClick = async () => {
     const teamId = match
