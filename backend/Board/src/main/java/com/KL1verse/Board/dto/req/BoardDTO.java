@@ -26,7 +26,8 @@ public class BoardDTO {
     private LocalDateTime deleteAt;
     private Integer commentCount;
     private String boardImage;
-
+    private String profile;
+    private String mainBadge;
 
 
 }
