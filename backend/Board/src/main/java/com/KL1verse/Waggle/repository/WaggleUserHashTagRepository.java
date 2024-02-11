@@ -12,14 +12,11 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface WaggleUserHashTagRepository extends JpaRepository<WaggleUserHashTag, Long> {
     List<WaggleUserHashTag> findByUserIdOrderByCreatedAtDesc(Integer userId);
-//    @Query(value = "SELECT hashtags FROM waggle_user_hashtag GROUP BY hashtags ORDER BY COUNT(*) DESC LIMIT 3", nativeQuery = true)
-//    String findMostViewedHashtags();
 
     @Query(value = "SELECT GROUP_CONCAT(hashtags) FROM (SELECT hashtags FROM waggle_user_hashtag GROUP BY hashtags ORDER BY COUNT(*) DESC LIMIT 3) AS top_hashtags", nativeQuery = true)
     String findMostViewedHashtags();
 
     List<WaggleUserHashTag> findByUserIdAndWaggle_Board_BoardIdAndIsLiked(Integer userId, Long boardId, Boolean isLiked);
 
-    WaggleUserHashTag findByUserIdAndWaggle_Board_BoardIdAndHashtagsAndIsLiked(Integer userId, Long waggleId, String hashtag, boolean isLiked);
 }
 

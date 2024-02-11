@@ -20,6 +20,7 @@ import com.KL1verse.s3.service.BoardImageService;
 import com.KL1verse.s3.service.FileService;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.HashMap;
@@ -27,7 +28,9 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
+import java.util.PriorityQueue;
 import java.util.Set;
+import java.util.function.Function;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import java.util.stream.Collectors;
@@ -89,6 +92,78 @@ public class WaggleServiceImpl implements WaggleService {
     });
   }
 
+//  @Override
+//  public Page<WaggleDTO> getWagglesByHashtags(List<String> hashtags, Pageable pageable) {
+//    Set<Long> visitedBoardIds = new HashSet<>(); // 이미 방문한 게시글의 ID를 추적하기 위한 Set
+//    List<WaggleDTO> uniqueWaggles = new ArrayList<>(); // 중복된 게시글을 필터링한 결과를 저장할 리스트
+//
+//    // 각 해시태그별로 해당하는 게시글들을 검색하고 중복을 제거하여 uniqueWaggles에 추가
+//    for (String hashtag : hashtags) {
+//      // 대괄호 제거
+//      hashtag = hashtag.replaceAll("[\\[\\]]", "");
+//      log.info("hashtag: {}", hashtag);
+//      Page<Waggle> waggles = waggleRepository.findByHashtagsContaining(hashtag, pageable);
+//
+//      List<WaggleDTO> waggleDTOList = convertToDTOList(waggles.getContent());
+//      for (WaggleDTO waggleDTO : waggleDTOList) {
+//        if (!visitedBoardIds.contains(
+//            waggleDTO.getBoard().getBoardId())) { // 이미 포함되어 있는 게시글인지 확인
+//          waggleDTO.getBoard().setCommentCount(
+//              commentRepository.countCommentsByBoardId(
+//                  waggleDTO.getBoard().getBoardId()));
+//          waggleDTO.setLikesCount(
+//              waggleRepository.getLikesCountForEachWaggle().stream()
+//                  .filter(result -> ((Waggle) result[0]).getWaggleId()
+//                      .equals(waggleDTO.getWaggleId()))
+//                  .map(result -> ((Long) result[1]).intValue())
+//                  .findFirst()
+//                  .orElse(0));
+//          waggleDTO.getBoard().setNickname(
+//              (String) waggleRepository.findUserNickname(waggleDTO.getBoard().getUserId())
+//                  .get(0)[0]);
+//          uniqueWaggles.add(waggleDTO); // 포함되어 있지 않다면 uniqueWaggles에 추가
+//          visitedBoardIds.add(waggleDTO.getBoard().getBoardId()); // 방문한 게시글로 표시
+//        }
+//      }
+//    }
+//
+//    // 상위 3개의 해시태그를 조회하여 각 해시태그별로 해당하는 게시글들을 검색하고 중복을 제거하여 uniqueWaggles에 추가
+//    String mostViewedWaggleUserHashTags = waggleUserHashTagRepository.findMostViewedHashtags();
+//    log.info("mostViewedWaggleUserHashTags: {}", mostViewedWaggleUserHashTags);
+//
+//    // 대괄호 제거 후 공백을 기준으로 분할하여 각 해시태그 처리
+//    String[] mostViewedHashtags = mostViewedWaggleUserHashTags.replaceAll("[\\[\\]]", "")
+//        .split(",\\s*");
+//    for (String mostViewedHashtag : mostViewedHashtags) {
+//      log.info("mostViewedHashtag: {}", mostViewedHashtag);
+//
+//      // 각 해시태그별로 해당하는 게시글들을 검색하고 중복을 제거하여 uniqueWaggles에 추가
+//      Page<Waggle> waggles = waggleRepository.findByHashtagsContaining(mostViewedHashtag, pageable);
+//      List<WaggleDTO> waggleDTOList = convertToDTOList(waggles.getContent());
+//      for (WaggleDTO waggleDTO : waggleDTOList) {
+//        if (!visitedBoardIds.contains(waggleDTO.getBoard().getBoardId())) { // 이미 포함되어 있는 게시글인지 확인
+//          waggleDTO.getBoard().setCommentCount(
+//              commentRepository.countCommentsByBoardId(waggleDTO.getBoard().getBoardId()));
+//          waggleDTO.setLikesCount(
+//              waggleRepository.getLikesCountForEachWaggle().stream()
+//                  .filter(result -> ((Waggle) result[0]).getWaggleId()
+//                      .equals(waggleDTO.getWaggleId()))
+//                  .map(result -> ((Long) result[1]).intValue())
+//                  .findFirst()
+//                  .orElse(0));
+//          waggleDTO.getBoard().setNickname(
+//              (String) waggleRepository.findUserNickname(waggleDTO.getBoard().getUserId())
+//                  .get(0)[0]);
+//          uniqueWaggles.add(waggleDTO); // 포함되어 있지 않다면 uniqueWaggles에 추가
+//          visitedBoardIds.add(waggleDTO.getBoard().getBoardId()); // 방문한 게시글로 표시
+//        }
+//      }
+//    }
+//
+//    return new PageImpl<>(uniqueWaggles, pageable, uniqueWaggles.size());
+//  }
+
+
   @Override
   public Page<WaggleDTO> getWagglesByHashtags(List<String> hashtags, Pageable pageable) {
     Set<Long> visitedBoardIds = new HashSet<>(); // 이미 방문한 게시글의 ID를 추적하기 위한 Set
@@ -103,8 +178,7 @@ public class WaggleServiceImpl implements WaggleService {
 
       List<WaggleDTO> waggleDTOList = convertToDTOList(waggles.getContent());
       for (WaggleDTO waggleDTO : waggleDTOList) {
-        if (!visitedBoardIds.contains(
-            waggleDTO.getBoard().getBoardId())) { // 이미 포함되어 있는 게시글인지 확인
+        if (!visitedBoardIds.contains(waggleDTO.getBoard().getBoardId())) { // 이미 포함되어 있는 게시글인지 확인
           waggleDTO.getBoard().setCommentCount(
               commentRepository.countCommentsByBoardId(
                   waggleDTO.getBoard().getBoardId()));
@@ -124,18 +198,25 @@ public class WaggleServiceImpl implements WaggleService {
       }
     }
 
-    // 상위 3개의 해시태그를 조회하여 각 해시태그별로 해당하는 게시글들을 검색하고 중복을 제거하여 uniqueWaggles에 추가
-    String mostViewedWaggleUserHashTags = waggleUserHashTagRepository.findMostViewedHashtags();
-    log.info("mostViewedWaggleUserHashTags: {}", mostViewedWaggleUserHashTags);
+    Map<String, Integer> hashtagCounts = new HashMap<>();
+    // 상위 3개의 해시태그를 조회
+    List<WaggleUserHashTag> allWaggleUserHashTags = waggleUserHashTagRepository.findAll();
+    for (WaggleUserHashTag waggleUserHashTag : allWaggleUserHashTags) {
+      String[] tags = waggleUserHashTag.getHashtags().replaceAll("[\\[\\]]", "").split(",\\s*");
+      for (String tag : tags) {
+        hashtagCounts.put(tag, hashtagCounts.getOrDefault(tag, 0) + 1);
+      }
+    }
 
-    // 대괄호 제거 후 공백을 기준으로 분할하여 각 해시태그 처리
-    String[] mostViewedHashtags = mostViewedWaggleUserHashTags.replaceAll("[\\[\\]]", "")
-        .split(",\\s*");
-    for (String mostViewedHashtag : mostViewedHashtags) {
-      log.info("mostViewedHashtag: {}", mostViewedHashtag);
+    // 등장 횟수를 기준으로 상위 3개의 해시태그를 추출
+    List<String> top3Hashtags = getTop3Hashtags(hashtagCounts);
 
-      // 각 해시태그별로 해당하는 게시글들을 검색하고 중복을 제거하여 uniqueWaggles에 추가
-      Page<Waggle> waggles = waggleRepository.findByHashtagsContaining(mostViewedHashtag, pageable);
+
+    // 각 상위 단어별로 해당하는 게시글들을 검색하고 중복을 제거하여 uniqueWaggles에 추가
+    for (String topWord : top3Hashtags) {
+      log.info("topWord: {}", topWord);
+      // 각 단어별로 해당하는 게시글들을 검색하고 중복을 제거하여 uniqueWaggles에 추가
+      Page<Waggle> waggles = waggleRepository.findByHashtagsContaining(topWord, pageable);
       List<WaggleDTO> waggleDTOList = convertToDTOList(waggles.getContent());
       for (WaggleDTO waggleDTO : waggleDTOList) {
         if (!visitedBoardIds.contains(waggleDTO.getBoard().getBoardId())) { // 이미 포함되어 있는 게시글인지 확인
@@ -159,6 +240,26 @@ public class WaggleServiceImpl implements WaggleService {
 
     return new PageImpl<>(uniqueWaggles, pageable, uniqueWaggles.size());
   }
+  private List<String> getTop3Hashtags(Map<String, Integer> hashtagCounts) {
+    PriorityQueue<Map.Entry<String, Integer>> minHeap = new PriorityQueue<>(
+        (a, b) -> a.getValue().equals(b.getValue()) ? a.getKey().compareTo(b.getKey()) : a.getValue() - b.getValue());
+
+    // 모든 해시태그를 우선순위 큐에 삽입
+    for (Map.Entry<String, Integer> entry : hashtagCounts.entrySet()) {
+      minHeap.offer(entry);
+      if (minHeap.size() > 3) { // 큐의 크기가 3을 초과하면 가장 작은 등장 횟수를 갖는 해시태그를 제거
+        minHeap.poll();
+      }
+    }
+
+    // 큐에서 상위 3개의 해시태그를 추출하여 리스트에 저장
+    List<String> top3Hashtags = new ArrayList<>();
+    while (!minHeap.isEmpty()) {
+      top3Hashtags.add(0, minHeap.poll().getKey()); // 큐는 오름차순으로 정렬되어 있으므로 리스트의 첫 번째 인덱스에 추가
+    }
+    return top3Hashtags;
+  }
+
 
 
   @Override
@@ -244,7 +345,6 @@ public class WaggleServiceImpl implements WaggleService {
   }
 
   public Map<String, Integer> calculateHashtagWeights(Integer loginUserId) {
-
     List<WaggleUserHashTag> userHashTags = waggleUserHashTagRepository.findByUserIdOrderByCreatedAtDesc(
         loginUserId);
 
@@ -257,7 +357,7 @@ public class WaggleServiceImpl implements WaggleService {
     for (WaggleUserHashTag userHashTag : userHashTags) {
       String[] tags = userHashTag.getHashtags().split(",");
       for (String tag : tags) {
-        tag = tag.trim();
+        tag = tag.trim().replaceAll("[\\[\\]]", ""); // 수정된 부분
 
         int weightToAdd = maxWeight;
         if (hashtagWeights.containsKey(tag)) {
@@ -272,13 +372,13 @@ public class WaggleServiceImpl implements WaggleService {
           if (userHashTag.isLiked()) {
             weightToAdd *= 0.2;
           }
-          log.info("weightToAdd: {}", weightToAdd);
+
           hashtagWeights.put(tag, weightToAdd);
         }
       }
       maxWeight--; // 가중치를 낮춰감
     }
-
+    log.info("hashtagWeights: {}", hashtagWeights);
     return hashtagWeights;
   }
 
@@ -604,7 +704,6 @@ public class WaggleServiceImpl implements WaggleService {
         .updateAt(waggleDTO.getBoard().getUpdateAt())
         .deleteAt(waggleDTO.getBoard().getDeleteAt())
         .userId(waggleDTO.getBoard().getUserId())
-//            .boardImage(waggleDTO.getBoard().getBoardImage())
         .boardType(waggleDTO.getBoard().getBoardType())
         .build());
     return waggle;

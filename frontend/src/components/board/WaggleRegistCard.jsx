@@ -16,6 +16,7 @@ export default function WaggleRegistCard({
   content,
   onTitleChange,
   onContentChange,
+  boardImage,
   onFileChange, // onFileChange 추가
   onSubmit,
   buttonText,
@@ -41,10 +42,10 @@ export default function WaggleRegistCard({
       <TextArea value={content} onChange={onContentChange} placeholder="내용" />
       <br />
       <InputLabel>사진 첨부</InputLabel>
-      <BoardFile onFileChange={handleFileChange} />
-      {previewImage && (
+      <BoardFile value={boardImage} onFileChange={handleFileChange} />
+      {/* {previewImage && (
         <img src={previewImage} alt="미리보기" style={{ maxWidth: "100%" }} />
-      )}
+      )} */}
       <br />
       <SubmitButton onClick={onSubmit}>{buttonText}</SubmitButton>
     </RegistCardContainer>

@@ -88,9 +88,6 @@ export const ImageContentBox = styled.div`
 export const ItemTitle = styled.div`
   font-size: 1rem;
   color: #222222;
-  height: 1.5rem;
-  display: block;
-  overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
   text-decoration: none;

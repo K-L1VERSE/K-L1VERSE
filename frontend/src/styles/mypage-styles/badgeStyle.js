@@ -41,6 +41,7 @@ export const BadgeBackground = styled.div`
     background-color: #e5edfb;
     border-radius: 0.25rem;
   }
+  border-radius: 0.25rem;
 `;
 
 export const BadgeText = styled.div`
@@ -66,6 +67,11 @@ export const ConfirmTextContainer = styled.div`
   gap: 0.625rem;
   border-radius: 0.5rem;
   background-color: #3261c1;
+  transition: box-shadow 0.3s ease;
+  &:hover {
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+    cursor: pointer;
+  }
 `;
 
 export const ConfirmText = styled.div`
@@ -113,6 +119,11 @@ export const DisabledTextContainer = styled.div`
   gap: 0.625rem;
   border-radius: 0.5rem;
   background-color: #f4f4f4;
+  transition: box-shadow 0.3s ease;
+  &:hover {
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+    cursor: pointer;
+  }
 `;
 
 export const DisabledText = styled.div`
@@ -126,6 +137,13 @@ export const DisabledText = styled.div`
 `;
 
 export const BadgeImageStyle = ({ code, isBadgeEarned }) => {
+  const svgWidth = 2.5;
+  const svgHeight = 3.4375;
+  const imageWidth = 1.75;
+  const imageHeight = 1.75;
+  const imageX = (svgWidth - imageWidth) / 2;
+  const imageY = (svgHeight - imageHeight) / 2;
+
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"
