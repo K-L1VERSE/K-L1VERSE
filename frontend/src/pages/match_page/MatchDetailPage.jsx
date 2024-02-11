@@ -20,29 +20,14 @@ export default function MatchDetailPage() {
   const day = location.state?.day;
   const v = location.state?.v;
 
-  // const [data, setData] = useState();
-  // useEffect(() => {
-  //   const fetchData = async () => {
-  //     const result = await getMatchDetail(matchId);
-  //     setData(result);
-  //   };
-  //   fetchData();
-  // }, []);
-
-  const data = {
-    homeTeamId: 1,
-    awayTeamId: 2,
-    homeTeamName: "울산 HD FC",
-    awayTeamName: "포항스틸러스",
-    homeBettingAmount: 40,
-    awayBettingAmount: 100,
-    drawBettingAmount: 60,
-    matchAt: "2024-02-03T13:00:00",
-    status: "done",
-    homeScore: 1,
-    awayScore: 2,
-    home: "울산 문수",
-  };
+  const [data, setData] = useState();
+  useEffect(() => {
+    const fetchData = async () => {
+      const result = await getMatchDetail(matchId);
+      setData(result);
+    };
+    fetchData();
+  }, []);
 
   return (
     <div>
