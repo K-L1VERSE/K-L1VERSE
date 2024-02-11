@@ -7,6 +7,7 @@ import {
   ProductItemCreated,
   ProductItemContainer,
   ProductItemWriter,
+  ProductImage,
 } from "../../styles/BoardStyles/ProductListStyle";
 import {
   DealFlagContainer,

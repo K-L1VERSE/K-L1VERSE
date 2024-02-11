@@ -7,6 +7,9 @@ function SearchComponent({ onSearch }) {
 
   const handleInputChange = (e) => {
     setSearchKeyword(e.target.value);
+    console.log(searchKeyword, "!!!!!!!!!!!!!!!!!!!");
+    console.log(e);
+    console.log(e.target.value);
   };
 
   const handleSearchClick = () => {
@@ -19,7 +22,7 @@ function SearchComponent({ onSearch }) {
       0,
       10,
       ({ data }) => {
-        onSearch(data);
+        onSearch(data.content); // data에 'content' 속성이 있는지 확인
         setShowSearchBar(false);
       },
       () => {},

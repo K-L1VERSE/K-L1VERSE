@@ -26,14 +26,12 @@ function WaggleRegistPage() {
       setBoardId(location.state.board.boardId);
       setTitle(location.state.board.title);
       setContent(location.state.board.content);
-      // setBoardImage(location.state.board.boardImage);
+      setBoardImage(location.state.board.boardImage);
       setIsUpdateMode(true);
     }
   }, [location]);
 
   const handleSubmit = () => {
-    // 사진 파일이 있을 경우
-
     if (isUpdateMode) {
       updateWaggle(
         boardId,
@@ -96,6 +94,7 @@ function WaggleRegistPage() {
         content={content}
         onTitleChange={(e) => setTitle(e.target.value)}
         onContentChange={(e) => setContent(e.target.value)}
+        boardImage={boardImage}
         onFileChange={handleFileChange}
         onSubmit={handleSubmit}
         buttonText={isUpdateMode ? "수정하기" : "작성하기"}

@@ -7,6 +7,7 @@ import {
   Date,
   BoardItemWrap,
 } from "../../styles/main-styles/BoardItemStyle";
+import { useNavigate } from "react-router-dom";
 
 // ************ 날짜 yyyy-mm-dd 형태로 변환 ************
 function formatDate(date) {
@@ -27,23 +28,31 @@ function truncateText(text, maxLength) {
   return text;
 }
 export default function BoardItem({ type, posts }) {
+  const navigate = useNavigate();
   const category = [
     {
       type: "와글와글",
       text: "⚽️ 축구 경기 직관 후기를 들려주세요.",
+      route: "/waggle",
     },
     {
       type: "직관메이트",
       text: "👋🏻 경기 직관 함께 할 메이트를 구합니다.",
+      route: "/mate",
     },
     {
       type: "중고거래",
       text: "📦 너에겐 필요 없지만 나에게 꼭 필요한 굿즈 구합니다.",
+      route: "/product",
     },
   ];
 
+  const handlePostClick = () => {
+    navigate(`${category[type].route}`);
+  };
+
   return (
-    <BoardItemWrap>
+    <BoardItemWrap onClick={() => handlePostClick()}>
       <Type type={type}>{category[type].type}</Type>
       <Text>{category[type].text}</Text>
       {posts.map((post) => (

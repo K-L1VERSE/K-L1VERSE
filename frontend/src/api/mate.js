@@ -31,3 +31,10 @@ export function deleteMate(boardId, success, fail) {
 export function getLatestMate(success, fail) {
   axios.get(`/${gateway}/${url}/recent/2`).then(success).catch(fail);
 }
+
+export function getMatesByMatchList(matchId, success, fail) {
+  axios
+    .get(`/${gateway}/${url}/matesByMatchList?matchIds=${matchId}`)
+    .then(success)
+    .catch(fail);
+}

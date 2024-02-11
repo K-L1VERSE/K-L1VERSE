@@ -97,4 +97,6 @@ export const ItemInfoItem = styled.div`
   align-items: center;
 `;
 
-export const DealFlagContainer = styled.div``;
+export const DealFlagContainer = styled.div`
+  display: absolute;
+`;
