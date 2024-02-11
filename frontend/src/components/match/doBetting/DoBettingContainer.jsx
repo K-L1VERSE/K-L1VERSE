@@ -29,12 +29,12 @@ import * as bettingApi from "../../../api/betting";
 import { UserState } from "../../../global/UserState";
 import { ReactComponent as DoBetIcon } from "../../../assets/icon/do-bet-icon.svg";
 
-function DoBettingContainer() {
+function DoBettingContainer({ data }) {
   const [selectedTeam, setSelectedTeam] = useState(null); // 'home', 'draw', 'away'
   const [bettingAmount, setBettingAmount] = useState(0);
   const [userState] = useRecoilState(UserState);
   const { matchId } = useParams();
-  const [match, setMatch] = useState(null);
+  const [match, setMatch] = useState(data);
   const [isLoading, setIsLoading] = useState(true); // 로딩 상태를 관리하는 상태 값 추가
   const [betComplete, setBetComplete] = useState(false);
 
