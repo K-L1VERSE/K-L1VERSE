@@ -51,6 +51,26 @@ export const ButtonContainer = styled.div`
   margin-bottom: 0.2rem;
 `;
 
+export const UserInfo = styled.div`
+  display: flex;
+  img {
+    margin: 0.5rem;
+  }
+  img:nth-of-type(2) {
+    margin-top: 0.7rem;
+  }
+  div {
+    margin-top: 0.7rem;
+    font-size: 0.9rem;
+  }
+`;
+
+export const TextBottom = styled.div`
+  display: flex;
+  justify-content: space-between;
+  height: 2rem;
+`;
+
 export const EditButton = styled.button`
   /* background-color: #fff; */
   /* background-color: yellowgreen; */
@@ -86,6 +106,7 @@ export const LikeBox = styled.div`
 /* ************* CommentForm ************* */
 export const CommentFormContainer = styled.form`
   font-family: "Pretendard-Regular";
+  border: 1px solid #ccc;
 `;
 
 export const TextContainer = styled.form`
@@ -97,15 +118,30 @@ export const TextArea = styled.textarea`
   padding: 10px;
   resize: none;
   flex: 1;
+  font-family: "Pretendard-Regular";
+  border-radius: 0;
+  width: 100%;
+  border: none;
+  border-bottom: 1px solid #ccc;
+  outline: none;
 `;
 
 export const CheckboxLabel = styled.label`
   display: flex;
   align-items: center;
-  font-size: 0.7rem;
+  font-size: 0.8rem;
+  div {
+    display: flex;
+    div {
+      padding-top: 0.3rem;
+      margin-left: 0.1rem;
+    }
+  }
 `;
 
-export const CheckboxInput = styled.input``;
+export const CheckboxInput = styled.input`
+  width: 1rem;
+`;
 
 // 댓글 수정창
 export const CommentInput = styled.input`
@@ -121,13 +157,14 @@ export const CommentInput = styled.input`
 export const SubmitButton = styled.button`
   background-color: #cdd8ec;
   color: #fff;
-  font-size: 0.9em;
+  font-size: 0.8em;
   border: none;
+  border-left: 1px solid #ccc;
   cursor: pointer;
-  /* border-radius: 20px; */
-
+  height: 100%;
+  transition: background-color 0.3s ease;
   &:hover {
-    background-color: #0056b3;
+    background-color: #bbe2ec;
   }
 `;
 
