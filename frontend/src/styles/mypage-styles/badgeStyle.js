@@ -155,7 +155,7 @@ export const BadgeImageStyle = ({ code, isBadgeEarned }) => {
       viewBox="0 0 44 55"
       fill="none"
     >
-      <g filter="url(#filter0_d_314_260)">
+      {/* <g filter="url(#filter0_d_314_260)">
         <path
           d="M36.08 38.8533C37.2457 38.0449 38 36.6975 38 35.193L37.9771 10.4912C37.9771 8.02105 35.9429 6 33.4286 6L10.5714 6C8.05714 6 6.02286 8.02105 6.02286 10.4912L6 35.193C6 36.6975 6.75428 38.0449 7.92 38.8533L22 48.6667L36.08 38.8533Z"
           fill="white"
@@ -165,14 +165,14 @@ export const BadgeImageStyle = ({ code, isBadgeEarned }) => {
           stroke="#002266"
           strokeWidth="0.4"
         />
-      </g>
+      </g> */}
 
       <image
-        href={`/badge/badge${code}.png`}
-        width="1.75rem"
-        height="1.75rem"
-        x="0.5rem"
-        y="0.75rem"
+        href={`/badge/badge${code}back.png`}
+        width="4rem"
+        height="4rem"
+        x="-0.6rem"
+        // y="0.5rem"
         filter={isBadgeEarned ? null : "url(#grayscaleFilter)"}
       />
 
