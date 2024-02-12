@@ -118,7 +118,7 @@ function Chat() {
       return;
     }
 
-    setMessages(() => [
+    setMessages((messages) => [
       ...messages,
       {
         type: recv.type,
