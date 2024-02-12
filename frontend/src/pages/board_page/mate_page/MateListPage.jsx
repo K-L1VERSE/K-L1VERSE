@@ -39,20 +39,24 @@ function MateListPage() {
       getMatesByMatchList(
         selectedMatchId,
         ({ data }) => {
-          if (!data) {
+          if (!data.content) {
             setHasMore(false);
             setIsMatchIdExists(true);
             setIsMateListExists(false);
+            // console.log("data.content.length 길이", data.content.length);
             console.log("isMateListExists false", data);
           } else {
             setIsMatchIdExists(true);
             setIsMateListExists(true);
             setMateList([...mateList, ...data.content]);
             setPage(page + 1);
+            // console.log("data.content.length 길이", data.content.length);
             console.log("isMateListExists true", data);
           }
         },
-        () => {},
+        (err) => {
+          console.log("err: ", err);
+        },
       );
     } else {
       getMateList(
