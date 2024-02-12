@@ -46,6 +46,10 @@ function Chat() {
       .then((response) => {
         const { data } = response;
         setMessages(data);
+        console.log("이전 messages 갯수 : ", messages.length);
+        for (let i = 0; i < messages.length; i++) {
+          console.log(messages[i]);
+        }
       })
       .catch(() => {});
   };
@@ -93,11 +97,37 @@ function Chat() {
   };
 
   const recvMessage = (recv) => {
-    setMessages((messages) => [
-      ...messages,
+    if (recv.type === "REJECT") {
+      console.log("전체 messages : ", messages);
+      console.log(`message#${recv.messageId}가 클린봇에 의해 거부되었습니다.`);
+      const rejectedMessageIndex = messages.findIndex(
+        (msg) => msg.messageId === recv.messageId,
+      );
+      console.log("recv: ", recv);
+      console.log("rejectedMessageIndex: ", rejectedMessageIndex);
+
+      if (rejectedMessageIndex !== -1) {
+        const updatedMessages = [...messages];
+
+        updatedMessages[rejectedMessageIndex].message =
+          "클린봇에 의해 검열된 메세지입니다.";
+
+        setMessages(updatedMessages);
+      } else {
+        console.log(
+          `messages#${recv.messageId}와 일치하는 메시지를 찾지 못했습니다.`,
+        );
+      }
+
+      return;
+    }
+
+    setMessages((prevMessages) => [
+      ...prevMessages,
       {
         type: recv.type,
         sender: recv.type === "ENTER" ? "[알림]" : recv.sender,
+        messageId: recv.messageId,
         message: recv.message,
         date: recv.date,
         profile: recv.profile,
