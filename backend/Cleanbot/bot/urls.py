@@ -1,6 +1,6 @@
-# from django.urls import path, include
-# from .views import predictAPI
-#
-# urlpatterns = [
-#     path("predict", predictAPI),
-# ]
+from django.urls import path, include
+from .views import predict_start
+
+urlpatterns = [
+    path("predict", predict_start),
+]

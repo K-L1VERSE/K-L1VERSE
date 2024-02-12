@@ -93,7 +93,28 @@ function Chat() {
   };
 
   const recvMessage = (recv) => {
-    setMessages((messages) => [
+    if (recv.type === "REJECT") {
+      const rejectedMessageIndex = messages.findIndex(
+        (msg) => msg.messageId === recv.messageId,
+      );
+
+      if (rejectedMessageIndex !== -1) {
+        const updatedMessages = [...messages];
+
+        updatedMessages[rejectedMessageIndex].message =
+          "클린봇에 의해 검열된 메세지입니다.";
+
+        setMessages(updatedMessages);
+      } else {
+        console.log(
+          `messages#${recv.messageId}와 일치하는 메시지를 찾지 못했습니다.`,
+        );
+      }
+
+      return;
+    }
+
+    setMessages(() => [
       ...messages,
       {
         type: recv.type,

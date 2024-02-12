@@ -15,7 +15,7 @@ public class MessageResDto {
         TALK, REJECT
     }
 
-    private MessageResDto.MessageType type;
+    private String type;
     private Long messageId;
     private Long roomId;
     private String sender;

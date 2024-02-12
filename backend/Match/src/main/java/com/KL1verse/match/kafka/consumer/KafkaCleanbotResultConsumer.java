@@ -28,20 +28,20 @@ public class KafkaCleanbotResultConsumer {
 
         try {
             CleanbotCheckResDto cleanbotCheckResDto = objectMapper.readValue(
-                CleanbotCheckResDtoJson, CleanbotCheckResDto.class);
+                    CleanbotCheckResDtoJson, CleanbotCheckResDto.class);
             log.info("match | CleanbotCheckResDto: {}", cleanbotCheckResDto.toString());
 
             //TODO 검열된 결과에 대해서 redis 삭제 작업 필요
             if (!cleanbotCheckResDto.getResult()) {
-                log.info("Blocked by Cleanbot: {}", cleanbotCheckResDto.getMessageId());
                 MessageResDto messageResDto = MessageResDto.builder()
-                    .type(MessageResDto.MessageType.REJECT)
-                    .messageId(cleanbotCheckResDto.getMessageId())
-                    .build();
+                        .type("REJECT")
+                        .messageId(cleanbotCheckResDto.getMessageId())
+                        .build();
+                log.info("Blocked by Cleanbot in room#{} : {}",
+                        cleanbotCheckResDto.getRoomId(), messageResDto.toString());
 
                 sendingOperations.convertAndSend(
-                    "/topic/chat/room/" + cleanbotCheckResDto.getRoomId(), messageResDto);
-
+                        "/topic/chat/room/" + cleanbotCheckResDto.getRoomId(), messageResDto);
             }
         } catch (Exception e) {
             e.printStackTrace();
