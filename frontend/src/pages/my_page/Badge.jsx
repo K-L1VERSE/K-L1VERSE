@@ -149,7 +149,7 @@ function Badge() {
       confirmButtonColor: "#3085d6",
       cancelButtonColor: "#d33",
       confirmButtonText:
-        "<div style='font-size:1rem; font-family:Pretendard-Regular;'>착용</div>",
+        "<div style='font-size:1rem; font-family:Pretendard-Regular;'>구매</div>",
       cancelButtonText:
         "<div style='font-size:1rem; font-family:Pretendard-Regular;'>취소</div>",
     }).then((result) => {
