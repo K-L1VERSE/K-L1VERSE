@@ -45,7 +45,12 @@ function Chat() {
       .get(`/match/chat/message/${roomId}`)
       .then((response) => {
         const { data } = response;
-        setMessages(data);
+        console.log("data 갯수 : ", data.length);
+        for (let i = 0; i < data.length; i++) {
+          console.log(data[i]);
+        }
+        setMessages([...data]);
+        console.log("messages 갯수 : ", messages.length);
       })
       .catch(() => {});
   };
