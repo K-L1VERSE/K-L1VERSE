@@ -64,6 +64,7 @@ function Chat() {
     });
 
     recvPrevMessages();
+    console.log(messages);
     // Set stompClient state to ensure it persists across re-renders
     setStompClient(stomp);
     console.log("stomp", stomp);
@@ -94,7 +95,7 @@ function Chat() {
 
   const recvMessage = (recv) => {
     if (recv.type === "REJECT") {
-      console.log(`messages#${recv.messageId}가 클린봇에 의해 거부되었습니다.`);
+      console.log(`message#${recv.messageId}가 클린봇에 의해 거부되었습니다.`);
       const rejectedMessageIndex = messages.findIndex(
         (msg) => msg.messageId === recv.messageId,
       );
@@ -117,7 +118,7 @@ function Chat() {
       return;
     }
 
-    setMessages((messages) => [
+    setMessages(() => [
       ...messages,
       {
         type: recv.type,
