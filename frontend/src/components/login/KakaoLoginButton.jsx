@@ -1,7 +1,6 @@
 import React from "react";
 import styled from "styled-components";
-
-import KakaoLoginImg from "../../assets/login_button/kakao_login_medium_narrow.png";
+import Kakao from "../../assets/login_button/kakao.png";
 
 function KakaoLoginButton() {
   const KAKAO_REST_API_KEY = process.env.REACT_APP_KAKAO_REST_API_KEY;
@@ -13,32 +12,28 @@ function KakaoLoginButton() {
   };
 
   return (
-    <ButtonContainer>
-      <LoginButton onClick={handleLogin} />
-    </ButtonContainer>
+    <But onClick={handleLogin}>
+      <img src={Kakao} width="20" alt="" />
+      <div>카톡으로 3초만에 로그인</div>
+    </But>
   );
 }
 
-const ButtonContainer = styled.div`
-  height: 45px;
-  border: none;
-  border-radius: 8px;
-  transition: box-shadow 0.5s ease;
-  &:hover {
-    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
-    cursor: pointer;
-  }
-`;
+const But = styled.div`
+  display: flex;
+  align-items: center;
+  background-color: #f9e000;
+  padding: 0.85rem 5rem;
 
-const LoginButton = styled.button`
-  width: 183px;
-  height: 45px;
-  border: none;
-  background-color: transparent;
+  /* width: 20rem; */
+  border-radius: 0.5rem;
   cursor: pointer;
-  background-image: url(${KakaoLoginImg});
-  back &:hover {
-    filter: brightness(0.7);
+
+  div {
+    color: #47282a;
+    font-size: 0.9rem;
+    margin-left: 0.5rem;
+    font-family: "Pretendard-Bold";
   }
 `;
 

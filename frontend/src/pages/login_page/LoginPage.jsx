@@ -11,29 +11,29 @@ function LoginPage() {
   localStorage.removeItem("recoil-persist");
 
   return (
-    <Box>
-      <LoginLogo />
-      <LoginButtonContainer>
+    <>
+      <LoginContainer>
         <KakaoLoginButton />
-        <NaverLoginButton />
-        <GoogleLoginButton />
-      </LoginButtonContainer>
-    </Box>
+        <Bottom>
+          <GoogleLoginButton />
+          <NaverLoginButton />
+        </Bottom>
+      </LoginContainer>
+    </>
   );
 }
 
-const Box = styled.div`
-  margin: 0 auto;
-  margin-top: 6rem;
-`;
+export default LoginPage;
 
-const LoginButtonContainer = styled.div`
+const LoginContainer = styled.div`
   display: flex;
   flex-direction: column;
-  gap: 0.7rem;
-  height: 15rem;
-  justify-content: center;
-  align-items: center;
+  /* justify-content: center; */
 `;
 
-export default LoginPage;
+const Bottom = styled.div`
+  display: flex;
+  margin: 1rem auto;
+  width: 7rem;
+  justify-content: space-between;
+`;
