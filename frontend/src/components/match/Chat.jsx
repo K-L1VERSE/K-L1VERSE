@@ -46,6 +46,10 @@ function Chat() {
       .then((response) => {
         const { data } = response;
         setMessages(data);
+        console.log("이전 messages 갯수 : ", messages.length);
+        for (let i = 0; i < messages.length; i++) {
+          console.log(messages[i]);
+        }
       })
       .catch(() => {});
   };
@@ -64,7 +68,6 @@ function Chat() {
     });
 
     recvPrevMessages();
-    console.log(messages);
     // Set stompClient state to ensure it persists across re-renders
     setStompClient(stomp);
     console.log("stomp", stomp);
@@ -119,8 +122,8 @@ function Chat() {
       return;
     }
 
-    setMessages((messages) => [
-      ...messages,
+    setMessages((prevMessages) => [
+      ...prevMessages,
       {
         type: recv.type,
         sender: recv.type === "ENTER" ? "[알림]" : recv.sender,
