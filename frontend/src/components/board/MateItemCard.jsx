@@ -57,7 +57,7 @@ function MateItemCard({ mate, user, fromMypage, category }) {
             </ItemContent>
             <ItemInfoSection>
               <MateItemCreated>
-                {formatRelativeTime(mate.createAt)}
+                {formatRelativeTime(mate.board.createAt)}
               </MateItemCreated>
             </ItemInfoSection>
           </ItemContainer>

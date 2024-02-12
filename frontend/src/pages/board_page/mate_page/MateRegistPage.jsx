@@ -5,10 +5,7 @@ import MateRegistCard from "../../../components/board/MateRegistCard"; // Import
 import { createMate, updateMate } from "../../../api/mate";
 import { UserState } from "../../../global/UserState";
 
-import {
-  DetailTop,
-  RegistCardContainer,
-} from "../../../styles/BoardStyles/BoardCreateStyle";
+import { DetailTop } from "../../../styles/BoardStyles/BoardCreateStyle";
 
 import BackIcon from "../../../assets/icon/back-icon.png";
 import { BackButton } from "../../../styles/BoardStyles/BoardDetailStyle";
