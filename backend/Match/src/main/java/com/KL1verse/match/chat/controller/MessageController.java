@@ -65,8 +65,6 @@ public class MessageController {
         } catch (JsonProcessingException e) {
             throw new RuntimeException(e);
         }
-
-        // Kafka Producing
     }
 
     @GetMapping("/chat/message/{roomId}")
