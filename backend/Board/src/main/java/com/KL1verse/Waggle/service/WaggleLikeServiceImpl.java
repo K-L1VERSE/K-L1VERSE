@@ -49,9 +49,10 @@ public class WaggleLikeServiceImpl implements WaggleLikeService {
             .build();
 
         waggleLikeRepository.save(waggleLike);
-        waggleService.saveHashtags(waggleService.getWaggleById(waggleId, userId));
 
         Long boardId = waggle.getBoard().getBoardId();
+
+        waggleService.saveHashtags(waggleService.getWaggleById(boardId, userId));
 
         List<Object[]> nicknameAndProfile = waggleLikeRepository.findNicknameAndProfileByUserId(userId);
         String userNickname = (String) nicknameAndProfile.get(0)[0];
@@ -78,6 +79,7 @@ public class WaggleLikeServiceImpl implements WaggleLikeService {
         Optional<WaggleLike> existingLike = waggleLikeRepository.findByUserIdAndWaggleId_WaggleId(
             userId, waggleId);
         existingLike.ifPresent(like -> waggleLikeRepository.delete(like));
+
         waggleService.removeHashtagsFromUnlikedWaggle(waggleId);
     }
 

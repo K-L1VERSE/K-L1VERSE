@@ -5,7 +5,13 @@ import {
   ForWidth,
 } from "../../styles/BoardStyles/ProductListStyle";
 
-function ProductContainer({ productList, formatRelativeTime }) {
+function ProductContainer({
+  productList,
+  formatRelativeTime,
+  user,
+  fromMypage,
+  category,
+}) {
   return (
     <ProductListContainer>
       <ForWidth>
@@ -14,6 +20,9 @@ function ProductContainer({ productList, formatRelativeTime }) {
             key={product.productId}
             product={product}
             formatRelativeTime={formatRelativeTime}
+            user={user}
+            fromMypage={fromMypage}
+            category={category}
           />
         ))}
       </ForWidth>

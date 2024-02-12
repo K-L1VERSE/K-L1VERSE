@@ -61,13 +61,19 @@ public class MateServiceImpl implements MateService {
     public Page<MateDTO> getMatesByUser(Integer userId, Pageable pageable) {
         Page<Mate> mates = mateRepository.findByBoard_UserId(userId, pageable);
 
+        List<Object[]> userInfo = mateRepository.findUserNicknameAndProfileAndMainBadge(userId);
+        String userNickname = (String) userInfo.get(0)[0];
+        String userProfile = (String) userInfo.get(0)[1];
+        String userMainBadge = (String) userInfo.get(0)[2];
+
         return mates.map(mate -> {
             MateDTO mateDTO = convertToDTO(mate);
 
-            // 닉네임 가져오기
-            List<Object[]> nicknameResult = mateRepository.findUserNickname(userId);
-            String userNickname = nicknameResult.isEmpty() ? null : (String) nicknameResult.get(0)[0];
             mateDTO.getBoard().setNickname(userNickname);
+            mateDTO.getBoard().setProfile(userProfile);
+            if(userMainBadge != null) {
+                mateDTO.getBoard().setMainBadge(userMainBadge);
+            }
 
             // 게시물 이미지 가져오기
             mateDTO.getBoard().setBoardImage(mate.getBoard().getBoardImage());

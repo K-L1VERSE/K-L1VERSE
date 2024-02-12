@@ -7,7 +7,7 @@ import TableContainer from "../../components/match/ScheduleTable";
 import MatchScheduleTop from "../../components/match/MatchScheduleTop";
 import ListContainer from "../../components/match/ScheduleList";
 
-export default function MatchSchedulePage() {
+export default function MatchSchedulePage({ isMateListPage, onMatchClick }) {
   const [data, setData] = useState([]);
   const [year, setYear] = useState(new Date().getFullYear());
   const [month, setMonth] = useState(new Date().getMonth() + 1);
@@ -20,6 +20,7 @@ export default function MatchSchedulePage() {
   const v = location.state?.v;
   const [selectedDay, setSelectedDayProps] = useState(null);
   const [resetDayFlag, setResetDayFlag] = useState(false);
+  const [selectedMatchId, setSelectedMatchId] = useState(null);
 
   const resetDay = () => {
     if (!resetDayFlag) {
@@ -50,17 +51,44 @@ export default function MatchSchedulePage() {
     fetchData();
   }, [year, month]);
 
+  const handleMatchClick = (matchId) => {
+    setSelectedMatchId(matchId);
+  };
+
   return (
     <div>
       <MatchScheduleTop setView={setView} view={view} />
-
-      <div>
-        <SelectContainer
+      <SelectContainer
+        year={year}
+        setYear={setYear}
+        month={month}
+        setMonth={setMonth}
+        resetDay={resetDay}
+        // onMatchClick={handleMatchClick}
+      />
+      <hr style={{ width: "95%", border: "1px solid #f4f4f4" }} />
+      {view === "list" && (
+        <ListContainer
+          data={data}
+          year={year}
+          month={month}
+          view={view}
+          isMateListPage={isMateListPage}
+          onMatchClick={onMatchClick}
+        />
+      )}
+      {view === "calendar" && (
+        <TableContainer
           year={year}
           setYear={setYear}
           month={month}
-          setMonth={setMonth}
-          resetDay={resetDay}
+          day={selectedDay}
+          setResetDayFlag={setResetDayFlag}
+          setSelectedDayProps={setSelectedDayProps}
+          data={data}
+          view={view}
+          isMateListPage={isMateListPage}
+          onMatchClick={onMatchClick}
         />
         <hr style={{ width: "95%", border: "1px solid #f4f4f4" }} />
         {view === "list" && (
