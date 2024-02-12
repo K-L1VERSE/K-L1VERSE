@@ -78,8 +78,8 @@ export const ItemWriter = styled.div`
 `;
 
 export const WriteBadge = styled.img`
-  width: 1rem;
-  height: 1rem;
+  width: 1.4rem;
+  height: 1.7rem;
 `;
 export const ImageContentBox = styled.div`
   display: flex;

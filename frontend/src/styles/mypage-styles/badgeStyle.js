@@ -32,11 +32,10 @@ export const BadgeLineContainer = styled.div`
 export const BadgeBackground = styled.div`
   display: flex;
   width: 15%;
-  padding: 0.25rem 0;
+  margin-bottom: 0.8rem;
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  flex-shrink: 0;
 
   ${(props) =>
     props.$isSelected && "background-color: #e5edfb; border-radius: 0.25rem"};
@@ -49,11 +48,8 @@ export const BadgeBackground = styled.div`
 
 export const BadgeText = styled.div`
   color: var(--gray1, #222);
-  font-family: Pretendard;
-  font-size: 0.75rem;
-  font-style: normal;
-  font-weight: 550;
-  line-height: normal;
+  font-family: "Pretendard-Regular";
+  font-size: 0.8rem;
 `;
 
 export const ConfirmContainer = styled.div`
@@ -139,23 +135,26 @@ export const DisabledText = styled.div`
   line-height: 1.5rem;
 `;
 
+export const BigContainer = styled.div``;
+
 export const BadgeImageStyle = ({ code, isBadgeEarned }) => {
-  const svgWidth = 2.5;
-  const svgHeight = 3.4375;
-  const imageWidth = 1.75;
-  const imageHeight = 1.75;
-  const imageX = (svgWidth - imageWidth) / 2;
-  const imageY = (svgHeight - imageHeight) / 2;
+  // const svgWidth = 2.5;
+  // const svgHeight = 3.4375;
+  // const imageWidth = 1.75;
+  // const imageHeight = 1.75;
+  // const imageX = (svgWidth - imageWidth) / 2;
+  // const imageY = (svgHeight - imageHeight) / 2;
 
   return (
-    <svg
-      xmlns="http://www.w3.org/2000/svg"
-      width="2.5rem"
-      height="3.4375rem"
-      viewBox="0 0 44 55"
-      fill="none"
-    >
-      {/* <g filter="url(#filter0_d_314_260)">
+    <BigContainer>
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        width="3.3rem"
+        height="3.3rem"
+        viewBox="0 0 44 44"
+        fill="none"
+      >
+        {/* <g filter="url(#filter0_d_314_260)">
         <path
           d="M36.08 38.8533C37.2457 38.0449 38 36.6975 38 35.193L37.9771 10.4912C37.9771 8.02105 35.9429 6 33.4286 6L10.5714 6C8.05714 6 6.02286 8.02105 6.02286 10.4912L6 35.193C6 36.6975 6.75428 38.0449 7.92 38.8533L22 48.6667L36.08 38.8533Z"
           fill="white"
@@ -167,61 +166,62 @@ export const BadgeImageStyle = ({ code, isBadgeEarned }) => {
         />
       </g> */}
 
-      <image
-        href={`/badge/badge${code}back.png`}
-        width="4rem"
-        height="4rem"
-        x="-0.6rem"
-        // y="0.5rem"
-        filter={isBadgeEarned ? null : "url(#grayscaleFilter)"}
-      />
+        <image
+          href={`/badge/badge${code}back.png`}
+          width="2.8rem"
+          height="3rem"
+          // x="-0.6rem"
+          // y="0.5rem"
+          filter={isBadgeEarned ? null : "url(#grayscaleFilter)"}
+        />
 
-      <defs>
-        <filter id="grayscaleFilter">
-          <feColorMatrix
-            type="matrix"
-            values="0.33 0.33 0.33 0 0
+        <defs>
+          <filter id="grayscaleFilter">
+            <feColorMatrix
+              type="matrix"
+              values="0.33 0.33 0.33 0 0
                             0.33 0.33 0.33 0 0
                             0.33 0.33 0.33 0 0
                             0    0    0    1 0"
-          />
-        </filter>
-        <filter
-          id="filter0_d_314_260"
-          x="0"
-          y="0"
-          width="44"
-          height="54.6665"
-          filterUnits="userSpaceOnUse"
-          colorInterpolationFilters="sRGB"
-        >
-          <feFlood floodOpacity="0" result="BackgroundImageFix" />
-          <feColorMatrix
-            in="SourceAlpha"
-            type="matrix"
-            values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0"
-            result="hardAlpha"
-          />
-          <feOffset />
-          <feGaussianBlur stdDeviation="3" />
-          <feComposite in2="hardAlpha" operator="out" />
-          <feColorMatrix
-            type="matrix"
-            values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.12 0"
-          />
-          <feBlend
-            mode="normal"
-            in2="BackgroundImageFix"
-            result="effect1_dropShadow_314_260"
-          />
-          <feBlend
-            mode="normal"
-            in="SourceGraphic"
-            in2="effect1_dropShadow_314_260"
-            result="shape"
-          />
-        </filter>
-      </defs>
-    </svg>
+            />
+          </filter>
+          <filter
+            id="filter0_d_314_260"
+            x="0"
+            y="0"
+            width="44"
+            height="54.6665"
+            filterUnits="userSpaceOnUse"
+            colorInterpolationFilters="sRGB"
+          >
+            <feFlood floodOpacity="0" result="BackgroundImageFix" />
+            <feColorMatrix
+              in="SourceAlpha"
+              type="matrix"
+              values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0"
+              result="hardAlpha"
+            />
+            <feOffset />
+            <feGaussianBlur stdDeviation="3" />
+            <feComposite in2="hardAlpha" operator="out" />
+            <feColorMatrix
+              type="matrix"
+              values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.12 0"
+            />
+            <feBlend
+              mode="normal"
+              in2="BackgroundImageFix"
+              result="effect1_dropShadow_314_260"
+            />
+            <feBlend
+              mode="normal"
+              in="SourceGraphic"
+              in2="effect1_dropShadow_314_260"
+              result="shape"
+            />
+          </filter>
+        </defs>
+      </svg>
+    </BigContainer>
   );
 };

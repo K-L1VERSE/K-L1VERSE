@@ -38,7 +38,7 @@ function WaggleItemCard({
           <WriterProfile src={waggle.board.profile} alt="Profile Image" />
           <ItemWriter>{waggle.board.nickname}</ItemWriter>
           <WriteBadge
-            src={`${process.env.PUBLIC_URL}/badge/badge${waggle.board.mainBadge === null ? 0 : waggle.board.mainBadge}.png`}
+            src={`${process.env.PUBLIC_URL}/badge/badge${waggle.board.mainBadge === null ? 0 : waggle.board.mainBadge}back.png`}
           />
         </WriterContainer>
         <ImageContentBox>

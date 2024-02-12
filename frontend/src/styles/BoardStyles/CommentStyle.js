@@ -68,8 +68,8 @@ export const CommentWriter = styled.div`
 `;
 
 export const WriterBadge = styled.img`
-  width: 1rem;
-  height: 1rem;
+  width: 1.4rem;
+  height: 1.7rem;
 `;
 
 export const ButtonContainer = styled.div`
@@ -183,6 +183,7 @@ export const CheckboxLabel = styled.label`
 
 export const CheckboxInput = styled.input`
   width: 1rem;
+  margin-left: 0.5rem;
 `;
 
 // 댓글 수정창

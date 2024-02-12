@@ -208,7 +208,7 @@ function Chat() {
                   <SenderImg src={message.profile} />
                   <OnlyNick>{message.sender}</OnlyNick>
                   <BadgeImg
-                    src={`${process.env.PUBLIC_URL}/badge/badge${message.mainBadge === null ? 0 : message.mainBadge}.png`}
+                    src={`${process.env.PUBLIC_URL}/badge/badge${message.mainBadge === null ? 0 : message.mainBadge}back.png`}
                   />
                 </InfoBox>
                 <MessageInfoBox $isMine={nickname === message.sender}>

@@ -110,8 +110,8 @@ export const OnlyNick = styled.div`
 
 export const BadgeImg = styled.img`
   display: inline-block;
-  width: 1rem;
-  height: 1rem;
+  width: 1.4rem;
+  height: 1.7rem;
   margin-top: 0.1rem;
 `;
 

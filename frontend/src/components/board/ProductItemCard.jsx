@@ -65,7 +65,7 @@ function ProductItemCard({
           <WriterProfile src={product.board.profile} />
           <ProductItemWriter>{product.board.nickname}</ProductItemWriter>
           <WriteBadge
-            src={`${process.env.PUBLIC_URL}/badge/badge${product.board.mainBadge === null ? 0 : product.board.mainBadge}.png`}
+            src={`${process.env.PUBLIC_URL}/badge/badge${product.board.mainBadge === null ? 0 : product.board.mainBadge}back.png`}
           />
         </WriterContainer>
         <ItemInfoSection>
