@@ -49,7 +49,7 @@ function Chat() {
         for (let i = 0; i < data.length; i++) {
           console.log(data[i]);
         }
-        setMessages(data);
+        setMessages([...data]);
         console.log("messages 갯수 : ", messages.length);
       })
       .catch(() => {});
