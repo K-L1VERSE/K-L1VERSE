@@ -22,8 +22,9 @@ import Like from "./Like";
 import { useParams } from "react-router-dom";
 
 function CommentItemCard({ comment, onCommentDelete, formatRelativeTime }) {
-  const [liked, setLiked] = useState(false);
-  const [likesCount, setLikesCount] = useState(0);
+  console.log("comment: ", comment);
+  const [liked, setLiked] = useState(comment.liked);
+  const [likesCount, setLikesCount] = useState(comment.likesCount);
   const [isEditMode, setIsEditMode] = useState(false);
   const [updatedContent, setUpdatedContent] = useState(comment.content);
   const { userId } = useRecoilState(UserState)[0];
