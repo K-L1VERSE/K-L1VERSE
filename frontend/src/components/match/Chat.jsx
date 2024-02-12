@@ -45,11 +45,12 @@ function Chat() {
       .get(`/match/chat/message/${roomId}`)
       .then((response) => {
         const { data } = response;
-        setMessages(data);
-        console.log("이전 messages 갯수 : ", messages.length);
-        for (let i = 0; i < messages.length; i++) {
-          console.log(messages[i]);
+        console.log("data 갯수 : ", data.length);
+        for (let i = 0; i < data.length; i++) {
+          console.log(data[i]);
         }
+        setMessages(data);
+        console.log("messages 갯수 : ", messages.length);
       })
       .catch(() => {});
   };
@@ -98,7 +99,6 @@ function Chat() {
 
   const recvMessage = (recv) => {
     if (recv.type === "REJECT") {
-      console.log("전체 messages : ", messages);
       console.log(`message#${recv.messageId}가 클린봇에 의해 거부되었습니다.`);
       const rejectedMessageIndex = messages.findIndex(
         (msg) => msg.messageId === recv.messageId,
