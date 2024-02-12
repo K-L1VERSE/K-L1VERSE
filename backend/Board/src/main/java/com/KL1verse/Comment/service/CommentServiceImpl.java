@@ -213,6 +213,7 @@ public class CommentServiceImpl implements CommentService {
                         secretComment.setLiked(isLiked);
 
                         List<CommentDTO> secretReplies = comment.getReplies().stream()
+                            .filter(reply->reply.getDeleteAt() == null)
                             .map(reply -> {
                                 if (reply.getIsSecret() && !isAuthorized(reply, requestingUserId)) {
 
@@ -233,19 +234,24 @@ public class CommentServiceImpl implements CommentService {
                                     secretReply.setLikesCount(
                                         secretReplyLikesCount != null ? secretReplyLikesCount : 0);
 
-                                    List<Object[]> secretReplyNickname = commentRepository.findUserNickname(
-                                        reply.getUserId());
-                                    secretReply.setNickname(
-                                        (String) secretReplyNickname.get(0)[0]); // Set the nickname
-
                                     return secretReply;
                                 } else {
                                     CommentDTO normalReply = convertToDTOWithReplies(reply,
                                         requestingUserId);
-                                    List<Object[]> replyNickname = commentRepository.findUserNickname(
-                                        reply.getUserId());
-                                    normalReply.setNickname(
-                                        (String) replyNickname.get(0)[0]); // 닉네임 설정
+
+                                    List<Object[]> replyUserInfo = commentRepository.findUserNicknameAndProfileAndMainBadge(
+                                            reply.getUserId());
+                                    String replyUserNickname = (String) replyUserInfo.get(0)[0];
+                                    String replyUserProfile = (String) replyUserInfo.get(0)[1];
+                                    String replyUsermainBadge = (String) replyUserInfo.get(0)[2];
+
+                                    normalReply.setNickname(replyUserNickname);
+                                    normalReply.setProfile(replyUserProfile);
+                                    if(replyUsermainBadge != null) {
+                                        normalReply.setMainBadge(replyUsermainBadge);
+                                    }
+
+
                                     normalReply.setLiked(isLiked);
                                     return normalReply;
                                 }
@@ -260,6 +266,7 @@ public class CommentServiceImpl implements CommentService {
                     } else {
 
                         List<CommentDTO> replies = comment.getReplies().stream()
+                            .filter(reply -> reply.getDeleteAt() == null)
                             .map(reply -> {
                                 if (reply.getIsSecret() && !isAuthorized(reply, requestingUserId)) {
 
@@ -290,11 +297,22 @@ public class CommentServiceImpl implements CommentService {
 
                                     CommentDTO normalReply = convertToDTOWithReplies(reply,
                                         requestingUserId);
-                                    List<Object[]> replyNickname = commentRepository.findUserNickname(
-                                        reply.getUserId());
-                                    normalReply.setNickname(
-                                        (String) replyNickname.get(0)[0]); // 닉네임 설정
-                                    normalReply.setLiked(isLiked);
+
+                                    List<Object[]> replyUserInfo = commentRepository.findUserNicknameAndProfileAndMainBadge(
+                                            reply.getUserId());
+                                    String replyUserNickname = (String) replyUserInfo.get(0)[0];
+                                    String replyUserProfile = (String) replyUserInfo.get(0)[1];
+                                    String replyUsermainBadge = (String) replyUserInfo.get(0)[2];
+
+                                    normalReply.setNickname(replyUserNickname);
+                                    normalReply.setProfile(replyUserProfile);
+                                    if(replyUsermainBadge != null) {
+                                        normalReply.setMainBadge(replyUsermainBadge);
+                                    }
+
+                                    boolean replyIsLiked = commentLikeRepository.findByUserIdAndCommentId_CommentId(requestingUserId, reply.getCommentId()).isPresent();
+
+                                    normalReply.setLiked(replyIsLiked);
                                     return normalReply;
                                 }
                             })

@@ -10,6 +10,8 @@ import {
   TextContainer,
   TextBottom,
   CommentRegistContainer,
+  UserInfoBox,
+  CancelButton,
   SubmitContainer,
   SubmitImg,
 } from "../../styles/BoardStyles/CommentStyle";
@@ -17,12 +19,18 @@ import {
   SenderImg,
   BadgeImg,
 } from "../../styles/match-styles/MatchChattingStyle";
-import { updateComment, createComment } from "../../api/comment";
+import { updateComment, createComment, createReply } from "../../api/comment";
 import SendIcon from "../../assets/icon/send-icon.png";
 
-const CommentForm = ({ boardId, parentId, getComments }) => {
+const CommentForm = ({
+  boardId,
+  parentId,
+  getComments,
+  isReplyMode,
+  setIsReplyMode,
+  setParentId,
+}) => {
   const [content, setContent] = useState("");
-  const [isUpdateMode, setIsUpdateMode] = useState(false);
   const [isSecret, setIsSecret] = useState(false);
   const { userId } = useRecoilState(UserState)[0];
   const [userState] = useRecoilState(UserState);
@@ -42,19 +50,19 @@ const CommentForm = ({ boardId, parentId, getComments }) => {
     if (content === "") {
       return;
     }
-    if (isUpdateMode) {
-      updateComment(
-        boardId,
+
+    if (isReplyMode) {
+      createReply(
+        parentId,
         {
-          board: {
-            content,
-            boardId,
-            parentId: parentId || null,
-            isSecret,
-          },
+          content,
+          userId,
+          isSecret,
         },
         () => {
-          setIsUpdateMode(false);
+          getComments();
+          setContent("");
+          setIsSecret(false);
         },
         () => {},
       );
@@ -88,11 +96,24 @@ const CommentForm = ({ boardId, parentId, getComments }) => {
   return (
     <CommentFormContainer>
       <CommentRegistContainer>
-        <SenderImg src={profile} />
-        <div style={{ marginLeft: "0.3rem" }}>{nickname}</div>
-        <BadgeImg
-          src={`${process.env.PUBLIC_URL}/badge/badge${mainBadge}.png`}
-        />
+        <UserInfoBox>
+          <SenderImg src={profile} />
+          <div style={{ marginLeft: "0.3rem" }}>{nickname}</div>
+          <BadgeImg
+            src={`${process.env.PUBLIC_URL}/badge/badge${mainBadge}.png`}
+          />
+        </UserInfoBox>
+
+        {isReplyMode && (
+          <CancelButton
+            onClick={() => {
+              setIsReplyMode(false);
+              setParentId(null);
+            }}
+          >
+            대댓글 취소
+          </CancelButton>
+        )}
       </CommentRegistContainer>
       <TextContainer>
         <TextArea
@@ -100,7 +121,9 @@ const CommentForm = ({ boardId, parentId, getComments }) => {
           onChange={(e) => setContent(e.target.value)}
           onKeyDown={handleKeyDown}
           required
-          placeholder="댓글을 작성하세요."
+          placeholder={
+            isReplyMode ? "대댓글을 작성하세요" : "댓글을 작성하세요."
+          }
         />
       </TextContainer>
       <TextBottom>
