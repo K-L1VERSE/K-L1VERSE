@@ -98,6 +98,8 @@ function Chat() {
       const rejectedMessageIndex = messages.findIndex(
         (msg) => msg.messageId === recv.messageId,
       );
+      console.log("recv: ", recv);
+      console.log("rejectedMessageIndex: ", rejectedMessageIndex);
 
       if (rejectedMessageIndex !== -1) {
         const updatedMessages = [...messages];
