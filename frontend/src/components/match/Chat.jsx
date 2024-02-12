@@ -69,7 +69,6 @@ function Chat() {
     });
 
     recvPrevMessages();
-    console.log(messages);
     // Set stompClient state to ensure it persists across re-renders
     setStompClient(stomp);
     console.log("stomp", stomp);
@@ -123,8 +122,8 @@ function Chat() {
       return;
     }
 
-    setMessages(() => [
-      ...messages,
+    setMessages((prevMessages) => [
+      ...prevMessages,
       {
         type: recv.type,
         sender: recv.type === "ENTER" ? "[알림]" : recv.sender,
