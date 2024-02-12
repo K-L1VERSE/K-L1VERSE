@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { useParams, useNavigate } from "react-router-dom";
+import { useParams, useNavigate, useLocation } from "react-router-dom";
 import axios from "../../../api/axios";
 import { useRecoilState } from "recoil";
 import BoardTopNavBar from "../../../components/board/BoardTopNavBar";
@@ -50,6 +50,9 @@ function MateDetailPage() {
 
   const { userId } = useRecoilState(UserState)[0];
 
+  const location = useLocation();
+  const { state } = location;
+
   /* mate 상세 정보 가져오기 */
   function getMateDetail() {
     axios.get(`/board/mates/${boardId}`).then(({ data }) => {
@@ -79,14 +82,34 @@ function MateDetailPage() {
   }, [matchId]);
 
   const handleUpdateBtn = () => {
-    navigate("/mateRegist", { state: { board: mateDetail } });
+    if (state && state.fromMypage) {
+      navigate("/mateRegist", {
+        state: {
+          board: mateDetail,
+          user: state.user,
+          fromMypage: state.fromMypage,
+          category: state.category,
+        },
+      });
+    } else {
+      navigate("/mateRegist", { state: { board: mateDetail } });
+    }
   };
 
   const handleDeleteBtn = () => {
     deleteMate(
       boardId,
       () => {
-        navigate("/mate");
+        if (state && state.fromMypage) {
+          navigate("/mypage", {
+            state: {
+              user: state.user,
+              category: state.category,
+            },
+          });
+        } else {
+          navigate("/mate");
+        }
       },
       () => {},
     );
@@ -109,7 +132,16 @@ function MateDetailPage() {
   };
 
   const handleBackClick = () => {
-    navigate("/mate");
+    if (state && state.fromMypage) {
+      navigate("/mypage", {
+        state: {
+          user: state.user,
+          category: state.category,
+        },
+      });
+    } else {
+      navigate("/mate");
+    }
   };
 
   return (

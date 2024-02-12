@@ -25,6 +25,7 @@ function ProductRegistPage() {
   const [file, setFile] = useState(null);
 
   const location = useLocation();
+  const { state } = location;
   useEffect(() => {
     if (location.state && location.state.board) {
       setBoardId(location.state.board.boardId);
@@ -51,7 +52,17 @@ function ProductRegistPage() {
           dealFlag,
         },
         () => {
-          navigate(`/product/${boardId}`);
+          if (state && state.fromMypage) {
+            navigate(`/product/${boardId}`, {
+              state: {
+                user: state.user,
+                fromMypage: state.fromMypage,
+                category: state.category,
+              },
+            });
+          } else {
+            navigate(`/product/${boardId}`);
+          }
         },
         () => {},
       );
