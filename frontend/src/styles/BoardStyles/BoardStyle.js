@@ -128,3 +128,34 @@ export const DealFlagContainer = styled.div`
   display: absolute;
   margin-bottom: 0.3rem;
 `;
+
+/* *********** toggle button ************ */
+export const ToggleContainer = styled.div`
+  display: flex;
+  justify-content: flex-end;
+  padding: 0 1.2rem;
+  margin-bottom: -0.5rem;
+  background-color: #ffffff;
+`;
+
+export const ToggleComponent = styled.div`
+  background-color: #ffffff;
+  display: flex;
+  justify-content: end;
+
+  button {
+    padding: 0.625rem 0.3rem 0rem 0.3rem;
+    border: none;
+    cursor: pointer;
+    background-color: #ffffff;
+  }
+`;
+
+export const ToggleText = styled.div`
+  font-size: 0.8rem;
+  font-family: "Pretendard-Bold";
+
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+`;

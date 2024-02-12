@@ -1,5 +1,8 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
+
+import { faCaretDown, faCaretUp } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { getMateList, getMatesByMatchList } from "../../../api/mate";
 import BoardTopNavBar from "../../../components/board/BoardTopNavBar";
 import MateContainer from "../../../components/board/MateContainer";
@@ -7,6 +10,9 @@ import {
   Header,
   HeaderButton,
   HeaderDiv,
+  ToggleContainer,
+  ToggleComponent,
+  ToggleText,
 } from "../../../styles/BoardStyles/BoardStyle";
 import MatchSchedulePage from "../../match_page/MatchSchedulePage";
 
@@ -97,6 +103,13 @@ function MateListPage() {
     navigate("/mateRegist");
   };
 
+  const [isToggled, setIsToggled] = useState(false);
+
+  const handleToggele = () => {
+    console.log("isToggled: ", isToggled);
+    setIsToggled(!isToggled);
+  };
+
   return (
     <div>
       <BoardTopNavBar />
@@ -112,10 +125,33 @@ function MateListPage() {
         </HeaderDiv>
         <HeaderButton onClick={handleWriteMateClick}>🖋 글쓰기</HeaderButton>
       </Header>
-      <MatchSchedulePage
-        isMateListPage={true}
-        onMatchClick={handleMatchClick}
-      />
+
+      <ToggleContainer>
+        <ToggleComponent>
+          <button onClick={handleToggele} type="button">
+            {isToggled ? (
+              <ToggleText>
+                경기 일정 펼치기&nbsp;&nbsp;
+                <FontAwesomeIcon icon={faCaretDown} />
+              </ToggleText>
+            ) : (
+              <ToggleText>
+                경기 일정 접기&nbsp;&nbsp; <FontAwesomeIcon icon={faCaretUp} />
+              </ToggleText>
+            )}
+          </button>
+        </ToggleComponent>
+      </ToggleContainer>
+
+      {isToggled ? (
+        <div />
+      ) : (
+        <MatchSchedulePage
+          isMateListPage={true}
+          onMatchClick={handleMatchClick}
+        />
+      )}
+
       {isMatchIdExists ? (
         <MateContainer mateList={mateList} />
       ) : (

@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useLocation } from "react-router-dom";
+
 import { getMatchList } from "../../api/match";
 import SelectContainer from "../../components/match/ScheduleSelect";
 import TableContainer from "../../components/match/ScheduleTable";
@@ -79,6 +80,7 @@ export default function MatchSchedulePage({ isMateListPage, onMatchClick }) {
       {view === "calendar" && (
         <TableContainer
           year={year}
+          setYear={setYear}
           month={month}
           day={selectedDay}
           setResetDayFlag={setResetDayFlag}
@@ -88,7 +90,22 @@ export default function MatchSchedulePage({ isMateListPage, onMatchClick }) {
           isMateListPage={isMateListPage}
           onMatchClick={onMatchClick}
         />
-      )}
+        <hr style={{ width: "95%", border: "1px solid #f4f4f4" }} />
+        {view === "list" && (
+          <ListContainer data={data} year={year} month={month} view={view} />
+        )}
+        {view === "calendar" && (
+          <TableContainer
+            year={year}
+            month={month}
+            day={selectedDay}
+            setResetDayFlag={setResetDayFlag}
+            setSelectedDayProps={setSelectedDayProps}
+            data={data}
+            view={view}
+          />
+        )}
+      </div>
     </div>
   );
 }
