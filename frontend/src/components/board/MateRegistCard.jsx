@@ -1,16 +1,8 @@
 import React, { useState, useEffect } from "react";
 import {
   TextArea,
-  NumberInput,
-  FlagInput,
   SubmitButton,
   TitleInput,
-  SelectInput,
-  FlagInputText,
-  FlagInputContainer,
-  FlagInputLabel,
-  FlagInputCheckbox,
-  FlagInputSlider,
   InputLabel,
   ToggleContainer,
   OuterCircle,
@@ -18,13 +10,12 @@ import {
   RegistCardContainer,
 } from "../../styles/BoardStyles/BoardCreateStyle";
 import { getMatchList } from "../../api/match";
-import { formatDateTime } from "../../components/board/dateFormat";
 import {
-  MateInputLabel,
   MateInputText,
   MateNumberContainer,
   MateNumberInput,
 } from "../../styles/BoardStyles/MateListStyle";
+import MatchSchedulePage from "../../pages/match_page/MatchSchedulePage";
 
 function MateRegistCard({
   title,
@@ -72,7 +63,15 @@ function MateRegistCard({
 
       <RegistCardContainer>
         <InputLabel>경기 일정</InputLabel>
-        <SelectInput
+        <MatchSchedulePage
+          value={matchId}
+          isMateListPage={true}
+          defaultValue={matchId}
+          onMatchClick={(matchId) => {
+            onMatchIdChange(matchId);
+          }}
+        />
+        {/* <SelectInput
           value={matchId}
           defaultValue={matchId}
           onChange={(e) => onMatchIdChange(e.target.value)}
@@ -86,7 +85,8 @@ function MateRegistCard({
               {formatDateTime(match.matchAt)}{" "}
             </option>
           ))}
-        </SelectInput>
+        </SelectInput> */}
+
         <InputLabel>제목</InputLabel>
         <TitleInput
           value={title}
