@@ -18,7 +18,7 @@ import {
 import { formatDateTime, formatRelativeTime } from "./dateFormat";
 import { getMatchDetail } from "../../api/match";
 
-function MateItemCard({ mate }) {
+function MateItemCard({ mate, user, fromMypage, category }) {
   const [matchDetail, setMatchDetail] = useState({});
 
   function getMatch() {
@@ -31,7 +31,11 @@ function MateItemCard({ mate }) {
   }, []);
 
   return (
-    <Link to={`/mate/${mate.board.boardId}`} style={{ textDecoration: "none" }}>
+    <Link
+      to={`/mate/${mate.board.boardId}`}
+      style={{ textDecoration: "none" }}
+      state={{ user, fromMypage, category }}
+    >
       <ItemContainer>
         {mate.fullFlag ? (
           <DealStatusOrange>모집완료</DealStatusOrange>

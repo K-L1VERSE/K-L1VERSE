@@ -24,6 +24,7 @@ function MateRegistPage() {
   const [isUpdateMode, setIsUpdateMode] = useState(false);
   const { userId } = useRecoilState(UserState)[0];
   const location = useLocation();
+  const { state } = location;
   useEffect(() => {
     if (location.state && location.state.board) {
       setBoardId(location.state.board.boardId);
@@ -51,7 +52,17 @@ function MateRegistPage() {
           matchId,
         },
         () => {
-          navigate(`/mate/${boardId}`);
+          if (state && state.fromMypage) {
+            navigate(`/mate/${boardId}`, {
+              state: {
+                user: state.user,
+                fromMypage: state.fromMypage,
+                category: state.category,
+              },
+            });
+          } else {
+            navigate(`/mate/${boardId}`);
+          }
         },
         () => {},
       );

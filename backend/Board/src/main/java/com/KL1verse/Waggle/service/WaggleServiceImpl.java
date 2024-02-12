@@ -11,6 +11,7 @@ import com.KL1verse.Waggle.repository.WaggleLikeRepository;
 import com.KL1verse.Waggle.repository.WaggleRepository;
 import com.KL1verse.Waggle.repository.WaggleUserHashTagRepository;
 import com.KL1verse.Waggle.repository.entity.Waggle;
+import com.KL1verse.Waggle.repository.entity.WaggleLike;
 import com.KL1verse.Waggle.repository.entity.WaggleUserHashTag;
 import com.KL1verse.kafka.dto.res.BoardNotificationResDto;
 import com.KL1verse.kafka.producer.KafkaBoardCleanbotProducer;
@@ -501,6 +502,7 @@ public class WaggleServiceImpl implements WaggleService {
     return hashtags;
   }
 
+  @Transactional
   @Override
   public void deleteWaggle(Long boardId) {
     Waggle waggleToDelete = findWaggleByBoardId(boardId);
@@ -511,6 +513,8 @@ public class WaggleServiceImpl implements WaggleService {
     List<WaggleUserHashTag> waggleUserHashTag = waggleUserHashTagRepository.findByWaggleWaggleId(waggleToDelete.getWaggleId());
     waggleUserHashTagRepository.deleteAll(waggleUserHashTag);
 
+    List<WaggleLike> waggleLikes = waggleLikeRepository.findByWaggleIdWaggleId(waggleToDelete.getWaggleId());
+    waggleLikeRepository.deleteAll(waggleLikes);
     waggleRepository.deleteById(waggleToDelete.getWaggleId());
 
   }

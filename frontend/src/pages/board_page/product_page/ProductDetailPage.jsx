@@ -60,16 +60,35 @@ function ProductDetailPage() {
   }, [boardId]);
 
   const handleUpdateBtn = () => {
-    navigate("/productRegist", {
-      state: { board: productDetail, price, dealFlag },
-    });
+    if (state && state.fromMypage) {
+      navigate("/productRegist", {
+        state: {
+          board: productDetail,
+          price,
+          dealFlag,
+          user: state.user,
+          fromMypage: state.fromMypage,
+          category: state.category,
+        },
+      });
+    } else {
+      navigate("/productRegist", {
+        state: { board: productDetail, price, dealFlag },
+      });
+    }
   };
 
   const handleDeleteBtn = async () => {
     deleteProduct(
       boardId,
       () => {
-        navigate("/product");
+        if (state && state.fromMypage) {
+          navigate("/mypage", {
+            state: { user: state.user, category: state.category },
+          });
+        } else {
+          navigate("/product");
+        }
       },
       () => {},
     );

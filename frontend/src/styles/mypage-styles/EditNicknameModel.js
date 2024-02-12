@@ -82,18 +82,11 @@ export const CancleButton = styled.button`
   border-radius: 0.5rem;
   font-weight: 600;
   cursor: pointer;
-
-  ${({ $abled }) =>
-    $abled &&
-    `
-    &:hover {
-      background-color: rgba(188, 188, 188, 0.4);
-    }
-  `}
 `;
 
 export const SaveButton = styled(CancleButton)`
   background-color: ${(props) =>
     props.$abled ? "#3261c1" : "rgba(233, 236, 242, 0.8)"};
   color: #fff;
+  cursor: ${(props) => (props.$abled ? "pointer" : "not-allowed")};
 `;

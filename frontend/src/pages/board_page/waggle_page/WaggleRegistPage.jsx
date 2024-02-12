@@ -20,6 +20,7 @@ function WaggleRegistPage() {
   const [file, setFile] = useState(null);
 
   const location = useLocation();
+  const { state } = location;
 
   useEffect(() => {
     if (location.state && location.state.board) {
@@ -43,7 +44,17 @@ function WaggleRegistPage() {
           },
         },
         () => {
-          navigate(`/waggle/${boardId}`);
+          if (state && state.fromMypage) {
+            navigate(`/waggle/${boardId}`, {
+              state: {
+                user: state.user,
+                fromMypage: state.fromMypage,
+                category: state.category,
+              },
+            });
+          } else {
+            navigate(`/waggle/${boardId}`);
+          }
         },
         () => {},
       );

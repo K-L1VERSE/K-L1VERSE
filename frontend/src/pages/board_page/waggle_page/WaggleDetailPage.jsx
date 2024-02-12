@@ -86,18 +86,38 @@ function WaggleDetailPage() {
   }, [waggleDetail]);
 
   const handleUpdateBtn = () => {
-    navigate(`/waggleRegist`, {
-      state: {
-        board: waggleDetail,
-      },
-    });
+    if (state && state.fromMypage) {
+      navigate(`/waggleRegist`, {
+        state: {
+          board: waggleDetail,
+          user: state.user,
+          fromMypage: state.fromMypage,
+          category: state.category,
+        },
+      });
+    } else {
+      navigate(`/waggleRegist`, {
+        state: {
+          board: waggleDetail,
+        },
+      });
+    }
   };
 
   const handleDeleteBtn = () => {
     deleteWaggle(
       boardId,
       () => {
-        navigate("/waggle");
+        if (state && state.fromMypage) {
+          navigate("/mypage", {
+            state: {
+              user: state.user,
+              category: state.category,
+            },
+          });
+        } else {
+          navigate("/waggle");
+        }
       },
       () => {},
     );

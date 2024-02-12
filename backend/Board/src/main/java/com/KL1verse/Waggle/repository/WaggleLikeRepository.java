@@ -15,4 +15,6 @@ public interface WaggleLikeRepository extends JpaRepository<WaggleLike, Long> {
 
     @Query(value = "SELECT nickname, profile FROM user WHERE user_id = :userId", nativeQuery = true)
     List<Object[]> findNicknameAndProfileByUserId(Integer userId);
+
+    List<WaggleLike> findByWaggleIdWaggleId(Long waggleId);
 }

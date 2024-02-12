@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { useLocation } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 import UserProfile from "../../components/mypage/UserProfile";
 import axios from "../../api/axios";
 
@@ -8,6 +8,11 @@ import {
   BoardContainer,
   BoardText,
   BoardList,
+  NoBoardContainer,
+  NoBoardBox,
+  NoBoardText,
+  NoBoardImg,
+  GoBoardButton,
 } from "../../styles/mypage-styles/MypageStyle";
 
 import {
@@ -20,6 +25,7 @@ import WaggleContainer from "../../components/board/WaggleContainer";
 import MateContainer from "../../components/board/MateContainer";
 import ProductContainer from "../../components/board/ProductContainer";
 import { formatRelativeTime } from "../../components/board/dateFormat";
+import { get } from "jquery";
 
 function MyPage() {
   const fromMypage = true;
@@ -56,9 +62,11 @@ function MyPage() {
   );
   const [page, setPage] = useState(1);
   const [category, setCategory] = useState(
-    state && state.category ? state.category : "",
+    state && state.category ? state.category : "1",
   );
   const [myBoard, setMyBoard] = useState([]);
+  const [isAxios, setIsAxios] = useState(false);
+  const [isCategoryChange, setIsCategoryChange] = useState(false);
 
   /* 유저 정보 가져오기 */
   const getUserInfo = () => {
@@ -70,14 +78,9 @@ function MyPage() {
       .catch(() => {});
   };
 
-  useEffect(() => {
-    if (!user.userId) {
-      getUserInfo();
-    }
-  }, []);
-
   /* 카테고리 변경 시 호출될 훅 */
   const getMyWagle = () => {
+    setIsAxios(false);
     let type = "";
     if (category === "1") {
       type = "waggles";
@@ -88,25 +91,49 @@ function MyPage() {
     }
 
     if (user.userId) {
-      setMyBoard([]);
       axios
         .post(`/board/${type}/myPage`, {
           userId: user.userId,
         })
         .then(({ data }) => {
+          setIsAxios(true);
+          setIsCategoryChange(false);
           setMyBoard(data.content);
         })
         .catch(() => {});
     }
   };
 
-  const [selectedValue, setSelectedValue] = useState("");
-
   useEffect(() => {
     if (category) {
+      setIsCategoryChange(true);
+      setMyBoard([]);
       getMyWagle();
     }
   }, [category]);
+
+  useEffect(() => {
+    if (!user.userId) {
+      getUserInfo();
+    }
+  }, []);
+
+  useEffect(() => {
+    if (user.userId) {
+      getMyWagle();
+    }
+  }, [user]);
+
+  const navigate = useNavigate();
+  const goWaggle = () => {
+    navigate("/waggle");
+  };
+  const goMate = () => {
+    navigate("/mate");
+  };
+  const goProduct = () => {
+    navigate("/product");
+  };
 
   return (
     <>
@@ -138,25 +165,65 @@ function MyPage() {
         </Nav>
       </BoardList>
       <div>
-        {category === "1" && (
-          <WaggleContainer
-            waggleList={myBoard.reverse()}
-            formatRelativeTime={formatRelativeTime}
-            user={user}
-            fromMypage={fromMypage}
-            category={category}
-          />
-        )}
-        {category === "2" && <MateContainer mateList={myBoard} fromMypage />}
-        {category === "3" && (
-          <ProductContainer
-            productList={myBoard.reverse()}
-            formatRelativeTime={formatRelativeTime}
-            user={user}
-            fromMypage={fromMypage}
-            category={category}
-          />
-        )}
+        {category === "1" &&
+          isAxios &&
+          !isCategoryChange &&
+          (myBoard.length > 0 ? (
+            <WaggleContainer
+              waggleList={myBoard.reverse()}
+              formatRelativeTime={formatRelativeTime}
+              user={user}
+              fromMypage={fromMypage}
+              category={category}
+            />
+          ) : (
+            <NoBoardContainer>
+              <NoBoardBox>
+                <NoBoardText>작성한 글이 없어요 </NoBoardText>
+                <NoBoardImg src="https://raw.githubusercontent.com/Tarikul-Islam-Anik/Animated-Fluent-Emojis/master/Emojis/Smilies/Grinning%20Face%20with%20Sweat.png" />
+              </NoBoardBox>
+              <GoBoardButton onClick={goWaggle}>글 쓰러 가기</GoBoardButton>
+            </NoBoardContainer>
+          ))}
+        {category === "2" &&
+          isAxios &&
+          !isCategoryChange &&
+          (myBoard.length > 0 ? (
+            <MateContainer
+              mateList={myBoard}
+              user={user}
+              fromMypage={fromMypage}
+              category={category}
+            />
+          ) : (
+            <NoBoardContainer>
+              <NoBoardBox>
+                <NoBoardText>작성한 글이 없어요 </NoBoardText>
+                <NoBoardImg src="https://raw.githubusercontent.com/Tarikul-Islam-Anik/Animated-Fluent-Emojis/master/Emojis/Smilies/Grinning%20Face%20with%20Sweat.png" />
+              </NoBoardBox>
+              <GoBoardButton onClick={goMate}>글 쓰러 가기</GoBoardButton>
+            </NoBoardContainer>
+          ))}
+        {category === "3" &&
+          isAxios &&
+          !isCategoryChange &&
+          (myBoard.length > 0 ? (
+            <ProductContainer
+              productList={myBoard.reverse()}
+              formatRelativeTime={formatRelativeTime}
+              user={user}
+              fromMypage={fromMypage}
+              category={category}
+            />
+          ) : (
+            <NoBoardContainer>
+              <NoBoardBox>
+                <NoBoardText>작성한 글이 없어요 </NoBoardText>
+                <NoBoardImg src="https://raw.githubusercontent.com/Tarikul-Islam-Anik/Animated-Fluent-Emojis/master/Emojis/Smilies/Grinning%20Face%20with%20Sweat.png" />
+              </NoBoardBox>
+              <GoBoardButton onClick={goProduct}>글 쓰러 가기</GoBoardButton>
+            </NoBoardContainer>
+          ))}
       </div>
     </>
   );
