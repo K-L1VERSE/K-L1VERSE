@@ -129,10 +129,9 @@ function CommentItemCard({
           <WriterContainer>
             {comment.profile && <WriterProfile src={comment.profile} />}
             <CommentWriter>{comment.nickname}</CommentWriter>
-            {comment.mainBadge && (
-              <WriterBadge
-                src={`${process.env.PUBLIC_URL}/badge/badge${comment.mainBadge === null ? 0 : comment.mainBadge}back.png`}
-              />
+            <WriterBadge
+              src={`${process.env.PUBLIC_URL}/badge/badge${comment.mainBadge === null ? 0 : comment.mainBadge}back.png`}
+            />
             )}
           </WriterContainer>
           <CommentItem key={comment.commentId}>
