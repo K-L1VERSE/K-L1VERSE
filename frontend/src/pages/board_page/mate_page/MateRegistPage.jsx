@@ -30,9 +30,9 @@ function MateRegistPage() {
       setBoardId(location.state.board.boardId);
       setTitle(location.state.board.title);
       setContent(location.state.board.content);
-      setTotal(location.state.board.total);
-      setFullFlag(location.state.board.fullFlag);
-      setMatchId(location.state.board.matchId);
+      setTotal(location.state.total);
+      setFullFlag(location.state.fullFlag);
+      setMatchId(location.state.matchId);
       setIsUpdateMode(true);
     }
   }, [location]);
@@ -92,37 +92,59 @@ function MateRegistPage() {
     setFullFlag(e.target.checked);
   }
 
+  const handleFullFlag = () => {
+    setFullFlag(!fullFlag);
+  };
+
   const handleBackClick = () => {
-    navigate("/mate");
+    if (isUpdateMode) {
+      if (state && state.fromMypage) {
+        navigate(`/mate/${boardId}`, {
+          state: {
+            user: state.user,
+            fromMypage: state.fromMypage,
+            category: state.category,
+          },
+        });
+      } else {
+        navigate(`/mate/${boardId}`);
+      }
+    } else {
+      navigate("/mate");
+    }
   };
 
   return (
-    <RegistCardContainer>
-      <DetailTop>
-        <BackButton onClick={handleBackClick}>
-          <img src={BackIcon} alt="Back" />
-        </BackButton>
-      </DetailTop>
-      <DetailTop>
-        {isUpdateMode ? "Mate 게시물 수정" : "Mate 게시물 작성"}
-      </DetailTop>
+    <div>
+      {boardId && (
+        <>
+          <DetailTop>
+            <BackButton onClick={handleBackClick}>
+              <img src={BackIcon} alt="Back" />
+            </BackButton>
+          </DetailTop>
+          <DetailTop>
+            {isUpdateMode ? "Mate 게시물 수정" : "Mate 게시물 작성"}
+          </DetailTop>
 
-      <MateRegistCard
-        title={title}
-        content={content}
-        total={total}
-        fullFlag={fullFlag}
-        matchId={matchId}
-        onTitleChange={(e) => setTitle(e.target.value)}
-        onContentChange={(e) => setContent(e.target.value)}
-        onTotalChange={(e) => setTotal(e.target.value)}
-        onfullFlag={fullFlag}
-        onFullFlagChange={handleFullFlagChange}
-        onMatchIdChange={(value) => setMatchId(value)}
-        onSubmit={handleSubmit}
-        buttonText={isUpdateMode ? "수정하기" : "작성하기"}
-      />
-    </RegistCardContainer>
+          <MateRegistCard
+            title={title}
+            content={content}
+            total={total}
+            fullFlag={fullFlag}
+            matchId={matchId}
+            onTitleChange={(e) => setTitle(e.target.value)}
+            onContentChange={(e) => setContent(e.target.value)}
+            onTotalChange={(e) => setTotal(e.target.value)}
+            onfullFlag={fullFlag}
+            onMatchIdChange={(value) => setMatchId(value)}
+            onSubmit={handleSubmit}
+            buttonText={isUpdateMode ? "수정하기" : "작성하기"}
+            handleFullFlag={handleFullFlag}
+          />
+        </>
+      )}
+    </div>
   );
 }
 

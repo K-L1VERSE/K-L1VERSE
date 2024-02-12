@@ -1,11 +1,11 @@
 import styled, { css } from "styled-components";
 
 export const DetailTop = styled.div`
-  margin-left: 1rem;
   margin-top: 1rem;
   flex-direction: column;
   font-family: "Pretendard-Regular";
   font-size: 1.3rem;
+  margin-left: 1rem;
 `;
 
 export const RegistCardContainer = styled.div`

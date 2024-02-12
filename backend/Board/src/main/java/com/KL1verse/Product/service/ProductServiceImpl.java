@@ -10,7 +10,9 @@ import com.KL1verse.Product.dto.req.ProductDTO;
 import com.KL1verse.Product.repository.ProductRepository;
 import com.KL1verse.Product.repository.entity.Product;
 import com.KL1verse.kafka.dto.req.BoardCleanbotCheckReqDto;
+import com.KL1verse.kafka.dto.res.BoardNotificationResDto;
 import com.KL1verse.kafka.producer.KafkaBoardCleanbotProducer;
+import com.KL1verse.kafka.producer.KafkaBoardNotificationProducer;
 import com.KL1verse.s3.repository.entity.File;
 import com.KL1verse.s3.service.BoardImageService;
 import com.KL1verse.s3.service.FileService;
@@ -39,6 +41,7 @@ public class ProductServiceImpl implements ProductService {
 
     private final CommentRepository commentRepository;
     private final KafkaBoardCleanbotProducer kafkaBoardCleanbotProducer;
+    private final KafkaBoardNotificationProducer kafkaBoardNotificationProducer;
 
     @Override
     public ProductDTO getProductById(Long boardId) {
@@ -125,6 +128,15 @@ public class ProductServiceImpl implements ProductService {
         ProductDTO createdProductDTO = convertToDTO(createdProduct);
         createdProductDTO.getBoard().setNickname(userNickname);
         createdProductDTO.getBoard().setBoardImage(file.getUri());
+
+        kafkaBoardNotificationProducer.boardNotification(BoardNotificationResDto.builder()
+                .type(BoardNotificationResDto.BoardNotificationType.GOAL)
+                .userId(userId)
+                .message("글 작성 보상으로 10골을 지급 받았습니다.")
+                .uri("/product/" + String.valueOf(board.getBoardId()))
+                .profile(null)
+                .nickname(null)
+                .build());
 
 //        BoardCleanbotCheckReqDto boardCleanbotCheckReqDto = BoardCleanbotCheckReqDto.builder()
 //            .id(createdProduct.getBoard().getBoardId())

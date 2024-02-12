@@ -420,6 +420,7 @@ public class WaggleServiceImpl implements WaggleService {
   }
 
 
+  @Transactional
   @Override
   public WaggleDTO createWaggle(WaggleDTO waggleDto) {
     Waggle waggle = convertToEntity(waggleDto);
@@ -428,10 +429,12 @@ public class WaggleServiceImpl implements WaggleService {
 
     Board board = saveBoard(waggle.getBoard());
 
-    File file = fileService.saveFile(waggleDto.getBoard().getBoardImage());
-    boardImageService.saveBoardImage(board, file);
-
-    board.setBoardImage(file.getUri());
+    File file = null;
+    if(waggleDto.getBoard().getBoardImage() != null) {
+      board.setBoardImage(waggleDto.getBoard().getBoardImage());
+      file = fileService.saveFile(waggleDto.getBoard().getBoardImage());
+      boardImageService.saveBoardImage(board, file);
+    }
 
     Integer userId = waggleDto.getBoard().getUserId();
     List<Object[]> nicknameResult = waggleRepository.findUserNickname(userId);
@@ -441,7 +444,9 @@ public class WaggleServiceImpl implements WaggleService {
 
     WaggleDTO createdWaggleDTO = convertToDTO(createdWaggle);
     createdWaggleDTO.getBoard().setNickname(userNickname);
-    createdWaggleDTO.getBoard().setBoardImage(file.getUri());
+    if(waggleDto.getBoard().getBoardImage() != null) {
+      createdWaggleDTO.getBoard().setBoardImage(waggleDto.getBoard().getBoardImage());
+    }
 
     kafkaBoardNotificationProducer.boardNotification(BoardNotificationResDto.builder()
             .type(BoardNotificationResDto.BoardNotificationType.GOAL)

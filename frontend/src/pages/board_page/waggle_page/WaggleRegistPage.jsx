@@ -70,7 +70,6 @@ function WaggleRegistPage() {
           },
         },
         ({ data }) => {
-          // console.log(data, "****************");
           navigate(`/waggle/${data.board.boardId}`);
         },
         () => {},
@@ -79,7 +78,21 @@ function WaggleRegistPage() {
   };
 
   const handleBackClick = () => {
-    navigate("/waggle");
+    if (isUpdateMode) {
+      if (state && state.fromMypage) {
+        navigate(`/waggle/${boardId}`, {
+          state: {
+            user: state.user,
+            fromMypage: state.fromMypage,
+            category: state.category,
+          },
+        });
+      } else {
+        navigate(`/waggle/${boardId}`);
+      }
+    } else {
+      navigate("/waggle");
+    }
   };
 
   // 파일 상태를 업데이트하는 핸들러 함수

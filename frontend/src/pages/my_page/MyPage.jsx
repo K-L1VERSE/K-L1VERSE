@@ -190,7 +190,7 @@ function MyPage() {
           !isCategoryChange &&
           (myBoard.length > 0 ? (
             <MateContainer
-              mateList={myBoard}
+              mateList={myBoard.reverse()}
               user={user}
               fromMypage={fromMypage}
               category={category}

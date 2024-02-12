@@ -88,7 +88,21 @@ function ProductRegistPage() {
   };
 
   const handleBackClick = () => {
-    navigate("/product");
+    if (isUpdateMode) {
+      if (state && state.fromMypage) {
+        navigate(`/product/${boardId}`, {
+          state: {
+            user: state.user,
+            fromMypage: state.fromMypage,
+            category: state.category,
+          },
+        });
+      } else {
+        navigate(`/product/${boardId}`);
+      }
+    } else {
+      navigate("/product");
+    }
   };
 
   // 파일 상태를 업데이트하는 핸들러 함수
