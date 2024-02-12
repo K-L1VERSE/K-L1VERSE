@@ -97,7 +97,7 @@ const EditNicknameModal = ({ type, setModalOpen, user, setUser }) => {
                 icon: "error",
                 title: "포인트가 부족합니다.",
               });
-              setModalOpen(false);
+              closeModal();
               return;
             }
             setUser(() => {

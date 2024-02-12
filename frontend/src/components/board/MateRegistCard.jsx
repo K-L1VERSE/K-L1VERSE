@@ -50,6 +50,9 @@ function MateRegistCard({
     const fetchData = async () => {
       const result = await getMatchList(year, month);
       setMatchList(result);
+      if (result.length > 0) {
+        onMatchIdChange(result[0].matchId);
+      }
     };
     fetchData();
   }, []);
@@ -71,6 +74,7 @@ function MateRegistCard({
         <InputLabel>경기 일정</InputLabel>
         <SelectInput
           value={matchId}
+          defaultValue={matchId}
           onChange={(e) => onMatchIdChange(e.target.value)}
         >
           <option value="" disabled>

@@ -20,7 +20,7 @@ function MateRegistPage() {
   const [content, setContent] = useState("");
   const [total, setTotal] = useState(0);
   const [fullFlag, setFullFlag] = useState(false);
-  const [matchId, setMatchId] = useState(0);
+  const [matchId, setMatchId] = useState(undefined);
   const [isUpdateMode, setIsUpdateMode] = useState(false);
   const { userId } = useRecoilState(UserState)[0];
   const location = useLocation();
@@ -115,36 +115,32 @@ function MateRegistPage() {
   };
 
   return (
-    <div>
-      {boardId && (
-        <>
-          <DetailTop>
-            <BackButton onClick={handleBackClick}>
-              <img src={BackIcon} alt="Back" />
-            </BackButton>
-          </DetailTop>
-          <DetailTop>
-            {isUpdateMode ? "Mate 게시물 수정" : "Mate 게시물 작성"}
-          </DetailTop>
+    <>
+      <DetailTop>
+        <BackButton onClick={handleBackClick}>
+          <img src={BackIcon} alt="Back" />
+        </BackButton>
+      </DetailTop>
+      <DetailTop>
+        {isUpdateMode ? "Mate 게시물 수정" : "Mate 게시물 작성"}
+      </DetailTop>
 
-          <MateRegistCard
-            title={title}
-            content={content}
-            total={total}
-            fullFlag={fullFlag}
-            matchId={matchId}
-            onTitleChange={(e) => setTitle(e.target.value)}
-            onContentChange={(e) => setContent(e.target.value)}
-            onTotalChange={(e) => setTotal(e.target.value)}
-            onfullFlag={fullFlag}
-            onMatchIdChange={(value) => setMatchId(value)}
-            onSubmit={handleSubmit}
-            buttonText={isUpdateMode ? "수정하기" : "작성하기"}
-            handleFullFlag={handleFullFlag}
-          />
-        </>
-      )}
-    </div>
+      <MateRegistCard
+        title={title}
+        content={content}
+        total={total}
+        fullFlag={fullFlag}
+        matchId={matchId}
+        onTitleChange={(e) => setTitle(e.target.value)}
+        onContentChange={(e) => setContent(e.target.value)}
+        onTotalChange={(e) => setTotal(e.target.value)}
+        onfullFlag={fullFlag}
+        onMatchIdChange={(value) => setMatchId(value)}
+        onSubmit={handleSubmit}
+        buttonText={isUpdateMode ? "수정하기" : "작성하기"}
+        handleFullFlag={handleFullFlag}
+      />
+    </>
   );
 }
 

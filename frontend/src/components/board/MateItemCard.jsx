@@ -23,14 +23,12 @@ function MateItemCard({ mate, user, fromMypage, category }) {
 
   function getMatch() {
     if (mate.matchId) {
-      console.log("!@#!@#!@#");
       getMatchDetail(mate.matchId).then((res) => {
         setMatchDetail(res);
       });
     }
   }
   useEffect(() => {
-    console.log("mate: ", mate);
     getMatch();
   }, []);
 
