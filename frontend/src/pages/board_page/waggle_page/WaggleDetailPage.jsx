@@ -190,7 +190,7 @@ function WaggleDetailPage() {
               <UserProfile src={waggleDetail.profile} />
               <User>{nickname}</User>
               <UserBadge
-                src={`${process.env.PUBLIC_URL}/badge/badge${waggleDetail.mainBadge === null ? 0 : waggleDetail.mainBadge}.png`}
+                src={`${process.env.PUBLIC_URL}/badge/badge${waggleDetail.mainBadge === null ? 0 : waggleDetail.mainBadge}back.png`}
               />
             </UserContainer>
             <CreateAt>{formatDateTime2(createAt)}</CreateAt>

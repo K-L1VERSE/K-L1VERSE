@@ -150,7 +150,7 @@ function ProductDetailPage() {
               <ProductWriterBadge
                 src={`${process.env.PUBLIC_URL}/badge/badge${
                   productDetail.mainBadge === null ? 0 : productDetail.mainBadge
-                }.png`}
+                }back.png`}
               />
             </ProductWriterContainer>
             {dealFlag ? (

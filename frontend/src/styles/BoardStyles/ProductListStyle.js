@@ -24,8 +24,8 @@ export const ProductItemWriter = styled.div`
 `;
 
 export const WriteBadge = styled.img`
-  width: 1rem;
-  height: 1rem;
+  width: 1.4rem;
+  height: 1.7rem;
 `;
 
 export const ForWidth = styled.div`
@@ -119,7 +119,7 @@ export const ProductWriterContainer = styled.div`
   display: flex;
   align-items: center;
   margin-bottom: 0.5rem;
-    margin-top: 1rem;
+  margin-top: 1rem;
 `;
 
 export const ProductWriterProfile = styled.img`
@@ -133,12 +133,12 @@ export const ProductWriter = styled.div`
   display: flex;
   align-items: center;
   margin-right: 0.1rem;
-    font-family: "Pretendard-Bold";
+  font-family: "Pretendard-Bold";
 `;
 
 export const ProductWriterBadge = styled.img`
-  width: 1rem;
-  height: 1rem;
+  width: 1.4rem;
+  height: 1.7rem;
 `;
 
 export const ProductDetailTitle = styled.p`

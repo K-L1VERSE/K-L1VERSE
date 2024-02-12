@@ -131,7 +131,7 @@ function CommentItemCard({
             <CommentWriter>{comment.nickname}</CommentWriter>
             {comment.mainBadge && (
               <WriterBadge
-                src={`${process.env.PUBLIC_URL}/badge/badge${comment.mainBadge === null ? 0 : comment.mainBadge}.png`}
+                src={`${process.env.PUBLIC_URL}/badge/badge${comment.mainBadge === null ? 0 : comment.mainBadge}back.png`}
               />
             )}
           </WriterContainer>
