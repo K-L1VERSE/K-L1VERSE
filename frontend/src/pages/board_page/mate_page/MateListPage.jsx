@@ -22,6 +22,7 @@ function MateListPage() {
   const [page, setPage] = useState(0);
   const [hasMore, setHasMore] = useState(true);
   const [isMatchIdExists, setIsMatchIdExists] = useState(true);
+  const [isMateListExists, setIsMateListExists] = useState(true);
   const navigate = useNavigate();
 
   const handleMatchClick = (selectedMatchId) => {
@@ -29,18 +30,26 @@ function MateListPage() {
     console.log("selectedMatchId:???????????????? ", selectedMatchId);
   };
 
+  useEffect(() => {
+    getMates();
+  }, [selectedMatchId]);
+
   function getMates() {
     if (selectedMatchId) {
       getMatesByMatchList(
         selectedMatchId,
         ({ data }) => {
-          if (!data.content) {
+          if (!data) {
             setHasMore(false);
-            setIsMatchIdExists(false);
+            setIsMatchIdExists(true);
+            setIsMateListExists(false);
+            console.log("isMateListExists false", data);
           } else {
             setIsMatchIdExists(true);
+            setIsMateListExists(true);
             setMateList([...mateList, ...data.content]);
             setPage(page + 1);
+            console.log("isMateListExists true", data);
           }
         },
         () => {},
@@ -65,8 +74,7 @@ function MateListPage() {
 
   useEffect(() => {
     getMates();
-    // console.log("mateList.board.createAt:!!!!!!!!!!!! ", mateList);
-  }, []);
+  }, [selectedMatchId]);
 
   const [isBottom, setIsBottom] = useState(false);
 
@@ -153,10 +161,15 @@ function MateListPage() {
       )}
 
       {isMatchIdExists ? (
-        mateList.length > 0 && <MateContainer mateList={mateList} />
+        isMateListExists ? (
+          <MateContainer mateList={mateList} />
+        ) : (
+          <p>해당하는 경기의 게시글이 없습니다.</p>
+        )
       ) : (
-        <p>해당하는 경기의 게시글이 없습니다.</p>
+        <MateContainer mateList={mateList} />
       )}
+
       {!hasMore && <p>No more data</p>}
     </div>
   );
