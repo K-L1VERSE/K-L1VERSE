@@ -95,6 +95,7 @@ function Chat() {
 
   const recvMessage = (recv) => {
     if (recv.type === "REJECT") {
+      console.log("전체 messages : ", messages);
       console.log(`message#${recv.messageId}가 클린봇에 의해 거부되었습니다.`);
       const rejectedMessageIndex = messages.findIndex(
         (msg) => msg.messageId === recv.messageId,
