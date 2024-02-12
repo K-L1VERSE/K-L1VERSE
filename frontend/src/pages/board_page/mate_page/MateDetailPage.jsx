@@ -43,7 +43,7 @@ function MateDetailPage() {
   const { boardId } = useParams();
   const navigate = useNavigate();
 
-  const [matchDetail, setMatchDetail] = useState({});
+  const [matchDetail, setMatchDetail] = useState(undefined);
   const [homeTeamName, setHomeTeamName] = useState("");
   const [awayTeamName, setAwayTeamName] = useState("");
   const [matchAt, setMatchAt] = useState("");
@@ -56,7 +56,6 @@ function MateDetailPage() {
   /* mate 상세 정보 가져오기 */
   function getMateDetail() {
     axios.get(`/board/mates/${boardId}`).then(({ data }) => {
-      console.log("!!!!!!!!!!!!", data);
       setMatchDetail(data);
       setMatchId(data.matchId);
       setMateDetail(data.board);
@@ -70,12 +69,14 @@ function MateDetailPage() {
   }, [boardId]);
 
   function getMatch() {
-    getMatchDetail(matchId).then((res) => {
-      setMatchDetail(res);
-      setHomeTeamName(res.homeTeamName);
-      setAwayTeamName(res.awayTeamName);
-      setMatchAt(res.matchAt);
-    });
+    if (matchId) {
+      getMatchDetail(matchId).then((res) => {
+        setMatchDetail(res);
+        setHomeTeamName(res.homeTeamName);
+        setAwayTeamName(res.awayTeamName);
+        setMatchAt(res.matchAt);
+      });
+    }
   }
   useEffect(() => {
     getMatch();
@@ -145,40 +146,44 @@ function MateDetailPage() {
   };
 
   return (
-    <Container>
-      <DetailTop>
-        <BackButton onClick={handleBackClick}>
-          <img src={BackIcon} alt="Back" />
-        </BackButton>
-      </DetailTop>
-      <DetailBox>
-        <User>{mateDetail.nickname}</User>
-        {fullFlag ? (
-          <DealStatusOrange>모집완료</DealStatusOrange>
-        ) : (
-          <DealStatusGreen>모집중</DealStatusGreen>
-        )}
-        <div
-          style={{
-            display: "flex",
-            justifyContent: "space-between",
-            marginBottom: "10px",
-          }}
-        >
-          <ItemTitle>
-            <MatchTitle>
-              {homeTeamName} vs {awayTeamName}
-            </MatchTitle>
-            <MatchTime>{formatDateTime(matchAt)}</MatchTime>
-          </ItemTitle>
-        </div>
-        <MateDetailTitle>{mateDetail.title}</MateDetailTitle>
-        <MateDetailContent>{mateDetail.content}</MateDetailContent>
-        <MateDetailTotal>총 인원 : {total}</MateDetailTotal>
-        <EditDeleteButton>{renderEditDeleteButtons()}</EditDeleteButton>
-      </DetailBox>
-      <CommentList boardId={boardId} />
-    </Container>
+    <div>
+      {matchDetail && homeTeamName && awayTeamName && matchAt && (
+        <Container>
+          <DetailTop>
+            <BackButton onClick={handleBackClick}>
+              <img src={BackIcon} alt="Back" />
+            </BackButton>
+          </DetailTop>
+          <DetailBox>
+            <User>{mateDetail.nickname}</User>
+            {fullFlag ? (
+              <DealStatusOrange>모집완료</DealStatusOrange>
+            ) : (
+              <DealStatusGreen>모집중</DealStatusGreen>
+            )}
+            <div
+              style={{
+                display: "flex",
+                justifyContent: "space-between",
+                marginBottom: "10px",
+              }}
+            >
+              <ItemTitle>
+                <MatchTitle>
+                  {homeTeamName} vs {awayTeamName}
+                </MatchTitle>
+                <MatchTime>{formatDateTime(matchAt)}</MatchTime>
+              </ItemTitle>
+            </div>
+            <MateDetailTitle>{mateDetail.title}</MateDetailTitle>
+            <MateDetailContent>{mateDetail.content}</MateDetailContent>
+            <MateDetailTotal>총 인원 : {total}</MateDetailTotal>
+            <EditDeleteButton>{renderEditDeleteButtons()}</EditDeleteButton>
+          </DetailBox>
+          <CommentList boardId={boardId} />
+        </Container>
+      )}
+    </div>
   );
 }
 

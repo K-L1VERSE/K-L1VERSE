@@ -1,11 +1,14 @@
 package com.KL1verse.match.chat.dto.res;
 
 import com.KL1verse.match.chat.dto.req.MessageReqDto;
-import lombok.Builder;
-import lombok.Data;
+import lombok.*;
 
 @Data
 @Builder
+@NoArgsConstructor
+@AllArgsConstructor
+@Getter
+@Setter
 public class MessageResDto {
 
     public enum MessageType {

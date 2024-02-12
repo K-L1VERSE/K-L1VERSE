@@ -121,63 +121,67 @@ function ProductDetailPage() {
   };
 
   return (
-    <Container>
-      <DetailTop>
-        <BackButton onClick={handleBackClick}>
-          <img src={BackIcon} alt="Back" />
-        </BackButton>
-      </DetailTop>
-      <DetailImgDiv>
-        {productDetail.boardImage &&
-          productDetail.boardImage
-            .split(",")
-            .map((imageUrl, index) => (
-              <DetailOnlyImg
-                key={index}
-                src={imageUrl.trim()}
-                alt={`Product Image ${index}`}
+    <div>
+      {productDetail && productDetail.boardImage && (
+        <Container>
+          <DetailTop>
+            <BackButton onClick={handleBackClick}>
+              <img src={BackIcon} alt="Back" />
+            </BackButton>
+          </DetailTop>
+          <DetailImgDiv>
+            {productDetail.boardImage &&
+              productDetail.boardImage
+                .split(",")
+                .map((imageUrl, index) => (
+                  <DetailOnlyImg
+                    key={index}
+                    src={imageUrl.trim()}
+                    alt={`Product Image ${index}`}
+                  />
+                ))}
+          </DetailImgDiv>
+          <DetailBox>
+            <ProductWriterContainer>
+              <ProductWriterProfile src={productDetail.profile} />
+              <ProductWriter>{productDetail.nickname}</ProductWriter>
+              <ProductWriterBadge
+                src={`${process.env.PUBLIC_URL}/badge/badge${
+                  productDetail.mainBadge === null ? 0 : productDetail.mainBadge
+                }.png`}
               />
-            ))}
-      </DetailImgDiv>
-      <DetailBox>
-        <ProductWriterContainer>
-          <ProductWriterProfile src={productDetail.profile} />
-          <ProductWriter>{productDetail.nickname}</ProductWriter>
-          <ProductWriterBadge
-            src={`${process.env.PUBLIC_URL}/badge/badge${
-              productDetail.mainBadge === null ? 0 : productDetail.mainBadge
-            }.png`}
-          />
-        </ProductWriterContainer>
-        {dealFlag ? (
-          <DealStatusOrange>거래완료</DealStatusOrange>
-        ) : (
-          <DealStatusGreen>거래가능</DealStatusGreen>
-        )}
-        <Title>{productDetail.title}</Title>
-        <FormattedDate>
-          {`${new window.Date(productDetail.createAt).toLocaleDateString(
-            "ko-KR",
-            {
-              year: "numeric",
-              month: "2-digit",
-              day: "2-digit",
-            },
-          )} ${new window.Date(productDetail.createAt).toLocaleTimeString(
-            "ko-KR",
-            {
-              hour: "2-digit",
-              minute: "2-digit",
-            },
-          )}`}
-        </FormattedDate>
+            </ProductWriterContainer>
+            {dealFlag ? (
+              <DealStatusOrange>거래완료</DealStatusOrange>
+            ) : (
+              <DealStatusGreen>거래가능</DealStatusGreen>
+            )}
+            <Title>{productDetail.title}</Title>
+            <FormattedDate>
+              {`${new window.Date(productDetail.createAt).toLocaleDateString(
+                "ko-KR",
+                {
+                  year: "numeric",
+                  month: "2-digit",
+                  day: "2-digit",
+                },
+              )} ${new window.Date(productDetail.createAt).toLocaleTimeString(
+                "ko-KR",
+                {
+                  hour: "2-digit",
+                  minute: "2-digit",
+                },
+              )}`}
+            </FormattedDate>
 
-        <Price>{Number(price).toLocaleString()} 원</Price>
-        <Content>{productDetail.content}</Content>
-        <EditDeleteButton>{renderEditDeleteButtons()}</EditDeleteButton>
-      </DetailBox>
-      <CommentList boardId={boardId} />
-    </Container>
+            <Price>{Number(price).toLocaleString()} 원</Price>
+            <Content>{productDetail.content}</Content>
+            <EditDeleteButton>{renderEditDeleteButtons()}</EditDeleteButton>
+          </DetailBox>
+          <CommentList boardId={boardId} />
+        </Container>
+      )}
+    </div>
   );
 }
 

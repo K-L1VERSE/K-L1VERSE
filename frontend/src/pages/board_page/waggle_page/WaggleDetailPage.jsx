@@ -177,48 +177,52 @@ function WaggleDetailPage() {
   };
 
   return (
-    <Container>
-      <DetailTop>
-        <BackButton onClick={handleBackClick}>
-          <img src={BackIcon} alt="Back" />
-        </BackButton>
-      </DetailTop>
-      <DetailBox>
-        <UserContainer>
-          <UserProfile src={waggleDetail.profile} />
-          <User>{nickname}</User>
-          <UserBadge
-            src={`${process.env.PUBLIC_URL}/badge/badge${waggleDetail.mainBadge === null ? 0 : waggleDetail.mainBadge}.png`}
-          />
-        </UserContainer>
-        <CreateAt>{formatDateTime2(createAt)}</CreateAt>
-        <Title>{title}</Title>
-        <Content>{content}</Content>
-        <WaggleImageContainer>
-          {waggleDetail.boardImage &&
-            waggleDetail.boardImage
-              .split(",")
-              .map((imageUrl, index) => (
-                <WaggleImage
-                  key={index}
-                  src={imageUrl.trim()}
-                  alt={`Waggle Image ${index}`}
-                />
-              ))}
-        </WaggleImageContainer>
-        <Like
-          liked={liked}
-          likesCount={likesCount}
-          handleLikeClick={handleLikeClick}
-        />
-        <EditDeleteButton>{renderEditDeleteButtons()}</EditDeleteButton>
-      </DetailBox>
-      <DetailCommentCount>
-        <Comment />
-        댓글 수 {commentCount}
-      </DetailCommentCount>
-      <CommentList boardId={boardId} />
-    </Container>
+    <div>
+      {waggleDetail && waggleId && (
+        <Container>
+          <DetailTop>
+            <BackButton onClick={handleBackClick}>
+              <img src={BackIcon} alt="Back" />
+            </BackButton>
+          </DetailTop>
+          <DetailBox>
+            <UserContainer>
+              <UserProfile src={waggleDetail.profile} />
+              <User>{nickname}</User>
+              <UserBadge
+                src={`${process.env.PUBLIC_URL}/badge/badge${waggleDetail.mainBadge === null ? 0 : waggleDetail.mainBadge}.png`}
+              />
+            </UserContainer>
+            <CreateAt>{formatDateTime2(createAt)}</CreateAt>
+            <Title>{title}</Title>
+            <Content>{content}</Content>
+            <WaggleImageContainer>
+              {waggleDetail.boardImage &&
+                waggleDetail.boardImage
+                  .split(",")
+                  .map((imageUrl, index) => (
+                    <WaggleImage
+                      key={index}
+                      src={imageUrl.trim()}
+                      alt={`Waggle Image ${index}`}
+                    />
+                  ))}
+            </WaggleImageContainer>
+            <Like
+              liked={liked}
+              likesCount={likesCount}
+              handleLikeClick={handleLikeClick}
+            />
+            <EditDeleteButton>{renderEditDeleteButtons()}</EditDeleteButton>
+          </DetailBox>
+          <DetailCommentCount>
+            <Comment />
+            댓글 수 {commentCount}
+          </DetailCommentCount>
+          <CommentList boardId={boardId} />
+        </Container>
+      )}
+    </div>
   );
 }
 

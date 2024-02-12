@@ -153,7 +153,7 @@ function MateListPage() {
       )}
 
       {isMatchIdExists ? (
-        <MateContainer mateList={mateList} />
+        mateList.length > 0 && <MateContainer mateList={mateList} />
       ) : (
         <p>해당하는 경기의 게시글이 없습니다.</p>
       )}
