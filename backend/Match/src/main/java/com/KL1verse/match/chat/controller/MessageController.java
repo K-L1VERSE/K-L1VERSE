@@ -75,6 +75,7 @@ public class MessageController {
 
         if (!jsonMessages.isEmpty()) {
             for (String jsonMessage : jsonMessages) {
+                log.info(jsonMessage);
                 try {
                     MessageResDto message = objectMapper.readValue(jsonMessage,
                         MessageResDto.class);
@@ -84,6 +85,7 @@ public class MessageController {
                 }
             }
         }
+        log.info(messages.toString());
 
         return ResponseEntity.ok().body(messages);
     }
