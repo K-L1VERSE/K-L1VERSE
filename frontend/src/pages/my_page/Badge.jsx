@@ -111,8 +111,10 @@ function Badge() {
           })
           .then(() => {
             Swal.fire({
-              icon: "success",
-              html: `<p style='font-size:1.2rem; font-family:Pretendard-Bold;'>뱃지 착용이 완료되었습니다.</p>`,
+              // icon: "success",
+              html: `
+              <img src="https://raw.githubusercontent.com/Tarikul-Islam-Anik/Animated-Fluent-Emojis/master/Emojis/Smilies/Light%20Blue%20Heart.png" alt="Light Blue Heart" width="100" height="100" />
+              <p style='font-size:1.2rem; font-family:Pretendard-Bold;'>뱃지 착용이 완료되었습니다.</p>`,
               confirmButtonText:
                 "<div style='font-size:1rem; font-family:Pretendard-Regular;'>확인</div>",
             });
@@ -125,10 +127,12 @@ function Badge() {
           })
           .catch(() => {
             Swal.fire({
-              icon: "error",
-              title: "잠시 후 다시 시도해주세요.",
+              // icon: "error",
+              html: `
+              <img src="https://raw.githubusercontent.com/Tarikul-Islam-Anik/Animated-Fluent-Emojis/master/Emojis/Symbols/Red%20Exclamation%20Mark.png" alt="Red Exclamation Mark" width="100" height="100" />
+              <p style='font-size:1.2rem; font-family:Pretendard-Bold;'>잠시 후 다시 시도해주세요.</p>`,
               confirmButtonText:
-                "<div style='font-size:1.25rem; font-family:revert; font-weight:550;'>뒤로 가기</div>",
+                "<div style='font-size:1rem; font-family:Pretendard-Regular; font-weight:550;'>뒤로 가기</div>",
             });
           });
       }
@@ -137,15 +141,17 @@ function Badge() {
 
   const handleBuyBadge = (index) => {
     Swal.fire({
-      title: "뱃지를 구매하시겠습니까?",
-      icon: "question",
+      html: `
+        <img src="https://raw.githubusercontent.com/Tarikul-Islam-Anik/Animated-Fluent-Emojis/master/Emojis/Animals/Hatching%20Chick.png" alt="Hatching Chick" width="100" height="100" />
+        <p style='font-size:1.2rem; font-family:Pretendard-Bold;'>뱃지를 구매하시겠습니까?</p>
+      `,
       showCancelButton: true,
       confirmButtonColor: "#3085d6",
       cancelButtonColor: "#d33",
       confirmButtonText:
-        "<div style='font-size:1.25rem; font-family:revert; font-weight:550;'>구매</div>",
+        "<div style='font-size:1rem; font-family:Pretendard-Regular;'>구매</div>",
       cancelButtonText:
-        "<div style='font-size:1.25rem; font-family:revert; font-weight:550;'>취소</div>",
+        "<div style='font-size:1rem; font-family:Pretendard-Regular;'>취소</div>",
     }).then((result) => {
       if (result.isConfirmed) {
         /* axios로 뱃지 구매 코드 보내기 */
@@ -156,24 +162,30 @@ function Badge() {
           .then((res) => {
             if (res.data.code === 1002) {
               Swal.fire({
-                icon: "error",
-                title: "포인트가 부족합니다.",
+                // icon: "error",
+                html: `
+                  <img src="https://raw.githubusercontent.com/Tarikul-Islam-Anik/Animated-Fluent-Emojis/master/Emojis/Symbols/Red%20Exclamation%20Mark.png" alt="Red Exclamation Mark" width="100" height="100" />
+                  <p style='font-size:1.2rem; font-family:Pretendard-Bold;'>포인트가 부족합니다.</p>`,
                 confirmButtonText:
-                  "<div style='font-size:1.25rem; font-family:revert; font-weight:550;'>뒤로가기</div>",
+                  "<div style='font-size:1rem; font-family:Pretendard-Regular; font-weight:550;'>뒤로 가기</div>",
               });
             } else if (res.data.code === 1200) {
               Swal.fire({
-                icon: "error",
-                title: "잘못된 요청입니다.",
+                // icon: "error",
+                html: `
+                  <img src="https://raw.githubusercontent.com/Tarikul-Islam-Anik/Animated-Fluent-Emojis/master/Emojis/Symbols/Red%20Exclamation%20Mark.png" alt="Red Exclamation Mark" width="100" height="100" />
+                  <p style='font-size:1.2rem; font-family:Pretendard-Bold;'>잘못된 요청입니다.</p>`,
                 confirmButtonText:
-                  "<div style='font-size:1.25rem; font-family:revert; font-weight:550;'>뒤로가기</div>",
+                  "<div style='font-size:1rem; font-family:Pretendard-Regular; font-weight:550;'>뒤로 가기</div>",
               });
             } else {
               Swal.fire({
                 icon: "success",
-                title: "뱃지 구매가 완료되었습니다.",
+                html: `
+              <img src="https://raw.githubusercontent.com/Tarikul-Islam-Anik/Animated-Fluent-Emojis/master/Emojis/Smilies/Light%20Blue%20Heart.png" alt="Light Blue Heart" width="100" height="100" />
+              <p style='font-size:1.2rem; font-family:Pretendard-Bold;'>뱃지 구매가 완료되었습니다.</p>`,
                 confirmButtonText:
-                  "<div style='font-size:1.25rem; font-family:revert; font-weight:550;'>확인</div>",
+                  "<div style='font-size:1rem; font-family:Pretendard-Regular;'>확인</div>",
               });
               setBadgeList(() => {
                 const newBadgeList = [...badgeList];
@@ -186,10 +198,12 @@ function Badge() {
           })
           .catch(() => {
             Swal.fire({
-              icon: "error",
-              title: "잠시 후 다시 시도해주세요.",
+              // icon: "error",
+              html: `
+                <img src="https://raw.githubusercontent.com/Tarikul-Islam-Anik/Animated-Fluent-Emojis/master/Emojis/Symbols/Red%20Exclamation%20Mark.png" alt="Red Exclamation Mark" width="100" height="100" />
+                <p style='font-size:1.2rem; font-family:Pretendard-Bold;'>잠시 후 다시 시도해주세요.</p>`,
               confirmButtonText:
-                "<div style='font-size:1.25rem; font-family:revert; font-weight:550;'>뒤로가기</div>",
+                "<div style='font-size:1rem; font-family:Pretendard-Regular; font-weight:550;'>뒤로 가기</div>",
             });
           });
       }
