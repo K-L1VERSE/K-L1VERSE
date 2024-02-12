@@ -69,6 +69,14 @@ export const ButtonContainer = styled.div`
   margin-bottom: 0.2rem;
 `;
 
+export const CommentRegistContainer = styled.div`
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  margin: 0.5rem 0 0.6rem 0.5rem;
+  font-size: 0.9rem;
+`;
+
 export const UserInfo = styled.div`
   display: flex;
   img {

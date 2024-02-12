@@ -5,13 +5,11 @@ import { UserState } from "../../global/UserState";
 import {
   CommentFormContainer,
   TextArea,
-  SubmitButton,
-  CancelButton,
   CheckboxLabel,
   CheckboxInput,
   TextContainer,
   TextBottom,
-  UserInfo,
+  CommentRegistContainer,
   SubmitContainer,
   SubmitImg,
 } from "../../styles/BoardStyles/CommentStyle";
@@ -89,13 +87,13 @@ const CommentForm = ({ boardId, parentId, getComments }) => {
 
   return (
     <CommentFormContainer>
-      <UserInfo>
+      <CommentRegistContainer>
         <SenderImg src={profile} />
-        <div>{nickname}</div>
+        <div style={{ marginLeft: "0.3rem" }}>{nickname}</div>
         <BadgeImg
           src={`${process.env.PUBLIC_URL}/badge/badge${mainBadge}.png`}
         />
-      </UserInfo>
+      </CommentRegistContainer>
       <TextContainer>
         <TextArea
           value={content}
