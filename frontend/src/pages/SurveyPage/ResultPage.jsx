@@ -17,10 +17,11 @@ import ToLeftPng from "../../assets/ToLeft.png";
 import Wallpaper from "../../assets/wallpaperbetter.png";
 import FacebookIcon from "../../assets/icon/facebook-icon(ver2).png";
 import TwitterIcon from "../../assets/icon/twitter-icon.png";
-import KakaoIcon from "../../assets/icon/kakaotalk-icon.png";
+import KakaoIcon from "../../assets/icon/kakaotalk.png";
 import Goback from "../../assets/icon/go-back-arrow-icon.png";
 import LoadingBar from "../../components/Survey/LoadingBar";
 import { ReactComponent as Congrats } from "../../assets/congrats.svg";
+import { ReactComponent as Refresh } from "../../assets/refresh.svg";
 
 function firework() {
   var duration = 15 * 100;
@@ -197,7 +198,8 @@ function ResultPage() {
 
   const domainAndPort = process.env.REACT_APP_DOMAIN_AND_PORT;
 
-  const imageUrl = "https://k-l1verse.site/" + teamImages[teamId];
+  const imageUrl =
+    "https://k-l1verse.site/" + teamImages[teamId][randomBackground];
 
   // 재랜더링시에 실행되게 해준다.
   useEffect(() => {
@@ -258,7 +260,7 @@ function ResultPage() {
               </Team>
             </ResultTeam>
           </div>
-          <BottomWrap>
+          {/* <BottomWrap>
             <ShareText>
               <div>콘텐츠 공유하기</div>
               <div>
@@ -283,15 +285,21 @@ function ResultPage() {
                 복사
               </div>
             </UrlBox>
-            <Shares>
-              <img src={FacebookIcon} onClick={shareFacebook} alt="facebook" />
-              <img src={TwitterIcon} onClick={shareTwitter} alt="twitter" />
+            <hr></hr>
+          </BottomWrap> */}
+          <Shares>
+            {/* <img src={FacebookIcon} onClick={shareFacebook} alt="facebook" />
+              <img src={TwitterIcon} onClick={shareTwitter} alt="twitter" /> */}
+            <div onClick={shareKakaoLink}>
               <img src={KakaoIcon} onClick={shareKakaoLink} alt="kakao" />
-              <span>
-                <img src={Goback} onClick={goStart} alt="restart" />
-              </span>
-            </Shares>
-          </BottomWrap>
+              <span>공유하기</span>
+            </div>
+            <div onClick={goStart}>
+              {/* <img src={refresh} onClick={goStart} alt="restart" /> */}
+              <Refresh />
+              <span>다시하기</span>
+            </div>
+          </Shares>
         </div>
       )}
       {!showResult && <LoadingBar done={100} />}
