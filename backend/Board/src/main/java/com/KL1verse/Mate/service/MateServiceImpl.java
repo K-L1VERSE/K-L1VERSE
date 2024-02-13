@@ -61,15 +61,15 @@ public class MateServiceImpl implements MateService {
     }
 
     @Override
-    public Page<MateDTO> getMatesByUser(Integer userId, Pageable pageable) {
-        Page<Mate> mates = mateRepository.findByBoard_UserId(userId, pageable);
+    public List<MateDTO> getMatesByUser(Integer userId, Pageable pageable) {
+        List<Mate> mates = mateRepository.findByBoard_UserId(userId, pageable);
 
         List<Object[]> userInfo = mateRepository.findUserNicknameAndProfileAndMainBadge(userId);
         String userNickname = (String) userInfo.get(0)[0];
         String userProfile = (String) userInfo.get(0)[1];
         String userMainBadge = (String) userInfo.get(0)[2];
 
-        return mates.map(mate -> {
+        return mates.stream().map(mate -> {
             MateDTO mateDTO = convertToDTO(mate);
 
             mateDTO.getBoard().setNickname(userNickname);
@@ -87,7 +87,7 @@ public class MateServiceImpl implements MateService {
             mateDTO.getBoard().setCommentCount(commentCount != null ? commentCount : 0);
 
             return mateDTO;
-        });
+        }).collect(Collectors.toList());
     }
 
 
@@ -204,10 +204,10 @@ public class MateServiceImpl implements MateService {
 
 
     @Override
-    public Page<MateDTO> getAllMateList(Pageable pageable) {
-        Page<Mate> mates = mateRepository.findByBoard_BoardType(Board.BoardType.MATE, pageable);
+    public List<MateDTO> getAllMateList(Pageable pageable) {
+        List<Mate> mates = mateRepository.findAllBy(pageable);
 
-        return mates.map(mate -> {
+        return mates.stream().map(mate -> {
             MateDTO mateDTO = convertToDTO(mate);
 
             if (mate.getBoard() != null) {
@@ -228,11 +228,9 @@ public class MateServiceImpl implements MateService {
             if(userMainBadge != null) {
                 mateDTO.getBoard().setMainBadge(userMainBadge);
             }
-            mateDTO.getBoard().setBoardImage(mate.getBoard().getBoardImage());
-
 
             return mateDTO;
-        });
+        }).collect(Collectors.toList());
     }
 
     private Mate findMateByBoardId(Long boardId) {

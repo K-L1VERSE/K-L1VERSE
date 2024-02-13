@@ -185,15 +185,16 @@ public class CommentServiceImpl implements CommentService {
     public List<CommentDTO> getAllCommentsByBoardId(Long boardId, Long requestingUserId) {
         List<Object[]> commentsWithLikesCount = commentRepository.findCommentsWithLikesCountByBoardId(
             boardId);
-
         return commentsWithLikesCount.stream()
             .map(result -> {
                 Comment comment = (Comment) result[0];
                 Long likesCount = (Long) result[1];
 
                 CommentDTO commentDTO = convertToDTO(comment);
+
                 Integer commentLikesCount = commentRepository.findLikesCountByCommentId(
                     comment.getCommentId());
+
                 commentDTO.setLikesCount(commentLikesCount != null ? commentLikesCount : 0);
 
                 List<Object[]> userInfo = commentRepository.findUserNicknameAndProfileAndMainBadge(

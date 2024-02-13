@@ -50,9 +50,9 @@ WaggleController {
     }
 
     @PostMapping("/myPage")
-    public ResponseEntity<Page<WaggleDTO>> getWagglesByUser(@RequestBody BoardDTO boardDTO, Pageable pageable) {
+    public ResponseEntity<List<WaggleDTO>> getWagglesByUser(@RequestBody BoardDTO boardDTO, Pageable pageable) {
         Integer userId = boardDTO.getUserId();
-        Page<WaggleDTO> waggles = waggleService.getWagglesByUser(userId, pageable);
+        List<WaggleDTO> waggles = waggleService.getWagglesByUser(userId, pageable);
         return ResponseEntity.ok(waggles);
     }
 
@@ -103,8 +103,8 @@ WaggleController {
     }
 
     @GetMapping("/pages")
-    public ResponseEntity<Page<WaggleDTO>> getAllWagglesPaged(Pageable pageable) {
-        Page<WaggleDTO> waggles = waggleService.getAllWagglesWithLikes(pageable);
+    public ResponseEntity<List<WaggleDTO>> getAllWagglesPaged(Pageable pageable) {
+        List<WaggleDTO> waggles = waggleService.getAllWagglesWithLikes(pageable);
         return ResponseEntity.ok(waggles);
     }
 

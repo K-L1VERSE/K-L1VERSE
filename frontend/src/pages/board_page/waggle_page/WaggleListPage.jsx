@@ -22,10 +22,10 @@ function WaggleListPage() {
       page,
       10,
       ({ data }) => {
-        if (!data.content) {
+        if (!data) {
           setHasMore(false);
         } else {
-          setWaggleList([...waggleList, ...data.content]);
+          setWaggleList([...waggleList, ...data]);
           setPage(page + 1);
         }
       },

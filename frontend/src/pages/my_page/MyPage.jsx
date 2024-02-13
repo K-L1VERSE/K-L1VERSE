@@ -60,13 +60,14 @@ function MyPage() {
           },
         },
   );
-  const [page, setPage] = useState(1);
   const [category, setCategory] = useState(
     state && state.category ? state.category : "1",
   );
+  const [page, setPage] = useState(0);
   const [myBoard, setMyBoard] = useState([]);
-  const [isAxios, setIsAxios] = useState(false);
-  const [isCategoryChange, setIsCategoryChange] = useState(false);
+  // const [isAxios, setIsAxios] = useState(false);
+  // const [isCategoryChange, setIsCategoryChange] = useState(false);
+  const [isBottom, setIsBottom] = useState(false);
 
   /* 유저 정보 가져오기 */
   const getUserInfo = () => {
@@ -80,7 +81,7 @@ function MyPage() {
 
   /* 카테고리 변경 시 호출될 훅 */
   const getMyWagle = () => {
-    setIsAxios(false);
+    // setIsAxios(false);
     let type = "";
     if (category === "1") {
       type = "waggles";
@@ -92,13 +93,17 @@ function MyPage() {
 
     if (user.userId) {
       axios
-        .post(`/board/${type}/myPage`, {
-          userId: user.userId,
-        })
+        .post(
+          `/board/${type}/myPage?page=${page}&size=10&sort=board.createAt,desc`,
+          {
+            userId: user.userId,
+          },
+        )
         .then(({ data }) => {
-          setIsAxios(true);
-          setIsCategoryChange(false);
-          setMyBoard(data.content);
+          // setIsAxios(true);
+          // setIsCategoryChange(false);
+          setMyBoard(myBoard !== null ? [...myBoard, ...data] : [...data]);
+          setPage(page + 1);
         })
         .catch(() => {});
     }
@@ -106,23 +111,67 @@ function MyPage() {
 
   useEffect(() => {
     if (category) {
-      setIsCategoryChange(true);
-      setMyBoard([]);
-      getMyWagle();
+      setMyBoard(null);
+      if (page !== 0) {
+        setPage(0);
+      } else {
+        console.log("category");
+        getMyWagle();
+      }
+      // setIsCategoryChange(true);
     }
   }, [category]);
 
   useEffect(() => {
+    if (page === 0) {
+      console.log("page");
+      getMyWagle();
+    }
+  }, [page]);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      const scrollTop =
+        (document.documentElement && document.documentElement.scrollTop) ||
+        document.body.scrollTop;
+      const scrollHeight =
+        (document.documentElement && document.documentElement.scrollHeight) ||
+        document.body.scrollHeight;
+      if (scrollTop + window.innerHeight >= scrollHeight) {
+        setIsBottom(true);
+      } else {
+        setIsBottom(false);
+      }
+    };
+
     if (!user.userId) {
       getUserInfo();
     }
+
+    window.addEventListener("scroll", handleScroll);
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+    };
   }, []);
 
   useEffect(() => {
+    setMyBoard(null);
+
     if (user.userId) {
-      getMyWagle();
+      if (page === 0) {
+        console.log("user");
+        getMyWagle();
+      } else {
+        setPage(0);
+      }
     }
   }, [user]);
+
+  useEffect(() => {
+    if (isBottom) {
+      getMyWagle();
+    }
+  }, [isBottom]);
 
   const navigate = useNavigate();
   const goWaggle = () => {
@@ -165,65 +214,71 @@ function MyPage() {
         </Nav>
       </BoardList>
       <div>
-        {category === "1" &&
-          isAxios &&
-          !isCategoryChange &&
-          (myBoard.length > 0 ? (
-            <WaggleContainer
-              waggleList={myBoard.reverse()}
-              formatRelativeTime={formatRelativeTime}
-              user={user}
-              fromMypage={fromMypage}
-              category={category}
-            />
-          ) : (
-            <NoBoardContainer>
-              <NoBoardBox>
-                <NoBoardText>작성한 글이 없어요 </NoBoardText>
-                <NoBoardImg src="https://raw.githubusercontent.com/Tarikul-Islam-Anik/Animated-Fluent-Emojis/master/Emojis/Smilies/Grinning%20Face%20with%20Sweat.png" />
-              </NoBoardBox>
-              <GoBoardButton onClick={goWaggle}>글 쓰러 가기</GoBoardButton>
-            </NoBoardContainer>
-          ))}
-        {category === "2" &&
-          isAxios &&
-          !isCategoryChange &&
-          (myBoard.length > 0 ? (
-            <MateContainer
-              mateList={myBoard.reverse()}
-              user={user}
-              fromMypage={fromMypage}
-              category={category}
-            />
-          ) : (
-            <NoBoardContainer>
-              <NoBoardBox>
-                <NoBoardText>작성한 글이 없어요 </NoBoardText>
-                <NoBoardImg src="https://raw.githubusercontent.com/Tarikul-Islam-Anik/Animated-Fluent-Emojis/master/Emojis/Smilies/Grinning%20Face%20with%20Sweat.png" />
-              </NoBoardBox>
-              <GoBoardButton onClick={goMate}>글 쓰러 가기</GoBoardButton>
-            </NoBoardContainer>
-          ))}
-        {category === "3" &&
-          isAxios &&
-          !isCategoryChange &&
-          (myBoard.length > 0 ? (
-            <ProductContainer
-              productList={myBoard.reverse()}
-              formatRelativeTime={formatRelativeTime}
-              user={user}
-              fromMypage={fromMypage}
-              category={category}
-            />
-          ) : (
-            <NoBoardContainer>
-              <NoBoardBox>
-                <NoBoardText>작성한 글이 없어요 </NoBoardText>
-                <NoBoardImg src="https://raw.githubusercontent.com/Tarikul-Islam-Anik/Animated-Fluent-Emojis/master/Emojis/Smilies/Grinning%20Face%20with%20Sweat.png" />
-              </NoBoardBox>
-              <GoBoardButton onClick={goProduct}>글 쓰러 가기</GoBoardButton>
-            </NoBoardContainer>
-          ))}
+        {myBoard && (
+          <div>
+            {category === "1" &&
+              // isAxios &&
+              // !isCategoryChange &&
+              (myBoard.length > 0 ? (
+                <WaggleContainer
+                  waggleList={myBoard}
+                  formatRelativeTime={formatRelativeTime}
+                  user={user}
+                  fromMypage={fromMypage}
+                  category={category}
+                />
+              ) : (
+                <NoBoardContainer>
+                  <NoBoardBox>
+                    <NoBoardText>작성한 글이 없어요 </NoBoardText>
+                    <NoBoardImg src="https://raw.githubusercontent.com/Tarikul-Islam-Anik/Animated-Fluent-Emojis/master/Emojis/Smilies/Grinning%20Face%20with%20Sweat.png" />
+                  </NoBoardBox>
+                  <GoBoardButton onClick={goWaggle}>글 쓰러 가기</GoBoardButton>
+                </NoBoardContainer>
+              ))}
+            {category === "2" &&
+              // isAxios &&
+              // !isCategoryChange &&
+              (myBoard.length > 0 ? (
+                <MateContainer
+                  mateList={myBoard}
+                  user={user}
+                  fromMypage={fromMypage}
+                  category={category}
+                />
+              ) : (
+                <NoBoardContainer>
+                  <NoBoardBox>
+                    <NoBoardText>작성한 글이 없어요 </NoBoardText>
+                    <NoBoardImg src="https://raw.githubusercontent.com/Tarikul-Islam-Anik/Animated-Fluent-Emojis/master/Emojis/Smilies/Grinning%20Face%20with%20Sweat.png" />
+                  </NoBoardBox>
+                  <GoBoardButton onClick={goMate}>글 쓰러 가기</GoBoardButton>
+                </NoBoardContainer>
+              ))}
+            {category === "3" &&
+              // isAxios &&
+              // !isCategoryChange &&
+              (myBoard.length > 0 ? (
+                <ProductContainer
+                  productList={myBoard}
+                  formatRelativeTime={formatRelativeTime}
+                  user={user}
+                  fromMypage={fromMypage}
+                  category={category}
+                />
+              ) : (
+                <NoBoardContainer>
+                  <NoBoardBox>
+                    <NoBoardText>작성한 글이 없어요 </NoBoardText>
+                    <NoBoardImg src="https://raw.githubusercontent.com/Tarikul-Islam-Anik/Animated-Fluent-Emojis/master/Emojis/Smilies/Grinning%20Face%20with%20Sweat.png" />
+                  </NoBoardBox>
+                  <GoBoardButton onClick={goProduct}>
+                    글 쓰러 가기
+                  </GoBoardButton>
+                </NoBoardContainer>
+              ))}
+          </div>
+        )}
       </div>
     </>
   );

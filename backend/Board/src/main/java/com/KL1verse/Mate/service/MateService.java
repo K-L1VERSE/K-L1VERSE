@@ -19,7 +19,7 @@ public interface MateService {
 
     Page<MateDTO> searchMates(SearchBoardConditionDto searchCondition, Pageable pageable);
 
-    Page<MateDTO> getAllMateList(Pageable pageable);
+    List<MateDTO> getAllMateList(Pageable pageable);
 
     Page<MateDTO> getOpenMates(Pageable pageable);
 
@@ -30,6 +30,6 @@ public interface MateService {
 
     Page<MateDTO> getMatesByMatchList(List<Integer> matchIds, Pageable pageable);
 
-    Page<MateDTO> getMatesByUser(Integer userId, Pageable pageable);
+    List<MateDTO> getMatesByUser(Integer userId, Pageable pageable);
 
 }

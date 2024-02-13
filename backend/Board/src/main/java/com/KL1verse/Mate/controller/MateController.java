@@ -33,9 +33,9 @@ public class MateController {
     }
 
     @PostMapping("/myPage")
-    public ResponseEntity<Page<MateDTO>> getMatesByUser(@RequestBody BoardDTO boardDTO, Pageable pageable) {
+    public ResponseEntity<List<MateDTO>> getMatesByUser(@RequestBody BoardDTO boardDTO, Pageable pageable) {
         Integer userId = boardDTO.getUserId();
-        Page<MateDTO> mates = mateService.getMatesByUser(userId, pageable);
+        List<MateDTO> mates = mateService.getMatesByUser(userId, pageable);
         return ResponseEntity.ok(mates);
     }
 
@@ -68,8 +68,8 @@ public class MateController {
     }
 
     @GetMapping("/pages")
-    public ResponseEntity<Page<MateDTO>> getAllMatesPaged(Pageable pageable) {
-        Page<MateDTO> mates = mateService.getAllMateList(pageable);
+    public ResponseEntity<List<MateDTO>> getAllMatesPaged(Pageable pageable) {
+        List<MateDTO> mates = mateService.getAllMateList(pageable);
         return ResponseEntity.ok(mates);
     }
 
