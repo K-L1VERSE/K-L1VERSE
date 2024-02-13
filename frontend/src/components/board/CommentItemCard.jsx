@@ -35,6 +35,7 @@ function CommentItemCard({
   formatRelativeTime,
   setIsReplyMode,
   setParentId,
+  writerId,
 }) {
   const [liked, setLiked] = useState(comment.liked);
   const [likesCount, setLikesCount] = useState(comment.likesCount);
@@ -154,7 +155,8 @@ function CommentItemCard({
       >
         <CommentListContainer $type={type}>
           {(!comment.isSecret ||
-            (comment.isSecret && userId === comment.userId)) && (
+            (comment.isSecret &&
+              (userId === comment.userId || userId === writerId))) && (
             <div>
               <WriterContainer>
                 {comment.profile && <WriterProfile src={comment.profile} />}

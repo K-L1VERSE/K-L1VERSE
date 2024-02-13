@@ -234,7 +234,7 @@ function WaggleDetailPage() {
               댓글 수 {commentCount}
             </div>
           </DetailCommentCount>
-          <CommentList boardId={boardId} />
+          <CommentList boardId={boardId} writerId={waggleDetail.userId} />
         </Container>
       )}
     </div>
