@@ -33,6 +33,7 @@ function Chat() {
   const roomId = matchId;
   const [message, setMessage] = useState("");
   const [messages, setMessages] = useState([]);
+  // const [rejectedMessages, setRejectedMessages] = useState({});
   const [stompClient, setStompClient] = useState(null);
   const [userState] = useRecoilState(UserState);
   const { nickname } = userState;
@@ -45,7 +46,12 @@ function Chat() {
       .get(`/match/chat/message/${roomId}`)
       .then((response) => {
         const { data } = response;
+        console.log("data 갯수 : ", data.length);
+        for (let i = 0; i < data.length; i++) {
+          console.log(data[i]);
+        }
         setMessages([...data]);
+        console.log("messages 갯수 : ", messages.length);
       })
       .catch(() => {});
   };
@@ -66,7 +72,7 @@ function Chat() {
     stomp.connect({}, (frame) => {
       stomp.subscribe(`/topic/chat/room/${roomId}`, (message) => {
         console.log(message);
-        recvMessage(JSON.parse(message.body));
+        recvMessage(JSON.parse(message.body), messages);
       });
     });
 
@@ -99,33 +105,31 @@ function Chat() {
     setMessage("");
   };
 
-  const recvMessage = (recv) => {
+  const recvMessage = (recv, messages) => {
     if (recv.type === "REJECT") {
       console.log(`message#${recv.messageId}가 클린봇에 의해 거부되었습니다.`);
       console.log("messages 갯수 : ", messages.length);
       console.log(recv);
-      for (let idx = messages.length - 1; idx >= 0; idx--) {
+
+      const rejectedMessageIndex = messages.findIndex(
+        (msg) => msg.messageId === recv.messageId,
+      );
+
+      // setRejectedMessages(recv);
+      console.log("recv: ", recv);
+      if (rejectedMessageIndex !== -1) {
+        const updatedMessages = [...messages];
+
+        updatedMessages[rejectedMessageIndex].message =
+          "클린봇에 의해 검열된 메세지입니다.";
+
+        setMessages(updatedMessages);
+      } else {
         console.log(
-          "messages[idx].messageId: ",
-          messages[idx].messageId,
-          " vs recv.messageId: ",
-          recv.messageId,
+          `messages#${recv.messageId}와 일치하는 메시지를 찾지 못했습니다.`,
         );
-
-        if (messages[idx].messageId == recv.messageId) {
-          console.log("recv: ", recv);
-          console.log("rejectedMessageIndex: ", idx);
-
-          const updatedMessages = [...messages];
-          updatedMessages[idx].message = "클린봇에 의해 검열된 메세지입니다.";
-          setMessages(updatedMessages);
-          return;
-        }
       }
 
-      console.log(
-        `message#${recv.messageId}와 일치하는 메시지를 찾지 못했습니다.`,
-      );
       return;
     }
 
