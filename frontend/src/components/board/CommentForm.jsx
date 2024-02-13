@@ -100,7 +100,7 @@ const CommentForm = ({
           <SenderImg src={profile} />
           <div style={{ marginLeft: "0.3rem" }}>{nickname}</div>
           <BadgeImg
-            src={`${process.env.PUBLIC_URL}/badge/badge${mainBadge}back.png`}
+            src={`${process.env.PUBLIC_URL}/badge/badge${mainBadge === null ? 0 : mainBadge}back.png`}
           />
         </UserInfoBox>
 
