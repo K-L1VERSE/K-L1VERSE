@@ -107,6 +107,7 @@ export const PercentItems = styled.div`
 
 export const PercentItem = styled.div`
   width: ${(props) => (props.$width ? `${props.$width}%` : "35%")};
+  min-width: 4.5rem;
 `;
 
 export const Percent = styled.div`
