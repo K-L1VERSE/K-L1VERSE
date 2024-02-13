@@ -24,7 +24,7 @@ public interface CommentRepository extends JpaRepository<Comment, Long> {
     @Query("SELECT COUNT(cl) FROM Waggle_colikes cl WHERE cl.commentId.commentId = :commentId")
     Integer findLikesCountByCommentId(Long commentId);
 
-    @Query("SELECT COUNT(c) FROM comment c WHERE c.boardId.boardId = :boardId AND c.deleteAt IS NULL")
+    @Query(value = "SELECT COUNT(c.comment_id) FROM comment c WHERE c.board_id = :boardId AND c.delete_at IS NULL", nativeQuery = true)
     Integer countCommentsByBoardId(Long boardId);
 
     @Query(value = "SELECT u.nickname FROM user u JOIN comment c ON c.user_id = u.user_id WHERE c.user_id = :userId", nativeQuery = true)

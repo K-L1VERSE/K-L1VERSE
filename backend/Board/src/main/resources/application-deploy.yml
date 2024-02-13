@@ -25,3 +25,7 @@ server:
    key-store-password: 1234
 
 domain: https://k-l1verse.site
+
+logging:
+  level:
+    root: warn

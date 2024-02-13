@@ -11,7 +11,7 @@ import {
 import { formatRelativeTime } from "./dateFormat";
 import CommentForm from "./CommentForm";
 
-const CommentList = ({ boardId }) => {
+const CommentList = ({ boardId, writerId }) => {
   const [commentList, setCommentList] = useState([]);
   const [commentId, setCommentId] = useState(0);
   const [likesCount, setLikesCount] = useState(0);
@@ -80,6 +80,7 @@ const CommentList = ({ boardId }) => {
         onCommentDelete={handleCommentDelete}
         setIsReplyMode={setIsReplyMode}
         setParentId={setParentId}
+        writerId={writerId}
       />
       <CommentForm
         boardId={boardId}

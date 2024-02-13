@@ -39,7 +39,7 @@ function LoginLogo() {
     <LogoWrap>
       <TopItem {...handlers}>
         {backgrounds.map((background) => (
-          <Top key={background.id} display={background.id === index}>
+          <Top key={background.id} $display={background.id === index}>
             <TopText>{background.topText}</TopText>
             <BottomText>{background.bottomText}</BottomText>
             <Img>
@@ -50,7 +50,7 @@ function LoginLogo() {
       </TopItem>
       <Toggles>
         {backgrounds.map((background) => (
-          <Toggle display={background.id === index} />
+          <Toggle $display={background.id === index} key={background.id} />
         ))}
       </Toggles>
     </LogoWrap>
@@ -78,8 +78,8 @@ const Top = styled.div`
   opacity: 0;
   transition: opacity 0.5s ease-in-out;
   position: absolute;
-  ${({ display }) =>
-    display &&
+  ${({ $display }) =>
+    $display &&
     css`
       opacity: 1;
     `};
@@ -116,7 +116,7 @@ const Toggle = styled.div`
   width: 0.5rem;
   height: 0.5rem;
   border-radius: 50%;
-  background: ${(props) => (props.display ? "#3261C1" : "#e5e5e5")};
+  background: ${(props) => (props.$display ? "#3261C1" : "#e5e5e5")};
   margin: 0.2rem;
   transition: background-color 0.3s ease;
 `;
