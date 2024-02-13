@@ -14,6 +14,9 @@ import BackIcon from "../../../assets/icon/back-icon.png";
 
 function ProductRegistPage() {
   const navigate = useNavigate();
+  const location = useLocation();
+  const { state } = location;
+
   const [boardId, setBoardId] = useState(null);
   const [title, setTitle] = useState("");
   const [content, setContent] = useState("");
@@ -21,11 +24,9 @@ function ProductRegistPage() {
   const [dealFlag, setDealFlag] = useState(false);
   const [boardImage, setBoardImage] = useState(null);
   const [isUpdateMode, setIsUpdateMode] = useState(false);
-  const { userId, nickname } = useRecoilState(UserState)[0];
-  const [file, setFile] = useState(null);
+  const { userId } = useRecoilState(UserState)[0];
+  const [file] = useState(null);
 
-  const location = useLocation();
-  const { state } = location;
   useEffect(() => {
     if (location.state && location.state.board) {
       setBoardId(location.state.board.boardId);
@@ -107,7 +108,9 @@ function ProductRegistPage() {
 
   // 파일 상태를 업데이트하는 핸들러 함수
   const handleFileChange = (file) => {
-    setBoardImage(file);
+    if (file) {
+      setBoardImage(file);
+    }
   };
 
   useEffect(() => {
@@ -139,6 +142,7 @@ function ProductRegistPage() {
               onTitleChange={(e) => setTitle(e.target.value)}
               onContentChange={(e) => setContent(e.target.value)}
               onPriceChange={(e) => setPrice(e.target.value)}
+              boardImage={boardImage}
               onFileChange={handleFileChange}
               onSubmit={handleSubmit}
               buttonText={isUpdateMode ? "수정하기" : "작성하기"}
@@ -164,6 +168,7 @@ function ProductRegistPage() {
             onTitleChange={(e) => setTitle(e.target.value)}
             onContentChange={(e) => setContent(e.target.value)}
             onPriceChange={(e) => setPrice(e.target.value)}
+            boardImage={boardImage}
             onFileChange={handleFileChange}
             onSubmit={handleSubmit}
             buttonText={isUpdateMode ? "수정하기" : "작성하기"}
