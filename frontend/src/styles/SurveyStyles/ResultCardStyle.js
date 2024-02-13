@@ -1,20 +1,51 @@
 import styled from "styled-components";
 
 export const Shares = styled.div`
-  margin-bottom: 1.5rem;
+  display: flex;
+  width: 86%;
+  margin: 0 auto;
+  justify-content: space-between;
+  margin-top: 3rem;
+  margin-bottom: 3rem;
+
+  div {
+    width: 48%;
+    border-radius: 8px;
+    height: 3rem;
+    display: flex;
+    align-items: center;
+
+    font-family: "Pretendard-Bold";
+    &:hover {
+      cursor: pointer;
+    }
+
+    img {
+      width: 2rem;
+      padding-left: 0.8rem;
+      padding-right: 0.5rem;
+    }
+  }
+
+  div:nth-child(1) {
+    color: #3a1d1d;
+    background-color: #f7e600;
+  }
+
+  div:nth-child(2) {
+    background-color: #3261c1;
+    svg {
+      width: 3rem;
+      margin-left: 0.8rem;
+    }
+    span {
+      color: white;
+    }
+  }
   img {
     width: 2.5rem;
     margin: 0 0.5rem;
     border-radius: 50%;
-    &:hover {
-      cursor: pointer;
-    }
-  }
-
-  span img {
-    width: 1.5rem;
-    padding: 0.5rem;
-    background-color: #f8f8f8;
   }
 `;
 
@@ -85,7 +116,6 @@ export const ShareText = styled.div`
   text-align: left;
   color: #222222;
   padding: 3rem 0 0.5rem 0;
-  border-bottom: 1px solid whitesmoke;
   font-family: "Pretendard-Regular";
   div:nth-child(1) {
     padding-top: 0.1rem;
