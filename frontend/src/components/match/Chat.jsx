@@ -104,7 +104,7 @@ function Chat() {
       console.log(`message#${recv.messageId}가 클린봇에 의해 거부되었습니다.`);
 
       for (let idx = messages.length - 1; idx >= 0; idx--) {
-        if (messages[idx].messageId === recv.messageId) {
+        if (messages[idx].messageId == recv.messageId) {
           console.log("recv: ", recv);
           console.log("rejectedMessageIndex: ", idx);
 
