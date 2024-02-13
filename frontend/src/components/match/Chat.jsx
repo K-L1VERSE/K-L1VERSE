@@ -56,6 +56,13 @@ function Chat() {
   };
 
   useEffect(() => {
+    console.log("messages 갯수 : ", messages.length);
+    for (let i = 0; i < messages.length; i++) {
+      console.log(messages[i]);
+    }
+  }, messages);
+
+  useEffect(() => {
     const domain = process.env.REACT_APP_DOMAIN;
     const socket = new SockJS(`${domain}:8040/ws/chat`);
     const stomp = Stomp.over(socket);
