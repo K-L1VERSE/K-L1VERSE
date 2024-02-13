@@ -4,21 +4,12 @@ import {
   TextArea,
   PriceInput,
   SubmitButton,
-  FileInputContainer,
-  FileInput,
-  FileInputLabel,
   RegistCardContainer,
   InputLabel,
   ToggleContainer,
   OuterCircle,
   InnerCircle,
   DealFlagText,
-} from "../../styles/BoardStyles/BoardCreateStyle";
-import {
-  FlagInputContainer,
-  FlagInputLabel,
-  FlagInputCheckbox,
-  FlagInputText,
 } from "../../styles/BoardStyles/BoardCreateStyle";
 import BoardFile from "./BoardFile";
 
@@ -27,20 +18,17 @@ export default function ProductRegistCard({
   content,
   price,
   dealFlag,
-  boardImage,
   onTitleChange,
   onContentChange,
   onPriceChange,
   onDealFlagChange,
+  boardImage,
   onFileChange,
   onSubmit,
   buttonText,
   handleDealFlag,
 }) {
-  const [previewImage, setPreviewImage] = useState(null);
-
   const handleFileChange = (file, result, imageUrl) => {
-    // console.log(imageUrl, "!@#!@#!@#!@#");
     onFileChange(imageUrl);
   };
 
@@ -50,8 +38,6 @@ export default function ProductRegistCard({
       onPriceChange(event);
     }
   };
-
-  console.log("dealFlag", dealFlag);
 
   return (
     <div>
@@ -80,10 +66,7 @@ export default function ProductRegistCard({
         />
         <br />
         <InputLabel>사진 첨부</InputLabel>
-        <BoardFile onFileChange={handleFileChange} />
-        {previewImage && (
-          <img src={previewImage} alt="미리보기" style={{ maxWidth: "100%" }} />
-        )}
+        <BoardFile value={boardImage} onFileChange={handleFileChange} />
         <br />
         <InputLabel>내용</InputLabel>
         <TextArea

@@ -18,11 +18,8 @@ export default function WaggleRegistCard({
   onSubmit,
   buttonText,
 }) {
-  // const [previewImage, setPreviewImage] = useState(null);
-
   const handleFileChange = (file, result, imageUrl) => {
     onFileChange(imageUrl);
-    // setPreviewImage(boardImage);
   };
 
   return (
