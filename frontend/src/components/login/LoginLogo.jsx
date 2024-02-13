@@ -31,6 +31,10 @@ function LoginLogo() {
     trackMouse: true,
   });
 
+  setInterval(() => {
+    setIndex((index + 1) % backgrounds.length);
+  }, [2500]);
+
   return (
     <LogoWrap>
       <TopItem {...handlers}>

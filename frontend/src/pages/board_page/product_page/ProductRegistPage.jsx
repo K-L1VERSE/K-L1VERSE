@@ -41,6 +41,17 @@ function ProductRegistPage() {
   }, [location]);
 
   const handleSubmit = () => {
+    if (boardImage === null) {
+      Swal.fire({
+        html: `
+          <img src="https://raw.githubusercontent.com/Tarikul-Islam-Anik/Animated-Fluent-Emojis/master/Emojis/Animals/Hatching%20Chick.png" alt="Hatching Chick" width="100" height="100" />
+          <div style="font-size:1rem; font-family:Pretendard-Regular; margin-top: 1rem;">이미지 업로드가 필수에요!</div>
+        `,
+        confirmButtonColor: "#3085d6",
+        confirmButtonText:
+          "<div style='font-size:1rem; font-family:Pretendard-Regular;'>확인</div>",
+      });
+    }
     if (isUpdateMode) {
       updateProduct(
         boardId,
