@@ -2,8 +2,8 @@ import styled from "styled-components";
 
 /* ************* CommentList ************* */
 export const ListContainer = styled.div`
+  padding: 0.1rem 1rem 1rem 1rem;
   margin-top: 1rem;
-  margin-right: 0.4rem;
 `;
 
 export const ReplyImg = styled.img`
@@ -34,24 +34,40 @@ export const CommentContentContainer = styled.div`
 export const CommentContent = styled.p`
   /* display: flex; */
   margin-bottom: 0.1rem;
-  margin-left: 1rem;
+  // margin-left: 1rem;
   font-size: 0.8rem;
   color: #5f5f5f;
   display: block;
 `;
 
 export const CommentTime = styled.div`
-  margin-left: 1rem;
-  font-size: 0.5rem;
+  display: flex;
+  font-size: 0.6rem;
   color: grey;
   align-items: center;
   justify-content: flex-end;
+  div {
+    display: flex;
+    margin-bottom: 0.2rem;
+  }
+  div:nth-of-type(2) {
+    padding-top: 0.2rem;
+    display: flex;
+    align-items: center;
+    svg {
+      margin-left: 0.3rem;
+      margin-bottom: 0.6rem;
+    }
+  }
+
+  img {
+    display: none;
+  }
 `;
 
 export const WriterContainer = styled.div`
   display: flex;
   align-items: center;
-  margin-left: 0.8rem;
 `;
 
 export const WriterProfile = styled.img`
@@ -77,6 +93,7 @@ export const ButtonContainer = styled.div`
   justify-content: flex-end;
   margin-left: 0.7rem;
   margin-bottom: 0.2rem;
+  height: 1.3rem;
 `;
 
 export const CommentRegistContainer = styled.div`
@@ -140,7 +157,6 @@ export const DeleteButton = styled.button`
 export const LikeBox = styled.div`
   display: flex;
   align-items: center;
-  margin-right: 0.7rem;
   justify-content: end;
   size: 0.7rem;
 `;
@@ -149,6 +165,8 @@ export const LikeBox = styled.div`
 export const CommentFormContainer = styled.form`
   font-family: "Pretendard-Regular";
   border: 1px solid #ccc;
+  border-radius: 10px;
+  margin-top: 1rem;
 `;
 
 export const TextContainer = styled.form`
@@ -233,6 +251,7 @@ export const CancelButton = styled.button`
   border: none;
   cursor: pointer;
   border-radius: 10px;
+  margin-right: 0.5rem;
 
   &.hover {
     text-decoration: underline;
@@ -240,13 +259,8 @@ export const CancelButton = styled.button`
 `;
 
 export const ReplyButton = styled.button`
-  color: grey;
   font-size: 0.5em;
-  border: none;
   cursor: pointer;
-  border-radius: 10px;
-
-  &.hover {
-    text-decoration: underline;
-  }
+  background-color: transparent;
+  border: none;
 `;

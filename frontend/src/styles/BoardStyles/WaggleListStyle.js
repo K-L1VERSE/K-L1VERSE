@@ -1,11 +1,11 @@
 import styled from "styled-components";
 
 export const WaggleListImage = styled.img`
-  width: 4rem;
-  height: 4rem;
+  max-width: 4rem;
+  max-height: 4rem;
   display: block;
   border-radius: 8px;
-  margin-right: 0.5rem;
+  margin-right: 1rem;
 `;
 
 export const WaggleImageContainer = styled.div`

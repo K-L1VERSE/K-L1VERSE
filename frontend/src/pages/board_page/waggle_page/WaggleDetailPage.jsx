@@ -23,6 +23,7 @@ import {
   UserContainer,
   UserProfile,
   UserBadge,
+  Gray,
 } from "../../../styles/BoardStyles/BoardDetailStyle";
 import { UserState } from "../../../global/UserState";
 
@@ -192,7 +193,13 @@ function WaggleDetailPage() {
                 src={`${process.env.PUBLIC_URL}/badge/badge${waggleDetail.mainBadge === null ? 0 : waggleDetail.mainBadge}back.png`}
               />
             </UserContainer>
-            <CreateAt>{formatDateTime2(createAt)}</CreateAt>
+            <div>
+              <CreateAt>
+                {formatDateTime2(createAt)}
+                <EditDeleteButton>{renderEditDeleteButtons()}</EditDeleteButton>
+              </CreateAt>
+            </div>
+
             <Title>{title}</Title>
             <Content>{content}</Content>
             <WaggleImageContainer>
@@ -212,11 +219,20 @@ function WaggleDetailPage() {
               likesCount={likesCount}
               handleLikeClick={handleLikeClick}
             />
-            <EditDeleteButton>{renderEditDeleteButtons()}</EditDeleteButton>
+            <Gray />
           </DetailBox>
+
           <DetailCommentCount>
-            <Comment />
-            댓글 수 {commentCount}
+            {/* <Comment /> */}
+            <div>
+              <img
+                src="https://raw.githubusercontent.com/Tarikul-Islam-Anik/Animated-Fluent-Emojis/master/Emojis/Smilies/Love%20Letter.png"
+                alt="Love Letter"
+                width="25"
+                height="25"
+              />
+              댓글 수 {commentCount}
+            </div>
           </DetailCommentCount>
           <CommentList boardId={boardId} />
         </Container>

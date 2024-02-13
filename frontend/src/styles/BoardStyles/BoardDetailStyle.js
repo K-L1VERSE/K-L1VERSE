@@ -13,9 +13,8 @@ export const DetailTop = styled.div`
 `;
 
 export const DetailBox = styled.div`
-  border-bottom: 1px solid #ccc;
+  // border-bottom: 1px solid #ccc;
   padding: 0.1rem 1rem 1rem 1rem;
-  margin-bottom: 1rem;
 `;
 
 export const UserContainer = styled.div`
@@ -154,23 +153,40 @@ export const BackButton = styled.button`
   margin-bottom: 1rem;
 `;
 
+export const LikeBig = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: right;
+  font-family: "Pretendard-Regular";
+  color: #595959;
+`;
+
 export const LikeButton = styled.button`
   background-color: transparent;
   border: none;
   cursor: pointer;
+  img {
+    width: 1rem;
+  }
 
   &:hover {
-    color: #007bff;
+    color: #007bfsf;
   }
 `;
 
+export const LikeBox = styled.div`
+  border: 2px solid pink;
+  display: flex;
+`;
+
 export const LikeCount = styled.span`
-  font-size: 0.9em;
+  font-size: 0.8rem;
 `;
 
 export const EditDeleteButton = styled.div`
   display: flex;
   justify-content: flex-end;
+  font-size: 1.5rem;
 `;
 
 export const UpdateButton = styled(Button)`
@@ -188,11 +204,21 @@ export const DeleteButton = styled(Button)`
 `;
 
 export const DetailCommentCount = styled.div`
-  font-size: 0.7rem;
-  margin-left: 1rem;
+  font-size: 0.8rem;
   margin-bottom: 0.5rem;
   color: #595959;
   align-items: center;
+  // svg {
+  //   margin-right: 0.3rem;
+  // }
+  div {
+    display: flex;
+    align-items: center;
+    img {
+      margin-left: 1rem;
+      margin-right: 0.3rem;
+    }
+  }
 `;
 
 export const DetailImgDiv = styled.div`
@@ -207,4 +233,11 @@ export const DetailOnlyImg = styled.img`
   max-width: 100%;
   max-height: 15rem;
   border-radius: 5px;
+`;
+
+export const Gray = styled.div`
+  width: 100%;
+  height: 0.05rem;
+  background-color: #ccc;
+  margin-top: 1rem;
 `;

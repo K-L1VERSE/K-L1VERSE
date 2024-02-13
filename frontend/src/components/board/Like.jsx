@@ -4,6 +4,7 @@ import LikeIcon from "../../assets/icon/like-icon.png";
 import {
   LikeButton,
   LikeCount,
+  LikeBig,
 } from "../../styles/BoardStyles/BoardDetailStyle";
 
 const Like = ({ liked, likesCount, handleLikeClick }) => {
@@ -15,16 +16,15 @@ const Like = ({ liked, likesCount, handleLikeClick }) => {
   };
 
   return (
-    <div>
+    <LikeBig>
       <LikeButton onClick={handleLikeButtonClick}>
         <img
           src={liked ? LikeIcon : UnlikeIcon}
           alt={liked ? "Like" : "Unlike"}
-          style={{ width: "13px", height: "11px" }}
         />
       </LikeButton>
       <LikeCount>{likesCount}</LikeCount>
-    </div>
+    </LikeBig>
   );
 };
 
