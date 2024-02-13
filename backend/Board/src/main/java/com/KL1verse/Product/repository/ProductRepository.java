@@ -17,13 +17,15 @@ public interface ProductRepository extends JpaRepository<Product, Long> {
 
     Page<Product> findByBoard_BoardId(Long boardId, Pageable pageable);
 
+    List<Product> findAllBy(Pageable pageable);
+
     Page<Product> findByBoard_TitleContainingOrBoard_ContentContaining(String titleKeyword,
         String contentKeyword, Pageable pageable);
 
     @Query(value = "SELECT u.nickname FROM user u JOIN board b ON b.user_id = u.user_id WHERE b.user_id = :userId", nativeQuery = true)
     List<Object[]> findUserNickname(@Param("userId") Integer userId);
 
-    Page<Product> findByBoard_UserId(Integer userId, Pageable pageable);
+    List<Product> findByBoard_UserId(Integer userId, Pageable pageable);
 
     @Query(value = "SELECT u.nickname, u.profile, CASE WHEN u.badge_id IS NOT NULL THEN bd.code ELSE NULL END AS code FROM user u LEFT JOIN badge b ON u.badge_id = b.badge_id LEFT JOIN badge_detail bd ON b.badge_detail_id = bd.badge_detail_id WHERE u.user_id = :userId", nativeQuery = true)
     List<Object[]> findUserNicknameAndProfileAndMainBadge(@Param("userId") Integer userId);

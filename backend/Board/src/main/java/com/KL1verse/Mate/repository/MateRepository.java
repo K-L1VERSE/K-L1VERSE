@@ -18,6 +18,8 @@ public interface MateRepository extends JpaRepository<Mate, Long> {
 
     Page<Mate> findByBoard_BoardId(Long boardId, Pageable pageable);
 
+    List<Mate> findAllBy(Pageable pageable);
+
     Page<Mate> findByBoard_TitleContainingOrBoard_ContentContaining(String titleKeyword,
         String contentKeyword, Pageable pageable);
 
@@ -32,7 +34,7 @@ public interface MateRepository extends JpaRepository<Mate, Long> {
     List<Object[]> findUserNickname(@Param("userId") Integer userId);
 
 
-    Page<Mate> findByBoard_UserId(Integer userId, Pageable pageable);
+    List<Mate> findByBoard_UserId(Integer userId, Pageable pageable);
 
     @Query(value = "SELECT u.nickname, u.profile, CASE WHEN u.badge_id IS NOT NULL THEN bd.code ELSE NULL END AS code FROM user u LEFT JOIN badge b ON u.badge_id = b.badge_id LEFT JOIN badge_detail bd ON b.badge_detail_id = bd.badge_detail_id WHERE u.user_id = :userId", nativeQuery = true)
     List<Object[]> findUserNicknameAndProfileAndMainBadge(@Param("userId") Integer userId);

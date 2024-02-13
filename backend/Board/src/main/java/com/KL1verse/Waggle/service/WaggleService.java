@@ -23,7 +23,7 @@ public interface WaggleService {
     Page<WaggleDTO> searchWagglesWithLikes(SearchBoardConditionDto searchCondition,
         Pageable pageable);
 
-    Page<WaggleDTO> getAllWagglesWithLikes(Pageable pageable);
+    List<WaggleDTO> getAllWagglesWithLikes(Pageable pageable);
 
     List<WaggleDTO> getMostRecentWaggles(int count);
 
@@ -38,7 +38,7 @@ public interface WaggleService {
     void removeHashtagsFromUnlikedWaggle(Long waggleId);
     void saveHashtags(WaggleDTO waggleDTO);
 
-    Page<WaggleDTO> getWagglesByUser(Integer userId, Pageable pageable);
+    List<WaggleDTO> getWagglesByUser(Integer userId, Pageable pageable);
 
 }
 

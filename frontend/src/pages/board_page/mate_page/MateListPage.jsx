@@ -66,9 +66,9 @@ function MateListPage() {
         page,
         10,
         ({ data }) => {
-          if (data.content.length > 0) {
+          if (data.length > 0) {
             const temp = [...mateList];
-            temp.push(...data.content);
+            temp.push(...data);
             setMateList(temp);
             setPage(page + 1);
           }
