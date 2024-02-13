@@ -33,7 +33,6 @@ function CommentItemCard({
   setIsReplyMode,
   setParentId,
 }) {
-  console.log("comment: ", comment);
   const [liked, setLiked] = useState(comment.liked);
   const [likesCount, setLikesCount] = useState(comment.likesCount);
   const [isEditMode, setIsEditMode] = useState(false);
@@ -82,10 +81,35 @@ function CommentItemCard({
           >
             삭제
           </DeleteButton>
+          {type === "comment" && (
+            <ReplyButton
+              onClick={() => {
+                setIsReplyMode(true);
+                setParentId(comment.commentId);
+              }}
+            >
+              답글
+            </ReplyButton>
+          )}
         </ButtonContainer>
       );
     }
-    return null;
+    return (
+      <div>
+        {type === "comment" && !comment.isSecret && (
+          <ButtonContainer>
+            <ReplyButton
+              onClick={() => {
+                setIsReplyMode(true);
+                setParentId(comment.commentId);
+              }}
+            >
+              답글
+            </ReplyButton>
+          </ButtonContainer>
+        )}
+      </div>
+    );
   };
 
   const handleLikeClick = () => {
@@ -182,19 +206,6 @@ function CommentItemCard({
                     {formatRelativeTime(comment.createAt)}
                   </CommentTime>
                   {renderEditDeleteButtons()}
-                  {type === "comment" &&
-                    userId !== comment.userId &&
-                    !comment.isSecret && (
-                      <ReplyButton
-                        onClick={() => {
-                          setIsReplyMode(true);
-                          setParentId(comment.commentId);
-                          console.log("comment.commentId: ", comment.commentId);
-                        }}
-                      >
-                        답글
-                      </ReplyButton>
-                    )}
                 </CommentContentContainer>
               </>
             )}
