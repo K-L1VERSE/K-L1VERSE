@@ -33,7 +33,6 @@ function CommentItemCard({
   setIsReplyMode,
   setParentId,
 }) {
-  console.log("comment: ", comment);
   const [liked, setLiked] = useState(comment.liked);
   const [likesCount, setLikesCount] = useState(comment.likesCount);
   const [isEditMode, setIsEditMode] = useState(false);
@@ -82,10 +81,35 @@ function CommentItemCard({
           >
             삭제
           </DeleteButton>
+          {type === "comment" && (
+            <ReplyButton
+              onClick={() => {
+                setIsReplyMode(true);
+                setParentId(comment.commentId);
+              }}
+            >
+              답글
+            </ReplyButton>
+          )}
         </ButtonContainer>
       );
     }
-    return null;
+    return (
+      <div>
+        {type === "comment" && !comment.isSecret && (
+          <ButtonContainer>
+            <ReplyButton
+              onClick={() => {
+                setIsReplyMode(true);
+                setParentId(comment.commentId);
+              }}
+            >
+              답글
+            </ReplyButton>
+          </ButtonContainer>
+        )}
+      </div>
+    );
   };
 
   const handleLikeClick = () => {
@@ -126,15 +150,19 @@ function CommentItemCard({
         }}
       >
         <CommentListContainer $type={type}>
-          <WriterContainer>
-            {comment.profile && <WriterProfile src={comment.profile} />}
-            <CommentWriter>{comment.nickname}</CommentWriter>
-            {comment.mainBadge && (
-              <WriterBadge
-                src={`${process.env.PUBLIC_URL}/badge/badge${comment.mainBadge === null ? 0 : comment.mainBadge}back.png`}
-              />
-            )}
-          </WriterContainer>
+          {(!comment.isSecret ||
+            (comment.isSecret && userId === comment.userId)) && (
+            <div>
+              <WriterContainer>
+                {comment.profile && <WriterProfile src={comment.profile} />}
+                <CommentWriter>{comment.nickname}</CommentWriter>
+                <WriterBadge
+                  src={`${process.env.PUBLIC_URL}/badge/badge${comment.mainBadge === null ? 0 : comment.mainBadge}back.png`}
+                />
+              </WriterContainer>
+            </div>
+          )}
+
           <CommentItem key={comment.commentId}>
             {isEditMode ? (
               // 수정 모드일 때는 입력 필드를 보여줌
@@ -158,30 +186,26 @@ function CommentItemCard({
               <>
                 <CommentContentContainer>
                   <CommentContent>{comment.content}</CommentContent>
-                  <LikeBox>
-                    <Like
-                      liked={liked}
-                      likesCount={likesCount}
-                      handleLikeClick={handleLikeClick}
-                    />
-                  </LikeBox>
+                  <div>
+                    {(!comment.isSecret ||
+                      (comment.isSecret && userId === comment.userId)) && (
+                      <div>
+                        <LikeBox>
+                          <Like
+                            liked={liked}
+                            likesCount={likesCount}
+                            handleLikeClick={handleLikeClick}
+                          />
+                        </LikeBox>
+                      </div>
+                    )}
+                  </div>
                 </CommentContentContainer>
                 <CommentContentContainer>
                   <CommentTime>
                     {formatRelativeTime(comment.createAt)}
                   </CommentTime>
                   {renderEditDeleteButtons()}
-                  {type === "comment" && userId !== comment.userId && (
-                    <ReplyButton
-                      onClick={() => {
-                        setIsReplyMode(true);
-                        setParentId(comment.commentId);
-                        console.log("comment.commentId: ", comment.commentId);
-                      }}
-                    >
-                      답글
-                    </ReplyButton>
-                  )}
                 </CommentContentContainer>
               </>
             )}

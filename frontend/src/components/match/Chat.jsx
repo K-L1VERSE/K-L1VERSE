@@ -45,15 +45,17 @@ function Chat() {
       .get(`/match/chat/message/${roomId}`)
       .then((response) => {
         const { data } = response;
-        console.log("data 갯수 : ", data.length);
-        for (let i = 0; i < data.length; i++) {
-          console.log(data[i]);
-        }
         setMessages([...data]);
-        console.log("messages 갯수 : ", messages.length);
       })
       .catch(() => {});
   };
+
+  useEffect(() => {
+    console.log("messages 갯수 : ", messages.length);
+    for (let i = 0; i < messages.length; i++) {
+      console.log(messages[i]);
+    }
+  }, [messages]);
 
   useEffect(() => {
     const domain = process.env.REACT_APP_DOMAIN;
@@ -100,25 +102,29 @@ function Chat() {
   const recvMessage = (recv) => {
     if (recv.type === "REJECT") {
       console.log(`message#${recv.messageId}가 클린봇에 의해 거부되었습니다.`);
-      const rejectedMessageIndex = messages.findIndex(
-        (msg) => msg.messageId === recv.messageId,
-      );
-      console.log("recv: ", recv);
-      console.log("rejectedMessageIndex: ", rejectedMessageIndex);
 
-      if (rejectedMessageIndex !== -1) {
-        const updatedMessages = [...messages];
-
-        updatedMessages[rejectedMessageIndex].message =
-          "클린봇에 의해 검열된 메세지입니다.";
-
-        setMessages(updatedMessages);
-      } else {
+      for (let idx = messages.length - 1; idx >= 0; idx--) {
         console.log(
-          `messages#${recv.messageId}와 일치하는 메시지를 찾지 못했습니다.`,
+          "messages[idx].messageId: ",
+          messages[idx].messageId,
+          " vs recv.messageId: ",
+          recv.messageId,
         );
+
+        if (messages[idx].messageId == recv.messageId) {
+          console.log("recv: ", recv);
+          console.log("rejectedMessageIndex: ", idx);
+
+          const updatedMessages = [...messages];
+          updatedMessages[idx].message = "클린봇에 의해 검열된 메세지입니다.";
+          setMessages(updatedMessages);
+          return;
+        }
       }
 
+      console.log(
+        `messages#${recv.messageId}와 일치하는 메시지를 찾지 못했습니다.`,
+      );
       return;
     }
 
