@@ -33,7 +33,7 @@ function Chat() {
   const roomId = matchId;
   const [message, setMessage] = useState("");
   const [messages, setMessages] = useState([]);
-  const [rejectedMessage, setrejectedMessage] = useState(null);
+  const [rejectedMessage, setRejectedMessage] = useState(null);
   const [stompClient, setStompClient] = useState(null);
   const [userState] = useRecoilState(UserState);
   const { nickname } = userState;
@@ -108,37 +108,9 @@ function Chat() {
   const recvMessage = (recv) => {
     if (recv.type === "REJECT") {
       console.log(`message#${recv.messageId}가 클린봇에 의해 거부되었습니다.`);
-      setrejectedMessage(recv);
+      setRejectedMessage(recv);
       return;
     }
-
-    useEffect(() => {
-      if (rejectedMessage === null) return;
-      if (rejectedMessage === undefined) return;
-
-      console.log("messages길이 : ", messages.length);
-      const rejectedMessageIndex = messages.findIndex(
-        (msg) => msg.messageId === rejectedMessage.messageId,
-      );
-      console.log("rejectedMessageIndex: ", rejectedMessageIndex);
-      console.log("rejectedMessage: ", rejectedMessage);
-      if (rejectedMessageIndex !== -1) {
-        const updatedMessages = [...messages];
-
-        console.log(
-          `message#${rejectedMessage.messageId}가 클린봇에 의해 거부되었습니다.`,
-        );
-
-        updatedMessages[rejectedMessageIndex].message =
-          "클린봇에 의해 검열된 메세지입니다.";
-
-        setMessages(updatedMessages);
-      } else {
-        console.log(
-          `messages#${recv.messageId}와 일치하는 메시지를 찾지 못했습니다.`,
-        );
-      }
-    }, [rejectedMessage, messages]);
 
     setMessages((prevMessages) => [
       ...prevMessages,
@@ -154,6 +126,37 @@ function Chat() {
       },
     ]);
   };
+
+  useEffect(() => {
+    if (rejectedMessage === null) return;
+    if (rejectedMessage === undefined) return;
+
+    console.log("messages길이 : ", messages.length);
+    const rejectedMessageIndex = messages.findIndex(
+      (msg) => msg.messageId === rejectedMessage.messageId,
+    );
+    console.log("rejectedMessageIndex: ", rejectedMessageIndex);
+    console.log("rejectedMessage: ", rejectedMessage);
+
+    if (rejectedMessageIndex !== -1) {
+      const updatedMessages = [...messages];
+
+      console.log(
+        `message#${rejectedMessage.messageId}가 클린봇에 의해 거부되었습니다.`,
+      );
+
+      updatedMessages[rejectedMessageIndex].message =
+        "클린봇에 의해 검열된 메세지입니다.";
+
+      setMessages(updatedMessages);
+    } else {
+      console.log(
+        `messages#${rejectedMessage.messageId}와 일치하는 메시지를 찾지 못했습니다.`,
+      );
+    }
+
+    setRejectedMessage(null);
+  }, [rejectedMessage, messages]);
 
   const chatBox = useRef();
 
