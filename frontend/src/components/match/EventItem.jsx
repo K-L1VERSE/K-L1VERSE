@@ -16,9 +16,10 @@ export default function EventItem({
   return (
     <Event $home={homeOrAway === "HOME"}>
       <EventName>
-        {eventName === "득점" && "🎉 "}
+        {eventName === "득점" && "⚽ "}
         {eventName === "교체" && <span>&#8693; </span>}
-        {eventName === "경고" && "❕❗️ "}
+        {eventName === "경고" && "🟨 "}
+        {eventName === "퇴장" && "🟥 "}
         {eventName}
       </EventName>
       {memberName2 ? (
