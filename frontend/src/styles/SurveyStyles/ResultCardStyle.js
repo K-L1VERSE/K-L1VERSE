@@ -6,6 +6,9 @@ export const Shares = styled.div`
     width: 2.5rem;
     margin: 0 0.5rem;
     border-radius: 50%;
+    &:hover {
+      cursor: pointer;
+    }
   }
 
   span img {
@@ -71,93 +74,49 @@ export const UrlBox = styled.div`
     padding: 0.5rem 1rem;
     font-size: 0.9rem;
     flex: 1;
+    &:hover {
+      cursor: pointer;
+    }
   }
 `;
 
 export const ShareText = styled.div`
+  display: flex;
   text-align: left;
   color: #222222;
-  padding: 5rem 0 0.5rem 0;
+  padding: 3rem 0 0.5rem 0;
   border-bottom: 1px solid whitesmoke;
-`;
-
-export const ResultTeam = styled.div`
-  .backgroundImage {
-    width: 100%;
-    height: 20rem;
+  font-family: "Pretendard-Regular";
+  div:nth-child(1) {
+    padding-top: 0.1rem;
+    margin-right: 0.2rem;
   }
 `;
 
-export const Team = styled.div`
-  position: absolute;
-  top: 25rem;
-  left: 50%;
-  transform: translate(-50%, -50%);
+export const ResultTeam = styled.div``;
 
+export const Team = styled.div`
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  .team-name {
+    position: absolute;
+    top: 20%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 1;
+  }
   div {
     color: white;
-    margin-bottom: 2.5rem;
+    margin-bottom: 5rem;
     font-family: "Pretendard-Bold";
     font-size: 1.8rem;
   }
 
-  .teamImage1 {
-    width: 10rem;
-    height: auto;
-  }
-
-  .teamImage2 {
-    width: 13rem;
-    height: auto;
-  }
-
-  .teamImage3 {
-    width: 10rem;
-    height: auto;
-  }
-
-  .teamImage4 {
-    width: auto;
-    height: 12rem;
-  }
-
-  .teamImage5 {
-    width: auto;
-    height: 12rem;
-  }
-
-  .teamImage6 {
-    width: 18rem;
-    height: auto;
-  }
-
-  .teamImage7 {
-    width: 12rem;
-    height: auto;
-  }
-
-  .teamImage8 {
-    width: auto;
-    height: 10rem;
-  }
-
-  .teamImage9 {
-    width: 18rem;
-    height: auto;
-  }
-
-  .teamImage10 {
-    width: 12rem;
-    height: auto;
-  }
-
-  .teamImage11 {
-    width: 12rem;
-    height: auto;
-  }
-
-  .teamImage12 {
-    width: auto;
-    height: 12rem;
+  img {
+    width: 20rem;
+    position: relative;
+    z-index: 0;
   }
 `;
