@@ -164,6 +164,17 @@ function CommentItemCard({
                 <WriterBadge
                   src={`${process.env.PUBLIC_URL}/badge/badge${comment.mainBadge === null ? 0 : comment.mainBadge}back.png`}
                 />
+                {comment.isSecret &&
+                  (userId === comment.userId || userId === writerId) && (
+                    <div>
+                      <img
+                        src="https://raw.githubusercontent.com/Tarikul-Islam-Anik/Animated-Fluent-Emojis/master/Emojis/Objects/Locked.png"
+                        alt="Locked"
+                        width="20"
+                        height="20"
+                      />
+                    </div>
+                  )}
               </WriterContainer>
             </div>
           )}
