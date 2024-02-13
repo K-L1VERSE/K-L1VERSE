@@ -166,6 +166,7 @@ function MateListPage() {
         <MatchSchedulePage
           isMateListPage={true}
           onMatchClick={handleMatchClick}
+          selectedMatchId={selectedMatchId}
         />
       )}
       {!selectedMatchId && mateList.length > 0 && (

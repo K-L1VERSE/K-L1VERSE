@@ -20,8 +20,6 @@ import Instagram from "../../assets/icon/instagram-icon.png";
 import Youtube from "../../assets/icon/youtube-icon.png";
 
 function TeamInfoItem({ teamInfo, coach, gk, df, mf, fw }) {
-  console.log("teamInfo: ", teamInfo);
-
   const audioRef = useRef(null);
 
   const playAudio = () => {
