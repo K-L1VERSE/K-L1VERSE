@@ -2,12 +2,9 @@ import React, { useState, useEffect } from "react";
 import { useRecoilState } from "recoil";
 import { useNavigate, useLocation } from "react-router-dom";
 import Swal from "sweetalert2";
-import BoardTopNavBar from "../../../components/board/BoardTopNavBar";
 import ProductRegistCard from "../../../components/board/ProductRegistCard";
 import { createProduct, updateProduct } from "../../../api/product";
 import { UserState } from "../../../global/UserState";
-
-import { RegistCardContainer } from "../../../styles/BoardStyles/BoardCreateStyle";
 
 import { DetailTop } from "../../../styles/BoardStyles/BoardCreateStyle";
 import { BackButton } from "../../../styles/BoardStyles/BoardDetailStyle";
