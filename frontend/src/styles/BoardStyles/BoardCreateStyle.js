@@ -165,12 +165,28 @@ export const FilePreview = styled.div`
   border-radius: 4px;
   /* padding: 0.3rem; */
   margin-left: 0.2rem;
+  position: relative;
 
   img {
     width: 100%;
     height: 100%;
-    object-fit: cover; /* 이미지를 가득 채우도록 설정 */
-    border-radius: 3px; /* 이미지에도 border-radius를 적용하면 더 자연스러워집니다. */
+    object-fit: cover;
+    border-radius: 3px;
+  }
+`;
+
+export const RemoveButton = styled.button`
+  top: 3px;
+  right: 3px;
+  position: absolute;
+  background-color: transparent;
+  border: none;
+  color: white;
+  font-size: 16px;
+  cursor: pointer;
+
+  &:hover {
+    color: red;
   }
 `;
 

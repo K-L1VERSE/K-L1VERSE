@@ -34,6 +34,7 @@ import {
   EditButton,
 } from "../../../styles/BoardStyles/CommentStyle";
 import { ImageBoxContainer } from "../../../styles/BoardStyles/ImageStyle";
+import Modal from "../../../components/common/Modal";
 
 function ProductDetailPage() {
   const [productDetail, setProductDetail] = useState({});
@@ -46,6 +47,9 @@ function ProductDetailPage() {
 
   const location = useLocation();
   const { state } = location;
+
+  const [modalVisible, setModalVisible] = useState(false);
+  const [clickedImageUrl, setClickedImageUrl] = useState("");
 
   /* product 상세 정보 가져오기 */
   function getProductDetail() {
@@ -122,6 +126,15 @@ function ProductDetailPage() {
     }
   };
 
+  const handleImageClick = (imageUrl) => {
+    setClickedImageUrl(imageUrl);
+    setModalVisible(true);
+  };
+
+  const handleCloseModal = () => {
+    setModalVisible(false);
+  };
+
   return (
     <div>
       {productDetail && productId && (
@@ -140,6 +153,7 @@ function ProductDetailPage() {
                     key={productId}
                     src={imageUrl.trim()}
                     alt={`Product Image ${index}`}
+                    onClick={() => handleImageClick(imageUrl.trim())}
                   />
                 ))}
           </DetailImgDiv>
@@ -183,6 +197,9 @@ function ProductDetailPage() {
           <CommentList boardId={boardId} />
         </Container>
       )}
+      <Modal visible={modalVisible} onClose={handleCloseModal}>
+        <img src={clickedImageUrl} alt="Modal Image" />
+      </Modal>
     </div>
   );
 }

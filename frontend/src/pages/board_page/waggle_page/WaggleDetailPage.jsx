@@ -39,6 +39,7 @@ import {
   WaggleImageContainer,
 } from "../../../styles/BoardStyles/WaggleListStyle";
 import { formatDateTime2 } from "../../../components/board/dateFormat";
+import Modal from "../../../components/common/Modal";
 
 function WaggleDetailPage() {
   const [boardDetail, setBoardDetail] = useState({});
@@ -54,6 +55,9 @@ function WaggleDetailPage() {
   const { boardId } = useParams();
   const navigate = useNavigate();
   const { userId } = useRecoilState(UserState)[0];
+
+  const [modalVisible, setModalVisible] = useState(false);
+  const [clickedImageUrl, setClickedImageUrl] = useState("");
 
   const location = useLocation();
   const { state } = location;
@@ -176,6 +180,15 @@ function WaggleDetailPage() {
     }
   };
 
+  const handleImageClick = (imageUrl) => {
+    setClickedImageUrl(imageUrl);
+    setModalVisible(true);
+  };
+
+  const handleCloseModal = () => {
+    setModalVisible(false);
+  };
+
   return (
     <div>
       {waggleDetail && waggleId && (
@@ -208,9 +221,10 @@ function WaggleDetailPage() {
                   .split(",")
                   .map((imageUrl, index) => (
                     <WaggleImage
-                      key={waggleId}
+                      key={index}
                       src={imageUrl.trim()}
                       alt={`Waggle Image ${index}`}
+                      onClick={() => handleImageClick(imageUrl.trim())}
                     />
                   ))}
             </WaggleImageContainer>
@@ -237,6 +251,9 @@ function WaggleDetailPage() {
           <CommentList boardId={boardId} writerId={waggleDetail.userId} />
         </Container>
       )}
+      <Modal visible={modalVisible} onClose={handleCloseModal}>
+        <img src={clickedImageUrl} alt="Modal Image" />
+      </Modal>
     </div>
   );
 }
