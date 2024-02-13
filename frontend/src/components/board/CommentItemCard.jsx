@@ -132,7 +132,6 @@ function CommentItemCard({
             <WriterBadge
               src={`${process.env.PUBLIC_URL}/badge/badge${comment.mainBadge === null ? 0 : comment.mainBadge}back.png`}
             />
-            )}
           </WriterContainer>
           <CommentItem key={comment.commentId}>
             {isEditMode ? (
