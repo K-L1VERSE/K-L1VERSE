@@ -3,12 +3,13 @@ import {
   FileInput,
   FileInputContainer,
   FileInputLabel,
+  FilePreview,
 } from "../../styles/BoardStyles/BoardCreateStyle";
 import CameraIcon from "../../assets/icon/camera-icon.svg";
 
 import { uploadFile } from "../../api/waggle";
 
-function BoardFile({ onFileChange }) {
+function BoardFile({ value, onFileChange }) {
   const fileInput = useRef(null);
 
   const handleImageChange = async (event) => {
@@ -22,12 +23,9 @@ function BoardFile({ onFileChange }) {
           formData.append("file", file);
 
           const res = await uploadFile(formData);
-          // console.log(res, "!!!!!!!!!!!!!!!!!");
-          // console.log(res.data, "????????????????");
-          // console.log(res.data.url, "@@@@@@@@@@@@@@@@");
           const imageUrl = res.data.url; // 받아온 URL
 
-          onFileChange(file, reader.result, imageUrl);
+          onFileChange(file, reader.res, imageUrl);
         } catch (error) {
           console.error("파일 업로드 실패", error);
         }
@@ -53,6 +51,11 @@ function BoardFile({ onFileChange }) {
           onClick={() => fileInput.current.click()}
         />
       </FileInputLabel>
+      {value && (
+        <FilePreview>
+          <img src={value} alt="미리보기" />
+        </FilePreview>
+      )}
     </FileInputContainer>
   );
 }

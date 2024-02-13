@@ -1,11 +1,8 @@
-import React, { useState } from "react";
+import React from "react";
 import {
   TitleInput,
   TextArea,
   SubmitButton,
-  FileInputContainer,
-  FileInput,
-  FileInputLabel,
   RegistCardContainer,
   InputLabel,
 } from "../../styles/BoardStyles/BoardCreateStyle";
@@ -21,11 +18,11 @@ export default function WaggleRegistCard({
   onSubmit,
   buttonText,
 }) {
-  const [previewImage, setPreviewImage] = useState(null);
+  // const [previewImage, setPreviewImage] = useState(null);
 
   const handleFileChange = (file, result, imageUrl) => {
-    // console.log(imageUrl, "!@#!@#!@#!@#");
     onFileChange(imageUrl);
+    // setPreviewImage(boardImage);
   };
 
   return (
@@ -43,9 +40,6 @@ export default function WaggleRegistCard({
       <br />
       <InputLabel>사진 첨부</InputLabel>
       <BoardFile value={boardImage} onFileChange={handleFileChange} />
-      {/* {previewImage && (
-        <img src={previewImage} alt="미리보기" style={{ maxWidth: "100%" }} />
-      )} */}
       <br />
       <SubmitButton onClick={onSubmit}>{buttonText}</SubmitButton>
     </RegistCardContainer>
