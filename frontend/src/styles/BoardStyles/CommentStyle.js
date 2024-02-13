@@ -38,6 +38,7 @@ export const CommentContent = styled.p`
   font-size: 0.8rem;
   color: #5f5f5f;
   display: block;
+  white-space: pre-wrap;
 `;
 
 export const CommentTime = styled.div`
