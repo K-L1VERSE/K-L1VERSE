@@ -111,14 +111,10 @@ const UserNickName = styled.div`
 
 function UserInfo({ user, setUser }) {
   /* 유저 닉네임 변경 버튼 이벤트 */
-  const editUserInfo = () => {
-    console.log("editUserInfo");
-  };
+  const editUserInfo = () => {};
 
   /* 유저 정보 바뀔 때마다 호출될 훅 */
-  useEffect(() => {
-    console.log("user정보 수정");
-  }, [user]);
+  useEffect(() => {}, [user]);
 
   const setUserState = useSetRecoilState(UserState);
   const setModifyingState = useSetRecoilState(ModifyingState);
@@ -162,9 +158,7 @@ function UserInfo({ user, setUser }) {
   };
 
   /* 이미지를 선택할 때마다 호출될 훅 */
-  useEffect(() => {
-    console.log("프로필 이미지 수정");
-  }, [selectedImage]);
+  useEffect(() => {}, [selectedImage]);
 
   const [isModalOpen, setIsModalOpen] = useState(false);
 
@@ -206,7 +200,7 @@ function UserInfo({ user, setUser }) {
             accept="image/*"
             onChange={handleImageChange}
           />
-          <BadgeButton mainBadge={user.mainBadge} />
+          <BadgeButton mainBadge={user.mainBadge} user={user} />
           <UserNickName>{user.nickname}</UserNickName>
           <ProfileEditContent onClick={handleModalOpen}>
             <ProfileEditIcon src="https://raw.githubusercontent.com/Tarikul-Islam-Anik/Animated-Fluent-Emojis/master/Emojis/Objects/Wrench.png" />

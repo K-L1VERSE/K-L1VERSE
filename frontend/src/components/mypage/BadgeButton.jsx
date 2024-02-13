@@ -27,7 +27,7 @@ const BadgeImage = styled.img`
   height: 1.125rem;
 `;
 
-function BadgeButton({ mainBadge }) {
+function BadgeButton({ mainBadge, user }) {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const badgeCodeList = [
     "1",
@@ -86,7 +86,9 @@ function BadgeButton({ mainBadge }) {
 
   const navigate = useNavigate();
   const goBadge = () => {
-    navigate("/badge");
+    navigate("/badge", {
+      state: { user },
+    });
   };
 
   const handleBuyBadge = (index) => {
