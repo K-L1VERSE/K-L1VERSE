@@ -14,6 +14,11 @@ import EditNicknameModal from "../../components/mypage/EditNicknameModal";
 import Footer from "../../components/main/Footer";
 
 function MainPage() {
+  const [userState] = useRecoilState(UserState);
+  const { nickname } = userState;
+
+  const navigate = useNavigate();
+
   (function () {
     var w = window;
     if (w.ChannelIO) {
@@ -54,11 +59,13 @@ function MainPage() {
   });
 
   useEffect(() => {
-    ChannelIO("showChannelButton");
-    return () => ChannelIO("hideChannelButton");
+    if (!nickname) {
+      navigate("/login");
+    } else {
+      ChannelIO("showChannelButton");
+      return () => ChannelIO("hideChannelButton");
+    }
   }, []);
-
-  const navigate = useNavigate();
 
   function handleAllBtn() {
     navigate("/waggle");
@@ -68,30 +75,31 @@ function MainPage() {
     navigate("/schedule");
   };
 
-  const [userState] = useRecoilState(UserState);
-  const { nickname } = userState;
-
   return (
     <div>
-      <Notice />
-      <Category>
-        <Title>💬 커뮤니티</Title>
-        <AllBtn onClick={handleAllBtn}>전체보기</AllBtn>
-      </Category>
-      <Board />
-      <Category>
-        <Title>🏁 오늘의 경기</Title>
-        <AllBtn onClick={goMatchSchedule}>전체보기</AllBtn>
-      </Category>
-      <TodayMatch />
-      <Hotclip />
-      <Category>
-        <Title>🎯 노스트라다무스 랭킹</Title>
-      </Category>
-      <Nostradamus />
-      <Survey />
-      <Footer />
-      {nickname === null && <EditNicknameModal type="signUp" />}
+      {nickname && (
+        <div>
+          <Notice />
+          <Category>
+            <Title>💬 커뮤니티</Title>
+            <AllBtn onClick={handleAllBtn}>전체보기</AllBtn>
+          </Category>
+          <Board />
+          <Category>
+            <Title>🏁 오늘의 경기</Title>
+            <AllBtn onClick={goMatchSchedule}>전체보기</AllBtn>
+          </Category>
+          <TodayMatch />
+          <Hotclip />
+          <Category>
+            <Title>🎯 노스트라다무스 랭킹</Title>
+          </Category>
+          <Nostradamus />
+          <Survey />
+          <Footer />
+          {nickname === null && <EditNicknameModal type="signUp" />}
+        </div>
+      )}
     </div>
   );
 }

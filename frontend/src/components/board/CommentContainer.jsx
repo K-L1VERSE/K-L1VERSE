@@ -10,6 +10,7 @@ function CommentContainer({
   handleReplyMode,
   setIsReplyMode,
   setParentId,
+  writerId,
 }) {
   return (
     <CommentListContainer>
@@ -25,6 +26,7 @@ function CommentContainer({
             handleReplyMode={handleReplyMode}
             setIsReplyMode={setIsReplyMode}
             setParentId={setParentId}
+            writerId={writerId}
           />
           {comment.replies && comment.replies.length > 0 && (
             <div>
@@ -37,6 +39,7 @@ function CommentContainer({
                   formatRelativeTime={formatRelativeTime}
                   onCommentDelete={onCommentDelete}
                   handleReplyMode={handleReplyMode}
+                  writerId={writerId}
                 />
               ))}
             </div>
