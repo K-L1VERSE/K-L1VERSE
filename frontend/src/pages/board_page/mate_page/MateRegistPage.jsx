@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from "react";
 import { useRecoilState } from "recoil";
 import { useNavigate, useLocation } from "react-router-dom";
+import Swal from "sweetalert2";
+
 import MateRegistCard from "../../../components/board/MateRegistCard"; // Import MateRegistCard
 import { createMate, updateMate } from "../../../api/mate";
 import { UserState } from "../../../global/UserState";
@@ -15,7 +17,7 @@ function MateRegistPage() {
   const [boardId, setBoardId] = useState(null);
   const [title, setTitle] = useState("");
   const [content, setContent] = useState("");
-  const [total, setTotal] = useState(0);
+  const [total, setTotal] = useState(1);
   const [fullFlag, setFullFlag] = useState(false);
   const [matchId, setMatchId] = useState(undefined);
   const [isUpdateMode, setIsUpdateMode] = useState(false);
@@ -90,7 +92,19 @@ function MateRegistPage() {
   }
 
   const handleFullFlag = () => {
-    setFullFlag(!fullFlag);
+    if (isUpdateMode) {
+      setFullFlag(!fullFlag);
+    } else {
+      Swal.fire({
+        html: `
+          <img src="https://raw.githubusercontent.com/Tarikul-Islam-Anik/Animated-Fluent-Emojis/master/Emojis/Animals/Hatching%20Chick.png" alt="Hatching Chick" width="100" height="100" />
+          <div style="font-size:1rem; font-family:Pretendard-Regular; margin-top: 1rem;">작성중에는 변경할 수 없어요!</div>
+        `,
+        confirmButtonColor: "#3085d6",
+        confirmButtonText:
+          "<div style='font-size:1rem; font-family:Pretendard-Regular;'>확인</div>",
+      });
+    }
   };
 
   const handleBackClick = () => {
@@ -130,7 +144,11 @@ function MateRegistPage() {
         matchId={matchId}
         onTitleChange={(e) => setTitle(e.target.value)}
         onContentChange={(e) => setContent(e.target.value)}
-        onTotalChange={(e) => setTotal(e.target.value)}
+        onTotalChange={(e) => {
+          if (e.target.value > 0) {
+            setTotal(e.target.value);
+          }
+        }}
         onfullFlag={fullFlag}
         onMatchIdChange={(value) => setMatchId(value)}
         onSubmit={handleSubmit}
