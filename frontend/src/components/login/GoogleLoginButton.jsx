@@ -1,7 +1,6 @@
 import React from "react";
 import styled from "styled-components";
-
-import GoogleLoginImg from "../../assets/login_button/google_login_medium_narrow.png";
+import Google from "../../assets/login_button/google-icon.png";
 
 function GoogleLoginButton() {
   const GOOGLE_REDIRECT_URI = process.env.REACT_APP_GOOGLE_REDIRECT_URI;
@@ -12,27 +11,22 @@ function GoogleLoginButton() {
   };
 
   return (
-    <div>
-      <LoginButton type="button" onClick={handleLogin} />
-    </div>
+    <But onClick={handleLogin}>
+      <img src={Google} alt="Google" />
+    </But>
   );
 }
 
-const LoginButton = styled.button`
-  width: 183px;
-  height: 45px;
-  padding-top: 10px;
-  border: none;
-  background-color: transparent;
+const But = styled.div`
+  padding: 0.5em 0.7rem 0.6rem 0.7rem;
+  border: 1px solid #edf0f3;
+  display: flex;
+  align-items: center;
+  border-radius: 50%;
   cursor: pointer;
-  border: 1px solid #dcdcdc;
-  background-image: url(${GoogleLoginImg});
-  background-size: contain;
-  border-radius: 8px;
-  transition: box-shadow 0.5s ease;
-  &:hover {
-    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
-    cursor: pointer;
+
+  img {
+    width: 1.3rem;
   }
 `;
 
