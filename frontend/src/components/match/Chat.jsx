@@ -33,7 +33,7 @@ function Chat() {
   const roomId = matchId;
   const [message, setMessage] = useState("");
   const [messages, setMessages] = useState([]);
-  // const [rejectedMessages, setRejectedMessages] = useState({});
+  const [rejectedMessage, setrejectedMessage] = useState(null);
   const [stompClient, setStompClient] = useState(null);
   const [userState] = useRecoilState(UserState);
   const { nickname } = userState;
@@ -72,7 +72,7 @@ function Chat() {
     stomp.connect({}, (frame) => {
       stomp.subscribe(`/topic/chat/room/${roomId}`, (message) => {
         console.log(message);
-        recvMessage(JSON.parse(message.body), messages);
+        recvMessage(JSON.parse(message.body));
       });
     });
 
@@ -105,20 +105,29 @@ function Chat() {
     setMessage("");
   };
 
-  const recvMessage = (recv, messages) => {
+  const recvMessage = (recv) => {
     if (recv.type === "REJECT") {
       console.log(`message#${recv.messageId}가 클린봇에 의해 거부되었습니다.`);
-      console.log("messages 갯수 : ", messages.length);
-      console.log(recv);
+      setrejectedMessage(recv);
+      return;
+    }
 
+    useEffect(() => {
+      if (rejectedMessage === null) return;
+      if (rejectedMessage === undefined) return;
+
+      console.log("messages길이 : ", messages.length);
       const rejectedMessageIndex = messages.findIndex(
-        (msg) => msg.messageId === recv.messageId,
+        (msg) => msg.messageId === rejectedMessage.messageId,
       );
-
-      // setRejectedMessages(recv);
-      console.log("recv: ", recv);
+      console.log("rejectedMessageIndex: ", rejectedMessageIndex);
+      console.log("rejectedMessage: ", rejectedMessage);
       if (rejectedMessageIndex !== -1) {
         const updatedMessages = [...messages];
+
+        console.log(
+          `message#${rejectedMessage.messageId}가 클린봇에 의해 거부되었습니다.`,
+        );
 
         updatedMessages[rejectedMessageIndex].message =
           "클린봇에 의해 검열된 메세지입니다.";
@@ -129,9 +138,7 @@ function Chat() {
           `messages#${recv.messageId}와 일치하는 메시지를 찾지 못했습니다.`,
         );
       }
-
-      return;
-    }
+    }, [rejectedMessage, messages]);
 
     setMessages((prevMessages) => [
       ...prevMessages,
