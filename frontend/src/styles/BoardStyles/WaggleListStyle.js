@@ -9,7 +9,7 @@ export const WaggleListImage = styled.img`
 `;
 
 export const WaggleImageContainer = styled.div`
-  margin-top: 20px;
+  /* margin-top: 20px; */
   max-width: 100%;
   max-height: 400px;
   overflow: hidden;
@@ -19,6 +19,7 @@ export const WaggleImage = styled.img`
   width: 10rem;
   height: auto;
   object-fit: cover;
-  border-radius: 8px;
-  margin-bottom: 20px;
+  border-radius: 4px;
+  /* margin-bottom: 20px; */
+  margin-left: 0.5rem;
 `;

@@ -137,7 +137,7 @@ function ProductDetailPage() {
                 .split(",")
                 .map((imageUrl, index) => (
                   <DetailOnlyImg
-                    key={index}
+                    key={productId}
                     src={imageUrl.trim()}
                     alt={`Product Image ${index}`}
                   />

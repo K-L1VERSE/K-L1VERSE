@@ -208,4 +208,5 @@ export const DetailOnlyImg = styled.img`
   max-width: 100%;
   max-height: 15rem;
   border-radius: 5px;
+  margin-left: 0.5rem;
 `;
