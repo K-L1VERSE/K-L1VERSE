@@ -4,7 +4,6 @@ import { useRecoilState } from "recoil";
 import {
   deleteWaggle,
   getWaggleDetail,
-  likeCount,
   likeWaggle,
   unlikeWaggle,
 } from "../../../api/waggle";
@@ -202,7 +201,7 @@ function WaggleDetailPage() {
                   .split(",")
                   .map((imageUrl, index) => (
                     <WaggleImage
-                      key={index}
+                      key={waggleId}
                       src={imageUrl.trim()}
                       alt={`Waggle Image ${index}`}
                     />
