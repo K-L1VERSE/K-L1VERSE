@@ -22,9 +22,11 @@ function MateItemCard({ mate, user, fromMypage, category }) {
   const [matchDetail, setMatchDetail] = useState(undefined);
 
   function getMatch() {
-    getMatchDetail(mate.matchId).then((res) => {
-      setMatchDetail(res);
-    });
+    if (mate.matchId) {
+      getMatchDetail(mate.matchId).then((res) => {
+        setMatchDetail(res);
+      });
+    }
   }
   useEffect(() => {
     getMatch();
@@ -55,7 +57,7 @@ function MateItemCard({ mate, user, fromMypage, category }) {
             </ItemContent>
             <ItemInfoSection>
               <MateItemCreated>
-                {formatRelativeTime(mate.createAt)}
+                {formatRelativeTime(mate.board.createAt)}
               </MateItemCreated>
             </ItemInfoSection>
           </ItemContainer>

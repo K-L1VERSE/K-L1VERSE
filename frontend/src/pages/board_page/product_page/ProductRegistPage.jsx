@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useRecoilState } from "recoil";
 import { useNavigate, useLocation } from "react-router-dom";
+import Swal from "sweetalert2";
 import BoardTopNavBar from "../../../components/board/BoardTopNavBar";
 import ProductRegistCard from "../../../components/board/ProductRegistCard";
 import { createProduct, updateProduct } from "../../../api/product";
@@ -14,6 +15,9 @@ import BackIcon from "../../../assets/icon/back-icon.png";
 
 function ProductRegistPage() {
   const navigate = useNavigate();
+  const location = useLocation();
+  const { state } = location;
+
   const [boardId, setBoardId] = useState(null);
   const [title, setTitle] = useState("");
   const [content, setContent] = useState("");
@@ -21,11 +25,9 @@ function ProductRegistPage() {
   const [dealFlag, setDealFlag] = useState(false);
   const [boardImage, setBoardImage] = useState(null);
   const [isUpdateMode, setIsUpdateMode] = useState(false);
-  const { userId, nickname } = useRecoilState(UserState)[0];
-  const [file, setFile] = useState(null);
+  const { userId } = useRecoilState(UserState)[0];
+  const [file] = useState(null);
 
-  const location = useLocation();
-  const { state } = location;
   useEffect(() => {
     if (location.state && location.state.board) {
       setBoardId(location.state.board.boardId);
@@ -88,12 +90,28 @@ function ProductRegistPage() {
   };
 
   const handleBackClick = () => {
-    navigate("/product");
+    if (isUpdateMode) {
+      if (state && state.fromMypage) {
+        navigate(`/product/${boardId}`, {
+          state: {
+            user: state.user,
+            fromMypage: state.fromMypage,
+            category: state.category,
+          },
+        });
+      } else {
+        navigate(`/product/${boardId}`);
+      }
+    } else {
+      navigate("/product");
+    }
   };
 
   // 파일 상태를 업데이트하는 핸들러 함수
   const handleFileChange = (file) => {
-    setBoardImage(file);
+    if (file) {
+      setBoardImage(file);
+    }
   };
 
   useEffect(() => {
@@ -101,7 +119,19 @@ function ProductRegistPage() {
   }, [file]);
 
   const handleDealFlag = () => {
-    setDealFlag(!dealFlag);
+    if (isUpdateMode) {
+      setDealFlag(!dealFlag);
+    } else {
+      Swal.fire({
+        html: `
+          <img src="https://raw.githubusercontent.com/Tarikul-Islam-Anik/Animated-Fluent-Emojis/master/Emojis/Animals/Hatching%20Chick.png" alt="Hatching Chick" width="100" height="100" />
+          <div style="font-size:1rem; font-family:Pretendard-Regular; margin-top: 1rem;">작성중에는 변경할 수 없어요!</div>
+        `,
+        confirmButtonColor: "#3085d6",
+        confirmButtonText:
+          "<div style='font-size:1rem; font-family:Pretendard-Regular;'>확인</div>",
+      });
+    }
   };
 
   return (
@@ -125,6 +155,7 @@ function ProductRegistPage() {
               onTitleChange={(e) => setTitle(e.target.value)}
               onContentChange={(e) => setContent(e.target.value)}
               onPriceChange={(e) => setPrice(e.target.value)}
+              boardImage={boardImage}
               onFileChange={handleFileChange}
               onSubmit={handleSubmit}
               buttonText={isUpdateMode ? "수정하기" : "작성하기"}
@@ -150,6 +181,7 @@ function ProductRegistPage() {
             onTitleChange={(e) => setTitle(e.target.value)}
             onContentChange={(e) => setContent(e.target.value)}
             onPriceChange={(e) => setPrice(e.target.value)}
+            boardImage={boardImage}
             onFileChange={handleFileChange}
             onSubmit={handleSubmit}
             buttonText={isUpdateMode ? "수정하기" : "작성하기"}

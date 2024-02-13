@@ -9,7 +9,9 @@ import com.KL1verse.Mate.dto.req.MateDTO;
 import com.KL1verse.Mate.repository.MateRepository;
 import com.KL1verse.Mate.repository.entity.Mate;
 import com.KL1verse.kafka.dto.req.BoardCleanbotCheckReqDto;
+import com.KL1verse.kafka.dto.res.BoardNotificationResDto;
 import com.KL1verse.kafka.producer.KafkaBoardCleanbotProducer;
+import com.KL1verse.kafka.producer.KafkaBoardNotificationProducer;
 import com.KL1verse.s3.repository.entity.File;
 import com.KL1verse.s3.service.BoardImageService;
 import com.KL1verse.s3.service.FileService;
@@ -37,6 +39,7 @@ public class MateServiceImpl implements MateService {
 
     private final CommentRepository commentRepository;
     private final KafkaBoardCleanbotProducer kafkaBoardCleanbotProducer;
+    private final KafkaBoardNotificationProducer kafkaBoardNotificationProducer;
 
 
     @Override
@@ -109,6 +112,15 @@ public class MateServiceImpl implements MateService {
 
         board.setBoardImage(file.getUri());
         createdMateDTO.getBoard().setBoardImage(file.getUri());
+
+        kafkaBoardNotificationProducer.boardNotification(BoardNotificationResDto.builder()
+                .type(BoardNotificationResDto.BoardNotificationType.GOAL)
+                .userId(userId)
+                .message("글 작성 보상으로 10골을 지급 받았습니다.")
+                .uri("/mate/" + String.valueOf(board.getBoardId()))
+                .profile(null)
+                .nickname(null)
+                .build());
 
 //        BoardCleanbotCheckReqDto boardCleanbotCheckReqDto = BoardCleanbotCheckReqDto.builder()
 //            .id(createdMate.getBoard().getBoardId())

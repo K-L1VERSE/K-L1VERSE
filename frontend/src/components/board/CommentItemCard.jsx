@@ -15,15 +15,26 @@ import {
   WriterContainer,
   WriterProfile,
   WriterBadge,
+  ReplyButton,
+  ReplyImg,
+  CommentContainer,
 } from "../../styles/BoardStyles/CommentStyle";
+import ReplyIcon from "../../assets/icon/reply-icon.svg";
 import { likeComment, unlikeComment, updateComment } from "../../api/comment";
 import { UserState } from "../../global/UserState";
 import Like from "./Like";
 import { useParams } from "react-router-dom";
 
-function CommentItemCard({ comment, onCommentDelete, formatRelativeTime }) {
-  const [liked, setLiked] = useState(false);
-  const [likesCount, setLikesCount] = useState(0);
+function CommentItemCard({
+  type,
+  comment,
+  onCommentDelete,
+  formatRelativeTime,
+  setIsReplyMode,
+  setParentId,
+}) {
+  const [liked, setLiked] = useState(comment.liked);
+  const [likesCount, setLikesCount] = useState(comment.likesCount);
   const [isEditMode, setIsEditMode] = useState(false);
   const [updatedContent, setUpdatedContent] = useState(comment.content);
   const { userId } = useRecoilState(UserState)[0];
@@ -31,7 +42,7 @@ function CommentItemCard({ comment, onCommentDelete, formatRelativeTime }) {
 
   const handleUpdateBtn = () => {
     if (isEditMode) {
-      if (updatedContent === comment.content || updatedContent === "") {
+      if (updatedContent === "") {
         return;
       }
 
@@ -70,10 +81,35 @@ function CommentItemCard({ comment, onCommentDelete, formatRelativeTime }) {
           >
             삭제
           </DeleteButton>
+          {type === "comment" && (
+            <ReplyButton
+              onClick={() => {
+                setIsReplyMode(true);
+                setParentId(comment.commentId);
+              }}
+            >
+              답글
+            </ReplyButton>
+          )}
         </ButtonContainer>
       );
     }
-    return null;
+    return (
+      <div>
+        {type === "comment" && !comment.isSecret && (
+          <ButtonContainer>
+            <ReplyButton
+              onClick={() => {
+                setIsReplyMode(true);
+                setParentId(comment.commentId);
+              }}
+            >
+              답글
+            </ReplyButton>
+          </ButtonContainer>
+        )}
+      </div>
+    );
   };
 
   const handleLikeClick = () => {
@@ -101,53 +137,82 @@ function CommentItemCard({ comment, onCommentDelete, formatRelativeTime }) {
   };
 
   return (
-    <CommentListContainer>
-      <WriterContainer>
-        {comment.profile && <WriterProfile src={comment.profile} />}
-        <CommentWriter>{comment.nickname}</CommentWriter>
-        {comment.mainBadge && (
-          <WriterBadge
-            src={`${process.env.PUBLIC_URL}/badge/badge${comment.mainBadge === null ? 0 : comment.mainBadge}.png`}
-          />
-        )}
-      </WriterContainer>
-      <CommentItem key={comment.commentId}>
-        {isEditMode ? (
-          // 수정 모드일 때는 입력 필드를 보여줌
-          <>
-            <CommentContentContainer>
-              <CommentInput
-                type="text"
-                value={updatedContent}
-                onChange={(e) => setUpdatedContent(e.target.value)}
-              />
-            </CommentContentContainer>
-            <CommentContentContainer>
-              <CommentTime>{formatRelativeTime(comment.createAt)}</CommentTime>
-              {renderEditDeleteButtons()}
-            </CommentContentContainer>
-          </>
-        ) : (
-          // 수정 모드가 아닐 때는 댓글 내용을 보여줌
-          <>
-            <CommentContentContainer>
-              <CommentContent>{comment.content}</CommentContent>
-              <LikeBox>
-                <Like
-                  liked={liked}
-                  likesCount={likesCount}
-                  handleLikeClick={handleLikeClick}
+    <div
+      style={{
+        display: "flex",
+        flexDirection: "row",
+      }}
+    >
+      <div>{type === "reply" && <ReplyImg src={ReplyIcon} alt="reply" />}</div>
+      <div
+        style={{
+          width: "100%",
+        }}
+      >
+        <CommentListContainer $type={type}>
+          {(!comment.isSecret ||
+            (comment.isSecret && userId === comment.userId)) && (
+            <div>
+              <WriterContainer>
+                {comment.profile && <WriterProfile src={comment.profile} />}
+                <CommentWriter>{comment.nickname}</CommentWriter>
+                <WriterBadge
+                  src={`${process.env.PUBLIC_URL}/badge/badge${comment.mainBadge === null ? 0 : comment.mainBadge}back.png`}
                 />
-              </LikeBox>
-            </CommentContentContainer>
-            <CommentContentContainer>
-              <CommentTime>{formatRelativeTime(comment.createAt)}</CommentTime>
-              {renderEditDeleteButtons()}
-            </CommentContentContainer>
-          </>
-        )}
-      </CommentItem>
-    </CommentListContainer>
+              </WriterContainer>
+            </div>
+          )}
+
+          <CommentItem key={comment.commentId}>
+            {isEditMode ? (
+              // 수정 모드일 때는 입력 필드를 보여줌
+              <>
+                <CommentContentContainer>
+                  <CommentInput
+                    type="text"
+                    value={updatedContent}
+                    onChange={(e) => setUpdatedContent(e.target.value)}
+                  />
+                </CommentContentContainer>
+                <CommentContentContainer>
+                  <CommentTime>
+                    {formatRelativeTime(comment.createAt)}
+                  </CommentTime>
+                  {renderEditDeleteButtons()}
+                </CommentContentContainer>
+              </>
+            ) : (
+              // 수정 모드가 아닐 때는 댓글 내용을 보여줌
+              <>
+                <CommentContentContainer>
+                  <CommentContent>{comment.content}</CommentContent>
+                  <div>
+                    {(!comment.isSecret ||
+                      (comment.isSecret && userId === comment.userId)) && (
+                      <div>
+                        <LikeBox>
+                          <Like
+                            liked={liked}
+                            likesCount={likesCount}
+                            handleLikeClick={handleLikeClick}
+                          />
+                        </LikeBox>
+                      </div>
+                    )}
+                  </div>
+                </CommentContentContainer>
+                <CommentContentContainer>
+                  <CommentTime>
+                    {formatRelativeTime(comment.createAt)}
+                  </CommentTime>
+                  {renderEditDeleteButtons()}
+                </CommentContentContainer>
+              </>
+            )}
+          </CommentItem>
+        </CommentListContainer>
+      </div>
+    </div>
   );
 }
 

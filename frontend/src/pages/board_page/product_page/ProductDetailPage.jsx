@@ -37,6 +37,7 @@ import { ImageBoxContainer } from "../../../styles/BoardStyles/ImageStyle";
 
 function ProductDetailPage() {
   const [productDetail, setProductDetail] = useState({});
+  const [productId, setProductId] = useState(undefined);
   const [price, setPrice] = useState(0);
   const [dealFlag, setDealFlag] = useState();
   const { boardId } = useParams();
@@ -49,6 +50,7 @@ function ProductDetailPage() {
   /* product 상세 정보 가져오기 */
   function getProductDetail() {
     axios.get(`/board/products/${boardId}`).then(({ data }) => {
+      setProductId(data.productId);
       setProductDetail(data.board);
       setPrice(data.price);
       setDealFlag(data.dealFlag);
@@ -122,7 +124,7 @@ function ProductDetailPage() {
 
   return (
     <div>
-      {productDetail && productDetail.boardImage && (
+      {productDetail && productId && (
         <Container>
           <DetailTop>
             <BackButton onClick={handleBackClick}>
@@ -148,7 +150,7 @@ function ProductDetailPage() {
               <ProductWriterBadge
                 src={`${process.env.PUBLIC_URL}/badge/badge${
                   productDetail.mainBadge === null ? 0 : productDetail.mainBadge
-                }.png`}
+                }back.png`}
               />
             </ProductWriterContainer>
             {dealFlag ? (

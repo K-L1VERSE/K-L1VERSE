@@ -37,7 +37,7 @@ export function likeComment(commentId, data, success, fail) {
 
 export function unlikeComment(commentId, data, success, fail) {
   axios
-    .delete(`/${gateway}/${url}/likes/${commentId}`, { data })
+    .delete(`/${gateway}/${url}/like/${commentId}`, { data })
     .then(success)
     .catch(fail);
 }

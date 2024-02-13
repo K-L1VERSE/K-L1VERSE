@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { TableContainer } from "../../styles/match-styles/MatchScheduleStyle";
 import Time from "./Time";
+import TimeForBoard from "../board/TimeForBoard";
 
 export default function ScheduleTable({
   year,
@@ -10,6 +11,9 @@ export default function ScheduleTable({
   setSelectedDayProps,
   data,
   view,
+  isMateListPage,
+  onMatchClick,
+  selectedMatchId,
 }) {
   const [selectedDay, setSelectedDay] = useState(day);
 
@@ -113,14 +117,22 @@ export default function ScheduleTable({
             .find((dayData) => dayData.day === selectedDay)
             .matches.map((match, index) => (
               <div key={index}>
-                <Time
-                  match={match}
-                  data={data}
-                  year={year}
-                  month={month}
-                  day={selectedDay}
-                  view={view}
-                />
+                {isMateListPage ? (
+                  <TimeForBoard
+                    match={match}
+                    onMatchClick={onMatchClick}
+                    selectedMatchId={selectedMatchId}
+                  />
+                ) : (
+                  <Time
+                    match={match}
+                    data={data}
+                    year={year}
+                    month={month}
+                    day={selectedDay}
+                    view={view}
+                  />
+                )}
                 <hr />
               </div>
             ))}

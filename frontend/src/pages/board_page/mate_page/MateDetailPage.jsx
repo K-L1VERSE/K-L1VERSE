@@ -87,13 +87,18 @@ function MateDetailPage() {
       navigate("/mateRegist", {
         state: {
           board: mateDetail,
+          total,
+          fullFlag,
+          matchId,
           user: state.user,
           fromMypage: state.fromMypage,
           category: state.category,
         },
       });
     } else {
-      navigate("/mateRegist", { state: { board: mateDetail } });
+      navigate("/mateRegist", {
+        state: { board: mateDetail, total, fullFlag, matchId },
+      });
     }
   };
 

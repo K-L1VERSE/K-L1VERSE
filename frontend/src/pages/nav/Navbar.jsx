@@ -74,24 +74,32 @@ export default function Header() {
         <Outlet />
       </Contents>
       <Nav $modifyingNickname={modifyingNickname} $disabled={nickname === null}>
-        <NavItem onClick={goMatchSchedule} $disabled={disabled}>
+        <NavItem
+          onClick={goMatchSchedule}
+          $disabled={disabled}
+          $isSelected={state[0]}
+        >
           {navbarScheduleIcon({ $isSelected: state[0] })}
           <Text $isSelected={state[0]}>경기일정</Text>
         </NavItem>
-        <NavItem onClick={goTeam} $disabled={disabled}>
+        <NavItem onClick={goTeam} $disabled={disabled} $isSelected={state[1]}>
           {navbarTeamInfoIcon({ $isSelected: state[1] })}
           <Text $isSelected={state[1]}>팀정보</Text>
         </NavItem>
         <NavItem onClick={goMain} $disabled={disabled}>
           <img src={Logo} alt="logo" width={50} />
         </NavItem>
-        <NavItem onClick={goNotification} $disabled={disabled}>
+        <NavItem
+          onClick={goNotification}
+          $disabled={disabled}
+          $isSelected={state[2]}
+        >
           {navbarNotificationIcon({ $isSelected: state[2] })}
           {notificationState.newNotifications.length > 0 &&
             currentPath !== "/notification" && <RedCircle />}
           <Text $isSelected={state[2]}>알림</Text>
         </NavItem>
-        <NavItem onClick={goMypage} $disabled={disabled}>
+        <NavItem onClick={goMypage} $disabled={disabled} $isSelected={state[3]}>
           {/* <MyPageIcon /> */}
           {navbarMyPageIcon({ $isSelected: state[3] })}
           <Text $isSelected={state[3]}>마이페이지</Text>

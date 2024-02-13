@@ -6,6 +6,16 @@ export const ListContainer = styled.div`
   margin-right: 0.4rem;
 `;
 
+export const ReplyImg = styled.img`
+  width: 1.8rem;
+  height: 1.8rem;
+`;
+
+export const CommentContainer = styled.div`
+  display: flex;
+  flex-direction: row;
+`;
+
 export const CommentListContainer = styled.div``;
 
 export const CommentItem = styled.li`
@@ -28,6 +38,7 @@ export const CommentContent = styled.p`
   font-size: 0.8rem;
   color: #5f5f5f;
   display: block;
+  white-space: pre-wrap;
 `;
 
 export const CommentTime = styled.div`
@@ -58,8 +69,8 @@ export const CommentWriter = styled.div`
 `;
 
 export const WriterBadge = styled.img`
-  width: 1rem;
-  height: 1rem;
+  width: 1.4rem;
+  height: 1.7rem;
 `;
 
 export const ButtonContainer = styled.div`
@@ -72,9 +83,15 @@ export const ButtonContainer = styled.div`
 export const CommentRegistContainer = styled.div`
   display: flex;
   flex-direction: row;
+  justify-content: space-between;
   align-items: center;
   margin: 0.5rem 0 0.6rem 0.5rem;
   font-size: 0.9rem;
+`;
+
+export const UserInfoBox = styled.div`
+  display: flex;
+  align-items: center;
 `;
 
 export const UserInfo = styled.div`
@@ -167,6 +184,7 @@ export const CheckboxLabel = styled.label`
 
 export const CheckboxInput = styled.input`
   width: 1rem;
+  margin-left: 0.5rem;
 `;
 
 // 댓글 수정창
@@ -211,21 +229,25 @@ export const SubmitImg = styled.img`
 `;
 
 export const CancelButton = styled.button`
-  background-color: #cdd8ec;
-  color: #000;
-  padding: 8px 12px;
-  font-size: 0.9em;
+  color: grey;
+  font-size: 0.8rem;
   border: none;
   cursor: pointer;
+  border-radius: 10px;
+
+  &.hover {
+    text-decoration: underline;
+  }
 `;
 
 export const ReplyButton = styled.button`
-  background-color: #4caf50;
-  color: white;
-  padding: 10px 15px;
+  color: grey;
+  font-size: 0.5em;
   border: none;
-  border-radius: 5px;
   cursor: pointer;
-  margin-right: 10px;
-  background-image: url("../../assets/icon/reply.png");
+  border-radius: 10px;
+
+  &.hover {
+    text-decoration: underline;
+  }
 `;

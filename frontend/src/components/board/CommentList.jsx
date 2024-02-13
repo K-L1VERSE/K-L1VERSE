@@ -18,6 +18,8 @@ const CommentList = ({ boardId }) => {
   const [liked, setLiked] = useState(false);
   const [userState] = useRecoilState(UserState);
   const { userId } = userState;
+  const [isReplyMode, setIsReplyMode] = useState(false);
+  const [parentId, setParentId] = useState(null);
 
   const getComments = () => {
     getCommentList(
@@ -76,12 +78,17 @@ const CommentList = ({ boardId }) => {
         commentList={commentList}
         formatRelativeTime={formatRelativeTime}
         onCommentDelete={handleCommentDelete}
+        setIsReplyMode={setIsReplyMode}
+        setParentId={setParentId}
       />
       <CommentForm
         boardId={boardId}
-        parentId={commentList.parentId}
+        parentId={parentId}
         onCommentSubmit={handleCommentSubmit}
         getComments={getComments}
+        isReplyMode={isReplyMode}
+        setIsReplyMode={setIsReplyMode}
+        setParentId={setParentId}
       />
     </ListContainer>
   );

@@ -38,8 +38,8 @@ export const User = styled.div`
 `;
 
 export const UserBadge = styled.img`
-  width: 1rem;
-  height: 1rem;
+  width: 1.4rem;
+  height: 1.7rem;
 `;
 
 export const CreateAt = styled.p`
@@ -65,6 +65,7 @@ export const FormattedDate = styled.div`
 export const Content = styled.p`
   margin-top: 1rem;
   font-size: 0.9rem;
+  white-space: pre-wrap;
 `;
 
 export const Price = styled.p`

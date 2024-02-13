@@ -1,14 +1,13 @@
 import React, { useState, useEffect } from "react";
 import { useRecoilState } from "recoil";
 import { useNavigate, useLocation } from "react-router-dom";
+import Swal from "sweetalert2";
+
 import MateRegistCard from "../../../components/board/MateRegistCard"; // Import MateRegistCard
 import { createMate, updateMate } from "../../../api/mate";
 import { UserState } from "../../../global/UserState";
 
-import {
-  DetailTop,
-  RegistCardContainer,
-} from "../../../styles/BoardStyles/BoardCreateStyle";
+import { DetailTop } from "../../../styles/BoardStyles/BoardCreateStyle";
 
 import BackIcon from "../../../assets/icon/back-icon.png";
 import { BackButton } from "../../../styles/BoardStyles/BoardDetailStyle";
@@ -18,9 +17,9 @@ function MateRegistPage() {
   const [boardId, setBoardId] = useState(null);
   const [title, setTitle] = useState("");
   const [content, setContent] = useState("");
-  const [total, setTotal] = useState(0);
+  const [total, setTotal] = useState(1);
   const [fullFlag, setFullFlag] = useState(false);
-  const [matchId, setMatchId] = useState(0);
+  const [matchId, setMatchId] = useState(undefined);
   const [isUpdateMode, setIsUpdateMode] = useState(false);
   const { userId } = useRecoilState(UserState)[0];
   const location = useLocation();
@@ -30,9 +29,9 @@ function MateRegistPage() {
       setBoardId(location.state.board.boardId);
       setTitle(location.state.board.title);
       setContent(location.state.board.content);
-      setTotal(location.state.board.total);
-      setFullFlag(location.state.board.fullFlag);
-      setMatchId(location.state.board.matchId);
+      setTotal(location.state.total);
+      setFullFlag(location.state.fullFlag);
+      setMatchId(location.state.matchId);
       setIsUpdateMode(true);
     }
   }, [location]);
@@ -92,12 +91,42 @@ function MateRegistPage() {
     setFullFlag(e.target.checked);
   }
 
+  const handleFullFlag = () => {
+    if (isUpdateMode) {
+      setFullFlag(!fullFlag);
+    } else {
+      Swal.fire({
+        html: `
+          <img src="https://raw.githubusercontent.com/Tarikul-Islam-Anik/Animated-Fluent-Emojis/master/Emojis/Animals/Hatching%20Chick.png" alt="Hatching Chick" width="100" height="100" />
+          <div style="font-size:1rem; font-family:Pretendard-Regular; margin-top: 1rem;">작성중에는 변경할 수 없어요!</div>
+        `,
+        confirmButtonColor: "#3085d6",
+        confirmButtonText:
+          "<div style='font-size:1rem; font-family:Pretendard-Regular;'>확인</div>",
+      });
+    }
+  };
+
   const handleBackClick = () => {
-    navigate("/mate");
+    if (isUpdateMode) {
+      if (state && state.fromMypage) {
+        navigate(`/mate/${boardId}`, {
+          state: {
+            user: state.user,
+            fromMypage: state.fromMypage,
+            category: state.category,
+          },
+        });
+      } else {
+        navigate(`/mate/${boardId}`);
+      }
+    } else {
+      navigate("/mate");
+    }
   };
 
   return (
-    <RegistCardContainer>
+    <>
       <DetailTop>
         <BackButton onClick={handleBackClick}>
           <img src={BackIcon} alt="Back" />
@@ -115,14 +144,18 @@ function MateRegistPage() {
         matchId={matchId}
         onTitleChange={(e) => setTitle(e.target.value)}
         onContentChange={(e) => setContent(e.target.value)}
-        onTotalChange={(e) => setTotal(e.target.value)}
+        onTotalChange={(e) => {
+          if (e.target.value > 0) {
+            setTotal(e.target.value);
+          }
+        }}
         onfullFlag={fullFlag}
-        onFullFlagChange={handleFullFlagChange}
         onMatchIdChange={(value) => setMatchId(value)}
         onSubmit={handleSubmit}
         buttonText={isUpdateMode ? "수정하기" : "작성하기"}
+        handleFullFlag={handleFullFlag}
       />
-    </RegistCardContainer>
+    </>
   );
 }
 

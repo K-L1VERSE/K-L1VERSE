@@ -11,16 +11,16 @@ import BackIcon from "../../../assets/icon/back-icon.png";
 
 function WaggleRegistPage() {
   const navigate = useNavigate();
+  const location = useLocation();
+  const { state } = location;
+
   const [boardId, setBoardId] = useState(null);
   const [title, setTitle] = useState("");
   const [content, setContent] = useState("");
   const [boardImage, setBoardImage] = useState(null);
   const [isUpdateMode, setIsUpdateMode] = useState(false);
   const { userId } = useRecoilState(UserState)[0];
-  const [file, setFile] = useState(null);
-
-  const location = useLocation();
-  const { state } = location;
+  const [file] = useState(null);
 
   useEffect(() => {
     if (location.state && location.state.board) {
@@ -70,7 +70,6 @@ function WaggleRegistPage() {
           },
         },
         ({ data }) => {
-          // console.log(data, "****************");
           navigate(`/waggle/${data.board.boardId}`);
         },
         () => {},
@@ -79,12 +78,28 @@ function WaggleRegistPage() {
   };
 
   const handleBackClick = () => {
-    navigate("/waggle");
+    if (isUpdateMode) {
+      if (state && state.fromMypage) {
+        navigate(`/waggle/${boardId}`, {
+          state: {
+            user: state.user,
+            fromMypage: state.fromMypage,
+            category: state.category,
+          },
+        });
+      } else {
+        navigate(`/waggle/${boardId}`);
+      }
+    } else {
+      navigate("/waggle");
+    }
   };
 
   // 파일 상태를 업데이트하는 핸들러 함수
   const handleFileChange = (file) => {
-    setBoardImage(file);
+    if (file) {
+      setBoardImage(file);
+    }
   };
 
   useEffect(() => {

@@ -7,7 +7,7 @@ import {
   TeamWrap,
 } from "../../styles/TeamStyles/TeamStyle";
 import TeamInfoItem from "../../components/team/TeamInfoItem";
-import { getTeamInfo } from "../../api/team";
+import { getTeamInfoAll } from "../../api/team";
 
 function TeamInfoPage() {
   const teams = [
@@ -62,79 +62,109 @@ function TeamInfoPage() {
   ];
 
   const [selectedId, setSelectedId] = useState(1);
-  const [teamInfo, setTeamInfo] = useState({
-    teamId: 0,
-    teamName: "",
-    description: "",
-    homepage: "",
-    facebook: "",
-    instagram: "",
-    youtube: "",
-    song: "",
-  });
+  const [teamInfoAll, setTeamInfoAll] = useState([]);
   const [coach, setCoach] = useState([]);
   const [gk, setGk] = useState([]);
   const [df, setDf] = useState([]);
   const [mf, setMf] = useState([]);
   const [fw, setFw] = useState([]);
+  const [render, setRender] = useState(false);
 
   useEffect(() => {
-    getTeamInfo(
-      selectedId,
+    getTeamInfoAll(
       ({ data }) => {
-        setTeamInfo({
-          teamId: data.teamId,
-          teamName: data.teamName,
-          description: data.description,
-          homepage: data.homepage,
-          facebook: data.facebook,
-          instagram: data.instagram,
-          youtube: data.youtube,
-          song: data.song,
-        });
-        setCoach(data.members.filter((member) => member.position === "감독"));
-        setGk(data.members.filter((member) => member.position === "gk"));
-        setDf(data.members.filter((member) => member.position === "df"));
-        setMf(data.members.filter((member) => member.position === "mf"));
-        setFw(data.members.filter((member) => member.position === "fw"));
+        setTeamInfoAll(data);
+        setCoach(
+          data[selectedId].members.filter(
+            (member) => member.position === "감독",
+          ),
+        );
+        setGk(
+          data[selectedId].members.filter((member) => member.position === "gk"),
+        );
+        setDf(
+          data[selectedId].members.filter((member) => member.position === "df"),
+        );
+        setMf(
+          data[selectedId].members.filter((member) => member.position === "mf"),
+        );
+        setFw(
+          data[selectedId].members.filter((member) => member.position === "fw"),
+        );
+        setRender(true);
       },
       () => {},
     );
+  }, []);
+
+  useEffect(() => {
+    if (teamInfoAll.length > 0) {
+      setRender(false);
+      setCoach(
+        teamInfoAll[selectedId].members.filter(
+          (member) => member.position === "감독",
+        ),
+      );
+      setGk(
+        teamInfoAll[selectedId].members.filter(
+          (member) => member.position === "gk",
+        ),
+      );
+      setDf(
+        teamInfoAll[selectedId].members.filter(
+          (member) => member.position === "df",
+        ),
+      );
+      setMf(
+        teamInfoAll[selectedId].members.filter(
+          (member) => member.position === "mf",
+        ),
+      );
+      setFw(
+        teamInfoAll[selectedId].members.filter(
+          (member) => member.position === "fw",
+        ),
+      );
+      setRender(true);
+    }
   }, [selectedId]);
 
   const clickId = (id) => {
     setSelectedId(id);
   };
-
   return (
-    <TeamPageWrap>
-      <Category>
-        <Title>⚽️ 팀정보</Title>
-      </Category>
-      <TeamWrap>
-        {teams.map((team) => (
-          <TeamItem
-            $focus={team.id === selectedId}
-            key={team.id}
-            onClick={() => clickId(team.id)}
-          >
-            <img
-              src={`${process.env.PUBLIC_URL}/badge/badge${team.id}.png`}
-              alt={team.name}
-            />
-            <TeamName>{team.name}</TeamName>
-          </TeamItem>
-        ))}
-      </TeamWrap>
-      <TeamInfoItem
-        teamInfo={teamInfo}
-        coach={coach}
-        gk={gk}
-        df={df}
-        mf={mf}
-        fw={fw}
-      />
-    </TeamPageWrap>
+    <div>
+      {teamInfoAll.length > 0 && render && (
+        <TeamPageWrap>
+          <Category>
+            <Title>⚽️ 팀정보</Title>
+          </Category>
+          <TeamWrap>
+            {teams.map((team) => (
+              <TeamItem
+                $focus={team.id === selectedId}
+                key={team.id}
+                onClick={() => clickId(team.id)}
+              >
+                <img
+                  src={`${process.env.PUBLIC_URL}/badge/badge${team.id}.png`}
+                  alt={team.name}
+                />
+                <TeamName>{team.name}</TeamName>
+              </TeamItem>
+            ))}
+          </TeamWrap>
+          <TeamInfoItem
+            teamInfo={teamInfoAll[selectedId]}
+            coach={coach}
+            gk={gk}
+            df={df}
+            mf={mf}
+            fw={fw}
+          />
+        </TeamPageWrap>
+      )}
+    </div>
   );
 }
 

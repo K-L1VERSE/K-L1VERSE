@@ -17,10 +17,11 @@ import ToLeftPng from "../../assets/ToLeft.png";
 import Wallpaper from "../../assets/wallpaperbetter.png";
 import FacebookIcon from "../../assets/icon/facebook-icon(ver2).png";
 import TwitterIcon from "../../assets/icon/twitter-icon.png";
-import KakaoIcon from "../../assets/icon/kakaotalk-icon.png";
+import KakaoIcon from "../../assets/icon/kakaotalk.png";
 import Goback from "../../assets/icon/go-back-arrow-icon.png";
 import LoadingBar from "../../components/Survey/LoadingBar";
 import { ReactComponent as Congrats } from "../../assets/congrats.svg";
+import { ReactComponent as Refresh } from "../../assets/refresh.svg";
 
 function firework() {
   var duration = 15 * 100;
@@ -58,18 +59,66 @@ function firework() {
 
 function ResultPage() {
   const teamImages = {
-    1: "/images/surveyResult/ulsan_mita.png",
-    2: "/images/surveyResult/pohang_soidori.png",
-    3: "/images/surveyResult/jeju_gamguri.png",
-    4: "/images/surveyResult/jeonbuk_nighty.png",
-    5: "/images/surveyResult/seoul_cid.png",
-    6: "/images/surveyResult/daejeon_citizen.webp",
-    7: "/images/surveyResult/daegu_victorica.png",
-    8: "/images/surveyResult/incheon_ut2.png",
-    9: "/images/surveyResult/gangwon_gangwoong.png",
-    10: "/images/surveyResult/gwangju_mascot.png",
-    11: "/images/surveyResult/suwon_swoony.png",
-    12: "/images/surveyResult/kimcheon_shuwoong2.png",
+    1: [
+      "/images/surveyResult/ulsan_mita1.png",
+      "/images/surveyResult/ulsan_mita2.png",
+      "/images/surveyResult/ulsan_mita3.png",
+    ],
+    2: [
+      "/images/surveyResult/pohang_soidori1.png",
+      "/images/surveyResult/pohang_soidori2.png",
+      "/images/surveyResult/pohang_soidori3.png",
+    ],
+    3: [
+      "/images/surveyResult/jeju_gamguri1.png",
+      "/images/surveyResult/jeju_gamguri2.png",
+      "/images/surveyResult/jeju_gamguri3.png",
+    ],
+    4: [
+      "/images/surveyResult/jeonbuk_nighty1.png",
+      "/images/surveyResult/jeonbuk_nighty2.png",
+      "/images/surveyResult/jeonbuk_nighty3.png",
+    ],
+    5: [
+      "/images/surveyResult/seoul_cid1.png",
+      "/images/surveyResult/seoul_cid2.png",
+      "/images/surveyResult/seoul_cid3.png",
+    ],
+    6: [
+      "/images/surveyResult/daejeon_citizen1.png",
+      "/images/surveyResult/daejeon_citizen2.png",
+      "/images/surveyResult/daejeon_citizen3.png",
+    ],
+    7: [
+      "/images/surveyResult/daegu_victorica1.png",
+      "/images/surveyResult/daegu_victorica2.png",
+      "/images/surveyResult/daegu_victorica3.png",
+    ],
+    8: [
+      "/images/surveyResult/incheon_ut21.png",
+      "/images/surveyResult/incheon_ut22.png",
+      "/images/surveyResult/incheon_ut23.png",
+    ],
+    9: [
+      "/images/surveyResult/gangwon_gangwoong1.png",
+      "/images/surveyResult/gangwon_gangwoong2.png",
+      "/images/surveyResult/gangwon_gangwoong3.png",
+    ],
+    10: [
+      "/images/surveyResult/gwangju_mascot1.png",
+      "/images/surveyResult/gwangju_mascot2.png",
+      "/images/surveyResult/gwangju_mascot3.png",
+    ],
+    11: [
+      "/images/surveyResult/suwon_swoony1.png",
+      "/images/surveyResult/suwon_swoony2.png",
+      "/images/surveyResult/suwon_swoony3.png",
+    ],
+    12: [
+      "/images/surveyResult/kimcheon_shuwoong21.png",
+      "/images/surveyResult/kimcheon_shuwoong22.png",
+      "/images/surveyResult/kimcheon_shuwoong23.png",
+    ],
   };
 
   const teamNames = {
@@ -87,12 +136,6 @@ function ResultPage() {
     12: "김천 상무 FC",
   };
 
-  const backgroundImages = {
-    1: "/images/surveyResult/background1.png",
-    2: "/images/surveyResult/background2.png",
-    3: "/images/surveyResult/background3.png",
-  };
-
   const {
     state: { teamId },
   } = useLocation();
@@ -100,7 +143,8 @@ function ResultPage() {
   const navigate = useNavigate();
   const [isCopyModalOpen, setIsCopyModalOpen] = React.useState(false);
   const [showResult, setShowResult] = useState(false);
-  const randomBackground = Math.floor(Math.random() * 3) + 1;
+  const randomBackground = Math.floor(Math.random() * 3);
+  const selectedTeamImage = teamImages[teamId][randomBackground];
 
   useEffect(() => {
     const tick = setTimeout(() => {
@@ -154,7 +198,8 @@ function ResultPage() {
 
   const domainAndPort = process.env.REACT_APP_DOMAIN_AND_PORT;
 
-  const imageUrl = "https://k-l1verse.site/" + teamImages[teamId];
+  const imageUrl =
+    "https://k-l1verse.site/" + teamImages[teamId][randomBackground];
 
   // 재랜더링시에 실행되게 해준다.
   useEffect(() => {
@@ -172,7 +217,7 @@ function ResultPage() {
       content: {
         title: "나랑 어울리는 K-리그 구단은?",
         description: teamNames[teamId],
-        imageUrl: imageUrl,
+        imageUrl,
         link: {
           mobileWebUrl: realUrl,
           webUrl: realUrl,
@@ -202,23 +247,31 @@ function ResultPage() {
             <Congrats />
             <Text>{`나와 어울리는\n축구 팀은?`}</Text>
           </TopWrap>
-          <BottomWrap>
+          <div>
             <ResultTeam>
-              <img
-                src={backgroundImages[randomBackground]}
-                className="backgroundImage"
-                alt="backgroundImage"
-              />
+              {/* <img src={selectedTeamImage} alt="teamImage" /> */}
               <Team>
-                <div>{teamNames[teamId]}</div>
+                <div className="team-name">{teamNames[teamId]}</div>
                 <img
-                  src={teamImages[teamId]}
-                  className={`teamImage${teamId}`}
+                  src={selectedTeamImage}
+                  className="team-image"
                   alt="teamImage"
                 />
               </Team>
             </ResultTeam>
-            <ShareText>콘텐츠 공유하기</ShareText>
+          </div>
+          {/* <BottomWrap>
+            <ShareText>
+              <div>콘텐츠 공유하기</div>
+              <div>
+                <img
+                  src="https://raw.githubusercontent.com/Tarikul-Islam-Anik/Animated-Fluent-Emojis/master/Emojis/Smilies/Love%20Letter.png"
+                  alt="Love Letter"
+                  width="25"
+                  height="25"
+                />
+              </div>
+            </ShareText>
             <UrlBox>
               <input
                 type="text"
@@ -226,17 +279,27 @@ function ResultPage() {
                 defaultValue={window.location.href}
                 readOnly
               />
-              <div onClick={copyUrl}>URL 복사</div>
+              <div onClick={copyUrl}>
+                URL
+                <br />
+                복사
+              </div>
             </UrlBox>
-            <Shares>
-              <img src={FacebookIcon} onClick={shareFacebook} alt="facebook" />
-              <img src={TwitterIcon} onClick={shareTwitter} alt="twitter" />
+            <hr></hr>
+          </BottomWrap> */}
+          <Shares>
+            {/* <img src={FacebookIcon} onClick={shareFacebook} alt="facebook" />
+              <img src={TwitterIcon} onClick={shareTwitter} alt="twitter" /> */}
+            <div onClick={shareKakaoLink}>
               <img src={KakaoIcon} onClick={shareKakaoLink} alt="kakao" />
-              <span>
-                <img src={Goback} onClick={goStart} alt="restart" />
-              </span>
-            </Shares>
-          </BottomWrap>
+              <span>공유하기</span>
+            </div>
+            <div onClick={goStart}>
+              {/* <img src={refresh} onClick={goStart} alt="restart" /> */}
+              <Refresh />
+              <span>다시하기</span>
+            </div>
+          </Shares>
         </div>
       )}
       {!showResult && <LoadingBar done={100} />}

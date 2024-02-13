@@ -10,6 +10,7 @@ export default function ListContainer({
   view,
   isMateListPage,
   onMatchClick,
+  selectedMatchId,
 }) {
   const groupedData = data.reduce((acc, match) => {
     const date = new Date(match.matchAt).toLocaleDateString("ko-KR", {
@@ -44,7 +45,11 @@ export default function ListContainer({
                 {matches.flatMap((match, index, array) => (
                   <React.Fragment key={index}>
                     {isMateListPage ? (
-                      <TimeForBoard match={match} onMatchClick={onMatchClick} />
+                      <TimeForBoard
+                        match={match}
+                        onMatchClick={onMatchClick}
+                        selectedMatchId={selectedMatchId}
+                      />
                     ) : (
                       <Time
                         match={match}

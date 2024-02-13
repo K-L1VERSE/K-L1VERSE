@@ -4,7 +4,6 @@ import { useRecoilState } from "recoil";
 import {
   deleteWaggle,
   getWaggleDetail,
-  likeCount,
   likeWaggle,
   unlikeWaggle,
 } from "../../../api/waggle";
@@ -190,7 +189,7 @@ function WaggleDetailPage() {
               <UserProfile src={waggleDetail.profile} />
               <User>{nickname}</User>
               <UserBadge
-                src={`${process.env.PUBLIC_URL}/badge/badge${waggleDetail.mainBadge === null ? 0 : waggleDetail.mainBadge}.png`}
+                src={`${process.env.PUBLIC_URL}/badge/badge${waggleDetail.mainBadge === null ? 0 : waggleDetail.mainBadge}back.png`}
               />
             </UserContainer>
             <CreateAt>{formatDateTime2(createAt)}</CreateAt>
@@ -202,7 +201,7 @@ function WaggleDetailPage() {
                   .split(",")
                   .map((imageUrl, index) => (
                     <WaggleImage
-                      key={index}
+                      key={waggleId}
                       src={imageUrl.trim()}
                       alt={`Waggle Image ${index}`}
                     />

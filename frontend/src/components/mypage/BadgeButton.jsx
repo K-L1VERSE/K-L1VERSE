@@ -148,10 +148,11 @@ function BadgeButton({ mainBadge }) {
   return (
     <div>
       <BadgeContainer>
-        <BadgeBackground style={{ position: "absolute" }} />
+        {/* <BadgeBackground style={{ position: "absolute" }} /> */}
         <BadgeImage
           onClick={goBadge}
-          src={`/badge/badge${mainBadge || 0}.png`}
+          src={`/badge/badge${mainBadge || 0}back.png`}
+          style={{ width: "1.8rem", height: "2.2rem" }}
         />
       </BadgeContainer>
     </div>

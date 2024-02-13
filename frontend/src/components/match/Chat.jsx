@@ -33,6 +33,7 @@ function Chat() {
   const roomId = matchId;
   const [message, setMessage] = useState("");
   const [messages, setMessages] = useState([]);
+  const [rejectedMessage, setRejectedMessage] = useState(null);
   const [stompClient, setStompClient] = useState(null);
   const [userState] = useRecoilState(UserState);
   const { nickname } = userState;
@@ -45,7 +46,7 @@ function Chat() {
       .get(`/match/chat/message/${roomId}`)
       .then((response) => {
         const { data } = response;
-        setMessages(data);
+        setMessages([...data]);
       })
       .catch(() => {});
   };
@@ -93,11 +94,17 @@ function Chat() {
   };
 
   const recvMessage = (recv) => {
-    setMessages((messages) => [
-      ...messages,
+    if (recv.type === "REJECT") {
+      setRejectedMessage(recv);
+      return;
+    }
+
+    setMessages((prevMessages) => [
+      ...prevMessages,
       {
         type: recv.type,
         sender: recv.type === "ENTER" ? "[알림]" : recv.sender,
+        messageId: recv.messageId,
         message: recv.message,
         date: recv.date,
         profile: recv.profile,
@@ -106,6 +113,30 @@ function Chat() {
       },
     ]);
   };
+
+  useEffect(() => {
+    if (rejectedMessage === null) return;
+    if (rejectedMessage === undefined) return;
+
+    const rejectedMessageIndex = messages.findIndex(
+      (msg) => msg.messageId === rejectedMessage.messageId,
+    );
+
+    if (rejectedMessageIndex !== -1) {
+      const updatedMessages = [...messages];
+
+      updatedMessages[rejectedMessageIndex].message =
+        "❤️클린봇에 의해 검열된 메세지입니다.";
+
+      setMessages(updatedMessages);
+    } else {
+      console.log(
+        `messages#${rejectedMessage.messageId}와 일치하는 메시지를 찾지 못했습니다.`,
+      );
+    }
+
+    setRejectedMessage(null);
+  }, [rejectedMessage, messages]);
 
   const chatBox = useRef();
 
@@ -178,7 +209,7 @@ function Chat() {
                   <SenderImg src={message.profile} />
                   <OnlyNick>{message.sender}</OnlyNick>
                   <BadgeImg
-                    src={`${process.env.PUBLIC_URL}/badge/badge${message.mainBadge === null ? 0 : message.mainBadge}.png`}
+                    src={`${process.env.PUBLIC_URL}/badge/badge${message.mainBadge === null ? 0 : message.mainBadge}back.png`}
                   />
                 </InfoBox>
                 <MessageInfoBox $isMine={nickname === message.sender}>

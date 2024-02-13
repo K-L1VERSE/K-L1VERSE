@@ -1,11 +1,11 @@
 import styled, { css } from "styled-components";
 
 export const DetailTop = styled.div`
-  margin-left: 1rem;
   margin-top: 1rem;
   flex-direction: column;
   font-family: "Pretendard-Regular";
   font-size: 1.3rem;
+  margin-left: 1rem;
 `;
 
 export const RegistCardContainer = styled.div`
@@ -134,7 +134,7 @@ export const FileInputContainer = styled.label`
 `;
 
 export const FileInput = styled.input`
-  display: none;
+  display: block;
 `;
 
 export const FileInputLabel = styled.span`
@@ -152,6 +152,25 @@ export const FileInputLabel = styled.span`
   img {
     width: 24px;
     height: 24px;
+  }
+`;
+
+export const FilePreview = styled.div`
+  width: 72px;
+  height: 72px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border: 1px solid lightgrey;
+  border-radius: 4px;
+  /* padding: 0.3rem; */
+  margin-left: 0.2rem;
+
+  img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover; /* 이미지를 가득 채우도록 설정 */
+    border-radius: 3px; /* 이미지에도 border-radius를 적용하면 더 자연스러워집니다. */
   }
 `;
 
