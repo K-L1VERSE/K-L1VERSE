@@ -12,6 +12,7 @@ function LoginPage() {
 
   return (
     <>
+      <LoginLogo />
       <LoginContainer>
         <KakaoLoginButton />
         <Bottom>
@@ -26,9 +27,11 @@ function LoginPage() {
 export default LoginPage;
 
 const LoginContainer = styled.div`
+  /* background-color: red; */
+  width: 20rem;
   display: flex;
   flex-direction: column;
-  /* justify-content: center; */
+  margin: 0 auto;
 `;
 
 const Bottom = styled.div`

@@ -13,7 +13,7 @@ function KakaoLoginButton() {
 
   return (
     <But onClick={handleLogin}>
-      <img src={Kakao} width="20" alt="" />
+      <img src={Kakao} width="20" alt="Kakao" />
       <div>카톡으로 3초만에 로그인</div>
     </But>
   );
@@ -23,7 +23,7 @@ const But = styled.div`
   display: flex;
   align-items: center;
   background-color: #f9e000;
-  padding: 0.85rem 5rem;
+  padding: 0.85rem 4.5rem;
 
   /* width: 20rem; */
   border-radius: 0.5rem;

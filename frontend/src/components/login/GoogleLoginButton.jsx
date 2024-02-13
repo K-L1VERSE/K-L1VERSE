@@ -11,20 +11,22 @@ function GoogleLoginButton() {
   };
 
   return (
-    <But>
-      <img src={Google} alt="Naver" onClick={handleLogin} />
+    <But onClick={handleLogin}>
+      <img src={Google} alt="Google" />
     </But>
   );
 }
 
 const But = styled.div`
-  padding: 0.6rem 0.6rem 0.4rem 0.6rem;
+  padding: 0.5em 0.7rem 0.6rem 0.7rem;
   border: 1px solid #edf0f3;
+  display: flex;
+  align-items: center;
   border-radius: 50%;
   cursor: pointer;
 
   img {
-    width: 1.5rem;
+    width: 1.3rem;
   }
 `;
 

@@ -26,6 +26,7 @@
     "react-router-dom": "^6.21.2",
     "react-scripts": "5.0.1",
     "react-slick": "^0.30.1",
+    "react-swipeable": "^7.0.1",
     "recoil": "^0.7.7",
     "recoil-persist": "^5.1.0",
     "slick-carousel": "^1.8.1",

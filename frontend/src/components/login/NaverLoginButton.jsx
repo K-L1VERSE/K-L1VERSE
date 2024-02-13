@@ -13,8 +13,8 @@ function NaverLoginButton() {
   };
 
   return (
-    <But>
-      <img src={Naver} alt="Naver" onClick={handleLogin} />
+    <But onClick={handleLogin}>
+      <img src={Naver} alt="Naver" />
     </But>
   );
 }
