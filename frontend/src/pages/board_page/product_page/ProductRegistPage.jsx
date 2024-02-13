@@ -1,12 +1,10 @@
 import React, { useState, useEffect } from "react";
 import { useRecoilState } from "recoil";
 import { useNavigate, useLocation } from "react-router-dom";
-import BoardTopNavBar from "../../../components/board/BoardTopNavBar";
+import Swal from "sweetalert2";
 import ProductRegistCard from "../../../components/board/ProductRegistCard";
 import { createProduct, updateProduct } from "../../../api/product";
 import { UserState } from "../../../global/UserState";
-
-import { RegistCardContainer } from "../../../styles/BoardStyles/BoardCreateStyle";
 
 import { DetailTop } from "../../../styles/BoardStyles/BoardCreateStyle";
 import { BackButton } from "../../../styles/BoardStyles/BoardDetailStyle";
@@ -40,6 +38,17 @@ function ProductRegistPage() {
   }, [location]);
 
   const handleSubmit = () => {
+    if (boardImage === null) {
+      Swal.fire({
+        html: `
+          <img src="https://raw.githubusercontent.com/Tarikul-Islam-Anik/Animated-Fluent-Emojis/master/Emojis/Animals/Hatching%20Chick.png" alt="Hatching Chick" width="100" height="100" />
+          <div style="font-size:1rem; font-family:Pretendard-Regular; margin-top: 1rem;">이미지 업로드가 필수에요!</div>
+        `,
+        confirmButtonColor: "#3085d6",
+        confirmButtonText:
+          "<div style='font-size:1rem; font-family:Pretendard-Regular;'>확인</div>",
+      });
+    }
     if (isUpdateMode) {
       updateProduct(
         boardId,
@@ -118,7 +127,19 @@ function ProductRegistPage() {
   }, [file]);
 
   const handleDealFlag = () => {
-    setDealFlag(!dealFlag);
+    if (isUpdateMode) {
+      setDealFlag(!dealFlag);
+    } else {
+      Swal.fire({
+        html: `
+          <img src="https://raw.githubusercontent.com/Tarikul-Islam-Anik/Animated-Fluent-Emojis/master/Emojis/Animals/Hatching%20Chick.png" alt="Hatching Chick" width="100" height="100" />
+          <div style="font-size:1rem; font-family:Pretendard-Regular; margin-top: 1rem;">작성중에는 변경할 수 없어요!</div>
+        `,
+        confirmButtonColor: "#3085d6",
+        confirmButtonText:
+          "<div style='font-size:1rem; font-family:Pretendard-Regular;'>확인</div>",
+      });
+    }
   };
 
   return (

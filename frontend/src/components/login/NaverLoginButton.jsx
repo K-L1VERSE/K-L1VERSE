@@ -1,7 +1,6 @@
 import React from "react";
 import styled from "styled-components";
-
-import NaverImg from "../../assets/login_button/naver_img.png";
+import Naver from "../../assets/login_button/naver-icon.png";
 
 function NaverLoginButton() {
   const NAVER_REDIRECT_URI = process.env.REACT_APP_NAVER_REDIRECT_URI;
@@ -14,45 +13,20 @@ function NaverLoginButton() {
   };
 
   return (
-    <NaverLoginContainer>
-      <NaverLogo src={NaverImg} alt="네이버 로고" onClick={handleLogin} />
-      <LoginButton type="button" onClick={handleLogin}>
-        네이버 로그인
-      </LoginButton>
-    </NaverLoginContainer>
+    <But onClick={handleLogin}>
+      <img src={Naver} alt="Naver" />
+    </But>
   );
 }
 
-const LoginButton = styled.button`
-  width: 138px;
-  height: 45px;
-  border: none;
-  background-color: transparent;
+const But = styled.div`
+  padding: 0.6rem 0.6rem 0.4rem 0.6rem;
+  border: 1px solid #edf0f3;
+  border-radius: 50%;
   cursor: pointer;
 
-  padding: 1px 35px 1px 6px;
-
-  background-color: #03c75a;
-
-  border-radius: 0 6px 6px 0;
-`;
-
-const NaverLogo = styled.img`
-  width: 45px;
-  height: 45px;
-
-  border-radius: 6px 0 0 6px;
-`;
-
-const NaverLoginContainer = styled.div`
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  border-radius: 8px;
-  transition: box-shadow 0.5s ease;
-  &:hover {
-    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
-    cursor: pointer;
+  img {
+    width: 1.5rem;
   }
 `;
 

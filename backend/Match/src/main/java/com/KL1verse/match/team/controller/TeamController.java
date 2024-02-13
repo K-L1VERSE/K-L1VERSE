@@ -26,4 +26,10 @@ public class TeamController {
         return new ResponseEntity<>(teamInfo, HttpStatus.OK);
     }
 
+    @GetMapping
+    public ResponseEntity<List<TeamInfoResponse>> getTeams() {
+        List<TeamInfoResponse> teams = teamService.getTeams();
+        return new ResponseEntity<>(teams, HttpStatus.OK);
+    }
+
 }

@@ -42,6 +42,7 @@ export const NavItem = styled.div`
     cursor: pointer;
     opacity: 85%;
   }
+  ${(props) => props.$isSelected && "pointer-events: none;"}
 `;
 
 export const Contents = styled.div`

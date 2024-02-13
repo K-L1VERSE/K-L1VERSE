@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import {
   TitleInput,
   TextArea,
@@ -28,8 +28,8 @@ export default function ProductRegistCard({
   buttonText,
   handleDealFlag,
 }) {
-  const handleFileChange = (file, result, imageUrl) => {
-    onFileChange(imageUrl);
+  const handleFileChange = (file, allFileUrls) => {
+    onFileChange(allFileUrls);
   };
 
   const handlePriceChange = (event) => {

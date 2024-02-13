@@ -149,8 +149,22 @@ public class CommentServiceImpl implements CommentService {
 
         Comment createdReply = commentRepository.save(reply);
 
-        List<Object[]> userNickname = commentRepository.findUserNickname(replyDTO.getUserId());
-        replyDTO.setNickname((String) userNickname.get(0)[0]);
+        List<Object[]> userInfo = commentRepository.findUserNicknameAndProfile(replyDTO.getUserId());
+        String userNickname = (String) userInfo.get(0)[0];
+        String userProfile = (String) userInfo.get(0)[1];
+
+        if(!parentComment.getUserId().equals(replyDTO.getUserId())) {
+            kafkaBoardNotificationProducer.boardNotification(
+                BoardNotificationResDto.builder()
+                    .type(BoardNotificationType.COMMENT)
+                    .userId(parentComment.getUserId())
+                    .profile(userProfile)
+                    .nickname(userNickname)
+                    .uri("/" + parentComment.getBoardId().getBoardType().toString().toLowerCase() + "/" + String.valueOf(parentComment.getBoardId().getBoardId()))
+                    .message("님이 새로운 대댓글을 달았습니다.")
+                    .build()
+            );
+        }
 
         return CommentDTO.builder()
             .commentId(createdReply.getCommentId())

@@ -64,6 +64,7 @@ export const FormattedDate = styled.div`
 export const Content = styled.p`
   margin-top: 1rem;
   font-size: 0.9rem;
+  white-space: pre-wrap;
 `;
 
 export const Price = styled.p`
@@ -233,6 +234,7 @@ export const DetailOnlyImg = styled.img`
   max-width: 100%;
   max-height: 15rem;
   border-radius: 5px;
+  margin-left: 0.5rem;
 `;
 
 export const Gray = styled.div`

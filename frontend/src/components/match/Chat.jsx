@@ -46,22 +46,10 @@ function Chat() {
       .get(`/match/chat/message/${roomId}`)
       .then((response) => {
         const { data } = response;
-        console.log("data 갯수 : ", data.length);
-        for (let i = 0; i < data.length; i++) {
-          console.log(data[i]);
-        }
         setMessages([...data]);
-        console.log("messages 갯수 : ", messages.length);
       })
       .catch(() => {});
   };
-
-  useEffect(() => {
-    console.log("messages 갯수 : ", messages.length);
-    for (let i = 0; i < messages.length; i++) {
-      console.log(messages[i]);
-    }
-  }, [messages]);
 
   useEffect(() => {
     const domain = process.env.REACT_APP_DOMAIN;
@@ -107,7 +95,6 @@ function Chat() {
 
   const recvMessage = (recv) => {
     if (recv.type === "REJECT") {
-      console.log(`message#${recv.messageId}가 클린봇에 의해 거부되었습니다.`);
       setRejectedMessage(recv);
       return;
     }
@@ -131,22 +118,15 @@ function Chat() {
     if (rejectedMessage === null) return;
     if (rejectedMessage === undefined) return;
 
-    console.log("messages길이 : ", messages.length);
     const rejectedMessageIndex = messages.findIndex(
       (msg) => msg.messageId === rejectedMessage.messageId,
     );
-    console.log("rejectedMessageIndex: ", rejectedMessageIndex);
-    console.log("rejectedMessage: ", rejectedMessage);
 
     if (rejectedMessageIndex !== -1) {
       const updatedMessages = [...messages];
 
-      console.log(
-        `message#${rejectedMessage.messageId}가 클린봇에 의해 거부되었습니다.`,
-      );
-
       updatedMessages[rejectedMessageIndex].message =
-        "클린봇에 의해 검열된 메세지입니다.";
+        "❤️클린봇에 의해 검열된 메세지입니다.";
 
       setMessages(updatedMessages);
     } else {

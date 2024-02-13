@@ -2,8 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useSetRecoilState } from "recoil";
 import Hangul from "hangul-js";
 import Swal from "sweetalert2";
-import { UserState } from "../../global/UserState";
-import { ModifyingState } from "../../global/UserState";
+import { UserState, ModifyingState } from "../../global/UserState";
 import axios from "../../api/axios";
 import {
   ModalBackground,
@@ -60,7 +59,11 @@ const EditNicknameModal = ({ type, setModalOpen, user, setUser }) => {
       }
     };
 
-    if (isValidNickname(newNickname) && newNickname.length >= 2) {
+    if (
+      isValidNickname(newNickname) &&
+      newNickname.length >= 2 &&
+      newNickname.length <= 5
+    ) {
       checkNicknameAvailability();
     } else {
       setIsCheckingAvailability(true);
@@ -142,8 +145,8 @@ const EditNicknameModal = ({ type, setModalOpen, user, setUser }) => {
       }
     }
   };
-  const isNicknameLengthValid = newNickname.length >= 2;
-
+  const isNicknameLengthShorterThanTwo = newNickname.length >= 2;
+  const isNicknameLengthLongerThanFive = newNickname.length <= 5;
   return (
     <ModalBackground>
       <ModalContainer>
@@ -166,7 +169,7 @@ const EditNicknameModal = ({ type, setModalOpen, user, setUser }) => {
           maxLength={10}
           placeholder="닉네임을 입력해주세요."
         />
-        {!isNicknameLengthValid && (
+        {!isNicknameLengthShorterThanTwo && (
           <p
             style={{
               color: "red",
@@ -180,6 +183,22 @@ const EditNicknameModal = ({ type, setModalOpen, user, setUser }) => {
             }}
           >
             2글자 이상 입력해주세요.
+          </p>
+        )}
+        {!isNicknameLengthLongerThanFive && (
+          <p
+            style={{
+              color: "red",
+              position: "absolute",
+              fontSize: "12px",
+              top: "48%",
+              marginTop: "10px",
+              left: "28%",
+              transform: "translateX(-50%)",
+              textAlign: "center",
+            }}
+          >
+            5글자 이하 입력해주세요.
           </p>
         )}
         {type === "modify" && (

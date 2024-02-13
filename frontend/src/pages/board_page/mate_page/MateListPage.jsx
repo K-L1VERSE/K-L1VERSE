@@ -21,53 +21,55 @@ function MateListPage() {
   const [mateList, setMateList] = useState([]);
   const [page, setPage] = useState(0);
   const [hasMore, setHasMore] = useState(true);
-  const [isMatchIdExists, setIsMatchIdExists] = useState(true);
-  const [isMateListExists, setIsMateListExists] = useState(true);
+  const [isFirstClick, setIsFirstClick] = useState(false);
   const navigate = useNavigate();
 
   const handleMatchClick = (selectedMatchId) => {
     setSelectedMatchId(selectedMatchId);
-    console.log("selectedMatchId:???????????????? ", selectedMatchId);
   };
-
-  useEffect(() => {
-    getMates();
-  }, [selectedMatchId]);
 
   function getMates() {
     if (selectedMatchId) {
-      getMatesByMatchList(
-        selectedMatchId,
-        ({ data }) => {
-          if (!data.content) {
-            setHasMore(false);
-            setIsMatchIdExists(true);
-            setIsMateListExists(false);
-            // console.log("data.content.length 길이", data.content.length);
-            console.log("isMateListExists false", data);
-          } else {
-            setIsMatchIdExists(true);
-            setIsMateListExists(true);
-            setMateList([...mateList, ...data.content]);
-            setPage(page + 1);
-            // console.log("data.content.length 길이", data.content.length);
-            console.log("isMateListExists true", data);
-          }
-        },
-        (err) => {
-          console.log("err: ", err);
-        },
-      );
+      if (!isFirstClick) {
+        setIsFirstClick(true);
+        getMatesByMatchList(
+          selectedMatchId,
+          ({ data }) => {
+            if (data.content.length > 0) {
+              console.log("!@!@!@");
+              setMateList(data.content);
+              setPage(page + 1);
+            } else {
+              setMateList([]);
+            }
+          },
+          () => {},
+        );
+      } else {
+        getMatesByMatchList(
+          selectedMatchId,
+          ({ data }) => {
+            if (data.content.length > 0) {
+              const temp = [...mateList];
+              temp.push(...data.content);
+              setMateList(temp);
+              setPage(page + 1);
+            } else {
+              setMateList([]);
+            }
+          },
+          () => {},
+        );
+      }
     } else {
       getMateList(
         page,
         10,
         ({ data }) => {
-          if (!data.content) {
-            setHasMore(false);
-            setIsMatchIdExists(false);
-          } else {
-            setMateList([...mateList, ...data.content]);
+          if (data.content.length > 0) {
+            const temp = [...mateList];
+            temp.push(...data.content);
+            setMateList(temp);
             setPage(page + 1);
           }
         },
@@ -78,6 +80,12 @@ function MateListPage() {
 
   useEffect(() => {
     getMates();
+  }, []);
+
+  useEffect(() => {
+    if (selectedMatchId) {
+      getMates();
+    }
   }, [selectedMatchId]);
 
   const [isBottom, setIsBottom] = useState(false);
@@ -118,7 +126,6 @@ function MateListPage() {
   const [isToggled, setIsToggled] = useState(false);
 
   const handleToggele = () => {
-    console.log("isToggled: ", isToggled);
     setIsToggled(!isToggled);
   };
 
@@ -137,7 +144,6 @@ function MateListPage() {
         </HeaderDiv>
         <HeaderButton onClick={handleWriteMateClick}>🖋 글쓰기</HeaderButton>
       </Header>
-
       <ToggleContainer>
         <ToggleComponent>
           <button onClick={handleToggele} type="button">
@@ -154,26 +160,24 @@ function MateListPage() {
           </button>
         </ToggleComponent>
       </ToggleContainer>
-
       {isToggled ? (
         <div />
       ) : (
         <MatchSchedulePage
           isMateListPage={true}
           onMatchClick={handleMatchClick}
+          selectedMatchId={selectedMatchId}
         />
       )}
-
-      {isMatchIdExists ? (
-        isMateListExists ? (
-          <MateContainer mateList={mateList} />
-        ) : (
-          <p>해당하는 경기의 게시글이 없습니다.</p>
-        )
-      ) : (
+      {!selectedMatchId && mateList.length > 0 && (
         <MateContainer mateList={mateList} />
       )}
-
+      {selectedMatchId && mateList.length > 0 && (
+        <MateContainer mateList={mateList} />
+      )}
+      {selectedMatchId && mateList.length === 0 && (
+        <p>해당하는 경기의 게시글이 없습니다.</p>
+      )}
       {!hasMore && <p>No more data</p>}
     </div>
   );
