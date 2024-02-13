@@ -7,7 +7,11 @@ import TableContainer from "../../components/match/ScheduleTable";
 import MatchScheduleTop from "../../components/match/MatchScheduleTop";
 import ListContainer from "../../components/match/ScheduleList";
 
-export default function MatchSchedulePage({ isMateListPage, onMatchClick }) {
+export default function MatchSchedulePage({
+  isMateListPage,
+  onMatchClick,
+  selectedMatchId,
+}) {
   const [data, setData] = useState([]);
   const [year, setYear] = useState(new Date().getFullYear());
   const [month, setMonth] = useState(new Date().getMonth() + 1);
@@ -20,7 +24,6 @@ export default function MatchSchedulePage({ isMateListPage, onMatchClick }) {
   const v = location.state?.v;
   const [selectedDay, setSelectedDayProps] = useState(null);
   const [resetDayFlag, setResetDayFlag] = useState(false);
-  const [selectedMatchId, setSelectedMatchId] = useState(null);
 
   const resetDay = () => {
     if (!resetDayFlag) {
@@ -51,10 +54,6 @@ export default function MatchSchedulePage({ isMateListPage, onMatchClick }) {
     fetchData();
   }, [year, month]);
 
-  const handleMatchClick = (matchId) => {
-    setSelectedMatchId(matchId);
-  };
-
   return (
     <div>
       <MatchScheduleTop setView={setView} view={view} />
@@ -75,6 +74,7 @@ export default function MatchSchedulePage({ isMateListPage, onMatchClick }) {
           view={view}
           isMateListPage={isMateListPage}
           onMatchClick={onMatchClick}
+          selectedMatchId={selectedMatchId}
         />
       )}
       {view === "calendar" && (
@@ -88,6 +88,7 @@ export default function MatchSchedulePage({ isMateListPage, onMatchClick }) {
           view={view}
           isMateListPage={isMateListPage}
           onMatchClick={onMatchClick}
+          selectedMatchId={selectedMatchId}
         />
       )}
     </div>

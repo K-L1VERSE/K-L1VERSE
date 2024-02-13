@@ -186,6 +186,8 @@ export const OnlyTime = styled.div`
   .statusText div {
     background-color: #ff3e24;
   }
+
+  background-color: ${(props) => (props.$isClicked ? "#f2f6fd" : "none")};
 `;
 
 export const BadgeImg = styled.img`

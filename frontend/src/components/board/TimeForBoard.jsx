@@ -4,7 +4,7 @@ import {
   OnlyTime,
 } from "../../styles/match-styles/MatchScheduleStyle";
 
-export default function TimeForBoard({ match, onMatchClick }) {
+export default function TimeForBoard({ match, onMatchClick, selectedMatchId }) {
   const handleOnClick = () => {
     if (onMatchClick) {
       onMatchClick(match.matchId);
@@ -29,7 +29,7 @@ export default function TimeForBoard({ match, onMatchClick }) {
   }
 
   return (
-    <OnlyTime>
+    <OnlyTime $isClicked={selectedMatchId === match.matchId}>
       <div className="time" onClick={handleOnClick}>
         <div className="timeLeft">
           {new Date(match.matchAt).toLocaleTimeString("ko-KR", {

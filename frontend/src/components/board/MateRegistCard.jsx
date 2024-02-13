@@ -70,6 +70,7 @@ function MateRegistCard({
           onMatchClick={(matchId) => {
             onMatchIdChange(matchId);
           }}
+          selectedMatchId={matchId}
         />
         {/* <SelectInput
           value={matchId}

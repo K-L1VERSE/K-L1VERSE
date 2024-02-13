@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useRecoilState } from "recoil";
 import { useNavigate, useLocation } from "react-router-dom";
+import Swal from "sweetalert2";
 import BoardTopNavBar from "../../../components/board/BoardTopNavBar";
 import ProductRegistCard from "../../../components/board/ProductRegistCard";
 import { createProduct, updateProduct } from "../../../api/product";
@@ -115,7 +116,19 @@ function ProductRegistPage() {
   }, [file]);
 
   const handleDealFlag = () => {
-    setDealFlag(!dealFlag);
+    if (isUpdateMode) {
+      setDealFlag(!dealFlag);
+    } else {
+      Swal.fire({
+        html: `
+          <img src="https://raw.githubusercontent.com/Tarikul-Islam-Anik/Animated-Fluent-Emojis/master/Emojis/Animals/Hatching%20Chick.png" alt="Hatching Chick" width="100" height="100" />
+          <div style="font-size:1rem; font-family:Pretendard-Regular; margin-top: 1rem;">작성중에는 변경할 수 없어요!</div>
+        `,
+        confirmButtonColor: "#3085d6",
+        confirmButtonText:
+          "<div style='font-size:1rem; font-family:Pretendard-Regular;'>확인</div>",
+      });
+    }
   };
 
   return (
