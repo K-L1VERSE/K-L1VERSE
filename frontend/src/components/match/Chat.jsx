@@ -60,7 +60,7 @@ function Chat() {
     for (let i = 0; i < messages.length; i++) {
       console.log(messages[i]);
     }
-  }, messages);
+  }, [messages]);
 
   useEffect(() => {
     const domain = process.env.REACT_APP_DOMAIN;
