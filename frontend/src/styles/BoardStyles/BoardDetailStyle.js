@@ -65,6 +65,7 @@ export const FormattedDate = styled.div`
 export const Content = styled.p`
   margin-top: 1rem;
   font-size: 0.9rem;
+  white-space: pre-wrap;
 `;
 
 export const Price = styled.p`
