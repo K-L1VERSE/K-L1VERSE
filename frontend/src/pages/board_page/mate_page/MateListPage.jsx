@@ -12,9 +12,11 @@ import {
   HeaderDiv,
   ToggleContainer,
   ToggleComponent,
-  ToggleText,
+  Small,
+  MateListContainer,
+  NoPost,
 } from "../../../styles/BoardStyles/BoardStyle";
-import MatchSchedulePage from "../../match_page/MatchSchedulePage";
+import ScheduleModal from "../../../components/board/toggle/ScheduleModal";
 
 function MateListPage() {
   const [selectedMatchId, setSelectedMatchId] = useState(null);
@@ -130,7 +132,7 @@ function MateListPage() {
   };
 
   return (
-    <div>
+    <MateListContainer>
       <BoardTopNavBar />
       <Header>
         <HeaderDiv>
@@ -148,14 +150,14 @@ function MateListPage() {
         <ToggleComponent>
           <button onClick={handleToggele} type="button">
             {isToggled ? (
-              <ToggleText>
-                경기 일정 펼치기&nbsp;&nbsp;
+              <div>
+                캘린더&nbsp;&nbsp;
                 <FontAwesomeIcon icon={faCaretDown} />
-              </ToggleText>
+              </div>
             ) : (
-              <ToggleText>
-                경기 일정 접기&nbsp;&nbsp; <FontAwesomeIcon icon={faCaretUp} />
-              </ToggleText>
+              <div>
+                캘린더&nbsp;&nbsp; <FontAwesomeIcon icon={faCaretUp} />
+              </div>
             )}
           </button>
         </ToggleComponent>
@@ -163,11 +165,13 @@ function MateListPage() {
       {isToggled ? (
         <div />
       ) : (
-        <MatchSchedulePage
-          isMateListPage={true}
-          onMatchClick={handleMatchClick}
-          selectedMatchId={selectedMatchId}
-        />
+        <Small>
+          <ScheduleModal
+            isMateListPage={true}
+            onMatchClick={handleMatchClick}
+            selectedMatchId={selectedMatchId}
+          />
+        </Small>
       )}
       {!selectedMatchId && mateList.length > 0 && (
         <MateContainer mateList={mateList} />
@@ -176,10 +180,10 @@ function MateListPage() {
         <MateContainer mateList={mateList} />
       )}
       {selectedMatchId && mateList.length === 0 && (
-        <p>해당하는 경기의 게시글이 없습니다.</p>
+        <NoPost>해당하는 경기의 게시글이 없습니다.</NoPost>
       )}
       {!hasMore && <p>No more data</p>}
-    </div>
+    </MateListContainer>
   );
 }
 

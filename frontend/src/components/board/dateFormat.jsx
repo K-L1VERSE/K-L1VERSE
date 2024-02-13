@@ -38,7 +38,9 @@ export function formatDateTime(dateTimeStr) {
   const hour = date.getHours();
   const minute = date.getMinutes();
 
-  // 2024년 3월 30일 16시 30분 형태로 날짜를 반환합니다.
+  if (minute === 0) {
+    return `${year}년 ${month}월 ${day}일 ${hour}시`;
+  }
   return `${year}년 ${month}월 ${day}일 ${hour}시 ${minute}분`;
 }
 

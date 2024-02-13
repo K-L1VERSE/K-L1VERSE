@@ -14,6 +14,7 @@ import {
   ItemContent,
   ItemInfoSection,
   ItemTitle,
+  TitleComponent,
 } from "../../styles/BoardStyles/BoardStyle";
 import { formatDateTime, formatRelativeTime } from "./dateFormat";
 import { getMatchDetail } from "../../api/match";
@@ -50,8 +51,11 @@ function MateItemCard({ mate, user, fromMypage, category }) {
               <MatchTitle>
                 {matchDetail.homeTeamName} vs {matchDetail.awayTeamName}
               </MatchTitle>
-              <MatchTime>{formatDateTime(matchDetail.matchAt)}</MatchTime>
+              <MatchTime>
+                {formatDateTime(matchDetail.matchAt)} 경기 ⚽
+              </MatchTime>
             </ItemTitle>
+            <TitleComponent>{mate.board.title}</TitleComponent>
             <ItemContent>
               <p>{mate.board.content}</p>
             </ItemContent>

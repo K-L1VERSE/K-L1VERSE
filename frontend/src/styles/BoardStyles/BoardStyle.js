@@ -94,7 +94,6 @@ export const ItemTitle = styled.div`
   font-size: 1rem;
   color: #222222;
   text-decoration: none;
-  margin-top: 0.4rem;
   font-family: "Pretendard-Bold";
   a {
     text-decoration: none;
@@ -140,28 +139,77 @@ export const ToggleContainer = styled.div`
   display: flex;
   justify-content: flex-end;
   padding: 0 1.2rem;
-  margin-bottom: -0.5rem;
   background-color: #ffffff;
 `;
 
 export const ToggleComponent = styled.div`
-  background-color: #ffffff;
-  display: flex;
-  justify-content: end;
-
   button {
-    padding: 0.625rem 0.3rem 0rem 0.3rem;
+    margin-top: 0.5rem;
+    padding: 0.3rem 0.6rem;
     border: none;
     cursor: pointer;
-    background-color: #ffffff;
+    background-color: #e5edfb;
+    display: flex;
+    align-items: center;
+    font-family: "Pretendard-Regular";
+    color: #002fa5;
+    outline: none;
   }
 `;
 
-export const ToggleText = styled.div`
-  font-size: 0.8rem;
-  font-family: "Pretendard-Bold";
+/** 토글  */
+export const Small = styled.div`
+  position: absolute;
+  top: 11rem;
+  right: 1rem;
+  background-color: white;
+  border: 1px solid lightgray;
+  border-radius: 7px;
+  width: 15rem;
+  height: 21.2rem;
+  z-index: 1;
+  overflow-y: scroll;
+  box-shadow: 0 5px 10px rgba(0, 0, 0, 0.22);
 
+  &::-webkit-scrollbar {
+    width: 0.5rem;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background: lightgray;
+    border-radius: 20px;
+  }
+
+  &::-webkit-scrollbar-thumb:hover {
+    background: #c7c8cc;
+  }
+`;
+
+export const MateListContainer = styled.div`
+  display: relative;
+`;
+
+export const NoPost = styled.div`
   display: flex;
-  justify-content: space-between;
+  justify-content: center;
   align-items: center;
+  height: 10rem;
+  font-size: 1rem;
+  color: #a9a9a9;
+  font-family: "Pretendard-Regular";
+`;
+
+export const TitleComponent = styled.div`
+  display: block;
+  width: 100%;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  font-size: 1rem;
+  color: #222222;
+  text-decoration: none;
+  font-family: "Pretendard-Bold";
+  a {
+    text-decoration: none;
+  }
 `;
