@@ -27,6 +27,16 @@ function WaggleItemCard({
     ? waggle.board.boardImage.split(",").map((image) => image.trim())
     : [];
 
+  const truncatedTitle =
+    waggle.board.title.length > 35
+      ? `${waggle.board.title.substring(0, 35)}...`
+      : waggle.board.title;
+
+  const truncatedContent =
+    waggle.board.content.length > 50
+      ? `${waggle.board.content.substring(0, 50)}...`
+      : waggle.board.content;
+
   return (
     <Link
       to={`/waggle/${waggle.board.boardId}`}
@@ -34,21 +44,26 @@ function WaggleItemCard({
       state={{ user, fromMypage, category }}
     >
       <ItemContainer>
-        <WriterContainer>
-          <WriterProfile src={waggle.board.profile} alt="Profile Image" />
-          <ItemWriter>{waggle.board.nickname}</ItemWriter>
-          <WriteBadge
-            src={`${process.env.PUBLIC_URL}/badge/badge${waggle.board.mainBadge === null ? 0 : waggle.board.mainBadge}back.png`}
-          />
-        </WriterContainer>
+        <div>
+          <WriterContainer>
+            <WriterProfile src={waggle.board.profile} alt="Profile Image" />
+            <ItemWriter>{waggle.board.nickname}</ItemWriter>
+            <WriteBadge
+              src={`${process.env.PUBLIC_URL}/badge/badge${waggle.board.mainBadge === null ? 0 : waggle.board.mainBadge}back.png`}
+            />
+          </WriterContainer>
+        </div>
+
         <ImageContentBox>
           {boardImage.length > 0 && (
             // 첫 번째 이미지만 출력
             <WaggleListImage src={boardImage[0].trim()} alt="Waggle Image" />
           )}
           <ItemContent>
-            <ItemTitle>{waggle.board.title}</ItemTitle>
-            <p>{waggle.board.content}</p>
+            <div>
+              <ItemTitle>{truncatedTitle}</ItemTitle>
+            </div>
+            <div>{truncatedContent}</div>
           </ItemContent>
         </ImageContentBox>
         <ItemInfoSection>

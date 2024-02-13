@@ -24,6 +24,9 @@ import { likeComment, unlikeComment, updateComment } from "../../api/comment";
 import { UserState } from "../../global/UserState";
 import Like from "./Like";
 import { useParams } from "react-router-dom";
+import { ReactComponent as LikeCount } from "../../assets/icon/likecount-icon.svg";
+
+import CommentIcon from "../../assets/comment.png";
 
 function CommentItemCard({
   type,
@@ -88,7 +91,7 @@ function CommentItemCard({
                 setParentId(comment.commentId);
               }}
             >
-              답글
+              <img src={CommentIcon} alt="comment" width="20" height="20" />
             </ReplyButton>
           )}
         </ButtonContainer>
@@ -104,7 +107,7 @@ function CommentItemCard({
                 setParentId(comment.commentId);
               }}
             >
-              답글
+              <img src={CommentIcon} alt="comment" width="20" height="20" />
             </ReplyButton>
           </ButtonContainer>
         )}
@@ -193,7 +196,7 @@ function CommentItemCard({
                         <LikeBox>
                           <Like
                             liked={liked}
-                            likesCount={likesCount}
+                            // likesCount={likesCount}
                             handleLikeClick={handleLikeClick}
                           />
                         </LikeBox>
@@ -203,7 +206,11 @@ function CommentItemCard({
                 </CommentContentContainer>
                 <CommentContentContainer>
                   <CommentTime>
-                    {formatRelativeTime(comment.createAt)}
+                    <div>{formatRelativeTime(comment.createAt)}</div>
+                    <div>
+                      <Like likesCount={likesCount} />
+                      <LikeCount width="1.2rem" height="1.2rem" />
+                    </div>
                   </CommentTime>
                   {renderEditDeleteButtons()}
                 </CommentContentContainer>

@@ -46,8 +46,9 @@ export const ListContainer = styled.div`
 
 export const ForPadding = styled.div`
   padding: 0.5rem;
-  border-bottom: 1px solid #f4f4f4;
+  border-bottom: 2px solid #f4f4f4;
 `;
+export const FirstLine = styled.div``;
 
 export const ItemContainer = styled.div`
   text-align: left;
@@ -83,16 +84,18 @@ export const WriteBadge = styled.img`
 `;
 export const ImageContentBox = styled.div`
   display: flex;
-  margin-top: 0.5rem;
 `;
 export const ItemTitle = styled.div`
+  display: block;
+  width: 100%;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
   font-size: 1rem;
   color: #222222;
-  text-overflow: ellipsis;
-  white-space: nowrap;
   text-decoration: none;
   margin-top: 0.4rem;
-  font-family: "Pretendard-Regular";
+  font-family: "Pretendard-Bold";
   a {
     text-decoration: none;
   }
@@ -100,6 +103,9 @@ export const ItemTitle = styled.div`
 
 export const ItemContent = styled.div`
   font-size: 0.8rem;
+  div {
+    margin-bottom: 0.5rem;
+  }
   a {
     color: #a9a9a9;
     text-decoration: none;

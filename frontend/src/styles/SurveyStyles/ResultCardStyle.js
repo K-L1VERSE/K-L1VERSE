@@ -2,7 +2,7 @@ import styled from "styled-components";
 
 export const Shares = styled.div`
   display: flex;
-  width: 86%;
+  width: 20rem;
   margin: 0 auto;
   justify-content: space-between;
   margin-top: 3rem;
