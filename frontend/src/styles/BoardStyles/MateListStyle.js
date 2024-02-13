@@ -2,17 +2,15 @@ import styled from "styled-components";
 
 /* *********** MateItemCard *********** */
 export const MatchTitle = styled.div`
-  color: black;
-  font-weight: 200;
-  font-size: 1.5rem;
-  font-weight: bold;
+  font-family: "Pretendard-Bold";
+  font-size: 1rem;
   margin-top: 0.5rem;
 `;
 
 export const MatchTime = styled.div`
-  font-size: 1rem;
-  color: black;
+  font-size: 0.8rem;
   margin-top: 0.5rem;
+  font-family: "Pretendard-Regular";
 `;
 
 export const MateItemCreated = styled.div`

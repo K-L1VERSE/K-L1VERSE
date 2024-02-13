@@ -1,8 +1,6 @@
 import React, { useState } from "react";
-import {
-  BadgeImg,
-  OnlyTime,
-} from "../../styles/match-styles/MatchScheduleStyle";
+import styled from "styled-components";
+import { BadgeImg } from "../../styles/match-styles/MatchScheduleStyle";
 
 export default function TimeForBoard({ match, onMatchClick, selectedMatchId }) {
   const handleOnClick = () => {
@@ -29,16 +27,16 @@ export default function TimeForBoard({ match, onMatchClick, selectedMatchId }) {
   }
 
   return (
-    <OnlyTime $isClicked={selectedMatchId === match.matchId}>
+    <OnlyTime2 $isClicked={selectedMatchId === match.matchId}>
       <div className="time" onClick={handleOnClick}>
-        <div className="timeLeft">
+        <div>
           {new Date(match.matchAt).toLocaleTimeString("ko-KR", {
             hour: "2-digit",
             minute: "2-digit",
             hour12: false,
           })}
         </div>
-        <div className="timeRight">
+        <div className="timeBottom">
           <div className="team">
             <div>
               <BadgeImg
@@ -47,6 +45,7 @@ export default function TimeForBoard({ match, onMatchClick, selectedMatchId }) {
               />
               {homeTeamName}
             </div>
+            <div>vs</div>
             <div>
               <BadgeImg
                 src={`${srcFirst}${match.awayTeamId}.png`}
@@ -55,37 +54,52 @@ export default function TimeForBoard({ match, onMatchClick, selectedMatchId }) {
               {awayTeamName}
             </div>
           </div>
-          <div className="status">
-            <div className="score">
-              <div
-                style={{
-                  fontWeight:
-                    match.homeScore > match.awayScore ? "bold" : "normal",
-                }}
-              >
-                {match.homeScore}
-              </div>
-              <div
-                style={{
-                  fontWeight:
-                    match.awayScore > match.homeScore ? "bold" : "normal",
-                }}
-              >
-                {match.awayScore}
-              </div>
-            </div>
-            <div className={`statusText ${match.status}`}>
-              <div>
-                {match.status === "upcoming"
-                  ? "경기 예정"
-                  : match.status === "during"
-                    ? "경기 중"
-                    : "경기 종료"}
-              </div>
-            </div>
-          </div>
         </div>
       </div>
-    </OnlyTime>
+    </OnlyTime2>
   );
 }
+
+export const OnlyTime2 = styled.div`
+  .time {
+    height: 4rem;
+    border-bottom: 2px solid #f4f4f4;
+    font-size: 0.8rem;
+    padding-top: 0.5rem;
+    font-family: "Pretendard-Regular";
+
+    &:hover {
+      cursor: pointer;
+    }
+  }
+  .time:last-child {
+    border-bottom: none;
+  }
+
+  .timeBottom {
+    display: flex;
+    width: 95%;
+    margin: 0 auto;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 0.9rem;
+    font-family: "Pretendard-Regular";
+  }
+  .team {
+    display: flex;
+    justify-content: space-between;
+    padding: 0rem 1rem;
+    width: 100%;
+  }
+  .team div {
+    display: flex;
+    align-items: center;
+    padding: 0.2rem;
+    height: 1.5rem;
+  }
+  .team div img {
+    margin-right: 0.6rem;
+  }
+
+  background-color: ${(props) => (props.$isClicked ? "#f2f6fd" : "none")};
+`;
