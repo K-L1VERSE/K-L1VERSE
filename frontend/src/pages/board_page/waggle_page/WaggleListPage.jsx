@@ -91,7 +91,7 @@ function WaggleListPage() {
         </HeaderDiv>
         <HeaderButton onClick={handleWriteWaggleClick}>🖋 글쓰기</HeaderButton>
       </Header>
-      {/* <SearchComponent onSearch={handleSearch} /> */}
+      <SearchComponent onSearch={handleSearch} />
 
       <WaggleContainer
         waggleList={waggleList}
