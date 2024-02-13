@@ -4,6 +4,7 @@ import {
   FileInputContainer,
   FileInputLabel,
   FilePreview,
+  RemoveButton,
 } from "../../styles/BoardStyles/BoardCreateStyle";
 import CameraIcon from "../../assets/icon/camera-icon.svg";
 import { uploadFile } from "../../api/waggle";
@@ -19,6 +20,9 @@ function BoardFile({ onFileChange, value }) {
       const previews = imageUrls.map((url, index) => (
         <FilePreview key={url}>
           <img src={url} alt={`미리보기 - Image ${index + 1}`} />
+          <RemoveButton onClick={(event) => handleRemoveImage(index, event)}>
+            x
+          </RemoveButton>
         </FilePreview>
       ));
       setFilePreviews(previews);
@@ -42,30 +46,41 @@ function BoardFile({ onFileChange, value }) {
         fileUrls.push(imageUrl);
       }
 
-      // 각 파일에 대한 미리보기 추가
+      // 미리보기
       const previews = fileUrls.map((url, index) => (
         <FilePreview key={url}>
           <img src={url} alt={`미리보기 - ${files[index].name}`} />
+          <RemoveButton onClick={(event) => handleRemoveImage(index, event)}>
+            x
+          </RemoveButton>
         </FilePreview>
       ));
 
-      // 모든 파일 업로드가 완료되면 onFileChange 호출
       const allFileUrls = fileUrls.join(",");
       setFilePreviews((prevPreviews) => [...prevPreviews, ...previews]);
       onFileChange(files, allFileUrls);
     }
+
+    if (fileInput.current) {
+      fileInput.current.value = null;
+    }
+  };
+
+  const handleRemoveImage = (indexToRemove, event) => {
+    event.preventDefault();
+
+    setFilePreviews((prevPreviews) => {
+      const newPreviews = [...prevPreviews];
+      newPreviews.splice(indexToRemove, 1);
+
+      const remainingUrls = newPreviews.map((preview) => preview.key);
+      onFileChange([], remainingUrls.join(","));
+      return newPreviews;
+    });
   };
 
   return (
     <FileInputContainer>
-      <FileInput
-        type="file"
-        accept="image/*"
-        onChange={handleImageChange}
-        style={{ display: "none" }}
-        ref={fileInput}
-        multiple
-      />
       <FileInputLabel>
         <img
           src={CameraIcon}
@@ -73,6 +88,14 @@ function BoardFile({ onFileChange, value }) {
           onClick={() => fileInput.current.click()}
         />
       </FileInputLabel>
+      <FileInput
+        type="file"
+        accept="image/*"
+        onChange={handleImageChange}
+        ref={fileInput}
+        style={{ display: "none" }}
+        multiple
+      />
       {filePreviews}
     </FileInputContainer>
   );
