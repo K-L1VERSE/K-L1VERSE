@@ -102,7 +102,8 @@ function Chat() {
   const recvMessage = (recv) => {
     if (recv.type === "REJECT") {
       console.log(`message#${recv.messageId}가 클린봇에 의해 거부되었습니다.`);
-
+      console.log("messages 갯수 : ", messages.length);
+      console.log(recv);
       for (let idx = messages.length - 1; idx >= 0; idx--) {
         console.log(
           "messages[idx].messageId: ",
@@ -123,7 +124,7 @@ function Chat() {
       }
 
       console.log(
-        `messages#${recv.messageId}와 일치하는 메시지를 찾지 못했습니다.`,
+        `message#${recv.messageId}와 일치하는 메시지를 찾지 못했습니다.`,
       );
       return;
     }
