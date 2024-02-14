@@ -17,6 +17,7 @@ import {
   UserBadge,
   DetailCommentCount,
   Gray,
+  CreateAt,
 } from "../../../styles/BoardStyles/BoardDetailStyle";
 import { deleteMate } from "../../../api/mate";
 import {
@@ -32,7 +33,10 @@ import {
 } from "../../../styles/BoardStyles/MateListStyle";
 import { getMatchDetail } from "../../../api/match";
 import { ItemTitle } from "../../../styles/BoardStyles/BoardStyle";
-import { formatDateTime } from "../../../components/board/dateFormat";
+import {
+  formatDateTime,
+  formatDateTime2,
+} from "../../../components/board/dateFormat";
 import { UserState } from "../../../global/UserState";
 import {
   DeleteButton,
@@ -87,6 +91,8 @@ function MateDetailPage() {
   useEffect(() => {
     getMatch();
   }, [matchId]);
+
+  const createAt = new Date(mateDetail.createAt);
 
   const handleUpdateBtn = () => {
     if (state && state.fromMypage) {
@@ -195,6 +201,12 @@ function MateDetailPage() {
               </MatchTitle>
             </div>
             <MatchTime>{formatDateTime(matchAt)}</MatchTime>
+            <ForSpaceBetween>
+              <CreateAt>
+                <div>{formatDateTime2(createAt)}</div>
+              </CreateAt>
+              <EditDeleteButton>{renderEditDeleteButtons()}</EditDeleteButton>
+            </ForSpaceBetween>
             <MateDetailTitle>{mateDetail.title}</MateDetailTitle>
             <MateDetailContent>{mateDetail.content}</MateDetailContent>
             <MateDetailTotal>총 인원 : {total}</MateDetailTotal>
@@ -210,7 +222,6 @@ function MateDetailPage() {
                   댓글 수 {mateDetail.commentCount}
                 </div>
               </DetailCommentCount>
-              <EditDeleteButton>{renderEditDeleteButtons()}</EditDeleteButton>
             </Bottom>
             <Gray />
           </DetailBox>
@@ -247,6 +258,7 @@ export const UserBar = styled.div`
   margin-left: 1rem;
   margin-top: 1rem;
   margin-bottom: 0.5rem;
+  align-items: center;
 `;
 
 export const UserName = styled.div`
@@ -258,12 +270,22 @@ export const UserName = styled.div`
 `;
 
 export const UserNick = styled.div`
-  font-family: "Pretendard-Regular";
+  font-family: "Pretendard-Bold";
   align-self: center;
+  font-size: 0.9rem;
+  margin-right: 0.1rem;
+  color: black;
 `;
 
 export const Bottom = styled.div`
   display: flex;
   justify-content: space-between;
   // margin-top: 1rem;
+`;
+
+export const ForSpaceBetween = styled.div`
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 0.3px solid #ccc;
 `;

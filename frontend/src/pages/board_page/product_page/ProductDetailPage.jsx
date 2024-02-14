@@ -1,8 +1,10 @@
 import React, { useState, useEffect } from "react";
+import styled from "styled-components";
 import { useParams, useNavigate, useLocation } from "react-router-dom";
 import { useRecoilState } from "recoil";
 import axios from "../../../api/axios";
 import CommentList from "../../../components/board/CommentList";
+import Like from "../../../components/board/Like";
 import {
   Container,
   User,
@@ -16,6 +18,8 @@ import {
   DetailImgDiv,
   DetailOnlyImg,
   FormattedDate,
+  Gray,
+  DetailCommentCount,
 } from "../../../styles/BoardStyles/BoardDetailStyle";
 import {
   DealStatusGreen,
@@ -145,22 +149,53 @@ function ProductDetailPage() {
             <BackButton onClick={handleBackClick}>
               <img src={BackIcon} alt="Back" />
             </BackButton>
-          </DetailTop>
-          <DetailBox>
-            <ProductWriterContainer>
-              <ProductWriterProfile src={productDetail.profile} />
-              <ProductWriter>{productDetail.nickname}</ProductWriter>
-              <ProductWriterBadge
-                src={`${process.env.PUBLIC_URL}/badge/badge${
-                  productDetail.mainBadge === null ? 0 : productDetail.mainBadge
-                }back.png`}
+            <ProductBoardTitle>
+              <div>중고 거래 &nbsp;</div>
+              <img
+                src="https://raw.githubusercontent.com/Tarikul-Islam-Anik/Animated-Fluent-Emojis/master/Emojis/Objects/Coin.png"
+                alt="Coin"
+                width="22"
+                height="22"
               />
-            </ProductWriterContainer>
-            {dealFlag ? (
-              <DealStatusOrange>거래완료</DealStatusOrange>
-            ) : (
-              <DealStatusGreen>거래가능</DealStatusGreen>
-            )}
+            </ProductBoardTitle>
+          </DetailTop>
+          <ProductImageWrapper>
+            {productDetail.boardImage &&
+              productDetail.boardImage
+                .split(",")
+                .map((imageUrl, index) => (
+                  <ProductImageTest
+                    key={productId}
+                    src={imageUrl.trim()}
+                    alt={`Product Image ${index}`}
+                    onClick={() => handleImageClick(imageUrl.trim())}
+                  />
+                ))}
+          </ProductImageWrapper>
+          <DetailBox>
+            <ForSpaceBetween>
+              <ForSpace>
+                <ProductWriterContainer>
+                  <ProductWriterProfile src={productDetail.profile} />
+                  <ProductWriter>{productDetail.nickname}</ProductWriter>
+                  <ProductWriterBadge
+                    src={`${process.env.PUBLIC_URL}/badge/badge${
+                      productDetail.mainBadge === null
+                        ? 0
+                        : productDetail.mainBadge
+                    }back.png`}
+                  />
+                </ProductWriterContainer>
+                {dealFlag ? (
+                  <DealStatusOrange>거래완료</DealStatusOrange>
+                ) : (
+                  <DealStatusGreen>거래가능</DealStatusGreen>
+                )}
+              </ForSpace>
+              <EditDeleteButton>{renderEditDeleteButtons()}</EditDeleteButton>
+            </ForSpaceBetween>
+            <ForMargin />
+            <Gray />
             <Title>{productDetail.title}</Title>
             <FormattedDate>
               {`${new window.Date(productDetail.createAt).toLocaleDateString(
@@ -181,8 +216,7 @@ function ProductDetailPage() {
 
             <Price>{Number(price).toLocaleString()} 원</Price>
             <Content>{productDetail.content}</Content>
-            <EditDeleteButton>{renderEditDeleteButtons()}</EditDeleteButton>
-            <ProductImageWrapper>
+            {/* <ProductImageWrapper>
               {productDetail.boardImage &&
                 productDetail.boardImage
                   .split(",")
@@ -194,9 +228,23 @@ function ProductDetailPage() {
                       onClick={() => handleImageClick(imageUrl.trim())}
                     />
                   ))}
-            </ProductImageWrapper>
+            </ProductImageWrapper> */}
+            {/* <EditDeleteButton>{renderEditDeleteButtons()}</EditDeleteButton> */}
+            <Bottom>
+              <DetailCommentCount>
+                <div>
+                  <img
+                    src="https://raw.githubusercontent.com/Tarikul-Islam-Anik/Animated-Fluent-Emojis/master/Emojis/Smilies/Love%20Letter.png"
+                    alt="Love Letter"
+                    width="25"
+                    height="25"
+                  />
+                  댓글 수 {productDetail.commentCount}
+                </div>
+              </DetailCommentCount>
+            </Bottom>
+            <Gray />
           </DetailBox>
-
           <CommentList boardId={boardId} />
         </Container>
       )}
@@ -208,3 +256,42 @@ function ProductDetailPage() {
 }
 
 export default ProductDetailPage;
+
+export const Bottom = styled.div`
+  display: flex;
+  justify-content: space-between;
+  margin-top: 1rem;
+`;
+
+export const ProductBoardTitle = styled.div`
+  display: flex;
+  width: 6rem;
+  height: 1.7rem;
+  font-family: "Pretendard-Bold";
+  margin: 0 auto;
+  font-size: 1rem;
+  background-color: #e5edfb;
+  padding: 0.2rem 0.2rem 0.15rem 0.7rem;
+  border-radius: 10px;
+  align-items: center;
+  color: #578cea;
+  margin-bottom: 1rem;
+  img {
+    margin-bottom: 0.1rem;
+  }
+`;
+
+export const ForSpace = styled.div`
+  display: flex;
+  margin-bottom: 0.5rem;
+`;
+
+export const ForMargin = styled.div`
+  height: 0.5rem;
+`;
+
+export const ForSpaceBetween = styled.div`
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+`;

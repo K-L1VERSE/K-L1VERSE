@@ -42,7 +42,6 @@ export const MateDetailTitle = styled.p`
   font-size: 1.2rem;
   font-family: "Pretendard-Bold";
   margin-bottom: 1rem;
-  border-top: 1px solid #ccc;
   margin-top: 1rem;
   padding-top: 1rem;
 `;
@@ -50,6 +49,7 @@ export const MateDetailTitle = styled.p`
 export const MateDetailContent = styled.p`
   margin: 0;
   white-space: pre-wrap;
+  font-size: 0.9rem;
 `;
 
 export const MateDetailTotal = styled.p`
