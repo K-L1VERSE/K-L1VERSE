@@ -2,7 +2,7 @@ import styled, { css } from "styled-components";
 
 export const BannerWrap = styled.div`
   position: relative;
-  height: 6rem;
+  height: ${(props) => props.height}px;
 `;
 
 export const BannerItem = styled.div`
