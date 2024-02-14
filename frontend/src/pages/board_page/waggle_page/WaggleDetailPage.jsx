@@ -202,8 +202,9 @@ function WaggleDetailPage() {
   //     )
   //   );
   // };
+
   const highlightHashtags = (text) => {
-    return text.split(/(#([\\p{L}0-9_]+))/).map((word, index) =>
+    return text.split(/#[a-z0-9_가-힣]+/gm).map((word, index) =>
       word.startsWith("#") ? (
         <span key={index} style={{ color: "#E4405F" }}>
           {word}
