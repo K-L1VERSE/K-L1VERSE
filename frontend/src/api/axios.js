@@ -19,6 +19,25 @@ instance.interceptors.request.use(
       // 요청 헤더에 accessToken 추가
       accessToken = JSON.parse(recoilData).userState.accessToken;
       config.headers.Authorization = `Bearer ${accessToken}`;
+    } else if (
+      ![
+        "/login",
+        "/logout",
+        "/KakaoAuth/",
+        "/GoogleAuth",
+        "/NaverAuth/",
+        "/survey",
+        "/question/1",
+        "/question/2",
+        "/question/3",
+        "/question/4",
+        "/question/5",
+        "/question/6",
+        "/question/7",
+        "/result",
+      ].includes(window.location.pathname)
+    ) {
+      window.location.href = `${domainAndPort}/login`;
     }
 
     return config;
