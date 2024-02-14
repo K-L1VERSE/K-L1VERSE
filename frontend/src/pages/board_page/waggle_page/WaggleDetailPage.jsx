@@ -191,29 +191,29 @@ function WaggleDetailPage() {
     setModalVisible(false);
   };
 
-  // const highlightHashtags = (text) => {
-  //   return text.split(/(#\w+)/).map((word, index) =>
-  //     word.startsWith("#") ? (
-  //       <span key={index} style={{ color: "#E4405F" }}>
-  //         {word}
-  //       </span>
-  //     ) : (
-  //       word
-  //     )
-  //   );
-  // };
-
   const highlightHashtags = (text) => {
-    return text.split(/#[a-z0-9_가-힣]+/gm).map((word, index) =>
+    return text.split(/(#\w+)/).map((word, index) =>
       word.startsWith("#") ? (
         <span key={index} style={{ color: "#E4405F" }}>
-          #{word}
+          {word}
         </span>
       ) : (
         word
       ),
     );
   };
+
+  // const highlightHashtags = (text) => {
+  //   return text.split(/#[a-z0-9_가-힣]+/gm).map((word, index) =>
+  //     word.startsWith("#") ? (
+  //       <span key={index} style={{ color: "#E4405F" }}>
+  //         #{word}
+  //       </span>
+  //     ) : (
+  //       word
+  //     ),
+  //   );
+  // };
   return (
     <div>
       {waggleDetail && waggleId && (
