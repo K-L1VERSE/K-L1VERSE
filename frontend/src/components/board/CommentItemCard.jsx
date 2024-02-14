@@ -219,10 +219,28 @@ function CommentItemCard({
                 </CommentContentContainer>
                 <CommentContentContainer>
                   <CommentTime>
-                    <div>{formatRelativeTime(comment.createAt)}</div>
-                    <div>
+                    <div
+                      style={{
+                        marginTop: "0.05rem",
+                      }}
+                    >
+                      {formatRelativeTime(comment.createAt)}
+                    </div>
+                    <div
+                      style={{
+                        marginRight: "0.3rem",
+                      }}
+                    >
                       <Like likesCount={likesCount} />
-                      <LikeCount width="1.2rem" height="1.2rem" />
+                    </div>
+                    <div>
+                      <LikeCount
+                        width="0.8rem"
+                        height="0.8rem"
+                        style={{
+                          marginBottom: "0.1rem",
+                        }}
+                      />
                     </div>
                   </CommentTime>
                   {renderEditDeleteButtons()}

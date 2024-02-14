@@ -69,13 +69,6 @@ public class NewsCrawl {
         log.info("Crawling...");
 
         teamInfoList.forEach(teamInfo -> {
-            if (teamInfo.getTeamCode().equals("35")) {
-                /*
-                 * 현재 김천 상무에 관한 뉴스는 없음
-                 * 이번에 승격하여 참가하는 팀이여서 그런듯?
-                 */
-                return;
-            }
             log.info("Crawling K리그1 {} 뉴스...", teamInfo.getTeamName());
             CrawlNewsTeam(teamInfo);
         });

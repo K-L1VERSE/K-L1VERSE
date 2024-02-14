@@ -37,6 +37,8 @@ import Like from "../../../components/board/Like";
 import {
   WaggleImage,
   WaggleImageContainer,
+  WaggleImageWrapper,
+  WaggleImageTest,
 } from "../../../styles/BoardStyles/WaggleListStyle";
 import { formatDateTime2 } from "../../../components/board/dateFormat";
 import Modal from "../../../components/common/Modal";
@@ -189,6 +191,18 @@ function WaggleDetailPage() {
     setModalVisible(false);
   };
 
+  const highlightHashtags = (text) => {
+    return text.split(/(#\w+)/).map((word, index) =>
+      word.startsWith("#") ? (
+        <span key={index} style={{ color: "#E4405F" }}>
+          {word}
+        </span>
+      ) : (
+        word
+      )
+    );
+  };
+
   return (
     <div>
       {waggleDetail && waggleId && (
@@ -213,21 +227,21 @@ function WaggleDetailPage() {
               </CreateAt>
             </div>
 
-            <Title>{title}</Title>
-            <Content>{content}</Content>
-            <WaggleImageContainer>
+            <Title>{highlightHashtags(title)}</Title>
+            <Content>{highlightHashtags(content)}</Content>
+            <WaggleImageWrapper>
               {waggleDetail.boardImage &&
                 waggleDetail.boardImage
                   .split(",")
                   .map((imageUrl, index) => (
-                    <WaggleImage
+                    <WaggleImageTest
                       key={index}
                       src={imageUrl.trim()}
                       alt={`Waggle Image ${index}`}
                       onClick={() => handleImageClick(imageUrl.trim())}
                     />
                   ))}
-            </WaggleImageContainer>
+            </WaggleImageWrapper>
             <Like
               liked={liked}
               likesCount={likesCount}

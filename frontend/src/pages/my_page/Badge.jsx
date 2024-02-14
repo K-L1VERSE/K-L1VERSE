@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 import { useSetRecoilState } from "recoil";
 import Swal from "sweetalert2";
 import { UserState } from "../../global/UserState";
@@ -18,6 +18,12 @@ import {
   DisabledTextContainer,
   DisabledText,
 } from "../../styles/mypage-styles/badgeStyle";
+
+import {
+  DetailTop,
+  BackButton,
+} from "../../styles/BoardStyles/BoardDetailStyle";
+import BackIcon from "../../assets/icon/back-icon.png";
 import BadgeList from "./BadgeList";
 
 function Badge() {
@@ -210,8 +216,36 @@ function Badge() {
     });
   };
 
+  const location = useLocation();
+  const { state } = location;
+
+  const handleBackClick = () => {
+    navigate("/mypage", {
+      state: {
+        user: state.user,
+      },
+    });
+  };
+
   return (
     <div>
+      <div
+        style={{
+          margin: "2rem 0 0 1rem",
+        }}
+      >
+        <DetailTop>
+          <BackButton
+            onClick={handleBackClick}
+            style={{
+              alignItems: "center",
+            }}
+          >
+            <img src={BackIcon} alt="Back" />
+          </BackButton>
+        </DetailTop>
+      </div>
+
       <TitleContainer>
         <TitleText>구단뱃지</TitleText>
       </TitleContainer>
