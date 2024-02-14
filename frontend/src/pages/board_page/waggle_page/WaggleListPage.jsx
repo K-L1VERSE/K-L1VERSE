@@ -37,6 +37,7 @@ function WaggleListPage() {
 
   function getRecommendWaggles() {
     getRecommendWaggleList(
+      page,
       {
         userId: 1,
       },
@@ -56,13 +57,20 @@ function WaggleListPage() {
       setPage(0);
       setWaggleList([]);
       setIsRecommend(true);
-      getRecommendWaggles();
+    } else {
+      setPage(0);
+      setWaggleList([]);
+      setIsRecommend(false);
     }
   };
 
   useEffect(() => {
-    getWaggles();
-  }, []);
+    if (isRecommend) {
+      getRecommendWaggles();
+    } else {
+      getWaggles();
+    }
+  }, [isRecommend]);
 
   const [isBottom, setIsBottom] = useState(false);
 
