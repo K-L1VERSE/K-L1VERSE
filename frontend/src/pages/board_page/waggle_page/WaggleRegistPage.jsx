@@ -101,7 +101,6 @@ function WaggleRegistPage() {
       setBoardImage(file);
     }
   };
-
   useEffect(() => {
     handleFileChange(file);
   }, [file]);
@@ -124,6 +123,7 @@ function WaggleRegistPage() {
         onFileChange={handleFileChange}
         onSubmit={handleSubmit}
         buttonText={isUpdateMode ? "수정하기" : "작성하기"}
+        setBoardImage={setBoardImage}
       />
     </>
   );

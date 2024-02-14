@@ -36,9 +36,9 @@ export function getLatestWaggle(success, fail) {
 }
 
 export function getSearchWaggleList(keyword, page, size, success, fail) {
-  axios
+  return axios
     .get(
-      `/${gateway}/${url}/search?keyword=${keyword}&page=${page}&size=${size}&sort=board.createAt,desc`,
+      `/${gateway}/${url}/searchPaged?keyword=${keyword}&page=${page}&size=${size}&sort=board.createAt,desc`,
     )
     .then(success)
     .catch(fail);

@@ -9,7 +9,7 @@ import {
   HeaderButton,
   HeaderDiv,
 } from "../../../styles/BoardStyles/BoardStyle";
-import SearchComponent from "../../../components/board/SearchComponent";
+// import SearchComponent from "../../../components/board/SearchComponent";
 
 function WaggleListPage() {
   const [waggleList, setWaggleList] = useState([]);
@@ -72,9 +72,9 @@ function WaggleListPage() {
     navigate("/waggleRegist");
   };
 
-  const handleSearch = (searchResult) => {
-    setWaggleList(searchResult);
-  };
+  // const handleSearch = (searchResult) => {
+  //   setWaggleList(searchResult);
+  // };
 
   return (
     <div>
