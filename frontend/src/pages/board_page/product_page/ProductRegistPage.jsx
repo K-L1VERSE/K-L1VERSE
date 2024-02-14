@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useRecoilState } from "recoil";
 import { useNavigate, useLocation } from "react-router-dom";
 import Swal from "sweetalert2";
+import styled from "styled-components";
 import ProductRegistCard from "../../../components/board/ProductRegistCard";
 import { createProduct, updateProduct } from "../../../api/product";
 import { UserState } from "../../../global/UserState";
@@ -153,9 +154,15 @@ function ProductRegistPage() {
                 <img src={BackIcon} alt="Back" />
               </BackButton>
             </DetailTop>
-            <DetailTop>
-              {isUpdateMode ? "중고거래 게시물 수정" : "중고거래 게시물 작성"}
-            </DetailTop>
+            <ProductBoardTitle>
+              <div>{isUpdateMode ? "중고거래 글수정" : "중고거래 글쓰기"}</div>
+              <img
+                src="https://raw.githubusercontent.com/Tarikul-Islam-Anik/Animated-Fluent-Emojis/master/Emojis/Objects/Coin.png"
+                alt="Coin"
+                width="22"
+                height="22"
+              />
+            </ProductBoardTitle>
             <ProductRegistCard
               title={title}
               content={content}
@@ -180,9 +187,15 @@ function ProductRegistPage() {
               <img src={BackIcon} alt="Back" />
             </BackButton>
           </DetailTop>
-          <DetailTop>
-            {isUpdateMode ? "중고거래 게시물 수정" : "중고거래 게시물 작성"}
-          </DetailTop>
+          <ProductBoardTitle>
+            <div>{isUpdateMode ? "중고거래 수정" : "중고거래 글쓰기"}</div>
+            <img
+              src="https://raw.githubusercontent.com/Tarikul-Islam-Anik/Animated-Fluent-Emojis/master/Emojis/Objects/Coin.png"
+              alt="Coin"
+              width="22"
+              height="22"
+            />
+          </ProductBoardTitle>
           <ProductRegistCard
             title={title}
             content={content}
@@ -205,3 +218,22 @@ function ProductRegistPage() {
 }
 
 export default ProductRegistPage;
+
+export const ProductBoardTitle = styled.div`
+  display: flex;
+  width: 8rem;
+  height: 1.7rem;
+  font-family: "Pretendard-Bold";
+  margin: 0 auto;
+  font-size: 1rem;
+  background-color: #e5edfb;
+  padding: 0.2rem 0.2rem 0.15rem 0.7rem;
+  border-radius: 10px;
+  align-items: center;
+  color: #578cea;
+  margin-bottom: 1rem;
+  img {
+    margin-left: 0.1rem;
+    margin-bottom: 0.1rem;
+  }
+`;
