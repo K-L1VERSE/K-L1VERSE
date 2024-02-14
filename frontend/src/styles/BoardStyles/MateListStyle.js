@@ -49,6 +49,7 @@ export const MateDetailTitle = styled.p`
 
 export const MateDetailContent = styled.p`
   margin: 0;
+  white-space: pre-wrap;
 `;
 
 export const MateDetailTotal = styled.p`
