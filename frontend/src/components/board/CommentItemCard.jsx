@@ -68,7 +68,7 @@ function CommentItemCard({
   };
 
   const renderEditDeleteButtons = () => {
-    if (userId === comment.userId) {
+    if (userId === comment.userId || userId === writerId) {
       return (
         <ButtonContainer>
           <EditButton
@@ -87,6 +87,7 @@ function CommentItemCard({
           </DeleteButton>
           {type === "comment" && (
             <ReplyButton
+              type="button"
               onClick={() => {
                 setIsReplyMode(true);
                 setParentId(comment.commentId);
@@ -204,7 +205,9 @@ function CommentItemCard({
                   <CommentContent>{comment.content}</CommentContent>
                   <div>
                     {(!comment.isSecret ||
-                      (comment.isSecret && userId === comment.userId)) && (
+                      (comment.isSecret &&
+                        (userId === comment.userId ||
+                          userId === writerId))) && (
                       <div>
                         <LikeBox>
                           <Like
