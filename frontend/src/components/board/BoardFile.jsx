@@ -1,4 +1,5 @@
 import React, { useRef, useState, useEffect } from "react";
+import Swal from "sweetalert2";
 import {
   FileInput,
   FileInputContainer,
@@ -39,6 +40,18 @@ function BoardFile({ onFileChange, value }) {
         const file = files[i];
         const formData = new FormData();
         formData.append("file", file);
+        if (file.size >= 1024 * 1024) {
+          Swal.fire({
+            html: `
+              <img src="https://raw.githubusercontent.com/Tarikul-Islam-Anik/Animated-Fluent-Emojis/master/Emojis/Animals/Hatching%20Chick.png" alt="Hatching Chick" width="100" height="100" />
+              <div style="font-size:1rem; font-family:Pretendard-Regular; margin-top: 1rem;">1MB 이하의 파일만 업로드 가능해요!</div>
+            `,
+            confirmButtonColor: "#3085d6",
+            confirmButtonText:
+              "<div style='font-size:1rem; font-family:Pretendard-Regular;'>확인</div>",
+          });
+          return;
+        }
 
         const res = await uploadFile(formData);
         const imageUrl = res.data.url;

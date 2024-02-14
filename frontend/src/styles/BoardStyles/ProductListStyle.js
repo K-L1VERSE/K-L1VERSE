@@ -165,3 +165,44 @@ export const ProductImage = styled.img`
   border-radius: 8px;
   margin-bottom: 1rem;
 `;
+
+export const ProductImageWrapper = styled.div`
+  display: flex;
+  white-space: nowrap;
+  overflow-x: auto;
+  padding: 0.5rem 0.5rem;
+  margin: 1rem 0;
+
+  &::-webkit-scrollbar {
+    height: 7.5px;
+  }
+
+  &::-webkit-scrollbar-track {
+    background: #f1f1f1;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background: #c7c8cc;
+    border-radius: 10px;
+  }
+
+  &::-webkit-scrollbar-thumb:hover {
+    background: #555;
+  }
+`;
+
+export const ProductImageTest = styled.img`
+  flex: 0 0 auto;
+  max-width: 16rem;
+  max-height: 9rem;
+  position: relative;
+  border-radius: 0.5rem;
+  border: 1px solid #ccc;
+  margin: 0 0.2rem;
+
+  &:hover {
+    img {
+      filter: brightness(100%);
+    }
+  }
+`;

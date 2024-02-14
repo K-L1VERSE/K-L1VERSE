@@ -25,6 +25,8 @@ import {
   ProductWriterContainer,
   ProductWriterProfile,
   ProductWriterBadge,
+  ProductImageWrapper,
+  ProductImageTest,
 } from "../../../styles/BoardStyles/ProductListStyle";
 import { deleteProduct } from "../../../api/product";
 import { UserState } from "../../../global/UserState";
@@ -144,19 +146,6 @@ function ProductDetailPage() {
               <img src={BackIcon} alt="Back" />
             </BackButton>
           </DetailTop>
-          <DetailImgDiv>
-            {productDetail.boardImage &&
-              productDetail.boardImage
-                .split(",")
-                .map((imageUrl, index) => (
-                  <DetailOnlyImg
-                    key={productId}
-                    src={imageUrl.trim()}
-                    alt={`Product Image ${index}`}
-                    onClick={() => handleImageClick(imageUrl.trim())}
-                  />
-                ))}
-          </DetailImgDiv>
           <DetailBox>
             <ProductWriterContainer>
               <ProductWriterProfile src={productDetail.profile} />
@@ -193,7 +182,21 @@ function ProductDetailPage() {
             <Price>{Number(price).toLocaleString()} 원</Price>
             <Content>{productDetail.content}</Content>
             <EditDeleteButton>{renderEditDeleteButtons()}</EditDeleteButton>
+            <ProductImageWrapper>
+              {productDetail.boardImage &&
+                productDetail.boardImage
+                  .split(",")
+                  .map((imageUrl, index) => (
+                    <ProductImageTest
+                      key={productId}
+                      src={imageUrl.trim()}
+                      alt={`Product Image ${index}`}
+                      onClick={() => handleImageClick(imageUrl.trim())}
+                    />
+                  ))}
+            </ProductImageWrapper>
           </DetailBox>
+
           <CommentList boardId={boardId} />
         </Container>
       )}

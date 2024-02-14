@@ -96,78 +96,6 @@ public class WaggleServiceImpl implements WaggleService {
     }).collect(Collectors.toList());
   }
 
-//  @Override
-//  public Page<WaggleDTO> getWagglesByHashtags(List<String> hashtags, Pageable pageable) {
-//    Set<Long> visitedBoardIds = new HashSet<>(); // 이미 방문한 게시글의 ID를 추적하기 위한 Set
-//    List<WaggleDTO> uniqueWaggles = new ArrayList<>(); // 중복된 게시글을 필터링한 결과를 저장할 리스트
-//
-//    // 각 해시태그별로 해당하는 게시글들을 검색하고 중복을 제거하여 uniqueWaggles에 추가
-//    for (String hashtag : hashtags) {
-//      // 대괄호 제거
-//      hashtag = hashtag.replaceAll("[\\[\\]]", "");
-//      log.info("hashtag: {}", hashtag);
-//      Page<Waggle> waggles = waggleRepository.findByHashtagsContaining(hashtag, pageable);
-//
-//      List<WaggleDTO> waggleDTOList = convertToDTOList(waggles.getContent());
-//      for (WaggleDTO waggleDTO : waggleDTOList) {
-//        if (!visitedBoardIds.contains(
-//            waggleDTO.getBoard().getBoardId())) { // 이미 포함되어 있는 게시글인지 확인
-//          waggleDTO.getBoard().setCommentCount(
-//              commentRepository.countCommentsByBoardId(
-//                  waggleDTO.getBoard().getBoardId()));
-//          waggleDTO.setLikesCount(
-//              waggleRepository.getLikesCountForEachWaggle().stream()
-//                  .filter(result -> ((Waggle) result[0]).getWaggleId()
-//                      .equals(waggleDTO.getWaggleId()))
-//                  .map(result -> ((Long) result[1]).intValue())
-//                  .findFirst()
-//                  .orElse(0));
-//          waggleDTO.getBoard().setNickname(
-//              (String) waggleRepository.findUserNickname(waggleDTO.getBoard().getUserId())
-//                  .get(0)[0]);
-//          uniqueWaggles.add(waggleDTO); // 포함되어 있지 않다면 uniqueWaggles에 추가
-//          visitedBoardIds.add(waggleDTO.getBoard().getBoardId()); // 방문한 게시글로 표시
-//        }
-//      }
-//    }
-//
-//    // 상위 3개의 해시태그를 조회하여 각 해시태그별로 해당하는 게시글들을 검색하고 중복을 제거하여 uniqueWaggles에 추가
-//    String mostViewedWaggleUserHashTags = waggleUserHashTagRepository.findMostViewedHashtags();
-//    log.info("mostViewedWaggleUserHashTags: {}", mostViewedWaggleUserHashTags);
-//
-//    // 대괄호 제거 후 공백을 기준으로 분할하여 각 해시태그 처리
-//    String[] mostViewedHashtags = mostViewedWaggleUserHashTags.replaceAll("[\\[\\]]", "")
-//        .split(",\\s*");
-//    for (String mostViewedHashtag : mostViewedHashtags) {
-//      log.info("mostViewedHashtag: {}", mostViewedHashtag);
-//
-//      // 각 해시태그별로 해당하는 게시글들을 검색하고 중복을 제거하여 uniqueWaggles에 추가
-//      Page<Waggle> waggles = waggleRepository.findByHashtagsContaining(mostViewedHashtag, pageable);
-//      List<WaggleDTO> waggleDTOList = convertToDTOList(waggles.getContent());
-//      for (WaggleDTO waggleDTO : waggleDTOList) {
-//        if (!visitedBoardIds.contains(waggleDTO.getBoard().getBoardId())) { // 이미 포함되어 있는 게시글인지 확인
-//          waggleDTO.getBoard().setCommentCount(
-//              commentRepository.countCommentsByBoardId(waggleDTO.getBoard().getBoardId()));
-//          waggleDTO.setLikesCount(
-//              waggleRepository.getLikesCountForEachWaggle().stream()
-//                  .filter(result -> ((Waggle) result[0]).getWaggleId()
-//                      .equals(waggleDTO.getWaggleId()))
-//                  .map(result -> ((Long) result[1]).intValue())
-//                  .findFirst()
-//                  .orElse(0));
-//          waggleDTO.getBoard().setNickname(
-//              (String) waggleRepository.findUserNickname(waggleDTO.getBoard().getUserId())
-//                  .get(0)[0]);
-//          uniqueWaggles.add(waggleDTO); // 포함되어 있지 않다면 uniqueWaggles에 추가
-//          visitedBoardIds.add(waggleDTO.getBoard().getBoardId()); // 방문한 게시글로 표시
-//        }
-//      }
-//    }
-//
-//    return new PageImpl<>(uniqueWaggles, pageable, uniqueWaggles.size());
-//  }
-
-
   @Override
   public Page<WaggleDTO> getWagglesByHashtags(List<String> hashtags, Pageable pageable) {
     Set<Long> visitedBoardIds = new HashSet<>(); // 이미 방문한 게시글의 ID를 추적하기 위한 Set
@@ -487,7 +415,7 @@ public class WaggleServiceImpl implements WaggleService {
   // extractHashtags 메서드 추가
   private Set<String> extractHashtags(String content) {
     Set<String> hashtags = new HashSet<>();
-    Pattern pattern = Pattern.compile("#(\\w+)");
+    Pattern pattern = Pattern.compile("#([\\p{L}0-9_]+)");
     Matcher matcher = pattern.matcher(content);
 
     while (matcher.find()) {
