@@ -67,6 +67,7 @@ export const Content = styled.p`
   white-space: pre-wrap;
 `;
 
+
 export const Price = styled.p`
   margin: 0;
   font-size: 1.1rem;
