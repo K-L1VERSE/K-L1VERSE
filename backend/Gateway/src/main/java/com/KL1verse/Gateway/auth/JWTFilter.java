@@ -1,12 +1,18 @@
 package com.KL1verse.Gateway.auth;
 
 import com.KL1verse.Gateway.auth.JwtUtil.Status;
+import com.KL1verse.Gateway.auth.dto.res.AccessTokenResDto;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.cloud.gateway.server.mvc.filter.FilterFunctions;
+import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Component;
+import org.springframework.web.client.RestTemplate;
 import org.springframework.web.server.ServerWebExchange;
 import org.springframework.web.servlet.function.HandlerFilterFunction;
 import org.springframework.web.servlet.function.ServerRequest;
@@ -23,6 +29,8 @@ public class JWTFilter {
 
     @Value("${domain}")
     private static String domain;
+    private static final RestTemplate restTemplate = new RestTemplate();
+    private static final ObjectMapper objectMapper = new ObjectMapper();
 
     public static HandlerFilterFunction<ServerResponse, ServerResponse> instrument() {
         return (request, next) -> {
@@ -57,10 +65,36 @@ public class JWTFilter {
                  */
                 log.info("Access Token expired");
                 ServerRequest modifiedRequest = ServerRequest.from(request)
-                    .uri(URI.create("/users/access_token/reissue"))
                     .build();
 
-                return next.handle(modifiedRequest);
+                // restTemplate으로 get요청 보내기
+                HttpHeaders headers = new HttpHeaders();
+                headers.set("Authorization", tokenList.get(0));
+                HttpEntity<String> entity = new HttpEntity<>(headers);
+
+                HttpEntity<String> response = restTemplate.exchange(
+                    "http://localhost:8010/users/access_token/reissue",
+                    HttpMethod.GET,
+                    entity,
+                    String.class
+                );
+
+                // UserServer로부터 받은 응답을 가지고 새로운 Access Token으로 요청 보내기
+                String newToken = response.getBody();
+                if(newToken != null ){
+                    log.info("Refresh Token 유효");
+                    AccessTokenResDto accessTokenResDto = objectMapper.readValue(newToken, AccessTokenResDto.class);
+    
+                    return ServerResponse.status(HttpStatus.UNAUTHORIZED)
+                            .header("Authorization", "Bearer " + accessTokenResDto.getAccessToken())
+                            .build();
+                } else {
+                    log.info("Refresh Token 만료");
+                    return ServerResponse.status(HttpStatus.UNAUTHORIZED)
+                            .header("Location", domain+":3000/login")
+                            .build();
+                }
+
             } else {
                 /*
                  * Access Token이 유효한 경우
@@ -70,6 +104,5 @@ public class JWTFilter {
 
             }
         };
-
     }
 }

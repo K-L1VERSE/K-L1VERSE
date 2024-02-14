@@ -59,8 +59,26 @@ instance.interceptors.response.use(
     console.log(err);
 
     if (err.response && err.response.status === 401) {
-      // UNAUTHORIZED 응답이면 로그인 페이지로 리다이렉션
-      window.location.href = `${domainAndPort}/login`;
+      if (err.response.headers.authorization) {
+        console.log(
+          "err.response.headers.authorization",
+          err.response.headers.authorization,
+        );
+        const newAccessToken = err.response.headers.authorization.split(" ")[1];
+        const recoilData = localStorage.getItem("recoil-persist");
+        if (recoilData) {
+          const jsonRecoilData = JSON.parse(recoilData);
+          jsonRecoilData.userState.accessToken = newAccessToken;
+          localStorage.setItem(
+            "recoil-persist",
+            JSON.stringify(jsonRecoilData),
+          );
+          window.location.reload();
+        }
+      } else {
+        // UNAUTHORIZED 응답이면 로그인 페이지로 리다이렉션
+        window.location.href = `${domainAndPort}/login`;
+      }
     }
   },
 );

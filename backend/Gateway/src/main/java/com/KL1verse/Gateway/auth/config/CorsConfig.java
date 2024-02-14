@@ -23,6 +23,7 @@ public class CorsConfig {
         config.addAllowedOrigin("http://k-l1verse.site");
         config.addAllowedHeader("*");
         config.addAllowedMethod("*");
+        config.addExposedHeader("Authorization");
 
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
         source.registerCorsConfiguration("/**",config);
