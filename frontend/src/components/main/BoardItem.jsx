@@ -47,9 +47,9 @@ export default function BoardItem({ type, posts }) {
     },
   ];
 
-  // const handlePostClick = () => {
-  //   navigate(`${category[type].route}`);
-  // };
+  const goBoard = () => {
+    navigate(`${category[type].route}`);
+  };
 
   const goPost = (boardId) => {
     navigate(`${category[type].route}/${boardId}`);
@@ -57,7 +57,9 @@ export default function BoardItem({ type, posts }) {
 
   return (
     <BoardItemWrap>
-      <Type type={type}>{category[type].type}</Type>
+      <Type onClick={goBoard} type={type}>
+        {category[type].type}
+      </Type>
       <Text>{category[type].text}</Text>
       {posts.map((post, i) => (
         <Post key={i} onClick={() => goPost(post.board.boardId)}>

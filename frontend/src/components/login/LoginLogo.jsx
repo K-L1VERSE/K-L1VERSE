@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useSwipeable } from "react-swipeable";
 import styled, { css } from "styled-components";
 import Community from "../../assets/login_button/community.png";
@@ -31,9 +31,15 @@ function LoginLogo() {
     trackMouse: true,
   });
 
-  setInterval(() => {
-    setIndex((index + 1) % backgrounds.length);
-  }, [2500]);
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setIndex((index + 1) % backgrounds.length);
+    }, 2500);
+
+    return () => {
+      clearTimeout(timer);
+    };
+  }, [index, backgrounds.length]);
 
   return (
     <LogoWrap>
