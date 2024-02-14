@@ -16,6 +16,7 @@ import Footer from "../../components/main/Footer";
 function MainPage() {
   const [userState] = useRecoilState(UserState);
   const { nickname } = userState;
+  const { email } = userState;
 
   const navigate = useNavigate();
 
@@ -59,7 +60,7 @@ function MainPage() {
   });
 
   useEffect(() => {
-    if (!nickname) {
+    if (!email) {
       navigate("/login");
     } else {
       ChannelIO("showChannelButton");
@@ -77,7 +78,7 @@ function MainPage() {
 
   return (
     <div>
-      {nickname && (
+      {email && (
         <div>
           <Notice />
           <Category>
