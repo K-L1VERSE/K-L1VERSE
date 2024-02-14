@@ -37,6 +37,8 @@ import Like from "../../../components/board/Like";
 import {
   WaggleImage,
   WaggleImageContainer,
+  WaggleImageWrapper,
+  WaggleImageTest,
 } from "../../../styles/BoardStyles/WaggleListStyle";
 import { formatDateTime2 } from "../../../components/board/dateFormat";
 import Modal from "../../../components/common/Modal";
@@ -215,19 +217,19 @@ function WaggleDetailPage() {
 
             <Title>{title}</Title>
             <Content>{content}</Content>
-            <WaggleImageContainer>
+            <WaggleImageWrapper>
               {waggleDetail.boardImage &&
                 waggleDetail.boardImage
                   .split(",")
                   .map((imageUrl, index) => (
-                    <WaggleImage
+                    <WaggleImageTest
                       key={index}
                       src={imageUrl.trim()}
                       alt={`Waggle Image ${index}`}
                       onClick={() => handleImageClick(imageUrl.trim())}
                     />
                   ))}
-            </WaggleImageContainer>
+            </WaggleImageWrapper>
             <Like
               liked={liked}
               likesCount={likesCount}
