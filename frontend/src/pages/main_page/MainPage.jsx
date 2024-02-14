@@ -12,6 +12,7 @@ import Nostradamus from "../../components/main/Nostradamus";
 import Survey from "../../components/main/Survey";
 import EditNicknameModal from "../../components/mypage/EditNicknameModal";
 import Footer from "../../components/main/Footer";
+import Banner from "../../components/main/Banner";
 
 function MainPage() {
   const [userState] = useRecoilState(UserState);
@@ -80,6 +81,7 @@ function MainPage() {
       {nickname && (
         <div>
           <Notice />
+          <Banner />
           <Category>
             <Title>💬 커뮤니티</Title>
             <AllBtn onClick={handleAllBtn}>전체보기</AllBtn>

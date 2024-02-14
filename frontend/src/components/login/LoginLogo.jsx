@@ -68,12 +68,9 @@ const LogoWrap = styled.div`
 const TopItem = styled.div`
   position: relative;
   height: 25rem;
-  /* height: 25rem;
-  overflow: none; */
 `;
 
 const Top = styled.div`
-  /* background-color: red; */
   width: 100%;
   opacity: 0;
   transition: opacity 0.5s ease-in-out;
@@ -86,7 +83,6 @@ const Top = styled.div`
 `;
 
 const Img = styled.div`
-  /* background-color: blue; */
   height: 23rem;
   display: flex;
   align-items: center;
