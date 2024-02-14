@@ -194,8 +194,9 @@ export const ProductImageWrapper = styled.div`
 
 export const ProductImageTest = styled.img`
   flex: 0 0 auto;
-  max-width: 16rem;
-  max-height: 9rem;
+
+  width: auto;
+  height: 9rem;
   position: relative;
   border-radius: 0.5rem;
   border: 1px solid #ccc;
