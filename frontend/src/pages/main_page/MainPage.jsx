@@ -17,6 +17,7 @@ function MainPage() {
   const [userState] = useRecoilState(UserState);
   const { email } = userState;
   const { nickname } = userState;
+  const { email } = userState;
 
   const navigate = useNavigate();
 
