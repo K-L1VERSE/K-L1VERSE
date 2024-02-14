@@ -55,7 +55,6 @@ public class GatewayApplication {
 		return route("SURVEY-SERVICE")
 			.route(path("/survey/**"), http(domain+":8020"))
 			.before(rewritePath("/survey/(?<segment>.*)", "/${segment}"))
-			.filter(jwtFilter.instrument())
 			.build();
 	}
 
