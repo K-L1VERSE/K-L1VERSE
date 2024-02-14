@@ -27,6 +27,7 @@ import { useParams } from "react-router-dom";
 import { ReactComponent as LikeCount } from "../../assets/icon/likecount-icon.svg";
 
 import CommentIcon from "../../assets/comment.png";
+import CocomentIcon from "../../assets/icon/cocoment-icon.png";
 
 function CommentItemCard({
   type,
@@ -93,7 +94,7 @@ function CommentItemCard({
                 setParentId(comment.commentId);
               }}
             >
-              <img src={CommentIcon} alt="comment" width="20" height="20" />
+              <img src={CocomentIcon} alt="comment" width="20" height="20" />
             </ReplyButton>
           )}
         </ButtonContainer>
@@ -109,7 +110,7 @@ function CommentItemCard({
                 setParentId(comment.commentId);
               }}
             >
-              <img src={CommentIcon} alt="comment" width="20" height="20" />
+              <img src={CocomentIcon} alt="comment" width="20" height="20" />
             </ReplyButton>
           </ButtonContainer>
         )}

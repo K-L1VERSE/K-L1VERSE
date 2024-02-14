@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import { getWaggleList } from "../../../api/waggle";
+import { getWaggleList, getRecommendWaggleList } from "../../../api/waggle";
 import BoardTopNavBar from "../../../components/board/BoardTopNavBar";
 import WaggleContainer from "../../../components/board/WaggleContainer";
 import { formatRelativeTime } from "../../../components/board/dateFormat";
@@ -9,12 +9,14 @@ import {
   HeaderButton,
   HeaderDiv,
 } from "../../../styles/BoardStyles/BoardStyle";
+import { Button } from "../../../styles/BoardStyles/BoardDetailStyle";
 // import SearchComponent from "../../../components/board/SearchComponent";
 
 function WaggleListPage() {
   const [waggleList, setWaggleList] = useState([]);
   const [page, setPage] = useState(0);
   const [hasMore, setHasMore] = useState(true);
+  const [isRecommend, setIsRecommend] = useState(false);
   const navigate = useNavigate();
 
   function getWaggles() {
@@ -32,6 +34,31 @@ function WaggleListPage() {
       () => {},
     );
   }
+
+  function getRecommendWaggles() {
+    getRecommendWaggleList(
+      {
+        userId: 1,
+      },
+      ({ data }) => {
+        if (!data) {
+          setHasMore(false);
+        } else {
+          setWaggleList([...waggleList, ...data]);
+          setPage(page + 1);
+        }
+      },
+    );
+  }
+
+  const handleRecommendClick = () => {
+    if (!isRecommend) {
+      setPage(0);
+      setWaggleList([]);
+      setIsRecommend(true);
+      getRecommendWaggles();
+    }
+  };
 
   useEffect(() => {
     getWaggles();
@@ -63,8 +90,10 @@ function WaggleListPage() {
   }
 
   useEffect(() => {
-    if (isBottom) {
+    if (isBottom && !isRecommend) {
       getWaggles();
+    } else if (isBottom && isRecommend) {
+      getRecommendWaggles();
     }
   }, [isBottom]);
 
@@ -78,6 +107,8 @@ function WaggleListPage() {
 
   return (
     <div>
+      <Button onClick={handleRecommendClick}> 추천 </Button>
+
       <BoardTopNavBar />
       <Header>
         <HeaderDiv>

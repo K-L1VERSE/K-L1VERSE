@@ -5,6 +5,7 @@ import com.KL1verse.Board.dto.req.SearchBoardConditionDto;
 import com.KL1verse.Comment.dto.req.CommentDTO;
 import com.KL1verse.Waggle.dto.req.WaggleDTO;
 import com.KL1verse.Waggle.service.WaggleService;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import lombok.extern.slf4j.Slf4j;
@@ -37,13 +38,17 @@ WaggleController {
     }
 
     @PostMapping("/hashtags")
-    public ResponseEntity<Page<WaggleDTO>> getWagglesByTopHashtags(@RequestBody BoardDTO boardDTO, Pageable pageable) {
+    public ResponseEntity<List<WaggleDTO>> getWagglesByTopHashtags(@RequestBody BoardDTO boardDTO, Pageable pageable) {
+        log.info(LocalDateTime.now().toString());
         // 상위 3개 해시태그 가져오기
         Integer loginUserId = boardDTO.getUserId();
+
         List<String> topHashtags = waggleService.getTopHashtags(loginUserId, 3);
+        log.info(LocalDateTime.now().toString());
 
         // 각 해시태그를 가진 게시글들을 가져와서 리스트에 추가
-        Page<WaggleDTO> waggles = waggleService.getWagglesByHashtags(topHashtags, pageable);
+        List<WaggleDTO> waggles = waggleService.getWagglesByHashtags(topHashtags, pageable);
+        log.info(LocalDateTime.now().toString());
 
         // 결과 반환
         return new ResponseEntity<>(waggles, HttpStatus.OK);

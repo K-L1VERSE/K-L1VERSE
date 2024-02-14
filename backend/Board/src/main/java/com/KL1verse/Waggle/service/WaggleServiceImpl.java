@@ -97,7 +97,7 @@ public class WaggleServiceImpl implements WaggleService {
   }
 
   @Override
-  public Page<WaggleDTO> getWagglesByHashtags(List<String> hashtags, Pageable pageable) {
+  public List<WaggleDTO> getWagglesByHashtags(List<String> hashtags, Pageable pageable) {
     Set<Long> visitedBoardIds = new HashSet<>(); // 이미 방문한 게시글의 ID를 추적하기 위한 Set
     List<WaggleDTO> uniqueWaggles = new ArrayList<>(); // 중복된 게시글을 필터링한 결과를 저장할 리스트
 
@@ -115,15 +115,18 @@ public class WaggleServiceImpl implements WaggleService {
               commentRepository.countCommentsByBoardId(
                   waggleDTO.getBoard().getBoardId()));
           waggleDTO.setLikesCount(
-              waggleRepository.getLikesCountForEachWaggle().stream()
-                  .filter(result -> ((Waggle) result[0]).getWaggleId()
-                      .equals(waggleDTO.getWaggleId()))
-                  .map(result -> ((Long) result[1]).intValue())
-                  .findFirst()
-                  .orElse(0));
-          waggleDTO.getBoard().setNickname(
-              (String) waggleRepository.findUserNickname(waggleDTO.getBoard().getUserId())
-                  .get(0)[0]);
+              waggleLikeRepository.findByWaggleIdWaggleId(waggleDTO.getWaggleId()).size());
+
+          List<Object[]> userInfo = waggleRepository.findUserNicknameAndProfileAndMainBadge(waggleDTO.getBoard().getUserId());
+          String userNickname = (String) userInfo.get(0)[0];
+          String userProfile = (String) userInfo.get(0)[1];
+          String userMainBadge = (String) userInfo.get(0)[2];
+          waggleDTO.getBoard().setNickname(userNickname);
+          waggleDTO.getBoard().setProfile(userProfile);
+          if(userMainBadge != null) {
+              waggleDTO.getBoard().setMainBadge(userMainBadge);
+          }
+
           uniqueWaggles.add(waggleDTO); // 포함되어 있지 않다면 uniqueWaggles에 추가
           visitedBoardIds.add(waggleDTO.getBoard().getBoardId()); // 방문한 게시글로 표시
         }
@@ -170,7 +173,7 @@ public class WaggleServiceImpl implements WaggleService {
       }
     }
 
-    return new PageImpl<>(uniqueWaggles, pageable, uniqueWaggles.size());
+    return uniqueWaggles;
   }
   private List<String> getTop3Hashtags(Map<String, Integer> hashtagCounts) {
     PriorityQueue<Map.Entry<String, Integer>> minHeap = new PriorityQueue<>(
@@ -273,8 +276,10 @@ public class WaggleServiceImpl implements WaggleService {
   }
 
   public Map<String, Integer> calculateHashtagWeights(Integer loginUserId) {
-    List<WaggleUserHashTag> userHashTags = waggleUserHashTagRepository.findByUserIdOrderByCreatedAtDesc(
-        loginUserId);
+    List<WaggleUserHashTag> userHashTags = waggleUserHashTagRepository.findAllByUserId(loginUserId);
+
+//    List<WaggleUserHashTag> userHashTags = waggleUserHashTagRepository.findByUserIdOrderByCreatedAtDesc(
+//        loginUserId);
 
     // 가중치를 저장할 맵
     Map<String, Integer> hashtagWeights = new HashMap<>();

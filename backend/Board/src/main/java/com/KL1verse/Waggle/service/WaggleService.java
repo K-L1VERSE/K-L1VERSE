@@ -31,7 +31,7 @@ public interface WaggleService {
 
     List<String> getTopHashtags(Integer loginUserId, int topCount);
 
-    Page<WaggleDTO> getWagglesByHashtags(List<String> hashtags, Pageable pageable);
+    List<WaggleDTO> getWagglesByHashtags(List<String> hashtags, Pageable pageable);
 
 
 
