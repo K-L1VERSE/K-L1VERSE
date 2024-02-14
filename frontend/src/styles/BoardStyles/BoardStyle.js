@@ -114,6 +114,7 @@ export const ItemContent = styled.div`
 
 export const ItemInfoSection = styled.div`
   display: flex;
+  flex-direction: row;
   align-items: center;
   margin-top: 8px;
   svg {
@@ -122,6 +123,7 @@ export const ItemInfoSection = styled.div`
 `;
 
 export const ItemInfoItem = styled.div`
+  display: flex;
   font-size: 0.7rem;
   margin-right: 0.7rem;
   margin-bottom: 0.5rem;
