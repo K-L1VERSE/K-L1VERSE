@@ -169,7 +169,6 @@ export const ProductImage = styled.img`
 
 export const ProductImageWrapper = styled.div`
   display: flex;
-  justify-content: flex-start;
   white-space: nowrap;
   overflow-x: auto;
   padding: 0.5rem 0.5rem;
@@ -195,8 +194,9 @@ export const ProductImageWrapper = styled.div`
 
 export const ProductImageTest = styled.img`
   flex: 0 0 auto;
-  max-width: 97%;
-  max-height: 9rem;
+
+  width: auto;
+  height: 9rem;
   position: relative;
   border-radius: 0.5rem;
   border: 1px solid #ccc;
