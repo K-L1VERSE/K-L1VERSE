@@ -29,16 +29,20 @@ export default function WaggleRegistCard({
 
   return (
     <RegistCardContainer>
-      <InputLabel>제목</InputLabel>
+      {/* <InputLabel>제목</InputLabel> */}
       <TitleInput
         type="text"
         value={title}
         onChange={onTitleChange}
-        placeholder="제목"
+        placeholder="Title"
       />
       <br />
-      <InputLabel>내용</InputLabel>
-      <TextArea value={content} onChange={onContentChange} placeholder="내용" />
+      {/* <InputLabel>내용</InputLabel> */}
+      <TextArea
+        value={content}
+        onChange={onContentChange}
+        placeholder="Fill the content here"
+      />
       <br />
       <InputLabel>사진 첨부</InputLabel>
       <BoardFile value={boardImage} onFileChange={handleFileChange} />

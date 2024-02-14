@@ -17,21 +17,28 @@ export const RegistCardContainer = styled.div`
 
 export const TitleInput = styled.input`
   padding: 8px;
-  border: 1px solid lightgrey;
-  border-radius: 4px;
+  // border: 1px solid lightgrey;
+  border: none;
+  border-bottom: 1px solid lightgrey;
+  // border-radius: 4px;
   font-size: 1rem;
   margin-top: 0.3rem;
+  outline: none;
+  font-family: "Pretendard-Regular";
 `;
 
 export const TextArea = styled.textarea`
   /* width: 20rem; */
   height: 10rem;
   padding: 0.6rem;
+  border: none;
   border: 1px solid lightgrey;
-  border-radius: 4px;
+  // border-radius: 4px;
   font-size: 1rem;
   resize: none;
   margin-top: 0.3rem;
+  outline: none;
+  font-family: "Pretendard-Regular";
 `;
 
 export const InputLabel = styled.label`
@@ -53,10 +60,13 @@ export const SelectInput = styled.select`
 
 export const PriceInput = styled.input`
   padding: 8px;
-  border: 1px solid lightgrey;
-  border-radius: 4px;
+  // border: 1px solid lightgrey;
+  // border-radius: 4px;
+  border: none;
+  border-bottom: 1px solid lightgrey;
   font-size: 1rem;
   margin-top: 0.3rem;
+  outline: none;
 `;
 
 export const NumberInput = styled.input`
@@ -146,6 +156,7 @@ export const FileInputLabel = styled.div`
   background: #ffffff;
   border: 1px solid lightgrey;
   border-radius: 4px;
+  outline: none;
   cursor: pointer;
 
   img {
@@ -187,13 +198,17 @@ export const RemoveButton = styled.button`
 `;
 
 export const SubmitButton = styled.button`
-  background-color: #4caf50;
+  background-color: #3261c1;
   color: white;
   padding: 10px 15px;
   border: none;
   border-radius: 4px;
   cursor: pointer;
   font-size: 1rem;
+  transition: box-shadow 0.3s ease;
+  &:hover {
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+  }
 `;
 
 export const ToggleContainer = styled.div`
@@ -202,6 +217,7 @@ export const ToggleContainer = styled.div`
   margin-top: 1rem;
   margin-left: 1rem;
   gap: 0.5rem;
+  font-size: 0.9rem;
 `;
 
 export const OuterCircle = styled.div`
@@ -231,6 +247,8 @@ export const InnerCircle = styled.div`
 `;
 
 export const DealFlagText = styled.div`
-  font-size: 1rem;
-  margin-left: 10px;
+  font-size: 0.9rem;
+  margin-left: 0.2rem;
+  font-family: "Pretendard-Regular";
+  color: darkslategrey;
 `;

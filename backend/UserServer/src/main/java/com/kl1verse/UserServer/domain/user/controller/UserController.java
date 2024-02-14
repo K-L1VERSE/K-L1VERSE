@@ -80,7 +80,7 @@ public class UserController {
             log.info("Refresh Token Expired");
 //            Custom Error 1101 return
 //            throw new TokenException(ResponseCode.EXPIRED_REFRESH_TOKEN);
-            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
+            return ResponseEntity.ok().build();
         }
 
         // Refresh Token 만료 안된 상황

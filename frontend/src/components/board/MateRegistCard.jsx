@@ -1,4 +1,6 @@
 import React, { useState, useEffect } from "react";
+import { faCaretDown, faCaretUp } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   TextArea,
   SubmitButton,
@@ -15,7 +17,11 @@ import {
   MateNumberContainer,
   MateNumberInput,
 } from "../../styles/BoardStyles/MateListStyle";
+
+import { Small, ToggleComponent } from "../../styles/BoardStyles/BoardStyle";
+
 import MatchSchedulePage from "../../pages/match_page/MatchSchedulePage";
+import ScheduleModal from "./toggle/ScheduleModal";
 
 function MateRegistCard({
   title,
@@ -52,6 +58,16 @@ function MateRegistCard({
     setFullFlag(e.target.checked);
   }
 
+  const [isToggled, setIsToggled] = useState(true);
+
+  const handleToggele = () => {
+    setIsToggled(!isToggled);
+  };
+
+  const handleMatchClick = (selectedMatchId) => {
+    setSelectedMatchId(selectedMatchId);
+  };
+
   return (
     <>
       <ToggleContainer>
@@ -62,48 +78,52 @@ function MateRegistCard({
       </ToggleContainer>
 
       <RegistCardContainer>
-        <InputLabel>경기 일정</InputLabel>
-        <MatchSchedulePage
-          value={matchId}
-          isMateListPage={true}
-          defaultValue={matchId}
-          onMatchClick={(matchId) => {
-            onMatchIdChange(matchId);
-          }}
-          selectedMatchId={matchId}
-        />
-        {/* <SelectInput
-          value={matchId}
-          defaultValue={matchId}
-          onChange={(e) => onMatchIdChange(e.target.value)}
-        >
-          <option value="" disabled>
-            경기를 선택하세요
-          </option>
-          {matchList.map((match) => (
-            <option key={match.matchId} value={match.matchId}>
-              {match.homeTeamName} vs {match.awayTeamName} -{" "}
-              {formatDateTime(match.matchAt)}{" "}
-            </option>
-          ))}
-        </SelectInput> */}
-
-        <InputLabel>제목</InputLabel>
+        <div>경기 선택</div>
+        <ToggleComponent>
+          <button onClick={handleToggele} type="button">
+            {isToggled ? (
+              <div>
+                캘린더&nbsp;&nbsp;
+                <FontAwesomeIcon icon={faCaretDown} />
+              </div>
+            ) : (
+              <div>
+                캘린더&nbsp;&nbsp; <FontAwesomeIcon icon={faCaretUp} />
+              </div>
+            )}
+          </button>
+        </ToggleComponent>
+        {isToggled ? (
+          <div />
+        ) : (
+          <Small>
+            <ScheduleModal
+              value={matchId}
+              isMateListPage={true}
+              defaultValue={matchId}
+              onMatchClick={(matchId) => {
+                onMatchIdChange(matchId);
+              }}
+              selectedMatchId={matchId}
+            />
+          </Small>
+        )}
         <TitleInput
           value={title}
           onChange={onTitleChange}
-          placeholder="제목을 입력하세요"
+          placeholder="Title"
         />
-        <InputLabel>모집 내용</InputLabel>
+        {/* <InputLabel>모집 내용</InputLabel> */}
+        <div style={{ height: "1rem" }} />
         <TextArea
           value={content}
           onChange={onContentChange}
-          placeholder="내용을 입력하세요"
+          placeholder="Fill the content here"
         />
         <InputLabel>모집 인원</InputLabel>
         <MateNumberContainer>
           <MateNumberInput
-            type="number"
+            type="text"
             value={total}
             onChange={onTotalChange}
             placeholder="총 인원"

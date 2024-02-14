@@ -42,13 +42,14 @@ export const MateDetailTitle = styled.p`
   font-size: 1.2rem;
   font-family: "Pretendard-Bold";
   margin-bottom: 1rem;
-  border-top: 1px solid #ccc;
   margin-top: 1rem;
   padding-top: 1rem;
 `;
 
 export const MateDetailContent = styled.p`
   margin: 0;
+  white-space: pre-wrap;
+  font-size: 0.9rem;
 `;
 
 export const MateDetailTotal = styled.p`
@@ -76,13 +77,15 @@ export const MateNumberContainer = styled.div`
 `;
 
 export const MateNumberInput = styled.input`
-  width: 2rem;
-  padding: 0.3rem;
+  width: 5rem;
+  padding: 0.4rem;
   text-align: center;
   margin-right: 4px;
   border: 1px solid lightgrey;
   border-radius: 4px;
-  font-size: 1rem;
+  font-size: 0.9rem;
+  outline: none;
+  margin-top: 0.1rem;
 `;
 
 export const MateInputText = styled.span`

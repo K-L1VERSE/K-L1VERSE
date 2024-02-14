@@ -241,12 +241,12 @@ function WaggleDetailPage() {
                 src={`${process.env.PUBLIC_URL}/badge/badge${waggleDetail.mainBadge === null ? 0 : waggleDetail.mainBadge}back.png`}
               />
             </UserContainer>
-            <div>
+            <ForSpaceBetween>
               <CreateAt>
-                {formatDateTime2(createAt)}
-                <EditDeleteButton>{renderEditDeleteButtons()}</EditDeleteButton>
+                <div>{formatDateTime2(createAt)}</div>
               </CreateAt>
-            </div>
+              <EditDeleteButton>{renderEditDeleteButtons()}</EditDeleteButton>
+            </ForSpaceBetween>
 
             <Title>{highlightHashtags(title)}</Title>
             <Content>{highlightHashtags(content)}</Content>
@@ -311,4 +311,11 @@ export const Bottom = styled.div`
   display: flex;
   justify-content: space-between;
   margin-top: 1rem;
+`;
+
+export const ForSpaceBetween = styled.div`
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 0.3px solid #ccc;
 `;
