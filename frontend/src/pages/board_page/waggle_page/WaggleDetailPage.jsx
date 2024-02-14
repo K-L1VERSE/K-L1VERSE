@@ -191,6 +191,18 @@ function WaggleDetailPage() {
     setModalVisible(false);
   };
 
+  const highlightHashtags = (text) => {
+    return text.split(/(#\w+)/).map((word, index) =>
+      word.startsWith("#") ? (
+        <span key={index} style={{ color: "#E4405F" }}>
+          {word}
+        </span>
+      ) : (
+        word
+      )
+    );
+  };
+
   return (
     <div>
       {waggleDetail && waggleId && (
@@ -215,8 +227,8 @@ function WaggleDetailPage() {
               </CreateAt>
             </div>
 
-            <Title>{title}</Title>
-            <Content>{content}</Content>
+            <Title>{highlightHashtags(title)}</Title>
+            <Content>{highlightHashtags(content)}</Content>
             <WaggleImageWrapper>
               {waggleDetail.boardImage &&
                 waggleDetail.boardImage
