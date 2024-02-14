@@ -8,6 +8,8 @@ import {
   Header,
   HeaderButton,
   HeaderDiv,
+  Info,
+  Button2,
 } from "../../../styles/BoardStyles/BoardStyle";
 import { Button } from "../../../styles/BoardStyles/BoardDetailStyle";
 // import SearchComponent from "../../../components/board/SearchComponent";
@@ -115,18 +117,19 @@ function WaggleListPage() {
 
   return (
     <div>
-      <Button onClick={handleRecommendClick}> 추천 </Button>
-
       <BoardTopNavBar />
+
       <Header>
         <HeaderDiv>
-          <img
-            src="https://raw.githubusercontent.com/Tarikul-Islam-Anik/Animated-Fluent-Emojis/master/Emojis/Smilies/Grinning%20Face%20with%20Big%20Eyes.png"
-            alt="Grinning Face with Big Eyes"
-            width="25"
-            height="25"
-          />
-          <div>와글Waggle 떠들어주세요</div>
+          <Info>
+            <img
+              src="https://raw.githubusercontent.com/Tarikul-Islam-Anik/Animated-Fluent-Emojis/master/Emojis/Smilies/Grinning%20Face%20with%20Big%20Eyes.png"
+              alt="Grinning Face with Big Eyes"
+              width="25"
+              height="25"
+            />
+            와글와글 떠들어주세요
+          </Info>
         </HeaderDiv>
         <HeaderButton onClick={handleWriteWaggleClick}>
           <img
@@ -138,6 +141,18 @@ function WaggleListPage() {
           <div>&nbsp;글쓰기</div>
         </HeaderButton>
       </Header>
+      <Button2>
+        <Button onClick={handleRecommendClick}>
+          <img
+            src="https://raw.githubusercontent.com/Tarikul-Islam-Anik/Animated-Fluent-Emojis/master/Emojis/Smilies/Heart%20Decoration.png"
+            alt="Heart Decoration"
+            width="35"
+            height="35"
+          />
+        </Button>
+        <div>&nbsp; 👈🏻 추천 받기 !</div>
+        {/* <div>&nbsp; 👈🏻 추천받아보아요</div> */}
+      </Button2>
       {/* <SearchComponent onSearch={handleSearch} /> */}
 
       <WaggleContainer

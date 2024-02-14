@@ -34,14 +34,14 @@ export default function WaggleRegistCard({
         type="text"
         value={title}
         onChange={onTitleChange}
-        placeholder="Title"
+        placeholder="제목"
       />
       <br />
       {/* <InputLabel>내용</InputLabel> */}
       <TextArea
         value={content}
         onChange={onContentChange}
-        placeholder="Fill the content here"
+        placeholder="상세 내용"
       />
       <br />
       <InputLabel>사진 첨부</InputLabel>
