@@ -46,6 +46,12 @@ const EditNicknameModal = ({ type, setModalOpen, user, setUser }) => {
   };
 
   useEffect(() => {
+    if (type === "signUp") {
+      setModifyingState((prev) => ({ ...prev, modifyingNickname: true }));
+    }
+  }, []);
+
+  useEffect(() => {
     const checkNicknameAvailability = async () => {
       try {
         const response = await axios.post("/user/users/check-nickname", {
@@ -59,12 +65,10 @@ const EditNicknameModal = ({ type, setModalOpen, user, setUser }) => {
       }
     };
 
-    if (
-      isValidNickname(newNickname) &&
-      newNickname.length >= 2 &&
-      newNickname.length <= 5
-    ) {
-      checkNicknameAvailability();
+    if (newNickname.length >= 2 && newNickname.length <= 5) {
+      if (isValidNickname(newNickname)) {
+        checkNicknameAvailability();
+      }
     } else {
       setIsCheckingAvailability(true);
       setIsNicknameAvailable(false);
@@ -88,6 +92,10 @@ const EditNicknameModal = ({ type, setModalOpen, user, setUser }) => {
   };
 
   const saveEdit = () => {
+    if (newNickname < 2 || newNickname > 5) {
+      return;
+    }
+
     if (isNicknameAvailable) {
       if (type === "modify") {
         axios
@@ -133,15 +141,19 @@ const EditNicknameModal = ({ type, setModalOpen, user, setUser }) => {
               ...prev,
               nickname: newNickname,
             }));
+            Swal.fire({
+              text: "닉네임이 설정되었습니다.",
+              width: "20rem",
+              imageUrl:
+                "https://raw.githubusercontent.com/Tarikul-Islam-Anik/Animated-Fluent-Emojis/master/Emojis/Smilies/Ghost.png",
+              imageWidth: 100,
+            }).then(() => {
+              setModifyingState((prev) => ({
+                ...prev,
+                modifyingNickname: false,
+              }));
+            });
           });
-        Swal.fire({
-          text: "닉네임이 설정되었습니다.",
-          width: "20rem",
-          imageUrl:
-            "https://raw.githubusercontent.com/Tarikul-Islam-Anik/Animated-Fluent-Emojis/master/Emojis/Smilies/Ghost.png",
-          imageWidth: 100,
-        });
-        setModalOpen(false);
       }
     }
   };
@@ -235,7 +247,14 @@ const EditNicknameModal = ({ type, setModalOpen, user, setUser }) => {
           {type === "modify" && (
             <CancleButton onClick={cancelEdit}>취소</CancleButton>
           )}
-          <SaveButton onClick={saveEdit} $abled={isNicknameAvailable}>
+          <SaveButton
+            onClick={saveEdit}
+            $abled={
+              isNicknameAvailable &&
+              newNickname.length <= 5 &&
+              newNickname.length >= 2
+            }
+          >
             저장
           </SaveButton>
         </ButtonContainer>
