@@ -65,3 +65,10 @@ export function likeCount(waggleId, success, fail) {
 export function uploadFile(formData) {
   return axios.post(`/${gateway}/file/upload`, formData);
 }
+
+export function getRecommendWaggleList(page, data, success, fail) {
+  axios
+    .post(`/${gateway}/${url}/hashtags?page=${page}`, data)
+    .then(success)
+    .catch(fail);
+}
