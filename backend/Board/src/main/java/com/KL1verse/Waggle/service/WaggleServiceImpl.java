@@ -38,6 +38,7 @@ import java.util.stream.Collectors;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.BeanUtils;
+import org.springframework.cglib.core.Local;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
@@ -66,15 +67,15 @@ public class WaggleServiceImpl implements WaggleService {
 
 
   @Override
-  public Page<WaggleDTO> getWagglesByUser(Integer userId, Pageable pageable) {
-    Page<Waggle> waggles = waggleRepository.findByBoard_UserId(userId, pageable);
+  public List<WaggleDTO> getWagglesByUser(Integer userId, Pageable pageable) {
+    List<Waggle> waggles = waggleRepository.findAllByBoard_UserId(userId, pageable);
 
     List<Object[]> userInfo = waggleRepository.findUserNicknameAndProfileAndMainBadge(userId);
     String userNickname = (String) userInfo.get(0)[0];
     String userProfile = (String) userInfo.get(0)[1];
     String userMainBadge = (String) userInfo.get(0)[2];
 
-    return waggles.map(waggle -> {
+    return waggles.stream().map(waggle -> {
       WaggleDTO waggleDTO = convertToDTO(waggle);
 
       waggleDTO.getBoard().setNickname(userNickname);
@@ -83,22 +84,16 @@ public class WaggleServiceImpl implements WaggleService {
           waggleDTO.getBoard().setMainBadge(userMainBadge);
       }
 
-      waggleDTO.getBoard().setBoardImage(waggle.getBoard().getBoardImage());
-
       // 사용자의 게시글에 대한 댓글 수 가져오기
       int commentCount = commentRepository.countCommentsByBoardId(waggle.getBoard().getBoardId());
       waggleDTO.getBoard().setCommentCount(commentCount);
 
       // 사용자의 게시글에 대한 좋아요 수 가져오기
-      int likesCount = waggleRepository.getLikesCountForEachWaggle().stream()
-          .filter(result -> ((Waggle) result[0]).getWaggleId().equals(waggle.getWaggleId()))
-          .map(result -> ((Long) result[1]).intValue())
-          .findFirst()
-          .orElse(0);
-      waggleDTO.setLikesCount(likesCount);
+      int likeCount = waggleLikeRepository.findByWaggleIdWaggleId(waggle.getWaggleId()).size();
+      waggleDTO.setLikesCount(likeCount);
 
       return waggleDTO;
-    });
+    }).collect(Collectors.toList());
   }
 
 //  @Override
@@ -282,12 +277,7 @@ public class WaggleServiceImpl implements WaggleService {
         .isPresent();
     waggleDTO.setLiked(isLiked);
 
-    int likesCount = waggleRepository.getLikesCountForEachWaggle().stream()
-        .filter(result -> ((Waggle) result[0]).getWaggleId().equals(waggle.getWaggleId()))
-        .map(result -> ((Long) result[1]).intValue())
-        .findFirst()
-        .orElse(0);
-
+    int likesCount = waggleLikeRepository.findByWaggleIdWaggleId(waggle.getWaggleId()).size();
     waggleDTO.setLikesCount(likesCount);
 
     int commentCount = commentRepository.countCommentsByBoardId(boardId);
@@ -622,19 +612,15 @@ public class WaggleServiceImpl implements WaggleService {
 
 
   @Override
-  public Page<WaggleDTO> getAllWagglesWithLikes(Pageable pageable) {
+  public List<WaggleDTO> getAllWagglesWithLikes(Pageable pageable) {
 
-    log.info(LocalDateTime.now().toString());
-    Page<Waggle> waggles = waggleRepository.findAll(pageable);
-    log.info(LocalDateTime.now().toString());
+    List<Waggle> waggles = waggleRepository.findAllBy(pageable);
 
-    List<WaggleDTO> wagglesWithLikes = waggles.getContent().stream()
+    List<WaggleDTO> wagglesWithLikes = waggles.stream()
         .map(waggle -> {
           WaggleDTO waggleDTO = convertToDTO(waggle);
 
-          log.info(LocalDateTime.now().toString());
           List<Object[]> profileAndMainBadge = waggleRepository.findUserNicknameAndProfileAndMainBadge(waggle.getBoard().getUserId());
-          log.info(LocalDateTime.now().toString());
 
           String userNickname = (String) profileAndMainBadge.get(0)[0];
           String userProfile = (String) profileAndMainBadge.get(0)[1];
@@ -646,10 +632,8 @@ public class WaggleServiceImpl implements WaggleService {
           }
 
           Long boardId = waggle.getBoard().getBoardId();
-          log.info(LocalDateTime.now().toString());
           Integer commentCount = commentRepository.countCommentsByBoardId(boardId);
           int likeCount = waggleLikeRepository.findByWaggleIdWaggleId(waggle.getWaggleId()).size();
-          log.info(LocalDateTime.now().toString());
           waggleDTO.getBoard().setCommentCount(commentCount != null ? commentCount : 0);
           waggleDTO.setLikesCount(likeCount);
 
@@ -657,8 +641,8 @@ public class WaggleServiceImpl implements WaggleService {
         })
         .collect(Collectors.toList());
 
-    log.info(LocalDateTime.now().toString());
-    return new PageImpl<>(wagglesWithLikes, pageable, waggles.getTotalElements());
+//    return new PageImpl<>(wagglesWithLikes, pageable, waggles.getTotalElements());
+    return wagglesWithLikes;
   }
 
 

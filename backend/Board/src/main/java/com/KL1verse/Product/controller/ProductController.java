@@ -31,9 +31,9 @@ public class ProductController {
     }
 
     @PostMapping("/myPage")
-    public ResponseEntity<Page<ProductDTO>> getProductsByUser(@RequestBody BoardDTO boardDTO, Pageable pageable) {
+    public ResponseEntity<List<ProductDTO>> getProductsByUser(@RequestBody BoardDTO boardDTO, Pageable pageable) {
         Integer userId = boardDTO.getUserId();
-        Page<ProductDTO> products = productService.getProductsByUser(userId, pageable);
+        List<ProductDTO> products = productService.getProductsByUser(userId, pageable);
         return ResponseEntity.ok(products);
     }
 
@@ -68,8 +68,8 @@ public class ProductController {
     }
 
     @GetMapping("/pages")
-    public ResponseEntity<Page<ProductDTO>> getAllProductsPaged(Pageable pageable) {
-        Page<ProductDTO> products = productService.getAllProductList(pageable);
+    public ResponseEntity<List<ProductDTO>> getAllProductsPaged(Pageable pageable) {
+        List<ProductDTO> products = productService.getAllProductList(pageable);
         return ResponseEntity.ok(products);
     }
 

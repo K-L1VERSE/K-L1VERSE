@@ -48,6 +48,7 @@ function ProductRegistPage() {
         confirmButtonText:
           "<div style='font-size:1rem; font-family:Pretendard-Regular;'>확인</div>",
       });
+      return;
     }
     if (isUpdateMode) {
       updateProduct(

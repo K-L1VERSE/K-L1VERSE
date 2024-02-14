@@ -75,15 +75,15 @@ public class ProductServiceImpl implements ProductService {
 //    }
 
     @Override
-    public Page<ProductDTO> getProductsByUser(Integer userId, Pageable pageable) {
-        Page<Product> products = productRepository.findByBoard_UserId(userId, pageable);
+    public List<ProductDTO> getProductsByUser(Integer userId, Pageable pageable) {
+        List<Product> products = productRepository.findByBoard_UserId(userId, pageable);
 
         List<Object[]> userInfo = productRepository.findUserNicknameAndProfileAndMainBadge(userId);
         String userNickname = (String) userInfo.get(0)[0];
         String userProfile = (String) userInfo.get(0)[1];
         String userMainBadge = (String) userInfo.get(0)[2];
 
-        return products.map(product -> {
+        return products.stream().map(product -> {
             ProductDTO productDTO = convertToDTO(product);
 
             productDTO.getBoard().setNickname(userNickname);
@@ -101,7 +101,7 @@ public class ProductServiceImpl implements ProductService {
             productDTO.getBoard().setCommentCount(commentCount != null ? commentCount : 0);
 
             return productDTO;
-        });
+        }).collect(Collectors.toList());
     }
 
 
@@ -226,10 +226,10 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    public Page<ProductDTO> getAllProductList(Pageable pageable) {
-        Page<Product> products = productRepository.findAll(pageable);
+    public List<ProductDTO> getAllProductList(Pageable pageable) {
+        List<Product> products = productRepository.findAllBy(pageable);
 
-        return products.map(product -> {
+        return products.stream().map(product -> {
             ProductDTO productDTO = convertToDTO(product);
 
             if (product.getBoard() != null) {
@@ -250,10 +250,9 @@ public class ProductServiceImpl implements ProductService {
             if(userBadge != null) {
                 productDTO.getBoard().setMainBadge(userBadge);
             }
-            productDTO.getBoard().setBoardImage(product.getBoard().getBoardImage());
 
             return productDTO;
-        });
+        }).collect(Collectors.toList());
     }
 
     @Override

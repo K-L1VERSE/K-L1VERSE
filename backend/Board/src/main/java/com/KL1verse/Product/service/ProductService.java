@@ -19,11 +19,11 @@ public interface ProductService {
 
     Page<ProductDTO> searchProducts(SearchBoardConditionDto searchCondition, Pageable pageable);
 
-    Page<ProductDTO> getAllProductList(Pageable pageable);
+    List<ProductDTO> getAllProductList(Pageable pageable);
 
     List<ProductDTO> getMostRecentProducts(int count);
 
-    Page<ProductDTO> getProductsByUser(Integer userId, Pageable pageable);
+    List<ProductDTO> getProductsByUser(Integer userId, Pageable pageable);
 }
 
 

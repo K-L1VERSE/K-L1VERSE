@@ -22,10 +22,10 @@ function ProductListPage() {
       page,
       10,
       ({ data }) => {
-        if (!data.content) {
+        if (!data) {
           setHasMore(false);
         } else {
-          setProductList([...productList, ...data.content]);
+          setProductList([...productList, ...data]);
           setPage(page + 1);
         }
       },
