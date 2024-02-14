@@ -21,6 +21,7 @@ export const UserContainer = styled.div`
   display: flex;
   align-items: center;
   margin-bottom: 0.5rem;
+  margin-top: 0.8rem;
 `;
 
 export const UserProfile = styled.img`
@@ -31,7 +32,7 @@ export const UserProfile = styled.img`
 `;
 
 export const User = styled.div`
-  font-size: 1rem;
+  font-size: 0.9rem;
   font-weight: bold;
   margin-right: 0.1rem;
 `;
@@ -45,7 +46,7 @@ export const CreateAt = styled.p`
   font-size: 0.7rem;
   color: #595959;
   padding-bottom: 0.5rem;
-  border-bottom: 0.3px solid #ccc;
+  // border-bottom: 0.3px solid #ccc;
 `;
 
 export const Title = styled.div`
@@ -185,9 +186,10 @@ export const LikeCount = styled.span`
 `;
 
 export const EditDeleteButton = styled.div`
-  // display: flex;
+  display: flex;
   justify-content: flex-end;
   font-size: 1.5rem;
+  height: 1.5rem;
 `;
 
 export const UpdateButton = styled(Button)`

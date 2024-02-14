@@ -5,4 +5,5 @@ export const ImageBoxContainer = styled.div`
   height: 10rem;
   display: flex;
   justify-content: center;
+  margin-bottom: 0.7rem;
 `;

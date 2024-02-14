@@ -119,8 +119,7 @@ export const ProductItemCreated = styled.div`
 export const ProductWriterContainer = styled.div`
   display: flex;
   align-items: center;
-  margin-bottom: 0.5rem;
-  margin-top: 1rem;
+  margin-right: 0.5rem;
 `;
 
 export const ProductWriterProfile = styled.img`
@@ -135,6 +134,7 @@ export const ProductWriter = styled.div`
   align-items: center;
   margin-right: 0.1rem;
   font-family: "Pretendard-Bold";
+  font-size: 0.9rem;
 `;
 
 export const ProductWriterBadge = styled.img`
