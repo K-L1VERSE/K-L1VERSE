@@ -72,8 +72,9 @@ public class JWTFilter {
                 headers.set("Authorization", tokenList.get(0));
                 HttpEntity<String> entity = new HttpEntity<>(headers);
 
+                String url = domain + ":8010/users/access_token/reissue";
                 HttpEntity<String> response = restTemplate.exchange(
-                    "http://localhost:8010/users/access_token/reissue",
+                        url,
                     HttpMethod.GET,
                     entity,
                     String.class
