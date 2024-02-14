@@ -19,7 +19,6 @@ import {
   EditDeleteButton,
   DetailCommentCount,
   CreateAt,
-  // LikeCount,
   UserContainer,
   UserProfile,
   UserBadge,
@@ -28,7 +27,7 @@ import {
 import { UserState } from "../../../global/UserState";
 
 import BackIcon from "../../../assets/icon/back-icon.png";
-import { ReactComponent as Comment } from "../../../assets/icon/comment-icon.svg";
+import { ReactComponent as CommentIcon } from "../../../assets/icon/comment-icon.svg";
 import {
   DeleteButton,
   EditButton,
@@ -189,6 +188,18 @@ function WaggleDetailPage() {
     setModalVisible(false);
   };
 
+  const highlightHashtags = (text) => {
+    return text.split(/(#\w+)/).map((word, index) =>
+      word.startsWith("#") ? (
+        <span key={index} style={{ color: "#E4405F" }}>
+          {word}
+        </span>
+      ) : (
+        word
+      )
+    );
+  };
+
   return (
     <div>
       {waggleDetail && waggleId && (
@@ -203,59 +214,55 @@ function WaggleDetailPage() {
               <UserProfile src={waggleDetail.profile} />
               <User>{nickname}</User>
               <UserBadge
-                src={`${process.env.PUBLIC_URL}/badge/badge${waggleDetail.mainBadge === null ? 0 : waggleDetail.mainBadge}back.png`}
-              />
-            </UserContainer>
-            <div>
-              <CreateAt>
-                {formatDateTime2(createAt)}
-                <EditDeleteButton>{renderEditDeleteButtons()}</EditDeleteButton>
-              </CreateAt>
-            </div>
-
-            <Title>{title}</Title>
-            <Content>{content}</Content>
-            <WaggleImageContainer>
-              {waggleDetail.boardImage &&
-                waggleDetail.boardImage
-                  .split(",")
-                  .map((imageUrl, index) => (
-                    <WaggleImage
-                      key={index}
-                      src={imageUrl.trim()}
-                      alt={`Waggle Image ${index}`}
-                      onClick={() => handleImageClick(imageUrl.trim())}
-                    />
-                  ))}
-            </WaggleImageContainer>
-            <Like
-              liked={liked}
-              likesCount={likesCount}
-              handleLikeClick={handleLikeClick}
-            />
-            <Gray />
-          </DetailBox>
-
-          <DetailCommentCount>
-            {/* <Comment /> */}
-            <div>
-              <img
-                src="https://raw.githubusercontent.com/Tarikul-Islam-Anik/Animated-Fluent-Emojis/master/Emojis/Smilies/Love%20Letter.png"
-                alt="Love Letter"
-                width="25"
-                height="25"
-              />
-              댓글 수 {commentCount}
-            </div>
-          </DetailCommentCount>
-          <CommentList boardId={boardId} writerId={waggleDetail.userId} />
-        </Container>
-      )}
-      <Modal visible={modalVisible} onClose={handleCloseModal}>
-        <img src={clickedImageUrl} alt="Modal Image" />
-      </Modal>
-    </div>
-  );
-}
-
-export default WaggleDetailPage;
+                src={`${process.env.PUBLIC_URL}/badge/badge${
+                  waggleDetail.mainBadge === null ? 0 : waggleDetail.main}back.png`}
+                  />
+                </UserContainer>
+                <div>
+                  <CreateAt>
+                    {formatDateTime2(createAt)}
+                    <EditDeleteButton>{renderEditDeleteButtons()}</EditDeleteButton>
+                  </CreateAt>
+                </div>
+    
+                <Title>{highlightHashtags(title)}</Title>
+                <Content>{highlightHashtags(content)}</Content>
+                <WaggleImageContainer>
+                  {waggleDetail.boardImage &&
+                    waggleDetail.boardImage
+                      .split(",")
+                      .map((imageUrl, index) => (
+                        <WaggleImage
+                          key={index}
+                          src={imageUrl.trim()}
+                          alt={`Waggle Image ${index}`}
+                          onClick={() => handleImageClick(imageUrl.trim())}
+                        />
+                      ))}
+                </WaggleImageContainer>
+                <Like
+                  liked={liked}
+                  likesCount={likesCount}
+                  handleLikeClick={handleLikeClick}
+                />
+                <Gray />
+              </DetailBox>
+    
+              <DetailCommentCount>
+                <CommentIcon />
+                <div>
+                  댓글 수 {commentCount}
+                </div>
+              </DetailCommentCount>
+              <CommentList boardId={boardId} writerId={waggleDetail.userId} />
+            </Container>
+          )}
+          <Modal visible={modalVisible} onClose={handleCloseModal}>
+            <img src={clickedImageUrl} alt="Modal Image" />
+          </Modal>
+        </div>
+      );
+    }
+    
+    export default WaggleDetailPage;
+    
