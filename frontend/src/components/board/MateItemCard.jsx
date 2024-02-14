@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import styled from "styled-components";
 import { Link } from "react-router-dom";
 import {
   MateItemCreated,
@@ -51,19 +52,15 @@ function MateItemCard({ mate, user, fromMypage, category }) {
               <MatchTitle>
                 {matchDetail.homeTeamName} vs {matchDetail.awayTeamName}
               </MatchTitle>
-              <MatchTime>
-                {formatDateTime(matchDetail.matchAt)} 경기 ⚽
-              </MatchTime>
             </ItemTitle>
+            <MatchTime>
+              {formatDateTime(matchDetail.matchAt)} 경기 <div>🥅</div>
+            </MatchTime>
             <TitleComponent>{mate.board.title}</TitleComponent>
-            <ItemContent>
-              <p>{mate.board.content}</p>
-            </ItemContent>
-            <ItemInfoSection>
-              <MateItemCreated>
-                {formatRelativeTime(mate.board.createAt)}
-              </MateItemCreated>
-            </ItemInfoSection>
+            <ItemContent>{mate.board.content}</ItemContent>
+            <MateItemCreated>
+              {formatRelativeTime(mate.board.createAt)}
+            </MateItemCreated>
           </ItemContainer>
         </Link>
       )}

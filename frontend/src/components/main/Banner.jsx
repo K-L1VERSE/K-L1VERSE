@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import { useSwipeable } from "react-swipeable";
 import Banner1 from "../../assets/banners/banner1.png";
 import Banner2 from "../../assets/banners/banner2.png";
@@ -10,6 +10,22 @@ import {
 } from "../../styles/main-styles/BannerStyle";
 
 export default function Banner() {
+  const imgRef = useRef(null);
+  const [height, setHeight] = useState(0);
+
+  useEffect(() => {
+    const imgElement = imgRef.current;
+    const resizeObserver = new ResizeObserver(([entry]) => {
+      setHeight(entry.target.offsetHeight);
+    });
+
+    resizeObserver.observe(imgElement);
+
+    return () => {
+      resizeObserver.unobserve(imgElement);
+    };
+  }, []);
+
   const [curIndex, setCurIndex] = useState(0);
   const imgs = [
     {
@@ -37,10 +53,10 @@ export default function Banner() {
 
   return (
     <>
-      <BannerWrap {...handlers}>
+      <BannerWrap {...handlers} height={height}>
         {imgs.map((img) => (
           <BannerItem key={img.id} $display={img.id === curIndex}>
-            <img src={img.src} alt="banner" />
+            <img ref={imgRef} src={img.src} alt="banner" />
           </BannerItem>
         ))}
       </BannerWrap>

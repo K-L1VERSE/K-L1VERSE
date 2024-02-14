@@ -51,11 +51,18 @@ public class MateServiceImpl implements MateService {
         mateDTO.getBoard().setCommentCount(commentCount);
 
         Integer userId = mateDTO.getBoard().getUserId();
-        List<Object[]> nicknameResult = mateRepository.findUserNickname(userId);
+        List<Object[]> userInfo = mateRepository.findUserNicknameAndProfileAndMainBadge(userId);
 
 
-        String userNickname = (String) nicknameResult.get(0)[0];
+        String userNickname = (String) userInfo.get(0)[0];
+        String userProfile = (String) userInfo.get(0)[1];
+        String userMainBadge = (String) userInfo.get(0)[2];
+
         mateDTO.getBoard().setNickname(userNickname);
+        mateDTO.getBoard().setProfile(userProfile);
+        if(userMainBadge != null) {
+            mateDTO.getBoard().setMainBadge(userMainBadge);
+        }
 
         return mateDTO;
     }

@@ -81,6 +81,7 @@ export const DealStatus = styled.div`
 export const DealStatusGreen = styled(DealStatus)`
   background-color: #4caf50;
   color: white;
+  align-self: center;
 `;
 
 export const DealStatusOrange = styled(DealStatus)`
