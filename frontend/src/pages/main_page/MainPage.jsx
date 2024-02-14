@@ -15,7 +15,6 @@ import Footer from "../../components/main/Footer";
 
 function MainPage() {
   const [userState] = useRecoilState(UserState);
-  const { email } = userState;
   const { nickname } = userState;
   const { email } = userState;
 
