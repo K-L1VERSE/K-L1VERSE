@@ -2,13 +2,11 @@ import React, { useState, useEffect } from "react";
 import { useRecoilState } from "recoil";
 import { useNavigate, useLocation } from "react-router-dom";
 import Swal from "sweetalert2";
-
+import styled from "styled-components";
 import MateRegistCard from "../../../components/board/MateRegistCard"; // Import MateRegistCard
 import { createMate, updateMate } from "../../../api/mate";
 import { UserState } from "../../../global/UserState";
-
 import { DetailTop } from "../../../styles/BoardStyles/BoardCreateStyle";
-
 import BackIcon from "../../../assets/icon/back-icon.png";
 import { BackButton } from "../../../styles/BoardStyles/BoardDetailStyle";
 
@@ -132,9 +130,15 @@ function MateRegistPage() {
           <img src={BackIcon} alt="Back" />
         </BackButton>
       </DetailTop>
-      <DetailTop>
-        {isUpdateMode ? "Mate 게시물 수정" : "Mate 게시물 작성"}
-      </DetailTop>
+      <MateBoardTitle>
+        <div>{isUpdateMode ? "직관메이트 글수정" : "직관메이트 글쓰기"}</div>
+        <img
+          src="https://raw.githubusercontent.com/Tarikul-Islam-Anik/Animated-Fluent-Emojis/master/Emojis/Hand%20gestures/Call%20Me%20Hand%20Medium-Light%20Skin%20Tone.png"
+          alt="Call Me Hand Medium-Light Skin Tone"
+          width="22"
+          height="22"
+        />
+      </MateBoardTitle>
 
       <MateRegistCard
         title={title}
@@ -145,9 +149,8 @@ function MateRegistPage() {
         onTitleChange={(e) => setTitle(e.target.value)}
         onContentChange={(e) => setContent(e.target.value)}
         onTotalChange={(e) => {
-          if (e.target.value > 0) {
-            setTotal(e.target.value);
-          }
+          const val = e.target.value;
+          setTotal(val.replace(/\D/g, ""));
         }}
         onfullFlag={fullFlag}
         onMatchIdChange={(value) => setMatchId(value)}
@@ -160,3 +163,22 @@ function MateRegistPage() {
 }
 
 export default MateRegistPage;
+
+export const MateBoardTitle = styled.div`
+  display: flex;
+  width: 9rem;
+  height: 1.7rem;
+  font-family: "Pretendard-Bold";
+  margin: 0 auto;
+  font-size: 1rem;
+  background-color: #e3faef;
+  padding: 0.2rem 0.2rem 0.15rem 0.7rem;
+  border-radius: 10px;
+  align-items: center;
+  color: #16b368;
+  margin-bottom: 1rem;
+  img {
+    margin-left: 0.1rem;
+    margin-bottom: 0.1rem;
+  }
+`;

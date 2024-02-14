@@ -54,12 +54,12 @@ export default function ProductRegistCard({
       </ToggleContainer>
 
       <RegistCardContainer>
-        <InputLabel>판매 물건</InputLabel>
+        {/* <InputLabel>판매 물건</InputLabel> */}
         <TitleInput
           type="text"
           value={title}
           onChange={onTitleChange}
-          placeholder="제목"
+          placeholder="Title"
         />
         <br />
         <InputLabel>판매 가격</InputLabel>
@@ -67,17 +67,17 @@ export default function ProductRegistCard({
           type="text"
           value={price}
           onChange={handlePriceChange}
-          placeholder="가격"
+          placeholder="Price"
         />
         <br />
         <InputLabel>사진 첨부</InputLabel>
         <BoardFile value={boardImage} onFileChange={handleFileChange} />
         <br />
-        <InputLabel>내용</InputLabel>
+        {/* <InputLabel>내용</InputLabel> */}
         <TextArea
           value={content}
           onChange={onContentChange}
-          placeholder="내용"
+          placeholder="Fill the content here"
         />
         <br />
         {/* <FlagInputContainer>
