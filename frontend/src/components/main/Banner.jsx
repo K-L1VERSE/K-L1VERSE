@@ -47,9 +47,15 @@ export default function Banner() {
     trackMouse: true,
   });
 
-  setInterval(() => {
-    setCurIndex((curIndex + 1) % imgs.length);
-  }, [5000]);
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setCurIndex((curIndex + 1) % imgs.length);
+    }, 5000);
+
+    return () => {
+      clearTimeout(timer);
+    };
+  }, [curIndex, imgs.length]);
 
   return (
     <>

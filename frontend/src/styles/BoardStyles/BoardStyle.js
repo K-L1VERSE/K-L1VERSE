@@ -56,7 +56,7 @@ export const ItemContainer = styled.div`
   text-align: left;
   text-decoration: none;
   color: inherit;
-  padding-top: 0.4rem;
+  /* padding-top: 0.4rem; */
 `;
 
 export const WriterContainer = styled.div`

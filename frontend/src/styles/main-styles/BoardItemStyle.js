@@ -9,9 +9,6 @@ export const BoardItemWrap = styled.div`
   margin: 0.8rem;
   box-shadow: 0 2px 8px 2px #e9ecef;
   border-radius: 8px;
-  :hover {
-    cursor: pointer;
-  }
 `;
 
 export const Type = styled.div`
@@ -25,6 +22,7 @@ export const Type = styled.div`
   text-align: center;
   display: inline-block;
   font-family: "Pretendard-Regular";
+  cursor: pointer;
 `;
 
 export const Text = styled.div`
@@ -38,7 +36,7 @@ export const Post = styled.div`
   display: flex;
   flex-direction: row;
   justify-content: space-between;
-
+  cursor: pointer;
   padding-top: 0.7rem;
   color: #595959;
 `;
