@@ -131,18 +131,17 @@ export const FullFlag = styled.p`
 `;
 
 export const Button = styled.button`
-  background-color: #cdd8ec;
-  color: #fff;
-  padding: 8px 16px;
-  font-size: 0.9em;
+  display: flex;
+  align-items: center;
+  background-color: white;
+  font-family: "Pretendard-Bold";
   border: none;
   cursor: pointer;
-  margin-right: 10px;
-  border-radius: 10px;
-  margin-top: 0.8rem;
+  width: 1.8rem;
+  justify-content: center;
 
-  &:hover {
-    background-color: #0056b3;
+  img {
+    margin-right: 0.2rem;
   }
 `;
 

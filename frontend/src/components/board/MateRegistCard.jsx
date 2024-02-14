@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import styled from "styled-components";
 import { faCaretDown, faCaretUp } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
@@ -18,7 +19,7 @@ import {
   MateNumberInput,
 } from "../../styles/BoardStyles/MateListStyle";
 
-import { Small, ToggleComponent } from "../../styles/BoardStyles/BoardStyle";
+import { ToggleComponent } from "../../styles/BoardStyles/BoardStyle";
 
 import MatchSchedulePage from "../../pages/match_page/MatchSchedulePage";
 import ScheduleModal from "./toggle/ScheduleModal";
@@ -78,7 +79,7 @@ function MateRegistCard({
       </ToggleContainer>
 
       <RegistCardContainer>
-        <div>경기 선택</div>
+        <div style={{ fontSize: "0.85rem" }}>경기 선택</div>
         <ToggleComponent>
           <button onClick={handleToggele} type="button">
             {isToggled ? (
@@ -96,7 +97,7 @@ function MateRegistCard({
         {isToggled ? (
           <div />
         ) : (
-          <Small>
+          <Small2>
             <ScheduleModal
               value={matchId}
               isMateListPage={true}
@@ -106,19 +107,15 @@ function MateRegistCard({
               }}
               selectedMatchId={matchId}
             />
-          </Small>
+          </Small2>
         )}
-        <TitleInput
-          value={title}
-          onChange={onTitleChange}
-          placeholder="Title"
-        />
+        <TitleInput value={title} onChange={onTitleChange} placeholder="제목" />
         {/* <InputLabel>모집 내용</InputLabel> */}
         <div style={{ height: "1rem" }} />
         <TextArea
           value={content}
           onChange={onContentChange}
-          placeholder="Fill the content here"
+          placeholder="상세 내용"
         />
         <InputLabel>모집 인원</InputLabel>
         <MateNumberContainer>
@@ -138,3 +135,36 @@ function MateRegistCard({
 }
 
 export default MateRegistCard;
+
+export const Small2 = styled.div`
+  position: absolute;
+  top: 10.5rem;
+  left: 6rem;
+  background-color: white;
+  border: 1px solid lightgray;
+  border-radius: 7px;
+  width: 15rem;
+  // height: 21.2rem;
+  height: auto;
+  max-height: 27rem;
+  z-index: 1;
+  overflow-y: scroll;
+  box-shadow: 0 5px 10px rgba(0, 0, 0, 0.22);
+
+  @media (min-width: 700px) {
+    left: 36%;
+  }
+
+  &::-webkit-scrollbar {
+    width: 0.5rem;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background: lightgray;
+    border-radius: 20px;
+  }
+
+  &::-webkit-scrollbar-thumb:hover {
+    background: #c7c8cc;
+  }
+`;

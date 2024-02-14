@@ -59,7 +59,7 @@ export default function ProductRegistCard({
           type="text"
           value={title}
           onChange={onTitleChange}
-          placeholder="Title"
+          placeholder="제목"
         />
         <br />
         <InputLabel>판매 가격</InputLabel>
@@ -77,7 +77,7 @@ export default function ProductRegistCard({
         <TextArea
           value={content}
           onChange={onContentChange}
-          placeholder="Fill the content here"
+          placeholder="상세 내용"
         />
         <br />
         {/* <FlagInputContainer>
