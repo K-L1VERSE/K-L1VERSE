@@ -68,7 +68,8 @@ function CommentItemCard({
   };
 
   const renderEditDeleteButtons = () => {
-    if (userId === comment.userId || userId === writerId) {
+    // if (userId === comment.userId || userId === writerId) {
+    if (userId === comment.userId) {
       return (
         <ButtonContainer>
           <EditButton
@@ -101,7 +102,8 @@ function CommentItemCard({
     }
     return (
       <div>
-        {type === "comment" && !comment.isSecret && (
+        {/* {type === "comment" && !comment.isSecret && ( */}
+        {type === "comment" && (
           <ButtonContainer>
             <ReplyButton
               onClick={() => {
