@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useParams, useNavigate, useLocation } from "react-router-dom";
+import styled from "styled-components";
 import axios from "../../../api/axios";
 import { useRecoilState } from "recoil";
 import BoardTopNavBar from "../../../components/board/BoardTopNavBar";
@@ -12,6 +13,10 @@ import {
   DetailTop,
   EditDeleteButton,
   User,
+  UserProfile,
+  UserBadge,
+  DetailCommentCount,
+  Gray,
 } from "../../../styles/BoardStyles/BoardDetailStyle";
 import { deleteMate } from "../../../api/mate";
 import {
@@ -68,6 +73,7 @@ function MateDetailPage() {
     getMateDetail();
   }, [boardId]);
 
+  console.log(mateDetail);
   function getMatch() {
     if (matchId) {
       getMatchDetail(matchId).then((res) => {
@@ -158,33 +164,57 @@ function MateDetailPage() {
             <BackButton onClick={handleBackClick}>
               <img src={BackIcon} alt="Back" />
             </BackButton>
+            <MateBoardTitle>
+              <div>직관 메이트 &nbsp;</div>
+              <img
+                src="https://raw.githubusercontent.com/Tarikul-Islam-Anik/Animated-Fluent-Emojis/master/Emojis/Hand%20gestures/Call%20Me%20Hand%20Medium-Light%20Skin%20Tone.png"
+                alt="Call Me Hand Medium-Light Skin Tone"
+                width="22"
+                height="22"
+              />
+            </MateBoardTitle>
           </DetailTop>
-          <DetailBox>
-            <User>{mateDetail.nickname}</User>
+          <UserBar>
+            <UserName>
+              <UserProfile src={mateDetail.profile} />
+              <UserNick>{mateDetail.nickname}</UserNick>
+              <UserBadge
+                src={`${process.env.PUBLIC_URL}/badge/badge${mateDetail.mainBadge === null ? 0 : mateDetail.mainBadge}back.png`}
+              />
+            </UserName>
             {fullFlag ? (
               <DealStatusOrange>모집완료</DealStatusOrange>
             ) : (
               <DealStatusGreen>모집중</DealStatusGreen>
             )}
-            <div
-              style={{
-                display: "flex",
-                justifyContent: "space-between",
-                marginBottom: "10px",
-              }}
-            >
-              <ItemTitle>
-                <MatchTitle>
-                  {homeTeamName} vs {awayTeamName}
-                </MatchTitle>
-                <MatchTime>{formatDateTime(matchAt)}</MatchTime>
-              </ItemTitle>
+          </UserBar>
+          <DetailBox>
+            <div style={{ marginBottom: "5px" }}>
+              <MatchTitle>
+                {homeTeamName} vs {awayTeamName}
+              </MatchTitle>
             </div>
+            <MatchTime>{formatDateTime(matchAt)}</MatchTime>
             <MateDetailTitle>{mateDetail.title}</MateDetailTitle>
             <MateDetailContent>{mateDetail.content}</MateDetailContent>
             <MateDetailTotal>총 인원 : {total}</MateDetailTotal>
-            <EditDeleteButton>{renderEditDeleteButtons()}</EditDeleteButton>
+            <Bottom>
+              <DetailCommentCount>
+                <div>
+                  <img
+                    src="https://raw.githubusercontent.com/Tarikul-Islam-Anik/Animated-Fluent-Emojis/master/Emojis/Smilies/Love%20Letter.png"
+                    alt="Love Letter"
+                    width="25"
+                    height="25"
+                  />
+                  댓글 수 {mateDetail.commentCount}
+                </div>
+              </DetailCommentCount>
+              <EditDeleteButton>{renderEditDeleteButtons()}</EditDeleteButton>
+            </Bottom>
+            <Gray />
           </DetailBox>
+
           <CommentList boardId={boardId} />
         </Container>
       )}
@@ -193,3 +223,47 @@ function MateDetailPage() {
 }
 
 export default MateDetailPage;
+
+export const MateBoardTitle = styled.div`
+  display: flex;
+  width: 6.4rem;
+  font-family: "Pretendard-Bold";
+  margin: 0 auto;
+  font-size: 1rem;
+  background-color: #e3faef;
+  padding: 0.2rem 0.6rem 0.15rem 0.7rem;
+  border-radius: 10px;
+  align-items: center;
+  color: #16b368;
+
+  margin-bottom: 0.5rem;
+  img {
+    margin-bottom: 0.3rem;
+  }
+`;
+
+export const UserBar = styled.div`
+  display: flex;
+  margin-left: 1rem;
+  margin-top: 1rem;
+  margin-bottom: 0.5rem;
+`;
+
+export const UserName = styled.div`
+  display: flex;
+  font-size: 0.9rem;
+  color: #595959;
+  align-self: center;
+  margin-right: 0.5rem;
+`;
+
+export const UserNick = styled.div`
+  font-family: "Pretendard-Regular";
+  align-self: center;
+`;
+
+export const Bottom = styled.div`
+  display: flex;
+  justify-content: space-between;
+  // margin-top: 1rem;
+`;

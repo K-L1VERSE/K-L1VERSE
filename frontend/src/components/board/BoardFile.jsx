@@ -19,12 +19,52 @@ function BoardFile({ onFileChange, value }) {
     if (value) {
       const imageUrls = value.split(",");
       const previews = imageUrls.map((url, index) => (
+        // <FilePreview key={url}>
+        //   <img src={url} alt={`미리보기 - Image ${index + 1}`} />
+        //   <RemoveButton onClick={(event) => handleRemoveImage(index, event)}>
+        //     x
+        //   </RemoveButton>
+        // </FilePreview>
+
+        // <div>
         <FilePreview key={url}>
-          <img src={url} alt={`미리보기 - Image ${index + 1}`} />
-          <RemoveButton onClick={(event) => handleRemoveImage(index, event)}>
-            x
-          </RemoveButton>
+          <div
+            style={{
+              display: "flex",
+              justifyContent: "center",
+              alignItems: "center",
+              flexDirection: "column",
+            }}
+          >
+            <div
+              style={{
+                borderBottom: "1px solid #E0E0E0",
+              }}
+            >
+              <img
+                src={url}
+                alt={`미리보기 - Image ${index + 1}`}
+                style={{
+                  width: "45px",
+                  height: "45px",
+                }}
+              />
+            </div>
+            <div>
+              <RemoveButton
+                onClick={(event) => handleRemoveImage(index, event)}
+                style={{
+                  fontSize: "0.8rem",
+                  fontWeight: "bold",
+                }}
+              >
+                삭제
+              </RemoveButton>
+            </div>
+          </div>
         </FilePreview>
+
+        // </div>
       ));
       setFilePreviews(previews);
     }
@@ -94,12 +134,8 @@ function BoardFile({ onFileChange, value }) {
 
   return (
     <FileInputContainer>
-      <FileInputLabel>
-        <img
-          src={CameraIcon}
-          alt="카메라 아이콘"
-          onClick={() => fileInput.current.click()}
-        />
+      <FileInputLabel onClick={() => fileInput.current.click()}>
+        <img src={CameraIcon} alt="카메라 아이콘"></img>
       </FileInputLabel>
       <FileInput
         type="file"

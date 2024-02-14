@@ -173,6 +173,7 @@ export const TextArea = styled.textarea`
   border-radius: 0;
   width: 100%;
   border: none;
+  height: auto;
   border-bottom: 1px solid #ccc;
   outline: none;
 `;

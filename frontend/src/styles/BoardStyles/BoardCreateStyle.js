@@ -126,21 +126,20 @@ export const FlagInputText = styled.span`
   margin-left: 10px;
 `;
 
-export const FileInputContainer = styled.label`
+export const FileInputContainer = styled.div`
   display: flex;
   margin-top: 0.1rem;
   margin-bottom: 0.3rem;
-  cursor: pointer;
 `;
 
 export const FileInput = styled.input`
   display: block;
 `;
 
-export const FileInputLabel = styled.span`
+export const FileInputLabel = styled.div`
   width: 72px;
   height: 72px;
-  display: flex;
+  display: inline-flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
@@ -176,12 +175,9 @@ export const FilePreview = styled.div`
 `;
 
 export const RemoveButton = styled.button`
-  top: 3px;
-  right: 3px;
-  position: absolute;
   background-color: transparent;
   border: none;
-  color: white;
+  color: black;
   font-size: 16px;
   cursor: pointer;
 

@@ -26,12 +26,14 @@ export const HeaderButton = styled.button`
   font-family: "Pretendard-Regular";
   border: none;
   background-color: transparent;
-  font-size: 0.7rem;
+  padding: 0.2rem 0.4rem;
+  border-radius: 3px;
   font-size: 0.8rem;
   color: #002266;
   &:hover {
     cursor: pointer;
   }
+  display: flex;
 `;
 
 /* *********** Waggle, Mate ************ */
@@ -86,7 +88,8 @@ export const ImageContentBox = styled.div`
   display: flex;
 `;
 export const ItemTitle = styled.div`
-  display: block;
+  display: flex;
+  align-items: center;
   width: 100%;
   overflow: hidden;
   white-space: nowrap;
@@ -95,21 +98,22 @@ export const ItemTitle = styled.div`
   color: #222222;
   text-decoration: none;
   font-family: "Pretendard-Bold";
-  a {
-    text-decoration: none;
+  @media (min-width: 700px) {
+    display: flex;
+    justify-content: space-between;
   }
+  margin-bottom: 0.5rem;
 `;
 
 export const ItemContent = styled.div`
   font-size: 0.8rem;
-  div {
-    margin-bottom: 0.5rem;
-  }
-  a {
-    color: #a9a9a9;
-    text-decoration: none;
-    color: inherit;
-  }
+  color: #595959;
+  width: 95%;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  text-decoration: none;
+  margin: 0.5rem 0;
 `;
 
 export const ItemInfoSection = styled.div`
@@ -147,6 +151,7 @@ export const ToggleContainer = styled.div`
 export const ToggleComponent = styled.div`
   button {
     margin-top: 0.5rem;
+    width: 4.7rem;
     padding: 0.3rem 0.6rem;
     border: none;
     cursor: pointer;
@@ -156,6 +161,7 @@ export const ToggleComponent = styled.div`
     font-family: "Pretendard-Regular";
     color: #002fa5;
     outline: none;
+    border-radius: 5px;
   }
 `;
 
@@ -168,10 +174,16 @@ export const Small = styled.div`
   border: 1px solid lightgray;
   border-radius: 7px;
   width: 15rem;
-  height: 21.2rem;
+  // height: 21.2rem;
+  height: auto;
+  max-height: 27rem;
   z-index: 1;
   overflow-y: scroll;
   box-shadow: 0 5px 10px rgba(0, 0, 0, 0.22);
+
+  @media (min-width: 700px) {
+    left: 53.5%;
+  }
 
   &::-webkit-scrollbar {
     width: 0.5rem;
@@ -203,7 +215,7 @@ export const NoPost = styled.div`
 
 export const TitleComponent = styled.div`
   display: block;
-  width: 100%;
+  width: 95%;
   overflow: hidden;
   white-space: nowrap;
   text-overflow: ellipsis;
@@ -214,4 +226,5 @@ export const TitleComponent = styled.div`
   a {
     text-decoration: none;
   }
+  margin-top: 1rem;
 `;
