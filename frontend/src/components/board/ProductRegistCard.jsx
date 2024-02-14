@@ -27,9 +27,14 @@ export default function ProductRegistCard({
   onSubmit,
   buttonText,
   handleDealFlag,
+  setBoardImage,
 }) {
-  const handleFileChange = (file, allFileUrls) => {
-    onFileChange(allFileUrls);
+  const handleFileChange = (files, allFileUrls) => {
+    if (allFileUrls.length === 0) {
+      setBoardImage(null);
+    } else {
+      onFileChange(allFileUrls);
+    }
   };
 
   const handlePriceChange = (event) => {
