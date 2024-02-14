@@ -169,6 +169,7 @@ function ProductRegistPage() {
               onSubmit={handleSubmit}
               buttonText={isUpdateMode ? "수정하기" : "작성하기"}
               handleDealFlag={handleDealFlag}
+              setBoardImage={setBoardImage}
             />
           </>
         )
@@ -195,6 +196,7 @@ function ProductRegistPage() {
             onSubmit={handleSubmit}
             buttonText={isUpdateMode ? "수정하기" : "작성하기"}
             handleDealFlag={handleDealFlag}
+            setBoardImage={setBoardImage}
           />
         </>
       )}
