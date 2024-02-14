@@ -21,6 +21,7 @@ export const TitleInput = styled.input`
   border-radius: 4px;
   font-size: 1rem;
   margin-top: 0.3rem;
+  font-family: "Pretendard-Regular";
 `;
 
 export const TextArea = styled.textarea`
@@ -32,6 +33,7 @@ export const TextArea = styled.textarea`
   font-size: 1rem;
   resize: none;
   margin-top: 0.3rem;
+  font-family: "Pretendard-Regular";
 `;
 
 export const InputLabel = styled.label`
@@ -187,13 +189,17 @@ export const RemoveButton = styled.button`
 `;
 
 export const SubmitButton = styled.button`
-  background-color: #4caf50;
+  background-color: #3261c1;
   color: white;
   padding: 10px 15px;
   border: none;
   border-radius: 4px;
   cursor: pointer;
   font-size: 1rem;
+  transition: box-shadow 0.3s ease;
+  &:hover {
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+  }
 `;
 
 export const ToggleContainer = styled.div`

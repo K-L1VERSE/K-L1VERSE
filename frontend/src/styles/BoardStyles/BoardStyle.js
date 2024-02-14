@@ -151,17 +151,19 @@ export const ToggleContainer = styled.div`
 export const ToggleComponent = styled.div`
   button {
     margin-top: 0.5rem;
-    width: 4.7rem;
+    width: 4.6rem;
     padding: 0.3rem 0.6rem;
     border: none;
     cursor: pointer;
     background-color: #e5edfb;
     display: flex;
+    justify-content: space-between;
     align-items: center;
     font-family: "Pretendard-Regular";
     color: #002fa5;
     outline: none;
     border-radius: 5px;
+    font-size: 0.83rem;
   }
 `;
 
