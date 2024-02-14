@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useParams, useNavigate, useLocation } from "react-router-dom";
 import { useRecoilState } from "recoil";
+import styled from "styled-components";
 import {
   deleteWaggle,
   getWaggleDetail,
@@ -197,7 +198,17 @@ function WaggleDetailPage() {
             <BackButton onClick={handleBackClick}>
               <img src={BackIcon} alt="Back" />
             </BackButton>
+            <WaggleBoardTitle>
+              <div>와글와글 &nbsp;</div>
+              <img
+                src="https://raw.githubusercontent.com/Tarikul-Islam-Anik/Animated-Fluent-Emojis/master/Emojis/Smilies/Grinning%20Face%20with%20Big%20Eyes.png"
+                alt="Grinning Face with Big Eyes"
+                width="22"
+                height="22"
+              />
+            </WaggleBoardTitle>
           </DetailTop>
+
           <DetailBox>
             <UserContainer>
               <UserProfile src={waggleDetail.profile} />
@@ -228,26 +239,26 @@ function WaggleDetailPage() {
                     />
                   ))}
             </WaggleImageContainer>
-            <Like
-              liked={liked}
-              likesCount={likesCount}
-              handleLikeClick={handleLikeClick}
-            />
+            <Bottom>
+              <DetailCommentCount>
+                <div>
+                  <img
+                    src="https://raw.githubusercontent.com/Tarikul-Islam-Anik/Animated-Fluent-Emojis/master/Emojis/Smilies/Love%20Letter.png"
+                    alt="Love Letter"
+                    width="25"
+                    height="25"
+                  />
+                  댓글 수 {commentCount}
+                </div>
+              </DetailCommentCount>
+              <Like
+                liked={liked}
+                likesCount={likesCount}
+                handleLikeClick={handleLikeClick}
+              />
+            </Bottom>
             <Gray />
           </DetailBox>
-
-          <DetailCommentCount>
-            {/* <Comment /> */}
-            <div>
-              <img
-                src="https://raw.githubusercontent.com/Tarikul-Islam-Anik/Animated-Fluent-Emojis/master/Emojis/Smilies/Love%20Letter.png"
-                alt="Love Letter"
-                width="25"
-                height="25"
-              />
-              댓글 수 {commentCount}
-            </div>
-          </DetailCommentCount>
           <CommentList boardId={boardId} writerId={waggleDetail.userId} />
         </Container>
       )}
@@ -259,3 +270,21 @@ function WaggleDetailPage() {
 }
 
 export default WaggleDetailPage;
+
+export const WaggleBoardTitle = styled.div`
+  display: flex;
+  font-family: "Pretendard-Bold";
+  margin: 0 auto;
+  font-size: 1rem;
+  background-color: #fee8de;
+  padding: 0.4rem 0.7rem 0.2rem 0.7rem;
+  border-radius: 10px;
+  align-items: center;
+  color: #f07e3d;
+`;
+
+export const Bottom = styled.div`
+  display: flex;
+  justify-content: space-between;
+  margin-top: 1rem;
+`;

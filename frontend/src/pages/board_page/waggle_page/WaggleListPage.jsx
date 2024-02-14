@@ -89,7 +89,15 @@ function WaggleListPage() {
           />
           <div>와글Waggle 떠들어주세요</div>
         </HeaderDiv>
-        <HeaderButton onClick={handleWriteWaggleClick}>🖋 글쓰기</HeaderButton>
+        <HeaderButton onClick={handleWriteWaggleClick}>
+          <img
+            src="https://raw.githubusercontent.com/Tarikul-Islam-Anik/Animated-Fluent-Emojis/master/Emojis/Objects/Pencil.png"
+            alt="Pencil"
+            width="15"
+            height="15"
+          />
+          <div>&nbsp;글쓰기</div>
+        </HeaderButton>
       </Header>
       {/* <SearchComponent onSearch={handleSearch} /> */}
 

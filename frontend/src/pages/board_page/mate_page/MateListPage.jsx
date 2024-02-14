@@ -125,7 +125,7 @@ function MateListPage() {
     navigate("/mateRegist");
   };
 
-  const [isToggled, setIsToggled] = useState(false);
+  const [isToggled, setIsToggled] = useState(true);
 
   const handleToggele = () => {
     setIsToggled(!isToggled);
@@ -144,7 +144,15 @@ function MateListPage() {
           />
           <div>경기 직관 함께 할 메이트 구합니다</div>
         </HeaderDiv>
-        <HeaderButton onClick={handleWriteMateClick}>🖋 글쓰기</HeaderButton>
+        <HeaderButton onClick={handleWriteMateClick}>
+          <img
+            src="https://raw.githubusercontent.com/Tarikul-Islam-Anik/Animated-Fluent-Emojis/master/Emojis/Objects/Pencil.png"
+            alt="Pencil"
+            width="15"
+            height="15"
+          />
+          <div>&nbsp;글쓰기</div>
+        </HeaderButton>
       </Header>
       <ToggleContainer>
         <ToggleComponent>

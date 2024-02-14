@@ -1,4 +1,5 @@
 import React from "react";
+import styled from "styled-components";
 import { Link } from "react-router-dom";
 import { ReactComponent as LikeCount } from "../../assets/icon/likecount-icon.svg";
 import { ReactComponent as Comment } from "../../assets/icon/comment-icon.svg";

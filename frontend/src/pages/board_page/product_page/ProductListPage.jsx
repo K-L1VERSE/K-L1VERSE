@@ -85,7 +85,15 @@ function ProductListPage() {
           />
           <div>나에게 꼭 필요한 굿-즈</div>
         </HeaderDiv>
-        <HeaderButton onClick={handleWriteProductClick}>🖋 글쓰기</HeaderButton>
+        <HeaderButton onClick={handleWriteProductClick}>
+          <img
+            src="https://raw.githubusercontent.com/Tarikul-Islam-Anik/Animated-Fluent-Emojis/master/Emojis/Objects/Pencil.png"
+            alt="Pencil"
+            width="15"
+            height="15"
+          />
+          <div>&nbsp;글쓰기</div>
+        </HeaderButton>
       </Header>
 
       <ProductContainer

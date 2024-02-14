@@ -9,12 +9,12 @@ export const Container = styled.div`
 
 export const DetailTop = styled.div`
   display: flex;
-  /* margin-bottom: 1rem; */
+  margin-bottom: 0.5rem;
 `;
 
 export const DetailBox = styled.div`
   // border-bottom: 1px solid #ccc;
-  padding: 0.1rem 1rem 1rem 1rem;
+  padding: 0.1rem 1rem 0rem 1rem;
 `;
 
 export const UserContainer = styled.div`
@@ -185,7 +185,7 @@ export const LikeCount = styled.span`
 `;
 
 export const EditDeleteButton = styled.div`
-  display: flex;
+  // display: flex;
   justify-content: flex-end;
   font-size: 1.5rem;
 `;
@@ -205,18 +205,16 @@ export const DeleteButton = styled(Button)`
 `;
 
 export const DetailCommentCount = styled.div`
+  display: flex;
   font-size: 0.8rem;
   margin-bottom: 0.5rem;
   color: #595959;
   align-items: center;
-  // svg {
-  //   margin-right: 0.3rem;
-  // }
   div {
+    padding-top: 0.3rem;
     display: flex;
     align-items: center;
     img {
-      margin-left: 1rem;
       margin-right: 0.3rem;
     }
   }
@@ -241,5 +239,4 @@ export const Gray = styled.div`
   width: 100%;
   height: 0.05rem;
   background-color: #ccc;
-  margin-top: 1rem;
 `;
