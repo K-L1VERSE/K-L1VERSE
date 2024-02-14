@@ -12,6 +12,7 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.server.ServerWebExchange;
 import org.springframework.web.servlet.function.HandlerFilterFunction;
@@ -19,20 +20,23 @@ import org.springframework.web.servlet.function.ServerRequest;
 import org.springframework.web.servlet.function.ServerResponse;
 
 import java.net.URI;
+import java.net.URL;
 import java.util.List;
 import java.util.function.Function;
 
 import static org.springframework.cloud.gateway.server.mvc.filter.FilterFunctions.redirectTo;
 
+@Service
 @Slf4j
+@RequiredArgsConstructor
 public class JWTFilter {
 
     @Value("${domain}")
-    private static String domain;
-    private static final RestTemplate restTemplate = new RestTemplate();
-    private static final ObjectMapper objectMapper = new ObjectMapper();
+    private String domain;
+    private final RestTemplate restTemplate = new RestTemplate();
+    private final ObjectMapper objectMapper = new ObjectMapper();
 
-    public static HandlerFilterFunction<ServerResponse, ServerResponse> instrument() {
+    public HandlerFilterFunction<ServerResponse, ServerResponse> instrument() {
         return (request, next) -> {
             List<String> tokenList = request.headers().header("Authorization");
             if (tokenList.isEmpty()) {
@@ -74,7 +78,7 @@ public class JWTFilter {
 
                 String url = domain + ":8010/users/access_token/reissue";
                 HttpEntity<String> response = restTemplate.exchange(
-                        url,
+                    url,
                     HttpMethod.GET,
                     entity,
                     String.class

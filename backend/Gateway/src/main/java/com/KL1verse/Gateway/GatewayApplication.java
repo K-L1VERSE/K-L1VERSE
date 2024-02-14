@@ -1,13 +1,15 @@
 package com.KL1verse.Gateway;
 
-import static com.KL1verse.Gateway.auth.JWTFilter.instrument;
 import static org.springframework.cloud.gateway.server.mvc.filter.BeforeFilterFunctions.rewritePath;
 import static org.springframework.cloud.gateway.server.mvc.handler.GatewayRouterFunctions.route;
 import static org.springframework.cloud.gateway.server.mvc.handler.HandlerFunctions.http;
 import static org.springframework.cloud.gateway.server.mvc.predicate.GatewayRequestPredicates.path;
 
+import com.KL1verse.Gateway.auth.JWTFilter;
 import jakarta.servlet.ServletException;
 import java.io.IOException;
+
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.json.simple.JSONObject;
 import org.springframework.beans.factory.annotation.Value;
@@ -19,10 +21,13 @@ import org.springframework.web.servlet.function.ServerResponse;
 
 @Slf4j
 @SpringBootApplication
+@RequiredArgsConstructor
 public class GatewayApplication {
 
 	@Value("${domain}")
 	private String domain;
+
+	private final JWTFilter jwtFilter;
 
 	public static void main(String[] args) {
 		SpringApplication.run(GatewayApplication.class, args);
@@ -41,7 +46,7 @@ public class GatewayApplication {
 		return route("USER-SERVICE")
 			.route(path("/user/**"), http(domain+":8010"))
 			.before(rewritePath("/user/(?<segment>.*)", "/${segment}"))
-			.filter(instrument())
+			.filter(jwtFilter.instrument())
 			.build();
 	}
 
@@ -50,7 +55,7 @@ public class GatewayApplication {
 		return route("SURVEY-SERVICE")
 			.route(path("/survey/**"), http(domain+":8020"))
 			.before(rewritePath("/survey/(?<segment>.*)", "/${segment}"))
-			.filter(instrument())
+			.filter(jwtFilter.instrument())
 			.build();
 	}
 
@@ -59,7 +64,7 @@ public class GatewayApplication {
 		return route("BOARD-SERVICE")
 			.route(path("/board/**"), http(domain+":8030"))
 			.before(rewritePath("/board/(?<segment>.*)", "/${segment}"))
-			.filter(instrument())
+			.filter(jwtFilter.instrument())
 			.build();
 	}
 
@@ -68,7 +73,7 @@ public class GatewayApplication {
 		return route("MATCH-SERVICE")
 			.route(path("/match/**"), http(domain+":8040"))
 			.before(rewritePath("/match/(?<segment>.*)", "/${segment}"))
-			.filter(instrument())
+			.filter(jwtFilter.instrument())
 			.build();
 	}
 
