@@ -17,9 +17,14 @@ export default function WaggleRegistCard({
   onFileChange, // onFileChange 수정
   onSubmit,
   buttonText,
+  setBoardImage,
 }) {
   const handleFileChange = (files, allFileUrls) => {
-    onFileChange(allFileUrls); // 전체 파일 URL 배열을 전달
+    if (allFileUrls.length === 0) {
+      setBoardImage(null);
+    } else {
+      onFileChange(allFileUrls);
+    }
   };
 
   return (

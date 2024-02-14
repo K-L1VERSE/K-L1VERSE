@@ -12,10 +12,12 @@ import Nostradamus from "../../components/main/Nostradamus";
 import Survey from "../../components/main/Survey";
 import EditNicknameModal from "../../components/mypage/EditNicknameModal";
 import Footer from "../../components/main/Footer";
+import Banner from "../../components/main/Banner";
 
 function MainPage() {
   const [userState] = useRecoilState(UserState);
   const { nickname } = userState;
+  const { email } = userState;
 
   const navigate = useNavigate();
 
@@ -59,7 +61,7 @@ function MainPage() {
   });
 
   useEffect(() => {
-    if (!nickname) {
+    if (!email) {
       navigate("/login");
     } else {
       ChannelIO("showChannelButton");
@@ -77,9 +79,10 @@ function MainPage() {
 
   return (
     <div>
-      {nickname && (
+      {email && (
         <div>
           <Notice />
+          <Banner />
           <Category>
             <Title>💬 커뮤니티</Title>
             <AllBtn onClick={handleAllBtn}>전체보기</AllBtn>

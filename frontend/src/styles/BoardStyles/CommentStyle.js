@@ -49,16 +49,6 @@ export const CommentTime = styled.div`
   justify-content: flex-end;
   div {
     display: flex;
-    margin-bottom: 0.2rem;
-  }
-  div:nth-of-type(2) {
-    padding-top: 0.2rem;
-    display: flex;
-    align-items: center;
-    svg {
-      margin-left: 0.3rem;
-      margin-bottom: 0.6rem;
-    }
   }
 
   img {
@@ -183,6 +173,7 @@ export const TextArea = styled.textarea`
   border-radius: 0;
   width: 100%;
   border: none;
+  height: auto;
   border-bottom: 1px solid #ccc;
   outline: none;
 `;

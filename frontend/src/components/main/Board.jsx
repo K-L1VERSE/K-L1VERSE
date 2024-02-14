@@ -19,7 +19,6 @@ function Board() {
       };
     getLatestMate(({ data }) => {
       setMate(data);
-      console.log("mate", data);
     }),
       (error) => {
         console.error(error);

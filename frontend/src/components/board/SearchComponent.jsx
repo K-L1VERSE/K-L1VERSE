@@ -8,8 +8,7 @@ function SearchComponent({ onSearch }) {
   const handleInputChange = (e) => {
     setSearchKeyword(e.target.value);
     console.log(searchKeyword, "!!!!!!!!!!!!!!!!!!!");
-    console.log(e);
-    console.log(e.target.value);
+    console.log("이게 진짜 들어가는 값 ", e.target.value);
   };
 
   const handleSearchClick = () => {
@@ -21,11 +20,22 @@ function SearchComponent({ onSearch }) {
       searchKeyword,
       0,
       10,
-      ({ data }) => {
-        onSearch(data.content); // data에 'content' 속성이 있는지 확인
+      (response) => {
+        console.log("API Response:", response);
+
+        if (response && response.data && response.data.content) {
+          const waggleList = response.data.content.map((item) => item.waggle); // 각 항목의 waggle 속성에 접근
+
+          console.log("data????", waggleList);
+          onSearch(waggleList);
+        } else {
+          console.log("Invalid response format");
+        }
         setShowSearchBar(false);
       },
-      () => {},
+      (err) => {
+        console.log("검색 안 됨 ㅜ ", err);
+      },
     );
   };
 
