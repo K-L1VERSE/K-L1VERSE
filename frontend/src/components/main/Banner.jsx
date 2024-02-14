@@ -15,10 +15,8 @@ export default function Banner() {
 
   useEffect(() => {
     const imgElement = imgRef.current;
-    const resizeObserver = new ResizeObserver((entries) => {
-      for (const entry of entries) {
-        setHeight(entry.target.offsetHeight);
-      }
+    const resizeObserver = new ResizeObserver(([entry]) => {
+      setHeight(entry.target.offsetHeight);
     });
 
     resizeObserver.observe(imgElement);
