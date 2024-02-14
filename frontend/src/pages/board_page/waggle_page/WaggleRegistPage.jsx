@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import styled from "styled-components";
 import { useRecoilState } from "recoil";
 import { useNavigate, useLocation } from "react-router-dom";
 import RegistCard from "../../../components/board/WaggleRegistCard";
@@ -112,7 +113,17 @@ function WaggleRegistPage() {
           <img src={BackIcon} alt="Back" />
         </BackButton>
       </DetailTop>
-      <DetailTop>{isUpdateMode ? "Waggle 수정" : "Waggle 글쓰기"}</DetailTop>
+      <div style={{ display: "flex", margin: "0 auto" }}>
+        <WaggleBoardTitle>
+          <div>{isUpdateMode ? "와글와글 수정" : "와글와글 글쓰기"}</div>
+          <img
+            src="https://raw.githubusercontent.com/Tarikul-Islam-Anik/Animated-Fluent-Emojis/master/Emojis/Smilies/Grinning%20Face%20with%20Big%20Eyes.png"
+            alt="Grinning Face with Big Eyes"
+            width="22"
+            height="22"
+          />
+        </WaggleBoardTitle>
+      </div>
 
       <RegistCard
         title={title}
@@ -130,3 +141,16 @@ function WaggleRegistPage() {
 }
 
 export default WaggleRegistPage;
+
+export const WaggleBoardTitle = styled.div`
+  display: inline-flex;
+  font-family: "Pretendard-Bold";
+  margin: 0 auto;
+  font-size: 1rem;
+  background-color: #fee8de;
+  padding: 0.4rem 0.7rem 0.3rem 0.7rem;
+  border-radius: 10px;
+  align-items: center;
+  color: #f07e3d;
+  justify-content: center;
+`;
