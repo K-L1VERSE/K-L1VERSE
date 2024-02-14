@@ -192,7 +192,7 @@ function WaggleDetailPage() {
   };
 
   const highlightHashtags = (text) => {
-    return text.split(/(#\w+)/).map((word, index) =>
+    return text.split(/(#\S+)/).map((word, index) =>
       word.startsWith("#") ? (
         <span key={index} style={{ color: "#E4405F" }}>
           {word}
