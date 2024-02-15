@@ -128,7 +128,7 @@ export const DisabledTextContainer = styled.div`
 export const DisabledText = styled.div`
   color: #000;
   text-align: center;
-  font-family: Pretendard;
+  font-family: "Pretendard-Bold";
   font-size: 1rem;
   font-style: normal;
   font-weight: 700;
