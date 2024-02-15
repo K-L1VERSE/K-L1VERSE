@@ -44,6 +44,8 @@ public class KafkaMatchNotificationConsumer {
                     .uri(notificationListReqDto.getUri())
                     .userId(userId)
                     .date(LocalDateTime.now())
+                    .homeTeamId(notificationListReqDto.getHomeTeamId())
+                    .awayTeamId(notificationListReqDto.getAwayTeamId())
                     .build();
                 messageReqDtoList.add(messageReqDto);
             }

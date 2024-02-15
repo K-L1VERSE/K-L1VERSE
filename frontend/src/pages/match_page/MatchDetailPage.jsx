@@ -20,6 +20,7 @@ export default function MatchDetailPage() {
   const m = location.state?.m;
   const day = location.state?.day;
   const v = location.state?.v;
+  const main = location.state?.main;
   const [isBetted, setIsBetted] = useState(false);
 
   const [data, setData] = useState();
@@ -53,7 +54,15 @@ export default function MatchDetailPage() {
     <div>
       {data && (
         <>
-          <MatchDetailScore match={data} y={y} m={m} d={d} day={day} v={v} />
+          <MatchDetailScore
+            match={data}
+            y={y}
+            m={m}
+            d={d}
+            day={day}
+            v={v}
+            main={main}
+          />
           {data.status !== "NONE" ? (
             <>
               <SliderContainer>

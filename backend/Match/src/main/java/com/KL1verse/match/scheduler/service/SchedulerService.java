@@ -90,7 +90,7 @@ public class SchedulerService {
         ScheduledFuture<?> scheduledTask = taskScheduler.schedule(task, new Trigger() {
             @Override
             public Instant nextExecution(TriggerContext triggerContext) {
-                CronTrigger crontrigger = new CronTrigger("0/15 * * * * *");
+                CronTrigger crontrigger = new CronTrigger("0/3 * * * * *");
                 return crontrigger.nextExecution(triggerContext);
             }
         });

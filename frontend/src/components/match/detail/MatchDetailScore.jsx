@@ -23,7 +23,7 @@ import MatchTimeComponent from "./MatchTimeComponent";
 import { BadgeImg } from "../../../styles/match-styles/MatchDetailStyle";
 import ToLeftPng from "../../../assets/ToLeft.png";
 
-export default function MatchDetailScore({ match, y, m, day, d, v }) {
+export default function MatchDetailScore({ match, y, m, day, d, v, main }) {
   const homeTeamsrc = `${process.env.PUBLIC_URL}/badge/badge${match.homeTeamId}.png`;
   const awayTeamsrc = `${process.env.PUBLIC_URL}/badge/badge${match.awayTeamId}.png`;
 
@@ -45,11 +45,14 @@ export default function MatchDetailScore({ match, y, m, day, d, v }) {
 
   const navigate = useNavigate();
   const goPrevPage = () => {
-    if (v === "list") {
+    if (main) {
+      navigate("/");
+    } else if (v === "list") {
       navigate("/schedule", { state: { d, y, m, v } });
     } else if (v === "calendar") {
       navigate("/schedule", { state: { d, y, m, day, v } });
     }
+
     // navigate(-1);
   };
 
