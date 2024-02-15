@@ -35,6 +35,14 @@ export default function MatchSchedulePage({
   };
 
   useEffect(() => {
+    const fetchData = async () => {
+      const result = await getMatchList(year, month);
+      setData(result);
+    };
+    fetchData();
+  }, [year, month]);
+
+  useEffect(() => {
     if (d) {
       setYear(y);
       setMonth(m);
@@ -44,14 +52,6 @@ export default function MatchSchedulePage({
       }
     }
   }, []);
-
-  useEffect(() => {
-    const fetchData = async () => {
-      const result = await getMatchList(year, month);
-      setData(result);
-    };
-    fetchData();
-  }, [year, month]);
 
   return (
     <div>
