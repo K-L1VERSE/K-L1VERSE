@@ -29,6 +29,7 @@ export default function MatchDetailPage() {
       await getMatchDetail(matchId)
         .then((result) => {
           setData(result);
+          console.log(result);
         })
         .catch(() => {
           setData({
@@ -67,8 +68,8 @@ export default function MatchDetailPage() {
             <>
               <SliderContainer>
                 <Slider {...settings}>
-                  <PredictionContainer />
-                  <CurrentBettingContainer />
+                  <PredictionContainer data={data} />
+                  <CurrentBettingContainer data={data} />
                 </Slider>
               </SliderContainer>
               <DoBettingContainer data={data} setIsBetted={setIsBetted} />

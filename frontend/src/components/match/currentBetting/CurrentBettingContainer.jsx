@@ -11,26 +11,34 @@ import {
 
 import CurrentBettingComponent from "./CurrentBettingComponent";
 
-function CurrentBettingContainer() {
+function CurrentBettingContainer({ data }) {
   const { matchId } = useParams();
 
-  const [match, setMatch] = useState(null);
-  const [isLoading, setIsLoading] = useState(true); // 로딩 상태를 관리하는 상태 값 추가
+  // const [match, setMatch] = useState(null);
+  // const [isLoading, setIsLoading] = useState(true); // 로딩 상태를 관리하는 상태 값 추가
 
-  useEffect(() => {
-    const fetchData = async () => {
-      const result = await getMatchDetail(matchId);
-      setMatch(result);
-      setIsLoading(false); // 데이터를 불러온 후 로딩 상태를 false로 설정
-    };
-    fetchData();
-  }, [matchId]);
+  // useEffect(() => {
+  //   const fetchData = async () => {
+  //     const result = await getMatchDetail(matchId);
+  //     setMatch(result);
+  //     setIsLoading(false); // 데이터를 불러온 후 로딩 상태를 false로 설정
+  //   };
+  //   fetchData();
+  // }, [matchId]);
 
-  if (isLoading) {
-    return <div>Loading...</div>; // 로딩 중일 때는 'Loading...'을 표시
-  }
+  // if (isLoading) {
+  //   return <div>Loading...</div>; // 로딩 중일 때는 'Loading...'을 표시
+  // }
 
-  const { homeBettingAmount, drawBettingAmount, awayBettingAmount } = match;
+  const {
+    homeBettingAmount,
+    drawBettingAmount,
+    awayBettingAmount,
+    homeTeamName,
+    awayTeamName,
+    homeTeamId,
+    awayTeamId,
+  } = data;
 
   const totalBettingAmount =
     homeBettingAmount + drawBettingAmount + awayBettingAmount;
@@ -72,16 +80,16 @@ function CurrentBettingContainer() {
       <CurrentBettingOuterContainer>
         <CurrentBettingInnerContainer>
           <CurrentBettingComponent
-            teamName={match.homeTeamName}
-            teamId={match.homeTeamId}
+            teamName={homeTeamName}
+            teamId={homeTeamId}
             teamOddsRatio={homeOddsRatio}
             teamOdds={homeOdds}
           />
         </CurrentBettingInnerContainer>
         <CurrentBettingInnerContainer>
           <CurrentBettingComponent
-            teamName={match.awayTeamName}
-            teamId={match.awayTeamId}
+            teamName={awayTeamName}
+            teamId={awayTeamId}
             teamOddsRatio={awayOddsRatio}
             teamOdds={awayOdds}
           />
