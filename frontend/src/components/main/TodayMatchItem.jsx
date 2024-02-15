@@ -33,7 +33,11 @@ function TodayMatchItem({ match }) {
 
   const navigate = useNavigate();
   const goMatchDetail = () => {
-    navigate(`/match/${match.matchId}`);
+    navigate(`/match/${match.matchId}`, {
+      state: {
+        main: true,
+      },
+    });
   };
 
   return (
