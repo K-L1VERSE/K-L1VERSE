@@ -34,3 +34,7 @@ oauth:
     redirect-uri: https://k-l1verse.site/KakaoAuth/
 
 domain: https://k-l1verse.site
+
+logging:
+  level:
+    root: warn
