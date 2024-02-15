@@ -71,7 +71,7 @@ function ProductItemCard({
         <ItemInfoSection>
           <ItemInfoItem>
             <Comment />
-            댓글 {product.board.commentCount} |
+            댓글 {product.board.commentCount}
           </ItemInfoItem>
           <ProductItemCreated>
             {formatRelativeTime(product.board.createAt)}

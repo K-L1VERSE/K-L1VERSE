@@ -9,10 +9,8 @@ export const BoardContainer = styled.div`
 `;
 
 export const BoardText = styled.div`
-  font-family: "Pretendard";
-  font-style: normal;
-  font-weight: 700;
-  font-size: 0.875rem;
+  font-family: "Pretendard-Bold";
+  font-size: 0.9rem;
 `;
 
 export const BoardList = styled.div`
@@ -29,7 +27,7 @@ export const NoBoardContainer = styled.div`
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  padding: 2rem 0 0 1rem;
+  padding: 3rem 0;
   gap: 0.75rem;
 `;
 
@@ -41,29 +39,21 @@ export const NoBoardBox = styled.div`
 `;
 
 export const NoBoardText = styled.div`
-  font-family: "Pretendard";
-  font-style: normal;
-  font-weight: 700;
-  font-size: 1rem;
+  font-family: "Pretendard-Bold";
 `;
 
 export const NoBoardImg = styled.img`
-  width: 1.5rem;
-  height: 1.5rem;
+  width: 1.2rem;
+  height: 1.2rem;
 `;
 
 export const GoBoardButton = styled.button`
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  width: 10rem;
-  height: 3rem;
   border-radius: 0.5rem;
+  padding: 0.7rem 0.9rem;
   border: none;
   background: var(--gray3, #f2f6fd);
-  font-family: "Pretendard";
-  font-style: normal;
-  font-weight: 700;
-  font-size: 0.875rem;
+  font-family: "Pretendard-Bold";
+  font-size: 0.8rem;
   cursor: pointer;
+  color: #3261c1;
 `;
