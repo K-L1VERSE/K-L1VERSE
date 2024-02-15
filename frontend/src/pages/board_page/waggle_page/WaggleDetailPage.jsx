@@ -258,6 +258,7 @@ function WaggleDetailPage() {
             </WaggleBoardTitle>
           </DetailTop>
           <DetailBox>
+            <Title>{title}</Title>
             <UserContainer>
               <UserProfile src={waggleDetail.profile} />
               <User>{nickname}</User>
@@ -269,10 +270,9 @@ function WaggleDetailPage() {
               <CreateAt>
                 <div>{formatDateTime2(createAt)}</div>
               </CreateAt>
-              <EditDeleteButton>{renderEditDeleteButtons()}</EditDeleteButton>
             </ForSpaceBetween>
+            <EditDeleteButton>{renderEditDeleteButtons()}</EditDeleteButton>
 
-            <Title>{title}</Title>
             <Content>{highlightHashtags(content)}</Content>
             <WaggleImageWrapper>
               {waggleDetail.boardImage &&
@@ -323,6 +323,7 @@ export const WaggleBoardTitle = styled.div`
   display: flex;
   font-family: "Pretendard-Bold";
   margin: 0 auto;
+  margin-bottom: 1rem;
   font-size: 1rem;
   background-color: #fee8de;
   padding: 0.4rem 0.7rem 0.2rem 0.7rem;
@@ -342,4 +343,5 @@ export const ForSpaceBetween = styled.div`
   justify-content: space-between;
   align-items: center;
   border-bottom: 0.3px solid #ccc;
+  margin-bottom: 0.2rem;
 `;
