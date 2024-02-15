@@ -100,7 +100,7 @@ function DoBettingContainer({ data }) {
       (targetTime - currentTime) / 1000 / 60,
     );
 
-    if (timeDifferenceInMinues >= 10) {
+    if (timeDifferenceInMinues >= 1) {
       return true;
     }
     return false;
