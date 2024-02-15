@@ -13,7 +13,7 @@ export default function TimelineConatiner(match, setMatch) {
   const { matchId } = useParams();
   const getTimeLines = (matchId) => {
     axios
-      .get(`http://70.12.246.226:8040/matches/timelines/${matchId}`)
+      .get(`https://k-l1verse.site:8040/matches/timelines/${matchId}`)
       .then((res) => {
         setTimelines(res.data);
         if (res.data[res.data.length - 1].eventName === "득점") {
