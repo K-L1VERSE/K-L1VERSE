@@ -139,8 +139,8 @@ const CommentForm = ({
             <img
               src="https://raw.githubusercontent.com/Tarikul-Islam-Anik/Animated-Fluent-Emojis/master/Emojis/Objects/Locked.png"
               alt="Locked"
-              width="20"
-              height="20"
+              width="19"
+              height="19"
             />
             <div> 비밀</div>
           </div>

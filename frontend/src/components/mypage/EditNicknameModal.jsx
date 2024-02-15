@@ -181,48 +181,51 @@ const EditNicknameModal = ({ type, setModalOpen, user, setUser }) => {
           maxLength={10}
           placeholder="닉네임을 입력해주세요."
         />
-        {!isNicknameLengthShorterThanTwo && (
-          <p
-            style={{
-              color: "red",
-              position: "absolute",
-              fontSize: "12px",
-              top: "48%",
-              marginTop: "10px",
-              left: "28%",
-              transform: "translateX(-50%)",
-              textAlign: "center",
-            }}
-          >
-            2글자 이상 입력해주세요.
-          </p>
-        )}
-        {!isNicknameLengthLongerThanFive && (
-          <p
-            style={{
-              color: "red",
-              position: "absolute",
-              fontSize: "12px",
-              top: "48%",
-              marginTop: "10px",
-              left: "28%",
-              transform: "translateX(-50%)",
-              textAlign: "center",
-            }}
-          >
-            5글자 이하 입력해주세요.
-          </p>
-        )}
         {type === "modify" && (
           <div
             className="info"
             style={{
+              position: "absolute",
+              top: "7rem",
+              left: "6.5rem",
               fontSize: "0.6.5rem",
               fontStyle: "italic",
               transform: "translateX(-4.3rem)",
             }}
           >
             * 변경 시 1000골이 차감됩니다.
+          </div>
+        )}
+        {!isNicknameLengthShorterThanTwo && (
+          <div
+            style={{
+              color: "red",
+              position: "absolute",
+              fontSize: "0.75rem",
+              top: "7.7rem",
+              marginTop: "0.8rem",
+              left: "6.5rem",
+              transform: "translateX(-50%)",
+              textAlign: "center",
+            }}
+          >
+            2글자 이상 입력해주세요.
+          </div>
+        )}
+        {!isNicknameLengthLongerThanFive && (
+          <div
+            style={{
+              color: "red",
+              position: "absolute",
+              fontSize: "0.75rem",
+              top: "7.7rem",
+              marginTop: "0.8rem",
+              left: "6.5rem",
+              transform: "translateX(-50%)",
+              textAlign: "center",
+            }}
+          >
+            5글자 이하 입력해주세요.
           </div>
         )}
         {newNickname.length >= 2 &&

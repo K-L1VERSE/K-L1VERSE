@@ -1,11 +1,9 @@
 import styled, { css } from "styled-components";
 
 export const DetailTop = styled.div`
-  margin-top: 1rem;
-  flex-direction: column;
-  font-family: "Pretendard-Regular";
-  font-size: 1.3rem;
-  margin-left: 1rem;
+  margin: 2rem 1rem 0 1rem;
+  display: flex;
+  align-items: center;
 `;
 
 export const RegistCardContainer = styled.div`
@@ -21,7 +19,7 @@ export const TitleInput = styled.input`
   border: none;
   border-bottom: 1px solid lightgrey;
   // border-radius: 4px;
-  font-size: 1rem;
+  font-size: 0.9rem;
   margin-top: 0.3rem;
   outline: none;
   font-family: "Pretendard-Regular";
@@ -34,11 +32,12 @@ export const TextArea = styled.textarea`
   border: none;
   border: 1px solid lightgrey;
   // border-radius: 4px;
-  font-size: 1rem;
+  font-size: 0.9rem;
   resize: none;
   margin-top: 0.3rem;
   outline: none;
   font-family: "Pretendard-Regular";
+  line-height: 1.2rem;
 `;
 
 export const InputLabel = styled.label`
@@ -64,9 +63,10 @@ export const PriceInput = styled.input`
   // border-radius: 4px;
   border: none;
   border-bottom: 1px solid lightgrey;
-  font-size: 1rem;
+  font-size: 0.9rem;
   margin-top: 0.3rem;
   outline: none;
+  font-family: "Pretendard-Regular";
 `;
 
 export const NumberInput = styled.input`
@@ -199,6 +199,7 @@ export const RemoveButton = styled.button`
 
 export const SubmitButton = styled.button`
   background-color: #3261c1;
+  font-family: "Pretendard-Regular";
   color: white;
   padding: 10px 15px;
   border: none;

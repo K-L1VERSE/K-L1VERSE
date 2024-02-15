@@ -3,25 +3,26 @@ import styled, { css } from "styled-components";
 export const Container = styled.div`
   max-width: 800px;
   margin: 0 auto;
-  padding: 20px;
+  padding: 1rem;
   font-family: "Pretendard-Regular";
 `;
 
 export const DetailTop = styled.div`
   display: flex;
-  margin-bottom: 0.5rem;
+  align-items: center;
+  margin: 0.5rem 0;
 `;
 
 export const DetailBox = styled.div`
   // border-bottom: 1px solid #ccc;
-  padding: 0.1rem 1rem 0rem 1rem;
+  /* padding: 0.1rem 1rem 0rem 1rem; */
 `;
 
 export const UserContainer = styled.div`
   display: flex;
   align-items: center;
   // margin-bottom: 0.5rem;
-  margin-top: 0.8rem;
+  margin-top: 0.5rem;
 `;
 
 export const UserProfile = styled.img`
@@ -53,19 +54,20 @@ export const Title = styled.div`
   margin-top: 0.5rem;
   font-size: 1.1rem;
   font-family: "Pretendard-Bold";
-  padding-bottom: 10px;
+  /* padding-bottom: 10px; */
 `;
 
 export const FormattedDate = styled.div`
-  font-size: 0.8rem;
-  margin-bottom: 0.5rem;
+  font-size: 0.7rem;
+  margin: 0.2rem 0;
   color: #595959;
 `;
 
 export const Content = styled.p`
-  margin-top: 1rem;
+  /* margin-top: 1rem; */
   font-size: 0.9rem;
   white-space: pre-wrap;
+  line-height: 1.2rem;
 `;
 
 export const Price = styled.p`
@@ -181,14 +183,14 @@ export const LikeBox = styled.div`
 `;
 
 export const LikeCount = styled.span`
-  font-size: 0.8rem;
+  font-size: 0.75rem;
+  color: grey;
 `;
 
 export const EditDeleteButton = styled.div`
   display: flex;
   justify-content: flex-end;
-  font-size: 1.5rem;
-  height: 1.5rem;
+  height: 1.3rem;
 `;
 
 export const UpdateButton = styled(Button)`

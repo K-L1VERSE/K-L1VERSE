@@ -5,7 +5,7 @@ export const WaggleListImage = styled.img`
   max-height: 4rem;
   display: block;
   border-radius: 8px;
-  margin-right: 1rem;
+  margin: 0.3rem 0.5rem 0 0;
 `;
 
 export const WaggleImageContainer = styled.div`

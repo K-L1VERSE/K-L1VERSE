@@ -17,6 +17,8 @@ import java.util.List;
 public class TestDataController {
 
     private final TestDataService testDataService;
+
+    @CrossOrigin(originPatterns = "*")
     @GetMapping("/{matchId}")
     public ResponseEntity<List<TestDataResDto>> getTimelines(@PathVariable(name = "matchId") int matchId) {
         List<TestDataResDto> timelineResponse = testDataService.getTimelines(matchId);

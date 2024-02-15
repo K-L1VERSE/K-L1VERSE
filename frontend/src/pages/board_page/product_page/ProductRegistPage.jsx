@@ -153,16 +153,18 @@ function ProductRegistPage() {
               <BackButton onClick={handleBackClick}>
                 <img src={BackIcon} alt="Back" />
               </BackButton>
+              <ProductBoardTitle>
+                <div>
+                  {isUpdateMode ? "중고거래 글수정" : "중고거래 글쓰기"}
+                </div>
+                <img
+                  src="https://raw.githubusercontent.com/Tarikul-Islam-Anik/Animated-Fluent-Emojis/master/Emojis/Objects/Coin.png"
+                  alt="Coin"
+                  width="18"
+                  height="18"
+                />
+              </ProductBoardTitle>
             </DetailTop>
-            <ProductBoardTitle>
-              <div>{isUpdateMode ? "중고거래 글수정" : "중고거래 글쓰기"}</div>
-              <img
-                src="https://raw.githubusercontent.com/Tarikul-Islam-Anik/Animated-Fluent-Emojis/master/Emojis/Objects/Coin.png"
-                alt="Coin"
-                width="22"
-                height="22"
-              />
-            </ProductBoardTitle>
             <ProductRegistCard
               title={title}
               content={content}
@@ -186,16 +188,17 @@ function ProductRegistPage() {
             <BackButton onClick={handleBackClick}>
               <img src={BackIcon} alt="Back" />
             </BackButton>
+
+            <ProductBoardTitle>
+              <div>{isUpdateMode ? "중고거래 수정" : "중고거래 글쓰기"}</div>
+              <img
+                src="https://raw.githubusercontent.com/Tarikul-Islam-Anik/Animated-Fluent-Emojis/master/Emojis/Objects/Coin.png"
+                alt="Coin"
+                width="22"
+                height="22"
+              />
+            </ProductBoardTitle>
           </DetailTop>
-          <ProductBoardTitle>
-            <div>{isUpdateMode ? "중고거래 수정" : "중고거래 글쓰기"}</div>
-            <img
-              src="https://raw.githubusercontent.com/Tarikul-Islam-Anik/Animated-Fluent-Emojis/master/Emojis/Objects/Coin.png"
-              alt="Coin"
-              width="22"
-              height="22"
-            />
-          </ProductBoardTitle>
           <ProductRegistCard
             title={title}
             content={content}
@@ -221,17 +224,16 @@ export default ProductRegistPage;
 
 export const ProductBoardTitle = styled.div`
   display: flex;
-  width: 8rem;
-  height: 1.7rem;
   font-family: "Pretendard-Bold";
   margin: 0 auto;
-  font-size: 1rem;
+  margin-bottom: 1rem;
   background-color: #e5edfb;
-  padding: 0.2rem 0.2rem 0.15rem 0.7rem;
+  padding: 0.3rem 0.5rem;
   border-radius: 10px;
   align-items: center;
   color: #578cea;
-  margin-bottom: 1rem;
+  font-size: 0.85rem;
+
   img {
     margin-left: 0.1rem;
     margin-bottom: 0.1rem;

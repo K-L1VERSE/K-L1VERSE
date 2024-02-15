@@ -54,7 +54,6 @@ function WaggleItemCard({
             />
           </WriterContainer>
         </div>
-
         <ImageContentBox>
           {boardImage.length > 0 && (
             // 첫 번째 이미지만 출력

@@ -247,7 +247,7 @@ function Badge() {
       </div>
 
       <TitleContainer>
-        <TitleText>구단뱃지</TitleText>
+        <TitleText>구단 뱃지</TitleText>
       </TitleContainer>
       <BadgeList
         badgeList={badgeList}

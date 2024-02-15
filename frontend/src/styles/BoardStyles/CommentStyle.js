@@ -2,8 +2,9 @@ import styled from "styled-components";
 
 /* ************* CommentList ************* */
 export const ListContainer = styled.div`
-  padding: 0.1rem 1rem 1rem 1rem;
-  margin-top: 1rem;
+  /* padding: 0.1rem 1rem 1rem 1rem; */
+  margin: 0.7rem 0.5rem 0 0.5rem;
+  margin-top: 0.7rem;
 `;
 
 export const ReplyImg = styled.img`
@@ -39,6 +40,7 @@ export const CommentContent = styled.p`
   color: #5f5f5f;
   display: block;
   white-space: pre-wrap;
+  line-height: 1.2rem;
 `;
 
 export const CommentTime = styled.div`
@@ -92,7 +94,7 @@ export const CommentRegistContainer = styled.div`
   flex-direction: row;
   justify-content: space-between;
   align-items: center;
-  margin: 0.5rem 0 0.6rem 0.5rem;
+  margin: 0.5rem 0 0 0.5rem;
   font-size: 0.9rem;
 `;
 
@@ -122,14 +124,12 @@ export const TextBottom = styled.div`
 `;
 
 export const EditButton = styled.button`
-  /* background-color: #fff; */
-  /* background-color: yellowgreen; */
+  background-color: #fff;
   color: grey;
   font-size: 0.5em;
   border: none;
   cursor: pointer;
   border-radius: 10px;
-
   &.hover {
     text-decoration: underline;
   }
@@ -162,7 +162,7 @@ export const CommentFormContainer = styled.form`
 
 export const TextContainer = styled.form`
   display: flex;
-  margin-top: 0.1rem;
+  /* margin-top: 0.1rem; */
 `;
 
 export const TextArea = styled.textarea`
@@ -176,6 +176,7 @@ export const TextArea = styled.textarea`
   height: auto;
   border-bottom: 1px solid #ccc;
   outline: none;
+  line-height: 1.2rem;
 `;
 
 export const CheckboxLabel = styled.label`
@@ -233,8 +234,9 @@ export const SubmitContainer = styled.div`
 `;
 
 export const SubmitImg = styled.img`
-  width: 1.8rem;
-  height: 1.8rem;
+  width: 1.5rem;
+  height: 1.5rem;
+  margin-right: 0.3rem;
 `;
 
 export const CancelButton = styled.button`

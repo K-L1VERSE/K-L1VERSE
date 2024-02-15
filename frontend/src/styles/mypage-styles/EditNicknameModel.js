@@ -64,7 +64,7 @@ export const MyInfoInput = styled.input`
   margin: 1.25rem 0.625rem 1.25rem 0;
   outline: none;
   flex: 80%;
-  padding-bottom: 0.3125rem;
+  padding: 0.3125rem;
 `;
 
 export const ButtonContainer = styled.div`

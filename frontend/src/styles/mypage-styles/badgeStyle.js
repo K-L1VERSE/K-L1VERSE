@@ -2,17 +2,14 @@ import styled from "styled-components";
 
 export const TitleContainer = styled.div`
   display: flex;
-  padding: 1rem 0 1rem 0;
+  padding: 0 0 2rem 0;
 `;
 
 export const TitleText = styled.div`
-  padding: 0 0 1rem 1rem;
   color: var(--blue1, #026);
-  font-family: Pretendard;
-  font-size: 1rem;
-  font-style: normal;
-  font-weight: 700;
-  line-height: normal;
+  font-family: "Pretendard-Bold";
+  margin: 0 auto;
+  font-size: 1.1rem;
 `;
 
 export const BadgeContainer = styled.div`
@@ -33,16 +30,18 @@ export const BadgeBackground = styled.div`
   display: flex;
   width: 15%;
   margin-bottom: 0.8rem;
+  padding-bottom: 0.3rem;
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  cursor: pointer;
 
   ${(props) =>
     props.$isSelected && "background-color: #e5edfb; border-radius: 0.25rem"};
-  // &:hover {
-  //   background-color: #e5edfb;
-  //   border-radius: 0.25rem;
-  // }
+  &:hover {
+    background-color: #e5edfb;
+    border-radius: 0.25rem;
+  }
   border-radius: 0.25rem;
 `;
 
@@ -92,6 +91,7 @@ export const PurchaseTextContainer = styled.div`
   border-radius: 0.5rem;
   border: 1px solid #3261c1;
   background-color: #fff;
+  cursor: pointer;
 `;
 
 export const PurchaseText = styled.div`
