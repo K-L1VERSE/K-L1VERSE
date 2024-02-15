@@ -29,12 +29,16 @@ export default function TimelineConatiner(match, setMatch) {
       .catch(() => {});
   };
 
-  setInterval(() => {
-    getTimeLines(matchId);
-  }, [10000]);
-
   useEffect(() => {
     getTimeLines(matchId);
+
+    const interval = setInterval(() => {
+      getTimeLines(matchId);
+    }, [10000]);
+
+    return () => {
+      clearInterval(interval);
+    };
   }, []);
 
   return (
