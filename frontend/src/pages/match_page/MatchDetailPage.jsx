@@ -20,6 +20,7 @@ export default function MatchDetailPage() {
   const m = location.state?.m;
   const day = location.state?.day;
   const v = location.state?.v;
+  const [isBetted, setIsBetted] = useState(false);
 
   const [data, setData] = useState();
   useEffect(() => {
@@ -61,7 +62,7 @@ export default function MatchDetailPage() {
                   <CurrentBettingContainer />
                 </Slider>
               </SliderContainer>
-              <DoBettingContainer data={data} />
+              <DoBettingContainer data={data} setIsBetted={setIsBetted} />
             </>
           ) : (
             <div />

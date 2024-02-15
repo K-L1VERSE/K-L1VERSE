@@ -1,5 +1,6 @@
 package com.KL1verse.match.scheduler.service;
 
+import com.KL1verse.match.kafka.producer.KafkaBettingWinProducer;
 import com.KL1verse.match.kafka.producer.KafkaMatchNotificationProducer;
 import com.KL1verse.match.match.TimelineList;
 import com.KL1verse.match.match.repository.MatchRepository;
@@ -35,6 +36,7 @@ public class SchedulerService {
     private final ObjectMapper objectMapper;
     private final TimelineList timelineList;
     private final MatchRepository matchRepository;
+    private final KafkaBettingWinProducer kafkaBettingWinProducer;
 
     // 동적으로 스케줄된 작업을 예약
     public void scheduleTaskNotification(String cronExpression, int matchId) {
@@ -146,6 +148,16 @@ public class SchedulerService {
                 match.setStatus(MatchStatus.done);
                 matchRepository.save(match);
                 cancleScheduledTask(matchId);
+
+                int homeScore = match.getHomeScore();
+                int awayScore = match.getAwayScore();
+                if(homeScore > awayScore) {
+                    kafkaBettingWinProducer.bettingWin(matchId, match.getHomeTeamId());
+                } else if(homeScore < awayScore) {
+                    kafkaBettingWinProducer.bettingWin(matchId, match.getAwayTeamId());
+                } else {
+                    kafkaBettingWinProducer.bettingWin(matchId, 0);
+                }
             }
 
             timelineList.getTimelineMatchList()[matchId] = timelineResponse;

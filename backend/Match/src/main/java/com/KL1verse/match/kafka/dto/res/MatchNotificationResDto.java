@@ -14,4 +14,6 @@ public class MatchNotificationResDto {
 
     List<Integer> userIdList;
     String uri;
+    String homeTeamId;
+    String awayTeamId;
 }
