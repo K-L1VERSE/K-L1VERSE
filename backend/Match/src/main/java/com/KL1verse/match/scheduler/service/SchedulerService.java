@@ -115,7 +115,6 @@ public class SchedulerService {
         }
     }
 
-    @Transactional
     public void crawlMatch(int matchId) {
         String url = "https://k-l1verse.site:8080/timelines/" + matchId;
         String response = restTemplate.getForObject(url, String.class);
