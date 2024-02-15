@@ -32,9 +32,11 @@ export function getLatestMate(success, fail) {
   axios.get(`/${gateway}/${url}/recent/2`).then(success).catch(fail);
 }
 
-export function getMatesByMatchList(matchId, success, fail) {
+export function getMatesByMatchList(matchId, page, success, fail) {
   axios
-    .get(`/${gateway}/${url}/matesByMatchList?matchIds=${matchId}`)
+    .get(
+      `/${gateway}/${url}/matesByMatchList?matchIds=${matchId}&page=${page}&size=10&sort=board.createAt,desc`,
+    )
     .then(success)
     .catch(fail);
 }
