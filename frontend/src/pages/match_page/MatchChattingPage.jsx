@@ -65,7 +65,7 @@ function MatchChattingPage() {
         </Button>
       </Buttons>
       <ScoreItem match={match} />
-      {focus === 1 && <TimelineContainer />}
+      {focus === 1 && <TimelineContainer match={match} setMatch={setMatch} />}
       {focus === 2 && <Chat />}
     </>
   );
