@@ -228,7 +228,7 @@ public class MatchServiceImpl implements MatchService {
             timelineResponse.add(TimelineResponse.builder()
                 .timelineId(timelineItem.getTimelineId())
                 .teamName(timelineItem.getTeamName())
-                .memberName(timelineItem.getMemberName())
+                .playerName(timelineItem.getMemberName())
                 .backNo(timelineItem.getBackNo())
                 .eventName(timelineItem.getEventName())
                 .timeMin(timelineItem.getTimeMin())

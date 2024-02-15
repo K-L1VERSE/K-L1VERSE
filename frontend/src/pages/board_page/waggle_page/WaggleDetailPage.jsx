@@ -307,7 +307,11 @@ function WaggleDetailPage() {
             </Bottom>
             <Gray />
           </DetailBox>
-          <CommentList boardId={boardId} writerId={waggleDetail.userId} />
+          <CommentList
+            boardId={boardId}
+            writerId={waggleDetail.userId}
+            setCommentCount={setCommentCount}
+          />
         </Container>
       )}
       <Modal visible={modalVisible} onClose={handleCloseModal}>

@@ -13,6 +13,7 @@ public class TestDataResDto {
     private String playerName;
     private String playerName2;
     private String teamName;
+    private Integer teamId;
     private Integer backNo;
     private Integer timeMin;
     private String eventName;

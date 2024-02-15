@@ -1,6 +1,10 @@
 package com.KL1verse.match.scheduler.service;
 
 import com.KL1verse.match.kafka.producer.KafkaMatchNotificationProducer;
+import com.KL1verse.match.match.TimelineList;
+import com.KL1verse.match.match.repository.MatchRepository;
+import com.KL1verse.match.match.repository.entity.Match;
+import com.KL1verse.match.match.repository.entity.Match.MatchStatus;
 import java.time.Instant;
 import java.util.*;
 import java.util.concurrent.ScheduledFuture;
@@ -16,6 +20,7 @@ import org.springframework.scheduling.TriggerContext;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.scheduling.concurrent.ThreadPoolTaskScheduler;
 import org.springframework.scheduling.support.CronTrigger;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.client.RestTemplate;
 
 @Slf4j
@@ -28,6 +33,8 @@ public class SchedulerService {
     private final KafkaMatchNotificationProducer kafkaMatchNotificationProducer;
     private final RestTemplate restTemplate = new RestTemplate();
     private final ObjectMapper objectMapper;
+    private final TimelineList timelineList;
+    private final MatchRepository matchRepository;
 
     // 동적으로 스케줄된 작업을 예약
     public void scheduleTaskNotification(String cronExpression, int matchId) {
@@ -81,7 +88,7 @@ public class SchedulerService {
         ScheduledFuture<?> scheduledTask = taskScheduler.schedule(task, new Trigger() {
             @Override
             public Instant nextExecution(TriggerContext triggerContext) {
-                CronTrigger crontrigger = new CronTrigger("0/2 * * * * *");
+                CronTrigger crontrigger = new CronTrigger("0/15 * * * * *");
                 return crontrigger.nextExecution(triggerContext);
             }
         });
@@ -106,6 +113,7 @@ public class SchedulerService {
         }
     }
 
+    @Transactional
     public void crawlMatch(int matchId) {
         String url = "http://localhost:8080/timelines/" + matchId;
         String response = restTemplate.getForObject(url, String.class);
@@ -113,10 +121,32 @@ public class SchedulerService {
 
         try {
             List<TimelineResponse> timelineResponse = Arrays.asList(objectMapper.readValue(response, TimelineResponse[].class));
-            log.info("timelineResponse: {}", timelineResponse.size());
+
+            TimelineResponse recentTimeline = timelineResponse.get(timelineResponse.size()-1);
+
+            if(timelineResponse.size() == 1) {
+                log.info("경기 시작~~");
+                Match match = matchRepository.findById(matchId).get();
+                match.setStatus(MatchStatus.during);
+                matchRepository.save(match);
+            }
+
+            if(recentTimeline.getEventName().equals("득점")) {
+                Match match = matchRepository.findById(matchId).get();
+                if(recentTimeline.getHomeOrAway().equals("HOME")) {
+                    match.setHomeScore(match.getHomeScore() + 1);
+                } else {
+                    match.setAwayScore(match.getAwayScore() + 1);
+                }
+                matchRepository.save(match);
+            }
+
             if(timelineResponse.get(timelineResponse.size()-1).getEventName().equals("경기종료")) {
                 cancleScheduledTask(matchId);
             }
+
+            timelineList.getTimelineMatchList()[matchId] = timelineResponse;
+
         } catch (JsonProcessingException e) {
             throw new RuntimeException(e);
         }
