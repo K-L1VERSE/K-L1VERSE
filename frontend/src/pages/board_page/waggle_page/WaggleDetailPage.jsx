@@ -122,7 +122,7 @@ function WaggleDetailPage() {
       confirmButtonColor: "#3085d6",
       cancelButtonColor: "#d33",
       confirmButtonText:
-        "<div style='font-size:1rem; font-family:Pretendard-Regular;'>확인</div>",
+        "<div style='font-size:1rem; font-family:Pretendard-Regular;'>삭제</div>",
       cancelButtonText:
         "<div style='font-size:1rem; font-family:Pretendard-Regular;'>취소</div>",
     }).then((result) => {
