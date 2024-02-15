@@ -26,12 +26,12 @@ export function formatDate(date) {
   return formattedDate;
 }
 
-function TodayMatchItem({ match }) {
+function TodayMatchItem({ match, goMatchDetail }) {
   const homeTeamsrc = `${process.env.PUBLIC_URL}/badge/badge${match.homeTeamId}.png`;
   const awayTeamsrc = `${process.env.PUBLIC_URL}/badge/badge${match.awayTeamId}.png`;
 
   return (
-    <TodayMatchItemhWrap>
+    <TodayMatchItemhWrap onClick={goMatchDetail}>
       <Date>{formatDate(match.matchAt)}</Date>
       <Teams>
         <Team>

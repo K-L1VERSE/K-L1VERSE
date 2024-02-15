@@ -29,7 +29,7 @@ import * as bettingApi from "../../../api/betting";
 import { UserState } from "../../../global/UserState";
 import { ReactComponent as DoBetIcon } from "../../../assets/icon/do-bet-icon.svg";
 
-function DoBettingContainer({ data }) {
+function DoBettingContainer({ data, setIsBetted }) {
   const [selectedTeam, setSelectedTeam] = useState(null); // 'home', 'draw', 'away'
   const [bettingAmount, setBettingAmount] = useState(0);
   const [userState] = useRecoilState(UserState);
@@ -150,6 +150,7 @@ function DoBettingContainer({ data }) {
               confirmButtonText: "확인",
             }).then(() => {
               setBetComplete(true);
+              setIsBetted(true);
             });
           });
       } catch {

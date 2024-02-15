@@ -17,13 +17,15 @@ export default function TimelineConatiner(match, setMatch) {
       .then((res) => {
         setTimelines(res.data);
         if (res.data[res.data.length - 1].eventName === "득점") {
-          const temp = match;
           if (res.data[res.data.length - 1].homeOrAway === "HOME") {
-            temp.homeScore += 1;
+            setMatch((prev) => {
+              return { ...prev, homeScore: prev.homeScore + 1 };
+            });
           } else {
-            temp.awayScore += 1;
+            setMatch((prev) => {
+              return { ...prev, awayScore: prev.awayScore + 1 };
+            });
           }
-          setMatch(temp);
         }
       })
       .catch(() => {});
