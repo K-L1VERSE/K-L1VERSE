@@ -80,7 +80,7 @@ public class AuthService {
             .password(passwordEncoder.encode("1234"))
             .profile(signUpReqDto.getProfile())
             .domain(signUpReqDto.getDomain())
-            .goal(1500)
+            .goal(2500)
             .totalBet(0)
             .winBet(0)
             .notificationFlag(true)

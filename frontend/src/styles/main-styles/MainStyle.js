@@ -25,7 +25,7 @@ export const AllBtn = styled.div`
 /* Footer */
 export const FooterContainer = styled.div`
   margin-top: 3rem;
-  height: 13rem;
+  height: 10rem;
   background-color: #f5f7f8;
   display: flex;
   flex-direction: column;
@@ -33,7 +33,7 @@ export const FooterContainer = styled.div`
   align-items: center;
   div {
     margin-bottom: 0.4rem;
-    font-size: 0.8rem;
+    font-size: 0.7rem;
     color: gray;
   }
 `;

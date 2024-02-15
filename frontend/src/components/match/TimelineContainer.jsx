@@ -8,7 +8,7 @@ import {
 import EventItem from "./EventItem";
 // import TimelineItem from "./TimelineItem";
 
-export default function TimelineConatiner() {
+export default function TimelineConatiner(match, setMatch) {
   const [timelines, setTimelines] = useState([]);
   const { matchId } = useParams();
   const getTimeLines = (matchId) => {
@@ -16,9 +16,15 @@ export default function TimelineConatiner() {
       .get(`http://70.12.246.226:8040/matches/timelines/${matchId}`)
       .then((res) => {
         setTimelines(res.data);
-        // if (res.data.eventName === "경기 종료") {
-        //   clearInterval(interval);
-        // }
+        if (res.data[res.data.length - 1].eventName === "득점") {
+          const temp = match;
+          if (res.data[res.data.length - 1].homeOrAway === "HOME") {
+            temp.homeScore += 1;
+          } else {
+            temp.awayScore += 1;
+          }
+          setMatch(temp);
+        }
       })
       .catch(() => {});
   };

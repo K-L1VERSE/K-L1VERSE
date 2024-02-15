@@ -63,7 +63,7 @@ export default function BoardItem({ type, posts }) {
       <Text>{category[type].text}</Text>
       {posts.map((post, i) => (
         <Post key={i} onClick={() => goPost(post.board.boardId)}>
-          <Title>{truncateText(post.board.content, 18)}</Title>
+          <Title>{truncateText(post.board.title, 18)}</Title>
           <Date>{formatDate(post.board.createAt)}</Date>
         </Post>
       ))}

@@ -142,6 +142,9 @@ public class SchedulerService {
             }
 
             if(timelineResponse.get(timelineResponse.size()-1).getEventName().equals("경기종료")) {
+                Match match = matchRepository.findById(matchId).get();
+                match.setStatus(MatchStatus.done);
+                matchRepository.save(match);
                 cancleScheduledTask(matchId);
             }
 
