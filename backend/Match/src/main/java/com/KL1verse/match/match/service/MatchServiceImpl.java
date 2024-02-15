@@ -52,7 +52,8 @@ public class MatchServiceImpl implements MatchService {
 
             if (now.getYear() == matchAt.getYear() && now.getMonthValue() == matchAt.getMonthValue()
                 && now.getDayOfMonth() == matchAt.getDayOfMonth()
-                && now.getHour() == matchAt.getHour()) {
+                && now.getHour() == matchAt.getHour()
+            && now.getMinute() == matchAt.getMinute()) {
                 match.setStatus(MatchStatus.during);
             }
 
