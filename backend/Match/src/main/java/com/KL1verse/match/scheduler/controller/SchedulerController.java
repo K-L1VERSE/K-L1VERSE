@@ -26,9 +26,13 @@ public class SchedulerController {
         log.info("Server start!");
 
         getTodayMatches().forEach(match -> {
-            String cronExpression = getCronExpression(match);
-            schedulerService.scheduleTask(cronExpression ,match.getMatchId());
+            String cronExpression = getCronExpression(match, 30);
+            schedulerService.scheduleTaskNotification(cronExpression ,match.getMatchId());
             log.info("matchId: {} 경기가 cronExpression: {} 알림 예약 완료되었습니다.", match.getMatchId(), cronExpression);
+
+            String cronExpressionAtMatch = getCronExpression(match, 0);
+            schedulerService.scheduleTaskCrawl(cronExpressionAtMatch ,match.getMatchId());
+            log.info("matchId: {} 경기가 cronExpression: {} 크롤링 예약 완료되었습니다.", match.getMatchId(), cronExpressionAtMatch);
         });
     }
 
@@ -37,9 +41,13 @@ public class SchedulerController {
         schedulerService.cancelAllScheduledTasks();;
 
         getTodayMatches().forEach(match -> {
-            String cronExpression = getCronExpression(match);
-            schedulerService.scheduleTask(cronExpression ,match.getMatchId());
-            log.info("matchId: {} 경기가 cronExpression: {} 알림 예약 완료되었습니다.", match.getMatchId(), cronExpression);
+            String cronExpressionBeforeThirty = getCronExpression(match, 30);
+            schedulerService.scheduleTaskNotification(cronExpressionBeforeThirty ,match.getMatchId());
+            log.info("matchId: {} 경기가 cronExpression: {} 알림 예약 완료되었습니다.", match.getMatchId(), cronExpressionBeforeThirty);
+
+            String cronExpressionAtMatch = getCronExpression(match, 0);
+            schedulerService.scheduleTaskCrawl(cronExpressionAtMatch ,match.getMatchId());
+            log.info("matchId: {} 경기가 cronExpression: {} 크롤링 예약 완료되었습니다.", match.getMatchId(), cronExpressionAtMatch);
         });
 
     }
@@ -48,9 +56,9 @@ public class SchedulerController {
         return matchRepository.findTodayMatches();
     }
 
-    private String getCronExpression(Match match) {
+    private String getCronExpression(Match match, int minutesBefore) {
         LocalDateTime matchDate = match.getMatchAt();
-        LocalDateTime thirtyMinutesBefore = matchDate.minusMinutes(30);
+        LocalDateTime thirtyMinutesBefore = matchDate.minusMinutes(minutesBefore);
         String cronExpression = convertToCronExpression(thirtyMinutesBefore);
         log.info("cronExpression: {}", cronExpression);
 
