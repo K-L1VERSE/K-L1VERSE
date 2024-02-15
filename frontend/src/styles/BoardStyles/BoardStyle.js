@@ -230,3 +230,19 @@ export const TitleComponent = styled.div`
   }
   margin-top: 1rem;
 `;
+
+export const Info = styled.div`
+  display: flex;
+  align-items: center;
+  margin-top: 0.5rem;
+  margin-left: 0.3rem;
+`;
+
+export const Button2 = styled.div`
+  display: flex;
+  align-items: center;
+  margin-left: 1.4rem;
+  font-family: "Pretendard-Bold";
+  color: #ff8911;
+  font-size: 0.9rem;
+`;
