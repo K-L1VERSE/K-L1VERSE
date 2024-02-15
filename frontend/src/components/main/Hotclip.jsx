@@ -40,7 +40,7 @@ export default function Hotclip() {
             )
             .then((res) => {
               if (res && res.data) {
-                const newVideos = data.items.map((item, index) => {
+                const newVideos = res.data.items.map((item, index) => {
                   return {
                     rank: index + 1,
                     youtubeId: item.id.videoId,
