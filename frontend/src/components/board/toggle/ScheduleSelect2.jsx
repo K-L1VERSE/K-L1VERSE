@@ -1,9 +1,6 @@
 import React from "react";
 import styled from "styled-components";
-import {
-  ScheduleSelect,
-  ArrowImg,
-} from "../../../styles/match-styles/MatchScheduleStyle";
+import { ArrowImg } from "../../../styles/match-styles/MatchScheduleStyle";
 import ToLeft from "../../../assets/ToLeft.png";
 import ToRight from "../../../assets/ToRight.png";
 

@@ -22,7 +22,6 @@ import {
 
 import { ToggleComponent } from "../../styles/BoardStyles/BoardStyle";
 
-import MatchSchedulePage from "../../pages/match_page/MatchSchedulePage";
 import ScheduleModal from "./toggle/ScheduleModal";
 
 function MateRegistCard({
@@ -41,7 +40,6 @@ function MateRegistCard({
   isUpdateMode,
 }) {
   const [matchList, setMatchList] = useState([]);
-  const [selectedMatchTime, setSelectedMatchTime] = useState(""); // 선택한 경기의 시간
 
   useEffect(() => {
     const today = new Date();
@@ -56,10 +54,6 @@ function MateRegistCard({
     };
     fetchData();
   }, []);
-
-  function handleFullFlagChange(e) {
-    setFullFlag(e.target.checked);
-  }
 
   const [isToggled, setIsToggled] = useState(true);
 
@@ -77,10 +71,6 @@ function MateRegistCard({
       return;
     }
     setIsToggled(!isToggled);
-  };
-
-  const handleMatchClick = (selectedMatchId) => {
-    setSelectedMatchId(selectedMatchId);
   };
 
   return (
@@ -119,15 +109,12 @@ function MateRegistCard({
               onMatchClick={(matchId) => {
                 onMatchIdChange(matchId);
                 setIsToggled(true);
-                console.log("matchId", matchId);
-                // matchList에서 선택한 matchId에 해당하는 정보 찾기
               }}
               selectedMatchId={matchId}
             />
           </Small2>
         )}
         <TitleInput value={title} onChange={onTitleChange} placeholder="제목" />
-        {/* <InputLabel>모집 내용</InputLabel> */}
         <div style={{ height: "1rem" }} />
         <TextArea
           value={content}

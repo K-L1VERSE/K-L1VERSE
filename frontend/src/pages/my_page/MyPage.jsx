@@ -25,7 +25,6 @@ import WaggleContainer from "../../components/board/WaggleContainer";
 import MateContainer from "../../components/board/MateContainer";
 import ProductContainer from "../../components/board/ProductContainer";
 import { formatRelativeTime } from "../../components/board/dateFormat";
-import { get } from "jquery";
 
 function MyPage() {
   const fromMypage = true;
@@ -65,11 +64,8 @@ function MyPage() {
   );
   const [page, setPage] = useState(0);
   const [myBoard, setMyBoard] = useState([]);
-  // const [isAxios, setIsAxios] = useState(false);
-  // const [isCategoryChange, setIsCategoryChange] = useState(false);
   const [isBottom, setIsBottom] = useState(false);
 
-  /* 유저 정보 가져오기 */
   const getUserInfo = () => {
     axios
       .get("/user/users/mypage")
@@ -79,9 +75,7 @@ function MyPage() {
       .catch(() => {});
   };
 
-  /* 카테고리 변경 시 호출될 훅 */
   const getMyWagle = () => {
-    // setIsAxios(false);
     let type = "";
     if (category === "1") {
       type = "waggles";
@@ -100,8 +94,6 @@ function MyPage() {
           },
         )
         .then(({ data }) => {
-          // setIsAxios(true);
-          // setIsCategoryChange(false);
           setMyBoard(myBoard !== null ? [...myBoard, ...data] : [...data]);
           setPage(page + 1);
         })
@@ -115,16 +107,13 @@ function MyPage() {
       if (page !== 0) {
         setPage(0);
       } else {
-        console.log("category");
         getMyWagle();
       }
-      // setIsCategoryChange(true);
     }
   }, [category]);
 
   useEffect(() => {
     if (page === 0) {
-      console.log("page");
       getMyWagle();
     }
   }, [page]);
@@ -159,7 +148,6 @@ function MyPage() {
 
     if (user.userId) {
       if (page === 0) {
-        console.log("user");
         getMyWagle();
       } else {
         setPage(0);
@@ -217,8 +205,6 @@ function MyPage() {
         {myBoard && (
           <div>
             {category === "1" &&
-              // isAxios &&
-              // !isCategoryChange &&
               (myBoard.length > 0 ? (
                 <WaggleContainer
                   waggleList={myBoard}
@@ -237,8 +223,6 @@ function MyPage() {
                 </NoBoardContainer>
               ))}
             {category === "2" &&
-              // isAxios &&
-              // !isCategoryChange &&
               (myBoard.length > 0 ? (
                 <MateContainer
                   mateList={myBoard}
@@ -256,8 +240,6 @@ function MyPage() {
                 </NoBoardContainer>
               ))}
             {category === "3" &&
-              // isAxios &&
-              // !isCategoryChange &&
               (myBoard.length > 0 ? (
                 <ProductContainer
                   productList={myBoard}

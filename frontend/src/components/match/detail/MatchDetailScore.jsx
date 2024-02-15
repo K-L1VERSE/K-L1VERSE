@@ -52,8 +52,6 @@ export default function MatchDetailScore({ match, y, m, day, d, v, main }) {
     } else if (v === "calendar") {
       navigate("/schedule", { state: { d, y, m, day, v } });
     }
-
-    // navigate(-1);
   };
 
   const getFormattedDateString = () => {
@@ -64,13 +62,10 @@ export default function MatchDetailScore({ match, y, m, day, d, v, main }) {
     const hour = String(date.getHours()).padStart(2, "0");
     const minute = String(date.getMinutes()).padStart(2, "0");
 
-    // 요일을 가져오기 위한 배열
     const daysOfWeek = ["일", "월", "화", "수", "목", "금", "토"];
 
-    // 요일 추출
     const dayOfWeek = daysOfWeek[date.getDay()];
 
-    // 결과 문자열 생성
     const formattedDateString = `${year}.${month}.${day} ${dayOfWeek}요일 ${hour}:${minute}`;
 
     return formattedDateString;

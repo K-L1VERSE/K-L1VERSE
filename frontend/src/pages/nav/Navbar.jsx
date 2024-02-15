@@ -100,7 +100,6 @@ export default function Header() {
           <Text $isSelected={state[2]}>알림</Text>
         </NavItem>
         <NavItem onClick={goMypage} $disabled={disabled} $isSelected={state[3]}>
-          {/* <MyPageIcon /> */}
           {navbarMyPageIcon({ $isSelected: state[3] })}
           <Text $isSelected={state[3]}>마이페이지</Text>
         </NavItem>

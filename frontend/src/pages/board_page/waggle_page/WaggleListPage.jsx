@@ -8,11 +8,9 @@ import {
   Header,
   HeaderButton,
   HeaderDiv,
-  Info,
   Button2,
 } from "../../../styles/BoardStyles/BoardStyle";
 import { Button } from "../../../styles/BoardStyles/BoardDetailStyle";
-// import SearchComponent from "../../../components/board/SearchComponent";
 
 function WaggleListPage() {
   const [waggleList, setWaggleList] = useState([]);
@@ -114,10 +112,6 @@ function WaggleListPage() {
     navigate("/waggleRegist");
   };
 
-  // const handleSearch = (searchResult) => {
-  //   setWaggleList(searchResult);
-  // };
-
   return (
     <div>
       <BoardTopNavBar />
@@ -151,9 +145,7 @@ function WaggleListPage() {
           />
         </Button>
         <div>&nbsp; 👈🏻 {btnName}</div>
-        {/* <div>&nbsp; 👈🏻 추천받아보아요</div> */}
       </Button2>
-      {/* <SearchComponent onSearch={handleSearch} /> */}
 
       <WaggleContainer
         waggleList={waggleList}

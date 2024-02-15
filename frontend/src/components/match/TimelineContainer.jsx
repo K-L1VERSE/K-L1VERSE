@@ -6,7 +6,6 @@ import {
   TimeMin,
 } from "../../styles/match-styles/MatchTimelinStyle";
 import EventItem from "./EventItem";
-// import TimelineItem from "./TimelineItem";
 
 export default function TimelineConatiner(match, setHomeScore, setAwayScore) {
   const [timelines, setTimelines] = useState([]);

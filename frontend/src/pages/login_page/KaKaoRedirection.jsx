@@ -24,9 +24,6 @@ function KaKaoRedirection() {
   axios
     .get(`/user/login/oauth/code/kakao?code=${KAKAO_CODE}`)
     .then((res) => {
-      /* access Token 받고 전역 변수로 관리 */
-      console.log(res.data);
-
       setUserState({
         nickname: res.data.nickname,
         profile: res.data.profile,
@@ -39,12 +36,9 @@ function KaKaoRedirection() {
         notificationFlag: res.data.notificationFlag,
       });
 
-      /* 성공시 홈화면으로 */
       window.location.href = "/";
     })
-    .catch(() => {
-      // window.location.href = "/login";
-    });
+    .catch(() => {});
 
   return (
     <div>

@@ -24,7 +24,6 @@ function NaverRedirection() {
   axios
     .get(`/user/login/oauth/code/naver?code=${NAVER_CODE}`)
     .then((res) => {
-      /* access Token 받고 전역 변수로 관리 */
       setUserState({
         nickname: res.data.nickname,
         profile: res.data.profile,
@@ -37,12 +36,9 @@ function NaverRedirection() {
         notificationFlag: res.data.notificationFlag,
       });
 
-      /* 성공시 홈화면으로 */
       window.location.href = "/";
     })
-    .catch(() => {
-      // window.location.href = "/login";
-    });
+    .catch(() => {});
 
   return (
     <div>

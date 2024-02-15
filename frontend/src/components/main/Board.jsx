@@ -16,25 +16,19 @@ function Board() {
         setWaggle(res.data);
       }
     }),
-      (error) => {
-        console.error(error);
-      };
+      () => {};
     getLatestMate((res) => {
       if (res && res.data) {
         setMate(res.data);
       }
     }),
-      (error) => {
-        console.error(error);
-      };
+      () => {};
     getLatestProduct((res) => {
       if (res && res.data) {
         setProduct(res.data);
       }
     }),
-      (error) => {
-        console.error(error);
-      };
+      () => {};
   }, []);
 
   return (

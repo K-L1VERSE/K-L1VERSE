@@ -9,7 +9,6 @@ import {
   Score,
 } from "../../styles/main-styles/TodayMatchStyle";
 
-// ************ 날짜 yyyy-mm-dd 형태로 변환 ************
 export function formatDate(date) {
   const d = new window.Date(date);
 

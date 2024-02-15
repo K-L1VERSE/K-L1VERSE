@@ -78,7 +78,6 @@ function Badge() {
   useEffect(() => {
     const temp = [...badgeList];
 
-    /* axios로 가지고 있는 뱃지 코드 리스트 가져오기 */
     axios
       .get(`/user/badges`)
       .then(({ data }) => {
@@ -117,7 +116,6 @@ function Badge() {
           })
           .then(() => {
             Swal.fire({
-              // icon: "success",
               html: `
               <img src="https://raw.githubusercontent.com/Tarikul-Islam-Anik/Animated-Fluent-Emojis/master/Emojis/Smilies/Light%20Blue%20Heart.png" alt="Light Blue Heart" width="100" height="100" />
               <p style='font-size:1.2rem; font-family:Pretendard-Bold;'>뱃지 착용이 완료되었습니다.</p>`,
@@ -133,7 +131,6 @@ function Badge() {
           })
           .catch(() => {
             Swal.fire({
-              // icon: "error",
               html: `
               <img src="https://raw.githubusercontent.com/Tarikul-Islam-Anik/Animated-Fluent-Emojis/master/Emojis/Symbols/Red%20Exclamation%20Mark.png" alt="Red Exclamation Mark" width="100" height="100" />
               <p style='font-size:1.2rem; font-family:Pretendard-Bold;'>잠시 후 다시 시도해주세요.</p>`,
@@ -160,7 +157,6 @@ function Badge() {
         "<div style='font-size:1rem; font-family:Pretendard-Regular;'>취소</div>",
     }).then((result) => {
       if (result.isConfirmed) {
-        /* axios로 뱃지 구매 코드 보내기 */
         axios
           .post(`/user/badges`, {
             code: badgeCodeList[index],
@@ -168,7 +164,6 @@ function Badge() {
           .then((res) => {
             if (res.data.code === 1002) {
               Swal.fire({
-                // icon: "error",
                 html: `
                   <img src="https://raw.githubusercontent.com/Tarikul-Islam-Anik/Animated-Fluent-Emojis/master/Emojis/Symbols/Red%20Exclamation%20Mark.png" alt="Red Exclamation Mark" width="100" height="100" />
                   <p style='font-size:1.2rem; font-family:Pretendard-Bold;'>포인트가 부족합니다.</p>`,
@@ -177,7 +172,6 @@ function Badge() {
               });
             } else if (res.data.code === 1200) {
               Swal.fire({
-                // icon: "error",
                 html: `
                   <img src="https://raw.githubusercontent.com/Tarikul-Islam-Anik/Animated-Fluent-Emojis/master/Emojis/Symbols/Red%20Exclamation%20Mark.png" alt="Red Exclamation Mark" width="100" height="100" />
                   <p style='font-size:1.2rem; font-family:Pretendard-Bold;'>잘못된 요청입니다.</p>`,
@@ -204,7 +198,6 @@ function Badge() {
           })
           .catch(() => {
             Swal.fire({
-              // icon: "error",
               html: `
                 <img src="https://raw.githubusercontent.com/Tarikul-Islam-Anik/Animated-Fluent-Emojis/master/Emojis/Symbols/Red%20Exclamation%20Mark.png" alt="Red Exclamation Mark" width="100" height="100" />
                 <p style='font-size:1.2rem; font-family:Pretendard-Bold;'>잠시 후 다시 시도해주세요.</p>`,

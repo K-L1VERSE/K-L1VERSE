@@ -53,7 +53,6 @@ function ProductItemCard({
         </DealFlagContainer>
         <ImageBoxContainer>
           {product.board.boardImage && product.board.boardImage.length > 0 && (
-            // 첫 번째 이미지만 출력
             <ProductImage src={boardImage[0].trim()} alt="Product Image" />
           )}
         </ImageBoxContainer>

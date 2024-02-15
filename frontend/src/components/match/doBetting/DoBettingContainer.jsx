@@ -30,19 +30,19 @@ import { UserState } from "../../../global/UserState";
 import { ReactComponent as DoBetIcon } from "../../../assets/icon/do-bet-icon.svg";
 
 function DoBettingContainer({ data, setIsBetted }) {
-  const [selectedTeam, setSelectedTeam] = useState(null); // 'home', 'draw', 'away'
+  const [selectedTeam, setSelectedTeam] = useState(null);
   const [bettingAmount, setBettingAmount] = useState(0);
   const [userState] = useRecoilState(UserState);
   const { matchId } = useParams();
   const [match, setMatch] = useState(data);
-  const [isLoading, setIsLoading] = useState(true); // 로딩 상태를 관리하는 상태 값 추가
+  const [isLoading, setIsLoading] = useState(true);
   const [betComplete, setBetComplete] = useState(false);
 
   useEffect(() => {
     const fetchData = async () => {
       const result = await getMatchDetail(matchId);
       setMatch(result);
-      setIsLoading(false); // 데이터를 불러온 후 로딩 상태를 false로 설정
+      setIsLoading(false);
     };
     fetchData();
   }, [matchId]);
@@ -176,7 +176,7 @@ function DoBettingContainer({ data, setIsBetted }) {
     }
   };
   const handleTeamClick = (team) => {
-    setSelectedTeam(selectedTeam === team ? null : team); // 기존에 선택된 팀이면 선택 해제, 아니면 선택
+    setSelectedTeam(selectedTeam === team ? null : team);
   };
   if (!match) {
     return <div>Loading...</div>;
@@ -203,7 +203,6 @@ function DoBettingContainer({ data, setIsBetted }) {
             type="button"
             selected={selectedTeam === "home"}
             onClick={() => handleTeamClick("home")}
-            // betComplete가 true면 disabled
             disabled={
               betComplete || match.status === "done" || !leftMoreThanTenMinutes
             }
@@ -256,7 +255,7 @@ function DoBettingContainer({ data, setIsBetted }) {
                 type="text"
                 onChange={(e) => {
                   const val = e.target.value;
-                  setBettingAmount(val.replace(/\D/g, "")); // 숫자가 아닌 문자를 모두 제거합니다.
+                  setBettingAmount(val.replace(/\D/g, ""));
                 }}
                 disabled={
                   betComplete ||

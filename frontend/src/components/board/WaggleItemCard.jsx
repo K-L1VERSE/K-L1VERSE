@@ -56,7 +56,6 @@ function WaggleItemCard({
         </div>
         <ImageContentBox>
           {boardImage.length > 0 && (
-            // 첫 번째 이미지만 출력
             <WaggleListImage src={boardImage[0].trim()} alt="Waggle Image" />
           )}
           <ItemContent>

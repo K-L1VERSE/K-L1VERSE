@@ -29,7 +29,6 @@ export default function MatchDetailPage() {
       await getMatchDetail(matchId)
         .then((result) => {
           setData(result);
-          console.log(result);
         })
         .catch(() => {
           setData({

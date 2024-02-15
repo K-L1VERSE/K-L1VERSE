@@ -30,7 +30,6 @@ export default function MatchSchedulePage({
       if (selectedDay) {
         setSelectedDayProps(null);
         setResetDayFlag(true);
-        console.log("resetDayFlag: ", resetDayFlag);
       }
     }
   };
@@ -63,7 +62,6 @@ export default function MatchSchedulePage({
         month={month}
         setMonth={setMonth}
         resetDay={resetDay}
-        // onMatchClick={handleMatchClick}
       />
       <hr style={{ width: "95%", border: "1px solid #f4f4f4" }} />
       {view === "list" && (

@@ -1,11 +1,9 @@
 import { useState, useEffect } from "react";
 import SockJS from "sockjs-client";
 import Stomp from "webstomp-client";
-import moment from "moment";
 
 function Chat() {
   const roomId = 1;
-  const sender = "test";
   const [message, setMessage] = useState("");
   const [messages, setMessages] = useState([]);
   const [stompClient, setStompClient] = useState(null);
@@ -14,23 +12,18 @@ function Chat() {
     const socket = new SockJS("http://localhost:3000/ws/chat");
     const stomp = Stomp.over(socket);
 
-    // This effect runs only once when the component mounts
     stomp.connect({}, (frame) => {
       stomp.subscribe(`/topic/chat/room/${roomId}`, (message) => {
-        console.log(message);
         recvMessage(JSON.parse(message.body));
       });
     });
 
-    // Set stompClient state to ensure it persists across re-renders
     setStompClient(stomp);
-    console.log("stomp", stomp);
 
-    // Cleanup function to disconnect the socket when the component unmounts
     return () => {
       stomp.disconnect();
     };
-  }, [roomId]); // Empty dependency array ensures this effect runs only once on mount
+  }, [roomId]);
 
   setMessages((messages) => [
     ...messages,

@@ -1,11 +1,9 @@
-import React, { useState } from "react";
+import React from "react";
 import {
   CommentItem,
-  CommentContent,
   CommentInput,
   ButtonContainer,
   EditButton,
-  DeleteButton,
   ReplyButton,
 } from "../../styles/BoardStyles/CommentStyle";
 import { createReply } from "../../api/comment";
@@ -16,10 +14,6 @@ function CommentReplyCard({ comment }) {
       content: replyContent,
       isSecret,
     });
-
-    const newReply = response.data;
-
-    console.log("New Reply:", newReply);
   };
 
   return (
@@ -33,7 +27,6 @@ function CommentReplyCard({ comment }) {
       ) : (
         <ReplyButton />
       )}
-      {/* Add a button or UI to trigger the reply submission */}
       <ButtonContainer>
         <EditButton
           type="button"

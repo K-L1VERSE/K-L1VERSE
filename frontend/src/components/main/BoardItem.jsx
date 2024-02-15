@@ -1,4 +1,5 @@
 import React from "react";
+import { useNavigate } from "react-router-dom";
 import {
   Title,
   Type,
@@ -7,9 +8,7 @@ import {
   Date,
   BoardItemWrap,
 } from "../../styles/main-styles/BoardItemStyle";
-import { useNavigate } from "react-router-dom";
 
-// ************ 날짜 yyyy-mm-dd 형태로 변환 ************
 function formatDate(date) {
   const d = new window.Date(date);
   let month = `${d.getMonth() + 1}`;
@@ -20,13 +19,13 @@ function formatDate(date) {
   return [year, month, day].join("-");
 }
 
-// ************ 제목 글자 수 제한 ************
 function truncateText(text, maxLength) {
   if (text && text.length > maxLength) {
     return `${text.slice(0, maxLength)}..`;
   }
   return text;
 }
+
 export default function BoardItem({ type, posts }) {
   const navigate = useNavigate();
   const category = [

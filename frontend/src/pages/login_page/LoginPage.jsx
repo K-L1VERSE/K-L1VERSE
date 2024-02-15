@@ -20,7 +20,7 @@ function LoginPage() {
           <NaverLoginButton />
         </Bottom>
         <LoginContent>
-          ※ 구글 로그인과 네이버 로그인은 개발자 계정으로만 가능합니다
+          ※ 네이버 로그인은 개발자 계정으로만 가능합니다
         </LoginContent>
       </LoginContainer>
     </>

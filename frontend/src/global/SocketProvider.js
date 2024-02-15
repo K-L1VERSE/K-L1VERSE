@@ -16,13 +16,13 @@ const SocketProvider = ({ children }) => {
   const [notification, setNotification] = useRecoilState(NotificationState);
   const [userState] = useRecoilState(UserState);
 
-  const recvNotification = (notification) => {
+  const recvNotification = (newNotification) => {
     setNotificationState((prevNotificationState) => {
       return {
         notifications: [...prevNotificationState.notifications],
         newNotifications: [
           ...prevNotificationState.newNotifications,
-          notification,
+          newNotification,
         ],
       };
     });
@@ -65,18 +65,13 @@ const SocketProvider = ({ children }) => {
         .then((res) => {
           if (res && res.data) {
             setNotification({
-              notifications: res.data.filter(
-                (notification) => notification.readFlag,
-              ),
-              newNotifications: res.data.filter(
-                (notification) => !notification.readFlag,
-              ),
+              notifications: res.data.filter((n) => n.readFlag),
+              newNotifications: res.data.filter((n) => !n.readFlag),
             });
           }
         })
         .catch(() => {});
     } else if (isLoggedIn && stompClient && !notificationFlag) {
-      console.log("소켓 연결 해제");
       stompClient.disconnect();
       setStompClient(null);
     } else if (!isLoggedIn && stompClient) {

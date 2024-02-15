@@ -33,7 +33,7 @@ export function formatDateTime(dateTimeStr) {
   const date = new Date(dateTimeStr);
 
   const year = date.getFullYear();
-  const month = date.getMonth() + 1; // 월은 0부터 시작하므로 1을 더해줍니다.
+  const month = date.getMonth() + 1;
   const day = date.getDate();
   const hour = date.getHours();
   const minute = date.getMinutes();
@@ -53,12 +53,10 @@ export function formatDateTime2(dateTimeStr) {
   const date = new Date(dateTimeStr);
 
   const year = date.getFullYear();
-  const month = date.getMonth() + 1; // 월은 0부터 시작하므로 1을 더해줍니다.
+  const month = date.getMonth() + 1;
   const day = date.getDate();
   const hour = date.getHours();
   const minute = date.getMinutes();
-
-  // 2024년 3월 30일 16:30 형태로 날짜를 반환합니다.
 
   let formattedDateTime = `${year}년 ${month}월 ${day}일 `;
   if (minute === 0) {

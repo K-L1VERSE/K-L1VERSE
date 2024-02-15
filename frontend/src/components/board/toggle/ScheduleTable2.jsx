@@ -22,10 +22,6 @@ export default function ScheduleTable({
     setResetDayFlag(false);
   }, [day]);
 
-  // useEffect(() => {
-  //   setSelectedDay(day);
-  // }, []);
-
   const daysInMonth = new Date(year, month, 0).getDate();
   const days = Array.from({ length: daysInMonth }, (_, i) => i + 1);
 
@@ -139,7 +135,6 @@ export default function ScheduleTable({
   );
 }
 
-/* calendar */
 export const TableContainer2 = styled.div`
   text-align: center;
   table {

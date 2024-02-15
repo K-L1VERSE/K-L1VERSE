@@ -4,8 +4,6 @@ import { useLocation } from "react-router-dom";
 import { getMatchList } from "../../../api/match";
 import SelectContainer2 from "./ScheduleSelect2";
 import TableContainer2 from "./ScheduleTable2";
-// import MatchScheduleTop from "../../match/MatchScheduleTop";
-// import ListContainer from "../../match/ScheduleList";
 
 export default function ScheduleModal({
   isMateListPage,
@@ -30,7 +28,6 @@ export default function ScheduleModal({
       if (selectedDay) {
         setSelectedDayProps(null);
         setResetDayFlag(true);
-        console.log("resetDayFlag: ", resetDayFlag);
       }
     }
   };
@@ -62,7 +59,6 @@ export default function ScheduleModal({
         month={month}
         setMonth={setMonth}
         resetDay={resetDay}
-        // onMatchClick={handleMatchClick}
       />
       <TableContainer2
         year={year}

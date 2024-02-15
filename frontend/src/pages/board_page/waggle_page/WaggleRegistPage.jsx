@@ -122,7 +122,6 @@ function WaggleRegistPage() {
     }
   };
 
-  // 파일 상태를 업데이트하는 핸들러 함수
   const handleFileChange = (file) => {
     if (file) {
       setBoardImage(file);

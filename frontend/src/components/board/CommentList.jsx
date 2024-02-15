@@ -39,10 +39,6 @@ const CommentList = ({ boardId, writerId, setCommentCount }) => {
     getComments();
   }, []);
 
-  // console.log(commentList);
-  // console.log("commentId$$$$$$$$$", commentId);
-  // console.log("liked?!?!??", liked);
-
   const handleCommentSubmit = (newComment) => {
     createComment(
       boardId,

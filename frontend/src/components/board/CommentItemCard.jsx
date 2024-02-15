@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { useRecoilState } from "recoil";
+import { useParams } from "react-router-dom";
 import {
   CommentItem,
   CommentWriter,
@@ -17,16 +18,12 @@ import {
   WriterBadge,
   ReplyButton,
   ReplyImg,
-  CommentContainer,
 } from "../../styles/BoardStyles/CommentStyle";
 import ReplyIcon from "../../assets/icon/reply-icon.svg";
 import { likeComment, unlikeComment, updateComment } from "../../api/comment";
 import { UserState } from "../../global/UserState";
 import Like from "./Like";
-import { useParams } from "react-router-dom";
 import { ReactComponent as LikeCount } from "../../assets/icon/likecount-icon.svg";
-
-import CommentIcon from "../../assets/comment.png";
 import CocomentIcon from "../../assets/icon/cocoment-icon.png";
 
 function CommentItemCard({
@@ -43,7 +40,6 @@ function CommentItemCard({
   const [isEditMode, setIsEditMode] = useState(false);
   const [updatedContent, setUpdatedContent] = useState(comment.content);
   const { userId } = useRecoilState(UserState)[0];
-  const { commentId } = useParams;
 
   const handleUpdateBtn = () => {
     if (isEditMode) {
@@ -69,7 +65,6 @@ function CommentItemCard({
   };
 
   const renderEditDeleteButtons = () => {
-    // if (userId === comment.userId || userId === writerId) {
     if (userId === comment.userId) {
       return (
         <ButtonContainer>
@@ -103,7 +98,6 @@ function CommentItemCard({
     }
     return (
       <div>
-        {/* {type === "comment" && !comment.isSecret && ( */}
         {type === "comment" && (
           <ButtonContainer>
             <ReplyButton
@@ -185,7 +179,6 @@ function CommentItemCard({
 
           <CommentItem key={comment.commentId}>
             {isEditMode ? (
-              // 수정 모드일 때는 입력 필드를 보여줌
               <>
                 <CommentContentContainer>
                   <CommentInput
@@ -202,7 +195,6 @@ function CommentItemCard({
                 </CommentContentContainer>
               </>
             ) : (
-              // 수정 모드가 아닐 때는 댓글 내용을 보여줌
               <>
                 <CommentContentContainer>
                   <CommentContent>{comment.content}</CommentContent>
@@ -215,7 +207,6 @@ function CommentItemCard({
                         <LikeBox>
                           <Like
                             liked={liked}
-                            // likesCount={likesCount}
                             handleLikeClick={handleLikeClick}
                           />
                         </LikeBox>

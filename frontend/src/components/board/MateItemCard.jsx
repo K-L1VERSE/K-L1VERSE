@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from "react";
-import styled from "styled-components";
 import { Link } from "react-router-dom";
 import {
   MateItemCreated,
@@ -13,7 +12,6 @@ import {
 import {
   ItemContainer,
   ItemContent,
-  ItemInfoSection,
   ItemTitle,
   TitleComponent,
 } from "../../styles/BoardStyles/BoardStyle";
