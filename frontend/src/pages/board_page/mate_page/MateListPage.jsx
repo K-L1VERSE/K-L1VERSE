@@ -32,17 +32,19 @@ function MateListPage() {
 
   function getMates() {
     if (selectedMatchId) {
-      if (!isFirstClick) {
-        setIsFirstClick(true);
+      if (isFirstClick) {
+        setIsFirstClick(false);
         getMatesByMatchList(
           selectedMatchId,
+          page,
           ({ data }) => {
             if (data.content.length > 0) {
-              console.log("!@!@!@");
+              // const temp = [...mateList];
+              // temp.push(...data.content);
+              // setMateList(temp);
+              // setPage(page + 1);
               setMateList(data.content);
               setPage(page + 1);
-            } else {
-              setMateList([]);
             }
           },
           () => {},
@@ -50,14 +52,13 @@ function MateListPage() {
       } else {
         getMatesByMatchList(
           selectedMatchId,
+          page,
           ({ data }) => {
             if (data.content.length > 0) {
               const temp = [...mateList];
               temp.push(...data.content);
               setMateList(temp);
               setPage(page + 1);
-            } else {
-              setMateList([]);
             }
           },
           () => {},
@@ -86,9 +87,20 @@ function MateListPage() {
 
   useEffect(() => {
     if (selectedMatchId) {
-      getMates();
+      setPage(0);
+      setMateList([]);
+
+      if (!isFirstClick) {
+        setIsFirstClick(true);
+      }
     }
   }, [selectedMatchId]);
+
+  useEffect(() => {
+    if (isFirstClick) {
+      getMates();
+    }
+  }, [isFirstClick]);
 
   const [isBottom, setIsBottom] = useState(false);
 
@@ -116,10 +128,10 @@ function MateListPage() {
   }
 
   useEffect(() => {
-    if (isBottom && !selectedMatchId) {
+    if (isBottom) {
       getMates();
     }
-  }, [isBottom, selectedMatchId]);
+  }, [isBottom]);
 
   const handleWriteMateClick = () => {
     navigate("/mateRegist");
