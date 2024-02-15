@@ -16,14 +16,24 @@ export default function TimelineConatiner() {
       .get(`http://70.12.246.226:8040/matches/timelines/${matchId}`)
       .then((res) => {
         setTimelines(res.data);
+        // if (res.data.eventName === "경기 종료") {
+        //   clearInterval(interval);
+        // }
       })
       .catch(() => {});
   };
 
-  setInterval(() => {
+  useEffect(() => {
     getTimeLines(matchId);
-    console.log(timelines);
-  }, [10000]);
+
+    const interval = setInterval(() => {
+      getTimeLines(matchId);
+    }, [10000]);
+
+    return () => {
+      clearInterval(interval);
+    };
+  }, []);
 
   return (
     <TimelineWrap>
