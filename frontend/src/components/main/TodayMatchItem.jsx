@@ -1,4 +1,5 @@
 import React from "react";
+import { useNavigate } from "react-router-dom";
 import {
   TodayMatchItemhWrap,
   Date,
@@ -8,7 +9,6 @@ import {
   Score,
 } from "../../styles/main-styles/TodayMatchStyle";
 
-// ************ 날짜 yyyy-mm-dd 형태로 변환 ************
 export function formatDate(date) {
   const d = new window.Date(date);
 
@@ -30,8 +30,17 @@ function TodayMatchItem({ match }) {
   const homeTeamsrc = `${process.env.PUBLIC_URL}/badge/badge${match.homeTeamId}.png`;
   const awayTeamsrc = `${process.env.PUBLIC_URL}/badge/badge${match.awayTeamId}.png`;
 
+  const navigate = useNavigate();
+  const goMatchDetail = () => {
+    navigate(`/match/${match.matchId}`, {
+      state: {
+        main: true,
+      },
+    });
+  };
+
   return (
-    <TodayMatchItemhWrap>
+    <TodayMatchItemhWrap onClick={goMatchDetail}>
       <Date>{formatDate(match.matchAt)}</Date>
       <Teams>
         <Team>

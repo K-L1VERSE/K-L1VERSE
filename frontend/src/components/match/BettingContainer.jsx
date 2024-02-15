@@ -21,12 +21,8 @@ export default function BettingContainer({ match }) {
         userId: userState.userId,
       });
       if (response.data.betGoal === 0) {
-        console.log(`베팅 아직 안했음 : ${response.data.betGoal}`); // 0
-        console.log(`베팅 안했을 때 팀 : ${response.data.betTeamId}`); // -1
       } else {
         setBetComplete(true);
-        console.log(`이미 베팅했음 : ${response.data.betGoal}`); // 골
-        console.log(`베팅 팀 : ${response.data.betTeamId}`); // 팀 아이디
       }
     };
     checkBetting();
@@ -50,11 +46,11 @@ export default function BettingContainer({ match }) {
   const homeOddsRatio = (homeOdds / totalOdds) * 100;
   const drawOddsRatio = (drawOdds / totalOdds) * 100;
   const awayOddsRatio = (awayOdds / totalOdds) * 100;
-  const [selectedTeam, setSelectedTeam] = useState(null); // 'home', 'draw', 'away'
+  const [selectedTeam, setSelectedTeam] = useState(null);
   const [bettingAmount, setBettingAmount] = useState(0);
 
   const handleTeamClick = (team) => {
-    setSelectedTeam(selectedTeam === team ? null : team); // 기존에 선택된 팀이면 선택 해제, 아니면 선택
+    setSelectedTeam(selectedTeam === team ? null : team);
   };
 
   const handleBettingClick = async () => {
@@ -74,7 +70,7 @@ export default function BettingContainer({ match }) {
     if (selectedTeam && bettingAmount > 0) {
       try {
         await bettingApi.betting({
-          userId: 1, // 나중에 userId 가져올 수 있도록 수정
+          userId: 1,
           matchId,
           bettingTeamId: teamId,
           amount: bettingAmount,

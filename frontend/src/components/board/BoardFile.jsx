@@ -1,5 +1,5 @@
 import React, { useRef, useState, useEffect } from "react";
-import Swal from "sweetalert2";
+import imageCompression from "browser-image-compression";
 import {
   FileInput,
   FileInputContainer,
@@ -9,7 +9,6 @@ import {
 } from "../../styles/BoardStyles/BoardCreateStyle";
 import CameraIcon from "../../assets/icon/camera-icon.svg";
 import { uploadFile } from "../../api/waggle";
-import imageCompression from "browser-image-compression";
 
 function BoardFile({ onFileChange, value }) {
   const fileInput = useRef(null);
@@ -69,7 +68,6 @@ function BoardFile({ onFileChange, value }) {
       for (let i = 0; i < files.length; i++) {
         const file = files[i];
 
-        // 이미지 압축
         const compressedFile = await compressImage(file);
         const formData = new FormData();
         formData.append("file", compressedFile);
@@ -80,7 +78,6 @@ function BoardFile({ onFileChange, value }) {
         fileUrls.push(imageUrl);
       }
 
-      // 미리보기 업데이트
       const previews = fileUrls.map((url, index) => (
         <FilePreview key={url}>
           <img src={url} alt={`미리보기 - ${files[index].name}`} />
@@ -123,7 +120,6 @@ function BoardFile({ onFileChange, value }) {
     try {
       return await imageCompression(file, options);
     } catch (error) {
-      console.error("Image compression error:", error);
       return file;
     }
   };

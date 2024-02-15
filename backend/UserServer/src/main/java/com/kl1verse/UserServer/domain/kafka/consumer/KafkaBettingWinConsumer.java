@@ -4,6 +4,8 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.kl1verse.UserServer.domain.betting.Winner;
 import com.kl1verse.UserServer.domain.kafka.KafkaUserRepository;
 import com.kl1verse.UserServer.domain.kafka.producer.KafkaProducer;
+import com.kl1verse.UserServer.domain.notification.dto.req.MessageReqDto;
+import com.kl1verse.UserServer.domain.notification.service.NotificationService;
 import com.kl1verse.UserServer.domain.user.repository.entity.User;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -13,6 +15,8 @@ import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDateTime;
+
 @Slf4j
 @Component
 @RequiredArgsConstructor
@@ -21,6 +25,7 @@ public class KafkaBettingWinConsumer {
 
     private final KafkaUserRepository kafkaUserRepository;
     private final KafkaProducer kafkaProducer;
+    private final NotificationService notificationService;
 
     @Autowired
     private ObjectMapper objectMapper;
@@ -38,6 +43,14 @@ public class KafkaBettingWinConsumer {
             kafkaUserRepository.updateGoal(winner.getUserId(),
                 user.getGoal() + winner.getNewGoal());
             kafkaUserRepository.updateWinBet(winner.getUserId(), user.getWinBet() + 1);
+            notificationService.sendNotification(MessageReqDto.builder()
+                    .type(MessageReqDto.NotificationType.GOAL)
+                    .userId(winner.getUserId())
+                    .uri("/mypage")
+                    .message("베팅 보상으로 " + winner.getNewGoal() + "골이 지급되었습니다.")
+                    .date(LocalDateTime.now())
+                    .build());
+
         } catch (Exception e) {
             e.printStackTrace();
         }

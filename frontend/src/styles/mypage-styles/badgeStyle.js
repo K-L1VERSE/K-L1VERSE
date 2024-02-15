@@ -75,10 +75,8 @@ export const ConfirmTextContainer = styled.div`
 export const ConfirmText = styled.div`
   color: #fff;
   text-align: center;
-  font-family: Pretendard;
+  font-family: "Pretendard-Bold";
   font-size: 1rem;
-  font-style: normal;
-  font-weight: 700;
   line-height: 1.5rem;
 `;
 
@@ -97,7 +95,7 @@ export const PurchaseTextContainer = styled.div`
 export const PurchaseText = styled.div`
   color: #3261c1;
   text-align: center;
-  font-family: Pretendard;
+  font-family: "Pretendard-Bold";
   font-size: 1rem;
   font-style: normal;
   font-weight: 700;
@@ -128,7 +126,7 @@ export const DisabledTextContainer = styled.div`
 export const DisabledText = styled.div`
   color: #000;
   text-align: center;
-  font-family: Pretendard;
+  font-family: "Pretendard-Bold";
   font-size: 1rem;
   font-style: normal;
   font-weight: 700;

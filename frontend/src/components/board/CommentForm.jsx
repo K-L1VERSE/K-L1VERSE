@@ -19,7 +19,7 @@ import {
   SenderImg,
   BadgeImg,
 } from "../../styles/match-styles/MatchChattingStyle";
-import { updateComment, createComment, createReply } from "../../api/comment";
+import { createComment, createReply } from "../../api/comment";
 import SendIcon from "../../assets/icon/send-icon.png";
 
 const CommentForm = ({
@@ -146,15 +146,7 @@ const CommentForm = ({
           </div>
         </CheckboxLabel>
         <SubmitContainer onClick={handleSubmit}>
-          {/* <SubmitButton type="button" onClick={handleSubmit}>
-            {isUpdateMode ? "댓글 수정 완료" : "등록"}
-          </SubmitButton> */}
           <SubmitImg src={SendIcon} />
-          {/* {isUpdateMode && (
-            <CancelButton type="button" onClick={() => setIsUpdateMode(false)}>
-              수정 취소
-            </CancelButton>
-          )} */}
         </SubmitContainer>
       </TextBottom>
     </CommentFormContainer>

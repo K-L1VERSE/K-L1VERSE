@@ -93,6 +93,7 @@ public class TestDataService {
                                 .timelineId(++timelineIdArray[matchId])
                                 .eventName("경기시작")
                                 .timeMin(0)
+                                .homeOrAway("AWAY")
                                 .build());
             } else {
                 hashmap.put(matchId, hashmap.get(matchId) + 1);
@@ -155,6 +156,7 @@ public class TestDataService {
                 else {
                     testDataResDtoList[matchId] = new ArrayList<>();
                     timelineIdArray[matchId] = 0;
+                    hashmap.remove(matchId);
                     return null;
                 }
             }

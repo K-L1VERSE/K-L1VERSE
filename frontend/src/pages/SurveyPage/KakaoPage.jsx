@@ -19,24 +19,12 @@ const teamImages = {
 };
 
 const KakaoPage = () => {
-  // 배포한 자신의 사이트
   const realUrl = "http://i10a409.p.ssafy.io/survey";
-  // 로컬 주소 (localhost 3000 같은거)
-  const resultUrl = window.location.href;
-
-  const domainAndPort = process.env.REACT_APP_DOMAIN_AND_PORT;
-
   const imageUrl = "https://i10a409.p.ssafy.io" + teamImages[teamId];
-  console.log("imageUrl: ", imageUrl);
 
-  // 재랜더링시에 실행되게 해준다.
   useEffect(() => {
-    // init 해주기 전에 clean up 을 해준다.
     Kakao.cleanup();
-    // 자신의 js 키를 넣어준다.
     Kakao.init("6929be9a78433534e7fc811e86f9795a");
-    // 잘 적용되면 true 를 뱉는다.
-    console.log(Kakao.isInitialized());
   }, []);
 
   const shareKakaoLink = () => {
@@ -46,7 +34,6 @@ const KakaoPage = () => {
         title: "나랑 어울리는 K-리그 구단은?",
         description: "울산 현대",
         imageUrl: imageUrl,
-        // imageUrl: `${domainAndPort}${teamImages[teamId]}`,
         link: {
           mobileWebUrl: realUrl,
           webUrl: realUrl,

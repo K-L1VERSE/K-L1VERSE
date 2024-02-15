@@ -5,20 +5,13 @@ import {
   Modal,
   TopWrap,
   Text,
-  BottomWrap,
-  UrlBox,
-  ShareText,
   Shares,
   ResultTeam,
   Team,
 } from "../../styles/SurveyStyles/ResultCardStyle";
 import { SurveyTop, ToLeftImg } from "../../styles/SurveyStyles/SurveyTop";
 import ToLeftPng from "../../assets/ToLeft.png";
-import Wallpaper from "../../assets/wallpaperbetter.png";
-import FacebookIcon from "../../assets/icon/facebook-icon(ver2).png";
-import TwitterIcon from "../../assets/icon/twitter-icon.png";
 import KakaoIcon from "../../assets/icon/kakaotalk.png";
-import Goback from "../../assets/icon/go-back-arrow-icon.png";
 import LoadingBar from "../../components/Survey/LoadingBar";
 import { ReactComponent as Congrats } from "../../assets/congrats.svg";
 import { ReactComponent as Refresh } from "../../assets/refresh.svg";
@@ -27,7 +20,6 @@ function firework() {
   var duration = 15 * 100;
   var animationEnd = Date.now() + duration;
   var defaults = { startVelocity: 25, spread: 360, ticks: 50, zIndex: 0 };
-  //  startVelocity: 범위, spread: 방향, ticks: 갯수
 
   function randomInRange(min, max) {
     return Math.random() * (max - min) + min;
@@ -41,7 +33,6 @@ function firework() {
     }
 
     var particleCount = 50 * (timeLeft / duration);
-    // since particles fall down, start a bit higher than random
     confetti(
       Object.assign({}, defaults, {
         particleCount,
@@ -154,24 +145,6 @@ function ResultPage() {
     return () => clearTimeout(tick);
   }, []);
 
-  function copyUrl(e) {
-    if (!document.queryCommandSupported("copy")) {
-      alert("복사 기능이 지원되지 않는 브라우저입니다.");
-    } else {
-      copyUrlRef.current.select();
-      document.execCommand("copy");
-      e.target.focus();
-      $(".show").css("display", "flex");
-      setIsCopyModalOpen(true);
-      const time = setTimeout(() => {
-        $(".show").css("display", "none");
-        setIsCopyModalOpen(false);
-      }, 1000);
-      return () => clearTimeout(time);
-    }
-    return false;
-  }
-
   const shareTwitter = () => {
     window.open(
       `https://twitter.com/intent/tweet?via=likeCpp&text=${encodeURIComponent("재미로 보는 나와 비슷한 케이리그 구단은?!")}&url=${encodeURIComponent(window.location.href)}`,
@@ -188,26 +161,15 @@ function ResultPage() {
     navigate("/survey");
   };
 
-  // **************** kakao 공유 ****************
   const { Kakao } = window;
 
-  // 배포한 자신의 사이트
   const realUrl = "https://k-l1verse.site/survey";
-  // 로컬 주소 (localhost 3000 같은거)
-  const resultUrl = window.location.href;
-
-  const domainAndPort = process.env.REACT_APP_DOMAIN_AND_PORT;
 
   const imageUrl =
     "https://k-l1verse.site/" + teamImages[teamId][randomBackground];
-  // 재랜더링시에 실행되게 해준다.
   useEffect(() => {
-    // init 해주기 전에 clean up 을 해준다.
     Kakao.cleanup();
-    // 자신의 js 키를 넣어준다.
     Kakao.init("6929be9a78433534e7fc811e86f9795a");
-    // 잘 적용되면 true 를 뱉는다.
-    console.log(Kakao.isInitialized());
   }, []);
 
   const shareKakaoLink = () => {
@@ -248,9 +210,7 @@ function ResultPage() {
           </TopWrap>
           <div>
             <ResultTeam>
-              {/* <img src={selectedTeamImage} alt="teamImage" /> */}
               <Team>
-                {/* <div className="team-name">{teamNames[teamId]}</div> */}
                 <img
                   src={selectedTeamImage}
                   className="team-image"
@@ -259,33 +219,6 @@ function ResultPage() {
               </Team>
             </ResultTeam>
           </div>
-          {/* <BottomWrap>
-            <ShareText>
-              <div>콘텐츠 공유하기</div>
-              <div>
-                <img
-                  src="https://raw.githubusercontent.com/Tarikul-Islam-Anik/Animated-Fluent-Emojis/master/Emojis/Smilies/Love%20Letter.png"
-                  alt="Love Letter"
-                  width="25"
-                  height="25"
-                />
-              </div>
-            </ShareText>
-            <UrlBox>
-              <input
-                type="text"
-                ref={copyUrlRef}
-                defaultValue={window.location.href}
-                readOnly
-              />
-              <div onClick={copyUrl}>
-                URL
-                <br />
-                복사
-              </div>
-            </UrlBox>
-            <hr></hr>
-          </BottomWrap> */}
           <Shares>
             {/* <img src={FacebookIcon} onClick={shareFacebook} alt="facebook" />
               <img src={TwitterIcon} onClick={shareTwitter} alt="twitter" /> */}
@@ -294,7 +227,6 @@ function ResultPage() {
               <span>공유하기</span>
             </div>
             <div onClick={goStart}>
-              {/* <img src={refresh} onClick={goStart} alt="restart" /> */}
               <Refresh />
               <span>다시하기</span>
             </div>

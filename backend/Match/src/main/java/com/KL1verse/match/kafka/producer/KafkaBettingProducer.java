@@ -27,6 +27,11 @@ public class KafkaBettingProducer {
 
     public void betting(BettingRequest bettingRequest) {
 
+        bettingRepository.findByUserIdAndMatchId(bettingRequest.getUserId(), bettingRequest.getMatchId())
+            .ifPresent(betting -> {
+                return;
+            });
+
         Betting betting = Betting.builder()
             .userId(bettingRequest.getUserId())
             .matchId(bettingRequest.getMatchId())

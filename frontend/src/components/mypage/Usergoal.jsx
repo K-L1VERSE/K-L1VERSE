@@ -55,9 +55,7 @@ const AccurateImg = styled.img`
 `;
 
 function Usergoal({ user }) {
-  useEffect(() => {
-    console.log("user 정보 수정");
-  }, [user]);
+  useEffect(() => {}, [user]);
 
   return (
     <UsergoalContainer>

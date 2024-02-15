@@ -21,7 +21,6 @@ export default function ProductRegistCard({
   onTitleChange,
   onContentChange,
   onPriceChange,
-  onDealFlagChange,
   boardImage,
   onFileChange,
   onSubmit,
@@ -54,7 +53,6 @@ export default function ProductRegistCard({
       </ToggleContainer>
 
       <RegistCardContainer>
-        {/* <InputLabel>판매 물건</InputLabel> */}
         <TitleInput
           type="text"
           value={title}
@@ -73,22 +71,12 @@ export default function ProductRegistCard({
         <InputLabel>사진 첨부</InputLabel>
         <BoardFile value={boardImage} onFileChange={handleFileChange} />
         <br />
-        {/* <InputLabel>내용</InputLabel> */}
         <TextArea
           value={content}
           onChange={onContentChange}
           placeholder="상세 내용"
         />
         <br />
-        {/* <FlagInputContainer>
-          <FlagInputLabel>
-            <FlagInputCheckbox
-              type="checkbox"
-              checked={dealFlag}
-              onChange={onDealFlagChange}
-            />
-          </FlagInputLabel>
-        </FlagInputContainer> */}
 
         <br />
         <SubmitButton onClick={onSubmit}>{buttonText}</SubmitButton>

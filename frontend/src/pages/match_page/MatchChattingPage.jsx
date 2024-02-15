@@ -17,6 +17,9 @@ function MatchChattingPage() {
   const { matchId } = useParams();
   const navigate = useNavigate();
   const [match, setMatch] = useState({});
+  const [homeScore, setHomeScore] = useState(0);
+  const [awayScore, setAwayScore] = useState(0);
+
   const [focus, setFocus] = useState(1);
   const location = useLocation();
   const d = location.state?.d;
@@ -29,9 +32,11 @@ function MatchChattingPage() {
     const fetchData = async () => {
       const result = await getMatchDetail(matchId);
       setMatch(result);
+      setHomeScore(result.homeScore);
+      setAwayScore(result.awayScore);
     };
     fetchData();
-  }, []);
+  }, [matchId]);
 
   const goMatchDetail = () => {
     navigate(`/match/${matchId}`, {
@@ -64,8 +69,14 @@ function MatchChattingPage() {
           👀 실시간 채팅
         </Button>
       </Buttons>
-      <ScoreItem match={match} />
-      {focus === 1 && <TimelineContainer match={match} setMatch={setMatch} />}
+      <ScoreItem match={match} homeScore={homeScore} awayScore={awayScore} />
+      {focus === 1 && (
+        <TimelineContainer
+          match={match}
+          setHomeScore={setHomeScore}
+          setAwayScore={setAwayScore}
+        />
+      )}
       {focus === 2 && <Chat />}
     </>
   );

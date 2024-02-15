@@ -4,6 +4,8 @@ import com.KL1verse.match.betting.repository.BettingRepository;
 import com.KL1verse.match.betting.repository.entity.Betting;
 import com.KL1verse.match.kafka.KafkaProducer;
 import com.KL1verse.match.kafka.dto.res.MatchNotificationResDto;
+import com.KL1verse.match.match.repository.MatchRepository;
+import com.KL1verse.match.match.repository.entity.Match;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import java.util.ArrayList;
 import java.util.List;
@@ -20,6 +22,7 @@ public class KafkaMatchNotificationProducer {
 
     private final KafkaProducer kafkaProducer;
     private final BettingRepository bettingRepository;
+    private final MatchRepository matchRepository;
 
     @Autowired
     private ObjectMapper objectMapper;
@@ -37,9 +40,12 @@ public class KafkaMatchNotificationProducer {
             userIdList.add(betting.getUserId());
         }
 
+        Match match = matchRepository.findById(matchId).orElseThrow();
         MatchNotificationResDto matchNotificationResDto = MatchNotificationResDto.builder()
             .userIdList(userIdList)
-            .uri(domain+"/matches/" + String.valueOf(matchId))
+            .homeTeamId(String.valueOf(match.getHomeTeamId()))
+            .awayTeamId(String.valueOf(match.getAwayTeamId()))
+            .uri("/match/" + String.valueOf(matchId))
             .build();
 
         // kafka로 보내기

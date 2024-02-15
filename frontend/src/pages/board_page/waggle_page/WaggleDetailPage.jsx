@@ -21,7 +21,6 @@ import {
   EditDeleteButton,
   DetailCommentCount,
   CreateAt,
-  // LikeCount,
   UserContainer,
   UserProfile,
   UserBadge,
@@ -30,15 +29,12 @@ import {
 import { UserState } from "../../../global/UserState";
 
 import BackIcon from "../../../assets/icon/back-icon.png";
-import { ReactComponent as Comment } from "../../../assets/icon/comment-icon.svg";
 import {
   DeleteButton,
   EditButton,
 } from "../../../styles/BoardStyles/CommentStyle";
 import Like from "../../../components/board/Like";
 import {
-  WaggleImage,
-  WaggleImageContainer,
   WaggleImageWrapper,
   WaggleImageTest,
 } from "../../../styles/BoardStyles/WaggleListStyle";
@@ -228,17 +224,6 @@ function WaggleDetailPage() {
     );
   };
 
-  // const highlightHashtags = (text) => {
-  //   return text.split(/#[a-z0-9_가-힣]+/gm).map((word, index) =>
-  //     word.startsWith("#") ? (
-  //       <span key={index} style={{ color: "#E4405F" }}>
-  //         #{word}
-  //       </span>
-  //     ) : (
-  //       word
-  //     ),
-  //   );
-  // };
   return (
     <div>
       {waggleDetail && waggleId && (

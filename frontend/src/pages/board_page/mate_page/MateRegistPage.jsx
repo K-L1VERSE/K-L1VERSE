@@ -101,17 +101,12 @@ function MateRegistPage() {
           matchId,
         },
         ({ data }) => {
-          console.log("Waggle created");
           navigate(`/mate/${data.board.boardId}`);
         },
         () => {},
       );
     }
   };
-
-  function handleFullFlagChange(e) {
-    setFullFlag(e.target.checked);
-  }
 
   const handleFullFlag = () => {
     if (isUpdateMode) {

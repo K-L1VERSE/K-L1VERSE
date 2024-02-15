@@ -30,10 +30,17 @@ export default function MatchSchedulePage({
       if (selectedDay) {
         setSelectedDayProps(null);
         setResetDayFlag(true);
-        console.log("resetDayFlag: ", resetDayFlag);
       }
     }
   };
+
+  useEffect(() => {
+    const fetchData = async () => {
+      const result = await getMatchList(year, month);
+      setData(result);
+    };
+    fetchData();
+  }, [year, month]);
 
   useEffect(() => {
     if (d) {
@@ -46,14 +53,6 @@ export default function MatchSchedulePage({
     }
   }, []);
 
-  useEffect(() => {
-    const fetchData = async () => {
-      const result = await getMatchList(year, month);
-      setData(result);
-    };
-    fetchData();
-  }, [year, month]);
-
   return (
     <div>
       <MatchScheduleTop setView={setView} view={view} />
@@ -63,7 +62,6 @@ export default function MatchSchedulePage({
         month={month}
         setMonth={setMonth}
         resetDay={resetDay}
-        // onMatchClick={handleMatchClick}
       />
       <hr style={{ width: "95%", border: "1px solid #f4f4f4" }} />
       {view === "list" && (

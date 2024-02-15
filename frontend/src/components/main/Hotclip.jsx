@@ -26,8 +26,10 @@ export default function Hotclip() {
 
         if (dateStr === data.savedAt.split("T")[0]) {
           getYoutubeList(
-            ({ data }) => {
-              setVideos(data);
+            (res) => {
+              if (res && res.data) {
+                setVideos(res.data);
+              }
             },
             () => {},
           );
@@ -36,21 +38,23 @@ export default function Hotclip() {
             .get(
               `https://www.googleapis.com/youtube/v3/search?part=snippet&maxResults=10&q=K리그1&type=video&key=${process.env.REACT_APP_YOUTUBE_API_KEY}`,
             )
-            .then(({ data }) => {
-              const newVideos = data.items.map((item, index) => {
-                return {
-                  rank: index + 1,
-                  youtubeId: item.id.videoId,
-                  thumbnail: item.snippet.thumbnails.medium.url,
-                };
-              });
-              postYoutube(
-                { items: newVideos },
-                () => {
-                  setVideos(newVideos);
-                },
-                () => {},
-              );
+            .then((res) => {
+              if (res && res.data) {
+                const newVideos = res.data.items.map((item, index) => {
+                  return {
+                    rank: index + 1,
+                    youtubeId: item.id.videoId,
+                    thumbnail: item.snippet.thumbnails.medium.url,
+                  };
+                });
+                postYoutube(
+                  { items: newVideos },
+                  () => {
+                    setVideos(newVideos);
+                  },
+                  () => {},
+                );
+              }
             })
             .catch(() => {});
         }

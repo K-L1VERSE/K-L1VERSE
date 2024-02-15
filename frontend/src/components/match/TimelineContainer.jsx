@@ -6,9 +6,8 @@ import {
   TimeMin,
 } from "../../styles/match-styles/MatchTimelinStyle";
 import EventItem from "./EventItem";
-// import TimelineItem from "./TimelineItem";
 
-export default function TimelineConatiner(match, setMatch) {
+export default function TimelineConatiner(match, setHomeScore, setAwayScore) {
   const [timelines, setTimelines] = useState([]);
   const { matchId } = useParams();
   const getTimeLines = (matchId) => {
@@ -17,13 +16,11 @@ export default function TimelineConatiner(match, setMatch) {
       .then((res) => {
         setTimelines(res.data);
         if (res.data[res.data.length - 1].eventName === "득점") {
-          const temp = match;
           if (res.data[res.data.length - 1].homeOrAway === "HOME") {
-            temp.homeScore += 1;
+            setHomeScore((prev) => prev + 1);
           } else {
-            temp.awayScore += 1;
+            setAwayScore((prev) => prev + 1);
           }
-          setMatch(temp);
         }
       })
       .catch(() => {});

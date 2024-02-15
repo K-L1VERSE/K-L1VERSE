@@ -1,8 +1,6 @@
 import React from "react";
 
 function MyWagle({ wagles }) {
-  console.log(wagles);
-
   const wagleList = wagles.map((wagle) => (
     <li key={wagle.boardId} className="wagle">
       <div>{wagle.title}</div>

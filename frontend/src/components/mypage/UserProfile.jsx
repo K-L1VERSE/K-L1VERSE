@@ -1,11 +1,10 @@
 import React, { useEffect, useState } from "react";
-import { Navigate, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
+import styled from "styled-components";
 import { useSetRecoilState } from "recoil";
 import { ModifyingState, UserState } from "../../global/UserState";
 
-import styled from "styled-components";
 import BadgeButton from "./BadgeButton";
-import LogoutButton from "./LogoutButton";
 import ProfileIcon from "../../assets/icon/profile-icon.png";
 
 import axios from "../../api/axios";
@@ -107,10 +106,6 @@ const UserNickName = styled.div`
 `;
 
 function UserInfo({ user, setUser }) {
-  /* 유저 닉네임 변경 버튼 이벤트 */
-  const editUserInfo = () => {};
-
-  /* 유저 정보 바뀔 때마다 호출될 훅 */
   useEffect(() => {}, [user]);
 
   const setUserState = useSetRecoilState(UserState);
@@ -118,7 +113,6 @@ function UserInfo({ user, setUser }) {
 
   const [selectedImage, setSelectedImage] = useState(null);
 
-  /* 프로필 이미지 선택 시 처리 함수 */
   const handleImageChange = (event) => {
     const file = event.target.files[0];
 
@@ -134,10 +128,10 @@ function UserInfo({ user, setUser }) {
       axios
         .post("/user/file/upload", formData)
         .then((res) => {
-          const url = res.data.url;
+          const { url } = res.data;
           axios
             .post("/user/users/profile", { profile: res.data.url })
-            .then((res) => {
+            .then(() => {
               reader.readAsDataURL(file);
               setUserState((prev) => ({ ...prev, profile: url }));
               setUser(() => {
@@ -146,15 +140,12 @@ function UserInfo({ user, setUser }) {
                 return temp;
               });
             })
-            .catch((err) => {
-              console.log(err);
-            });
+            .catch(() => {});
         })
         .catch(() => {});
     }
   };
 
-  /* 이미지를 선택할 때마다 호출될 훅 */
   useEffect(() => {}, [selectedImage]);
 
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -162,10 +153,6 @@ function UserInfo({ user, setUser }) {
   const handleModalOpen = () => {
     setModifyingState((prev) => ({ ...prev, modifyingNickname: true }));
     setIsModalOpen(true);
-  };
-
-  const handleModalClose = () => {
-    setIsModalOpen(false);
   };
 
   const navigate = useNavigate();
@@ -205,7 +192,6 @@ function UserInfo({ user, setUser }) {
         </UserInfoContent>
       </UserInfoContainer>
 
-      {/* EditNickname Modal */}
       {isModalOpen && (
         <EditNicknameModal
           type="modify"

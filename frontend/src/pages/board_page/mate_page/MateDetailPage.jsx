@@ -4,16 +4,13 @@ import Swal from "sweetalert2";
 import styled from "styled-components";
 import { useRecoilState } from "recoil";
 import axios from "../../../api/axios";
-import BoardTopNavBar from "../../../components/board/BoardTopNavBar";
 import CommentList from "../../../components/board/CommentList";
 import {
   BackButton,
-  Button,
   Container,
   DetailBox,
   DetailTop,
   EditDeleteButton,
-  User,
   UserProfile,
   UserBadge,
   DetailCommentCount,
@@ -33,7 +30,6 @@ import {
   MateDetailTotal,
 } from "../../../styles/BoardStyles/MateListStyle";
 import { getMatchDetail } from "../../../api/match";
-import { ItemTitle } from "../../../styles/BoardStyles/BoardStyle";
 import {
   formatDateTime,
   formatDateTime2,
@@ -63,7 +59,6 @@ function MateDetailPage() {
   const location = useLocation();
   const { state } = location;
 
-  /* mate 상세 정보 가져오기 */
   function getMateDetail() {
     axios.get(`/board/mates/${boardId}`).then(({ data }) => {
       setMatchDetail(data);
@@ -79,7 +74,6 @@ function MateDetailPage() {
     getMateDetail();
   }, [boardId]);
 
-  console.log(mateDetail);
   function getMatch() {
     if (matchId) {
       getMatchDetail(matchId).then((res) => {

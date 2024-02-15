@@ -5,10 +5,8 @@ import Swal from "sweetalert2";
 import { useRecoilState } from "recoil";
 import axios from "../../../api/axios";
 import CommentList from "../../../components/board/CommentList";
-import Like from "../../../components/board/Like";
 import {
   Container,
-  User,
   Title,
   Content,
   DetailBox,
@@ -16,8 +14,6 @@ import {
   DetailTop,
   BackButton,
   Price,
-  DetailImgDiv,
-  DetailOnlyImg,
   FormattedDate,
   Gray,
   DetailCommentCount,
@@ -25,7 +21,6 @@ import {
 import {
   DealStatusGreen,
   DealStatusOrange,
-  ProductImage,
   ProductWriter,
   ProductWriterContainer,
   ProductWriterProfile,
@@ -40,7 +35,6 @@ import {
   DeleteButton,
   EditButton,
 } from "../../../styles/BoardStyles/CommentStyle";
-import { ImageBoxContainer } from "../../../styles/BoardStyles/ImageStyle";
 import Modal from "../../../components/common/Modal";
 
 function ProductDetailPage() {
@@ -59,7 +53,6 @@ function ProductDetailPage() {
   const [modalVisible, setModalVisible] = useState(false);
   const [clickedImageUrl, setClickedImageUrl] = useState("");
 
-  /* product 상세 정보 가져오기 */
   function getProductDetail() {
     axios.get(`/board/products/${boardId}`).then(({ data }) => {
       setProductId(data.productId);
@@ -235,20 +228,6 @@ function ProductDetailPage() {
 
             <Price>{Number(price).toLocaleString()} 원</Price>
             <Content>{productDetail.content}</Content>
-            {/* <ProductImageWrapper>
-              {productDetail.boardImage &&
-                productDetail.boardImage
-                  .split(",")
-                  .map((imageUrl, index) => (
-                    <ProductImageTest
-                      key={productId}
-                      src={imageUrl.trim()}
-                      alt={`Product Image ${index}`}
-                      onClick={() => handleImageClick(imageUrl.trim())}
-                    />
-                  ))}
-            </ProductImageWrapper> */}
-            {/* <EditDeleteButton>{renderEditDeleteButtons()}</EditDeleteButton> */}
             <Bottom>
               <DetailCommentCount>
                 <div>

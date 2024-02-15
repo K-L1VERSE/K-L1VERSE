@@ -109,6 +109,8 @@ public class NotificationService {
                 .readFlag(false)
                 .type(messageReqDto.getType())
                 .createdAt(messageReqDto.getDate())
+                .homeTeamId(messageReqDto.getHomeTeamId())
+                .awayTeamId(messageReqDto.getAwayTeamId())
                 .build();
 
             log.info("type = {}", messageReqDto.getType().toString());
@@ -119,6 +121,8 @@ public class NotificationService {
                 .content(messageReqDto.getMessage())
                 .readFlag(false)
                 .type(messageReqDto.getType())
+                .homeTeamId(messageReqDto.getHomeTeamId())
+                .awayTeamId(messageReqDto.getAwayTeamId())
                 .build();
 
             sendingOperations.convertAndSend("/topic/notification/" + user.getEmail()+":"+user.getDomain(), notificationResDto);

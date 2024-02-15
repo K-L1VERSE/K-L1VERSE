@@ -7,7 +7,7 @@ import {
   Score,
 } from "../../styles/match-styles/MatchTimelinStyle";
 
-export default function ScoreContainer({ match }) {
+export default function ScoreContainer({ match, homeScore, awayScore }) {
   const homeTeamsrc = `${process.env.PUBLIC_URL}/badge/badge${match.homeTeamId}.png`;
   const awayTeamsrc = `${process.env.PUBLIC_URL}/badge/badge${match.awayTeamId}.png`;
 
@@ -19,7 +19,7 @@ export default function ScoreContainer({ match }) {
           <div>{match.homeTeamName}</div>
         </Team>
         <Score>
-          {match.homeScore} - {match.awayScore}
+          {homeScore} - {awayScore}
         </Score>
         <Team>
           <TeamName>{match.awayTeamName}</TeamName>

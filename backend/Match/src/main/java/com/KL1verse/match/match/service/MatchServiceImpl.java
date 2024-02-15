@@ -82,17 +82,9 @@ public class MatchServiceImpl implements MatchService {
 
         Match match = matchRepository.findById(matchId).orElse(null);
 
-        LocalDateTime now = LocalDateTime.now();
-        LocalDateTime matchAt = match.getMatchAt();
-        if (now.getYear() == matchAt.getYear() && now.getMonthValue() == matchAt.getMonthValue()
-            && now.getDayOfMonth() == matchAt.getDayOfMonth()
-            && now.getHour() == matchAt.getHour()) {
-            match.setStatus(MatchStatus.during);
-        }
-
-        if (match.getStatus().equals(MatchStatus.during)) {
-            getScore(match);
-        }
+//        if (match.getStatus().equals(MatchStatus.during)) {
+//            getScore(match);
+//        }
 
         return MatchDetailResponse.builder()
             .homeTeamId(match.getHomeTeamId())

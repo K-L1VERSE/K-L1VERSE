@@ -26,8 +26,8 @@ function MateListPage() {
   const [isFirstClick, setIsFirstClick] = useState(false);
   const navigate = useNavigate();
 
-  const handleMatchClick = (selectedMatchId) => {
-    setSelectedMatchId(selectedMatchId);
+  const handleMatchClick = (matchId) => {
+    setSelectedMatchId(matchId);
   };
 
   function getMates() {
@@ -39,10 +39,6 @@ function MateListPage() {
           page,
           ({ data }) => {
             if (data.content.length > 0) {
-              // const temp = [...mateList];
-              // temp.push(...data.content);
-              // setMateList(temp);
-              // setPage(page + 1);
               setMateList(data.content);
               setPage(page + 1);
             }

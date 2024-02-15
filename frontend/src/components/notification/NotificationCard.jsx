@@ -14,9 +14,7 @@ import {
   NotificationMatchVersus,
 } from "../../styles/notification-styles/NotificationStyle";
 import CommentIcon from "../../assets/icon/comment-icon.png";
-import GoalIcon from "../../assets/icon/goal-icon.png";
 import MatchIcon from "../../assets/icon/match-icon.png";
-import LikeIcon from "../../assets/icon/like-icon.png";
 import NewsIcon from "../../assets/icon/news-icon.png";
 
 function NotificationCard({

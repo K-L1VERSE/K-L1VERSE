@@ -14,7 +14,7 @@ export default function WaggleRegistCard({
   onTitleChange,
   onContentChange,
   boardImage,
-  onFileChange, // onFileChange 수정
+  onFileChange,
   onSubmit,
   buttonText,
   setBoardImage,
@@ -29,7 +29,6 @@ export default function WaggleRegistCard({
 
   return (
     <RegistCardContainer>
-      {/* <InputLabel>제목</InputLabel> */}
       <TitleInput
         type="text"
         value={title}
@@ -37,7 +36,6 @@ export default function WaggleRegistCard({
         placeholder="제목"
       />
       <br />
-      {/* <InputLabel>내용</InputLabel> */}
       <TextArea
         value={content}
         onChange={onContentChange}
