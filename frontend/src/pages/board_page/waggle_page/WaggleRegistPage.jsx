@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import styled from "styled-components";
+import Swal from "sweetalert2";
 import { useRecoilState } from "recoil";
 import { useNavigate, useLocation } from "react-router-dom";
 import RegistCard from "../../../components/board/WaggleRegistCard";
@@ -34,6 +35,31 @@ function WaggleRegistPage() {
   }, [location]);
 
   const handleSubmit = () => {
+    if (title.length === 0) {
+      Swal.fire({
+        html: `
+          <img src="https://raw.githubusercontent.com/Tarikul-Islam-Anik/Animated-Fluent-Emojis/master/Emojis/Animals/Hatching%20Chick.png" alt="Hatching Chick" width="100" height="100" />
+          <div style="font-size:1rem; font-family:Pretendard-Regular; margin-top: 1rem;">제목을 입력해주세요!</div>
+        `,
+        confirmButtonColor: "#3085d6",
+        confirmButtonText:
+          "<div style='font-size:1rem; font-family:Pretendard-Regular;'>확인</div>",
+      });
+      return;
+    }
+    if (content.length === 0) {
+      Swal.fire({
+        html: `
+          <img src="https://raw.githubusercontent.com/Tarikul-Islam-Anik/Animated-Fluent-Emojis/master/Emojis/Animals/Hatching%20Chick.png" alt="Hatching Chick" width="100" height="100" />
+          <div style="font-size:1rem; font-family:Pretendard-Regular; margin-top: 1rem;">내용을 입력해주세요!</div>
+        `,
+        confirmButtonColor: "#3085d6",
+        confirmButtonText:
+          "<div style='font-size:1rem; font-family:Pretendard-Regular;'>확인</div>",
+      });
+      return;
+    }
+
     if (isUpdateMode) {
       updateWaggle(
         boardId,

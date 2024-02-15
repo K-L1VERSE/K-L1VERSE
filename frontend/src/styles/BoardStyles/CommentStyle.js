@@ -36,7 +36,7 @@ export const CommentContent = styled.p`
   /* display: flex; */
   margin-bottom: 0.1rem;
   // margin-left: 1rem;
-  font-size: 0.8rem;
+  font-size: 0.85rem;
   color: #5f5f5f;
   display: block;
   white-space: pre-wrap;
@@ -177,6 +177,7 @@ export const TextArea = styled.textarea`
   border-bottom: 1px solid #ccc;
   outline: none;
   line-height: 1.2rem;
+  font-size: 0.85rem;
 `;
 
 export const CheckboxLabel = styled.label`
