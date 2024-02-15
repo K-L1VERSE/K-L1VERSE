@@ -10,8 +10,10 @@ export default function Nostradamus() {
 
   useEffect(() => {
     getNostradamus(
-      ({ data }) => {
-        setRank(data);
+      (res) => {
+        if (res && res.data) {
+          setRank(res.data);
+        }
       },
       () => {},
     );

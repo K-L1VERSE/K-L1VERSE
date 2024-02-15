@@ -31,7 +31,7 @@ function TodayMatchItem({ match, goMatchDetail }) {
   const awayTeamsrc = `${process.env.PUBLIC_URL}/badge/badge${match.awayTeamId}.png`;
 
   return (
-    <TodayMatchItemhWrap onClick={goMatchDetail}>
+    <TodayMatchItemhWrap onClick={goMatchDetail(match.matchId)}>
       <Date>{formatDate(match.matchAt)}</Date>
       <Teams>
         <Team>

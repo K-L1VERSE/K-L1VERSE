@@ -63,14 +63,16 @@ const SocketProvider = ({ children }) => {
       axios
         .get("/user/users/notifications")
         .then((res) => {
-          setNotification({
-            notifications: res.data.filter(
-              (notification) => notification.readFlag,
-            ),
-            newNotifications: res.data.filter(
-              (notification) => !notification.readFlag,
-            ),
-          });
+          if (res && res.data) {
+            setNotification({
+              notifications: res.data.filter(
+                (notification) => notification.readFlag,
+              ),
+              newNotifications: res.data.filter(
+                (notification) => !notification.readFlag,
+              ),
+            });
+          }
         })
         .catch(() => {});
     } else if (isLoggedIn && stompClient && !notificationFlag) {
