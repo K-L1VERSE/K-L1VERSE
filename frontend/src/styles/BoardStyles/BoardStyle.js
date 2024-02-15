@@ -12,6 +12,7 @@ export const Header = styled.div`
 
 export const HeaderDiv = styled.div`
   display: flex;
+  align-items: center;
   font-size: 1.1rem;
   line-height: 10px;
   color: #222222;
@@ -64,7 +65,6 @@ export const WriterContainer = styled.div`
   flex-direction: row;
   align-items: center;
   margin-top: 0.3rem;
-  margin-bottom: 0.5rem;
 `;
 
 export const WriterProfile = styled.img`
@@ -210,7 +210,7 @@ export const NoPost = styled.div`
   justify-content: center;
   align-items: center;
   height: 10rem;
-  font-size: 1rem;
+  font-size: 0.9rem;
   color: #a9a9a9;
   font-family: "Pretendard-Regular";
 `;

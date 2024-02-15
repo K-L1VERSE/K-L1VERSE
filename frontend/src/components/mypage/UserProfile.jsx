@@ -63,8 +63,8 @@ const ProfileEditContent = styled.div`
 `;
 
 const ProfileEditIcon = styled.img`
-  width: 1.25rem;
-  height: 1.25rem;
+  width: 0.9rem;
+  margin-left: 0.2rem;
   cursor: pointer;
 `;
 
@@ -102,11 +102,8 @@ const UserProfileInput = styled.input`
 
 const UserNickName = styled.div`
   color: var(--gray1, #222);
-  font-family: "Pretendard-Regular";
-  font-size: 0.875rem;
-  font-style: normal;
-  font-weight: 500;
-  line-height: normal;
+  font-family: "Pretendard-Bold";
+  font-size: 1.1rem;
 `;
 
 function UserInfo({ user, setUser }) {

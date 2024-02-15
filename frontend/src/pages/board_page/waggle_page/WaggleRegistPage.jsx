@@ -112,19 +112,16 @@ function WaggleRegistPage() {
         <BackButton onClick={handleBackClick}>
           <img src={BackIcon} alt="Back" />
         </BackButton>
-      </DetailTop>
-      <div style={{ display: "flex", margin: "0 auto" }}>
         <WaggleBoardTitle>
           <div>{isUpdateMode ? "와글와글 수정" : "와글와글 글쓰기"}</div>
           <img
             src="https://raw.githubusercontent.com/Tarikul-Islam-Anik/Animated-Fluent-Emojis/master/Emojis/Smilies/Grinning%20Face%20with%20Big%20Eyes.png"
             alt="Grinning Face with Big Eyes"
-            width="22"
-            height="22"
+            width="18"
+            height="18"
           />
         </WaggleBoardTitle>
-      </div>
-
+      </DetailTop>
       <RegistCard
         title={title}
         content={content}
@@ -143,14 +140,14 @@ function WaggleRegistPage() {
 export default WaggleRegistPage;
 
 export const WaggleBoardTitle = styled.div`
-  display: inline-flex;
+  display: flex;
   font-family: "Pretendard-Bold";
   margin: 0 auto;
-  font-size: 1rem;
+  margin-bottom: 1rem;
   background-color: #fee8de;
-  padding: 0.4rem 0.7rem 0.3rem 0.7rem;
+  padding: 0.3rem 0.5rem;
   border-radius: 10px;
   align-items: center;
   color: #f07e3d;
-  justify-content: center;
+  font-size: 0.85rem;
 `;

@@ -13,9 +13,9 @@ export const BoardItemWrap = styled.div`
 
 export const Type = styled.div`
   background-color: ${(props) =>
-    props.type == 0 ? "#fee8de" : props.type == 1 ? "#E3FAEF" : "#E5EDFB"};
+    props.type === 0 ? "#fee8de" : props.type === 1 ? "#E3FAEF" : "#E5EDFB"};
   color: ${(props) =>
-    props.type == 0 ? "#f07e3d" : props.type == 1 ? "#16B368" : "#578CEA"};
+    props.type === 0 ? "#f07e3d" : props.type === 1 ? "#16B368" : "#578CEA"};
   font-size: 0.75rem;
   padding: 0.3em;
   border-radius: 0.3rem;

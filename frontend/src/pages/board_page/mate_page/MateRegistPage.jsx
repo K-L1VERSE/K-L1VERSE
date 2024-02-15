@@ -35,6 +35,14 @@ function MateRegistPage() {
   }, [location]);
 
   const handleSubmit = () => {
+    if (title.length === 0) {
+      alert("제목 없어요");
+      return;
+    }
+    if (content.length === 0) {
+      alert("내용 없어요");
+      return;
+    }
     if (isUpdateMode) {
       updateMate(
         boardId,
@@ -129,16 +137,16 @@ function MateRegistPage() {
         <BackButton onClick={handleBackClick}>
           <img src={BackIcon} alt="Back" />
         </BackButton>
+        <MateBoardTitle>
+          <div>{isUpdateMode ? "직관메이트 글수정" : "직관메이트 글쓰기"}</div>
+          <img
+            src="https://raw.githubusercontent.com/Tarikul-Islam-Anik/Animated-Fluent-Emojis/master/Emojis/Hand%20gestures/Call%20Me%20Hand%20Medium-Light%20Skin%20Tone.png"
+            alt="Call Me Hand Medium-Light Skin Tone"
+            width="18"
+            height="18"
+          />
+        </MateBoardTitle>
       </DetailTop>
-      <MateBoardTitle>
-        <div>{isUpdateMode ? "직관메이트 글수정" : "직관메이트 글쓰기"}</div>
-        <img
-          src="https://raw.githubusercontent.com/Tarikul-Islam-Anik/Animated-Fluent-Emojis/master/Emojis/Hand%20gestures/Call%20Me%20Hand%20Medium-Light%20Skin%20Tone.png"
-          alt="Call Me Hand Medium-Light Skin Tone"
-          width="22"
-          height="22"
-        />
-      </MateBoardTitle>
 
       <MateRegistCard
         title={title}
@@ -167,6 +175,22 @@ export default MateRegistPage;
 
 export const MateBoardTitle = styled.div`
   display: flex;
+  font-family: "Pretendard-Bold";
+  margin: 0 auto;
+  margin-bottom: 1rem;
+  background-color: #e3faef;
+  padding: 0.3rem 0.5rem;
+  border-radius: 10px;
+  align-items: center;
+  color: #16b368;
+  font-size: 0.85rem;
+
+  img {
+    margin-left: 0.1rem;
+    margin-bottom: 0.1rem;
+  }
+
+  /* display: flex;
   width: 9rem;
   height: 1.7rem;
   font-family: "Pretendard-Bold";
@@ -177,9 +201,5 @@ export const MateBoardTitle = styled.div`
   border-radius: 10px;
   align-items: center;
   color: #16b368;
-  margin-bottom: 1rem;
-  img {
-    margin-left: 0.1rem;
-    margin-bottom: 0.1rem;
-  }
+  margin-bottom: 1rem; */
 `;

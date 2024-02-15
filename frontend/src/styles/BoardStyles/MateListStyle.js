@@ -18,7 +18,8 @@ export const MatchTime = styled.div`
   display: inline-flex;
   height: 1rem;
   background-color: #f4f4f4;
-  padding: 0.2rem 0.7rem;
+  padding: 0.2rem 0.6rem;
+  border-radius: 0.3rem;
   font-size: 0.8rem;
   font-family: "Pretendard-Regular";
   color: black;
@@ -43,7 +44,6 @@ export const MateDetailTitle = styled.p`
   font-family: "Pretendard-Bold";
   margin-bottom: 1rem;
   margin-top: 1rem;
-  padding-top: 1rem;
 `;
 
 export const MateDetailContent = styled.p`

@@ -67,7 +67,7 @@ export default function ProductRegistCard({
           type="text"
           value={price}
           onChange={handlePriceChange}
-          placeholder="Price"
+          placeholder="가격"
         />
         <br />
         <InputLabel>사진 첨부</InputLabel>
