@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useRecoilState } from "recoil";
+import Swal from "sweetalert2";
 import { UserState } from "../../global/UserState";
 import CommentContainer from "./CommentContainer";
 import { ListContainer } from "../../styles/BoardStyles/CommentStyle";
@@ -58,17 +59,33 @@ const CommentList = ({ boardId, writerId }) => {
   };
 
   const handleCommentDelete = (commentId) => {
-    deleteComment(
-      commentId,
-      () => {
-        setCommentList((prevComments) =>
-          prevComments.filter(
-            (prevComment) => prevComment.commentId !== commentId,
-          ),
+    Swal.fire({
+      html: `
+        <img src="https://raw.githubusercontent.com/Tarikul-Islam-Anik/Animated-Fluent-Emojis/master/Emojis/Animals/Bear.png" alt="Bear" width="100" height="100"/>
+        <p style='font-size:1.2rem; font-family:Pretendard-Bold;'>댓글을 삭제하시겠습니까?</p>
+      `,
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText:
+        "<div style='font-size:1rem; font-family:Pretendard-Regular;'>확인</div>",
+      cancelButtonText:
+        "<div style='font-size:1rem; font-family:Pretendard-Regular;'>취소</div>",
+    }).then((result) => {
+      if (result.isConfirmed) {
+        deleteComment(
+          commentId,
+          () => {
+            setCommentList((prevComments) =>
+              prevComments.filter(
+                (prevComment) => prevComment.commentId !== commentId,
+              ),
+            );
+          },
+          () => {},
         );
-      },
-      () => {},
-    );
+      }
+    });
   };
 
   return (
