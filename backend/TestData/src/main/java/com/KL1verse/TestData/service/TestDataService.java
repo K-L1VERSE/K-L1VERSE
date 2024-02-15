@@ -156,6 +156,7 @@ public class TestDataService {
                 else {
                     testDataResDtoList[matchId] = new ArrayList<>();
                     timelineIdArray[matchId] = 0;
+                    hashmap.remove(matchId);
                     return null;
                 }
             }
