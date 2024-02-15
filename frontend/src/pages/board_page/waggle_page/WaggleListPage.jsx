@@ -54,12 +54,15 @@ function WaggleListPage() {
     );
   }
 
+  const [btnName, setBtnName] = useState("추천받기 !");
   const handleRecommendClick = () => {
     if (!isRecommend) {
+      setBtnName("돌아가기 !");
       setPage(0);
       setWaggleList([]);
       setIsRecommend(true);
     } else {
+      setBtnName("추천받기 !");
       setPage(0);
       setWaggleList([]);
       setIsRecommend(false);
@@ -150,7 +153,7 @@ function WaggleListPage() {
             height="35"
           />
         </Button>
-        <div>&nbsp; 👈🏻 추천 받기 !</div>
+        <div>&nbsp; 👈🏻 {btnName}</div>
         {/* <div>&nbsp; 👈🏻 추천받아보아요</div> */}
       </Button2>
       {/* <SearchComponent onSearch={handleSearch} /> */}

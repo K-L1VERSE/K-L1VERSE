@@ -67,6 +67,7 @@ function WaggleItemCard({
             <div>{truncatedContent}</div>
           </ItemContent>
         </ImageContentBox>
+        <Hashtags>{waggle.hashtags.map((tag) => `#${tag}`).join(" ")}</Hashtags>
         <ItemInfoSection>
           <ItemInfoItem className="waggle-like">
             <LikeCount />
@@ -86,3 +87,10 @@ function WaggleItemCard({
 }
 
 export default WaggleItemCard;
+
+export const Hashtags = styled.div`
+  font-size: 0.8rem;
+  color: #1d24ca;
+  margin-top: 0.5rem;
+  font-family: "Pretendard-Bold";
+`;

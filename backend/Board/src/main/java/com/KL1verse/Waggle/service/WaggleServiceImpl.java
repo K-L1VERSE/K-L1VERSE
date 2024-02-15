@@ -134,7 +134,7 @@ public class WaggleServiceImpl implements WaggleService {
     }
 
     Map<String, Integer> hashtagCounts = new HashMap<>();
-    // 상위 3개의 해시태그를 조회
+    // 상위 5개의 해시태그를 조회
     List<WaggleUserHashTag> allWaggleUserHashTags = waggleUserHashTagRepository.findAll();
     for (WaggleUserHashTag waggleUserHashTag : allWaggleUserHashTags) {
       String[] tags = waggleUserHashTag.getHashtags().replaceAll("[\\[\\]]", "").split(",\\s*");
@@ -143,12 +143,12 @@ public class WaggleServiceImpl implements WaggleService {
       }
     }
 
-    // 등장 횟수를 기준으로 상위 3개의 해시태그를 추출
-    List<String> top3Hashtags = getTop3Hashtags(hashtagCounts);
+    // 등장 횟수를 기준으로 상위 5개의 해시태그를 추출
+    List<String> top5Hashtags = getTop5Hashtags(hashtagCounts);
 
 
     // 각 상위 단어별로 해당하는 게시글들을 검색하고 중복을 제거하여 uniqueWaggles에 추가
-    for (String topWord : top3Hashtags) {
+    for (String topWord : top5Hashtags) {
       log.info("topWord: {}", topWord);
       // 각 단어별로 해당하는 게시글들을 검색하고 중복을 제거하여 uniqueWaggles에 추가
       Page<Waggle> waggles = waggleRepository.findByHashtagsContaining(topWord, pageable);
@@ -175,24 +175,24 @@ public class WaggleServiceImpl implements WaggleService {
 
     return uniqueWaggles;
   }
-  private List<String> getTop3Hashtags(Map<String, Integer> hashtagCounts) {
+  private List<String> getTop5Hashtags(Map<String, Integer> hashtagCounts) {
     PriorityQueue<Map.Entry<String, Integer>> minHeap = new PriorityQueue<>(
         (a, b) -> a.getValue().equals(b.getValue()) ? a.getKey().compareTo(b.getKey()) : a.getValue() - b.getValue());
 
     // 모든 해시태그를 우선순위 큐에 삽입
     for (Map.Entry<String, Integer> entry : hashtagCounts.entrySet()) {
       minHeap.offer(entry);
-      if (minHeap.size() > 3) { // 큐의 크기가 3을 초과하면 가장 작은 등장 횟수를 갖는 해시태그를 제거
+      if (minHeap.size() > 5) { // 큐의 크기가 5을 초과하면 가장 작은 등장 횟수를 갖는 해시태그를 제거
         minHeap.poll();
       }
     }
 
-    // 큐에서 상위 3개의 해시태그를 추출하여 리스트에 저장
-    List<String> top3Hashtags = new ArrayList<>();
+    // 큐에서 상위 5개의 해시태그를 추출하여 리스트에 저장
+    List<String> top5Hashtags = new ArrayList<>();
     while (!minHeap.isEmpty()) {
-      top3Hashtags.add(0, minHeap.poll().getKey()); // 큐는 오름차순으로 정렬되어 있으므로 리스트의 첫 번째 인덱스에 추가
+      top5Hashtags.add(0, minHeap.poll().getKey()); // 큐는 오름차순으로 정렬되어 있으므로 리스트의 첫 번째 인덱스에 추가
     }
-    return top3Hashtags;
+    return top5Hashtags;
   }
 
 

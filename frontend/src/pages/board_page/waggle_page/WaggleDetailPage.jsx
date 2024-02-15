@@ -212,7 +212,14 @@ function WaggleDetailPage() {
   const highlightHashtags = (text) => {
     return text.split(/(#\S+)/).map((word, index) =>
       word.startsWith("#") ? (
-        <span key={index} style={{ color: "#E4405F" }}>
+        <span
+          key={index}
+          style={{
+            color: "#1D24CA",
+            fontStyle: "italic",
+            fontWeight: "bold",
+          }}
+        >
           {word}
         </span>
       ) : (
@@ -265,7 +272,7 @@ function WaggleDetailPage() {
               <EditDeleteButton>{renderEditDeleteButtons()}</EditDeleteButton>
             </ForSpaceBetween>
 
-            <Title>{highlightHashtags(title)}</Title>
+            <Title>{title}</Title>
             <Content>{highlightHashtags(content)}</Content>
             <WaggleImageWrapper>
               {waggleDetail.boardImage &&
