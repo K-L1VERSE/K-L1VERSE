@@ -8,7 +8,7 @@ import {
 import EventItem from "./EventItem";
 // import TimelineItem from "./TimelineItem";
 
-export default function TimelineConatiner(match, setMatch) {
+export default function TimelineConatiner(match, setHomeScore, setAwayScore) {
   const [timelines, setTimelines] = useState([]);
   const { matchId } = useParams();
   const getTimeLines = (matchId) => {
@@ -18,13 +18,9 @@ export default function TimelineConatiner(match, setMatch) {
         setTimelines(res.data);
         if (res.data[res.data.length - 1].eventName === "득점") {
           if (res.data[res.data.length - 1].homeOrAway === "HOME") {
-            setMatch((prev) => {
-              return { ...prev, homeScore: prev.homeScore + 1 };
-            });
+            setHomeScore((prev) => prev + 1);
           } else {
-            setMatch((prev) => {
-              return { ...prev, awayScore: prev.awayScore + 1 };
-            });
+            setAwayScore((prev) => prev + 1);
           }
         }
       })
