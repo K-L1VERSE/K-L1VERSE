@@ -1,4 +1,6 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
+import { useParams } from "react-router-dom";
+import axios from "../../api/axios";
 import {
   TimelineWrap,
   TimeMin,
@@ -6,89 +8,38 @@ import {
 import EventItem from "./EventItem";
 // import TimelineItem from "./TimelineItem";
 
-export default function TimelineConatiner() {
-  const timelines = [
-    {
-      timelineId: 0,
-      memberName: "",
-      memberName2: "",
-      backNo: 0,
-      teamName: "",
-      eventName: "전반시작",
-      timeMin: 0,
-      homeOrAway: "AWAY",
-    },
-    {
-      timelineId: 1,
-      memberName: "강성진",
-      memberName2: "",
-      backNo: 11,
-      teamName: "서울",
-      eventName: "유효슈팅",
-      timeMin: 3,
-      homeOrAway: "AWAY",
-    },
-    {
-      timelineId: 2,
-      memberName: "강성진",
-      memberName2: "",
-      backNo: 11,
-      teamName: "서울",
-      eventName: "득점",
-      timeMin: 6,
-      homeOrAway: "AWAY",
-    },
-    {
-      timelineId: 3,
-      memberName: "김경민",
-      memberName2: "이시영",
-      backNo: 0,
-      teamName: "",
-      eventName: "교체",
-      timeMin: 6,
-      homeOrAway: "HOME",
-    },
-    {
-      timelineId: 3,
-      memberName: "강성진",
-      memberName2: "",
-      backNo: 11,
-      teamName: "",
-      eventName: "경고",
-      timeMin: 6,
-      homeOrAway: "AWAY",
-    },
-    {
-      timelineId: 0,
-      memberName: "",
-      memberName2: "",
-      backNo: 0,
-      teamName: "",
-      eventName: "전반종료",
-      timeMin: 0,
-      homeOrAway: "AWAY",
-    },
-    {
-      timelineId: 0,
-      memberName: "",
-      memberName2: "",
-      backNo: 0,
-      teamName: "",
-      eventName: "후반시작",
-      timeMin: 0,
-      homeOrAway: "AWAY",
-    },
-    {
-      timelineId: 0,
-      memberName: "",
-      memberName2: "",
-      backNo: 0,
-      teamName: "",
-      eventName: "경기종료",
-      timeMin: 0,
-      homeOrAway: "AWAY",
-    },
-  ];
+export default function TimelineConatiner(match, setMatch) {
+  const [timelines, setTimelines] = useState([]);
+  const { matchId } = useParams();
+  const getTimeLines = (matchId) => {
+    axios
+      .get(`http://70.12.246.226:8040/matches/timelines/${matchId}`)
+      .then((res) => {
+        setTimelines(res.data);
+        if (res.data[res.data.length - 1].eventName === "득점") {
+          const temp = match;
+          if (res.data[res.data.length - 1].homeOrAway === "HOME") {
+            temp.homeScore += 1;
+          } else {
+            temp.awayScore += 1;
+          }
+          setMatch(temp);
+        }
+      })
+      .catch(() => {});
+  };
+
+  useEffect(() => {
+    getTimeLines(matchId);
+
+    const interval = setInterval(() => {
+      getTimeLines(matchId);
+    }, [10000]);
+
+    return () => {
+      clearInterval(interval);
+    };
+  }, []);
 
   return (
     <TimelineWrap>
@@ -97,28 +48,28 @@ export default function TimelineConatiner() {
         <tbody>
           {timelines.map((timeline, i) => (
             <tr key={i}>
-              <td width="45%">
+              <td width="44%">
                 {timeline.homeOrAway === "HOME" && (
                   <EventItem
                     eventName={timeline.eventName}
                     teamName={timeline.teamName}
-                    memberName={timeline.memberName}
-                    memberName2={timeline.memberName2}
+                    memberName={timeline.playerName}
+                    memberName2={timeline.playerName2}
                     backNo={timeline.backNo}
                     homeOrAway={timeline.homeOrAway}
                   />
                 )}
               </td>
-              <td width="10%">
+              <td width="12%">
                 <TimeMin>{timeline.timeMin} &#8216;</TimeMin>
               </td>
-              <td width="45%">
+              <td width="44%">
                 {timeline.homeOrAway === "AWAY" && (
                   <EventItem
                     eventName={timeline.eventName}
                     teamName={timeline.teamName}
-                    memberName={timeline.memberName}
-                    memberName2={timeline.memberName2}
+                    memberName={timeline.playerName}
+                    memberName2={timeline.playerName2}
                     backNo={timeline.backNo}
                     homeOrAway={timeline.homeOrAway}
                   />

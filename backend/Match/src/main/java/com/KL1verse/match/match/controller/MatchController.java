@@ -1,5 +1,6 @@
 package com.KL1verse.match.match.controller;
 
+import com.KL1verse.match.match.TimelineList;
 import com.KL1verse.match.match.dto.res.MatchDetailResponse;
 import com.KL1verse.match.match.dto.res.MatchListResponse;
 import com.KL1verse.match.match.dto.res.TimelineResponse;
@@ -10,6 +11,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -21,6 +23,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 public class MatchController {
 
     private final MatchService matchService;
+    private final TimelineList timelineList;
 
     @GetMapping("/{year}/{month}")
     public ResponseEntity<List<MatchListResponse>> getMatchList(@PathVariable("year") int year, @PathVariable("month") int month) {
@@ -41,10 +44,16 @@ public class MatchController {
         return new ResponseEntity<>(todayMatchList, HttpStatus.OK);
     }
 
-    @GetMapping("/{matchId}/timelines")
+    /*@GetMapping("/{matchId}/timelines")
     public ResponseEntity<List<TimelineResponse>> getTimelines(@PathVariable int matchId) {
         List<TimelineResponse> timelineResponse = matchService.getTimeline(matchId);
         return new ResponseEntity<>(timelineResponse, HttpStatus.OK);
+    }*/
+
+    @CrossOrigin(originPatterns = "*")
+    @GetMapping("/timelines/{matchId}")
+    public ResponseEntity<List<TimelineResponse>> getTimelines(@PathVariable(name = "matchId") int matchId) {
+        return new ResponseEntity<>(timelineList.getTimelineMatchList()[matchId], HttpStatus.OK);
     }
 
 }

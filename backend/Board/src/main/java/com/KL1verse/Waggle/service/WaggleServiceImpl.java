@@ -182,7 +182,7 @@ public class WaggleServiceImpl implements WaggleService {
     // 모든 해시태그를 우선순위 큐에 삽입
     for (Map.Entry<String, Integer> entry : hashtagCounts.entrySet()) {
       minHeap.offer(entry);
-      if (minHeap.size() > 5) { // 큐의 크기가 5을 초과하면 가장 작은 등장 횟수를 갖는 해시태그를 제거
+      if (minHeap.size() > 10) { // 큐의 크기가 5을 초과하면 가장 작은 등장 횟수를 갖는 해시태그를 제거
         minHeap.poll();
       }
     }

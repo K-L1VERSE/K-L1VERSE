@@ -12,7 +12,7 @@ import {
 import { formatRelativeTime } from "./dateFormat";
 import CommentForm from "./CommentForm";
 
-const CommentList = ({ boardId, writerId }) => {
+const CommentList = ({ boardId, writerId, setCommentCount }) => {
   const [commentList, setCommentList] = useState([]);
   const [commentId, setCommentId] = useState(0);
   const [likesCount, setLikesCount] = useState(0);
@@ -81,6 +81,7 @@ const CommentList = ({ boardId, writerId }) => {
                 (prevComment) => prevComment.commentId !== commentId,
               ),
             );
+            setCommentCount((prev) => prev - 1);
           },
           () => {},
         );
@@ -98,6 +99,7 @@ const CommentList = ({ boardId, writerId }) => {
         setIsReplyMode={setIsReplyMode}
         setParentId={setParentId}
         writerId={writerId}
+        setCommentCount={setCommentCount}
       />
       <CommentForm
         boardId={boardId}
@@ -107,6 +109,7 @@ const CommentList = ({ boardId, writerId }) => {
         isReplyMode={isReplyMode}
         setIsReplyMode={setIsReplyMode}
         setParentId={setParentId}
+        setCommentCount={setCommentCount}
       />
     </ListContainer>
   );

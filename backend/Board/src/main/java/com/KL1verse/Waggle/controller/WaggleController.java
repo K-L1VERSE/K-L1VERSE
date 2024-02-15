@@ -43,7 +43,7 @@ WaggleController {
         // 상위 3개 해시태그 가져오기
         Integer loginUserId = boardDTO.getUserId();
 
-        List<String> topHashtags = waggleService.getTopHashtags(loginUserId, 3);
+        List<String> topHashtags = waggleService.getTopHashtags(loginUserId, 10);
         log.info(LocalDateTime.now().toString());
 
         // 각 해시태그를 가진 게시글들을 가져와서 리스트에 추가

@@ -29,6 +29,7 @@ const CommentForm = ({
   isReplyMode,
   setIsReplyMode,
   setParentId,
+  setCommentCount,
 }) => {
   const [content, setContent] = useState("");
   const [isSecret, setIsSecret] = useState(false);
@@ -80,6 +81,7 @@ const CommentForm = ({
           getComments();
           setContent("");
           setIsSecret(false);
+          setCommentCount((prev) => prev + 1);
         },
         () => {},
       );

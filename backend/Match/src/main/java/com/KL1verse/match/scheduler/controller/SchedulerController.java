@@ -26,7 +26,7 @@ public class SchedulerController {
         log.info("Server start!");
 
         getTodayMatches().forEach(match -> {
-            String cronExpression = getCronExpression(match, 30);
+            String cronExpression = getCronExpression(match, 5);
             schedulerService.scheduleTaskNotification(cronExpression ,match.getMatchId());
             log.info("matchId: {} 경기가 cronExpression: {} 알림 예약 완료되었습니다.", match.getMatchId(), cronExpression);
 
@@ -41,7 +41,7 @@ public class SchedulerController {
         schedulerService.cancelAllScheduledTasks();;
 
         getTodayMatches().forEach(match -> {
-            String cronExpressionBeforeThirty = getCronExpression(match, 30);
+            String cronExpressionBeforeThirty = getCronExpression(match, 5);
             schedulerService.scheduleTaskNotification(cronExpressionBeforeThirty ,match.getMatchId());
             log.info("matchId: {} 경기가 cronExpression: {} 알림 예약 완료되었습니다.", match.getMatchId(), cronExpressionBeforeThirty);
 

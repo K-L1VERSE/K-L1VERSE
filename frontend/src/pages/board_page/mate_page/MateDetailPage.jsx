@@ -57,7 +57,7 @@ function MateDetailPage() {
   const [homeTeamName, setHomeTeamName] = useState("");
   const [awayTeamName, setAwayTeamName] = useState("");
   const [matchAt, setMatchAt] = useState("");
-
+  const [commentCount, setCommentCount] = useState(0);
   const { userId } = useRecoilState(UserState)[0];
 
   const location = useLocation();
@@ -71,6 +71,7 @@ function MateDetailPage() {
       setMateDetail(data.board);
       setTotal(data.total);
       setFullFlag(data.fullFlag);
+      setCommentCount(data.board.commentCount);
     });
   }
 
@@ -238,14 +239,14 @@ function MateDetailPage() {
                     width="25"
                     height="25"
                   />
-                  댓글 수 {mateDetail.commentCount}
+                  댓글 수 {commentCount}
                 </div>
               </DetailCommentCount>
             </Bottom>
             <Gray />
           </DetailBox>
 
-          <CommentList boardId={boardId} />
+          <CommentList boardId={boardId} setCommentCount={setCommentCount} />
         </Container>
       )}
     </div>

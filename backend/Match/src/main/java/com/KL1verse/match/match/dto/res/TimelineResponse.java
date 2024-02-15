@@ -13,12 +13,12 @@ import lombok.Setter;
 @Builder
 public class TimelineResponse {
     private Integer timelineId;
-    private String memberName;
-    private String memberName2;
+    private String playerName;
+    private String playerName2;
     private Integer backNo;
     private String teamName;
+    private Integer teamId;
     private String eventName;
     private Integer timeMin;
     private String homeOrAway;
-
 }
