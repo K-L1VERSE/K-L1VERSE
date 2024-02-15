@@ -118,6 +118,9 @@ function MateRegistCard({
               defaultValue={matchId}
               onMatchClick={(matchId) => {
                 onMatchIdChange(matchId);
+                setIsToggled(true);
+                console.log("matchId", matchId);
+                // matchList에서 선택한 matchId에 해당하는 정보 찾기
               }}
               selectedMatchId={matchId}
             />
