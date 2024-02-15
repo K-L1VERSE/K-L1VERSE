@@ -19,6 +19,9 @@ function LoginPage() {
           <GoogleLoginButton />
           <NaverLoginButton />
         </Bottom>
+        <LoginContent>
+          ※ 구글 로그인과 네이버 로그인은 개발자 계정으로만 가능합니다
+        </LoginContent>
       </LoginContainer>
     </>
   );
@@ -39,4 +42,11 @@ const Bottom = styled.div`
   margin: 1rem auto;
   width: 7rem;
   justify-content: space-between;
+`;
+
+const LoginContent = styled.div`
+  font-size: 0.75rem;
+  color: gray;
+  text-align: center;
+  margin-top: -0.3rem;
 `;
