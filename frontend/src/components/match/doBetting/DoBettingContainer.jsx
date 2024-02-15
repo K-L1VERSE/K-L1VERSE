@@ -145,12 +145,17 @@ function DoBettingContainer({ data, setIsBetted }) {
           })
           .then(() => {
             Swal.fire({
-              title: `${teamName}에 ${bettingAmount}골 베팅했습니다.`,
-              icon: "success",
-              confirmButtonText: "확인",
+              html: `
+                <img src="https://raw.githubusercontent.com/Tarikul-Islam-Anik/Animated-Fluent-Emojis/master/Emojis/Animals/Bear.png" alt="Bear" width="100" height="100"/>
+                <p style='font-size:1.2rem; font-family:Pretendard-Bold;'>${teamName}에 ${bettingAmount}골 베팅했습니다.</p>
+              `,
+              confirmButtonColor: "#3085d6",
+              confirmButtonText:
+                "<div style='font-size:1rem; font-family:Pretendard-Regular;'>확인</div>",
             }).then(() => {
               setBetComplete(true);
               setIsBetted(true);
+              window.location.reload();
             });
           });
       } catch {
