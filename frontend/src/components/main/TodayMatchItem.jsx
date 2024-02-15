@@ -1,4 +1,5 @@
 import React from "react";
+import { useNavigate } from "react-router-dom";
 import {
   TodayMatchItemhWrap,
   Date,
@@ -26,12 +27,17 @@ export function formatDate(date) {
   return formattedDate;
 }
 
-function TodayMatchItem({ match, goMatchDetail }) {
+function TodayMatchItem({ match }) {
   const homeTeamsrc = `${process.env.PUBLIC_URL}/badge/badge${match.homeTeamId}.png`;
   const awayTeamsrc = `${process.env.PUBLIC_URL}/badge/badge${match.awayTeamId}.png`;
 
+  const navigate = useNavigate();
+  const goMatchDetail = () => {
+    navigate(`/match/${match.matchId}`);
+  };
+
   return (
-    <TodayMatchItemhWrap onClick={goMatchDetail(match.matchId)}>
+    <TodayMatchItemhWrap onClick={goMatchDetail}>
       <Date>{formatDate(match.matchAt)}</Date>
       <Teams>
         <Team>

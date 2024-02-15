@@ -13,6 +13,7 @@ export const TodayMatchItemhWrap = styled.div`
   margin: 0 0.8rem;
   padding: 0.5rem;
   /* background-color: red; */
+  cursor: pointer;
 `;
 
 export const Date = styled.div`
