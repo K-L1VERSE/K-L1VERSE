@@ -200,7 +200,6 @@ function ResultPage() {
 
   const imageUrl =
     "https://k-l1verse.site/" + teamImages[teamId][randomBackground];
-
   // 재랜더링시에 실행되게 해준다.
   useEffect(() => {
     // init 해주기 전에 clean up 을 해준다.
@@ -251,7 +250,7 @@ function ResultPage() {
             <ResultTeam>
               {/* <img src={selectedTeamImage} alt="teamImage" /> */}
               <Team>
-                <div className="team-name">{teamNames[teamId]}</div>
+                {/* <div className="team-name">{teamNames[teamId]}</div> */}
                 <img
                   src={selectedTeamImage}
                   className="team-image"
