@@ -241,6 +241,7 @@ export const Info = styled.div`
 export const Button2 = styled.div`
   display: flex;
   align-items: center;
+  margin-top: 0.3rem;
   margin-left: 1.4rem;
   font-family: "Pretendard-Bold";
   color: #ff8911;
