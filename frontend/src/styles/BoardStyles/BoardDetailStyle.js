@@ -20,7 +20,7 @@ export const DetailBox = styled.div`
 export const UserContainer = styled.div`
   display: flex;
   align-items: center;
-  margin-bottom: 0.5rem;
+  // margin-bottom: 0.5rem;
   margin-top: 0.8rem;
 `;
 
@@ -45,7 +45,7 @@ export const UserBadge = styled.img`
 export const CreateAt = styled.p`
   font-size: 0.7rem;
   color: #595959;
-  padding-bottom: 0.5rem;
+  // padding-bottom: 0.5rem;
   // border-bottom: 0.3px solid #ccc;
 `;
 

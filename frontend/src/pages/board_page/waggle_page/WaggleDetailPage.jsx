@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useParams, useNavigate, useLocation } from "react-router-dom";
+import Swal from "sweetalert2";
 import { useRecoilState } from "recoil";
 import styled from "styled-components";
 import {
@@ -112,22 +113,38 @@ function WaggleDetailPage() {
   };
 
   const handleDeleteBtn = () => {
-    deleteWaggle(
-      boardId,
-      () => {
-        if (state && state.fromMypage) {
-          navigate("/mypage", {
-            state: {
-              user: state.user,
-              category: state.category,
-            },
-          });
-        } else {
-          navigate("/waggle");
-        }
-      },
-      () => {},
-    );
+    Swal.fire({
+      html: `
+        <img src="https://raw.githubusercontent.com/Tarikul-Islam-Anik/Animated-Fluent-Emojis/master/Emojis/Animals/Bear.png" alt="Bear" width="100" height="100"/>
+        <p style='font-size:1.2rem; font-family:Pretendard-Bold;'>게시글을 삭제하시겠습니까?</p>
+      `,
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText:
+        "<div style='font-size:1rem; font-family:Pretendard-Regular;'>삭제</div>",
+      cancelButtonText:
+        "<div style='font-size:1rem; font-family:Pretendard-Regular;'>취소</div>",
+    }).then((result) => {
+      if (result.isConfirmed) {
+        deleteWaggle(
+          boardId,
+          () => {
+            if (state && state.fromMypage) {
+              navigate("/mypage", {
+                state: {
+                  user: state.user,
+                  category: state.category,
+                },
+              });
+            } else {
+              navigate("/waggle");
+            }
+          },
+          () => {},
+        );
+      }
+    });
   };
 
   const handleLikeClick = () => {
@@ -195,7 +212,14 @@ function WaggleDetailPage() {
   const highlightHashtags = (text) => {
     return text.split(/(#\S+)/).map((word, index) =>
       word.startsWith("#") ? (
-        <span key={index} style={{ color: "#E4405F" }}>
+        <span
+          key={index}
+          style={{
+            color: "#1D24CA",
+            fontStyle: "italic",
+            fontWeight: "bold",
+          }}
+        >
           {word}
         </span>
       ) : (
@@ -234,6 +258,7 @@ function WaggleDetailPage() {
             </WaggleBoardTitle>
           </DetailTop>
           <DetailBox>
+            <Title>{title}</Title>
             <UserContainer>
               <UserProfile src={waggleDetail.profile} />
               <User>{nickname}</User>
@@ -245,10 +270,9 @@ function WaggleDetailPage() {
               <CreateAt>
                 <div>{formatDateTime2(createAt)}</div>
               </CreateAt>
-              <EditDeleteButton>{renderEditDeleteButtons()}</EditDeleteButton>
             </ForSpaceBetween>
+            <EditDeleteButton>{renderEditDeleteButtons()}</EditDeleteButton>
 
-            <Title>{highlightHashtags(title)}</Title>
             <Content>{highlightHashtags(content)}</Content>
             <WaggleImageWrapper>
               {waggleDetail.boardImage &&
@@ -299,6 +323,7 @@ export const WaggleBoardTitle = styled.div`
   display: flex;
   font-family: "Pretendard-Bold";
   margin: 0 auto;
+  margin-bottom: 1rem;
   font-size: 1rem;
   background-color: #fee8de;
   padding: 0.4rem 0.7rem 0.2rem 0.7rem;
@@ -318,4 +343,5 @@ export const ForSpaceBetween = styled.div`
   justify-content: space-between;
   align-items: center;
   border-bottom: 0.3px solid #ccc;
+  margin-bottom: 0.2rem;
 `;
