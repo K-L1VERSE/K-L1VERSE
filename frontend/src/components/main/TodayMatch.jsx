@@ -8,8 +8,10 @@ function TodayMatch() {
   const [matches, setMatches] = useState([]);
 
   useEffect(() => {
-    getTodayMatch(({ data }) => {
-      setMatches(data);
+    getTodayMatch((res) => {
+      if (res && res.data) {
+        setMatches(res.data);
+      }
     }),
       () => {};
   }, []);
