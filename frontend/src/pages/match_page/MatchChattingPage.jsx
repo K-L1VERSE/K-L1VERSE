@@ -25,13 +25,21 @@ function MatchChattingPage() {
   const day = location.state?.day;
   const v = location.state?.v;
 
+  // useEffect(() => {
+  //   const fetchData = async () => {
+  //     const result = await getMatchDetail(matchId);
+  //     setMatch(result);
+  //   };
+  //   fetchData();
+  // }, []);
+
   useEffect(() => {
     const fetchData = async () => {
       const result = await getMatchDetail(matchId);
       setMatch(result);
     };
     fetchData();
-  }, []);
+  }, [matchId]);
 
   const goMatchDetail = () => {
     navigate(`/match/${matchId}`, {
