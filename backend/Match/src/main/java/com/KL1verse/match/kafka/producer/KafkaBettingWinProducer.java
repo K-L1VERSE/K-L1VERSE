@@ -71,15 +71,11 @@ public class KafkaBettingWinProducer {
                     throw new RuntimeException(e);
                 }
 
-                if (!match.getGoalDivided()) {
-                    matchRepository.updateGoalDivided(matchId, true);
-                    kafkaProducer.sendMessage("winner-info", winnerInfoJson);
-                }
-
+                kafkaProducer.sendMessage("winner-info", winnerInfoJson);
             }
         }
 
+        match.setGoalDivided(true);
+        matchRepository.save(match);
     }
-
-
 }
