@@ -4,7 +4,12 @@ import { useNavigate } from "react-router-dom";
 import { useRecoilState } from "recoil";
 import { UserState } from "../../global/UserState";
 import Board from "../../components/main/Board";
-import { Category, Title, AllBtn } from "../../styles/main-styles/MainStyle";
+import {
+  Category,
+  Title,
+  AllBtn,
+  NostraContent,
+} from "../../styles/main-styles/MainStyle";
 import TodayMatch from "../../components/main/TodayMatch";
 import Notice from "../../components/main/Notice";
 import Hotclip from "../../components/main/Hotclip";
@@ -97,6 +102,9 @@ function MainPage() {
           <Category>
             <Title>🎯 노스트라다무스 랭킹</Title>
           </Category>
+          <NostraContent>
+            경기 결과 예측에 성공하여 순위에 올라보세요!
+          </NostraContent>
           <Nostradamus />
           <Survey />
           <Footer />

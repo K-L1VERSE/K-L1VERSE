@@ -13,6 +13,13 @@ export const Title = styled.div`
   font-family: "Pretendard-Bold";
 `;
 
+export const NostraContent = styled.div`
+  margin-top: -0.6rem;
+  margin-left: 2.4rem;
+  font-size: 0.7rem;
+  color: gray;
+`;
+
 export const AllBtn = styled.div`
   color: #002266;
   font-size: 0.7rem;
