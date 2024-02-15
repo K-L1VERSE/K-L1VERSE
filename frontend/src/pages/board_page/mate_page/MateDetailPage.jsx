@@ -192,8 +192,8 @@ function MateDetailPage() {
               <img
                 src="https://raw.githubusercontent.com/Tarikul-Islam-Anik/Animated-Fluent-Emojis/master/Emojis/Hand%20gestures/Call%20Me%20Hand%20Medium-Light%20Skin%20Tone.png"
                 alt="Call Me Hand Medium-Light Skin Tone"
-                width="22"
-                height="22"
+                width="18"
+                height="18"
               />
             </MateBoardTitle>
           </DetailTop>
@@ -217,7 +217,9 @@ function MateDetailPage() {
                 {homeTeamName} vs {awayTeamName}
               </MatchTitle>
             </div>
-            <MatchTime>{formatDateTime(matchAt)}</MatchTime>
+            <MatchTime>
+              {formatDateTime(matchAt)} 경기 <div>🥅</div>
+            </MatchTime>
             <ForSpaceBetween>
               <CreateAt>
                 <div>{formatDateTime2(createAt)}</div>
@@ -254,17 +256,16 @@ export default MateDetailPage;
 
 export const MateBoardTitle = styled.div`
   display: flex;
-  width: 6.4rem;
   font-family: "Pretendard-Bold";
   margin: 0 auto;
-  font-size: 1rem;
+  margin-bottom: 1rem;
+  font-size: 0.85rem;
   background-color: #e3faef;
-  padding: 0.2rem 0.6rem 0.15rem 0.7rem;
+  padding: 0.2rem 0.5rem;
   border-radius: 10px;
   align-items: center;
   color: #16b368;
 
-  margin-bottom: 0.5rem;
   img {
     margin-bottom: 0.3rem;
   }
@@ -272,7 +273,7 @@ export const MateBoardTitle = styled.div`
 
 export const UserBar = styled.div`
   display: flex;
-  margin-left: 1rem;
+  /* margin-left: 1rem; */
   margin-top: 1rem;
   margin-bottom: 0.5rem;
   align-items: center;

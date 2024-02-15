@@ -38,10 +38,15 @@ export function formatDateTime(dateTimeStr) {
   const hour = date.getHours();
   const minute = date.getMinutes();
 
+  let formattedDateTime = `${year}년 ${month}월 ${day}일 `;
   if (minute === 0) {
-    return `${year}년 ${month}월 ${day}일 ${hour}시`;
+    formattedDateTime += `${hour}시`;
+  } else if (minute.toString().length === 1) {
+    formattedDateTime += `${hour}시 0${minute}분`;
+  } else {
+    formattedDateTime += `${hour}시 ${minute}분`;
   }
-  return `${year}년 ${month}월 ${day}일 ${hour}시 ${minute}분`;
+  return formattedDateTime;
 }
 
 export function formatDateTime2(dateTimeStr) {
@@ -53,6 +58,15 @@ export function formatDateTime2(dateTimeStr) {
   const hour = date.getHours();
   const minute = date.getMinutes();
 
-  // 2024년 3월 30일 16시 30분 형태로 날짜를 반환합니다.
-  return `${year}년 ${month}월 ${day}일 ${hour}:${minute}`;
+  // 2024년 3월 30일 16:30 형태로 날짜를 반환합니다.
+
+  let formattedDateTime = `${year}년 ${month}월 ${day}일 `;
+  if (minute === 0) {
+    formattedDateTime += `${hour}:00`;
+  } else if (minute.toString().length === 1) {
+    formattedDateTime += `${hour}:0${minute}`;
+  } else {
+    formattedDateTime += `${hour}:${minute}`;
+  }
+  return formattedDateTime;
 }

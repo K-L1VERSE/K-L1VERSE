@@ -171,8 +171,8 @@ function ProductDetailPage() {
               <img
                 src="https://raw.githubusercontent.com/Tarikul-Islam-Anik/Animated-Fluent-Emojis/master/Emojis/Objects/Coin.png"
                 alt="Coin"
-                width="22"
-                height="22"
+                width="18"
+                height="18"
               />
             </ProductBoardTitle>
           </DetailTop>
@@ -282,20 +282,15 @@ export const Bottom = styled.div`
 
 export const ProductBoardTitle = styled.div`
   display: flex;
-  width: 6rem;
-  height: 1.7rem;
   font-family: "Pretendard-Bold";
   margin: 0 auto;
-  font-size: 1rem;
+  margin-bottom: 1rem;
+  font-size: 0.85rem;
   background-color: #e5edfb;
-  padding: 0.2rem 0.2rem 0.15rem 0.7rem;
+  padding: 0.3rem 0.5rem;
   border-radius: 10px;
   align-items: center;
   color: #578cea;
-  margin-bottom: 1rem;
-  img {
-    margin-bottom: 0.1rem;
-  }
 `;
 
 export const ForSpace = styled.div`
@@ -304,7 +299,7 @@ export const ForSpace = styled.div`
 `;
 
 export const ForMargin = styled.div`
-  height: 0.5rem;
+  /* height: 0.5rem; */
 `;
 
 export const ForSpaceBetween = styled.div`

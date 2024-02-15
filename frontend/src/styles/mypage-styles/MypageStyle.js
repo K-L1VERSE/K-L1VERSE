@@ -49,10 +49,11 @@ export const NoBoardImg = styled.img`
 
 export const GoBoardButton = styled.button`
   border-radius: 0.5rem;
-  padding: 0.7rem 0.8rem;
+  padding: 0.7rem 0.9rem;
   border: none;
   background: var(--gray3, #f2f6fd);
   font-family: "Pretendard-Bold";
-  font-size: 0.875rem;
+  font-size: 0.8rem;
   cursor: pointer;
+  color: #3261c1;
 `;

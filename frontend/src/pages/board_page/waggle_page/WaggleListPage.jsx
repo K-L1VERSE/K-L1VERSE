@@ -121,18 +121,15 @@ function WaggleListPage() {
   return (
     <div>
       <BoardTopNavBar />
-
       <Header>
         <HeaderDiv>
-          <Info>
-            <img
-              src="https://raw.githubusercontent.com/Tarikul-Islam-Anik/Animated-Fluent-Emojis/master/Emojis/Smilies/Grinning%20Face%20with%20Big%20Eyes.png"
-              alt="Grinning Face with Big Eyes"
-              width="25"
-              height="25"
-            />
-            와글와글 떠들어주세요
-          </Info>
+          <img
+            src="https://raw.githubusercontent.com/Tarikul-Islam-Anik/Animated-Fluent-Emojis/master/Emojis/Smilies/Grinning%20Face%20with%20Big%20Eyes.png"
+            alt="Grinning Face with Big Eyes"
+            width="25"
+            height="25"
+          />
+          <div>와글와글 떠들어주세요</div>
         </HeaderDiv>
         <HeaderButton onClick={handleWriteWaggleClick}>
           <img

@@ -252,8 +252,8 @@ function WaggleDetailPage() {
               <img
                 src="https://raw.githubusercontent.com/Tarikul-Islam-Anik/Animated-Fluent-Emojis/master/Emojis/Smilies/Grinning%20Face%20with%20Big%20Eyes.png"
                 alt="Grinning Face with Big Eyes"
-                width="22"
-                height="22"
+                width="18"
+                height="18"
               />
             </WaggleBoardTitle>
           </DetailTop>
@@ -270,9 +270,8 @@ function WaggleDetailPage() {
               <CreateAt>
                 <div>{formatDateTime2(createAt)}</div>
               </CreateAt>
+              <EditDeleteButton>{renderEditDeleteButtons()}</EditDeleteButton>
             </ForSpaceBetween>
-            <EditDeleteButton>{renderEditDeleteButtons()}</EditDeleteButton>
-
             <Content>{highlightHashtags(content)}</Content>
             <WaggleImageWrapper>
               {waggleDetail.boardImage &&
@@ -324,12 +323,12 @@ export const WaggleBoardTitle = styled.div`
   font-family: "Pretendard-Bold";
   margin: 0 auto;
   margin-bottom: 1rem;
-  font-size: 1rem;
   background-color: #fee8de;
-  padding: 0.4rem 0.7rem 0.2rem 0.7rem;
+  padding: 0.3rem 0.5rem;
   border-radius: 10px;
   align-items: center;
   color: #f07e3d;
+  font-size: 0.85rem;
 `;
 
 export const Bottom = styled.div`
