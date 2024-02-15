@@ -9,24 +9,16 @@ import {
 } from "../../styles/BoardStyles/BoardCreateStyle";
 import CameraIcon from "../../assets/icon/camera-icon.svg";
 import { uploadFile } from "../../api/waggle";
+import imageCompression from "browser-image-compression";
 
 function BoardFile({ onFileChange, value }) {
   const fileInput = useRef(null);
   const [filePreviews, setFilePreviews] = useState([]);
 
   useEffect(() => {
-    // value가 변경되면 미리보기 업데이트
     if (value) {
       const imageUrls = value.split(",");
       const previews = imageUrls.map((url, index) => (
-        // <FilePreview key={url}>
-        //   <img src={url} alt={`미리보기 - Image ${index + 1}`} />
-        //   <RemoveButton onClick={(event) => handleRemoveImage(index, event)}>
-        //     x
-        //   </RemoveButton>
-        // </FilePreview>
-
-        // <div>
         <FilePreview key={url}>
           <div
             style={{
@@ -63,8 +55,6 @@ function BoardFile({ onFileChange, value }) {
             </div>
           </div>
         </FilePreview>
-
-        // </div>
       ));
       setFilePreviews(previews);
     }
@@ -78,20 +68,11 @@ function BoardFile({ onFileChange, value }) {
 
       for (let i = 0; i < files.length; i++) {
         const file = files[i];
+
+        // 이미지 압축
+        const compressedFile = await compressImage(file);
         const formData = new FormData();
-        formData.append("file", file);
-        if (file.size >= 1024 * 1024) {
-          Swal.fire({
-            html: `
-              <img src="https://raw.githubusercontent.com/Tarikul-Islam-Anik/Animated-Fluent-Emojis/master/Emojis/Animals/Hatching%20Chick.png" alt="Hatching Chick" width="100" height="100" />
-              <div style="font-size:1rem; font-family:Pretendard-Regular; margin-top: 1rem;">1MB 이하의 파일만 업로드 가능해요!</div>
-            `,
-            confirmButtonColor: "#3085d6",
-            confirmButtonText:
-              "<div style='font-size:1rem; font-family:Pretendard-Regular;'>확인</div>",
-          });
-          return;
-        }
+        formData.append("file", compressedFile);
 
         const res = await uploadFile(formData);
         const imageUrl = res.data.url;
@@ -99,7 +80,7 @@ function BoardFile({ onFileChange, value }) {
         fileUrls.push(imageUrl);
       }
 
-      // 미리보기
+      // 미리보기 업데이트
       const previews = fileUrls.map((url, index) => (
         <FilePreview key={url}>
           <img src={url} alt={`미리보기 - ${files[index].name}`} />
@@ -130,6 +111,21 @@ function BoardFile({ onFileChange, value }) {
       onFileChange([], remainingUrls.join(","));
       return newPreviews;
     });
+  };
+
+  const compressImage = async (file) => {
+    const options = {
+      maxSizeMB: 1,
+      maxWidthOrHeight: 800,
+      useWebWorker: true,
+    };
+
+    try {
+      return await imageCompression(file, options);
+    } catch (error) {
+      console.error("Image compression error:", error);
+      return file;
+    }
   };
 
   return (

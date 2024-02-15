@@ -164,9 +164,16 @@ public class WaggleServiceImpl implements WaggleService {
                   .map(result -> ((Long) result[1]).intValue())
                   .findFirst()
                   .orElse(0));
-          waggleDTO.getBoard().setNickname(
-              (String) waggleRepository.findUserNickname(waggleDTO.getBoard().getUserId())
-                  .get(0)[0]);
+          List<Object[]> UserInfo = waggleRepository.findUserNicknameAndProfileAndMainBadge(waggleDTO.getBoard().getUserId());
+          String UserNickname = (String) UserInfo.get(0)[0];
+            String UserProfile = (String) UserInfo.get(0)[1];
+            String UserMainBadge = (String) UserInfo.get(0)[2];
+
+          waggleDTO.getBoard().setNickname(UserNickname);
+            waggleDTO.getBoard().setProfile(UserProfile);
+            if(UserMainBadge != null) {
+                waggleDTO.getBoard().setMainBadge(UserMainBadge);
+            }
           uniqueWaggles.add(waggleDTO); // 포함되어 있지 않다면 uniqueWaggles에 추가
           visitedBoardIds.add(waggleDTO.getBoard().getBoardId()); // 방문한 게시글로 표시
         }

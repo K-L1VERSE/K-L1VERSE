@@ -28,4 +28,4 @@ domain: https://k-l1verse.site
 
 logging:
   level:
-    root: warn
+    root: info
