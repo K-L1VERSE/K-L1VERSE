@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import styled from "styled-components";
 import { useParams, useNavigate, useLocation } from "react-router-dom";
+import Swal from "sweetalert2";
 import { useRecoilState } from "recoil";
 import axios from "../../../api/axios";
 import CommentList from "../../../components/board/CommentList";
@@ -91,19 +92,35 @@ function ProductDetailPage() {
   };
 
   const handleDeleteBtn = async () => {
-    deleteProduct(
-      boardId,
-      () => {
-        if (state && state.fromMypage) {
-          navigate("/mypage", {
-            state: { user: state.user, category: state.category },
-          });
-        } else {
-          navigate("/product");
-        }
-      },
-      () => {},
-    );
+    Swal.fire({
+      html: `
+        <img src="https://raw.githubusercontent.com/Tarikul-Islam-Anik/Animated-Fluent-Emojis/master/Emojis/Animals/Bear.png" alt="Bear" width="100" height="100"/>
+        <p style='font-size:1.2rem; font-family:Pretendard-Bold;'>게시글을 삭제하시겠습니까?</p>
+      `,
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText:
+        "<div style='font-size:1rem; font-family:Pretendard-Regular;'>삭제</div>",
+      cancelButtonText:
+        "<div style='font-size:1rem; font-family:Pretendard-Regular;'>취소</div>",
+    }).then((result) => {
+      if (result.isConfirmed) {
+        deleteProduct(
+          boardId,
+          () => {
+            if (state && state.fromMypage) {
+              navigate("/mypage", {
+                state: { user: state.user, category: state.category },
+              });
+            } else {
+              navigate("/product");
+            }
+          },
+          () => {},
+        );
+      }
+    });
   };
 
   const renderEditDeleteButtons = () => {

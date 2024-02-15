@@ -157,6 +157,7 @@ function MateRegistPage() {
         onSubmit={handleSubmit}
         buttonText={isUpdateMode ? "수정하기" : "작성하기"}
         handleFullFlag={handleFullFlag}
+        isUpdateMode={isUpdateMode}
       />
     </>
   );

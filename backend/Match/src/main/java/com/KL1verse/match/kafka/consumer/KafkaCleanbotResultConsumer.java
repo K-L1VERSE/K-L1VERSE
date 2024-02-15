@@ -23,7 +23,7 @@ public class KafkaCleanbotResultConsumer {
     @Autowired
     private ObjectMapper objectMapper;
 
-    @KafkaListener(topics = "cleanbot-chat-output", groupId = "match-group")
+//    @KafkaListener(topics = "cleanbot-chat-output", groupId = "match-group")
     public void cleanbotCheck(String CleanbotCheckResDtoJson) {
 
         try {
