@@ -7,6 +7,8 @@ import com.KL1verse.match.match.repository.MatchRepository;
 import com.KL1verse.match.match.repository.entity.Match;
 import com.KL1verse.match.match.repository.entity.Match.MatchStatus;
 import java.time.Instant;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.*;
 import java.util.concurrent.ScheduledFuture;
 
@@ -97,6 +99,25 @@ public class SchedulerService {
         scheduledTasks.put(matchId, scheduledTask);
     }
 
+    public void scheduleBettingDivide(String cronExpression, int matchId, int winningTeamId) {
+        Runnable task = () -> {
+            log.info("베팅 정산, 경기 = {}", matchId);
+
+            // 여기에 원하는 작업 수행
+            kafkaBettingWinProducer.bettingWin(matchId, winningTeamId);
+
+        };
+
+        // 스케줄된 작업 예약
+        ScheduledFuture<?> scheduledTask = taskScheduler.schedule(task, new Trigger() {
+            @Override
+            public Instant nextExecution(TriggerContext triggerContext) {
+                CronTrigger crontrigger = new CronTrigger(cronExpression);
+                return crontrigger.nextExecution(triggerContext);
+            }
+        });
+    }
+
     // 동적으로 스케줄된 작업을 제거
     public void cancelAllScheduledTasks() {
         scheduledTasks.forEach((matchId, scheduledTask) -> {
@@ -115,7 +136,6 @@ public class SchedulerService {
         }
     }
 
-    @Transactional
     public void crawlMatch(int matchId) {
         String url = "https://k-l1verse.site:8080/timelines/" + matchId;
         String response = restTemplate.getForObject(url, String.class);
@@ -151,13 +171,16 @@ public class SchedulerService {
 
                 int homeScore = match.getHomeScore();
                 int awayScore = match.getAwayScore();
+                int winningTeamId = 0;
                 if(homeScore > awayScore) {
-                    kafkaBettingWinProducer.bettingWin(matchId, match.getHomeTeamId());
+                    winningTeamId = match.getHomeTeamId();
                 } else if(homeScore < awayScore) {
-                    kafkaBettingWinProducer.bettingWin(matchId, match.getAwayTeamId());
-                } else {
-                    kafkaBettingWinProducer.bettingWin(matchId, 0);
+                    winningTeamId = match.getAwayTeamId();
                 }
+
+                DateTimeFormatter formatter = DateTimeFormatter.ofPattern("ss mm HH dd MM *");
+                String cronExpression = LocalDateTime.now().plusMinutes(1).format(formatter);
+                scheduleBettingDivide(cronExpression, matchId, winningTeamId);
             }
 
             timelineList.getTimelineMatchList()[matchId] = timelineResponse;
