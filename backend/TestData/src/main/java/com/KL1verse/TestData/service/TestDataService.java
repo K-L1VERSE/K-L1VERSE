@@ -25,6 +25,7 @@ public class TestDataService {
 
     private static class TeamInfo {
         private String name;
+        private int teamId;
         private List<Member> members;
     }
 
@@ -34,6 +35,7 @@ public class TestDataService {
     @PostConstruct
     public void init() {
         homeTeam.name = "서울";
+        homeTeam.teamId = 5;
         homeTeam.members = new ArrayList<>();
         homeTeam.members.add(new Member("백종범", 1));
         homeTeam.members.add(new Member("서주환", 23));
@@ -53,6 +55,7 @@ public class TestDataService {
 
 
         awayTeam.name = "수원";
+        awayTeam.teamId = 11;
         awayTeam.members = new ArrayList<>();
         awayTeam.members.add(new Member("노동건", 17));
         awayTeam.members.add(new Member("곽동준", 32));
@@ -99,6 +102,7 @@ public class TestDataService {
                             .timelineId(++timelineIdArray[matchId])
                             .eventName("경기종료")
                             .timeMin(90)
+                            .homeOrAway("AWAY")
                             .build());
                 } else if(timelineIdArray[matchId] < 19) {
 
@@ -112,6 +116,8 @@ public class TestDataService {
                     String isHomeOrAway = homeOrAway[(int)(Math.random() * 2)];
                     if(isHomeOrAway.equals("HOME")) {
                         testDataResDto.setHomeOrAway("HOME");
+                        testDataResDto.setTeamId(homeTeam.teamId);
+                        testDataResDto.setTeamName(homeTeam.name);
                         Member member = homeTeam.members.get((int)(Math.random() * 15));
                         testDataResDto.setBackNo(member.backNo);
                         testDataResDto.setPlayerName(member.name);
@@ -126,6 +132,8 @@ public class TestDataService {
                         }
                     } else {
                         testDataResDto.setHomeOrAway("AWAY");
+                        testDataResDto.setTeamId(awayTeam.teamId);
+                        testDataResDto.setTeamName(awayTeam.name);
                         Member member = awayTeam.members.get((int)(Math.random() * 16));
                         testDataResDto.setBackNo(member.backNo);
                         testDataResDto.setPlayerName(member.name);
@@ -143,6 +151,11 @@ public class TestDataService {
                     testDataResDto.setTimeMin((int)(Math.random() * 4) + (4*timelineIdArray[matchId]));
 
                     testDataResDtoList[matchId].add(testDataResDto);
+                }
+                else {
+                    testDataResDtoList[matchId] = new ArrayList<>();
+                    timelineIdArray[matchId] = 0;
+                    return null;
                 }
             }
 

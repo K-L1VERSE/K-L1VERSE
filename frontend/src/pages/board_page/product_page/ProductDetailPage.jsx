@@ -51,6 +51,7 @@ function ProductDetailPage() {
   const { boardId } = useParams();
   const navigate = useNavigate();
   const { userId } = useRecoilState(UserState)[0];
+  const [commentCount, setCommentCount] = useState(0);
 
   const location = useLocation();
   const { state } = location;
@@ -65,6 +66,7 @@ function ProductDetailPage() {
       setProductDetail(data.board);
       setPrice(data.price);
       setDealFlag(data.dealFlag);
+      setCommentCount(data.board.commentCount);
     });
   }
 
@@ -256,13 +258,13 @@ function ProductDetailPage() {
                     width="25"
                     height="25"
                   />
-                  댓글 수 {productDetail.commentCount}
+                  댓글 수 {commentCount}
                 </div>
               </DetailCommentCount>
             </Bottom>
             <Gray />
           </DetailBox>
-          <CommentList boardId={boardId} />
+          <CommentList boardId={boardId} setCommentCount={setCommentCount} />
         </Container>
       )}
       <Modal visible={modalVisible} onClose={handleCloseModal}>
