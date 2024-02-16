@@ -43,49 +43,49 @@ function App() {
   return (
     <div className="App">
       <SocketProvider>
-        <BrowserRouter>
-          <Routes>
-            <Route path="/login" element={<LoginPage />} />
+        {/* <BrowserRouter> */}
+        <Routes>
+          <Route path="/login" element={<LoginPage />} />
 
-            <Route path="/logout" element={<LogoutPage />} />
+          <Route path="/logout" element={<LogoutPage />} />
 
-            <Route path="/KakaoAuth" element={<KaKaoRedirection />} />
-            <Route path="/GoogleAuth" element={<GoogleRedirection />} />
-            <Route path="/NaverAuth" element={<NaverRedirection />} />
+          <Route path="/KakaoAuth" element={<KaKaoRedirection />} />
+          <Route path="/GoogleAuth" element={<GoogleRedirection />} />
+          <Route path="/NaverAuth" element={<NaverRedirection />} />
 
-            <Route path="/" element={<Navbar />}>
-              <Route index element={<MainPage />} />
+          <Route path="/" element={<Navbar />}>
+            <Route index element={<MainPage />} />
 
-              <Route path="/notification" element={<NotificationPage />} />
+            <Route path="/notification" element={<NotificationPage />} />
 
-              <Route path="/survey" element={<StartPage />} />
-              <Route path="/question/:questionNum" element={<QuestionPage />} />
-              <Route path="/result" element={<ResultPage />} />
-              <Route path="/kakao" element={<KakaoPage />} />
+            <Route path="/survey" element={<StartPage />} />
+            <Route path="/question/:questionNum" element={<QuestionPage />} />
+            <Route path="/result" element={<ResultPage />} />
+            <Route path="/kakao" element={<KakaoPage />} />
 
-              <Route path="/waggle" element={<WaggleListPage />} />
-              <Route path="/waggle/:boardId" element={<WaggleDetailPage />} />
-              <Route path="/waggleRegist" element={<WaggleRegistPage />} />
+            <Route path="/waggle" element={<WaggleListPage />} />
+            <Route path="/waggle/:boardId" element={<WaggleDetailPage />} />
+            <Route path="/waggleRegist" element={<WaggleRegistPage />} />
 
-              <Route path="/mate" element={<MateListPage />} />
-              <Route path="/mate/:boardId" element={<MateDetailPage />} />
-              <Route path="/mateRegist" element={<MateRegistPage />} />
+            <Route path="/mate" element={<MateListPage />} />
+            <Route path="/mate/:boardId" element={<MateDetailPage />} />
+            <Route path="/mateRegist" element={<MateRegistPage />} />
 
-              <Route path="/product" element={<ProductListPage />} />
-              <Route path="/product/:boardId" element={<ProductDetailPage />} />
-              <Route path="/productRegist" element={<ProductRegistPage />} />
+            <Route path="/product" element={<ProductListPage />} />
+            <Route path="/product/:boardId" element={<ProductDetailPage />} />
+            <Route path="/productRegist" element={<ProductRegistPage />} />
 
-              <Route path="/schedule" element={<MatchSchedulePage />} />
-              <Route path="/match/:matchId" element={<MatchDetailPage />} />
-              <Route path="/chat/:matchId" element={<MatchChattingPage />} />
-              <Route path="/team" element={<TeamInfoPage />} />
+            <Route path="/schedule" element={<MatchSchedulePage />} />
+            <Route path="/match/:matchId" element={<MatchDetailPage />} />
+            <Route path="/chat/:matchId" element={<MatchChattingPage />} />
+            <Route path="/team" element={<TeamInfoPage />} />
 
-              <Route path="/mypage" element={<MyPage />} />
-              <Route path="/badge" element={<Badge />} />
-              <Route path="/setting" element={<SettingPage />} />
-            </Route>
-          </Routes>
-        </BrowserRouter>
+            <Route path="/mypage" element={<MyPage />} />
+            <Route path="/badge" element={<Badge />} />
+            <Route path="/setting" element={<SettingPage />} />
+          </Route>
+        </Routes>
+        {/* </BrowserRouter> */}
       </SocketProvider>
     </div>
   );

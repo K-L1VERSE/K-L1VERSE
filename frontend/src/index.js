@@ -6,13 +6,18 @@ import GlobalStyle from "./styles/global/GlobalStyle";
 
 import App from "./App";
 import reportWebVitals from "./reportWebVitals";
+import ScrollToTop from "./global/ScrollToTop";
+import { BrowserRouter } from "react-router-dom";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
   // <React.StrictMode>
   <RecoilRoot>
-    <GlobalStyle />
-    <App />
+    <BrowserRouter>
+      <GlobalStyle />
+      <ScrollToTop />
+      <App />
+    </BrowserRouter>
   </RecoilRoot>,
   // </React.StrictMode>,
 );

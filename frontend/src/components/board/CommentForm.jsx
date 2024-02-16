@@ -61,6 +61,7 @@ const CommentForm = ({
           isSecret,
         },
         () => {
+          setCommentCount((prev) => prev + 1);
           getComments();
           setContent("");
           setIsSecret(false);
