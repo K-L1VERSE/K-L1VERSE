@@ -20,4 +20,5 @@ public class SignInResDto {
     private Integer userId;
     private String mainBadge;
     private Boolean notificationFlag;
+    private Integer goal;
 }
