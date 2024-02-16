@@ -7,6 +7,7 @@
 
 - 배포 URL : https://K-L1VERSE.site
 - Test ID & PW : 소셜로그인 시스템으로 테스트 계정 X
+- 서비스 UCC : https://www.youtube.com/watch?v=oaa-51droiM&t=58
 
 <br>
 
