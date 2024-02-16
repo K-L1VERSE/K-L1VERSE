@@ -168,7 +168,7 @@ function DoBettingContainer({ data, setIsBetted }) {
                 ...prev,
                 goal: prev.goal - bettingAmount,
               }));
-              // window.location.reload();
+              window.location.reload();
             });
           });
       } catch {
