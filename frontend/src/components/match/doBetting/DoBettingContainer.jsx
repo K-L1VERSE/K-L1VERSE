@@ -32,7 +32,7 @@ import { ReactComponent as DoBetIcon } from "../../../assets/icon/do-bet-icon.sv
 function DoBettingContainer({ data, setIsBetted }) {
   const [selectedTeam, setSelectedTeam] = useState(null);
   const [bettingAmount, setBettingAmount] = useState(0);
-  const [userState] = useRecoilState(UserState);
+  const [userState, setUserState] = useRecoilState(UserState);
   const { matchId } = useParams();
   const [match, setMatch] = useState(data);
   const [isLoading, setIsLoading] = useState(true);
@@ -126,6 +126,15 @@ function DoBettingContainer({ data, setIsBetted }) {
       : null;
 
     if (selectedTeam && bettingAmount > 0) {
+      if (userState.goal < bettingAmount) {
+        Swal.fire({
+          title: "보유 골이 부족합니다.",
+          icon: "error",
+          cancelButtonText: "확인",
+        }).then(() => {});
+        return;
+      }
+
       try {
         await bettingApi
           .betting({
@@ -155,7 +164,11 @@ function DoBettingContainer({ data, setIsBetted }) {
             }).then(() => {
               setBetComplete(true);
               setIsBetted(true);
-              window.location.reload();
+              setUserState((prev) => ({
+                ...prev,
+                goal: prev.goal - bettingAmount,
+              }));
+              // window.location.reload();
             });
           });
       } catch {

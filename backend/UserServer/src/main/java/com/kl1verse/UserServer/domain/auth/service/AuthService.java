@@ -142,6 +142,7 @@ public class AuthService {
             .domain(user.getDomain())
             .userId(user.getId())
             .notificationFlag(user.getNotificationFlag())
+            .goal(user.getGoal())
             .build();
 
         if(user.getWearBadge() != null) {
