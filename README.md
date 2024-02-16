@@ -1409,7 +1409,7 @@ Docker"
 ### [소셜로그인]
 
 - 카카오, 구글, 네이버 계정으로 소셜 로그인이 가능합니다.
-![login](/uploads/52c03a15ce1b8d44ddca5ae212ddc8c5/login.gif)
+<img src="/uploads/52c03a15ce1b8d44ddca5ae212ddc8c5/login.gif" width="500"/>
 
 ### [마이페이지]
 
