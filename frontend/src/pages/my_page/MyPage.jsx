@@ -69,8 +69,10 @@ function MyPage() {
   const getUserInfo = () => {
     axios
       .get("/user/users/mypage")
-      .then(({ data }) => {
-        setUser(data);
+      .then((res) => {
+        if (res.data) {
+          setUser(res.data);
+        }
       })
       .catch(() => {});
   };
@@ -93,9 +95,13 @@ function MyPage() {
             userId: user.userId,
           },
         )
-        .then(({ data }) => {
-          setMyBoard(myBoard !== null ? [...myBoard, ...data] : [...data]);
-          setPage(page + 1);
+        .then((res) => {
+          if (res.data) {
+            setMyBoard(
+              myBoard !== null ? [...myBoard, ...res.data] : [...res.data],
+            );
+            setPage(page + 1);
+          }
         })
         .catch(() => {});
     }
