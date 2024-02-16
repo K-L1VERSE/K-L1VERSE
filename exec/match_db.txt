@@ -1,0 +1,3 @@
+url: jdbc:mariadb://3.39.6.237:5040/match
+username: root
+password: KL1VERSE

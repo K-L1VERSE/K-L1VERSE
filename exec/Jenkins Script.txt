@@ -1,0 +1,401 @@
+[접속 URL]
+https://k-l1verse.site:5555
+
+
+[Script]
+pipeline {
+    agent any
+    
+    tools {
+        nodejs "NodeJS 20.10.0"
+    }
+    
+    environment {
+        repository = "ignuy/kl1verse"
+        DOCKERHUB_CREDENTIALS=credentials('docker')
+    }
+    
+    stages {
+        stage('Dockehub login') {
+            steps {
+                sh 'echo $DOCKERHUB_CREDENTIALS_PSW | docker login -u $DOCKERHUB_CREDENTIALS_USR --password-stdin' // docker hub 로그인
+            }
+        }
+        
+        stage('Git Config Setting...') {
+            steps {
+                echo '⚠️⚠️ prevent for SSL certificate Error!!'
+                sh 'git config --global http.sslVerify false'
+            }
+        }
+        
+        stage('Git Cloning...') {
+            steps {
+                git branch: 'master', credentialsId: 'ignuy', url: 'https://lab.ssafy.com/s10-webmobile2-sub2/S10P12A409.git'
+            }
+        }
+        
+         stage('Build UserServer') {
+            steps {
+                echo "⚗️⚗️ build User start"
+                sh '''
+                    APP_NAME=user
+                    IMAGE=user
+                    PORT=8010
+                
+                    cd backend/UserServer/
+                    cp -v /var/jenkins_home/k-l1verse.site/keystore.p12 ./src/main/resources/
+                    
+                    chmod +x gradlew
+                    ./gradlew clean bootJar
+                    
+                    # Application Stop
+                    if [ "$(docker ps -a -q -f name=$APP_NAME)" ]; then
+                        echo -n "🚫 Stop Docker Container : "
+                        docker rm -f $APP_NAME
+                    else
+                        echo "🚫 There is no running container named $APP_NAME"
+                    fi
+                    
+                    # Image Build
+                    if [ "$(docker images -a -q $IMAGE)" ]; then
+                        echo "🗑️ Remove Docker Image : "
+                        docker image rm $IMAGE
+                    else
+                        echo "🗑️ There is no Docker image named $IMAGE"
+                    fi
+                    docker build . -t $IMAGE
+                    
+                    # Docker Run
+                    echo -n "🚀 Docker $APP_NAME Container Start! : "
+                    docker run -d \
+                    --name $APP_NAME \
+                    -p $PORT:$PORT \
+                    --restart=on-failure:10 \
+                    $IMAGE
+                '''
+            }
+        }
+        
+         stage('Build frontend') {
+            steps {
+                echo "⚗️⚗️ build React start"
+                sh '''
+                    APP_NAME=frontend
+                    IMAGE=frontend
+                    PORT=3000
+                    
+                    cp -v /var/jenkins_home/.env ./frontend
+                
+                    cd frontend
+                    cat .env
+                    npm install
+                    npm run build
+                    
+                    # Application Stop
+                    if [ "$(docker ps -a -q -f name=$APP_NAME)" ]; then
+                        echo -n "🚫 Stop Docker Container : "
+                        docker rm -f $APP_NAME
+                    else
+                        echo "🚫 There is no running container named $APP_NAME"
+                    fi
+                    
+                    # Image Build
+                    if [ "$(docker images -a -q $IMAGE)" ]; then
+                        echo "🗑️ Remove Docker Image : "
+                        docker image rm $IMAGE
+                    else
+                        echo "🗑️ There is no Docker image named $IMAGE"
+                    fi
+                    docker build . -t $IMAGE
+                    
+                    # Docker Run
+                    echo -n "🚀 Docker $APP_NAME Container Start! : "
+                    docker run -d \
+                    --name $APP_NAME \
+                    -p $PORT:$PORT \
+                    --restart=on-failure:10 \
+                    $IMAGE
+                '''
+            }
+        }
+        
+        stage('Build Match') {
+            steps {
+                echo "⚗️⚗️ build Match start"
+                sh '''
+                    APP_NAME=match
+                    IMAGE=match
+                    PORT=8040
+                
+                    cd backend/Match/
+                    cp -v /var/jenkins_home/k-l1verse.site/keystore.p12 ./src/main/resources/
+                    
+                    chmod +x gradlew
+                    ./gradlew clean bootJar
+                    
+                    # Application Stop
+                    if [ "$(docker ps -a -q -f name=$APP_NAME)" ]; then
+                        echo -n "🚫 Stop Docker Container : "
+                        docker rm -f $APP_NAME
+                    else
+                        echo "🚫 There is no running container named $APP_NAME"
+                    fi
+                    
+                    # Image Build
+                    if [ "$(docker images -a -q $IMAGE)" ]; then
+                        echo "🗑️ Remove Docker Image : "
+                        docker image rm $IMAGE
+                    else
+                        echo "🗑️ There is no Docker image named $IMAGE"
+                    fi
+                    docker build . -t $IMAGE
+                    
+                    # Docker Run
+                    echo -n "🚀 Docker $APP_NAME Container Start! : "
+                    docker run -d \
+                    --name $APP_NAME \
+                    -p $PORT:$PORT \
+                    --restart=on-failure:10 \
+                    $IMAGE
+                '''
+            }
+        }
+        
+        stage('Build Survey') {
+            steps {
+                echo "⚗️⚗️ build Survey start"
+                sh '''
+                    APP_NAME=survey
+                    IMAGE=survey
+                    PORT=8020
+                
+                    cd backend/Survey/
+                    cp -v /var/jenkins_home/k-l1verse.site/keystore.p12 ./src/main/resources/
+                    
+                    chmod +x gradlew
+                    ./gradlew clean bootJar
+                    
+                    # Application Stop
+                    if [ "$(docker ps -a -q -f name=$APP_NAME)" ]; then
+                        echo -n "🚫 Stop Docker Container : "
+                        docker rm -f $APP_NAME
+                    else
+                        echo "🚫 There is no running container named $APP_NAME"
+                    fi
+                    
+                    # Image Build
+                    if [ "$(docker images -a -q $IMAGE)" ]; then
+                        echo "🗑️ Remove Docker Image : "
+                        docker image rm $IMAGE
+                    else
+                        echo "🗑️ There is no Docker image named $IMAGE"
+                    fi
+                    docker build . -t $IMAGE
+                    
+                    # Docker Run
+                    echo -n "🚀 Docker $APP_NAME Container Start! : "
+                    docker run -d \
+                    --name $APP_NAME \
+                    -p $PORT:$PORT \
+                    --restart=on-failure:10 \
+                    $IMAGE
+                '''
+            }
+        }
+        
+       
+        
+        stage('Build Gateway') {
+            steps {
+                echo "⚗️⚗️ build Gateway start"
+                sh '''
+                    APP_NAME=gateway
+                    IMAGE=gateway
+                    PORT=8000
+                
+                    cd backend/Gateway/
+                    cp -v /var/jenkins_home/k-l1verse.site/keystore.p12 ./src/main/resources/
+                    
+                    chmod +x gradlew
+                    ./gradlew clean bootJar
+                    
+                    # Application Stop
+                    if [ "$(docker ps -a -q -f name=$APP_NAME)" ]; then
+                        echo -n "🚫 Stop Docker Container : "
+                        docker rm -f $APP_NAME
+                    else
+                        echo "🚫 There is no running container named $APP_NAME"
+                    fi
+                    
+                    # Image Build
+                    if [ "$(docker images -a -q $IMAGE)" ]; then
+                        echo "🗑️ Remove Docker Image : "
+                        docker image rm $IMAGE
+                    else
+                        echo "🗑️ There is no Docker image named $IMAGE"
+                    fi
+                    docker build . -t $IMAGE
+                    
+                    # Docker Run
+                    echo -n "🚀 Docker $APP_NAME Container Start! : "
+                    docker run -d \
+                    --name $APP_NAME \
+                    -p $PORT:$PORT \
+                    --restart=on-failure:10 \
+                    $IMAGE
+                '''
+            }
+        }
+        
+        stage('Build Board') {
+            steps {
+                echo "⚗️⚗️ build Board start"
+                sh '''
+                    APP_NAME=board
+                    IMAGE=board
+                    PORT=8030
+                
+                    cd backend/Board/
+                    cp -v /var/jenkins_home/k-l1verse.site/keystore.p12 ./src/main/resources/
+                    
+                    chmod +x gradlew
+                    ./gradlew clean bootJar
+                    
+                    # Application Stop
+                    if [ "$(docker ps -a -q -f name=$APP_NAME)" ]; then
+                        echo -n "🚫 Stop Docker Container : "
+                        docker rm -f $APP_NAME
+                    else
+                        echo "🚫 There is no running container named $APP_NAME"
+                    fi
+                    
+                    # Image Build
+                    if [ "$(docker images -a -q $IMAGE)" ]; then
+                        echo "🗑️ Remove Docker Image : "
+                        docker image rm $IMAGE
+                    else
+                        echo "🗑️ There is no Docker image named $IMAGE"
+                    fi
+                    docker build . -t $IMAGE
+                    
+                    # Docker Run
+                    echo -n "🚀 Docker $APP_NAME Container Start! : "
+                    docker run -d \
+                    --name $APP_NAME \
+                    -p $PORT:$PORT \
+                    --restart=on-failure:10 \
+                    $IMAGE
+                '''
+            }
+        }
+        
+        stage('Build Crawl') {
+            steps {
+                echo "⚗️⚗️ build Crawl start"
+                sh '''
+                    APP_NAME=crawl
+                    IMAGE=crawl
+                    PORT=8050
+                    
+                    cd backend/Crawl/
+                    
+                    chmod +x gradlew
+                    ./gradlew clean bootJar
+                    
+                    # Application Stop
+                    if [ "$(docker ps -a -q -f name=$APP_NAME)" ]; then
+                        echo -n "🚫 Stop Docker Container : "
+                        docker rm -f $APP_NAME
+                    else
+                        echo "🚫 There is no running container named $APP_NAME"
+                    fi
+                    
+                    # Image Build
+                    if [ "$(docker images -a -q $IMAGE)" ]; then
+                        echo "🗑️ Remove Docker Image : "
+                        docker image rm $IMAGE
+                    else
+                        echo "🗑️ There is no Docker image named $IMAGE"
+                    fi
+                    docker build . -t $IMAGE
+                    
+                    # Docker Run
+                    echo -n "🚀 Docker $APP_NAME Container Start! : "
+                    docker run -d \
+                    --name $APP_NAME \
+                    -p $PORT:$PORT \
+                    --restart=on-failure:10 \
+                    $IMAGE
+                '''
+            }
+        }
+        
+        stage('Build TestData') {
+            steps {
+                echo "⚗️⚗️ build TestData start"
+                sh '''
+                    APP_NAME=testdata
+                    IMAGE=testdata
+                    PORT=8080
+                    
+                    cd backend/TestData/
+                    cp -v /var/jenkins_home/k-l1verse.site/keystore.p12 ./src/main/resources/
+                    
+                    chmod +x gradlew
+                    ./gradlew clean bootJar
+                    
+                    # Application Stop
+                    if [ "$(docker ps -a -q -f name=$APP_NAME)" ]; then
+                        echo -n "🚫 Stop Docker Container : "
+                        docker rm -f $APP_NAME
+                    else
+                        echo "🚫 There is no running container named $APP_NAME"
+                    fi
+                    
+                    # Image Build
+                    if [ "$(docker images -a -q $IMAGE)" ]; then
+                        echo "🗑️ Remove Docker Image : "
+                        docker image rm $IMAGE
+                    else
+                        echo "🗑️ There is no Docker image named $IMAGE"
+                    fi
+                    docker build . -t $IMAGE
+                    
+                    # Docker Run
+                    echo -n "🚀 Docker $APP_NAME Container Start! : "
+                    docker run -d \
+                    --name $APP_NAME \
+                    -p $PORT:$PORT \
+                    --restart=on-failure:10 \
+                    $IMAGE
+                '''
+            }
+        }
+    }
+    
+    post {
+        success {
+            script {
+                def Author_ID = sh(script: "git show -s --pretty=%an", returnStdout: true).trim()
+                def Author_Name = sh(script: "git show -s --pretty=%ae", returnStdout: true).trim()
+                mattermostSend (color: 'good', 
+                message: "빌드 성공: ${env.JOB_NAME} #${env.BUILD_NUMBER} by ${Author_ID}(${Author_Name})\n(<${env.BUILD_URL}|Details>)", 
+                endpoint: 'https://meeting.ssafy.com/hooks/gw69q6tab3rm5fimw1xew9rtmy', 
+                channel: '409'
+                )
+            }
+        }
+        failure {
+            script {
+                def Author_ID = sh(script: "git show -s --pretty=%an", returnStdout: true).trim()
+                def Author_Name = sh(script: "git show -s --pretty=%ae", returnStdout: true).trim()
+                mattermostSend (color: 'danger', 
+                message: "빌드 실패: ${env.JOB_NAME} #${env.BUILD_NUMBER} by ${Author_ID}(${Author_Name})\n(<${env.BUILD_URL}|Details>)", 
+                endpoint: 'https://meeting.ssafy.com/hooks/gw69q6tab3rm5fimw1xew9rtmy', 
+                channel: '409'
+                )
+            }
+        }
+    }
+}
