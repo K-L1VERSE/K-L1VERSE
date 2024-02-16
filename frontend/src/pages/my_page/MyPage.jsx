@@ -63,7 +63,7 @@ function MyPage() {
     state && state.category ? state.category : "1",
   );
   const [page, setPage] = useState(0);
-  const [myBoard, setMyBoard] = useState([]);
+  const [myBoard, setMyBoard] = useState(null);
   const [isBottom, setIsBottom] = useState(false);
 
   const getUserInfo = () => {
