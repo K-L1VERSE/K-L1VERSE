@@ -209,18 +209,18 @@ public class NewsCrawl {
                 }
 
                 log.info("newsContent = {}", newsInfo.content);
-//                String prompt = "(예 or 아니오)로 대답해줘. 다음의 뉴스 내용은 긍정적인 내용이야? ("+newsInfo.getContent()+")";
-//                String responseFromOpenAIJSon = openAiService.sendRequest(prompt);
-//                ObjectMapper objectMapper = new ObjectMapper();
-//                try {
-//                    JsonNode responseNode = objectMapper.readTree(responseFromOpenAIJSon);
-//                    String responseFromOpenAI = responseNode.get("choices").get(0).get("message").get("content").asText();
-//                    if(responseFromOpenAI == null || responseFromOpenAI.equals("아니오") || responseFromOpenAI.equals("아니요")) {
-//                        continue;
-//                    }
-//                } catch (JsonProcessingException e) {
-//                    e.printStackTrace();
-//                }
+                String prompt = "(예 or 아니오)로 대답해줘. 다음의 뉴스 내용은 긍정적인 내용이야? ("+newsInfo.getContent()+")";
+                String responseFromOpenAIJSon = openAiService.sendRequest(prompt);
+                ObjectMapper objectMapper = new ObjectMapper();
+                try {
+                    JsonNode responseNode = objectMapper.readTree(responseFromOpenAIJSon);
+                    String responseFromOpenAI = responseNode.get("choices").get(0).get("message").get("content").asText();
+                    if(responseFromOpenAI == null || responseFromOpenAI.equals("아니오") || responseFromOpenAI.equals("아니요")) {
+                        continue;
+                    }
+                } catch (JsonProcessingException e) {
+                    e.printStackTrace();
+                }
                 titleList.add(newsInfo.getTitle());
                 uriList.add(newsInfo.getUri());
             }
