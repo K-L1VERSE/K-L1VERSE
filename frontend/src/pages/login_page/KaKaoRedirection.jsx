@@ -34,6 +34,7 @@ function KaKaoRedirection() {
         mainBadge: res.data.mainBadge,
         isLoggedIn: true,
         notificationFlag: res.data.notificationFlag,
+        goal: res.data.goal,
       });
 
       window.location.href = "/";
