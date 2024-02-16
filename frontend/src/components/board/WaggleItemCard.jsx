@@ -65,7 +65,11 @@ function WaggleItemCard({
             <div>{truncatedContent}</div>
           </ItemContent>
         </ImageContentBox>
-        <Hashtags>{waggle.hashtags.map((tag) => `#${tag}`).join(" ")}</Hashtags>
+        <Hashtags>
+          {waggle.hashtags &&
+            waggle.hashtags.length > 0 &&
+            waggle.hashtags.map((tag) => `#${tag}`).join(" ")}
+        </Hashtags>
         <ItemInfoSection>
           <ItemInfoItem className="waggle-like">
             <LikeCount />
