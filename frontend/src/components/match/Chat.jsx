@@ -27,7 +27,7 @@ import SendIcon from "../../assets/icon/send-icon.png";
 
 import { UserState } from "../../global/UserState";
 
-function Chat() {
+function Chat({ match, setMatch }) {
   const { matchId } = useParams();
   const roomId = matchId;
   const [message, setMessage] = useState("");
@@ -67,6 +67,51 @@ function Chat() {
       stomp.disconnect();
     };
   }, [roomId]);
+
+  const getTimeLines = (matchId) => {
+    axios
+      // .get(`https://k-l1verse.site:8040/matches/timelines/${matchId}`)
+      .get(`http://localhost:8040/matches/timelines/${matchId}`)
+      .then((res) => {
+        if (res.data) {
+          let changeHomeScore = 0;
+          let changeAwayScore = 0;
+
+          res.data.forEach((timeline) => {
+            if (timeline.eventName === "득점") {
+              if (timeline.homeOrAway === "HOME") {
+                changeHomeScore += 1;
+              } else {
+                changeAwayScore += 1;
+              }
+            }
+          });
+          if (
+            match.homeScore !== changeHomeScore ||
+            match.awayScore !== changeAwayScore
+          ) {
+            setMatch((prev) => ({
+              ...prev,
+              homeScore: changeHomeScore,
+              awayScore: changeAwayScore,
+            }));
+          }
+        }
+      })
+      .catch(() => {});
+  };
+
+  useEffect(() => {
+    getTimeLines(matchId);
+
+    const interval = setInterval(() => {
+      getTimeLines(matchId);
+    }, [10000]);
+
+    return () => {
+      clearInterval(interval);
+    };
+  }, []);
 
   const sendMessage = () => {
     if (message === "") return;
