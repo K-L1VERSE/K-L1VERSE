@@ -32,6 +32,7 @@ const CommentForm = ({
   setCommentCount,
 }) => {
   const [content, setContent] = useState("");
+  const [parentCommentUserId, setParentCommentUserId] = useState("");
   const [isSecret, setIsSecret] = useState(false);
   const { userId } = useRecoilState(UserState)[0];
   const [userState] = useRecoilState(UserState);

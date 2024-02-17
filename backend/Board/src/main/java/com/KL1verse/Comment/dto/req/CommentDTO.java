@@ -22,6 +22,7 @@ public class CommentDTO {
     private String content;
     private Long boardId;
     private Long parentId;
+    private Integer parentCommentUserId;
     private List<CommentDTO> replies;
     private LocalDateTime createAt;
     private LocalDateTime updateAt;

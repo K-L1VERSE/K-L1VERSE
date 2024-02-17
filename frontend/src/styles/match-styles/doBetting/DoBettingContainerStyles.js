@@ -8,14 +8,27 @@ export const DoBetTitleComponent = styled.div`
 `;
 
 export const DoBetTitle = styled.div`
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
   font-family: "Pretendard-Bold";
   color: #002266;
-  display: flex;
   div {
     margin-left: 0.3rem;
     margin-top: 0.1rem;
     font-size: 0.95rem;
   }
+`;
+
+export const DoBetLeft = styled.div`
+  display: flex;
+`;
+
+export const UserGoal = styled.div`
+  font-size: 0.8rem;
+  color: gray;
+  margin-bottom: 0.15rem;
+  font-family: "Pretendard-Bold";
 `;
 
 export const DoBetContainer = styled.div`

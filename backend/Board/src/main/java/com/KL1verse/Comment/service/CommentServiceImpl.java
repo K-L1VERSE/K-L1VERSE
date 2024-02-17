@@ -234,6 +234,7 @@ public class CommentServiceImpl implements CommentService {
 
                                     CommentDTO secretReply = new CommentDTO();
                                     secretReply.setContent("비밀 대댓글입니다.");
+                                    secretReply.setParentCommentUserId(comment.getUserId());
                                     secretReply.setUpdateAt(reply.getUpdateAt());
                                     secretReply.setDeleteAt(reply.getDeleteAt());
                                     secretReply.setCommentId(reply.getCommentId());
@@ -287,6 +288,7 @@ public class CommentServiceImpl implements CommentService {
 
                                     CommentDTO secretReply = new CommentDTO();
                                     secretReply.setContent("비밀 대댓글입니다.");
+                                    secretReply.setParentCommentUserId(comment.getUserId());
                                     secretReply.setUpdateAt(reply.getUpdateAt());
                                     secretReply.setDeleteAt(reply.getDeleteAt());
                                     secretReply.setCommentId(reply.getCommentId());
@@ -319,6 +321,7 @@ public class CommentServiceImpl implements CommentService {
                                     String replyUserProfile = (String) replyUserInfo.get(0)[1];
                                     String replyUsermainBadge = (String) replyUserInfo.get(0)[2];
 
+                                    normalReply.setParentCommentUserId(comment.getUserId());
                                     normalReply.setNickname(replyUserNickname);
                                     normalReply.setProfile(replyUserProfile);
                                     if(replyUsermainBadge != null) {
@@ -356,6 +359,7 @@ public class CommentServiceImpl implements CommentService {
 
                     CommentDTO secretReply = new CommentDTO();
                     secretReply.setContent("비밀 대댓글입니다.");
+                    secretReply.setParentCommentUserId(comment.getUserId());
                     secretReply.setUpdateAt(reply.getUpdateAt());
                     secretReply.setDeleteAt(reply.getDeleteAt());
                     secretReply.setCommentId(reply.getCommentId());
