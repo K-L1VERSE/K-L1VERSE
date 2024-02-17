@@ -16,7 +16,7 @@ function LoginLogo() {
     },
     {
       id: 1,
-      topText: "베팅을 통해",
+      topText: "골 응원을 통해",
       bottomText: "승리를 예측해봐요",
       img: Betting,
     },

@@ -41,6 +41,9 @@ function CommentItemCard({
   const [updatedContent, setUpdatedContent] = useState(comment.content);
   const { userId } = useRecoilState(UserState)[0];
 
+  console.log(comment);
+  console.log(comment.parentCommentUserId);
+
   const handleUpdateBtn = () => {
     if (isEditMode) {
       if (updatedContent === "") {
@@ -154,7 +157,9 @@ function CommentItemCard({
         <CommentListContainer $type={type}>
           {(!comment.isSecret ||
             (comment.isSecret &&
-              (userId === comment.userId || userId === writerId))) && (
+              (userId === comment.userId ||
+                userId === writerId ||
+                userId === comment.parentCommentUserId))) && (
             <div>
               <WriterContainer>
                 {comment.profile && <WriterProfile src={comment.profile} />}
@@ -163,7 +168,9 @@ function CommentItemCard({
                   src={`${process.env.PUBLIC_URL}/badge/badge${comment.mainBadge === null ? 0 : comment.mainBadge}back.png`}
                 />
                 {comment.isSecret &&
-                  (userId === comment.userId || userId === writerId) && (
+                  (userId === comment.userId ||
+                    userId === writerId ||
+                    userId === comment.parentCommentUserId) && (
                     <div>
                       <img
                         src="https://raw.githubusercontent.com/Tarikul-Islam-Anik/Animated-Fluent-Emojis/master/Emojis/Objects/Locked.png"

@@ -70,7 +70,7 @@ function Usergoal({ user }) {
       <Item>
         <ItemContent>
           <ItemTitle>
-            <ItemTitleText>베팅</ItemTitleText>
+            <ItemTitleText>응원 성공</ItemTitleText>
           </ItemTitle>
           <ItemText>
             {user.winBet} / {user.totalBet}
