@@ -12,8 +12,8 @@ export default function TimelineConatiner({ match, setMatch }) {
   const { matchId } = useParams();
   const getTimeLines = (matchId) => {
     axios
-      // .get(`https://k-l1verse.site:8040/matches/timelines/${matchId}`)
-      .get(`http://localhost:8040/matches/timelines/${matchId}`)
+      .get(`https://k-l1verse.site:8040/matches/timelines/${matchId}`)
+      // .get(`http://localhost:8040/matches/timelines/${matchId}`)
       .then((res) => {
         if (res.data) {
           setTimelines(res.data);
