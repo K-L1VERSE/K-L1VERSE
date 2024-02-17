@@ -79,88 +79,101 @@ public class TestDataService {
     private final List<TestDataResDto>[] testDataResDtoList = new ArrayList[1000];
     private final int[] timelineIdArray = new int[1000];
     private String[] eventNames = new String[]{"경기시작", "경기종료", "유효슈팅", "득점", "경고", "퇴장", "교체"};
+    private double[] eventProbabilities = new double[]{0.5, 0.15, 0.1, 0.05, 0.2};
     private String[] homeOrAway = new String[]{"HOME", "AWAY"};
 
     private final Map<Integer, Integer> hashmap = new HashMap<>();
 
-        public List<TestDataResDto> getTimelines(int matchId) {
+    public String generateRandomEvent() {
+        double random = Math.random();
+        double sum = 0;
+        for(int i=0; i<eventProbabilities.length; i++) {
+            sum += eventProbabilities[i];
+            if(random < sum) {
+                return eventNames[i+2];
+            }
+        }
+        return eventNames[eventNames.length-1];
+    }
 
-            if(!hashmap.containsKey(matchId)) {
-                testDataResDtoList[matchId] = new ArrayList<>();
-                timelineIdArray[matchId] = 0;
-                hashmap.put(matchId, 1);
-                testDataResDtoList[matchId].add(TestDataResDto.builder()
-                                .timelineId(++timelineIdArray[matchId])
-                                .eventName("경기시작")
-                                .timeMin(0)
-                                .homeOrAway("AWAY")
-                                .build());
-            } else {
-                hashmap.put(matchId, hashmap.get(matchId) + 1);
+    public List<TestDataResDto> getTimelines(int matchId) {
 
-                if(timelineIdArray[matchId] == 19) {
-                    testDataResDtoList[matchId].add(TestDataResDto.builder()
+        if(!hashmap.containsKey(matchId)) {
+            testDataResDtoList[matchId] = new ArrayList<>();
+            timelineIdArray[matchId] = 0;
+            hashmap.put(matchId, 1);
+            testDataResDtoList[matchId].add(TestDataResDto.builder()
                             .timelineId(++timelineIdArray[matchId])
-                            .eventName("경기종료")
-                            .timeMin(90)
+                            .eventName("경기시작")
+                            .timeMin(0)
                             .homeOrAway("AWAY")
                             .build());
-                } else if(timelineIdArray[matchId] < 19) {
+        } else {
+            hashmap.put(matchId, hashmap.get(matchId) + 1);
 
-                    String eventName = eventNames[(int)(Math.random() * 5) + 2];
+            if(timelineIdArray[matchId] == 19) {
+                testDataResDtoList[matchId].add(TestDataResDto.builder()
+                        .timelineId(++timelineIdArray[matchId])
+                        .eventName("경기종료")
+                        .timeMin(90)
+                        .homeOrAway("AWAY")
+                        .build());
+            } else if(timelineIdArray[matchId] < 19) {
 
-                    TestDataResDto testDataResDto = TestDataResDto.builder()
-                            .timelineId(++timelineIdArray[matchId])
-                            .eventName(eventName)
-                            .build();
+                String eventName = generateRandomEvent();
 
-                    String isHomeOrAway = homeOrAway[(int)(Math.random() * 2)];
-                    if(isHomeOrAway.equals("HOME")) {
-                        testDataResDto.setHomeOrAway("HOME");
-                        testDataResDto.setTeamId(homeTeam.teamId);
-                        testDataResDto.setTeamName(homeTeam.name);
-                        Member member = homeTeam.members.get((int)(Math.random() * 15));
-                        testDataResDto.setBackNo(member.backNo);
-                        testDataResDto.setPlayerName(member.name);
+                TestDataResDto testDataResDto = TestDataResDto.builder()
+                        .timelineId(++timelineIdArray[matchId])
+                        .eventName(eventName)
+                        .build();
 
-                        if(eventName.equals("교체")) {
-                            Member member2 = homeTeam.members.get((int)(Math.random() * 15));
-                            while(member.backNo == member2.backNo) {
-                                member2 = homeTeam.members.get((int)(Math.random() * 15));
-                            }
-                            testDataResDto.setBackNo(member2.backNo);
-                            testDataResDto.setPlayerName2(member2.name);
+                String isHomeOrAway = homeOrAway[(int)(Math.random() * 2)];
+                if(isHomeOrAway.equals("HOME")) {
+                    testDataResDto.setHomeOrAway("HOME");
+                    testDataResDto.setTeamId(homeTeam.teamId);
+                    testDataResDto.setTeamName(homeTeam.name);
+                    Member member = homeTeam.members.get((int)(Math.random() * 15));
+                    testDataResDto.setBackNo(member.backNo);
+                    testDataResDto.setPlayerName(member.name);
+
+                    if(eventName.equals("교체")) {
+                        Member member2 = homeTeam.members.get((int)(Math.random() * 15));
+                        while(member.backNo == member2.backNo) {
+                            member2 = homeTeam.members.get((int)(Math.random() * 15));
                         }
-                    } else {
-                        testDataResDto.setHomeOrAway("AWAY");
-                        testDataResDto.setTeamId(awayTeam.teamId);
-                        testDataResDto.setTeamName(awayTeam.name);
-                        Member member = awayTeam.members.get((int)(Math.random() * 16));
-                        testDataResDto.setBackNo(member.backNo);
-                        testDataResDto.setPlayerName(member.name);
-
-                        if(eventName.equals("교체")) {
-                            Member member2 = homeTeam.members.get((int)(Math.random() * 15));
-                            while(member.backNo == member2.backNo) {
-                                member2 = homeTeam.members.get((int)(Math.random() * 15));
-                            }
-                            testDataResDto.setBackNo(member2.backNo);
-                            testDataResDto.setPlayerName2(member2.name);
-                        }
+                        testDataResDto.setBackNo(member2.backNo);
+                        testDataResDto.setPlayerName2(member2.name);
                     }
+                } else {
+                    testDataResDto.setHomeOrAway("AWAY");
+                    testDataResDto.setTeamId(awayTeam.teamId);
+                    testDataResDto.setTeamName(awayTeam.name);
+                    Member member = awayTeam.members.get((int)(Math.random() * 16));
+                    testDataResDto.setBackNo(member.backNo);
+                    testDataResDto.setPlayerName(member.name);
 
-                    testDataResDto.setTimeMin((int)(Math.random() * 4) + (4*timelineIdArray[matchId]));
+                    if(eventName.equals("교체")) {
+                        Member member2 = homeTeam.members.get((int)(Math.random() * 15));
+                        while(member.backNo == member2.backNo) {
+                            member2 = homeTeam.members.get((int)(Math.random() * 15));
+                        }
+                        testDataResDto.setBackNo(member2.backNo);
+                        testDataResDto.setPlayerName2(member2.name);
+                    }
+                }
 
-                    testDataResDtoList[matchId].add(testDataResDto);
-                }
-                else {
-                    testDataResDtoList[matchId] = new ArrayList<>();
-                    timelineIdArray[matchId] = 0;
-                    hashmap.remove(matchId);
-                    return null;
-                }
+                testDataResDto.setTimeMin((int)(Math.random() * 4) + (4*timelineIdArray[matchId]));
+
+                testDataResDtoList[matchId].add(testDataResDto);
             }
-
-            return testDataResDtoList[matchId];
+            else {
+                testDataResDtoList[matchId] = new ArrayList<>();
+                timelineIdArray[matchId] = 0;
+                hashmap.remove(matchId);
+                return null;
+            }
         }
+
+        return testDataResDtoList[matchId];
+    }
 }

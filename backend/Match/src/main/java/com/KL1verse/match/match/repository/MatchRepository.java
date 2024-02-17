@@ -18,7 +18,7 @@ public interface MatchRepository extends JpaRepository<Match, Integer> {
     String findOneByTeamId(@Param("teamId") int teamId);
 
     @Query(value = "SELECT * FROM game WHERE YEAR(match_at) = :year and MONTH(match_at) = :monthValue and DAY(match_at) = :dayOfMonth", nativeQuery = true)
-    List<Match> findByDate(int year, int monthValue, int dayOfMonth);
+    List<Match> findByDate(@Param("year") int year, @Param("monthValue") int monthValue, @Param("dayOfMonth") int dayOfMonth);
 
     @Query(value = "UPDATE game SET home_betting_amount = :homeBettingAmount WHERE match_id = :matchId", nativeQuery = true)
     void updateHomeBettingAmount(@Param("matchId") int matchId,

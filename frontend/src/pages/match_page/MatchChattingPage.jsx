@@ -16,9 +16,7 @@ import ToLeftPng from "../../assets/ToLeft.png";
 function MatchChattingPage() {
   const { matchId } = useParams();
   const navigate = useNavigate();
-  const [match, setMatch] = useState({});
-  const [homeScore, setHomeScore] = useState(0);
-  const [awayScore, setAwayScore] = useState(0);
+  const [match, setMatch] = useState(undefined);
 
   const [focus, setFocus] = useState(1);
   const location = useLocation();
@@ -32,8 +30,6 @@ function MatchChattingPage() {
     const fetchData = async () => {
       const result = await getMatchDetail(matchId);
       setMatch(result);
-      setHomeScore(result.homeScore);
-      setAwayScore(result.awayScore);
     };
     fetchData();
   }, [matchId]);
@@ -54,31 +50,32 @@ function MatchChattingPage() {
     setFocus(id);
   };
 
+  console.log("match", match);
   return (
-    <>
-      <SurveyTop>
-        <ToLeftImg src={ToLeftPng} onClick={goMatchDetail} />
-      </SurveyTop>
-      <BettingPercentItem match={match} />
-      <Line />
-      <Buttons>
-        <Button $focus={focus === 1} onClick={() => clickBut(1)}>
-          ⚽ 타임라인
-        </Button>
-        <Button $focus={focus === 2} onClick={() => clickBut(2)}>
-          👀 실시간 채팅
-        </Button>
-      </Buttons>
-      <ScoreItem match={match} homeScore={homeScore} awayScore={awayScore} />
-      {focus === 1 && (
-        <TimelineContainer
-          match={match}
-          setHomeScore={setHomeScore}
-          setAwayScore={setAwayScore}
-        />
+    <div>
+      {match && (
+        <>
+          <SurveyTop>
+            <ToLeftImg src={ToLeftPng} onClick={goMatchDetail} />
+          </SurveyTop>
+          <BettingPercentItem match={match} />
+          <Line />
+          <Buttons>
+            <Button $focus={focus === 1} onClick={() => clickBut(1)}>
+              ⚽ 타임라인
+            </Button>
+            <Button $focus={focus === 2} onClick={() => clickBut(2)}>
+              👀 실시간 채팅
+            </Button>
+          </Buttons>
+          <ScoreItem match={match} />
+          {focus === 1 && (
+            <TimelineContainer match={match} setMatch={setMatch} />
+          )}
+          {focus === 2 && <Chat match={match} setMatch={setMatch} />}
+        </>
       )}
-      {focus === 2 && <Chat />}
-    </>
+    </div>
   );
 }
 

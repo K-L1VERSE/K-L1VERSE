@@ -50,16 +50,13 @@ public class MatchServiceImpl implements MatchService {
             LocalDateTime now = LocalDateTime.now();
             LocalDateTime matchAt = match.getMatchAt();
 
-            if (now.getYear() == matchAt.getYear() && now.getMonthValue() == matchAt.getMonthValue()
-                && now.getDayOfMonth() == matchAt.getDayOfMonth()
-                && now.getHour() == matchAt.getHour()
-            && now.getMinute() == matchAt.getMinute()) {
+            if(match.getStatus() == MatchStatus.upcoming && now.isAfter(matchAt)) {
                 match.setStatus(MatchStatus.during);
             }
 
-            if (match.getStatus().equals(MatchStatus.during)) {
-                getScore(match);
-            }
+//            if (match.getStatus().equals(MatchStatus.during)) {
+//                getScore(match);
+//            }
 
             matchListResponses.add(MatchListResponse.builder()
                 .matchId(match.getMatchId())

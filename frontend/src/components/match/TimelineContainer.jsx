@@ -7,19 +7,38 @@ import {
 } from "../../styles/match-styles/MatchTimelinStyle";
 import EventItem from "./EventItem";
 
-export default function TimelineConatiner(match, setHomeScore, setAwayScore) {
+export default function TimelineConatiner({ match, setMatch }) {
   const [timelines, setTimelines] = useState([]);
   const { matchId } = useParams();
   const getTimeLines = (matchId) => {
     axios
-      .get(`https://k-l1verse.site:8040/matches/timelines/${matchId}`)
+      // .get(`https://k-l1verse.site:8040/matches/timelines/${matchId}`)
+      .get(`http://localhost:8040/matches/timelines/${matchId}`)
       .then((res) => {
-        setTimelines(res.data);
-        if (res.data[res.data.length - 1].eventName === "득점") {
-          if (res.data[res.data.length - 1].homeOrAway === "HOME") {
-            setHomeScore((prev) => prev + 1);
-          } else {
-            setAwayScore((prev) => prev + 1);
+        if (res.data) {
+          setTimelines(res.data);
+
+          let changeHomeScore = 0;
+          let changeAwayScore = 0;
+
+          res.data.forEach((timeline) => {
+            if (timeline.eventName === "득점") {
+              if (timeline.homeOrAway === "HOME") {
+                changeHomeScore += 1;
+              } else {
+                changeAwayScore += 1;
+              }
+            }
+          });
+          if (
+            match.homeScore !== changeHomeScore ||
+            match.awayScore !== changeAwayScore
+          ) {
+            setMatch((prev) => ({
+              ...prev,
+              homeScore: changeHomeScore,
+              awayScore: changeAwayScore,
+            }));
           }
         }
       })
