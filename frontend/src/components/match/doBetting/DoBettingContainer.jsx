@@ -20,6 +20,8 @@ import {
   DoBetText,
   DoBetTitleComponent,
   DoBetTitle,
+  DoBetLeft,
+  UserGoal,
 } from "../../../styles/match-styles/doBetting/DoBettingContainerStyles";
 import {
   Betting,
@@ -145,7 +147,7 @@ function DoBettingContainer({ data, setIsBetted }) {
           })
           .catch(() => {
             Swal.fire({
-              title: "베팅에 실패했습니다.",
+              title: "응원에 실패했습니다.",
               icon: "error",
               cancelButtonText: "확인",
             }).then(() => {
@@ -156,7 +158,7 @@ function DoBettingContainer({ data, setIsBetted }) {
             Swal.fire({
               html: `
                 <img src="https://raw.githubusercontent.com/Tarikul-Islam-Anik/Animated-Fluent-Emojis/master/Emojis/Animals/Bear.png" alt="Bear" width="100" height="100"/>
-                <p style='font-size:1.2rem; font-family:Pretendard-Bold;'>${teamName}에 ${bettingAmount}골 베팅했습니다.</p>
+                <p style='font-size:1.2rem; font-family:Pretendard-Bold;'>${teamName}에 ${bettingAmount}골 응원했습니다.</p>
               `,
               confirmButtonColor: "#3085d6",
               confirmButtonText:
@@ -173,7 +175,7 @@ function DoBettingContainer({ data, setIsBetted }) {
           });
       } catch {
         Swal.fire({
-          title: "베팅에 실패했습니다.",
+          title: "응원에 실패했습니다.",
           icon: "error",
           cancelButtonText: "확인",
         }).then(() => {
@@ -182,7 +184,7 @@ function DoBettingContainer({ data, setIsBetted }) {
       }
     } else {
       Swal.fire({
-        title: "팀과 베팅골을 선택해주세요.",
+        title: "팀과 응원골을 선택해주세요.",
         icon: "info",
         confirmButtonText: "확인",
       });
@@ -200,13 +202,15 @@ function DoBettingContainer({ data, setIsBetted }) {
       <div>
         <DoBetTitleComponent>
           <DoBetTitle>
-            <img
-              src="https://raw.githubusercontent.com/Tarikul-Islam-Anik/Animated-Fluent-Emojis/master/Emojis/Objects/Money%20Bag.png"
-              alt="Money Bag"
-              width="20"
-              height="20"
-            />
-            <div>베팅 하기</div>
+            <DoBetLeft>
+              <img
+                src="https://raw.githubusercontent.com/Tarikul-Islam-Anik/Animated-Fluent-Emojis/master/Emojis/Smilies/Beating%20Heart.png"
+                alt="Beating Heart"
+                width="20"
+                height="20"
+              />
+              <div>응원 하기</div>
+            </DoBetLeft>
           </DoBetTitle>
         </DoBetTitleComponent>
       </div>
@@ -253,8 +257,8 @@ function DoBettingContainer({ data, setIsBetted }) {
             </TeamNameContainer>
           </TeamSelectButton>
         </DoBetButtonContainer>
-
         <DoBetInputContainer>
+          <UserGoal>현재 보유 골 : {userState.goal}</UserGoal>
           <DoBetInputComponent>
             <InputForm
               disabled={
@@ -292,7 +296,8 @@ function DoBettingContainer({ data, setIsBetted }) {
               }
             >
               <DoBetText>
-                <DoBetIcon /> <div>베팅 하기</div>
+                {/* <DoBetIcon /> */}
+                <div>👊🏻 응원 하기</div>
               </DoBetText>
             </DoBetButton>
           </DoBetInputComponent>
