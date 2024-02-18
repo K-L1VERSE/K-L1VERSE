@@ -40,7 +40,7 @@ public class KafkaMatchNotificationConsumer {
                 log.info("userId : {}", userId);
                 MessageReqDto messageReqDto = MessageReqDto.builder()
                     .type(NotificationType.MATCH)
-                    .message("경기가 3분 뒤에 시작합니다.")
+                    .message("경기가 30분 뒤에 시작합니다.")
                     .uri(notificationListReqDto.getUri())
                     .userId(userId)
                     .date(LocalDateTime.now())
