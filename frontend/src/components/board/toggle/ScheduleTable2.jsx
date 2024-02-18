@@ -14,6 +14,7 @@ export default function ScheduleTable({
   isMateListPage,
   onMatchClick,
   selectedMatchId,
+  setSelectedMatch,
 }) {
   const [selectedDay, setSelectedDay] = useState(day);
 
@@ -115,6 +116,7 @@ export default function ScheduleTable({
                     match={match}
                     onMatchClick={onMatchClick}
                     selectedMatchId={selectedMatchId}
+                    setSelectedMatch={setSelectedMatch}
                   />
                 ) : (
                   <Time
