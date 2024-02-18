@@ -8,6 +8,7 @@ import "slick-carousel/slick/slick-theme.css";
 
 import MatchDetailScore from "../../components/match/detail/MatchDetailScore";
 import { getMatchDetail } from "../../api/match";
+import { getUserDetail } from "../../api/user";
 import PredictionContainer from "../../components/match/prediction/PredictionContainer";
 import CurrentBettingContainer from "../../components/match/currentBetting/CurrentBettingContainer";
 import DoBettingContainer from "../../components/match/doBetting/DoBettingContainer";
@@ -24,6 +25,7 @@ export default function MatchDetailPage() {
   const [isBetted, setIsBetted] = useState(false);
 
   const [data, setData] = useState();
+  const [user, setUser] = useState();
   useEffect(() => {
     const fetchData = async () => {
       await getMatchDetail(matchId)
@@ -35,6 +37,15 @@ export default function MatchDetailPage() {
             status: "NONE",
           });
         });
+
+      await getUserDetail(
+        (result) => {
+          if (result.data) {
+            setUser(result.data);
+          }
+        },
+        () => {},
+      );
     };
     fetchData();
   }, []);
@@ -52,7 +63,7 @@ export default function MatchDetailPage() {
 
   return (
     <div>
-      {data && (
+      {data && user && (
         <>
           <MatchDetailScore
             match={data}
@@ -71,7 +82,13 @@ export default function MatchDetailPage() {
                   <CurrentBettingContainer data={data} />
                 </Slider>
               </SliderContainer>
-              <DoBettingContainer data={data} setIsBetted={setIsBetted} />
+              <DoBettingContainer
+                match={data}
+                setMatch={setData}
+                user={user}
+                setUser={setUser}
+                setIsBetted={setIsBetted}
+              />
             </>
           ) : (
             <div />
