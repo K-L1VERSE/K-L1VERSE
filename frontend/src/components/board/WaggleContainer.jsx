@@ -12,9 +12,8 @@ function WaggleContainer({
   return (
     <ListContainer>
       {waggleList.map((waggle) => (
-        <ForPadding>
+        <ForPadding key={waggle.waggleId}>
           <WaggleItemCard
-            key={waggle.waggleId}
             waggle={waggle}
             formatRelativeTime={formatRelativeTime}
             user={user}

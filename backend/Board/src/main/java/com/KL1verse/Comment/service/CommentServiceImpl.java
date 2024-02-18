@@ -36,11 +36,11 @@ public class CommentServiceImpl implements CommentService {
     private String domain;
 
     @Override
-    public CommentDTO getCommentById(Long commentId, Long requestingUserId) {
+    public CommentDTO getCommentById(Long commentId, Long requestingUserId, Integer commentParentUserId) {
         Comment comment = commentRepository.findById(commentId)
             .orElseThrow(() -> new RuntimeException("Comment not found with id: " + commentId));
 
-        if (comment.getIsSecret() && !isAuthorized(comment, requestingUserId)) {
+        if (comment.getIsSecret() && !isAuthorized(comment, requestingUserId, commentParentUserId)) {
 
             return null;
         }
@@ -49,12 +49,15 @@ public class CommentServiceImpl implements CommentService {
     }
 
 
-    private boolean isAuthorized(Comment comment, Long requestingUserId) {
+    private boolean isAuthorized(Comment comment, Long requestingUserId, Integer commentParentUserId) {
 
         int boardUserId = comment.getBoardId().getUserId();
         Long commentUserId = Long.valueOf(comment.getUserId());
-        return requestingUserId.equals(commentUserId) || (requestingUserId.intValue()
-            == boardUserId);
+
+        return requestingUserId.equals(commentUserId) ||
+            (requestingUserId.intValue() == boardUserId) ||
+            (requestingUserId.intValue() == commentParentUserId) ;
+
     }
 
 
@@ -131,6 +134,13 @@ public class CommentServiceImpl implements CommentService {
         }
 
         existingComment.setDeleteAt(LocalDateTime.now());
+
+        if(existingComment.getReplies().size() > 0) {
+            for(int i=0; i<existingComment.getReplies().size(); i++) {
+                existingComment.getReplies().get(i).setDeleteAt(LocalDateTime.now());
+            }
+        }
+
         commentRepository.save(existingComment);
         log.info("Comment {} is deleted : ", commentId);
     }
@@ -215,7 +225,7 @@ public class CommentServiceImpl implements CommentService {
 
                 if (comment.getParentId() == null) {
 
-                    if (comment.getIsSecret() && !isAuthorized(comment, requestingUserId)) {
+                    if (comment.getIsSecret() && !isAuthorized(comment, requestingUserId, comment.getUserId())) {
 
                         log.info("~!@~!@~!~!!~@~! 비밀댓글");
                         CommentDTO secretComment = new CommentDTO();
@@ -230,7 +240,7 @@ public class CommentServiceImpl implements CommentService {
                         List<CommentDTO> secretReplies = comment.getReplies().stream()
                             .filter(reply->reply.getDeleteAt() == null)
                             .map(reply -> {
-                                if (reply.getIsSecret() && !isAuthorized(reply, requestingUserId)) {
+                                if (reply.getIsSecret() && !isAuthorized(reply, requestingUserId, comment.getUserId())) {
 
                                     CommentDTO secretReply = new CommentDTO();
                                     secretReply.setContent("비밀 대댓글입니다.");
@@ -284,7 +294,7 @@ public class CommentServiceImpl implements CommentService {
                         List<CommentDTO> replies = comment.getReplies().stream()
                             .filter(reply -> reply.getDeleteAt() == null)
                             .map(reply -> {
-                                if (reply.getIsSecret() && !isAuthorized(reply, requestingUserId)) {
+                                if (reply.getIsSecret() && !isAuthorized(reply, requestingUserId, comment.getUserId())) {
 
                                     CommentDTO secretReply = new CommentDTO();
                                     secretReply.setContent("비밀 대댓글입니다.");
@@ -355,7 +365,7 @@ public class CommentServiceImpl implements CommentService {
         CommentDTO commentDTO = convertToDTO(comment);
         List<CommentDTO> replyDTOs = comment.getReplies().stream()
             .map(reply -> {
-                if (reply.getIsSecret() && !isAuthorized(reply, requestingUserId)) {
+                if (reply.getIsSecret() && !isAuthorized(reply, requestingUserId, comment.getUserId())) {
 
                     CommentDTO secretReply = new CommentDTO();
                     secretReply.setContent("비밀 대댓글입니다.");

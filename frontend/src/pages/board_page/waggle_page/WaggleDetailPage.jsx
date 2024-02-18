@@ -112,7 +112,7 @@ function WaggleDetailPage() {
     Swal.fire({
       html: `
         <img src="https://raw.githubusercontent.com/Tarikul-Islam-Anik/Animated-Fluent-Emojis/master/Emojis/Animals/Bear.png" alt="Bear" width="100" height="100"/>
-        <p style='font-size:1.2rem; font-family:Pretendard-Bold;'>게시글을 삭제하시겠습니까?</p>
+        <div style='font-size:1.2rem; font-family:Pretendard-Bold;'>게시글을 삭제하시겠습니까?</div>
       `,
       showCancelButton: true,
       confirmButtonColor: "#3085d6",

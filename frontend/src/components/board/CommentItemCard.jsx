@@ -18,6 +18,7 @@ import {
   WriterBadge,
   ReplyButton,
   ReplyImg,
+  ReplyMode,
 } from "../../styles/BoardStyles/CommentStyle";
 import ReplyIcon from "../../assets/icon/reply-icon.svg";
 import { likeComment, unlikeComment, updateComment } from "../../api/comment";
@@ -25,6 +26,7 @@ import { UserState } from "../../global/UserState";
 import Like from "./Like";
 import { ReactComponent as LikeCount } from "../../assets/icon/likecount-icon.svg";
 import CocomentIcon from "../../assets/icon/cocoment-icon.png";
+import CommentForm from "./CommentForm";
 
 function CommentItemCard({
   type,
@@ -40,9 +42,6 @@ function CommentItemCard({
   const [isEditMode, setIsEditMode] = useState(false);
   const [updatedContent, setUpdatedContent] = useState(comment.content);
   const { userId } = useRecoilState(UserState)[0];
-
-  console.log(comment);
-  console.log(comment.parentCommentUserId);
 
   const handleUpdateBtn = () => {
     if (isEditMode) {
@@ -209,7 +208,8 @@ function CommentItemCard({
                     {(!comment.isSecret ||
                       (comment.isSecret &&
                         (userId === comment.userId ||
-                          userId === writerId))) && (
+                          userId === writerId ||
+                          userId === comment.parentCommentUserId))) && (
                       <div>
                         <LikeBox>
                           <Like
