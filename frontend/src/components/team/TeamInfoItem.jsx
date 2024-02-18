@@ -1,4 +1,6 @@
 import React, { useRef } from "react";
+import { LazyLoadImage } from "react-lazy-load-image-component";
+import "react-lazy-load-image-component/src/effects/blur.css";
 import {
   TeamInfoWrap,
   Top,
@@ -77,7 +79,11 @@ function TeamInfoItem({ teamInfo, coach, gk, df, mf, fw }) {
         <Members>
           {coach.map((member, i) => (
             <Member key={i}>
-              <img src={member.profile} alt={member.name} />
+              <LazyLoadImage
+                src={member.profile}
+                alt={member.name}
+                effect="blur"
+              />
               <Backno>{member.backNumber}</Backno>
               <MemberName>{member.name}</MemberName>
             </Member>
@@ -89,7 +95,11 @@ function TeamInfoItem({ teamInfo, coach, gk, df, mf, fw }) {
         <Members>
           {gk.map((member, i) => (
             <Member key={i}>
-              <img src={member.profile} alt={member.name} />
+              <LazyLoadImage
+                src={member.profile}
+                alt={member.name}
+                effect="blur"
+              />
               <Backno>{member.backNumber}</Backno>
               <MemberName>{member.name}</MemberName>
             </Member>
@@ -101,7 +111,11 @@ function TeamInfoItem({ teamInfo, coach, gk, df, mf, fw }) {
         <Members>
           {df.map((member, i) => (
             <Member key={i}>
-              <img src={member.profile} alt={member.name} />
+              <LazyLoadImage
+                src={member.profile}
+                alt={member.name}
+                effect="blur"
+              />
               <Backno>{member.backNumber}</Backno>
               <MemberName>{member.name}</MemberName>
             </Member>
@@ -113,7 +127,11 @@ function TeamInfoItem({ teamInfo, coach, gk, df, mf, fw }) {
         <Members>
           {mf.map((member, i) => (
             <Member key={i}>
-              <img src={member.profile} alt={member.name} />
+              <LazyLoadImage
+                src={member.profile}
+                alt={member.name}
+                effect="blur"
+              />
               <Backno>{member.backNumber}</Backno>
               <MemberName>{member.name}</MemberName>
             </Member>
@@ -125,7 +143,11 @@ function TeamInfoItem({ teamInfo, coach, gk, df, mf, fw }) {
         <Members>
           {fw.map((member, i) => (
             <Member key={i}>
-              <img src={member.profile} alt={member.name} />
+              <LazyLoadImage
+                src={member.profile}
+                alt={member.name}
+                effect="blur"
+              />
               <Backno>{member.backNumber}</Backno>
               <MemberName>{member.name}</MemberName>
             </Member>

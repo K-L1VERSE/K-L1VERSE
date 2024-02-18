@@ -24,6 +24,7 @@
     "react-dom": "^18.2.0",
     "react-helmet-async": "^2.0.4",
     "react-horizontal-scrolling-menu": "^4.1.2",
+    "react-lazy-load-image-component": "^1.6.0",
     "react-lottie": "^1.2.4",
     "react-router-dom": "^6.21.2",
     "react-scripts": "5.0.1",
