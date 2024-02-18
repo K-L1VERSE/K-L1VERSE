@@ -64,4 +64,12 @@ public class BettingServiceImpl implements BettingService {
         return teamId;
     }
 
+    @Override
+    public void dividedCancel(String matchId) {
+        Match match = matchRepository.findById(Integer.parseInt(matchId)).orElseThrow();
+        if(match.getGoalDivided()) {
+            match.setGoalDivided(false);
+        }
+    }
+
 }
