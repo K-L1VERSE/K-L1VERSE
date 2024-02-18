@@ -2,10 +2,16 @@ import React from "react";
 import styled from "styled-components";
 import { BadgeImg } from "../../styles/match-styles/MatchScheduleStyle";
 
-export default function TimeForBoard({ match, onMatchClick, selectedMatchId }) {
+export default function TimeForBoard({
+  match,
+  onMatchClick,
+  selectedMatchId,
+  setSelectedMatch,
+}) {
   const handleOnClick = () => {
     if (onMatchClick) {
       onMatchClick(match.matchId);
+      setSelectedMatch(match);
     }
   };
 
