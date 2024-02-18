@@ -9,6 +9,7 @@ export default function ScheduleModal({
   isMateListPage,
   onMatchClick,
   selectedMatchId,
+  setSelectedMatch,
 }) {
   const [data, setData] = useState([]);
   const [year, setYear] = useState(new Date().getFullYear());
@@ -71,6 +72,7 @@ export default function ScheduleModal({
         isMateListPage={isMateListPage}
         onMatchClick={onMatchClick}
         selectedMatchId={selectedMatchId}
+        setSelectedMatch={setSelectedMatch}
       />
     </div>
   );
