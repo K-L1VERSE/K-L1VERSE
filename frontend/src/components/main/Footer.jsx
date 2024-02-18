@@ -5,13 +5,13 @@ import { FooterContainer } from "../../styles/main-styles/MainStyle";
 export default function Footer() {
   const leftClick = () => {
     window.open(
-      "https://sohy.notion.site/K-L1VERSE-98b4b5a944b049a8ae5ceab24c1656bc?pvs=4",
+      "https://sulim0314.notion.site/K-L1VERSE-c2954f33b8e14e10ac2478998d45fa92?pvs=4",
     );
   };
 
   const rightClick = () => {
     window.open(
-      "https://sohy.notion.site/K-L1VERSE-c8410fb7673e49c1b7b4b41a0b134aff?pvs=4",
+      "https://sulim0314.notion.site/K-L1VERSE-9eafb8ae276b4439ab7768ffd0d4f1b6?pvs=4",
     );
   };
 
