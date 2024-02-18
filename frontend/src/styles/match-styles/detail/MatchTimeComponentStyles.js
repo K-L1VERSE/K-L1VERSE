@@ -10,14 +10,17 @@ export const TimeContainer = styled.div`
 
 export const TimeComponent = styled.div`
   text-align: center;
-  margin-top: 1rem;
-  margin-bottom: 1rem;
-
   border-radius: 22px;
-  background-color: #002fa5;
+  background: radial-gradient(circle at center, #002fa5 10%, #002277 100%);
   color: white;
 
-  padding: 9px 14px;
+  padding: 9px 16px;
+
+  transition: box-shadow 0.3s ease;
+  &:hover {
+    box-shadow: 0 3px 9px rgba(0, 0, 0, 0.3);
+    cursor: pointer;
+  }
 `;
 
 export const DuringComponent = styled.div`

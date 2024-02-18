@@ -8,12 +8,14 @@ import com.kl1verse.UserServer.domain.notification.dto.req.MessageReqDto;
 import com.kl1verse.UserServer.domain.notification.dto.req.MessageReqDto.NotificationType;
 import com.kl1verse.UserServer.domain.notification.dto.res.NotificationResDto;
 import com.kl1verse.UserServer.domain.notification.service.NotificationService;
+import com.kl1verse.UserServer.domain.user.dto.res.CheckGoalResDto;
 import com.kl1verse.UserServer.domain.user.dto.res.MypageResponseDto;
 import com.kl1verse.UserServer.domain.user.dto.res.NicknameUpdateReqDto;
 import com.kl1verse.UserServer.domain.user.exception.UserException;
 import com.kl1verse.UserServer.domain.user.repository.UserRepository;
 import com.kl1verse.UserServer.domain.user.repository.entity.User;
 import com.kl1verse.UserServer.domain.user.service.MypageServiceImpl;
+import com.kl1verse.UserServer.domain.user.service.UserService;
 import com.kl1verse.UserServer.global.ResponseCode;
 import jakarta.servlet.http.HttpServletRequest;
 import java.time.LocalDateTime;
@@ -41,6 +43,7 @@ public class UserController {
     private final UserRepository userRepository;
     private final StringRedisTemplate redisTemplate;
     private final NotificationService notificationService;
+    private final UserService userService;
 
     @GetMapping("/hello")
     public String hello() {
@@ -211,5 +214,10 @@ public class UserController {
     public ResponseEntity<?> badgeTest(@PathVariable(name = "badgeDetailId") String badgeDetailId) {
             List<User> userList = userRepository.findByBadgeDetailId(badgeDetailId);
         return ResponseEntity.ok().body(userList);
+    }
+
+    @PostMapping("/goal")
+    public ResponseEntity<?> checkGoal(@RequestBody CheckGoalResDto checkGoalResDto) {
+        return ResponseEntity.ok().body(userService.checkGoal(checkGoalResDto));
     }
 }
