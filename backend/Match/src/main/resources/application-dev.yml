@@ -1,14 +1,18 @@
 spring:
   datasource:
 #    김동훈 ssafy
-    url: jdbc:mariadb://localhost:3306/dev
-    username: root
-    password: 1234
+#    url: jdbc:mariadb://localhost:3306/dev
+#    username: root
+#    password: 1234
 
 #    김동훈 home
 #    url: jdbc:mariadb://localhost:3307/dev
 #    username: root
 #    password: 1234
+
+    url: jdbc:mariadb://3.39.6.237:5040/match
+    username: root
+    password: KL1VERSE
 
   # kafka 설정
   kafka:
