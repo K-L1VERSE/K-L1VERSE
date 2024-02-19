@@ -15,6 +15,7 @@ export default function ScheduleTable({
   onMatchClick,
   selectedMatchId,
   setSelectedMatch,
+  type,
 }) {
   const [selectedDay, setSelectedDay] = useState(day);
 
@@ -117,6 +118,7 @@ export default function ScheduleTable({
                     onMatchClick={onMatchClick}
                     selectedMatchId={selectedMatchId}
                     setSelectedMatch={setSelectedMatch}
+                    type={type}
                   />
                 ) : (
                   <Time
