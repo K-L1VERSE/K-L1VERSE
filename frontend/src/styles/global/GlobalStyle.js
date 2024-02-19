@@ -12,7 +12,7 @@ body {
 @media screen and (min-width: 700px) {
   body {
     margin : 0 auto;
-    width: 600px;
+    width: 390px;
   }
 }
 html {
