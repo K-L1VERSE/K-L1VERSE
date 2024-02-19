@@ -43,9 +43,9 @@ export const ProductListContainer = styled.div`
   width: 22rem;
   margin-top: 1rem;
   font-family: "Pretendard-Regular";
-  @media (min-width: 768px) {
-    width: 600px;
-  }
+  // @media (min-width: 768px) {
+  //   width: 600px;
+  // }
 `;
 
 export const ProductItemContainer = styled.div`
@@ -59,10 +59,10 @@ export const ProductItemContainer = styled.div`
   border-radius: 5px;
   padding: 0.6rem;
   box-sizing: border-box;
-  @media (min-width: 768px) {
-    margin-right: 0.55rem;
-    width: 11.8rem;
-  }
+  // @media (min-width: 768px) {
+  //   margin-right: 0.55rem;
+  //   width: 11.8rem;
+  // }
   transition: box-shadow 0.3s;
   &:hover {
     box-shadow: 0 2px 6px 0 rgba(0, 0, 0, 0.1);
