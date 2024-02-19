@@ -123,6 +123,7 @@ function MateRegistCard({
               }}
               selectedMatchId={matchId}
               setSelectedMatch={setSelectedMatch}
+              type="regist"
             />
           </Small2>
         )}

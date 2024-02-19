@@ -10,6 +10,7 @@ export default function ScheduleModal({
   onMatchClick,
   selectedMatchId,
   setSelectedMatch,
+  type,
 }) {
   const [data, setData] = useState([]);
   const [year, setYear] = useState(new Date().getFullYear());
@@ -73,6 +74,7 @@ export default function ScheduleModal({
         onMatchClick={onMatchClick}
         selectedMatchId={selectedMatchId}
         setSelectedMatch={setSelectedMatch}
+        type={type}
       />
     </div>
   );

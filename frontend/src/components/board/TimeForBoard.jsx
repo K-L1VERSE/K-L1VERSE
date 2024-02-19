@@ -7,11 +7,14 @@ export default function TimeForBoard({
   onMatchClick,
   selectedMatchId,
   setSelectedMatch,
+  type,
 }) {
   const handleOnClick = () => {
     if (onMatchClick) {
       onMatchClick(match.matchId);
-      setSelectedMatch(match);
+      if (type === "regist") {
+        setSelectedMatch(match);
+      }
     }
   };
 
