@@ -19,7 +19,7 @@ export const Nav = styled.nav`
   ${(props) => props.$disabled && "pointer-events: none;"};
   @media (hover: hover) and (min-width: 700px) {
     margin: 0 auto;
-    width: 600px;
+    width: 390px;
   }
 `;
 
