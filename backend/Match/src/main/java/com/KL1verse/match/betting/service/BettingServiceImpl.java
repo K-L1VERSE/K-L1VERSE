@@ -69,6 +69,7 @@ public class BettingServiceImpl implements BettingService {
         Match match = matchRepository.findById(Integer.parseInt(matchId)).orElseThrow();
         if(match.getGoalDivided()) {
             match.setGoalDivided(false);
+            matchRepository.save(match);
         }
     }
 
