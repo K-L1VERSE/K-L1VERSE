@@ -1,6 +1,8 @@
 package com.KL1verse.match.match.repository;
 
 import com.KL1verse.match.match.repository.entity.Match;
+
+import java.time.LocalDateTime;
 import java.util.List;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
@@ -18,7 +20,7 @@ public interface MatchRepository extends JpaRepository<Match, Integer> {
     String findOneByTeamId(@Param("teamId") int teamId);
 
     @Query(value = "SELECT * FROM game WHERE YEAR(match_at) = :year and MONTH(match_at) = :monthValue and DAY(match_at) = :dayOfMonth", nativeQuery = true)
-    List<Match> findByDate(int year, int monthValue, int dayOfMonth);
+    List<Match> findByDate(@Param("year") int year, @Param("monthValue") int monthValue, @Param("dayOfMonth") int dayOfMonth);
 
     @Query(value = "UPDATE game SET home_betting_amount = :homeBettingAmount WHERE match_id = :matchId", nativeQuery = true)
     void updateHomeBettingAmount(@Param("matchId") int matchId,
@@ -38,6 +40,6 @@ public interface MatchRepository extends JpaRepository<Match, Integer> {
     @Query(value = "SELECT COUNT(t) FROM timeline t WHERE t.match_id = :matchId", nativeQuery = true)
     int countById(@Param("matchId") int matchId);
 
-    @Query(value = "SELECT * FROM game g WHERE DATE(g.match_at) = CURRENT_DATE", nativeQuery = true)
-    List<Match> findTodayMatches();
+    @Query(value = "SELECT * FROM game g WHERE DATE(g.match_at) = DATE(:currentTime)", nativeQuery = true)
+    List<Match> findTodayMatches(@Param("currentTime") LocalDateTime currentTime);
 }

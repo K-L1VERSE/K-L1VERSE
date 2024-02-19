@@ -19,6 +19,18 @@ import {
   MateNumberContainer,
   MateNumberInput,
 } from "../../styles/BoardStyles/MateListStyle";
+import {
+  MatchDetailContainerBox,
+  MatchDetailContainer,
+  MatchDateText,
+} from "../../styles/BoardStyles/MateCreateStyle";
+import {
+  NotificationMatchContainer,
+  NotificationMatchImg,
+  NotificationMatchText,
+  NotificationMatchTeamContainer,
+  NotificationMatchVersus,
+} from "../../styles/notification-styles/NotificationStyle";
 
 import { ToggleComponent } from "../../styles/BoardStyles/BoardStyle";
 
@@ -39,22 +51,21 @@ function MateRegistCard({
   handleFullFlag,
   isUpdateMode,
 }) {
-  const [matchList, setMatchList] = useState([]);
+  // useEffect(() => {
+  //   const today = new Date();
+  //   const year = today.getFullYear();
+  //   const month = today.getMonth() + 2;
+  //   const fetchData = async () => {
+  //     const result = await getMatchList(year, month);
+  //     setMatchList(result);
+  //     if (result.length > 0) {
+  //       onMatchIdChange(result[0].matchId);
+  //     }
+  //   };
+  //   fetchData();
+  // }, []);
 
-  useEffect(() => {
-    const today = new Date();
-    const year = today.getFullYear();
-    const month = today.getMonth() + 2;
-    const fetchData = async () => {
-      const result = await getMatchList(year, month);
-      setMatchList(result);
-      if (result.length > 0) {
-        onMatchIdChange(result[0].matchId);
-      }
-    };
-    fetchData();
-  }, []);
-
+  const [selectedMatch, setSelectedMatch] = useState([]);
   const [isToggled, setIsToggled] = useState(true);
 
   const handleToggele = () => {
@@ -111,8 +122,64 @@ function MateRegistCard({
                 setIsToggled(true);
               }}
               selectedMatchId={matchId}
+              setSelectedMatch={setSelectedMatch}
+              type="regist"
             />
           </Small2>
+        )}
+        {selectedMatch && selectedMatch.matchId && (
+          <MatchDetailContainerBox>
+            <MatchDetailContainer>
+              <MatchDateText>
+                {new Date(selectedMatch.matchAt).toLocaleDateString("ko-KR", {
+                  year: "numeric",
+                  month: "2-digit",
+                  day: "2-digit",
+                  weekday: "long",
+                })}
+              </MatchDateText>
+              <MatchDateText>
+                {new Date(selectedMatch.matchAt).toLocaleTimeString("ko-KR", {
+                  hour: "2-digit",
+                  minute: "2-digit",
+                  hour12: false,
+                })}
+              </MatchDateText>
+            </MatchDetailContainer>
+            <MatchDetailContainer>
+              <NotificationMatchContainer
+                style={{
+                  gap: "0.2rem",
+                }}
+              >
+                <NotificationMatchTeamContainer
+                  style={{
+                    gap: "0.2rem",
+                  }}
+                >
+                  <NotificationMatchImg
+                    src={`${process.env.PUBLIC_URL}/badge/badge${selectedMatch.homeTeamId}.png`}
+                  />
+                  <NotificationMatchText>
+                    {selectedMatch.homeTeamName}
+                  </NotificationMatchText>
+                </NotificationMatchTeamContainer>
+                <NotificationMatchVersus>vs</NotificationMatchVersus>
+                <NotificationMatchTeamContainer
+                  style={{
+                    gap: "0.2rem",
+                  }}
+                >
+                  <NotificationMatchImg
+                    src={`${process.env.PUBLIC_URL}/badge/badge${selectedMatch.awayTeamId}.png`}
+                  />
+                  <NotificationMatchText>
+                    {selectedMatch.awayTeamName}
+                  </NotificationMatchText>
+                </NotificationMatchTeamContainer>
+              </NotificationMatchContainer>
+            </MatchDetailContainer>
+          </MatchDetailContainerBox>
         )}
         <TitleInput value={title} onChange={onTitleChange} placeholder="제목" />
         <div style={{ height: "1rem" }} />

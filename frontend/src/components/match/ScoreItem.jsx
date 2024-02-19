@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import {
   ScoreWrap,
   ScoreInner,
@@ -7,7 +7,7 @@ import {
   Score,
 } from "../../styles/match-styles/MatchTimelinStyle";
 
-export default function ScoreContainer({ match, homeScore, awayScore }) {
+export default function ScoreContainer({ match }) {
   const homeTeamsrc = `${process.env.PUBLIC_URL}/badge/badge${match.homeTeamId}.png`;
   const awayTeamsrc = `${process.env.PUBLIC_URL}/badge/badge${match.awayTeamId}.png`;
 
@@ -19,7 +19,7 @@ export default function ScoreContainer({ match, homeScore, awayScore }) {
           <div>{match.homeTeamName}</div>
         </Team>
         <Score>
-          {homeScore} - {awayScore}
+          {match.homeScore} - {match.awayScore}
         </Score>
         <Team>
           <TeamName>{match.awayTeamName}</TeamName>

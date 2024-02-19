@@ -1,6 +1,7 @@
 package com.kl1verse.UserServer.domain.user.service;
 
 import com.kl1verse.UserServer.domain.kafka.dto.req.BoardNotificationReqDto;
+import com.kl1verse.UserServer.domain.user.dto.res.CheckGoalResDto;
 import com.kl1verse.UserServer.domain.user.exception.UserException;
 import com.kl1verse.UserServer.domain.user.repository.UserRepository;
 import com.kl1verse.UserServer.domain.user.repository.entity.User;
@@ -28,5 +29,15 @@ public class UserService {
         User user = userOptional.get();
         user.setGoal(user.getGoal() + 10);
         userRepository.save(user);
+    }
+
+    public boolean checkGoal(CheckGoalResDto checkGoalResDto) {
+        Optional<User> userOptional = userRepository.findById(checkGoalResDto.getUserId());
+        if(userOptional.isEmpty()) {
+            throw new UserException(ResponseCode.INVALID_USER_INFO);
+        }
+
+        User user = userOptional.get();
+        return user.getGoal() >= checkGoalResDto.getCompareGoal();
     }
 }

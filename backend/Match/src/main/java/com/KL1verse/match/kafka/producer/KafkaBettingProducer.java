@@ -13,6 +13,8 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Optional;
+
 @Service
 @RequiredArgsConstructor
 @Slf4j
@@ -27,10 +29,10 @@ public class KafkaBettingProducer {
 
     public void betting(BettingRequest bettingRequest) {
 
-        bettingRepository.findByUserIdAndMatchId(bettingRequest.getUserId(), bettingRequest.getMatchId())
-            .ifPresent(betting -> {
-                return;
-            });
+        Optional<Betting> bettingOptional = bettingRepository.findByUserIdAndMatchId(bettingRequest.getUserId(), bettingRequest.getMatchId());
+        if(bettingOptional.isPresent()) {
+            return;
+        }
 
         Betting betting = Betting.builder()
             .userId(bettingRequest.getUserId())

@@ -55,7 +55,7 @@ public class BettingController {
 
     @GetMapping("/betting")
     public ResponseEntity<?> bettingWinTest() {
-        kafkaBettingWinProducer.bettingWin(1, 2);
+        kafkaBettingWinProducer.bettingWin(1, 1);
         return new ResponseEntity<>("success", HttpStatus.OK);
     }
 

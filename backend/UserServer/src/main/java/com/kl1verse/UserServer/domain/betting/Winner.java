@@ -13,6 +13,7 @@ import lombok.Setter;
 @Builder
 public class Winner {
 
+    private int matchId;
     private int userId;
     private int newGoal;
 }

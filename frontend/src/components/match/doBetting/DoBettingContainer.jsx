@@ -20,39 +20,30 @@ import {
   DoBetText,
   DoBetTitleComponent,
   DoBetTitle,
+  DoBetLeft,
+  UserGoal,
 } from "../../../styles/match-styles/doBetting/DoBettingContainerStyles";
 import {
   Betting,
   BadgeImg,
 } from "../../../styles/match-styles/MatchDetailStyle";
 import * as bettingApi from "../../../api/betting";
-import { UserState } from "../../../global/UserState";
+import * as userApi from "../../../api/user";
 import { ReactComponent as DoBetIcon } from "../../../assets/icon/do-bet-icon.svg";
 
-function DoBettingContainer({ data, setIsBetted }) {
+function DoBettingContainer({ match, setMatch, user, setUser, setIsBetted }) {
   const [selectedTeam, setSelectedTeam] = useState(null);
   const [bettingAmount, setBettingAmount] = useState(0);
-  const [userState, setUserState] = useRecoilState(UserState);
   const { matchId } = useParams();
-  const [match, setMatch] = useState(data);
-  const [isLoading, setIsLoading] = useState(true);
   const [betComplete, setBetComplete] = useState(false);
-
-  useEffect(() => {
-    const fetchData = async () => {
-      const result = await getMatchDetail(matchId);
-      setMatch(result);
-      setIsLoading(false);
-    };
-    fetchData();
-  }, [matchId]);
+  const [isBettingInProgress, setIsBettingInProgress] = useState(false);
 
   useEffect(() => {
     const checkBetting = async () => {
-      if (match && userState.userId) {
+      if (match && user.userId) {
         const response = await bettingApi.checkBetting({
           matchId,
-          userId: userState.userId,
+          userId: user.userId,
         });
 
         if (response.data.betGoal === 0) {
@@ -70,10 +61,9 @@ function DoBettingContainer({ data, setIsBetted }) {
         }
       }
     };
-    if (!isLoading) {
-      checkBetting();
-    }
-  }, [match, userState.userId, matchId]);
+
+    checkBetting();
+  }, [match, user.userId, matchId]);
 
   const getparsedTeamName = (teamName) => {
     let parsedTeamName = teamName.substring(0, 2);
@@ -109,6 +99,9 @@ function DoBettingContainer({ data, setIsBetted }) {
   const leftMoreThanTenMinutes = isLeftMoreThanTenMinutes(match.matchAt);
 
   const handleBettingClick = async () => {
+    if (isBettingInProgress) return;
+    setIsBettingInProgress(true);
+
     const teamId = match
       ? selectedTeam === "home"
         ? match.homeTeamId
@@ -126,68 +119,104 @@ function DoBettingContainer({ data, setIsBetted }) {
       : null;
 
     if (selectedTeam && bettingAmount > 0) {
-      if (userState.goal < bettingAmount) {
-        Swal.fire({
-          title: "보유 골이 부족합니다.",
-          icon: "error",
-          cancelButtonText: "확인",
-        }).then(() => {});
-        return;
-      }
-
-      try {
-        await bettingApi
-          .betting({
-            userId: userState.userId,
-            matchId,
-            bettingTeamId: teamId,
-            amount: bettingAmount,
-          })
-          .catch(() => {
+      userApi.checkUserGoal(
+        {
+          userId: user.userId,
+          compareGoal: bettingAmount,
+        },
+        (res) => {
+          if (res.data) {
+            try {
+              bettingApi
+                .betting({
+                  userId: user.userId,
+                  matchId,
+                  bettingTeamId: teamId,
+                  amount: bettingAmount,
+                })
+                .catch(() => {
+                  Swal.fire({
+                    title: "응원에 실패했습니다.",
+                    icon: "error",
+                    cancelButtonText: "확인",
+                  }).then(() => {
+                    setBetComplete(true);
+                    setIsBettingInProgress(false);
+                  });
+                })
+                .then(() => {
+                  Swal.fire({
+                    html: `
+                    <img src="https://raw.githubusercontent.com/Tarikul-Islam-Anik/Animated-Fluent-Emojis/master/Emojis/Animals/Bear.png" alt="Bear" width="100" height="100"/>
+                    <p style='font-size:1.2rem; font-family:Pretendard-Bold;'>${teamName}에 ${bettingAmount}골 응원했습니다.</p>
+                  `,
+                    confirmButtonColor: "#3085d6",
+                    confirmButtonText:
+                      "<div style='font-size:1rem; font-family:Pretendard-Regular;'>확인</div>",
+                  }).then(() => {
+                    setIsBettingInProgress(false);
+                    setBetComplete(true);
+                    setIsBetted(true);
+                    setUser((prev) => ({
+                      ...prev,
+                      goal: prev.goal - bettingAmount,
+                    }));
+                    if (selectedTeam === "home") {
+                      setMatch((prev) => ({
+                        ...prev,
+                        homeBettingAmount:
+                          prev.homeBettingAmount + parseInt(bettingAmount, 10),
+                      }));
+                    } else if (selectedTeam === "away") {
+                      setMatch((prev) => ({
+                        ...prev,
+                        awayBettingAmount:
+                          prev.awayBettingAmount + parseInt(bettingAmount, 10),
+                      }));
+                    } else {
+                      setMatch((prev) => ({
+                        ...prev,
+                        drawBettingAmount:
+                          prev.drawBettingAmount + parseInt(bettingAmount, 10),
+                      }));
+                    }
+                  });
+                });
+            } catch {
+              Swal.fire({
+                title: "응원에 실패했습니다.",
+                icon: "error",
+                cancelButtonText: "확인",
+              }).then(() => {
+                setBetComplete(true);
+                setIsBettingInProgress(false);
+              });
+            }
+          } else {
             Swal.fire({
-              title: "베팅에 실패했습니다.",
+              title: "보유 골이 부족합니다.",
               icon: "error",
               cancelButtonText: "확인",
             }).then(() => {
-              setBetComplete(true);
+              setIsBettingInProgress(false);
             });
-          })
-          .then(() => {
-            Swal.fire({
-              html: `
-                <img src="https://raw.githubusercontent.com/Tarikul-Islam-Anik/Animated-Fluent-Emojis/master/Emojis/Animals/Bear.png" alt="Bear" width="100" height="100"/>
-                <p style='font-size:1.2rem; font-family:Pretendard-Bold;'>${teamName}에 ${bettingAmount}골 베팅했습니다.</p>
-              `,
-              confirmButtonColor: "#3085d6",
-              confirmButtonText:
-                "<div style='font-size:1rem; font-family:Pretendard-Regular;'>확인</div>",
-            }).then(() => {
-              setBetComplete(true);
-              setIsBetted(true);
-              setUserState((prev) => ({
-                ...prev,
-                goal: prev.goal - bettingAmount,
-              }));
-              window.location.reload();
-            });
-          });
-      } catch {
-        Swal.fire({
-          title: "베팅에 실패했습니다.",
-          icon: "error",
-          cancelButtonText: "확인",
-        }).then(() => {
-          setBetComplete(true);
-        });
-      }
+          }
+        },
+        () => {
+          setIsBettingInProgress(false);
+        },
+      );
     } else {
       Swal.fire({
-        title: "팀과 베팅골을 선택해주세요.",
+        title: "팀과 응원골을 선택해주세요.",
         icon: "info",
         confirmButtonText: "확인",
+      }).then(() => {
+        setIsBettingInProgress(false);
       });
     }
   };
+
   const handleTeamClick = (team) => {
     setSelectedTeam(selectedTeam === team ? null : team);
   };
@@ -200,13 +229,15 @@ function DoBettingContainer({ data, setIsBetted }) {
       <div>
         <DoBetTitleComponent>
           <DoBetTitle>
-            <img
-              src="https://raw.githubusercontent.com/Tarikul-Islam-Anik/Animated-Fluent-Emojis/master/Emojis/Objects/Money%20Bag.png"
-              alt="Money Bag"
-              width="20"
-              height="20"
-            />
-            <div>베팅 하기</div>
+            <DoBetLeft>
+              <img
+                src="https://raw.githubusercontent.com/Tarikul-Islam-Anik/Animated-Fluent-Emojis/master/Emojis/Smilies/Beating%20Heart.png"
+                alt="Beating Heart"
+                width="20"
+                height="20"
+              />
+              <div>응원 하기</div>
+            </DoBetLeft>
           </DoBetTitle>
         </DoBetTitleComponent>
       </div>
@@ -253,8 +284,8 @@ function DoBettingContainer({ data, setIsBetted }) {
             </TeamNameContainer>
           </TeamSelectButton>
         </DoBetButtonContainer>
-
         <DoBetInputContainer>
+          <UserGoal>현재 보유 골 : {user.goal}</UserGoal>
           <DoBetInputComponent>
             <InputForm
               disabled={
@@ -292,7 +323,8 @@ function DoBettingContainer({ data, setIsBetted }) {
               }
             >
               <DoBetText>
-                <DoBetIcon /> <div>베팅 하기</div>
+                {/* <DoBetIcon /> */}
+                <div>👊🏻 응원 하기</div>
               </DoBetText>
             </DoBetButton>
           </DoBetInputComponent>

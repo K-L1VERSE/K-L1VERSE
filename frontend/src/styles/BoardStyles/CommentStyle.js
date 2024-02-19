@@ -1,5 +1,11 @@
 import styled from "styled-components";
 
+export const ReplyMode = styled.div`
+  border: 2px solid red;
+  width: 2rem;
+  height: 2rem;
+`;
+
 /* ************* CommentList ************* */
 export const ListContainer = styled.div`
   /* padding: 0.1rem 1rem 1rem 1rem; */

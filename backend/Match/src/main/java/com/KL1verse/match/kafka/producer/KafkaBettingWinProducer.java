@@ -60,6 +60,7 @@ public class KafkaBettingWinProducer {
                 int newGoal = Math.round(betting.getAmount() * rate);
 
                 Winner winner = Winner.builder()
+                    .matchId(betting.getMatchId())
                     .userId(betting.getUserId())
                     .newGoal(newGoal)
                     .build();

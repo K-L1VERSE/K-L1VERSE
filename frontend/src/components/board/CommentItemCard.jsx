@@ -18,6 +18,7 @@ import {
   WriterBadge,
   ReplyButton,
   ReplyImg,
+  ReplyMode,
 } from "../../styles/BoardStyles/CommentStyle";
 import ReplyIcon from "../../assets/icon/reply-icon.svg";
 import { likeComment, unlikeComment, updateComment } from "../../api/comment";
@@ -25,6 +26,7 @@ import { UserState } from "../../global/UserState";
 import Like from "./Like";
 import { ReactComponent as LikeCount } from "../../assets/icon/likecount-icon.svg";
 import CocomentIcon from "../../assets/icon/cocoment-icon.png";
+import CommentForm from "./CommentForm";
 
 function CommentItemCard({
   type,
@@ -154,7 +156,9 @@ function CommentItemCard({
         <CommentListContainer $type={type}>
           {(!comment.isSecret ||
             (comment.isSecret &&
-              (userId === comment.userId || userId === writerId))) && (
+              (userId === comment.userId ||
+                userId === writerId ||
+                userId === comment.parentCommentUserId))) && (
             <div>
               <WriterContainer>
                 {comment.profile && <WriterProfile src={comment.profile} />}
@@ -163,7 +167,9 @@ function CommentItemCard({
                   src={`${process.env.PUBLIC_URL}/badge/badge${comment.mainBadge === null ? 0 : comment.mainBadge}back.png`}
                 />
                 {comment.isSecret &&
-                  (userId === comment.userId || userId === writerId) && (
+                  (userId === comment.userId ||
+                    userId === writerId ||
+                    userId === comment.parentCommentUserId) && (
                     <div>
                       <img
                         src="https://raw.githubusercontent.com/Tarikul-Islam-Anik/Animated-Fluent-Emojis/master/Emojis/Objects/Locked.png"
@@ -202,7 +208,8 @@ function CommentItemCard({
                     {(!comment.isSecret ||
                       (comment.isSecret &&
                         (userId === comment.userId ||
-                          userId === writerId))) && (
+                          userId === writerId ||
+                          userId === comment.parentCommentUserId))) && (
                       <div>
                         <LikeBox>
                           <Like

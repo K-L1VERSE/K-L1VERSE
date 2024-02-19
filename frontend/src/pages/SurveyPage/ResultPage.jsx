@@ -136,12 +136,15 @@ function ResultPage() {
   const [showResult, setShowResult] = useState(false);
   const randomBackground = Math.floor(Math.random() * 3);
   const selectedTeamImage = teamImages[teamId][randomBackground];
+  const { Kakao } = window;
 
   useEffect(() => {
     const tick = setTimeout(() => {
       setShowResult(true);
       firework();
     }, 3000);
+    Kakao.cleanup();
+    Kakao.init("6929be9a78433534e7fc811e86f9795a");
     return () => clearTimeout(tick);
   }, []);
 
@@ -161,20 +164,16 @@ function ResultPage() {
     navigate("/survey");
   };
 
-  const { Kakao } = window;
-
   const realUrl = "https://k-l1verse.site/survey";
 
   const imageUrl =
     "https://k-l1verse.site/" + teamImages[teamId][randomBackground];
-  useEffect(() => {
-    Kakao.cleanup();
-    Kakao.init("6929be9a78433534e7fc811e86f9795a");
-  }, []);
 
   const shareKakaoLink = () => {
+    console.log("@@@@@@@@@@@");
     Kakao.Share.sendDefault({
       objectType: "feed",
+      installTalk: true,
       content: {
         title: "나랑 어울리는 K-리그 구단은?",
         description: teamNames[teamId],
@@ -222,11 +221,11 @@ function ResultPage() {
           <Shares>
             {/* <img src={FacebookIcon} onClick={shareFacebook} alt="facebook" />
               <img src={TwitterIcon} onClick={shareTwitter} alt="twitter" /> */}
-            <div onClick={shareKakaoLink}>
-              <img src={KakaoIcon} onClick={shareKakaoLink} alt="kakao" />
+            <div role="presentation" onClick={shareKakaoLink}>
+              <img src={KakaoIcon} alt="kakao" />
               <span>공유하기</span>
             </div>
-            <div onClick={goStart}>
+            <div role="presentation" onClick={goStart}>
               <Refresh />
               <span>다시하기</span>
             </div>

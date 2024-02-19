@@ -58,7 +58,7 @@ const CommentList = ({ boardId, writerId, setCommentCount }) => {
     Swal.fire({
       html: `
         <img src="https://raw.githubusercontent.com/Tarikul-Islam-Anik/Animated-Fluent-Emojis/master/Emojis/Animals/Bear.png" alt="Bear" width="100" height="100"/>
-        <p style='font-size:1.2rem; font-family:Pretendard-Bold;'>댓글을 삭제하시겠습니까?</p>
+        <div style='font-size:1.2rem; font-family:Pretendard-Bold;'>댓글을 삭제하시겠습니까?</div>
       `,
       showCancelButton: true,
       confirmButtonColor: "#3085d6",
@@ -69,15 +69,33 @@ const CommentList = ({ boardId, writerId, setCommentCount }) => {
         "<div style='font-size:1rem; font-family:Pretendard-Regular;'>취소</div>",
     }).then((result) => {
       if (result.isConfirmed) {
+        const commentToDelete = commentList.find(
+          (comment) => comment.commentId === commentId,
+        );
+        const repliesCount = commentToDelete
+          ? commentToDelete.replies.length
+          : 0;
+
         deleteComment(
           commentId,
           () => {
-            setCommentList((prevComments) =>
-              prevComments.filter(
-                (prevComment) => prevComment.commentId !== commentId,
-              ),
-            );
-            setCommentCount((prev) => prev - 1);
+            setCommentList((prevComments) => {
+              if (commentToDelete) {
+                // 삭제할 댓글이 상위 댓글인 경우
+                return prevComments.filter(
+                  (prevComment) => prevComment.commentId !== commentId,
+                );
+              }
+              // 삭제할 댓글이 대댓글인 경우
+              return prevComments.map((comment) => ({
+                ...comment,
+                replies: comment.replies.filter(
+                  (reply) => reply.commentId !== commentId,
+                ),
+              }));
+            });
+            // 댓글과 답글을 모두 삭제한 후 댓글 개수 업데이트
+            setCommentCount((prev) => prev - 1 - repliesCount);
           },
           () => {},
         );
