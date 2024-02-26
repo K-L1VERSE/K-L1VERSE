@@ -35,3 +35,6 @@ out/
 
 ### VS Code ###
 .vscode/
+
+### server config yaml ###
+/src/main/resources/*.yml
