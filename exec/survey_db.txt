@@ -1,3 +1,0 @@
-url: jdbc:mariadb://3.39.6.237:5020/survey
-username: root
-password: KL1VERSE
