@@ -1409,7 +1409,7 @@ Docker"
 ## **프로젝트 소개**
 
 ### [메인페이지]
-![mainpage](https://github.com/K-L1VERSE/K-L1VERSE/assets/133645725/9429041e-fb18-477b-b0c4-6b05c21f449f)
+![mainpage]<img src="https://github.com/K-L1VERSE/K-L1VERSE/assets/133645725/9429041e-fb18-477b-b0c4-6b05c21f449f" width="500"/>
 
 ### [소셜로그인]
 
