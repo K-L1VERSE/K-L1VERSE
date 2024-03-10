@@ -1409,12 +1409,12 @@ Docker"
 ## **프로젝트 소개**
 
 ### [메인페이지]
-<img src="/uploads/0abbfe7b34370e9e6b0d1849130805b6/main.gif" width="500"/>
+![mainpage](https://github.com/K-L1VERSE/K-L1VERSE/assets/133645725/9429041e-fb18-477b-b0c4-6b05c21f449f)
 
 ### [소셜로그인]
 
 - 카카오, 구글, 네이버 계정으로 소셜 로그인이 가능합니다.
-<img src="/uploads/52c03a15ce1b8d44ddca5ae212ddc8c5/login.gif" width="500"/>
+![login](https://github.com/K-L1VERSE/K-L1VERSE/assets/133645725/3f13b8e7-9b10-4748-a237-81ec5093cb91)
 
 ### [마이페이지]
 
@@ -1423,13 +1423,13 @@ Docker"
 - 닉네임을 설정할 수 있습니다.
 - 골(포인트), 베팅 현황, 적중률을 확인할 수 있습니다.
 - 각 게시판에서 성한 글을 모아볼 수 있습니다.
-<img src="/uploads/64b7dbfbac5e6f2abdfe136cadbb9981/Mypage.gif" width="500"/>
+![Mypage](https://github.com/K-L1VERSE/K-L1VERSE/assets/133645725/b0391690-1bef-48a7-b34c-b89affb8d4e5)
 
 ### [설정 페이지]
 
 - 알림을 키거나 끌 수 있습니다.
 - 로그아웃할 수 있습니다.
-<img src="/uploads/aaaf99dc1b102fe69d51c99051c1ec36/logout.gif" width="500"/>
+![logout](https://github.com/K-L1VERSE/K-L1VERSE/assets/133645725/e076e711-d770-4fc9-828b-9cb6592cd2f8)
 
 ### [알림]
 
@@ -1437,23 +1437,23 @@ Docker"
 - 출석이나 베팅 성공 등으로 포인트를 받았을 때 관련 알림을 받을 수 있습니다.
 - 벳지를 착용했을 때 해당 구단의 관련 뉴스가 필터링되어 추천됩니다.
 - 베팅한 경기에 대하여 경기 시작 5분 전에 시작 안내를 받을 수 있습니다.
-<img src="/uploads/27b1a3d5bf73e2bc3e18d99944ae4fba/Notification.gif" width="500"/>
+![Notification](https://github.com/K-L1VERSE/K-L1VERSE/assets/133645725/3470c185-b5df-445a-8259-9021330701e1)
 
 ### [팀 정보]
 
 - 각 구단의 공식 SNS와 홈페이지, 응원가, 선수 정보들을 제공하여 K-League1 소속 구단들의 정보를 한 눈에 모아 볼 수 있습니다.
-<img src="/uploads/104cd94a0ae9005bcf5d217db217682f/teamInfo.gif" width="500"/>
+![teamInfo](https://github.com/K-L1VERSE/K-L1VERSE/assets/133645725/83a487b1-9908-4ab7-8786-6daeccfdff49)
 
 ### [성향 test를 통한 구단 추천]
 
 - K리그를 잘 모르는 사람들을 대상으로 성향 테스트를 통해 사용자가 선택한 답변의 가중치를 분석해 가중치가 가장 높은 구단 1개를 추천합니다.
 - 추천된 구단을 SNS를 통해 다른 사람들과 공유할 수 있습니다.
-<img src="/uploads/ce47a7c634599632fef06eba120de6ab/Recomment.gif" width="500"/>
+![Recomment](https://github.com/K-L1VERSE/K-L1VERSE/assets/133645725/6b2723ac-eba9-4ceb-9781-fca052cc6b76)
 
 ### [경기 일정]
 
 - K-League1 경기 일정들을 리스트와 캘린더 형태로 확인할 수 있습니다.
-<img src="/uploads/26636355201fa5d2e1b2cdb926e0dc83/Match.gif" width="500"/>
+![Match](https://github.com/K-L1VERSE/K-L1VERSE/assets/133645725/681b9c84-7626-439f-ad0b-78adb1444187)
 
 ### [경기 상세]
 
@@ -1463,7 +1463,7 @@ Docker"
 - 경기가 끝난 후 베팅 결과에 따라 포인트가 배분됩니다.
 - 실시간 채팅을 통해 다른 유저들과 소통할 수 있습니다.
 - 욕설 또는 불쾌함을 유발할 수 있는 글귀에는 클린봇 기능을 통해 필터링됩니다.
-<img src="/uploads/3c750ce06da72db2e90310151e2b3ce2/Chat.gif" width="500"/>
+![Chat](https://github.com/K-L1VERSE/K-L1VERSE/assets/133645725/bc710212-8baa-44a8-b1ff-8dee946435f0)
 
 ### [와글 게시판]
 
@@ -1471,7 +1471,7 @@ Docker"
 - 게시글 추천 버튼을 누르면 개인화된 추천 게시글이 도출됩니다.
 - 게시글과 댓글 삭제버튼을 클릭하면 모달로 확인창이 뜹니다.
 - 제목, 내용, 여러장의 사진 등을 첨부할 수 있습니다.
-<img src="/uploads/ea7cc9bd8cb8f1ef57fd9d1db3390705/와글_게시글_영상.gif" width="500"/>
+![와글_게시글_영상](https://github.com/K-L1VERSE/K-L1VERSE/assets/133645725/243381ff-1051-49f2-8070-73c3b8047aec)
 
 ### [직관메이트 게시판]
 
@@ -1479,20 +1479,20 @@ Docker"
 - 모집중인 게시글에 모집이 완료되면 모집완료로 변경할 수 있습니다.
 - 제목, 내용, 여러장의 사진 등을 첨부할 수 있습니다.
 - 게시글과 댓글 삭제버튼을 클릭하면 모달로 확인창이 뜹니다.
-<img src="/uploads/3292ad0cd26e765431cd9ee801a6e93b/직관메이트_게시글_작성.gif" width="500"/>
+![직관메이트_게시글_작성](https://github.com/K-L1VERSE/K-L1VERSE/assets/133645725/f9ac4c8e-a580-44cc-9ddf-237165124b7a)
 
 ### [중고거래 게시판]
 
 - 제목, 내용, 여러장의 사진 등을 첨부할 수 있고 사진을 필수적으로 첨부해야 합니다.
 - 게시글을 작성하면 거래가능이 뜨고 거래가 완료되면 거래완료로 변경할 수 있습니다.
-<img src="/uploads/7bcdf4bc1078d8cddd1710ae80bd382a/중고거래_게시글_작성.gif" width="500"/>
+![중고거래_게시글_작성](https://github.com/K-L1VERSE/K-L1VERSE/assets/133645725/017ecbbd-60a8-4297-9527-434462439982)
     
 ### [좋아요와 비밀 댓글]
 
 - 좋아요와 댓글 수는 실시간으로 상세 페이지에 반영됩니다.
 - 비밀 댓글을 클릭하면 비밀 댓글이 작성됩니다.
 - 비밀 댓글은 게시글 작성자와 댓글 작성자만 확인할 수 있습니다.
-<img src="/uploads/b7c50dea3155068400aedabefa5b5ba7/비밀댓글_테스트.gif" width="500"/>
+![비밀댓글_테스트](https://github.com/K-L1VERSE/K-L1VERSE/assets/133645725/255ff4eb-44e3-42f8-97dd-85e7b99318b9)
 <br>
 
 ## K-L1VERSE 앞으로의 계획
