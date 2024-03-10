@@ -102,7 +102,7 @@ Docker"
   <br><br>
 - 버전 및 이슈관리 : Gitlab, Jira
   <br><br>
-- 협업 툴 : Discord, MatterMost, [Notion](https://sohy.notion.site/A409-Project-K-L1VERSE-9799a742de2743f2a5728d7ddea838b4?pvs=4)
+- 협업 툴 : Discord, MatterMost, Notion
   <br><br>
 - 서비스 배포 환경 : AWS
   <br><br>
